@@ -3,7 +3,11 @@ var xhr = new XMLHttpRequest();
 xhr.open('GET', path + '/config.json');
 xhr.addEventListener('load', function () {
   if (xhr.status === 200) {
-    window.load(JSON.parse(xhr.responseText));
+    var items = JSON.parse(xhr.responseText);
+    items.forEach(function(v) {
+      v.contentUrl = path + '/' + v.contentUrl;
+    });
+    window.load(items);
   } else {
     console.error(xhr.statusText);
   }
