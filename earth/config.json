@@ -1,0 +1,26 @@
+[{
+    "title": "index.html",
+    "mode": "htmlmixed",
+    "content": "",
+    "contentUrl": "earth/index.html"
+}, {
+    "title": "index.js",
+    "mode": "javascript",
+    "content": "",
+    "contentUrl": "earth/index.js"
+}, {
+    "title": "index.css",
+    "mode": "css",
+    "content": "",
+    "contentUrl": "earth/index.css"
+}, {
+    "title": "index.goml",
+    "mode": "xml",
+    "content": "",
+    "contentUrl": "earth/index.goml"
+}, {
+    "title": "index.sort",
+    "mode": "glsl",
+    "content": "",
+    "contentUrl": "earth/index.sort"
+}]

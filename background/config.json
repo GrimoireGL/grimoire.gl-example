@@ -1,0 +1,26 @@
+[{
+    "title": "index.html",
+    "mode": "htmlmixed",
+    "content": "",
+    "contentUrl": "background/index.html"
+}, {
+    "title": "index.js",
+    "mode": "javascript",
+    "content": "",
+    "contentUrl": "background/index.js"
+}, {
+    "title": "index.css",
+    "mode": "css",
+    "content": "",
+    "contentUrl": "background/index.css"
+}, {
+    "title": "index.goml",
+    "mode": "xml",
+    "content": "",
+    "contentUrl": "background/index.goml"
+}, {
+    "title": "index.sort",
+    "mode": "glsl",
+    "content": "",
+    "contentUrl": "background/index.sort"
+}]

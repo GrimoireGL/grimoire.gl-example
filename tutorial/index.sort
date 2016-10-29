@@ -1,0 +1,16 @@
+@Pass
+attribute vec3 position;
+@vert{
+  uniform mat4 _matPVM;
+  void main(){
+    gl_Position = _matPVM * vec4(position,1);
+  }
+}
+@frag{
+  @{type:"color", default:"#381794"}
+  uniform vec4 color;
+  uniform float _time;
+  void main(){
+    gl_FragColor = color;//vec4(color.r, color.g, color.b, abs(sin(_time*0.001)));
+  }
+}

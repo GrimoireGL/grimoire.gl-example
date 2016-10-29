@@ -1,0 +1,9 @@
+<goml width="480" height="320">
+    <import-material type="color" src="index.sort" />
+    <geometry name="cube" type="cube" divide="30" />
+    <material id="color" type="color" color="blue" />
+    <scene>
+        <camera class="camera" near="0.01" far="40.0" aspect="1.5" fovy="45d" position="0,0,10" />
+        <mesh class="cube" position="2,0,0" geometry="cube" material="#color" rotation="0,0,0" targetBuffer="wireframe" />
+    </scene>
+</goml>
