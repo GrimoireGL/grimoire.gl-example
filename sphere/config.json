@@ -2,25 +2,25 @@
     "title": "index.html",
     "mode": "htmlmixed",
     "content": "",
-    "contentUrl": "cube/index.html"
+    "contentUrl": "sphere/index.html"
 }, {
     "title": "index.js",
     "mode": "javascript",
     "content": "",
-    "contentUrl": "cube/index.js"
+    "contentUrl": "sphere/index.js"
 }, {
     "title": "index.css",
     "mode": "css",
     "content": "",
-    "contentUrl": "cube/index.css"
+    "contentUrl": "sphere/index.css"
 }, {
     "title": "index.goml",
     "mode": "xml",
     "content": "",
-    "contentUrl": "cube/index.goml"
+    "contentUrl": "sphere/index.goml"
 }, {
     "title": "index.sort",
     "mode": "glsl",
     "content": "",
-    "contentUrl": "cube/index.sort"
+    "contentUrl": "sphere/index.sort"
 }]
