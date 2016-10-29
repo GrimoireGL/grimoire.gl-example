@@ -3,30 +3,30 @@
     "title": "index.html",
     "mode": "htmlmixed",
     "content": "",
-    "contentUrl": "grimoire.gl-example/index/index.html"
+    "contentUrl": "/index/index.html"
   },
   {
     "title": "index.js",
     "mode": "javascript",
     "content": "",
-    "contentUrl": "grimoire.gl-example/index/index.js"
+    "contentUrl": "/index/index.js"
   },
   {
     "title": "index.css",
     "mode": "css",
     "content": "",
-    "contentUrl": "grimoire.gl-example/index/index.css"
+    "contentUrl": "/index/index.css"
   },
   {
     "title": "index.goml",
     "mode": "xml",
     "content": "",
-    "contentUrl": "grimoire.gl-example/index/index.goml"
+    "contentUrl": "/index/index.goml"
   },
   {
     "title": "index.sort",
     "mode": "glsl",
     "content": "",
-    "contentUrl": "grimoire.gl-example/index/index.sort"
+    "contentUrl": "/index/index.sort"
   }
 ]
