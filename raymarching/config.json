@@ -2,30 +2,30 @@
     "title": "index.html",
     "mode": "htmlmixed",
     "content": "",
-    "contentUrl": "raymarching/index.html"
+    "contentUrl": "index.html"
 }, {
     "title": "index.js",
     "mode": "javascript",
     "content": "",
-    "contentUrl": "raymarching/index.js"
+    "contentUrl": "index.js"
 }, {
     "title": "index.css",
     "mode": "css",
     "content": "",
-    "contentUrl": "raymarching/index.css"
+    "contentUrl": "index.css"
 }, {
     "title": "index.goml",
     "mode": "xml",
     "content": "",
-    "contentUrl": "raymarching/index.goml"
+    "contentUrl": "index.goml"
 }, {
     "title": "gray.sort",
     "mode": "glsl",
     "content": "",
-    "contentUrl": "raymarching/gray.sort"
+    "contentUrl": "gray.sort"
 }, {
     "title": "raymarching.sort",
     "mode": "glsl",
     "content": "",
-    "contentUrl": "raymarching/raymarching.sort"
+    "contentUrl": "raymarching.sort"
 }]
