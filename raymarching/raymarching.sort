@@ -4,33 +4,14 @@
 @NoDepth()
 precision highp float;
 precision highp int;
-#define LIGHT_COUNT 10
-
-attribute vec3 position;
-
-struct Light{
-  vec4 position;
-  vec4 ambient;
-  vec4 diffuse;
-  vec4 specular;
-  vec3 spotDirection;
-  float spotCutOff;
-  float constantAttenuation;
-  float linearAttenuation;
-  float quadraticAttenuation;
-  float spotExponent;
-  float spotLightCosCutOff;
-};
-
-uniform Light light[LIGHT_COUNT];
-
-@vert{
+#ifdef VS
+  attribute vec3 position;
   void main(){
     gl_Position = vec4(position,1);
   }
-}
+#endif
 
-@frag{
+#ifdef FS
   @{default:"-3.0"}
   uniform float fovyDepth;
 
@@ -45,7 +26,6 @@ uniform Light light[LIGHT_COUNT];
   uniform vec2 _viewportSize;
 
   const float Epsilon = 0.0001;
-  const float PI = 3.141592;
   const float OFFSET = 0.01;
 
   struct Ray{
@@ -176,4 +156,4 @@ uniform Light light[LIGHT_COUNT];
     }
     gl_FragColor = vec4(color,1);
   }
-}
+#endif

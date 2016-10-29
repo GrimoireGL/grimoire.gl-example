@@ -2,22 +2,25 @@
 @NoBlend()
 @NoDepth()
 @NoCull()
-attribute vec3 position;
+FS_PREC_FLOAT(mediump)
 varying vec2 uv;
-@vert{
-  uniform float _time;
-void main(){
-  gl_Position = vec4(position,1);
-  uv = position.xy;
-  uv = vec2(uv.x * cos(uv.y + _time/1000.),uv.x * sin(uv.y + _time/1000.));
-  uv = (uv + vec2(1))/2.;
-}
-}
 
-@frag{
+#ifdef VS
+  attribute vec3 position;
+
+  uniform float _time;
+  void main(){
+    gl_Position = vec4(position,1);
+    uv = position.xy;
+    uv = vec2(uv.x * cos(uv.y + _time/1000.),uv.x * sin(uv.y + _time/1000.));
+    uv = (uv + vec2(1))/2.;
+  }
+#endif
+
+#ifdef FS
 uniform sampler2D source;
 
 void main(){
   gl_FragColor = texture2D(source,uv);
 }
-}
+#endif
