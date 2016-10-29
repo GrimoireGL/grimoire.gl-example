@@ -8,7 +8,7 @@ function rot() {
 
 rot();
 
-document.getElementById('color').addEventListener(function(e) {
+document.getElementById('color').addEventListener('change', function(e) {
   var color = e.target.value;
   var elm = document.createElement('div');
   elm.style.color = color;
