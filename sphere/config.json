@@ -1,0 +1,26 @@
+[{
+    "title": "index.html",
+    "mode": "htmlmixed",
+    "content": "",
+    "contentUrl": "cube/index.html"
+}, {
+    "title": "index.js",
+    "mode": "javascript",
+    "content": "",
+    "contentUrl": "cube/index.js"
+}, {
+    "title": "index.css",
+    "mode": "css",
+    "content": "",
+    "contentUrl": "cube/index.css"
+}, {
+    "title": "index.goml",
+    "mode": "xml",
+    "content": "",
+    "contentUrl": "cube/index.goml"
+}, {
+    "title": "index.sort",
+    "mode": "glsl",
+    "content": "",
+    "contentUrl": "cube/index.sort"
+}]

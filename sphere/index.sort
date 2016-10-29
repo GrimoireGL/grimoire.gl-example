@@ -1,0 +1,17 @@
+@Pass
+attribute vec3 position;
+attribute vec3 normal;
+
+varying vec3 vNormal;
+@vert{
+  uniform mat4 _matPVM;
+  void main(){
+    gl_Position = _matPVM * vec4(position,1);
+    vNormal = normal;
+  }
+}
+@frag{
+  void main(){
+    gl_FragColor = vec4(vNormal,1);
+  }
+}
