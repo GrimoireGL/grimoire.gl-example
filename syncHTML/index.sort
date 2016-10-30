@@ -22,10 +22,7 @@ varying vec3 vNormal;
 #ifdef FS
   @{type:"color", default:"#6E183D"}
   uniform vec4 color;
-  @{type:"sun", default:"3.14,3.14"}
-  uniform vec2 sun;
   void main(){
-    vec3 sun_vec = vec3(sin(sun.x) * cos(sun.y), sin(sun.x) * sin(sun.y), cos(sun.x));
-    gl_FragColor = vec4(clamp(dot(vNormal, -1.0 * sun_vec), 0.3, 1.0) * color.rgb, 1.0);
+    gl_FragColor = color;
   }
 #endif

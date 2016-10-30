@@ -1,13 +1,14 @@
 @DepthFunc(LEQUAL)
 @BlendFunc(SRC_ALPHA, ONE_MINUS_SRC_ALPHA)
-attribute vec3 position;
-@vert{
+FS_PREC_FLOAT(mediump)
+#ifdef VS
+  attribute vec3 position;
   void main(){
     gl_Position = vec4(position, 1.);
   }
-}
+#endif
 
-@frag{
+#ifdef FS
   const int _ParticlesAmount = 10;
 
   uniform float _time;
@@ -85,4 +86,4 @@ attribute vec3 position;
       gl_FragColor = alphaBlend(gl_FragColor, vec4(cloverCenterColor, opacity * drawClover(center, 0.05, 0.3)));
     }
   }
-}
+#endif
