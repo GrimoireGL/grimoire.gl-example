@@ -51,10 +51,17 @@
     </div>
     <div id="overlay">
       <div class="shade" v-show="visible" transition="fade">
-        <div class="plate" v-show="visible" transition="popup" v-cloak>
+        <div class="plate" v-show="visible && config.type !== 'no-plate'" transition="popup" v-cloak>
           <div class="label" v-cloak>{{ config.label }}</div>
           <div v-show="config.type === 'prompt'">
-            <input class="title" type="text" v-model="config.title" v-el:title @keydown.enter="hide(true)"></input>
+            <input
+              class="title"
+              type="text"
+              v-model="config.title"
+              @keydown.enter="hide(true)"
+              @keydown.esc="hide(false)"
+              v-el:title
+            ></input>
             <div class="message filetype">File type: <span class='bold'>{{ filetype }}</span></div>
             <div class="message error" v-show="error"><span class='bold'>{{ error }}</span></div>
           </div>

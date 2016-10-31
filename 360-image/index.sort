@@ -1,18 +1,22 @@
 @Pass
 @CullFace(FRONT)
-attribute vec3 position;
-attribute vec2 uv;
+
+FS_PREC_FLOAT(mediump)
 varying vec2 vUV;
-@vert{
+
+#ifdef VS
+  attribute vec3 position;
+  attribute vec2 uv;
   uniform mat4 _matPVM;
   void main(){
     gl_Position = _matPVM * vec4(position,1);
     vUV = uv;
   }
-}
-@frag{
+#endif
+
+#ifdef FS
   uniform sampler2D texture;
   void main(){
     gl_FragColor = vec4(texture2D(texture,vUV).rgb, 1);
   }
-}
+#endif

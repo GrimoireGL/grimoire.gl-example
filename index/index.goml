@@ -1,7 +1,7 @@
 <goml width="512" height="512">
   <import-material type="sprite" src="./index.sort" />
   <geometry name="cube" type="cube" />
-  <material id="sprite" type="sprite" color="#cc3" sun="0.5,0.5" />
+  <material id="sprite" type="sprite" color="yellow" sun="0.5,0.5" />
   <renderer camera=".camera" viewport="0,0,100%,100%">
     <render-scene/>
   </renderer>
