@@ -182,7 +182,7 @@ exports.default = typeof _symbol2.default === "function" && _typeof(_iterator2.d
 },{"../core-js/symbol":14,"../core-js/symbol/iterator":15}],22:[function(require,module,exports){
 module.exports = require("regenerator-runtime");
 
-},{"regenerator-runtime":140}],23:[function(require,module,exports){
+},{"regenerator-runtime":141}],23:[function(require,module,exports){
 require('../modules/web.dom.iterable');
 require('../modules/es6.string.iterator');
 module.exports = require('../modules/core.get-iterator');
@@ -2303,6 +2303,188 @@ for(var collections = ['NodeList', 'DOMTokenList', 'MediaList', 'StyleSheetList'
   Iterators[NAME] = Iterators.Array;
 }
 },{"./_global":62,"./_hide":64,"./_iterators":77,"./_wks":118,"./es6.array.iterator":121}],140:[function(require,module,exports){
+// shim for using process in browser
+var process = module.exports = {};
+
+// cached from whatever global is present so that test runners that stub it
+// don't break things.  But we need to wrap it in a try catch in case it is
+// wrapped in strict mode code which doesn't define any globals.  It's inside a
+// function because try/catches deoptimize in certain engines.
+
+var cachedSetTimeout;
+var cachedClearTimeout;
+
+function defaultSetTimout() {
+    throw new Error('setTimeout has not been defined');
+}
+function defaultClearTimeout () {
+    throw new Error('clearTimeout has not been defined');
+}
+(function () {
+    try {
+        if (typeof setTimeout === 'function') {
+            cachedSetTimeout = setTimeout;
+        } else {
+            cachedSetTimeout = defaultSetTimout;
+        }
+    } catch (e) {
+        cachedSetTimeout = defaultSetTimout;
+    }
+    try {
+        if (typeof clearTimeout === 'function') {
+            cachedClearTimeout = clearTimeout;
+        } else {
+            cachedClearTimeout = defaultClearTimeout;
+        }
+    } catch (e) {
+        cachedClearTimeout = defaultClearTimeout;
+    }
+} ())
+function runTimeout(fun) {
+    if (cachedSetTimeout === setTimeout) {
+        //normal enviroments in sane situations
+        return setTimeout(fun, 0);
+    }
+    // if setTimeout wasn't available but was latter defined
+    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+        cachedSetTimeout = setTimeout;
+        return setTimeout(fun, 0);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedSetTimeout(fun, 0);
+    } catch(e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+            return cachedSetTimeout.call(null, fun, 0);
+        } catch(e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+            return cachedSetTimeout.call(this, fun, 0);
+        }
+    }
+
+
+}
+function runClearTimeout(marker) {
+    if (cachedClearTimeout === clearTimeout) {
+        //normal enviroments in sane situations
+        return clearTimeout(marker);
+    }
+    // if clearTimeout wasn't available but was latter defined
+    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+        cachedClearTimeout = clearTimeout;
+        return clearTimeout(marker);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedClearTimeout(marker);
+    } catch (e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+            return cachedClearTimeout.call(null, marker);
+        } catch (e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+            return cachedClearTimeout.call(this, marker);
+        }
+    }
+
+
+
+}
+var queue = [];
+var draining = false;
+var currentQueue;
+var queueIndex = -1;
+
+function cleanUpNextTick() {
+    if (!draining || !currentQueue) {
+        return;
+    }
+    draining = false;
+    if (currentQueue.length) {
+        queue = currentQueue.concat(queue);
+    } else {
+        queueIndex = -1;
+    }
+    if (queue.length) {
+        drainQueue();
+    }
+}
+
+function drainQueue() {
+    if (draining) {
+        return;
+    }
+    var timeout = runTimeout(cleanUpNextTick);
+    draining = true;
+
+    var len = queue.length;
+    while(len) {
+        currentQueue = queue;
+        queue = [];
+        while (++queueIndex < len) {
+            if (currentQueue) {
+                currentQueue[queueIndex].run();
+            }
+        }
+        queueIndex = -1;
+        len = queue.length;
+    }
+    currentQueue = null;
+    draining = false;
+    runClearTimeout(timeout);
+}
+
+process.nextTick = function (fun) {
+    var args = new Array(arguments.length - 1);
+    if (arguments.length > 1) {
+        for (var i = 1; i < arguments.length; i++) {
+            args[i - 1] = arguments[i];
+        }
+    }
+    queue.push(new Item(fun, args));
+    if (queue.length === 1 && !draining) {
+        runTimeout(drainQueue);
+    }
+};
+
+// v8 likes predictible objects
+function Item(fun, array) {
+    this.fun = fun;
+    this.array = array;
+}
+Item.prototype.run = function () {
+    this.fun.apply(null, this.array);
+};
+process.title = 'browser';
+process.browser = true;
+process.env = {};
+process.argv = [];
+process.version = ''; // empty string to avoid regexp issues
+process.versions = {};
+
+function noop() {}
+
+process.on = noop;
+process.addListener = noop;
+process.once = noop;
+process.off = noop;
+process.removeListener = noop;
+process.removeAllListeners = noop;
+process.emit = noop;
+
+process.binding = function (name) {
+    throw new Error('process.binding is not supported');
+};
+
+process.cwd = function () { return '/' };
+process.chdir = function (dir) {
+    throw new Error('process.chdir is not supported');
+};
+process.umask = function() { return 0; };
+
+},{}],141:[function(require,module,exports){
 (function (global){
 // This method of obtaining a reference to the global object needs to be
 // kept identical to the way it is obtained in runtime.js
@@ -2337,7 +2519,7 @@ if (hadRuntime) {
 }
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./runtime":141}],141:[function(require,module,exports){
+},{"./runtime":142}],142:[function(require,module,exports){
 (function (process,global){
 /**
  * Copyright (c) 2014, Facebook, Inc.
@@ -3009,7 +3191,7 @@ if (hadRuntime) {
 );
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":143}],142:[function(require,module,exports){
+},{"_process":140}],143:[function(require,module,exports){
 (function (process,global){
 'use strict';
 
@@ -21592,8 +21774,8 @@ var MouseCameraControlComponent = function (_Component16) {
 
         var _this78 = (0, _possibleConstructorReturn3.default)(this, (MouseCameraControlComponent.__proto__ || (0, _getPrototypeOf2.default)(MouseCameraControlComponent)).apply(this, arguments));
 
-        _this78._lastScreenPos = { x: NaN, y: NaN };
         _this78._origin = new Vector3(0, 0, 0);
+        _this78._lastScreenPos = null;
         _this78._xsum = 0;
         _this78._ysum = 0;
         return _this78;
@@ -21602,19 +21784,22 @@ var MouseCameraControlComponent = function (_Component16) {
     (0, _createClass3.default)(MouseCameraControlComponent, [{
         key: "$awake",
         value: function $awake() {
-            this.getAttribute("rotateX").boundTo("_rotateX");
-            this.getAttribute("rotateY").boundTo("_rotateY");
-            this.getAttribute("moveZ").boundTo("_moveZ");
+            this.getAttribute("rotateSpeed").boundTo("_rotateSpeed");
+            this.getAttribute("zoomSpeed").boundTo("_zoomSpeed");
             this.getAttribute("moveSpeed").boundTo("_moveSpeed");
             this._transform = this.node.getComponent("Transform");
-            this._scriptTag = this.companion.get("canvasElement");
         }
     }, {
         key: "$mount",
         value: function $mount() {
-            this._scriptTag.addEventListener("mousemove", this._mouseMove.bind(this));
-            this._scriptTag.addEventListener("contextmenu", this._contextMenu.bind(this));
-            this._distance = Math.sqrt(Vector3.dot(this._transform.localPosition.subtractWith(this._origin), this._transform.localPosition.subtractWith(this._origin)));
+            this._initialRight = Vector3.copy(this._transform.right);
+            this._initialUp = Vector3.copy(this._transform.up);
+            this._initialDirection = this._transform.localPosition.subtractWith(this._origin);
+            this._initialRotation = this._transform.localRotation;
+            var scriptTag = this.companion.get("canvasElement");
+            scriptTag.addEventListener("mousemove", this._mouseMove.bind(this));
+            scriptTag.addEventListener("contextmenu", this._contextMenu.bind(this));
+            scriptTag.addEventListener("mousewheel", this._mouseWheel.bind(this));
         }
     }, {
         key: "_contextMenu",
@@ -21624,9 +21809,7 @@ var MouseCameraControlComponent = function (_Component16) {
     }, {
         key: "_mouseMove",
         value: function _mouseMove(m) {
-            if (isNaN(this._lastScreenPos.x)) {
-                this._initialDirection = this._transform.localPosition.subtractWith(this._origin);
-                this._initialRotation = this._transform.localRotation;
+            if (this._lastScreenPos === null) {
                 this._lastScreenPos = {
                     x: m.screenX,
                     y: m.screenY
@@ -21634,23 +21817,31 @@ var MouseCameraControlComponent = function (_Component16) {
                 return;
             }
             var updated = false;
-            var diffX = m.screenX - this._lastScreenPos.x,
-                diffY = m.screenY - this._lastScreenPos.y;
+            var diffX = m.screenX - this._lastScreenPos.x;
+            var diffY = m.screenY - this._lastScreenPos.y;
+            var distance = this._transform.localPosition.subtractWith(this._origin).magnitude;
             if ((m.buttons & 1) > 0) {
-                this._xsum += diffX * this._rotateX;
-                this._ysum += diffY * this._rotateY * 0.2;
-                this._ysum = Math.min(this.getValue("maxY"), Math.max(this.getValue("minY"), this._ysum));
+                this._xsum += diffX;
+                this._ysum += diffY;
+                this._ysum = Math.min(Math.PI * 50, this._ysum);
+                this._ysum = Math.max(-Math.PI * 50, this._ysum);
                 updated = true;
             }
             if ((m.buttons & 2) > 0) {
-                this._origin = this._origin.addWith(this._transform.right.multiplyWith(-diffX * 0.05 * this._moveSpeed)).addWith(this._transform.up.multiplyWith(diffY * 0.05 * this._moveSpeed));
+                var moveX = -diffX * this._moveSpeed * 0.01;
+                var moveY = diffY * this._moveSpeed * 0.01;
+                this._origin = this._origin.addWith(this._transform.right.multiplyWith(moveX)).addWith(this._transform.up.multiplyWith(moveY));
+                distance = this._transform.localPosition.subtractWith(this._origin).magnitude;
                 updated = true;
-                this._distance = Math.sqrt(Vector3.dot(this._transform.localPosition.subtractWith(this._origin), this._transform.localPosition.subtractWith(this._origin)));
             }
-            var degToPi = Math.PI / 180;
             if (updated) {
-                var rotation = Quaternion.eulerXYZ(this._ysum * degToPi, this._xsum * degToPi, 0);
+                // rotate excution
+                var rotationVartical = Quaternion.angleAxis(-this._xsum * this._rotateSpeed, this._initialUp);
+                var rotationHorizontal = Quaternion.angleAxis(-this._ysum * this._rotateSpeed, this._initialRight);
+                var rotation = Quaternion.multiply(rotationVartical, rotationHorizontal);
                 var rotationMat = Matrix.rotationQuaternion(rotation);
+                var direction = Matrix.transformNormal(rotationMat, this._initialDirection);
+                this._transform.localPosition = this._origin.addWith(Vector3.normalize(direction).multiplyWith(distance));
                 this._transform.localRotation = Quaternion.multiply(this._initialRotation, rotation);
             }
             this._lastScreenPos = {
@@ -21658,36 +21849,36 @@ var MouseCameraControlComponent = function (_Component16) {
                 y: m.screenY
             };
         }
+    }, {
+        key: "_mouseWheel",
+        value: function _mouseWheel(m) {
+            // let move = m.deltaY * this._moveZ * MouseCameraControlComponent.moveCoefficient;
+            // let toOrigin = Vector3.normalize(Vector3.subtract(this._origin, this._transform.localPosition));
+            // this._origin = this._origin.addWith(toOrigin.multiplyWith(move));
+            // this._transform.localPosition = this._transform.localPosition.addWith(this._transform.forward.multiplyWith(move));
+            // m.preventDefault();
+            var dir = Vector3.normalize(Vector3.subtract(this._transform.localPosition, this._origin));
+            var moveDist = -m.deltaY * this._zoomSpeed;
+            var distance = Vector3.subtract(this._origin, this._transform.localPosition).magnitude;
+            var nextDist = Math.max(1, distance - moveDist);
+            this._transform.localPosition = this._origin.addWith(dir.multiplyWith(nextDist));
+            m.preventDefault();
+        }
     }]);
     return MouseCameraControlComponent;
 }(Component);
 
-MouseCameraControlComponent.rotateCoefficient = 0.003;
-MouseCameraControlComponent.moveCoefficient = 0.05;
 MouseCameraControlComponent.attributes = {
-    // Specify the attributes user can intaract
-    rotateX: {
-        defaultValue: 1,
+    rotateSpeed: {
+        defaultValue: 0.01,
         converter: "Number"
     },
-    rotateY: {
-        defaultValue: 1,
-        converter: "Number"
-    },
-    moveZ: {
-        defaultValue: 1,
+    zoomSpeed: {
+        defaultValue: 0.05,
         converter: "Number"
     },
     moveSpeed: {
         defaultValue: 1,
-        converter: "Number"
-    },
-    maxY: {
-        defaultValue: 89,
-        converter: "Number"
-    },
-    minY: {
-        defaultValue: -89,
         converter: "Number"
     }
 };
@@ -23307,6 +23498,7 @@ obtainGomlInterface.register(function () {
                         obtainGomlInterface.registerNode("scene", ["Scene"]);
                         obtainGomlInterface.registerNode("camera", ["Transform", "Camera"]);
                         obtainGomlInterface.registerNode("empty", []);
+                        obtainGomlInterface.registerNode("object", ["Transform"]);
                         obtainGomlInterface.registerNode("geometry", ["Geometry"]);
                         obtainGomlInterface.registerNode("texture", ["Texture"]);
                         obtainGomlInterface.registerNode("mesh", ["Transform", "MaterialContainer", "MeshRenderer"]);
@@ -23318,7 +23510,7 @@ obtainGomlInterface.register(function () {
                         obtainGomlInterface.registerNode("render-quad", ["MaterialContainer", "RenderQuad"]);
                         DefaultPrimitives.register();
 
-                    case 60:
+                    case 61:
                     case "end":
                         return _context104.stop();
                 }
@@ -23328,99 +23520,5 @@ obtainGomlInterface.register(function () {
 });
 
 
-
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":143,"babel-runtime/core-js/get-iterator":1,"babel-runtime/core-js/json/stringify":2,"babel-runtime/core-js/map":3,"babel-runtime/core-js/number/parse-float":4,"babel-runtime/core-js/object/create":5,"babel-runtime/core-js/object/get-own-property-names":8,"babel-runtime/core-js/object/get-prototype-of":9,"babel-runtime/core-js/object/keys":10,"babel-runtime/core-js/object/set-prototype-of":11,"babel-runtime/core-js/promise":12,"babel-runtime/core-js/reflect/own-keys":13,"babel-runtime/core-js/symbol":14,"babel-runtime/helpers/classCallCheck":16,"babel-runtime/helpers/createClass":17,"babel-runtime/helpers/get":18,"babel-runtime/helpers/inherits":19,"babel-runtime/helpers/possibleConstructorReturn":20,"babel-runtime/helpers/typeof":21,"babel-runtime/regenerator":22}],143:[function(require,module,exports){
-// shim for using process in browser
-
-var process = module.exports = {};
-var queue = [];
-var draining = false;
-var currentQueue;
-var queueIndex = -1;
-
-function cleanUpNextTick() {
-    draining = false;
-    if (currentQueue.length) {
-        queue = currentQueue.concat(queue);
-    } else {
-        queueIndex = -1;
-    }
-    if (queue.length) {
-        drainQueue();
-    }
-}
-
-function drainQueue() {
-    if (draining) {
-        return;
-    }
-    var timeout = setTimeout(cleanUpNextTick);
-    draining = true;
-
-    var len = queue.length;
-    while(len) {
-        currentQueue = queue;
-        queue = [];
-        while (++queueIndex < len) {
-            if (currentQueue) {
-                currentQueue[queueIndex].run();
-            }
-        }
-        queueIndex = -1;
-        len = queue.length;
-    }
-    currentQueue = null;
-    draining = false;
-    clearTimeout(timeout);
-}
-
-process.nextTick = function (fun) {
-    var args = new Array(arguments.length - 1);
-    if (arguments.length > 1) {
-        for (var i = 1; i < arguments.length; i++) {
-            args[i - 1] = arguments[i];
-        }
-    }
-    queue.push(new Item(fun, args));
-    if (queue.length === 1 && !draining) {
-        setTimeout(drainQueue, 0);
-    }
-};
-
-// v8 likes predictible objects
-function Item(fun, array) {
-    this.fun = fun;
-    this.array = array;
-}
-Item.prototype.run = function () {
-    this.fun.apply(null, this.array);
-};
-process.title = 'browser';
-process.browser = true;
-process.env = {};
-process.argv = [];
-process.version = ''; // empty string to avoid regexp issues
-process.versions = {};
-
-function noop() {}
-
-process.on = noop;
-process.addListener = noop;
-process.once = noop;
-process.off = noop;
-process.removeListener = noop;
-process.removeAllListeners = noop;
-process.emit = noop;
-
-process.binding = function (name) {
-    throw new Error('process.binding is not supported');
-};
-
-process.cwd = function () { return '/' };
-process.chdir = function (dir) {
-    throw new Error('process.chdir is not supported');
-};
-process.umask = function() { return 0; };
-
-},{}]},{},[142]);
+},{"_process":140,"babel-runtime/core-js/get-iterator":1,"babel-runtime/core-js/json/stringify":2,"babel-runtime/core-js/map":3,"babel-runtime/core-js/number/parse-float":4,"babel-runtime/core-js/object/create":5,"babel-runtime/core-js/object/get-own-property-names":8,"babel-runtime/core-js/object/get-prototype-of":9,"babel-runtime/core-js/object/keys":10,"babel-runtime/core-js/object/set-prototype-of":11,"babel-runtime/core-js/promise":12,"babel-runtime/core-js/reflect/own-keys":13,"babel-runtime/core-js/symbol":14,"babel-runtime/helpers/classCallCheck":16,"babel-runtime/helpers/createClass":17,"babel-runtime/helpers/get":18,"babel-runtime/helpers/inherits":19,"babel-runtime/helpers/possibleConstructorReturn":20,"babel-runtime/helpers/typeof":21,"babel-runtime/regenerator":22}]},{},[143]);
