@@ -182,7 +182,7 @@ exports.default = typeof _symbol2.default === "function" && _typeof(_iterator2.d
 },{"../core-js/symbol":14,"../core-js/symbol/iterator":15}],22:[function(require,module,exports){
 module.exports = require("regenerator-runtime");
 
-},{"regenerator-runtime":140}],23:[function(require,module,exports){
+},{"regenerator-runtime":141}],23:[function(require,module,exports){
 require('../modules/web.dom.iterable');
 require('../modules/es6.string.iterator');
 module.exports = require('../modules/core.get-iterator');
@@ -2303,6 +2303,188 @@ for(var collections = ['NodeList', 'DOMTokenList', 'MediaList', 'StyleSheetList'
   Iterators[NAME] = Iterators.Array;
 }
 },{"./_global":62,"./_hide":64,"./_iterators":77,"./_wks":118,"./es6.array.iterator":121}],140:[function(require,module,exports){
+// shim for using process in browser
+var process = module.exports = {};
+
+// cached from whatever global is present so that test runners that stub it
+// don't break things.  But we need to wrap it in a try catch in case it is
+// wrapped in strict mode code which doesn't define any globals.  It's inside a
+// function because try/catches deoptimize in certain engines.
+
+var cachedSetTimeout;
+var cachedClearTimeout;
+
+function defaultSetTimout() {
+    throw new Error('setTimeout has not been defined');
+}
+function defaultClearTimeout () {
+    throw new Error('clearTimeout has not been defined');
+}
+(function () {
+    try {
+        if (typeof setTimeout === 'function') {
+            cachedSetTimeout = setTimeout;
+        } else {
+            cachedSetTimeout = defaultSetTimout;
+        }
+    } catch (e) {
+        cachedSetTimeout = defaultSetTimout;
+    }
+    try {
+        if (typeof clearTimeout === 'function') {
+            cachedClearTimeout = clearTimeout;
+        } else {
+            cachedClearTimeout = defaultClearTimeout;
+        }
+    } catch (e) {
+        cachedClearTimeout = defaultClearTimeout;
+    }
+} ())
+function runTimeout(fun) {
+    if (cachedSetTimeout === setTimeout) {
+        //normal enviroments in sane situations
+        return setTimeout(fun, 0);
+    }
+    // if setTimeout wasn't available but was latter defined
+    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+        cachedSetTimeout = setTimeout;
+        return setTimeout(fun, 0);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedSetTimeout(fun, 0);
+    } catch(e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+            return cachedSetTimeout.call(null, fun, 0);
+        } catch(e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+            return cachedSetTimeout.call(this, fun, 0);
+        }
+    }
+
+
+}
+function runClearTimeout(marker) {
+    if (cachedClearTimeout === clearTimeout) {
+        //normal enviroments in sane situations
+        return clearTimeout(marker);
+    }
+    // if clearTimeout wasn't available but was latter defined
+    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+        cachedClearTimeout = clearTimeout;
+        return clearTimeout(marker);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedClearTimeout(marker);
+    } catch (e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+            return cachedClearTimeout.call(null, marker);
+        } catch (e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+            return cachedClearTimeout.call(this, marker);
+        }
+    }
+
+
+
+}
+var queue = [];
+var draining = false;
+var currentQueue;
+var queueIndex = -1;
+
+function cleanUpNextTick() {
+    if (!draining || !currentQueue) {
+        return;
+    }
+    draining = false;
+    if (currentQueue.length) {
+        queue = currentQueue.concat(queue);
+    } else {
+        queueIndex = -1;
+    }
+    if (queue.length) {
+        drainQueue();
+    }
+}
+
+function drainQueue() {
+    if (draining) {
+        return;
+    }
+    var timeout = runTimeout(cleanUpNextTick);
+    draining = true;
+
+    var len = queue.length;
+    while(len) {
+        currentQueue = queue;
+        queue = [];
+        while (++queueIndex < len) {
+            if (currentQueue) {
+                currentQueue[queueIndex].run();
+            }
+        }
+        queueIndex = -1;
+        len = queue.length;
+    }
+    currentQueue = null;
+    draining = false;
+    runClearTimeout(timeout);
+}
+
+process.nextTick = function (fun) {
+    var args = new Array(arguments.length - 1);
+    if (arguments.length > 1) {
+        for (var i = 1; i < arguments.length; i++) {
+            args[i - 1] = arguments[i];
+        }
+    }
+    queue.push(new Item(fun, args));
+    if (queue.length === 1 && !draining) {
+        runTimeout(drainQueue);
+    }
+};
+
+// v8 likes predictible objects
+function Item(fun, array) {
+    this.fun = fun;
+    this.array = array;
+}
+Item.prototype.run = function () {
+    this.fun.apply(null, this.array);
+};
+process.title = 'browser';
+process.browser = true;
+process.env = {};
+process.argv = [];
+process.version = ''; // empty string to avoid regexp issues
+process.versions = {};
+
+function noop() {}
+
+process.on = noop;
+process.addListener = noop;
+process.once = noop;
+process.off = noop;
+process.removeListener = noop;
+process.removeAllListeners = noop;
+process.emit = noop;
+
+process.binding = function (name) {
+    throw new Error('process.binding is not supported');
+};
+
+process.cwd = function () { return '/' };
+process.chdir = function (dir) {
+    throw new Error('process.chdir is not supported');
+};
+process.umask = function() { return 0; };
+
+},{}],141:[function(require,module,exports){
 (function (global){
 // This method of obtaining a reference to the global object needs to be
 // kept identical to the way it is obtained in runtime.js
@@ -2337,7 +2519,7 @@ if (hadRuntime) {
 }
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./runtime":141}],141:[function(require,module,exports){
+},{"./runtime":142}],142:[function(require,module,exports){
 (function (process,global){
 /**
  * Copyright (c) 2014, Facebook, Inc.
@@ -3009,17 +3191,13 @@ if (hadRuntime) {
 );
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":143}],142:[function(require,module,exports){
+},{"_process":140}],143:[function(require,module,exports){
 (function (process,global){
 'use strict';
 
 var _parseFloat = require("babel-runtime/core-js/number/parse-float");
 
 var _parseFloat2 = _interopRequireDefault(_parseFloat);
-
-var _stringify = require("babel-runtime/core-js/json/stringify");
-
-var _stringify2 = _interopRequireDefault(_stringify);
 
 var _getOwnPropertyNames = require("babel-runtime/core-js/object/get-own-property-names");
 
@@ -3037,17 +3215,21 @@ var _map = require("babel-runtime/core-js/map");
 
 var _map2 = _interopRequireDefault(_map);
 
-var _get2 = require("babel-runtime/helpers/get");
-
-var _get3 = _interopRequireDefault(_get2);
-
 var _getIterator2 = require("babel-runtime/core-js/get-iterator");
 
 var _getIterator3 = _interopRequireDefault(_getIterator2);
 
+var _stringify = require("babel-runtime/core-js/json/stringify");
+
+var _stringify2 = _interopRequireDefault(_stringify);
+
 var _regenerator = require("babel-runtime/regenerator");
 
 var _regenerator2 = _interopRequireDefault(_regenerator);
+
+var _get2 = require("babel-runtime/helpers/get");
+
+var _get3 = _interopRequireDefault(_get2);
 
 var _getPrototypeOf = require("babel-runtime/core-js/object/get-prototype-of");
 
@@ -3771,6 +3953,530 @@ var index = createCommonjsModule(function (module, exports) {
 });
 
 window.__awaiter = index;
+
+var DefaultMacro = {
+    "GRIMOIRE": null,
+    "WEBGL_VERSION": "1"
+};
+
+/**
+ * Manage macros which would be appended head of all shaders grimoire.js would load.
+ */
+
+var MacroRegistory = function () {
+    function MacroRegistory() {
+        (0, _classCallCheck3.default)(this, MacroRegistory);
+
+        /**
+         * Macro string which generated by registored macro.
+         * @type {string}
+         */
+        this.macroString = "";
+        /**
+         * The map of macro.
+         */
+        this._macro = {};
+        /**
+         * Handlers functions for changing macro.
+         */
+        this._observers = [];
+        for (var key in DefaultMacro) {
+            this.setValue(key, DefaultMacro[key]);
+        }
+    }
+    /**
+     * Set the value of macros.
+     * @param {string}    key [description]
+     * @param {string =   null}        val [description]
+     */
+
+
+    (0, _createClass3.default)(MacroRegistory, [{
+        key: "setValue",
+        value: function setValue(key) {
+            var val = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+
+            if (this._macro[key] !== val) {
+                this._macro[key] = val;
+                this.macroString = this._getMacroString();
+                this._notifyMacroChanged();
+            }
+        }
+        /**
+         * Get the value of macro.
+         * @param  {string} key [description]
+         * @return {string}     [description]
+         */
+
+    }, {
+        key: "getValue",
+        value: function getValue(key) {
+            return this._macro[key];
+        }
+    }, {
+        key: "addObserver",
+        value: function addObserver(handler) {
+            this._observers.push(handler);
+        }
+    }, {
+        key: "removeObserver",
+        value: function removeObserver(handler) {
+            for (var i = 0; i < this._observers.length; i++) {
+                if (this._observers[i] === handler) {
+                    this._observers.splice(i, 1);
+                }
+            }
+        }
+    }, {
+        key: "_getMacroString",
+        value: function _getMacroString() {
+            var result = "";
+            for (var key in this._macro) {
+                result += this._genSingleMacroString(key, this._macro[key]);
+            }
+            return result;
+        }
+    }, {
+        key: "_notifyMacroChanged",
+        value: function _notifyMacroChanged() {
+            for (var i = 0; i < this._observers.length; i++) {
+                this._observers[i]();
+            }
+        }
+        /**
+         * Generate macro string for single macro
+         * @param  {string} key [description]
+         * @param  {string} val [description]
+         * @return {string}     [description]
+         */
+
+    }, {
+        key: "_genSingleMacroString",
+        value: function _genSingleMacroString(key, val) {
+            if (val === void 0) {
+                throw new Error("Macro value of " + key + " can't be undefined");
+            }
+            if (val === null) {
+                return "#define " + key + "\n";
+            } else {
+                return "#define " + key + " " + val + "\n";
+            }
+        }
+    }]);
+    return MacroRegistory;
+}();
+
+var Pass = function () {
+    function Pass(program, attributes, beforeDraw) {
+        (0, _classCallCheck3.default)(this, Pass);
+
+        this.program = program;
+        this.attributes = attributes;
+        this.beforeDraw = beforeDraw;
+    }
+
+    (0, _createClass3.default)(Pass, [{
+        key: "draw",
+        value: function draw(arg) {
+            this.program.use();
+            for (var i = 0; i < this.beforeDraw.length; i++) {
+                this.beforeDraw[i](this, arg);
+            }
+            arg.geometry.draw(arg.targetBuffer, this.attributes, this.program, arg.drawCount, arg.drawOffset);
+        }
+    }]);
+    return Pass;
+}();
+
+var SORTPass = function (_Pass) {
+    (0, _inherits3.default)(SORTPass, _Pass);
+
+    function SORTPass(program, attributes, beforeDraw, programInfo) {
+        (0, _classCallCheck3.default)(this, SORTPass);
+
+        var _this = (0, _possibleConstructorReturn3.default)(this, (SORTPass.__proto__ || (0, _getPrototypeOf2.default)(SORTPass)).call(this, program, attributes, beforeDraw));
+
+        _this.programInfo = programInfo;
+        return _this;
+    }
+
+    return SORTPass;
+}(Pass);
+
+var UniformProxy = function () {
+    function UniformProxy(program) {
+        (0, _classCallCheck3.default)(this, UniformProxy);
+
+        this.program = program;
+        this._currentTextureRegister = 0;
+        this._gl = program.gl;
+    }
+
+    (0, _createClass3.default)(UniformProxy, [{
+        key: "uniformBool",
+        value: function uniformBool(variableName, val) {
+            var _this2 = this;
+
+            this._pass(variableName, function (l) {
+                return _this2._gl.uniform1i(l, val ? 1 : 0);
+            });
+        }
+    }, {
+        key: "uniformMatrix",
+        value: function uniformMatrix(variableName, mat) {
+            var _this3 = this;
+
+            this._pass(variableName, function (l) {
+                return _this3._gl.uniformMatrix4fv(l, false, mat.rawElements);
+            });
+        }
+    }, {
+        key: "uniformFloat",
+        value: function uniformFloat(variableName, val) {
+            var _this4 = this;
+
+            this._pass(variableName, function (l) {
+                return _this4._gl.uniform1f(l, val);
+            });
+        }
+    }, {
+        key: "uniformFloatArray",
+        value: function uniformFloatArray(variableName, val) {
+            var _this5 = this;
+
+            this._pass(variableName, function (l) {
+                return _this5._gl.uniform1fv(l, val);
+            });
+        }
+    }, {
+        key: "uniformInt",
+        value: function uniformInt(variableName, val) {
+            var _this6 = this;
+
+            this._pass(variableName, function (l) {
+                return _this6._gl.uniform1i(l, val);
+            });
+        }
+    }, {
+        key: "uniformVector2",
+        value: function uniformVector2(variableName, val) {
+            var _this7 = this;
+
+            this._pass(variableName, function (l) {
+                return _this7._gl.uniform2f(l, val.X, val.Y);
+            });
+        }
+    }, {
+        key: "uniformVector2Array",
+        value: function uniformVector2Array(variableName, val) {
+            var _this8 = this;
+
+            this._pass(variableName, function (l) {
+                return _this8._gl.uniform2fv(l, val);
+            });
+        }
+    }, {
+        key: "uniformVector3",
+        value: function uniformVector3(variableName, val) {
+            var _this9 = this;
+
+            this._pass(variableName, function (l) {
+                return _this9._gl.uniform3f(l, val.X, val.Y, val.Z);
+            });
+        }
+    }, {
+        key: "uniformVector3Array",
+        value: function uniformVector3Array(variableName, val) {
+            var _this10 = this;
+
+            this._pass(variableName, function (l) {
+                return _this10._gl.uniform3fv(l, val);
+            });
+        }
+    }, {
+        key: "uniformColor3",
+        value: function uniformColor3(variableName, val) {
+            var _this11 = this;
+
+            this._pass(variableName, function (l) {
+                return _this11._gl.uniform3f(l, val.R, val.G, val.B);
+            });
+        }
+    }, {
+        key: "uniformVector4",
+        value: function uniformVector4(variableName, val) {
+            var _this12 = this;
+
+            this._pass(variableName, function (l) {
+                return _this12._gl.uniform4f(l, val.X, val.Y, val.Z, val.W);
+            });
+        }
+    }, {
+        key: "uniformVector4Array",
+        value: function uniformVector4Array(variableName, val) {
+            var _this13 = this;
+
+            this._pass(variableName, function (l) {
+                return _this13._gl.uniform4fv(l, val);
+            });
+        }
+    }, {
+        key: "uniformColor4",
+        value: function uniformColor4(variableName, val) {
+            var _this14 = this;
+
+            this._pass(variableName, function (l) {
+                return _this14._gl.uniform4f(l, val.R, val.G, val.B, val.A);
+            });
+        }
+    }, {
+        key: "uniformTexture2D",
+        value: function uniformTexture2D(variableName, val) {
+            if (val.valid) {
+                val.register(this._currentTextureRegister);
+                this.uniformInt(variableName, this._currentTextureRegister);
+                this._currentTextureRegister++;
+            } else {
+                console.warn("The texture assigned to '" + variableName + "' is not valid.");
+            }
+        }
+    }, {
+        key: "onUse",
+        value: function onUse() {
+            this._currentTextureRegister = 0;
+        }
+    }, {
+        key: "_pass",
+        value: function _pass(variableName, act) {
+            var location = this.program.findUniformLocation(variableName);
+            if (location) {
+                act(location);
+            }
+        }
+    }]);
+    return UniformProxy;
+}();
+
+/**
+ * Most based object for any Grimoire.js related classes.
+ * @type {[type]}
+ */
+
+
+var IDObject = function () {
+    function IDObject() {
+        (0, _classCallCheck3.default)(this, IDObject);
+
+        this.id = IDObject.getUniqueRandom(10);
+    }
+    /**
+     * Generate random string
+     * @param  {number} length length of random string
+     * @return {string}        generated string
+     */
+
+
+    (0, _createClass3.default)(IDObject, [{
+        key: "toString",
+
+        /**
+         * Obtain stringfied object.
+         * If this method was not overridden, this method return class name.
+         * @return {string} stringfied object
+         */
+        value: function toString() {
+            return this.getTypeName();
+        }
+        /**
+         * Obtain class name
+         * @return {string} Class name of the instance.
+         */
+
+    }, {
+        key: "getTypeName",
+        value: function getTypeName() {
+            var funcNameRegex = /function (.{1,})\(/;
+            var result = funcNameRegex.exec(this.constructor.toString());
+            return result && result.length > 1 ? result[1] : "";
+        }
+    }], [{
+        key: "getUniqueRandom",
+        value: function getUniqueRandom(length) {
+            return Math.random().toString(36).slice(-length);
+        }
+    }]);
+    return IDObject;
+}();
+
+var ResourceBase = function (_IDObject) {
+    (0, _inherits3.default)(ResourceBase, _IDObject);
+
+    function ResourceBase(gl) {
+        (0, _classCallCheck3.default)(this, ResourceBase);
+
+        var _this15 = (0, _possibleConstructorReturn3.default)(this, (ResourceBase.__proto__ || (0, _getPrototypeOf2.default)(ResourceBase)).call(this));
+
+        _this15.gl = gl;
+        _this15.destroyed = false;
+        _this15.valid = false;
+        return _this15;
+    }
+
+    (0, _createClass3.default)(ResourceBase, [{
+        key: "destroy",
+        value: function destroy() {
+            this.destroyed = true;
+        }
+    }, {
+        key: "valid",
+        get: function get() {
+            return this._valid;
+        },
+        set: function set(val) {
+            var _this16 = this;
+
+            if (this._valid === val) {
+                return;
+            }
+            this._valid = val;
+            if (this._valid) {
+                this._validResolve(this);
+            } else {
+                this.validPromise = new _promise2.default(function (resolve) {
+                    _this16._validResolve = resolve;
+                });
+            }
+        }
+    }]);
+    return ResourceBase;
+}(IDObject);
+
+var Program = function (_ResourceBase) {
+    (0, _inherits3.default)(Program, _ResourceBase);
+
+    function Program(gl) {
+        (0, _classCallCheck3.default)(this, Program);
+
+        var _this17 = (0, _possibleConstructorReturn3.default)(this, (Program.__proto__ || (0, _getPrototypeOf2.default)(Program)).call(this, gl));
+
+        _this17._uniformLocations = {};
+        _this17._attributeLocations = {};
+        _this17.uniforms = new UniformProxy(_this17);
+        _this17.program = gl.createProgram();
+        return _this17;
+    }
+
+    (0, _createClass3.default)(Program, [{
+        key: "update",
+        value: function update(shaders) {
+            var _this18 = this;
+
+            if (this.valid) {
+                // detach all attached shaders previously
+                var preciousShaders = this.gl.getAttachedShaders(this.program);
+                preciousShaders.forEach(function (s) {
+                    return _this18.gl.detachShader(_this18.program, s);
+                });
+            }
+            shaders.forEach(function (shader) {
+                _this18.gl.attachShader(_this18.program, shader.shader);
+            });
+            this.gl.linkProgram(this.program);
+            if (!this.gl.getProgramParameter(this.program, WebGLRenderingContext.LINK_STATUS)) {
+                var errorLog = this.gl.getProgramInfoLog(this.program);
+                throw new Error("LINK FAILED\n" + errorLog);
+            }
+            this.valid = true;
+        }
+    }, {
+        key: "use",
+        value: function use() {
+            this.gl.useProgram(this.program);
+            this.uniforms.onUse();
+        }
+    }, {
+        key: "destroy",
+        value: function destroy() {
+            (0, _get3.default)(Program.prototype.__proto__ || (0, _getPrototypeOf2.default)(Program.prototype), "destroy", this).call(this);
+            this.gl.deleteProgram(this.program);
+        }
+    }, {
+        key: "findAttributeLocation",
+        value: function findAttributeLocation(variableName) {
+            if (typeof this._attributeLocations[variableName] === "undefined") {
+                this._attributeLocations[variableName] = this.gl.getAttribLocation(this.program, variableName);
+                this.gl.enableVertexAttribArray(this._attributeLocations[variableName]);
+                return this._attributeLocations[variableName];
+            } else {
+                return this._attributeLocations[variableName];
+            }
+        }
+    }, {
+        key: "findUniformLocation",
+        value: function findUniformLocation(variableName) {
+            if (typeof this._uniformLocations[variableName] === "undefined") {
+                return this._uniformLocations[variableName] = this.gl.getUniformLocation(this.program, variableName);
+            } else {
+                return this._uniformLocations[variableName];
+            }
+        }
+    }]);
+    return Program;
+}(ResourceBase);
+
+var Shader = function (_ResourceBase2) {
+    (0, _inherits3.default)(Shader, _ResourceBase2);
+
+    function Shader(gl, type, sourceCode) {
+        (0, _classCallCheck3.default)(this, Shader);
+
+        var _this19 = (0, _possibleConstructorReturn3.default)(this, (Shader.__proto__ || (0, _getPrototypeOf2.default)(Shader)).call(this, gl));
+
+        _this19.type = type;
+        _this19.sourceCode = sourceCode;
+        _this19.shader = gl.createShader(type);
+        if (sourceCode) {
+            _this19.update(sourceCode);
+        }
+        return _this19;
+    }
+
+    (0, _createClass3.default)(Shader, [{
+        key: "update",
+        value: function update(source) {
+            this.gl.shaderSource(this.shader, source);
+            this.gl.compileShader(this.shader);
+            if (!this.gl.getShaderParameter(this.shader, WebGLRenderingContext.COMPILE_STATUS)) {
+                throw new Error("Compiling shader failed.\nSourceCode:\n" + source + "\n\nErrorCode:" + this.gl.getShaderInfoLog(this.shader));
+            }
+            this.sourceCode = source;
+            this.valid = true;
+        }
+    }, {
+        key: "destroy",
+        value: function destroy() {
+            (0, _get3.default)(Shader.prototype.__proto__ || (0, _getPrototypeOf2.default)(Shader.prototype), "destroy", this).call(this);
+            this.gl.deleteShader(this.shader);
+        }
+    }]);
+    return Shader;
+}(ResourceBase);
+
+var GLSLUtil = function () {
+    function GLSLUtil() {
+        (0, _classCallCheck3.default)(this, GLSLUtil);
+    }
+
+    (0, _createClass3.default)(GLSLUtil, null, [{
+        key: "isPrimitive",
+        value: function isPrimitive(type) {
+            return GLSLUtil._primitives.indexOf(type) >= 0;
+        }
+    }]);
+    return GLSLUtil;
+}();
+
+GLSLUtil._primitives = ["float", "bool", "int", "vec2", "vec3", "vec4", "ivec2", "ivec3", "ivec4", "bvec2", "bvec3", "bvec4", "mat2", "mat3", "mat4", "sampler1D", "sampler2D", "sampler3D", "samplerCube", "sampler1DShadow", "sampler2DShadow"];
 
 var VectorBase = function () {
     function VectorBase() {
@@ -9677,14 +10383,14 @@ var Vector3 = function (_VectorBase) {
     function Vector3(x, y, z) {
         (0, _classCallCheck3.default)(this, Vector3);
 
-        var _this = (0, _possibleConstructorReturn3.default)(this, (Vector3.__proto__ || (0, _getPrototypeOf2.default)(Vector3)).call(this));
+        var _this20 = (0, _possibleConstructorReturn3.default)(this, (Vector3.__proto__ || (0, _getPrototypeOf2.default)(Vector3)).call(this));
 
         if (typeof y === "undefined") {
-            _this.rawElements = x;
-            return (0, _possibleConstructorReturn3.default)(_this);
+            _this20.rawElements = x;
+            return (0, _possibleConstructorReturn3.default)(_this20);
         }
-        _this.rawElements = [x, y, z];
-        return _this;
+        _this20.rawElements = [x, y, z];
+        return _this20;
     }
 
     (0, _createClass3.default)(Vector3, [{
@@ -9915,14 +10621,14 @@ var Vector4 = function (_VectorBase2) {
     function Vector4(x, y, z, w) {
         (0, _classCallCheck3.default)(this, Vector4);
 
-        var _this2 = (0, _possibleConstructorReturn3.default)(this, (Vector4.__proto__ || (0, _getPrototypeOf2.default)(Vector4)).call(this));
+        var _this21 = (0, _possibleConstructorReturn3.default)(this, (Vector4.__proto__ || (0, _getPrototypeOf2.default)(Vector4)).call(this));
 
         if (typeof y === "undefined") {
-            _this2.rawElements = x;
-            return (0, _possibleConstructorReturn3.default)(_this2);
+            _this21.rawElements = x;
+            return (0, _possibleConstructorReturn3.default)(_this21);
         }
-        _this2.rawElements = [x, y, z, w];
-        return _this2;
+        _this21.rawElements = [x, y, z, w];
+        return _this21;
     }
 
     (0, _createClass3.default)(Vector4, [{
@@ -10305,10 +11011,10 @@ var Color4 = function (_VectorBase3) {
     function Color4(r, g, b, a) {
         (0, _classCallCheck3.default)(this, Color4);
 
-        var _this3 = (0, _possibleConstructorReturn3.default)(this, (Color4.__proto__ || (0, _getPrototypeOf2.default)(Color4)).call(this));
+        var _this22 = (0, _possibleConstructorReturn3.default)(this, (Color4.__proto__ || (0, _getPrototypeOf2.default)(Color4)).call(this));
 
-        _this3.rawElements = [r, g, b, a];
-        return _this3;
+        _this22.rawElements = [r, g, b, a];
+        return _this22;
     }
     /// Color parser for css like syntax
 
@@ -10435,10 +11141,10 @@ var Color3 = function (_VectorBase4) {
     function Color3(r, g, b) {
         (0, _classCallCheck3.default)(this, Color3);
 
-        var _this4 = (0, _possibleConstructorReturn3.default)(this, (Color3.__proto__ || (0, _getPrototypeOf2.default)(Color3)).call(this));
+        var _this23 = (0, _possibleConstructorReturn3.default)(this, (Color3.__proto__ || (0, _getPrototypeOf2.default)(Color3)).call(this));
 
-        _this4.rawElements = [r, g, b];
-        return _this4;
+        _this23.rawElements = [r, g, b];
+        return _this23;
     }
 
     (0, _createClass3.default)(Color3, [{
@@ -10551,14 +11257,14 @@ var Vector2 = function (_VectorBase5) {
     function Vector2(x, y) {
         (0, _classCallCheck3.default)(this, Vector2);
 
-        var _this5 = (0, _possibleConstructorReturn3.default)(this, (Vector2.__proto__ || (0, _getPrototypeOf2.default)(Vector2)).call(this));
+        var _this24 = (0, _possibleConstructorReturn3.default)(this, (Vector2.__proto__ || (0, _getPrototypeOf2.default)(Vector2)).call(this));
 
         if (typeof y === "undefined") {
-            _this5.rawElements = x;
-            return (0, _possibleConstructorReturn3.default)(_this5);
+            _this24.rawElements = x;
+            return (0, _possibleConstructorReturn3.default)(_this24);
         }
-        _this5.rawElements = [x, y];
-        return _this5;
+        _this24.rawElements = [x, y];
+        return _this24;
     }
 
     (0, _createClass3.default)(Vector2, [{
@@ -10808,14 +11514,14 @@ var Matrix = function (_MatrixBase) {
     function Matrix(arr) {
         (0, _classCallCheck3.default)(this, Matrix);
 
-        var _this6 = (0, _possibleConstructorReturn3.default)(this, (Matrix.__proto__ || (0, _getPrototypeOf2.default)(Matrix)).call(this));
+        var _this25 = (0, _possibleConstructorReturn3.default)(this, (Matrix.__proto__ || (0, _getPrototypeOf2.default)(Matrix)).call(this));
 
         if (arr) {
-            _this6.rawElements = arr;
+            _this25.rawElements = arr;
         } else {
-            _this6.rawElements = mat4.create();
+            _this25.rawElements = mat4.create();
         }
-        return _this6;
+        return _this25;
     }
 
     (0, _createClass3.default)(Matrix, [{
@@ -11466,7913 +12172,10 @@ var Rectangle = function () {
 
 ///<reference path="../lib-ts/gl-matrix.d.ts"/>
 
-var GeometryUtility = function () {
-    function GeometryUtility() {
-        (0, _classCallCheck3.default)(this, GeometryUtility);
-    }
-
-    (0, _createClass3.default)(GeometryUtility, null, [{
-        key: "fromArray",
-
-        /**
-         * Generateor wrap for array
-         * @param  {number[]}                 array [description]
-         * @return {IterableIterator<number>}       [description]
-         */
-        value: _regenerator2.default.mark(function fromArray(array) {
-            var i;
-            return _regenerator2.default.wrap(function fromArray$(_context) {
-                while (1) {
-                    switch (_context.prev = _context.next) {
-                        case 0:
-                            i = 0;
-
-                        case 1:
-                            if (!(i < array.length)) {
-                                _context.next = 7;
-                                break;
-                            }
-
-                            _context.next = 4;
-                            return array[i];
-
-                        case 4:
-                            i++;
-                            _context.next = 1;
-                            break;
-
-                        case 7:
-                        case "end":
-                            return _context.stop();
-                    }
-                }
-            }, fromArray, this);
-        })
-        /**
-         * Convert triangles topology to lines. Basically uses for making wireframes.
-         * @param  {IterableIterator<number>} indicies [description]
-         * @return {IterableIterator<number>}          [description]
-         */
-
-    }, {
-        key: "linesFromTriangles",
-        value: _regenerator2.default.mark(function linesFromTriangles(indicies) {
-            var ic, i, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, _index, a, b, c;
-
-            return _regenerator2.default.wrap(function linesFromTriangles$(_context2) {
-                while (1) {
-                    switch (_context2.prev = _context2.next) {
-                        case 0:
-                            ic = new Array(3);
-                            i = 0;
-                            _iteratorNormalCompletion = true;
-                            _didIteratorError = false;
-                            _iteratorError = undefined;
-                            _context2.prev = 5;
-                            _iterator = (0, _getIterator3.default)(indicies);
-
-                        case 7:
-                            if (_iteratorNormalCompletion = (_step = _iterator.next()).done) {
-                                _context2.next = 17;
-                                break;
-                            }
-
-                            _index = _step.value;
-
-                            ic[i % 3] = _index;
-
-                            if (!(i % 3 === 2)) {
-                                _context2.next = 13;
-                                break;
-                            }
-
-                            a = ic[0], b = ic[1], c = ic[2];
-                            return _context2.delegateYield([a, b, b, c, c, a], "t0", 13);
-
-                        case 13:
-                            i++;
-
-                        case 14:
-                            _iteratorNormalCompletion = true;
-                            _context2.next = 7;
-                            break;
-
-                        case 17:
-                            _context2.next = 23;
-                            break;
-
-                        case 19:
-                            _context2.prev = 19;
-                            _context2.t1 = _context2["catch"](5);
-                            _didIteratorError = true;
-                            _iteratorError = _context2.t1;
-
-                        case 23:
-                            _context2.prev = 23;
-                            _context2.prev = 24;
-
-                            if (!_iteratorNormalCompletion && _iterator.return) {
-                                _iterator.return();
-                            }
-
-                        case 26:
-                            _context2.prev = 26;
-
-                            if (!_didIteratorError) {
-                                _context2.next = 29;
-                                break;
-                            }
-
-                            throw _iteratorError;
-
-                        case 29:
-                            return _context2.finish(26);
-
-                        case 30:
-                            return _context2.finish(23);
-
-                        case 31:
-                        case "end":
-                            return _context2.stop();
-                    }
-                }
-            }, linesFromTriangles, this, [[5, 19, 23, 31], [24,, 26, 30]]);
-        })
-        /**
-         * Generator for ellipse positions
-         * @param  {Vector3}                  center [the center position of ellipse]
-         * @param  {Vector3}                  up     [up vector for ellipse]
-         * @param  {Vector3}                  right  [right vector for ellipse]
-         * @param  {number}                   divide [how many triangles should consists in the ellipse]
-         * @return {IterableIterator<number>}        [Generated iterator for position]
-         */
-
-    }, {
-        key: "ellipsePosition",
-        value: _regenerator2.default.mark(function ellipsePosition(center, up, right, divide) {
-            var step, i, theta, sin, cos;
-            return _regenerator2.default.wrap(function ellipsePosition$(_context3) {
-                while (1) {
-                    switch (_context3.prev = _context3.next) {
-                        case 0:
-                            _context3.next = 2;
-                            return center.X;
-
-                        case 2:
-                            _context3.next = 4;
-                            return center.Y;
-
-                        case 4:
-                            _context3.next = 6;
-                            return center.Z;
-
-                        case 6:
-                            step = 2 * Math.PI / divide;
-                            i = 0;
-
-                        case 8:
-                            if (!(i < divide)) {
-                                _context3.next = 21;
-                                break;
-                            }
-
-                            theta = step * i;
-                            sin = Math.sin(Math.PI * 2 - theta);
-                            cos = Math.cos(Math.PI * 2 - theta);
-                            _context3.next = 14;
-                            return center.X + cos * up.X + sin * right.X;
-
-                        case 14:
-                            _context3.next = 16;
-                            return center.Y + cos * up.Y + sin * right.Y;
-
-                        case 16:
-                            _context3.next = 18;
-                            return center.Z + cos * up.Z + sin * right.Z;
-
-                        case 18:
-                            i++;
-                            _context3.next = 8;
-                            break;
-
-                        case 21:
-                        case "end":
-                            return _context3.stop();
-                    }
-                }
-            }, ellipsePosition, this);
-        })
-    }, {
-        key: "trianglePosition",
-        value: _regenerator2.default.mark(function trianglePosition(center, up, right) {
-            var p0, p1, p2;
-            return _regenerator2.default.wrap(function trianglePosition$(_context4) {
-                while (1) {
-                    switch (_context4.prev = _context4.next) {
-                        case 0:
-                            p0 = center.addWith(up);
-                            p1 = center.subtractWith(up).addWith(right);
-                            p2 = center.subtractWith(up).subtractWith(right);
-                            return _context4.delegateYield(p0.rawElements, "t0", 4);
-
-                        case 4:
-                            return _context4.delegateYield(p1.rawElements, "t1", 5);
-
-                        case 5:
-                            return _context4.delegateYield(p2.rawElements, "t2", 6);
-
-                        case 6:
-                        case "end":
-                            return _context4.stop();
-                    }
-                }
-            }, trianglePosition, this);
-        })
-    }, {
-        key: "cubePosition",
-        value: _regenerator2.default.mark(function cubePosition(center, up, right, forward) {
-            return _regenerator2.default.wrap(function cubePosition$(_context5) {
-                while (1) {
-                    switch (_context5.prev = _context5.next) {
-                        case 0:
-                            return _context5.delegateYield(GeometryUtility.quadPosition(center.subtractWith(forward), up, right), "t0", 1);
-
-                        case 1:
-                            return _context5.delegateYield(GeometryUtility.quadPosition(center.addWith(forward), up, right.negateThis()), "t1", 2);
-
-                        case 2:
-                            return _context5.delegateYield(GeometryUtility.quadPosition(center.addWith(up), forward, right), "t2", 3);
-
-                        case 3:
-                            return _context5.delegateYield(GeometryUtility.quadPosition(center.addWith(right), forward, up.negateThis()), "t3", 4);
-
-                        case 4:
-                            return _context5.delegateYield(GeometryUtility.quadPosition(center.subtractWith(up), forward, right.negateThis()), "t4", 5);
-
-                        case 5:
-                            return _context5.delegateYield(GeometryUtility.quadPosition(center.subtractWith(right), forward, up), "t5", 6);
-
-                        case 6:
-                        case "end":
-                            return _context5.stop();
-                    }
-                }
-            }, cubePosition, this);
-        })
-    }, {
-        key: "quadPosition",
-        value: _regenerator2.default.mark(function quadPosition(center, up, right) {
-            var p0, p1, p2, p3;
-            return _regenerator2.default.wrap(function quadPosition$(_context6) {
-                while (1) {
-                    switch (_context6.prev = _context6.next) {
-                        case 0:
-                            p0 = center.subtractWith(right).addWith(up);
-                            p1 = center.addWith(right).addWith(up);
-                            p2 = center.addWith(right).subtractWith(up);
-                            p3 = center.subtractWith(right).subtractWith(up);
-                            return _context6.delegateYield(p0.rawElements, "t0", 5);
-
-                        case 5:
-                            return _context6.delegateYield(p1.rawElements, "t1", 6);
-
-                        case 6:
-                            return _context6.delegateYield(p2.rawElements, "t2", 7);
-
-                        case 7:
-                            return _context6.delegateYield(p3.rawElements, "t3", 8);
-
-                        case 8:
-                        case "end":
-                            return _context6.stop();
-                    }
-                }
-            }, quadPosition, this);
-        })
-    }, {
-        key: "planePosition",
-        value: _regenerator2.default.mark(function planePosition(center, up, right, divide) {
-            var x, y, i, j, _i, _j;
-
-            return _regenerator2.default.wrap(function planePosition$(_context7) {
-                while (1) {
-                    switch (_context7.prev = _context7.next) {
-                        case 0:
-                            x = center.addWith(right).multiplyWith(2);
-                            y = center.subtractWith(up).multiplyWith(2);
-                            i = -divide / 2;
-
-                        case 3:
-                            if (!(i < divide / 2 + 1)) {
-                                _context7.next = 13;
-                                break;
-                            }
-
-                            j = -divide / 2;
-
-                        case 5:
-                            if (!(j < divide / 2 + 1)) {
-                                _context7.next = 10;
-                                break;
-                            }
-
-                            return _context7.delegateYield(x.multiplyWith(j / divide).addWith(y.multiplyWith(i / divide)).rawElements, "t0", 7);
-
-                        case 7:
-                            j++;
-                            _context7.next = 5;
-                            break;
-
-                        case 10:
-                            i++;
-                            _context7.next = 3;
-                            break;
-
-                        case 13:
-                            _i = -divide / 2;
-
-                        case 14:
-                            if (!(_i < divide / 2 + 1)) {
-                                _context7.next = 24;
-                                break;
-                            }
-
-                            _j = -divide / 2;
-
-                        case 16:
-                            if (!(_j < divide / 2 + 1)) {
-                                _context7.next = 21;
-                                break;
-                            }
-
-                            return _context7.delegateYield(x.multiplyWith(_j / divide).addWith(y.multiplyWith(_i / divide)).rawElements, "t1", 18);
-
-                        case 18:
-                            _j++;
-                            _context7.next = 16;
-                            break;
-
-                        case 21:
-                            _i++;
-                            _context7.next = 14;
-                            break;
-
-                        case 24:
-                        case "end":
-                            return _context7.stop();
-                    }
-                }
-            }, planePosition, this);
-        })
-    }, {
-        key: "cylinderPosition",
-        value: _regenerator2.default.mark(function cylinderPosition(center, up, right, forward, divide) {
-            var step, d, d2, temp, i, theta, sin, cos, currentCenter, currentRight;
-            return _regenerator2.default.wrap(function cylinderPosition$(_context8) {
-                while (1) {
-                    switch (_context8.prev = _context8.next) {
-                        case 0:
-                            return _context8.delegateYield(GeometryUtility.ellipsePosition(center.addWith(up), forward, right, divide), "t0", 1);
-
-                        case 1:
-                            return _context8.delegateYield(GeometryUtility.ellipsePosition(center.subtractWith(up), forward, Vector3.negate(right), divide), "t1", 2);
-
-                        case 2:
-                            step = 2 * Math.PI / divide;
-                            d = Math.cos(step / 2);
-                            d2 = Math.sin(step / 2);
-                            temp = divide % 2 == 0 ? step / 2 : 0;
-                            i = 0;
-
-                        case 7:
-                            if (!(i < divide)) {
-                                _context8.next = 17;
-                                break;
-                            }
-
-                            theta = step / 2 + step * i;
-                            sin = Math.sin((Math.PI - step) / 2 - theta - temp);
-                            cos = Math.cos((Math.PI - step) / 2 - theta - temp);
-                            currentCenter = new Vector3(d * cos, center.Y, d * sin);
-                            currentRight = new Vector3(Math.cos(-step / 2 - theta - temp), center.Y, Math.sin(-step / 2 - theta - temp));
-                            return _context8.delegateYield(GeometryUtility.quadPosition(currentCenter, up, Vector3.multiply(d2, currentRight)), "t2", 14);
-
-                        case 14:
-                            i++;
-                            _context8.next = 7;
-                            break;
-
-                        case 17:
-                        case "end":
-                            return _context8.stop();
-                    }
-                }
-            }, cylinderPosition, this);
-        })
-    }, {
-        key: "conePosition",
-        value: _regenerator2.default.mark(function conePosition(center, up, right, forward, divide) {
-            var step, d, d2, temp, i, theta, sin, cos, currentCenter, currentRight;
-            return _regenerator2.default.wrap(function conePosition$(_context9) {
-                while (1) {
-                    switch (_context9.prev = _context9.next) {
-                        case 0:
-                            return _context9.delegateYield(GeometryUtility.ellipsePosition(center.subtractWith(up), forward, Vector3.negate(right), divide), "t0", 1);
-
-                        case 1:
-                            step = 2 * Math.PI / divide;
-                            d = Math.cos(step / 2) / 2;
-                            d2 = Math.sin(step / 2);
-                            temp = divide % 2 == 1 ? step / 2 : 0;
-                            i = 0;
-
-                        case 6:
-                            if (!(i < divide)) {
-                                _context9.next = 16;
-                                break;
-                            }
-
-                            theta = step * i;
-                            sin = Math.sin((Math.PI - step) / 2 - theta - temp);
-                            cos = Math.cos((Math.PI - step) / 2 - theta - temp);
-                            currentCenter = new Vector3(d * cos, center.Y, d * sin);
-                            currentRight = new Vector3(Math.cos(-step / 2 - theta - temp), center.Y, Math.sin(-step / 2 - theta - temp));
-                            return _context9.delegateYield(GeometryUtility.trianglePosition(currentCenter, up.subtractWith(currentCenter), Vector3.multiply(d2, currentRight)), "t1", 13);
-
-                        case 13:
-                            i++;
-                            _context9.next = 6;
-                            break;
-
-                        case 16:
-                        case "end":
-                            return _context9.stop();
-                    }
-                }
-            }, conePosition, this);
-        })
-    }, {
-        key: "spherePosition",
-        value: _regenerator2.default.mark(function spherePosition(center, up, right, forward, rowDiv, circleDiv) {
-            var ia, ja, j, phi, sinPhi, upVector, i, theta;
-            return _regenerator2.default.wrap(function spherePosition$(_context10) {
-                while (1) {
-                    switch (_context10.prev = _context10.next) {
-                        case 0:
-                            return _context10.delegateYield(center.addWith(up).rawElements, "t0", 1);
-
-                        case 1:
-                            return _context10.delegateYield(center.subtractWith(up).rawElements, "t1", 2);
-
-                        case 2:
-                            ia = 2 * Math.PI / circleDiv;
-                            ja = Math.PI / (rowDiv + 1);
-                            j = 1;
-
-                        case 5:
-                            if (!(j <= rowDiv)) {
-                                _context10.next = 19;
-                                break;
-                            }
-
-                            phi = ja * j;
-                            sinPhi = Math.sin(phi);
-                            upVector = up.multiplyWith(Math.cos(phi));
-                            i = 0;
-
-                        case 10:
-                            if (!(i <= circleDiv)) {
-                                _context10.next = 16;
-                                break;
-                            }
-
-                            theta = ia * i;
-                            return _context10.delegateYield(right.multiplyWith(Math.cos(theta)).addWith(forward.multiplyWith(Math.sin(theta))).multiplyWith(sinPhi).addWith(upVector).rawElements, "t2", 13);
-
-                        case 13:
-                            i++;
-                            _context10.next = 10;
-                            break;
-
-                        case 16:
-                            j++;
-                            _context10.next = 5;
-                            break;
-
-                        case 19:
-                        case "end":
-                            return _context10.stop();
-                    }
-                }
-            }, spherePosition, this);
-        })
-    }, {
-        key: "quadNormal",
-        value: _regenerator2.default.mark(function quadNormal(normal) {
-            return _regenerator2.default.wrap(function quadNormal$(_context11) {
-                while (1) {
-                    switch (_context11.prev = _context11.next) {
-                        case 0:
-                            return _context11.delegateYield(normal.rawElements, "t0", 1);
-
-                        case 1:
-                            return _context11.delegateYield(normal.rawElements, "t1", 2);
-
-                        case 2:
-                            return _context11.delegateYield(normal.rawElements, "t2", 3);
-
-                        case 3:
-                            return _context11.delegateYield(normal.rawElements, "t3", 4);
-
-                        case 4:
-                        case "end":
-                            return _context11.stop();
-                    }
-                }
-            }, quadNormal, this);
-        })
-    }, {
-        key: "ellipseNormal",
-        value: _regenerator2.default.mark(function ellipseNormal(normal, divide) {
-            var i;
-            return _regenerator2.default.wrap(function ellipseNormal$(_context12) {
-                while (1) {
-                    switch (_context12.prev = _context12.next) {
-                        case 0:
-                            i = 0;
-
-                        case 1:
-                            if (!(i < divide + 1)) {
-                                _context12.next = 6;
-                                break;
-                            }
-
-                            return _context12.delegateYield(normal.rawElements, "t0", 3);
-
-                        case 3:
-                            i++;
-                            _context12.next = 1;
-                            break;
-
-                        case 6:
-                        case "end":
-                            return _context12.stop();
-                    }
-                }
-            }, ellipseNormal, this);
-        })
-    }, {
-        key: "triangleNormal",
-        value: _regenerator2.default.mark(function triangleNormal(normal) {
-            return _regenerator2.default.wrap(function triangleNormal$(_context13) {
-                while (1) {
-                    switch (_context13.prev = _context13.next) {
-                        case 0:
-                            return _context13.delegateYield(normal.rawElements, "t0", 1);
-
-                        case 1:
-                            return _context13.delegateYield(normal.rawElements, "t1", 2);
-
-                        case 2:
-                            return _context13.delegateYield(normal.rawElements, "t2", 3);
-
-                        case 3:
-                        case "end":
-                            return _context13.stop();
-                    }
-                }
-            }, triangleNormal, this);
-        })
-    }, {
-        key: "cubeNormal",
-        value: _regenerator2.default.mark(function cubeNormal(center, up, right, forward) {
-            return _regenerator2.default.wrap(function cubeNormal$(_context14) {
-                while (1) {
-                    switch (_context14.prev = _context14.next) {
-                        case 0:
-                            return _context14.delegateYield(GeometryUtility.quadNormal(forward.negateThis()), "t0", 1);
-
-                        case 1:
-                            return _context14.delegateYield(GeometryUtility.quadNormal(forward), "t1", 2);
-
-                        case 2:
-                            return _context14.delegateYield(GeometryUtility.quadNormal(up), "t2", 3);
-
-                        case 3:
-                            return _context14.delegateYield(GeometryUtility.quadNormal(right), "t3", 4);
-
-                        case 4:
-                            return _context14.delegateYield(GeometryUtility.quadNormal(up.negateThis()), "t4", 5);
-
-                        case 5:
-                            return _context14.delegateYield(GeometryUtility.quadNormal(right.negateThis()), "t5", 6);
-
-                        case 6:
-                        case "end":
-                            return _context14.stop();
-                    }
-                }
-            }, cubeNormal, this);
-        })
-    }, {
-        key: "cylinderNormal",
-        value: _regenerator2.default.mark(function cylinderNormal(center, up, right, forward, divide) {
-            var step, lastRight, i, theta, sin, cos, currentRight;
-            return _regenerator2.default.wrap(function cylinderNormal$(_context15) {
-                while (1) {
-                    switch (_context15.prev = _context15.next) {
-                        case 0:
-                            return _context15.delegateYield(GeometryUtility.ellipseNormal(up, divide), "t0", 1);
-
-                        case 1:
-                            return _context15.delegateYield(GeometryUtility.ellipseNormal(up.negateThis(), divide), "t1", 2);
-
-                        case 2:
-                            step = 2 * Math.PI / divide;
-                            lastRight = new Vector3(Math.cos(-step / 2), center.Y, Math.sin(-step / 2));
-                            i = 0;
-
-                        case 5:
-                            if (!(i < divide)) {
-                                _context15.next = 18;
-                                break;
-                            }
-
-                            theta = step * (i + 1);
-                            sin = Math.sin(Math.PI / 2 - theta);
-                            cos = Math.cos(Math.PI / 2 - theta);
-                            currentRight = new Vector3(Math.cos(-step / 2 - theta), center.Y, Math.sin(-step / 2 - theta));
-                            return _context15.delegateYield(Vector3.cross(lastRight, up).rawElements, "t2", 11);
-
-                        case 11:
-                            return _context15.delegateYield(Vector3.cross(currentRight, up).rawElements, "t3", 12);
-
-                        case 12:
-                            return _context15.delegateYield(Vector3.cross(currentRight, up).rawElements, "t4", 13);
-
-                        case 13:
-                            return _context15.delegateYield(Vector3.cross(lastRight, up).rawElements, "t5", 14);
-
-                        case 14:
-                            lastRight = currentRight;
-
-                        case 15:
-                            i++;
-                            _context15.next = 5;
-                            break;
-
-                        case 18:
-                        case "end":
-                            return _context15.stop();
-                    }
-                }
-            }, cylinderNormal, this);
-        })
-    }, {
-        key: "coneNormal",
-        value: _regenerator2.default.mark(function coneNormal(center, up, right, forward, divide) {
-            var step, d, lastNormal, i, theta, sin, cos, currentCenter, currentRight;
-            return _regenerator2.default.wrap(function coneNormal$(_context16) {
-                while (1) {
-                    switch (_context16.prev = _context16.next) {
-                        case 0:
-                            return _context16.delegateYield(GeometryUtility.ellipseNormal(up.negateThis(), divide), "t0", 1);
-
-                        case 1:
-                            step = Math.PI / divide;
-                            d = Math.cos(step / 2) / 2;
-                            lastNormal = Vector3.cross(new Vector3(Math.cos(step / 2), center.Y, Math.sin(step / 2)), up.subtractWith(new Vector3(d * Math.cos((Math.PI + step) / 2), center.Y, d * Math.sin((Math.PI + step) / 2))));
-                            i = 0;
-
-                        case 5:
-                            if (!(i < divide * 2)) {
-                                _context16.next = 18;
-                                break;
-                            }
-
-                            theta = step * i;
-                            sin = Math.sin((Math.PI - step) / 2 - theta);
-                            cos = Math.cos((Math.PI - step) / 2 - theta);
-                            currentCenter = new Vector3(d * cos, center.Y, d * sin);
-                            currentRight = new Vector3(Math.cos(-step / 2 - theta), center.Y, Math.sin(-step / 2 - theta));
-                            return _context16.delegateYield(Vector3.cross(currentRight, up.subtractWith(currentCenter)).rawElements, "t1", 12);
-
-                        case 12:
-                            if (!(i % 2 == 1)) {
-                                _context16.next = 15;
-                                break;
-                            }
-
-                            return _context16.delegateYield(lastNormal.rawElements, "t2", 14);
-
-                        case 14:
-                            lastNormal = Vector3.cross(currentRight, up.subtractWith(currentCenter));
-
-                        case 15:
-                            i++;
-                            _context16.next = 5;
-                            break;
-
-                        case 18:
-                            return _context16.delegateYield(Vector3.cross(new Vector3(Math.cos(step / 2), center.Y, Math.sin(step / 2)), up.subtractWith(new Vector3(d * Math.cos((Math.PI + step) / 2), center.Y, d * Math.sin((Math.PI + step) / 2)))).rawElements, "t3", 19);
-
-                        case 19:
-                        case "end":
-                            return _context16.stop();
-                    }
-                }
-            }, coneNormal, this);
-        })
-    }, {
-        key: "planeNormal",
-        value: _regenerator2.default.mark(function planeNormal(normal, divide) {
-            var s, i, _i2;
-
-            return _regenerator2.default.wrap(function planeNormal$(_context17) {
-                while (1) {
-                    switch (_context17.prev = _context17.next) {
-                        case 0:
-                            s = GeometryUtility.planeSize(divide) / 2;
-                            i = 0;
-
-                        case 2:
-                            if (!(i < s)) {
-                                _context17.next = 7;
-                                break;
-                            }
-
-                            return _context17.delegateYield(normal.rawElements, "t0", 4);
-
-                        case 4:
-                            i++;
-                            _context17.next = 2;
-                            break;
-
-                        case 7:
-                            _i2 = 0;
-
-                        case 8:
-                            if (!(_i2 < s)) {
-                                _context17.next = 13;
-                                break;
-                            }
-
-                            return _context17.delegateYield(normal.negateThis().rawElements, "t1", 10);
-
-                        case 10:
-                            _i2++;
-                            _context17.next = 8;
-                            break;
-
-                        case 13:
-                        case "end":
-                            return _context17.stop();
-                    }
-                }
-            }, planeNormal, this);
-        })
-    }, {
-        key: "sphereNormal",
-        value: _regenerator2.default.mark(function sphereNormal(up, right, forward, rowDiv, circleDiv) {
-            return _regenerator2.default.wrap(function sphereNormal$(_context18) {
-                while (1) {
-                    switch (_context18.prev = _context18.next) {
-                        case 0:
-                            return _context18.delegateYield(GeometryUtility.spherePosition(Vector3.Zero, up, right, forward, rowDiv, circleDiv), "t0", 1);
-
-                        case 1:
-                        case "end":
-                            return _context18.stop();
-                    }
-                }
-            }, sphereNormal, this);
-        })
-    }, {
-        key: "sphereUV",
-        value: _regenerator2.default.mark(function sphereUV(rowDiv, circleDiv) {
-            var ia, ja, j, phi, sinPhi, i, theta;
-            return _regenerator2.default.wrap(function sphereUV$(_context19) {
-                while (1) {
-                    switch (_context19.prev = _context19.next) {
-                        case 0:
-                            return _context19.delegateYield([0, 0, 0, 1], "t0", 1);
-
-                        case 1:
-                            ia = 2 * Math.PI / circleDiv;
-                            ja = Math.PI / (rowDiv + 1);
-                            j = 1;
-
-                        case 4:
-                            if (!(j <= rowDiv)) {
-                                _context19.next = 17;
-                                break;
-                            }
-
-                            phi = ja * j;
-                            sinPhi = Math.sin(phi);
-                            i = 0;
-
-                        case 8:
-                            if (!(i <= circleDiv)) {
-                                _context19.next = 14;
-                                break;
-                            }
-
-                            theta = ia * i;
-                            return _context19.delegateYield([theta / Math.PI / 2, phi / Math.PI], "t1", 11);
-
-                        case 11:
-                            i++;
-                            _context19.next = 8;
-                            break;
-
-                        case 14:
-                            j++;
-                            _context19.next = 4;
-                            break;
-
-                        case 17:
-                        case "end":
-                            return _context19.stop();
-                    }
-                }
-            }, sphereUV, this);
-        })
-    }, {
-        key: "quadUV",
-        value: _regenerator2.default.mark(function quadUV() {
-            return _regenerator2.default.wrap(function quadUV$(_context20) {
-                while (1) {
-                    switch (_context20.prev = _context20.next) {
-                        case 0:
-                            return _context20.delegateYield([0, 0], "t0", 1);
-
-                        case 1:
-                            return _context20.delegateYield([1, 0], "t1", 2);
-
-                        case 2:
-                            return _context20.delegateYield([1, 1], "t2", 3);
-
-                        case 3:
-                            return _context20.delegateYield([0, 1], "t3", 4);
-
-                        case 4:
-                        case "end":
-                            return _context20.stop();
-                    }
-                }
-            }, quadUV, this);
-        })
-    }, {
-        key: "cubeUV",
-        value: _regenerator2.default.mark(function cubeUV() {
-            var i;
-            return _regenerator2.default.wrap(function cubeUV$(_context21) {
-                while (1) {
-                    switch (_context21.prev = _context21.next) {
-                        case 0:
-                            i = 0;
-
-                        case 1:
-                            if (!(i < 6)) {
-                                _context21.next = 6;
-                                break;
-                            }
-
-                            return _context21.delegateYield(GeometryUtility.quadUV(), "t0", 3);
-
-                        case 3:
-                            i++;
-                            _context21.next = 1;
-                            break;
-
-                        case 6:
-                        case "end":
-                            return _context21.stop();
-                    }
-                }
-            }, cubeUV, this);
-        })
-    }, {
-        key: "triangleUV",
-        value: _regenerator2.default.mark(function triangleUV() {
-            return _regenerator2.default.wrap(function triangleUV$(_context22) {
-                while (1) {
-                    switch (_context22.prev = _context22.next) {
-                        case 0:
-                            return _context22.delegateYield([0, 0], "t0", 1);
-
-                        case 1:
-                            return _context22.delegateYield([1, 0], "t1", 2);
-
-                        case 2:
-                            return _context22.delegateYield([0, 1], "t2", 3);
-
-                        case 3:
-                        case "end":
-                            return _context22.stop();
-                    }
-                }
-            }, triangleUV, this);
-        })
-    }, {
-        key: "ellipseUV",
-        value: _regenerator2.default.mark(function ellipseUV(divide) {
-            var step, i, theta;
-            return _regenerator2.default.wrap(function ellipseUV$(_context23) {
-                while (1) {
-                    switch (_context23.prev = _context23.next) {
-                        case 0:
-                            return _context23.delegateYield([0.5, 0.5], "t0", 1);
-
-                        case 1:
-                            step = 2 * Math.PI / divide;
-                            i = 0;
-
-                        case 3:
-                            if (!(i < divide)) {
-                                _context23.next = 9;
-                                break;
-                            }
-
-                            theta = step * i;
-                            return _context23.delegateYield([0.5 + Math.cos(theta + Math.PI) / 2, 0.5 + Math.sin(theta + Math.PI) / 2], "t1", 6);
-
-                        case 6:
-                            i++;
-                            _context23.next = 3;
-                            break;
-
-                        case 9:
-                        case "end":
-                            return _context23.stop();
-                    }
-                }
-            }, ellipseUV, this);
-        })
-    }, {
-        key: "planeUV",
-        value: _regenerator2.default.mark(function planeUV(divide) {
-            var i, j, _i3, _j2;
-
-            return _regenerator2.default.wrap(function planeUV$(_context24) {
-                while (1) {
-                    switch (_context24.prev = _context24.next) {
-                        case 0:
-                            i = 0;
-
-                        case 1:
-                            if (!(i < divide + 1)) {
-                                _context24.next = 11;
-                                break;
-                            }
-
-                            j = 0;
-
-                        case 3:
-                            if (!(j < divide + 1)) {
-                                _context24.next = 8;
-                                break;
-                            }
-
-                            return _context24.delegateYield([j / divide, i / divide], "t0", 5);
-
-                        case 5:
-                            j++;
-                            _context24.next = 3;
-                            break;
-
-                        case 8:
-                            i++;
-                            _context24.next = 1;
-                            break;
-
-                        case 11:
-                            _i3 = 0;
-
-                        case 12:
-                            if (!(_i3 < divide + 1)) {
-                                _context24.next = 22;
-                                break;
-                            }
-
-                            _j2 = 0;
-
-                        case 14:
-                            if (!(_j2 < divide + 1)) {
-                                _context24.next = 19;
-                                break;
-                            }
-
-                            return _context24.delegateYield([_j2 / divide, _i3 / divide], "t1", 16);
-
-                        case 16:
-                            _j2++;
-                            _context24.next = 14;
-                            break;
-
-                        case 19:
-                            _i3++;
-                            _context24.next = 12;
-                            break;
-
-                        case 22:
-                        case "end":
-                            return _context24.stop();
-                    }
-                }
-            }, planeUV, this);
-        })
-    }, {
-        key: "cylinderUV",
-        value: _regenerator2.default.mark(function cylinderUV(divide) {
-            var p, j;
-            return _regenerator2.default.wrap(function cylinderUV$(_context25) {
-                while (1) {
-                    switch (_context25.prev = _context25.next) {
-                        case 0:
-                            return _context25.delegateYield(GeometryUtility.ellipseUV(divide), "t0", 1);
-
-                        case 1:
-                            return _context25.delegateYield(GeometryUtility.ellipseUV(divide), "t1", 2);
-
-                        case 2:
-                            p = 1 / divide;
-                            j = 0;
-
-                        case 4:
-                            if (!(j < divide)) {
-                                _context25.next = 12;
-                                break;
-                            }
-
-                            return _context25.delegateYield([p * j, 0], "t2", 6);
-
-                        case 6:
-                            return _context25.delegateYield([p * (j + 1), 0], "t3", 7);
-
-                        case 7:
-                            return _context25.delegateYield([p * (j + 1), 1], "t4", 8);
-
-                        case 8:
-                            return _context25.delegateYield([p * j, 1], "t5", 9);
-
-                        case 9:
-                            j++;
-                            _context25.next = 4;
-                            break;
-
-                        case 12:
-                        case "end":
-                            return _context25.stop();
-                    }
-                }
-            }, cylinderUV, this);
-        })
-    }, {
-        key: "coneUV",
-        value: _regenerator2.default.mark(function coneUV(divide) {
-            var step, i, theta;
-            return _regenerator2.default.wrap(function coneUV$(_context26) {
-                while (1) {
-                    switch (_context26.prev = _context26.next) {
-                        case 0:
-                            return _context26.delegateYield(GeometryUtility.ellipseUV(divide), "t0", 1);
-
-                        case 1:
-                            step = Math.PI / 2 / divide;
-                            i = 0;
-
-                        case 3:
-                            if (!(i < divide)) {
-                                _context26.next = 11;
-                                break;
-                            }
-
-                            theta = -step * i;
-                            return _context26.delegateYield([0, 0], "t1", 6);
-
-                        case 6:
-                            return _context26.delegateYield([Math.cos(theta - step), Math.sin(theta - step)], "t2", 7);
-
-                        case 7:
-                            return _context26.delegateYield([Math.cos(theta), Math.sin(theta)], "t3", 8);
-
-                        case 8:
-                            i++;
-                            _context26.next = 3;
-                            break;
-
-                        case 11:
-                        case "end":
-                            return _context26.stop();
-                    }
-                }
-            }, coneUV, this);
-        })
-    }, {
-        key: "triangleIndex",
-        value: _regenerator2.default.mark(function triangleIndex(offset) {
-            var o;
-            return _regenerator2.default.wrap(function triangleIndex$(_context27) {
-                while (1) {
-                    switch (_context27.prev = _context27.next) {
-                        case 0:
-                            o = offset;
-                            return _context27.delegateYield([o, o + 2, o + 1], "t0", 2);
-
-                        case 2:
-                        case "end":
-                            return _context27.stop();
-                    }
-                }
-            }, triangleIndex, this);
-        })
-    }, {
-        key: "quadIndex",
-        value: _regenerator2.default.mark(function quadIndex(offset) {
-            var o;
-            return _regenerator2.default.wrap(function quadIndex$(_context28) {
-                while (1) {
-                    switch (_context28.prev = _context28.next) {
-                        case 0:
-                            o = offset;
-                            return _context28.delegateYield([o, o + 2, o + 1, o, o + 3, o + 2], "t0", 2);
-
-                        case 2:
-                        case "end":
-                            return _context28.stop();
-                    }
-                }
-            }, quadIndex, this);
-        })
-    }, {
-        key: "cubeIndex",
-        value: _regenerator2.default.mark(function cubeIndex(offset) {
-            var s, i;
-            return _regenerator2.default.wrap(function cubeIndex$(_context29) {
-                while (1) {
-                    switch (_context29.prev = _context29.next) {
-                        case 0:
-                            s = GeometryUtility.quadSize();
-                            i = 0;
-
-                        case 2:
-                            if (!(i < 6)) {
-                                _context29.next = 7;
-                                break;
-                            }
-
-                            return _context29.delegateYield(GeometryUtility.quadIndex(offset + s * i), "t0", 4);
-
-                        case 4:
-                            i++;
-                            _context29.next = 2;
-                            break;
-
-                        case 7:
-                        case "end":
-                            return _context29.stop();
-                    }
-                }
-            }, cubeIndex, this);
-        })
-    }, {
-        key: "sphereIndex",
-        value: _regenerator2.default.mark(function sphereIndex(offset, rowDiv, circleDiv) {
-            var getIndex, top, bottom, i, j, _i4, _i5;
-
-            return _regenerator2.default.wrap(function sphereIndex$(_context30) {
-                while (1) {
-                    switch (_context30.prev = _context30.next) {
-                        case 0:
-                            getIndex = function getIndex(i, j) {
-                                return offset + (circleDiv + 1) * j + 2 + i;
-                            };
-
-                            top = offset;
-                            bottom = offset + 1;
-                            // upper side
-
-                            i = 0;
-
-                        case 4:
-                            if (!(i < circleDiv)) {
-                                _context30.next = 14;
-                                break;
-                            }
-
-                            _context30.next = 7;
-                            return top;
-
-                        case 7:
-                            _context30.next = 9;
-                            return getIndex(i, 0);
-
-                        case 9:
-                            _context30.next = 11;
-                            return getIndex(i + 1, 0);
-
-                        case 11:
-                            i++;
-                            _context30.next = 4;
-                            break;
-
-                        case 14:
-                            j = 0;
-
-                        case 15:
-                            if (!(j < rowDiv - 1)) {
-                                _context30.next = 36;
-                                break;
-                            }
-
-                            _i4 = 0;
-
-                        case 17:
-                            if (!(_i4 < circleDiv)) {
-                                _context30.next = 33;
-                                break;
-                            }
-
-                            _context30.next = 20;
-                            return getIndex(_i4, j);
-
-                        case 20:
-                            _context30.next = 22;
-                            return getIndex(_i4, j + 1);
-
-                        case 22:
-                            _context30.next = 24;
-                            return getIndex(_i4 + 1, j);
-
-                        case 24:
-                            _context30.next = 26;
-                            return getIndex(_i4, j + 1);
-
-                        case 26:
-                            _context30.next = 28;
-                            return getIndex(_i4 + 1, j + 1);
-
-                        case 28:
-                            _context30.next = 30;
-                            return getIndex(_i4 + 1, j);
-
-                        case 30:
-                            _i4++;
-                            _context30.next = 17;
-                            break;
-
-                        case 33:
-                            j++;
-                            _context30.next = 15;
-                            break;
-
-                        case 36:
-                            _i5 = 0;
-
-                        case 37:
-                            if (!(_i5 < circleDiv)) {
-                                _context30.next = 47;
-                                break;
-                            }
-
-                            _context30.next = 40;
-                            return bottom;
-
-                        case 40:
-                            _context30.next = 42;
-                            return getIndex(_i5 + 1, rowDiv - 1);
-
-                        case 42:
-                            _context30.next = 44;
-                            return getIndex(_i5, rowDiv - 1);
-
-                        case 44:
-                            _i5++;
-                            _context30.next = 37;
-                            break;
-
-                        case 47:
-                        case "end":
-                            return _context30.stop();
-                    }
-                }
-            }, sphereIndex, this);
-        })
-    }, {
-        key: "cylinderIndex",
-        value: _regenerator2.default.mark(function cylinderIndex(offset, divide) {
-            var s, t, i;
-            return _regenerator2.default.wrap(function cylinderIndex$(_context31) {
-                while (1) {
-                    switch (_context31.prev = _context31.next) {
-                        case 0:
-                            s = GeometryUtility.ellipseSize(divide);
-                            t = GeometryUtility.quadSize();
-                            return _context31.delegateYield(GeometryUtility.ellipseIndex(offset, divide), "t0", 3);
-
-                        case 3:
-                            return _context31.delegateYield(GeometryUtility.ellipseIndex(offset + s, divide), "t1", 4);
-
-                        case 4:
-                            i = 0;
-
-                        case 5:
-                            if (!(i < divide)) {
-                                _context31.next = 10;
-                                break;
-                            }
-
-                            return _context31.delegateYield(GeometryUtility.quadIndex(offset + s * 2 + t * i), "t2", 7);
-
-                        case 7:
-                            i++;
-                            _context31.next = 5;
-                            break;
-
-                        case 10:
-                        case "end":
-                            return _context31.stop();
-                    }
-                }
-            }, cylinderIndex, this);
-        })
-    }, {
-        key: "coneIndex",
-        value: _regenerator2.default.mark(function coneIndex(offset, divide) {
-            var s, t, i;
-            return _regenerator2.default.wrap(function coneIndex$(_context32) {
-                while (1) {
-                    switch (_context32.prev = _context32.next) {
-                        case 0:
-                            s = GeometryUtility.ellipseSize(divide);
-                            t = GeometryUtility.triangleSize();
-                            return _context32.delegateYield(GeometryUtility.ellipseIndex(offset, divide), "t0", 3);
-
-                        case 3:
-                            i = 0;
-
-                        case 4:
-                            if (!(i < divide)) {
-                                _context32.next = 9;
-                                break;
-                            }
-
-                            return _context32.delegateYield(GeometryUtility.triangleIndex(offset + s + i * t), "t1", 6);
-
-                        case 6:
-                            i++;
-                            _context32.next = 4;
-                            break;
-
-                        case 9:
-                        case "end":
-                            return _context32.stop();
-                    }
-                }
-            }, coneIndex, this);
-        })
-    }, {
-        key: "planeIndex",
-        value: _regenerator2.default.mark(function planeIndex(offset, divide) {
-            var o, s, j, i, _j3, _i6;
-
-            return _regenerator2.default.wrap(function planeIndex$(_context33) {
-                while (1) {
-                    switch (_context33.prev = _context33.next) {
-                        case 0:
-                            o = offset;
-                            s = GeometryUtility.planeSize(divide) / 2;
-                            j = 0;
-
-                        case 3:
-                            if (!(j < divide)) {
-                                _context33.next = 15;
-                                break;
-                            }
-
-                            i = 0;
-
-                        case 5:
-                            if (!(i < divide)) {
-                                _context33.next = 12;
-                                break;
-                            }
-
-                            o = offset + i + j * (divide + 1);
-                            return _context33.delegateYield([o, o + divide + 2, o + 1], "t0", 8);
-
-                        case 8:
-                            return _context33.delegateYield([o, o + divide + 1, o + divide + 2], "t1", 9);
-
-                        case 9:
-                            i++;
-                            _context33.next = 5;
-                            break;
-
-                        case 12:
-                            j++;
-                            _context33.next = 3;
-                            break;
-
-                        case 15:
-                            _j3 = 0;
-
-                        case 16:
-                            if (!(_j3 < divide)) {
-                                _context33.next = 28;
-                                break;
-                            }
-
-                            _i6 = 0;
-
-                        case 18:
-                            if (!(_i6 < divide)) {
-                                _context33.next = 25;
-                                break;
-                            }
-
-                            o = offset + _i6 + _j3 * (divide + 1) + s;
-                            return _context33.delegateYield([o, o + 1, o + divide + 2], "t2", 21);
-
-                        case 21:
-                            return _context33.delegateYield([o, o + divide + 2, o + divide + 1], "t3", 22);
-
-                        case 22:
-                            _i6++;
-                            _context33.next = 18;
-                            break;
-
-                        case 25:
-                            _j3++;
-                            _context33.next = 16;
-                            break;
-
-                        case 28:
-                        case "end":
-                            return _context33.stop();
-                    }
-                }
-            }, planeIndex, this);
-        })
-    }, {
-        key: "ellipseIndex",
-        value: _regenerator2.default.mark(function ellipseIndex(offset, divide) {
-            var i;
-            return _regenerator2.default.wrap(function ellipseIndex$(_context34) {
-                while (1) {
-                    switch (_context34.prev = _context34.next) {
-                        case 0:
-                            i = 0;
-
-                        case 1:
-                            if (!(i < divide - 1)) {
-                                _context34.next = 6;
-                                break;
-                            }
-
-                            return _context34.delegateYield([offset, offset + 1 + i, offset + 2 + i], "t0", 3);
-
-                        case 3:
-                            i++;
-                            _context34.next = 1;
-                            break;
-
-                        case 6:
-                            return _context34.delegateYield([offset, offset + divide, offset + 1], "t1", 7);
-
-                        case 7:
-                        case "end":
-                            return _context34.stop();
-                    }
-                }
-            }, ellipseIndex, this);
-        })
-    }, {
-        key: "quadSize",
-        value: function quadSize() {
-            return 4;
-        }
-    }, {
-        key: "triangleSize",
-        value: function triangleSize() {
-            return 3;
-        }
-    }, {
-        key: "cubeSize",
-        value: function cubeSize() {
-            return 6 * GeometryUtility.quadSize();
-        }
-    }, {
-        key: "sphereSize",
-        value: function sphereSize(rowDiv, circleDiv) {
-            return 2 + rowDiv * (circleDiv + 1);
-        }
-    }, {
-        key: "cylinderSize",
-        value: function cylinderSize(divide) {
-            return GeometryUtility.ellipseSize(divide) * 2 + divide * GeometryUtility.quadSize();
-        }
-    }, {
-        key: "coneSize",
-        value: function coneSize(divide) {
-            return GeometryUtility.ellipseSize(divide) + divide * GeometryUtility.triangleSize();
-        }
-    }, {
-        key: "planeSize",
-        value: function planeSize(divide) {
-            return (divide + 1) * (divide + 1) * 2;
-        }
-    }, {
-        key: "ellipseSize",
-        value: function ellipseSize(divide) {
-            return divide + 1;
-        }
-    }]);
-    return GeometryUtility;
-}();
-
-/**
- * Provides the feature to instanciate primitive geometry.
- */
-
-
-var GeometryFactory = function () {
-    function GeometryFactory(gl) {
-        (0, _classCallCheck3.default)(this, GeometryFactory);
-
-        this.gl = gl;
-    }
-    /**
-     * Add new type geometry
-     * @param {string}                   typeName        [description]
-     * @param {IAttributeDeclaration }}             argumentDeclarations [description]
-     * @param {IGeometryFactoryDelegate} factoryDelegate [description]
-     */
-
-
-    (0, _createClass3.default)(GeometryFactory, [{
-        key: "instanciate",
-        value: function instanciate(type, args) {
-            var factoryDelegate = GeometryFactory.factoryDelegates[type];
-            if (!factoryDelegate) {
-                throw new Error("Can not instanciate unknown geometry type " + type);
-            }
-            return factoryDelegate(this.gl, args);
-        }
-    }, {
-        key: "instanciateAsDefault",
-        value: function instanciateAsDefault(type) {
-            var decl = GeometryFactory.factoryArgumentDeclarations[type];
-            var args = {};
-            for (var attr in decl) {
-                var attrDecl = decl[attr];
-                args[attr] = attrDecl.defaultValue;
-            }
-            return this.instanciate(type, args);
-        }
-    }], [{
-        key: "addType",
-        value: function addType(typeName, argumentDeclarations, factoryDelegate) {
-            GeometryFactory.factoryDelegates[typeName] = factoryDelegate;
-            GeometryFactory.factoryArgumentDeclarations[typeName] = argumentDeclarations;
-        }
-    }]);
-    return GeometryFactory;
-}();
-/**
- * Delegates to be used as factory
- */
-
-
-GeometryFactory.factoryDelegates = {};
-/**
- * Argument inputs to be used for construction of geometry.
- */
-GeometryFactory.factoryArgumentDeclarations = {};
-
-/**
- * Most based object for any Grimoire.js related classes.
- * @type {[type]}
- */
-
-var IDObject = function () {
-    function IDObject() {
-        (0, _classCallCheck3.default)(this, IDObject);
-
-        this.id = IDObject.getUniqueRandom(10);
-    }
-    /**
-     * Generate random string
-     * @param  {number} length length of random string
-     * @return {string}        generated string
-     */
-
-
-    (0, _createClass3.default)(IDObject, [{
-        key: "toString",
-
-        /**
-         * Obtain stringfied object.
-         * If this method was not overridden, this method return class name.
-         * @return {string} stringfied object
-         */
-        value: function toString() {
-            return this.getTypeName();
-        }
-        /**
-         * Obtain class name
-         * @return {string} Class name of the instance.
-         */
-
-    }, {
-        key: "getTypeName",
-        value: function getTypeName() {
-            var funcNameRegex = /function (.{1,})\(/;
-            var result = funcNameRegex.exec(this.constructor.toString());
-            return result && result.length > 1 ? result[1] : "";
-        }
-    }], [{
-        key: "getUniqueRandom",
-        value: function getUniqueRandom(length) {
-            return Math.random().toString(36).slice(-length);
-        }
-    }]);
-    return IDObject;
-}();
-
-var ResourceBase = function (_IDObject) {
-    (0, _inherits3.default)(ResourceBase, _IDObject);
-
-    function ResourceBase(gl) {
-        (0, _classCallCheck3.default)(this, ResourceBase);
-
-        var _this7 = (0, _possibleConstructorReturn3.default)(this, (ResourceBase.__proto__ || (0, _getPrototypeOf2.default)(ResourceBase)).call(this));
-
-        _this7.gl = gl;
-        _this7.destroyed = false;
-        _this7.valid = false;
-        return _this7;
-    }
-
-    (0, _createClass3.default)(ResourceBase, [{
-        key: "destroy",
-        value: function destroy() {
-            this.destroyed = true;
-        }
-    }, {
-        key: "valid",
-        get: function get() {
-            return this._valid;
-        },
-        set: function set(val) {
-            var _this8 = this;
-
-            if (this._valid === val) {
-                return;
-            }
-            this._valid = val;
-            if (this._valid) {
-                this._validResolve(this);
-            } else {
-                this.validPromise = new _promise2.default(function (resolve) {
-                    _this8._validResolve = resolve;
-                });
-            }
-        }
-    }]);
-    return ResourceBase;
-}(IDObject);
-
-var Buffer = function (_ResourceBase) {
-    (0, _inherits3.default)(Buffer, _ResourceBase);
-
-    function Buffer(gl, target, usage) {
-        (0, _classCallCheck3.default)(this, Buffer);
-
-        var _this9 = (0, _possibleConstructorReturn3.default)(this, (Buffer.__proto__ || (0, _getPrototypeOf2.default)(Buffer)).call(this, gl));
-
-        _this9.target = target;
-        _this9.usage = usage;
-        _this9.buffer = gl.createBuffer();
-        return _this9;
-    }
-
-    (0, _createClass3.default)(Buffer, [{
-        key: "update",
-        value: function update(length, subBuffer) {
-            this.bind();
-            if (subBuffer) {
-                if (!this.valid) {
-                    this.gl.bufferData(this.target, length + subBuffer.byteLength, this.usage);
-                }
-                this.gl.bufferSubData(this.target, length, subBuffer);
-            } else {
-                if (typeof length === "number") {
-                    this.gl.bufferData(this.target, length, this.usage);
-                } else {
-                    this.gl.bufferData(this.target, length, this.usage);
-                }
-            }
-            this.valid = true;
-        }
-    }, {
-        key: "bind",
-        value: function bind() {
-            this.gl.bindBuffer(this.target, this.buffer);
-        }
-    }, {
-        key: "destroy",
-        value: function destroy() {
-            (0, _get3.default)(Buffer.prototype.__proto__ || (0, _getPrototypeOf2.default)(Buffer.prototype), "destroy", this).call(this);
-            this.gl.deleteBuffer(this.buffer);
-        }
-    }]);
-    return Buffer;
-}(ResourceBase);
-
-/**
- * The geometry class for managing buffer resource
- */
-
-
-var Geometry = function () {
-    function Geometry(verticies, attribInfo, indicies) {
-        (0, _classCallCheck3.default)(this, Geometry);
-
-        this.verticies = verticies;
-        this.attribInfo = attribInfo;
-        this.indicies = indicies;
-        this._validateGLContext();
-        // check all buffers requested by attribute variables are all contained in verticies
-        for (var attrKey in attribInfo) {
-            if (typeof verticies[attribInfo[attrKey].bufferName] === "undefined") {
-                throw new Error("The buffer request by " + attribInfo[attrKey].bufferName + " is not contained in geometry.");
-            }
-        }
-    }
-
-    (0, _createClass3.default)(Geometry, [{
-        key: "draw",
-        value: function draw(indexName, attribNames, program) {
-            var _this10 = this;
-
-            var count = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : Number.MAX_VALUE;
-            var offset = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 0;
-
-            var targetIndex = this.indicies[indexName];
-            attribNames.forEach(function (name) {
-                var attribInfo = _this10.attribInfo[name];
-                if (!attribInfo) {
-                    throw new Error("There is no such vertex buffer");
-                }
-                var index = program.findAttributeLocation(name);
-                if (index < 0) {
-                    return;
-                }
-                var buffer = _this10.verticies[attribInfo.bufferName];
-                buffer.bind();
-                _this10._gl.vertexAttribPointer(index, attribInfo.size, attribInfo.type, false, attribInfo.stride, attribInfo.offset);
-            });
-            targetIndex.index.bind();
-            this._gl.drawElements(targetIndex.topology, Math.min(targetIndex.count, count), targetIndex.type, Math.min(offset * targetIndex.byteSize, (targetIndex.count - 1) * targetIndex.byteSize));
-        }
-    }, {
-        key: "_validateGLContext",
-        value: function _validateGLContext() {
-            // Check for index buffers
-            for (var indexName in this.indicies) {
-                var _index2 = this.indicies[indexName];
-                if (!this._gl) {
-                    this._gl = _index2.index.gl;
-                }
-                if (this._gl !== _index2.index.gl) {
-                    throw new Error("All index buffers should be initialized with same context");
-                }
-            }
-            // Check for vertex buffers
-            for (var vertexName in this.verticies) {
-                var vertex = this.verticies[vertexName];
-                if (this._gl !== vertex.gl) {
-                    throw new Error("All vertex buffers should be initialized with same context");
-                }
-            }
-        }
-    }]);
-    return Geometry;
-}();
-
-/**
- * Helper class to instanciate Geometry easily.
- */
-
-
-var GeometryBuilder = function () {
-    function GeometryBuilder() {
-        (0, _classCallCheck3.default)(this, GeometryBuilder);
-    }
-
-    (0, _createClass3.default)(GeometryBuilder, null, [{
-        key: "build",
-        value: function build(gl, info) {
-            var buffers = {};
-            var attribs = {};
-            for (var bufferKey in info.verticies) {
-                var byteWidth = 4;
-                var buffer = info.verticies[bufferKey];
-                var sizeSum = 0;
-                for (var attribKey in buffer.size) {
-                    if (attribs[attribKey]) {
-                        throw new Error("Attribute variable name was dupelicated");
-                    }
-                    var size = buffer.size[attribKey];
-                    attribs[attribKey] = {
-                        size: size,
-                        offset: sizeSum * byteWidth,
-                        bufferName: bufferKey,
-                        type: buffer.type ? buffer.type : WebGLRenderingContext.FLOAT,
-                        stride: 0
-                    };
-                    sizeSum += size;
-                }
-                for (var _attribKey in buffer.size) {
-                    attribs[_attribKey].stride = sizeSum * byteWidth;
-                }
-                // generate source array of vertex buffer
-                var bufferSource = new Array(sizeSum * buffer.count);
-                var bufferGenerator = buffer.getGenerators();
-                var generators = [];
-                var sizes = [];
-                var beforeEach = bufferGenerator.beforeEach ? bufferGenerator.beforeEach() : undefined;
-                for (var _attribKey2 in buffer.size) {
-                    if (_attribKey2 === "beforeEach") {
-                        continue;
-                    }
-                    var generator = bufferGenerator[_attribKey2];
-                    generators.push(generator());
-                    sizes.push(buffer.size[_attribKey2]);
-                }
-                var i = 0;
-                for (var vertCount = 0; vertCount < buffer.count; vertCount++) {
-                    if (beforeEach && beforeEach.next().done) {
-                        throw new Error("before each was ended before reaching count.");
-                    }
-                    for (var genIndex = 0; genIndex < generators.length; genIndex++) {
-                        var _generator = generators[genIndex];
-                        for (var sizeIndex = 0; sizeIndex < sizes[genIndex]; sizeIndex++) {
-                            var genResult = _generator.next();
-                            if (genResult.done) {
-                                throw new Error("Generator function finished before reaching specified count");
-                            }
-                            bufferSource[i] = genResult.value;
-                            i++;
-                        }
-                    }
-                }
-                // instanciate buffers
-                buffers[bufferKey] = new Buffer(gl, WebGLRenderingContext.ARRAY_BUFFER, buffer.usage ? buffer.usage : WebGLRenderingContext.STATIC_DRAW);
-                buffers[bufferKey].update(new Float32Array(bufferSource));
-            }
-            return new Geometry(buffers, attribs, this._generateIndicies(gl, info.indicies));
-        }
-    }, {
-        key: "_generateIndicies",
-        value: function _generateIndicies(gl, indexGenerator) {
-            var indexMap = {};
-            for (var indexName in indexGenerator) {
-                var indicies = [];
-                var generatorInfo = indexGenerator[indexName];
-                var _iteratorNormalCompletion2 = true;
-                var _didIteratorError2 = false;
-                var _iteratorError2 = undefined;
-
-                try {
-                    for (var _iterator2 = (0, _getIterator3.default)(generatorInfo.generator()), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-                        var variable = _step2.value;
-
-                        indicies.push(variable);
-                    }
-                } catch (err) {
-                    _didIteratorError2 = true;
-                    _iteratorError2 = err;
-                } finally {
-                    try {
-                        if (!_iteratorNormalCompletion2 && _iterator2.return) {
-                            _iterator2.return();
-                        }
-                    } finally {
-                        if (_didIteratorError2) {
-                            throw _iteratorError2;
-                        }
-                    }
-                }
-
-                var bufferType = this._getIndexType(indicies.length);
-                var buffer = new Buffer(gl, WebGLRenderingContext.ELEMENT_ARRAY_BUFFER, WebGLRenderingContext.STATIC_DRAW);
-                buffer.update(new bufferType.ctor(indicies));
-                indexMap[indexName] = {
-                    count: indicies.length,
-                    index: buffer,
-                    type: bufferType.format,
-                    byteSize: bufferType.byteSize,
-                    topology: generatorInfo.topology ? generatorInfo.topology : WebGLRenderingContext.TRIANGLES
-                };
-            }
-            return indexMap;
-        }
-        /**
-         * Determine which index type should be used
-         * @param  {number} length [description]
-         * @return {[type]}        [description]
-         */
-
-    }, {
-        key: "_getIndexType",
-        value: function _getIndexType(length) {
-            var format = WebGLRenderingContext.UNSIGNED_INT;
-            var arrayConstructor = Uint32Array;
-            var byteSize = 4;
-            if (length < 256) {
-                format = WebGLRenderingContext.UNSIGNED_BYTE;
-                arrayConstructor = Uint8Array;
-                byteSize = 1;
-            } else if (length < 65535) {
-                format = WebGLRenderingContext.UNSIGNED_SHORT;
-                arrayConstructor = Uint16Array;
-                byteSize = 2;
-            } else if (length >= 4294967296) {
-                throw new Error("Too many index of geometry!");
-            }
-            return {
-                format: format,
-                ctor: arrayConstructor,
-                byteSize: byteSize
-            };
-        }
-    }]);
-    return GeometryBuilder;
-}();
-
-// TODO add normal and uvs
-// TODO apply attributes
-
-
-var DefaultPrimitives = function () {
-    function DefaultPrimitives() {
-        (0, _classCallCheck3.default)(this, DefaultPrimitives);
-    }
-
-    (0, _createClass3.default)(DefaultPrimitives, null, [{
-        key: "register",
-        value: function register() {
-            DefaultPrimitives._registerTriangle();
-            DefaultPrimitives._registerQuad();
-            DefaultPrimitives._registerCube();
-            DefaultPrimitives._registerSphere();
-            DefaultPrimitives._registerCircle();
-            DefaultPrimitives._registerCylinder();
-            DefaultPrimitives._registerCone();
-            DefaultPrimitives._registerPlane();
-        }
-    }, {
-        key: "_registerTriangle",
-        value: function _registerTriangle() {
-            GeometryFactory.addType("triangle", {}, function (gl, attrs) {
-                return GeometryBuilder.build(gl, {
-                    indicies: {
-                        default: {
-                            generator: _regenerator2.default.mark(function generator() {
-                                return _regenerator2.default.wrap(function generator$(_context35) {
-                                    while (1) {
-                                        switch (_context35.prev = _context35.next) {
-                                            case 0:
-                                                return _context35.delegateYield(GeometryUtility.triangleIndex(0), "t0", 1);
-
-                                            case 1:
-                                            case "end":
-                                                return _context35.stop();
-                                        }
-                                    }
-                                }, generator, this);
-                            }),
-                            topology: WebGLRenderingContext.TRIANGLES
-                        },
-                        wireframe: {
-                            generator: _regenerator2.default.mark(function generator() {
-                                return _regenerator2.default.wrap(function generator$(_context36) {
-                                    while (1) {
-                                        switch (_context36.prev = _context36.next) {
-                                            case 0:
-                                                return _context36.delegateYield(GeometryUtility.linesFromTriangles(GeometryUtility.triangleIndex(0)), "t0", 1);
-
-                                            case 1:
-                                            case "end":
-                                                return _context36.stop();
-                                        }
-                                    }
-                                }, generator, this);
-                            }),
-                            topology: WebGLRenderingContext.LINES
-                        }
-                    },
-                    verticies: {
-                        main: {
-                            size: {
-                                position: 3,
-                                normal: 3,
-                                uv: 2
-                            },
-                            count: GeometryUtility.triangleSize(),
-                            getGenerators: function getGenerators() {
-                                return {
-                                    position: _regenerator2.default.mark(function position() {
-                                        return _regenerator2.default.wrap(function position$(_context37) {
-                                            while (1) {
-                                                switch (_context37.prev = _context37.next) {
-                                                    case 0:
-                                                        return _context37.delegateYield(GeometryUtility.trianglePosition(Vector3.Zero, Vector3.YUnit, Vector3.XUnit), "t0", 1);
-
-                                                    case 1:
-                                                    case "end":
-                                                        return _context37.stop();
-                                                }
-                                            }
-                                        }, position, this);
-                                    }),
-                                    normal: _regenerator2.default.mark(function normal() {
-                                        return _regenerator2.default.wrap(function normal$(_context38) {
-                                            while (1) {
-                                                switch (_context38.prev = _context38.next) {
-                                                    case 0:
-                                                        return _context38.delegateYield(GeometryUtility.triangleNormal(Vector3.ZUnit), "t0", 1);
-
-                                                    case 1:
-                                                    case "end":
-                                                        return _context38.stop();
-                                                }
-                                            }
-                                        }, normal, this);
-                                    }),
-                                    uv: _regenerator2.default.mark(function uv() {
-                                        return _regenerator2.default.wrap(function uv$(_context39) {
-                                            while (1) {
-                                                switch (_context39.prev = _context39.next) {
-                                                    case 0:
-                                                        return _context39.delegateYield(GeometryUtility.triangleUV(), "t0", 1);
-
-                                                    case 1:
-                                                    case "end":
-                                                        return _context39.stop();
-                                                }
-                                            }
-                                        }, uv, this);
-                                    })
-                                };
-                            }
-                        }
-                    }
-                });
-            });
-        }
-    }, {
-        key: "_registerQuad",
-        value: function _registerQuad() {
-            GeometryFactory.addType("quad", {}, function (gl, attrs) {
-                return GeometryBuilder.build(gl, {
-                    indicies: {
-                        default: {
-                            generator: _regenerator2.default.mark(function generator() {
-                                return _regenerator2.default.wrap(function generator$(_context40) {
-                                    while (1) {
-                                        switch (_context40.prev = _context40.next) {
-                                            case 0:
-                                                return _context40.delegateYield(GeometryUtility.quadIndex(0), "t0", 1);
-
-                                            case 1:
-                                            case "end":
-                                                return _context40.stop();
-                                        }
-                                    }
-                                }, generator, this);
-                            }),
-                            topology: WebGLRenderingContext.TRIANGLES
-                        },
-                        wireframe: {
-                            generator: _regenerator2.default.mark(function generator() {
-                                return _regenerator2.default.wrap(function generator$(_context41) {
-                                    while (1) {
-                                        switch (_context41.prev = _context41.next) {
-                                            case 0:
-                                                return _context41.delegateYield(GeometryUtility.linesFromTriangles(GeometryUtility.quadIndex(0)), "t0", 1);
-
-                                            case 1:
-                                            case "end":
-                                                return _context41.stop();
-                                        }
-                                    }
-                                }, generator, this);
-                            }),
-                            topology: WebGLRenderingContext.LINES
-                        }
-                    },
-                    verticies: {
-                        main: {
-                            size: {
-                                position: 3,
-                                normal: 3,
-                                uv: 2
-                            },
-                            count: GeometryUtility.quadSize(),
-                            getGenerators: function getGenerators() {
-                                return {
-                                    position: _regenerator2.default.mark(function position() {
-                                        return _regenerator2.default.wrap(function position$(_context42) {
-                                            while (1) {
-                                                switch (_context42.prev = _context42.next) {
-                                                    case 0:
-                                                        return _context42.delegateYield(GeometryUtility.quadPosition(Vector3.Zero, Vector3.YUnit, Vector3.XUnit), "t0", 1);
-
-                                                    case 1:
-                                                    case "end":
-                                                        return _context42.stop();
-                                                }
-                                            }
-                                        }, position, this);
-                                    }),
-                                    normal: _regenerator2.default.mark(function normal() {
-                                        return _regenerator2.default.wrap(function normal$(_context43) {
-                                            while (1) {
-                                                switch (_context43.prev = _context43.next) {
-                                                    case 0:
-                                                        return _context43.delegateYield(GeometryUtility.quadNormal(Vector3.ZUnit), "t0", 1);
-
-                                                    case 1:
-                                                    case "end":
-                                                        return _context43.stop();
-                                                }
-                                            }
-                                        }, normal, this);
-                                    }),
-                                    uv: _regenerator2.default.mark(function uv() {
-                                        return _regenerator2.default.wrap(function uv$(_context44) {
-                                            while (1) {
-                                                switch (_context44.prev = _context44.next) {
-                                                    case 0:
-                                                        return _context44.delegateYield(GeometryUtility.quadUV(), "t0", 1);
-
-                                                    case 1:
-                                                    case "end":
-                                                        return _context44.stop();
-                                                }
-                                            }
-                                        }, uv, this);
-                                    })
-                                };
-                            }
-                        }
-                    }
-                });
-            });
-        }
-    }, {
-        key: "_registerCube",
-        value: function _registerCube() {
-            GeometryFactory.addType("cube", {}, function (gl, attrs) {
-                return GeometryBuilder.build(gl, {
-                    indicies: {
-                        default: {
-                            generator: _regenerator2.default.mark(function generator() {
-                                return _regenerator2.default.wrap(function generator$(_context45) {
-                                    while (1) {
-                                        switch (_context45.prev = _context45.next) {
-                                            case 0:
-                                                return _context45.delegateYield(GeometryUtility.cubeIndex(0), "t0", 1);
-
-                                            case 1:
-                                            case "end":
-                                                return _context45.stop();
-                                        }
-                                    }
-                                }, generator, this);
-                            }),
-                            topology: WebGLRenderingContext.TRIANGLES
-                        },
-                        wireframe: {
-                            generator: _regenerator2.default.mark(function generator() {
-                                return _regenerator2.default.wrap(function generator$(_context46) {
-                                    while (1) {
-                                        switch (_context46.prev = _context46.next) {
-                                            case 0:
-                                                return _context46.delegateYield(GeometryUtility.linesFromTriangles(GeometryUtility.cubeIndex(0)), "t0", 1);
-
-                                            case 1:
-                                            case "end":
-                                                return _context46.stop();
-                                        }
-                                    }
-                                }, generator, this);
-                            }),
-                            topology: WebGLRenderingContext.LINES
-                        }
-                    },
-                    verticies: {
-                        main: {
-                            size: {
-                                position: 3,
-                                normal: 3,
-                                uv: 2
-                            },
-                            count: GeometryUtility.cubeSize(),
-                            getGenerators: function getGenerators() {
-                                return {
-                                    position: _regenerator2.default.mark(function position() {
-                                        return _regenerator2.default.wrap(function position$(_context47) {
-                                            while (1) {
-                                                switch (_context47.prev = _context47.next) {
-                                                    case 0:
-                                                        return _context47.delegateYield(GeometryUtility.cubePosition(Vector3.Zero, Vector3.YUnit, Vector3.XUnit, Vector3.ZUnit.negateThis()), "t0", 1);
-
-                                                    case 1:
-                                                    case "end":
-                                                        return _context47.stop();
-                                                }
-                                            }
-                                        }, position, this);
-                                    }),
-                                    normal: _regenerator2.default.mark(function normal() {
-                                        return _regenerator2.default.wrap(function normal$(_context48) {
-                                            while (1) {
-                                                switch (_context48.prev = _context48.next) {
-                                                    case 0:
-                                                        return _context48.delegateYield(GeometryUtility.cubeNormal(Vector3.Zero, Vector3.YUnit, Vector3.XUnit, Vector3.ZUnit.negateThis()), "t0", 1);
-
-                                                    case 1:
-                                                    case "end":
-                                                        return _context48.stop();
-                                                }
-                                            }
-                                        }, normal, this);
-                                    }),
-                                    uv: _regenerator2.default.mark(function uv() {
-                                        return _regenerator2.default.wrap(function uv$(_context49) {
-                                            while (1) {
-                                                switch (_context49.prev = _context49.next) {
-                                                    case 0:
-                                                        return _context49.delegateYield(GeometryUtility.cubeUV(), "t0", 1);
-
-                                                    case 1:
-                                                    case "end":
-                                                        return _context49.stop();
-                                                }
-                                            }
-                                        }, uv, this);
-                                    })
-                                };
-                            }
-                        }
-                    }
-                });
-            });
-        }
-    }, {
-        key: "_registerSphere",
-        value: function _registerSphere() {
-            GeometryFactory.addType("sphere", {
-                divVertical: {
-                    converter: "Number",
-                    defaultValue: 100
-                },
-                divHorizontal: {
-                    converter: "Number",
-                    defaultValue: 100
-                }
-            }, function (gl, attrs) {
-                var dH = attrs["divHorizontal"];
-                var dV = attrs["divVertical"];
-                return GeometryBuilder.build(gl, {
-                    indicies: {
-                        default: {
-                            generator: _regenerator2.default.mark(function generator() {
-                                return _regenerator2.default.wrap(function generator$(_context50) {
-                                    while (1) {
-                                        switch (_context50.prev = _context50.next) {
-                                            case 0:
-                                                return _context50.delegateYield(GeometryUtility.sphereIndex(0, dH, dV), "t0", 1);
-
-                                            case 1:
-                                            case "end":
-                                                return _context50.stop();
-                                        }
-                                    }
-                                }, generator, this);
-                            }),
-                            topology: WebGLRenderingContext.TRIANGLES
-                        },
-                        wireframe: {
-                            generator: _regenerator2.default.mark(function generator() {
-                                return _regenerator2.default.wrap(function generator$(_context51) {
-                                    while (1) {
-                                        switch (_context51.prev = _context51.next) {
-                                            case 0:
-                                                return _context51.delegateYield(GeometryUtility.linesFromTriangles(GeometryUtility.sphereIndex(0, dH, dV)), "t0", 1);
-
-                                            case 1:
-                                            case "end":
-                                                return _context51.stop();
-                                        }
-                                    }
-                                }, generator, this);
-                            }),
-                            topology: WebGLRenderingContext.LINES
-                        }
-                    },
-                    verticies: {
-                        main: {
-                            size: {
-                                position: 3,
-                                normal: 3,
-                                uv: 2
-                            },
-                            count: GeometryUtility.sphereSize(dH, dV),
-                            getGenerators: function getGenerators() {
-                                return {
-                                    position: _regenerator2.default.mark(function position() {
-                                        return _regenerator2.default.wrap(function position$(_context52) {
-                                            while (1) {
-                                                switch (_context52.prev = _context52.next) {
-                                                    case 0:
-                                                        return _context52.delegateYield(GeometryUtility.spherePosition(Vector3.Zero, Vector3.YUnit, Vector3.XUnit, Vector3.ZUnit.negateThis(), dH, dV), "t0", 1);
-
-                                                    case 1:
-                                                    case "end":
-                                                        return _context52.stop();
-                                                }
-                                            }
-                                        }, position, this);
-                                    }),
-                                    normal: _regenerator2.default.mark(function normal() {
-                                        return _regenerator2.default.wrap(function normal$(_context53) {
-                                            while (1) {
-                                                switch (_context53.prev = _context53.next) {
-                                                    case 0:
-                                                        return _context53.delegateYield(GeometryUtility.sphereNormal(Vector3.YUnit, Vector3.XUnit, Vector3.ZUnit.negateThis(), dH, dV), "t0", 1);
-
-                                                    case 1:
-                                                    case "end":
-                                                        return _context53.stop();
-                                                }
-                                            }
-                                        }, normal, this);
-                                    }),
-                                    uv: _regenerator2.default.mark(function uv() {
-                                        return _regenerator2.default.wrap(function uv$(_context54) {
-                                            while (1) {
-                                                switch (_context54.prev = _context54.next) {
-                                                    case 0:
-                                                        return _context54.delegateYield(GeometryUtility.sphereUV(dH, dV), "t0", 1);
-
-                                                    case 1:
-                                                    case "end":
-                                                        return _context54.stop();
-                                                }
-                                            }
-                                        }, uv, this);
-                                    })
-                                };
-                            }
-                        }
-                    }
-                });
-            });
-        }
-    }, {
-        key: "_registerCircle",
-        value: function _registerCircle() {
-            GeometryFactory.addType("circle", {
-                divide: {
-                    converter: "Number",
-                    defaultValue: 50
-                }
-            }, function (gl, attrs) {
-                var div = attrs["divide"];
-                return GeometryBuilder.build(gl, {
-                    indicies: {
-                        default: {
-                            generator: _regenerator2.default.mark(function generator() {
-                                return _regenerator2.default.wrap(function generator$(_context55) {
-                                    while (1) {
-                                        switch (_context55.prev = _context55.next) {
-                                            case 0:
-                                                return _context55.delegateYield(GeometryUtility.ellipseIndex(0, div), "t0", 1);
-
-                                            case 1:
-                                            case "end":
-                                                return _context55.stop();
-                                        }
-                                    }
-                                }, generator, this);
-                            }),
-                            topology: WebGLRenderingContext.TRIANGLES
-                        },
-                        wireframe: {
-                            generator: _regenerator2.default.mark(function generator() {
-                                return _regenerator2.default.wrap(function generator$(_context56) {
-                                    while (1) {
-                                        switch (_context56.prev = _context56.next) {
-                                            case 0:
-                                                return _context56.delegateYield(GeometryUtility.linesFromTriangles(GeometryUtility.ellipseIndex(0, div)), "t0", 1);
-
-                                            case 1:
-                                            case "end":
-                                                return _context56.stop();
-                                        }
-                                    }
-                                }, generator, this);
-                            }),
-                            topology: WebGLRenderingContext.LINES
-                        }
-                    },
-                    verticies: {
-                        main: {
-                            size: {
-                                position: 3,
-                                normal: 3,
-                                uv: 2
-                            },
-                            count: GeometryUtility.ellipseSize(div),
-                            getGenerators: function getGenerators() {
-                                return {
-                                    position: _regenerator2.default.mark(function position() {
-                                        return _regenerator2.default.wrap(function position$(_context57) {
-                                            while (1) {
-                                                switch (_context57.prev = _context57.next) {
-                                                    case 0:
-                                                        return _context57.delegateYield(GeometryUtility.ellipsePosition(Vector3.Zero, Vector3.YUnit, Vector3.XUnit, div), "t0", 1);
-
-                                                    case 1:
-                                                    case "end":
-                                                        return _context57.stop();
-                                                }
-                                            }
-                                        }, position, this);
-                                    }),
-                                    normal: _regenerator2.default.mark(function normal() {
-                                        return _regenerator2.default.wrap(function normal$(_context58) {
-                                            while (1) {
-                                                switch (_context58.prev = _context58.next) {
-                                                    case 0:
-                                                        return _context58.delegateYield(GeometryUtility.ellipseNormal(Vector3.ZUnit, div), "t0", 1);
-
-                                                    case 1:
-                                                    case "end":
-                                                        return _context58.stop();
-                                                }
-                                            }
-                                        }, normal, this);
-                                    }),
-                                    uv: _regenerator2.default.mark(function uv() {
-                                        return _regenerator2.default.wrap(function uv$(_context59) {
-                                            while (1) {
-                                                switch (_context59.prev = _context59.next) {
-                                                    case 0:
-                                                        return _context59.delegateYield(GeometryUtility.ellipseUV(div), "t0", 1);
-
-                                                    case 1:
-                                                    case "end":
-                                                        return _context59.stop();
-                                                }
-                                            }
-                                        }, uv, this);
-                                    })
-                                };
-                            }
-                        }
-                    }
-                });
-            });
-        }
-    }, {
-        key: "_registerCylinder",
-        value: function _registerCylinder() {
-            GeometryFactory.addType("cylinder", {
-                divide: {
-                    converter: "Number",
-                    defaultValue: 50
-                }
-            }, function (gl, attrs) {
-                var div = attrs["divide"];
-                return GeometryBuilder.build(gl, {
-                    indicies: {
-                        default: {
-                            generator: _regenerator2.default.mark(function generator() {
-                                return _regenerator2.default.wrap(function generator$(_context60) {
-                                    while (1) {
-                                        switch (_context60.prev = _context60.next) {
-                                            case 0:
-                                                return _context60.delegateYield(GeometryUtility.cylinderIndex(0, div), "t0", 1);
-
-                                            case 1:
-                                            case "end":
-                                                return _context60.stop();
-                                        }
-                                    }
-                                }, generator, this);
-                            }),
-                            topology: WebGLRenderingContext.TRIANGLES
-                        },
-                        wireframe: {
-                            generator: _regenerator2.default.mark(function generator() {
-                                return _regenerator2.default.wrap(function generator$(_context61) {
-                                    while (1) {
-                                        switch (_context61.prev = _context61.next) {
-                                            case 0:
-                                                return _context61.delegateYield(GeometryUtility.linesFromTriangles(GeometryUtility.cylinderIndex(0, div)), "t0", 1);
-
-                                            case 1:
-                                            case "end":
-                                                return _context61.stop();
-                                        }
-                                    }
-                                }, generator, this);
-                            }),
-                            topology: WebGLRenderingContext.LINES
-                        }
-                    },
-                    verticies: {
-                        main: {
-                            size: {
-                                position: 3,
-                                normal: 3,
-                                uv: 2
-                            },
-                            count: GeometryUtility.cylinderSize(div),
-                            getGenerators: function getGenerators() {
-                                return {
-                                    position: _regenerator2.default.mark(function position() {
-                                        return _regenerator2.default.wrap(function position$(_context62) {
-                                            while (1) {
-                                                switch (_context62.prev = _context62.next) {
-                                                    case 0:
-                                                        return _context62.delegateYield(GeometryUtility.cylinderPosition(Vector3.Zero, Vector3.YUnit, Vector3.XUnit, Vector3.ZUnit.negateThis(), div), "t0", 1);
-
-                                                    case 1:
-                                                    case "end":
-                                                        return _context62.stop();
-                                                }
-                                            }
-                                        }, position, this);
-                                    }),
-                                    normal: _regenerator2.default.mark(function normal() {
-                                        return _regenerator2.default.wrap(function normal$(_context63) {
-                                            while (1) {
-                                                switch (_context63.prev = _context63.next) {
-                                                    case 0:
-                                                        return _context63.delegateYield(GeometryUtility.cylinderNormal(Vector3.Zero, Vector3.YUnit, Vector3.XUnit, Vector3.ZUnit.negateThis(), div), "t0", 1);
-
-                                                    case 1:
-                                                    case "end":
-                                                        return _context63.stop();
-                                                }
-                                            }
-                                        }, normal, this);
-                                    }),
-                                    uv: _regenerator2.default.mark(function uv() {
-                                        return _regenerator2.default.wrap(function uv$(_context64) {
-                                            while (1) {
-                                                switch (_context64.prev = _context64.next) {
-                                                    case 0:
-                                                        return _context64.delegateYield(GeometryUtility.cylinderUV(div), "t0", 1);
-
-                                                    case 1:
-                                                    case "end":
-                                                        return _context64.stop();
-                                                }
-                                            }
-                                        }, uv, this);
-                                    })
-                                };
-                            }
-                        }
-                    }
-                });
-            });
-        }
-    }, {
-        key: "_registerCone",
-        value: function _registerCone() {
-            GeometryFactory.addType("cone", {
-                divide: {
-                    converter: "Number",
-                    defaultValue: 50
-                }
-            }, function (gl, attrs) {
-                var div = attrs["divide"];
-                return GeometryBuilder.build(gl, {
-                    indicies: {
-                        default: {
-                            generator: _regenerator2.default.mark(function generator() {
-                                return _regenerator2.default.wrap(function generator$(_context65) {
-                                    while (1) {
-                                        switch (_context65.prev = _context65.next) {
-                                            case 0:
-                                                return _context65.delegateYield(GeometryUtility.coneIndex(0, div), "t0", 1);
-
-                                            case 1:
-                                            case "end":
-                                                return _context65.stop();
-                                        }
-                                    }
-                                }, generator, this);
-                            }),
-                            topology: WebGLRenderingContext.TRIANGLES
-                        },
-                        wireframe: {
-                            generator: _regenerator2.default.mark(function generator() {
-                                return _regenerator2.default.wrap(function generator$(_context66) {
-                                    while (1) {
-                                        switch (_context66.prev = _context66.next) {
-                                            case 0:
-                                                return _context66.delegateYield(GeometryUtility.linesFromTriangles(GeometryUtility.coneIndex(0, div)), "t0", 1);
-
-                                            case 1:
-                                            case "end":
-                                                return _context66.stop();
-                                        }
-                                    }
-                                }, generator, this);
-                            }),
-                            topology: WebGLRenderingContext.LINES
-                        }
-                    },
-                    verticies: {
-                        main: {
-                            size: {
-                                position: 3,
-                                normal: 3,
-                                uv: 2
-                            },
-                            count: GeometryUtility.coneSize(div),
-                            getGenerators: function getGenerators() {
-                                return {
-                                    position: _regenerator2.default.mark(function position() {
-                                        return _regenerator2.default.wrap(function position$(_context67) {
-                                            while (1) {
-                                                switch (_context67.prev = _context67.next) {
-                                                    case 0:
-                                                        return _context67.delegateYield(GeometryUtility.conePosition(Vector3.Zero, Vector3.YUnit, Vector3.XUnit, Vector3.ZUnit.negateThis(), div), "t0", 1);
-
-                                                    case 1:
-                                                    case "end":
-                                                        return _context67.stop();
-                                                }
-                                            }
-                                        }, position, this);
-                                    }),
-                                    normal: _regenerator2.default.mark(function normal() {
-                                        return _regenerator2.default.wrap(function normal$(_context68) {
-                                            while (1) {
-                                                switch (_context68.prev = _context68.next) {
-                                                    case 0:
-                                                        return _context68.delegateYield(GeometryUtility.coneNormal(Vector3.Zero, Vector3.YUnit, Vector3.XUnit, Vector3.ZUnit.negateThis(), div), "t0", 1);
-
-                                                    case 1:
-                                                    case "end":
-                                                        return _context68.stop();
-                                                }
-                                            }
-                                        }, normal, this);
-                                    }),
-                                    uv: _regenerator2.default.mark(function uv() {
-                                        return _regenerator2.default.wrap(function uv$(_context69) {
-                                            while (1) {
-                                                switch (_context69.prev = _context69.next) {
-                                                    case 0:
-                                                        return _context69.delegateYield(GeometryUtility.coneUV(div), "t0", 1);
-
-                                                    case 1:
-                                                    case "end":
-                                                        return _context69.stop();
-                                                }
-                                            }
-                                        }, uv, this);
-                                    })
-                                };
-                            }
-                        }
-                    }
-                });
-            });
-        }
-    }, {
-        key: "_registerPlane",
-        value: function _registerPlane() {
-            GeometryFactory.addType("plane", {
-                divide: {
-                    converter: "Number",
-                    defaultValue: 10
-                }
-            }, function (gl, attrs) {
-                var div = attrs["divide"];
-                return GeometryBuilder.build(gl, {
-                    indicies: {
-                        default: {
-                            generator: _regenerator2.default.mark(function generator() {
-                                return _regenerator2.default.wrap(function generator$(_context70) {
-                                    while (1) {
-                                        switch (_context70.prev = _context70.next) {
-                                            case 0:
-                                                return _context70.delegateYield(GeometryUtility.planeIndex(0, div), "t0", 1);
-
-                                            case 1:
-                                            case "end":
-                                                return _context70.stop();
-                                        }
-                                    }
-                                }, generator, this);
-                            }),
-                            topology: WebGLRenderingContext.TRIANGLES
-                        },
-                        wireframe: {
-                            generator: _regenerator2.default.mark(function generator() {
-                                return _regenerator2.default.wrap(function generator$(_context71) {
-                                    while (1) {
-                                        switch (_context71.prev = _context71.next) {
-                                            case 0:
-                                                return _context71.delegateYield(GeometryUtility.linesFromTriangles(GeometryUtility.planeIndex(0, div)), "t0", 1);
-
-                                            case 1:
-                                            case "end":
-                                                return _context71.stop();
-                                        }
-                                    }
-                                }, generator, this);
-                            }),
-                            topology: WebGLRenderingContext.LINES
-                        }
-                    },
-                    verticies: {
-                        main: {
-                            size: {
-                                position: 3,
-                                normal: 3,
-                                uv: 2
-                            },
-                            count: GeometryUtility.planeSize(div),
-                            getGenerators: function getGenerators() {
-                                return {
-                                    position: _regenerator2.default.mark(function position() {
-                                        return _regenerator2.default.wrap(function position$(_context72) {
-                                            while (1) {
-                                                switch (_context72.prev = _context72.next) {
-                                                    case 0:
-                                                        return _context72.delegateYield(GeometryUtility.planePosition(Vector3.Zero, Vector3.YUnit, Vector3.XUnit, div), "t0", 1);
-
-                                                    case 1:
-                                                    case "end":
-                                                        return _context72.stop();
-                                                }
-                                            }
-                                        }, position, this);
-                                    }),
-                                    normal: _regenerator2.default.mark(function normal() {
-                                        return _regenerator2.default.wrap(function normal$(_context73) {
-                                            while (1) {
-                                                switch (_context73.prev = _context73.next) {
-                                                    case 0:
-                                                        return _context73.delegateYield(GeometryUtility.planeNormal(Vector3.ZUnit, div), "t0", 1);
-
-                                                    case 1:
-                                                    case "end":
-                                                        return _context73.stop();
-                                                }
-                                            }
-                                        }, normal, this);
-                                    }),
-                                    uv: _regenerator2.default.mark(function uv() {
-                                        return _regenerator2.default.wrap(function uv$(_context74) {
-                                            while (1) {
-                                                switch (_context74.prev = _context74.next) {
-                                                    case 0:
-                                                        return _context74.delegateYield(GeometryUtility.planeUV(div), "t0", 1);
-
-                                                    case 1:
-                                                    case "end":
-                                                        return _context74.stop();
-                                                }
-                                            }
-                                        }, uv, this);
-                                    })
-                                };
-                            }
-                        }
-                    }
-                });
-            });
-        }
-    }]);
-    return DefaultPrimitives;
-}();
-
-function BooleanConverter(val) {
-    if (typeof val === "boolean") {
-        return val;
-    } else if (typeof val === "string") {
-        switch (val) {
-            case "true":
-                return true;
-            case "false":
-                return false;
-            default:
-                throw new Error("Invalid string " + val + " for parsing as boolean");
-        }
-    }
-    throw new Error("Parsing failed: " + val);
-}
-
-var NodeUtility = function () {
-    function NodeUtility() {
-        (0, _classCallCheck3.default)(this, NodeUtility);
-    }
-
-    (0, _createClass3.default)(NodeUtility, null, [{
-        key: "getNodeListIndexByElementIndex",
-
-        /**
-         * Get index of NodeList converted from index in Element
-         * @param  {HTMLElement} targetElement Parent element of search target elements
-         * @param  {number}      elementIndex  Index in element
-         * @return {number}                    Index in NodeList
-         */
-        value: function getNodeListIndexByElementIndex(targetElement, elementIndex) {
-            var nodeArray = Array.prototype.slice.call(targetElement.childNodes);
-            var elementArray = nodeArray.filter(function (v) {
-                return v.nodeType === 1;
-            });
-            elementIndex = elementIndex < 0 ? elementArray.length + elementIndex : elementIndex;
-            var index = nodeArray.indexOf(elementArray[elementIndex]);
-            return index === -1 ? null : index;
-        }
-    }, {
-        key: "getAttributes",
-        value: function getAttributes(element) {
-            var attributes = {};
-            var domAttr = element.attributes;
-            for (var i = 0; i < domAttr.length; i++) {
-                var attrNode = domAttr.item(i);
-                var name = attrNode.name;
-                attributes[name] = attrNode.value;
-            }
-            return attributes;
-        }
-    }]);
-    return NodeUtility;
-}();
-
-var Constants = function () {
-    function Constants() {
-        (0, _classCallCheck3.default)(this, Constants);
-    }
-
-    (0, _createClass3.default)(Constants, null, [{
-        key: "defaultNamespace",
-        get: function get() {
-            return "HTTP://GRIMOIRE.GL/NS/DEFAULT";
-        }
-    }]);
-    return Constants;
-}();
-
-/**
- * The class to identity with XML namespace feature.
- */
-
-
-var NSIdentity = function () {
-    function NSIdentity(ns, name) {
-        (0, _classCallCheck3.default)(this, NSIdentity);
-
-        if (name) {
-            this.ns = ns.toUpperCase();
-            this.name = name;
-        } else {
-            this.ns = Constants.defaultNamespace;
-            this.name = ns;
-        }
-        // Ensure all of the characters are uppercase
-        this.name = NSIdentity._ensureValidIdentity(this.name, true);
-        this.ns = NSIdentity._ensureValidIdentity(this.ns);
-        this.fqn = this.name + "|" + this.ns;
-    }
-    /**
-     * Generate an instance from Full qualified name.
-     * @param  {string}             fqn [description]
-     * @return {NSIdentity}     [description]
-     */
-
-
-    (0, _createClass3.default)(NSIdentity, null, [{
-        key: "fromFQN",
-        value: function fromFQN(fqn) {
-            var splitted = fqn.split("|");
-            if (splitted.length !== 2) {
-                throw new Error("Invalid fqn was given");
-            }
-            return new NSIdentity(splitted[1], splitted[0]);
-        }
-        /**
-         * Make sure given name is valid for using in identity.
-         * | is prohibited for using in name or namespace.
-         * . is prohibited for using in name.
-         * All lowercase alphabet will be transformed into uppercase.
-         * @param  {string} name        [A name to verify]
-         * @param  {[type]} noDot=false [Ensure not using dot or not]
-         * @return {string}             [Valid name]
-         */
-
-    }, {
-        key: "_ensureValidIdentity",
-        value: function _ensureValidIdentity(name) {
-            var noDot = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-
-            if (name.indexOf("|") > -1) {
-                throw new Error("Namespace and identity cannnot contain | ");
-            }
-            if (noDot && name.indexOf(".") > -1) {
-                throw new Error("identity cannnot contain .");
-            }
-            if (name == null) {
-                throw new Error("Specified name was null or undefined");
-            }
-            return name;
-        }
-    }]);
-    return NSIdentity;
-}();
-
-var NSDictionary = function () {
-    function NSDictionary() {
-        (0, _classCallCheck3.default)(this, NSDictionary);
-
-        this._nameObjectMap = new _map2.default();
-        this._fqnObjectMap = new _map2.default();
-    }
-
-    (0, _createClass3.default)(NSDictionary, [{
-        key: "set",
-        value: function set(key, value) {
-            var namedChildMap = void 0;
-            if (this._nameObjectMap.has(key.name)) {
-                namedChildMap = this._nameObjectMap.get(key.name);
-            } else {
-                namedChildMap = new _map2.default();
-                this._nameObjectMap.set(key.name, namedChildMap);
-            }
-            namedChildMap.set(key.fqn, value);
-            this._fqnObjectMap.set(key.fqn, value);
-        }
-    }, {
-        key: "delete",
-        value: function _delete(key) {
-            if (this._fqnObjectMap.has(key.fqn)) {
-                var theMap = this._nameObjectMap.get(key.name);
-                if (theMap.size === 1) {
-                    this._nameObjectMap.delete(key.name);
-                } else {
-                    theMap.delete(key.fqn);
-                }
-                this._fqnObjectMap.delete(key.fqn);
-            }
-        }
-    }, {
-        key: "get",
-        value: function get(arg1, name) {
-            if (typeof arg1 === "string") {
-                if (name) {
-                    return this.get(new NSIdentity(arg1, name));
-                } else {
-                    var namedMap = this._nameObjectMap.get(arg1);
-                    if (!namedMap) {
-                        return null;
-                    }
-                    if (namedMap.size === 1) {
-                        var itr = namedMap.values();
-                        return itr.next().value;
-                    } else {
-                        throw new Error("Specified tag name " + arg1 + " is ambigious to identify.");
-                    }
-                }
-            } else {
-                if (arg1 instanceof NSIdentity) {
-                    return this.fromFQN(arg1.fqn);
-                } else {
-                    if (arg1.prefix) {
-                        return this.get(new NSIdentity(arg1.namespaceURI, arg1.localName));
-                    } else {
-                        if (arg1.namespaceURI && this._fqnObjectMap.has(arg1.localName + "|" + arg1.namespaceURI)) {
-                            return this.get(new NSIdentity(arg1.namespaceURI, arg1.localName));
-                        }
-                        if (arg1 && arg1.ownerElement && arg1.ownerElement.namespaceURI && this._fqnObjectMap.has(arg1.localName + "|" + arg1.ownerElement.namespaceURI)) {
-                            return this.get(new NSIdentity(arg1.ownerElement.namespaceURI, arg1.localName));
-                        }
-                        return this.get(arg1.localName);
-                    }
-                }
-            }
-        }
-    }, {
-        key: "fromFQN",
-        value: function fromFQN(fqn) {
-            return this._fqnObjectMap.get(fqn);
-        }
-    }, {
-        key: "isAmbigious",
-        value: function isAmbigious(name) {
-            return this._nameObjectMap.get(name).size > 1;
-        }
-    }, {
-        key: "has",
-        value: function has(name) {
-            return this._nameObjectMap.has(name);
-        }
-    }, {
-        key: "pushDictionary",
-        value: function pushDictionary(dict) {
-            var _this11 = this;
-
-            dict._fqnObjectMap.forEach(function (value, keyFQN) {
-                var id = NSIdentity.fromFQN(keyFQN);
-                _this11.set(id, value);
-            });
-            return this;
-        }
-    }, {
-        key: "toArray",
-        value: function toArray() {
-            var ret = [];
-            this._fqnObjectMap.forEach(function (value) {
-                ret.push(value);
-            });
-            return ret;
-        }
-    }, {
-        key: "clone",
-        value: function clone() {
-            var dict = new NSDictionary();
-            return dict.pushDictionary(this);
-        }
-    }, {
-        key: "forEach",
-        value: function forEach(callback) {
-            this._fqnObjectMap.forEach(function (val, key) {
-                callback(val, key);
-            });
-            return this;
-        }
-    }, {
-        key: "map",
-        value: function map(callback) {
-            var ret = new NSDictionary();
-            this._fqnObjectMap.forEach(function (val, fqn) {
-                var id = NSIdentity.fromFQN(fqn);
-                ret.set(id, callback(val, fqn));
-            });
-            return ret;
-        }
-    }, {
-        key: "clear",
-        value: function clear() {
-            this._nameObjectMap.clear();
-            this._fqnObjectMap.clear();
-        }
-    }]);
-    return NSDictionary;
-}();
-
-/**
- * Provides static methods to ensure arguments are valid type.
- */
-
-
-var Ensure = function () {
-    function Ensure() {
-        (0, _classCallCheck3.default)(this, Ensure);
-    }
-
-    (0, _createClass3.default)(Ensure, null, [{
-        key: "ensureString",
-
-        /**
-         * Ensure specified str being string
-         * @param  {string | number}      str [description]
-         * @return {string}      [description]
-         */
-        value: function ensureString(str) {
-            if (typeof str === "string") {
-                return str;
-            } else if (typeof str === "number") {
-                return str.toString();
-            } else {
-                throw new Error("Specified argument can not convert into string");
-            }
-        }
-        /**
-         * Ensure specified number being number
-         * @param  {string | number}      str [description]
-         * @return {string}      [description]
-         */
-
-    }, {
-        key: "ensureNumber",
-        value: function ensureNumber(num) {
-            if (typeof num === "string") {
-                return parseInt(num, 10);
-            } else if (typeof num === "number") {
-                return num;
-            } else {
-                throw new Error("specified argument can not be converted into number");
-            }
-        }
-    }, {
-        key: "ensureTobeNSIdentity",
-        value: function ensureTobeNSIdentity(name) {
-            if (!name) {
-                return undefined;
-            }
-            if (typeof name === "string") {
-                return new NSIdentity(name);
-            } else {
-                return name;
-            }
-        }
-    }, {
-        key: "ensureTobeNSIdentityArray",
-        value: function ensureTobeNSIdentityArray(names) {
-            if (!names) {
-                return [];
-            }
-            var newArr = [];
-            for (var i = 0; i < names.length; i++) {
-                newArr.push(this.ensureTobeNSIdentity(names[i]));
-            }
-            return newArr;
-        }
-    }, {
-        key: "ensureTobeNSDictionary",
-        value: function ensureTobeNSDictionary(dict, defaultNamespace) {
-            if (!dict) {
-                return new NSDictionary();
-            }
-            if (dict instanceof NSDictionary) {
-                return dict;
-            } else {
-                var newDict = new NSDictionary();
-                for (var key in dict) {
-                    newDict.set(new NSIdentity(defaultNamespace, key), dict[key]);
-                }
-                return newDict;
-            }
-        }
-    }, {
-        key: "ensureTobeMessage",
-        value: function ensureTobeMessage(message) {
-            if (message.startsWith("$")) {
-                return message;
-            } else {
-                return "$" + message;
-            }
-        }
-    }]);
-    return Ensure;
-}();
-
-/**
- * Management a single attribute with specified type. Converter will serve a value with object with any type instead of string.
- * When attribute is changed, emit a "change" event. When attribute is requested, emit a "get" event.
- * If responsive flag is not true, event will not be emitted.
- */
-
-
-var Attribute = function () {
-    function Attribute() {
-        (0, _classCallCheck3.default)(this, Attribute);
-
-        this._handlers = [];
-    }
-
-    (0, _createClass3.default)(Attribute, [{
-        key: "addObserver",
-        value: function addObserver(handler) {
-            var callFirst = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-
-            this._handlers.push(handler);
-            if (callFirst) {
-                handler(this);
-            }
-        }
-    }, {
-        key: "removeObserver",
-        value: function removeObserver(handler) {
-            var index = -1;
-            for (var i = 0; i < this._handlers.length; i++) {
-                if (handler === this._handlers[i]) {
-                    index = i;
-                    break;
-                }
-            }
-            if (index < 0) {
-                return;
-            }
-            this._handlers.splice(index, 1);
-        }
-        /**
-         * Bind converted value to specified field.
-         * When target object was not specified, field of owner component would be assigned.
-         * @param {string} variableName [description]
-         * @param {any} targetObject [description]
-         */
-
-    }, {
-        key: "boundTo",
-        value: function boundTo(variableName) {
-            var targetObject = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.component;
-
-            this.addObserver(function (v) {
-                targetObject[variableName] = v.Value;
-            });
-            targetObject[variableName] = this.Value;
-        }
-        /**
-         * Apply default value to attribute from DOM values.
-         * @param {string }} domValues [description]
-         */
-
-    }, {
-        key: "resolveDefaultValue",
-        value: function resolveDefaultValue(domValues) {
-            if (this._value !== void 0) {
-                return;
-            }
-            var tagAttrValue = domValues[this.name.name];
-            if (tagAttrValue !== void 0) {
-                this.Value = tagAttrValue; // Dom指定値で解決
-                return;
-            }
-            var nodeDefaultValue = this.component.node.nodeDeclaration.defaultAttributes.get(this.name);
-            if (nodeDefaultValue !== void 0) {
-                this.Value = nodeDefaultValue; // Node指定値で解決
-                return;
-            }
-            var attrDefaultValue = this.declaration.defaultValue;
-            this.Value = attrDefaultValue;
-        }
-    }, {
-        key: "_notifyChange",
-        value: function _notifyChange() {
-            var _this12 = this;
-
-            this._handlers.forEach(function (handler) {
-                handler(_this12);
-            });
-        }
-    }, {
-        key: "tree",
-        get: function get() {
-            return this.component.tree;
-        }
-    }, {
-        key: "companion",
-        get: function get() {
-            return this.component.companion;
-        }
-        /**
-         * Get a value with specified type.
-         * @return {any} value with specified type.
-         */
-
-    }, {
-        key: "Value",
-        get: function get() {
-            try {
-                return this.converter.convert(this._value);
-            } catch (e) {
-                console.error(e); // TODO should be more convenient error handling
-            }
-        }
-        /**
-         * Set a value with any type.
-         * @param {any} val Value with string or specified type.
-         */
-        ,
-        set: function set(val) {
-            this._value = val;
-            this._notifyChange();
-        }
-        /**
-         * Construct a new attribute with name of key and any value with specified type. If constant flag is true, This attribute will be immutable.
-         * If converter is not served, string converter will be set as default.
-         * @param {string}        key       Key of this attribute.
-         * @param {any}           value     Value of this attribute.
-         * @param {ConverterBase} converter Converter of this attribute.
-         * @param {boolean}       constant  Whether this attribute is immutable or not. False as default.
-         */
-
-    }], [{
-        key: "generateAttributeForComponent",
-        value: function generateAttributeForComponent(name, declaration, component) {
-            var attr = new Attribute();
-            attr.name = new NSIdentity(component.name.ns, name);
-            attr.component = component;
-            attr.declaration = declaration;
-            var converterName = Ensure.ensureTobeNSIdentity(declaration.converter);
-            attr.converter = obtainGomlInterface.converters.get(converterName);
-            if (attr.converter === void 0) {
-                // When the specified converter was not found
-                throw new Error("Specified converter " + converterName.name + " was not found from registered converters.\n Component: " + attr.component.name.fqn + "\n Attribute: " + attr.name.name);
-            }
-            attr.converter = {
-                convert: attr.converter.convert.bind(attr),
-                name: attr.converter.name
-            };
-            attr.component.attributes.set(attr.name, attr);
-            return attr;
-        }
-    }]);
-    return Attribute;
-}();
-
-/**
- * Base class for any components
- */
-
-
-var Component = function (_IDObject2) {
-    (0, _inherits3.default)(Component, _IDObject2);
-
-    function Component() {
-        (0, _classCallCheck3.default)(this, Component);
-
-        /**
-         * Whether this component was created by nodeDeclaration
-         * @type {boolean}
-         */
-        var _this13 = (0, _possibleConstructorReturn3.default)(this, (Component.__proto__ || (0, _getPrototypeOf2.default)(Component)).apply(this, arguments));
-
-        _this13.isDefaultComponent = false;
-        /**
-         * Flag that this component is activated or not.
-         * @type {boolean}
-         */
-        _this13._enabled = true;
-        _this13._handlers = [];
-        _this13._additionalAttributesNames = [];
-        return _this13;
-    }
-
-    (0, _createClass3.default)(Component, [{
-        key: "getValue",
-
-        /**
-         * Obtain value of attribute. When the attribute is not existing, this method would return undefined.
-         * @param  {string} name [description]
-         * @return {any}         [description]
-         */
-        value: function getValue(name) {
-            var attr = this.attributes.get(name);
-            if (attr) {
-                return attr.Value;
-            } else {
-                return undefined;
-            }
-        }
-        /**
-         * Set value of attribute
-         * @param {string} name  [description]
-         * @param {any}    value [description]
-         */
-
-    }, {
-        key: "setValue",
-        value: function setValue(name, value) {
-            var attr = this.attributes.get(name); // TODO:check readonly?
-            if (attr) {
-                attr.Value = value;
-            }
-        }
-    }, {
-        key: "getAttribute",
-        value: function getAttribute(name) {
-            return this.attributes.get(name);
-        }
-    }, {
-        key: "addEnabledObserver",
-        value: function addEnabledObserver(handler) {
-            this._handlers.push(handler);
-        }
-    }, {
-        key: "removeEnabledObserver",
-        value: function removeEnabledObserver(handler) {
-            var index = -1;
-            for (var i = 0; i < this._handlers.length; i++) {
-                if (handler === this._handlers[i]) {
-                    index = i;
-                    break;
-                }
-            }
-            if (index < 0) {
-                return;
-            }
-            this._handlers.splice(index, 1);
-        }
-    }, {
-        key: "resolveDefaultAttributes",
-        value: function resolveDefaultAttributes(nodeAttributes) {
-            var _this14 = this;
-
-            if (this.isDefaultComponent) {
-                this.attributes.forEach(function (attr) {
-                    return attr.resolveDefaultValue(nodeAttributes);
-                });
-            } else {
-                (function () {
-                    var attrs = NodeUtility.getAttributes(_this14.element);
-                    _this14.attributes.forEach(function (attr) {
-                        return attr.resolveDefaultValue(attrs);
-                    });
-                })();
-            }
-        }
-        /**
-         * Add attribute
-         * @param {string}                name      [description]
-         * @param {IAttributeDeclaration} attribute [description]
-         */
-
-    }, {
-        key: "__addAtribute",
-        value: function __addAtribute(name, attribute) {
-            if (!attribute) {
-                throw new Error("can not add attribute null or undefined.");
-            }
-            var attr = Attribute.generateAttributeForComponent(name, attribute, this);
-            if (this.isDefaultComponent) {
-                this.node.addAttribute(attr);
-            }
-            if (this.isDefaultComponent) {
-                attr.resolveDefaultValue(NodeUtility.getAttributes(this.node.element));
-            } else {
-                var attrs = NodeUtility.getAttributes(this.element);
-                attr.resolveDefaultValue(attrs);
-            }
-            this._additionalAttributesNames.push(attr.name);
-        }
-    }, {
-        key: "__removeAttributes",
-        value: function __removeAttributes(name) {
-            var _this15 = this;
-
-            if (name) {
-                var _index3 = this._additionalAttributesNames.findIndex(function (id) {
-                    return id.name === name;
-                });
-                if (_index3 < 0) {
-                    throw new Error("can not remove attributes :" + name);
-                }
-                var attrId = this._additionalAttributesNames[_index3];
-                if (this.isDefaultComponent) {
-                    this.node.removeAttribute(this.attributes.get(attrId));
-                }
-                this.attributes.delete(attrId);
-                this._additionalAttributesNames.splice(_index3, 1);
-            } else {
-                this._additionalAttributesNames.forEach(function (id) {
-                    _this15.__removeAttributes(id.name);
-                });
-            }
-        }
-    }, {
-        key: "enabled",
-        get: function get() {
-            return this._enabled;
-        },
-        set: function set(val) {
-            var _this16 = this;
-
-            if (this._enabled === val) {
-                return;
-            }
-            this._enabled = val;
-            this._handlers.forEach(function (handler) {
-                handler(_this16);
-            });
-        }
-        /**
-         * The dictionary which is shared in entire tree.
-         * @return {NSDictionary<any>} [description]
-         */
-
-    }, {
-        key: "companion",
-        get: function get() {
-            return this.node ? this.node.companion : null;
-        }
-        /**
-         * Tree interface for the tree this node is attached.
-         * @return {IGomlInterface} [description]
-         */
-
-    }, {
-        key: "tree",
-        get: function get() {
-            return this.node ? this.node.tree : null;
-        }
-    }]);
-    return Component;
-}(IDObject);
-
-var GrimoireComponent = function (_Component) {
-    (0, _inherits3.default)(GrimoireComponent, _Component);
-
-    function GrimoireComponent() {
-        (0, _classCallCheck3.default)(this, GrimoireComponent);
-        return (0, _possibleConstructorReturn3.default)(this, (GrimoireComponent.__proto__ || (0, _getPrototypeOf2.default)(GrimoireComponent)).apply(this, arguments));
-    }
-
-    (0, _createClass3.default)(GrimoireComponent, [{
-        key: "$awake",
-        value: function $awake() {
-            var _this18 = this;
-
-            this.node.resolveAttributesValue();
-            this.getAttribute("id").addObserver(function (attr) {
-                _this18.node.element.id = attr.Value;
-            });
-            this.getAttribute("class").addObserver(function (attr) {
-                _this18.node.element.className = attr.Value.join(" ");
-            });
-            this.getAttribute("enabled").addObserver(function (attr) {
-                if (_this18.node.isActive) {
-                    _this18.node.notifyActivenessUpdate();
-                }
-            });
-        }
-    }]);
-    return GrimoireComponent;
-}(Component);
-
-GrimoireComponent.attributes = {
-    id: {
-        converter: "String",
-        defaultValue: null,
-        readonly: false
-    },
-    class: {
-        converter: "StringArray",
-        defaultValue: null,
-        readonly: false
-    },
-    enabled: {
-        converter: "Boolean",
-        defaultValue: true,
-        readonly: false
-    }
-};
-
-function StringArrayConverter(val) {
-    if (Array.isArray(val) || !val) {
-        return val;
-    }
-    if (typeof val === "string") {
-        return val.split(" ");
-    }
-    throw new Error("value is not supported by StringArrayConverter.:" + val);
-}
-
-function StringConverter(val) {
-    if (typeof val === "string") {
-        return val;
-    } else if (!val) {
-        return val;
-    } else if (typeof val.toString === "function") {
-        return val.toString();
-    }
-    throw new Error("value is not supported by StringConverter.");
-}
-
-var ComponentDeclaration = function () {
-    function ComponentDeclaration(name, attributes, ctor) {
-        (0, _classCallCheck3.default)(this, ComponentDeclaration);
-
-        this.name = name;
-        this.ctor = ctor;
-        this.attributes = attributes;
-    }
-
-    (0, _createClass3.default)(ComponentDeclaration, [{
-        key: "generateInstance",
-        value: function generateInstance(componentElement) {
-            componentElement = componentElement ? componentElement : document.createElementNS(this.name.ns, this.name.name);
-            var component = new this.ctor();
-            componentElement.setAttribute("x-gr-id", component.id);
-            obtainGomlInterface.componentDictionary[component.id] = component;
-            component.name = this.name;
-            component.element = componentElement;
-            component.attributes = new NSDictionary();
-            for (var key in this.attributes) {
-                Attribute.generateAttributeForComponent(key, this.attributes[key], component);
-            }
-            return component;
-        }
-    }]);
-    return ComponentDeclaration;
-}();
-
-var NSSet = function () {
-    function NSSet() {
-        (0, _classCallCheck3.default)(this, NSSet);
-
-        this._contentArray = [];
-    }
-
-    (0, _createClass3.default)(NSSet, [{
-        key: "push",
-        value: function push(item) {
-            var index = this._contentArray.findIndex(function (id) {
-                return id.fqn === item.fqn;
-            });
-            if (index === -1) {
-                this._contentArray.push(item);
-            }
-            return this;
-        }
-    }, {
-        key: "pushArray",
-        value: function pushArray(item) {
-            var _this19 = this;
-
-            item.forEach(function (v) {
-                _this19.push(v);
-            });
-            return this;
-        }
-    }, {
-        key: "values",
-        value: function values() {
-            return this._contentArray.values();
-        }
-    }, {
-        key: "toArray",
-        value: function toArray() {
-            var ret = [];
-            var _iteratorNormalCompletion3 = true;
-            var _didIteratorError3 = false;
-            var _iteratorError3 = undefined;
-
-            try {
-                for (var _iterator3 = (0, _getIterator3.default)(this._contentArray), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-                    var item = _step3.value;
-
-                    ret.push(item);
-                }
-            } catch (err) {
-                _didIteratorError3 = true;
-                _iteratorError3 = err;
-            } finally {
-                try {
-                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
-                        _iterator3.return();
-                    }
-                } finally {
-                    if (_didIteratorError3) {
-                        throw _iteratorError3;
-                    }
-                }
-            }
-
-            return ret;
-        }
-    }, {
-        key: "clone",
-        value: function clone() {
-            var newSet = new NSSet();
-            var _iteratorNormalCompletion4 = true;
-            var _didIteratorError4 = false;
-            var _iteratorError4 = undefined;
-
-            try {
-                for (var _iterator4 = (0, _getIterator3.default)(this._contentArray), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
-                    var i = _step4.value;
-
-                    newSet.push(i);
-                }
-            } catch (err) {
-                _didIteratorError4 = true;
-                _iteratorError4 = err;
-            } finally {
-                try {
-                    if (!_iteratorNormalCompletion4 && _iterator4.return) {
-                        _iterator4.return();
-                    }
-                } finally {
-                    if (_didIteratorError4) {
-                        throw _iteratorError4;
-                    }
-                }
-            }
-
-            return newSet;
-        }
-    }, {
-        key: "merge",
-        value: function merge(other) {
-            var _iteratorNormalCompletion5 = true;
-            var _didIteratorError5 = false;
-            var _iteratorError5 = undefined;
-
-            try {
-                for (var _iterator5 = (0, _getIterator3.default)(other._contentArray), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
-                    var elem = _step5.value;
-
-                    this.push(elem);
-                }
-            } catch (err) {
-                _didIteratorError5 = true;
-                _iteratorError5 = err;
-            } finally {
-                try {
-                    if (!_iteratorNormalCompletion5 && _iterator5.return) {
-                        _iterator5.return();
-                    }
-                } finally {
-                    if (_didIteratorError5) {
-                        throw _iteratorError5;
-                    }
-                }
-            }
-
-            return this;
-        }
-    }], [{
-        key: "fromArray",
-        value: function fromArray(array) {
-            var nSet = new NSSet();
-            nSet.pushArray(array);
-            return nSet;
-        }
-    }]);
-    return NSSet;
-}();
-
-var NodeDeclaration = function () {
-    function NodeDeclaration(name, _defaultComponents, _defaultAttributes, superNode, _treeConstraints) {
-        (0, _classCallCheck3.default)(this, NodeDeclaration);
-
-        this.name = name;
-        this._defaultComponents = _defaultComponents;
-        this._defaultAttributes = _defaultAttributes;
-        this.superNode = superNode;
-        this._treeConstraints = _treeConstraints;
-        if (!this.superNode && this.name.name.toUpperCase() !== "GRIMOIRENODEBASE") {
-            this.superNode = new NSIdentity("GrimoireNodeBase");
-        }
-    }
-
-    (0, _createClass3.default)(NodeDeclaration, [{
-        key: "addDefaultComponent",
-        value: function addDefaultComponent(componentName) {
-            var componentId = Ensure.ensureTobeNSIdentity(componentName);
-            this._defaultComponents.push(componentId);
-            if (this._defaultComponentsActual) {
-                this._defaultComponentsActual.push(componentId);
-            }
-        }
-    }, {
-        key: "_resolveInherites",
-        value: function _resolveInherites() {
-            if (!this.superNode) {
-                this._defaultComponentsActual = this._defaultComponents;
-                this._defaultAttributesActual = this._defaultAttributes;
-                return;
-            }
-            var superNode = obtainGomlInterface.nodeDeclarations.get(this.superNode);
-            var inheritedDefaultComponents = superNode.defaultComponents;
-            var inheritedDefaultAttribute = superNode.defaultAttributes;
-            this._defaultComponentsActual = inheritedDefaultComponents.clone().merge(this._defaultComponents);
-            this._defaultAttributesActual = inheritedDefaultAttribute.clone().pushDictionary(this._defaultAttributes);
-        }
-    }, {
-        key: "defaultComponents",
-        get: function get() {
-            if (!this._defaultComponentsActual) {
-                this._resolveInherites();
-            }
-            return this._defaultComponentsActual;
-        }
-    }, {
-        key: "defaultAttributes",
-        get: function get() {
-            if (!this._defaultAttributesActual) {
-                this._resolveInherites();
-            }
-            return this._defaultAttributesActual;
-        }
-    }, {
-        key: "treeConstraints",
-        get: function get() {
-            return this._treeConstraints;
-        }
-    }]);
-    return NodeDeclaration;
-}();
-
-/**
- * Provides safe xml read feature.
- */
-
-
-var XMLReader = function () {
-    function XMLReader() {
-        (0, _classCallCheck3.default)(this, XMLReader);
-    }
-
-    (0, _createClass3.default)(XMLReader, null, [{
-        key: "parseXML",
-        value: function parseXML(doc, rootElementName) {
-            var parsed = XMLReader._parser.parseFromString(doc, "text/xml");
-            if (rootElementName) {
-                if (parsed.documentElement.tagName.toUpperCase() !== rootElementName.toUpperCase()) {
-                    throw new Error("Specified document is invalid.");
-                } // TODO should throw more detail error
-            }
-            return [parsed.documentElement]; // TODO: implenent!
-        }
-    }, {
-        key: "getElements",
-        value: function getElements(elem, name) {
-            var result = [];
-            var elems = elem.getElementsByTagName(name);
-            for (var i = 0; i < elems.length; i++) {
-                result.push(elems.item(i));
-            }
-            return result;
-        }
-    }, {
-        key: "getSingleElement",
-        value: function getSingleElement(elem, name, mandatory) {
-            var result = XMLReader.getElements(elem, name);
-            if (result.length === 1) {
-                return result[0];
-            } else if (result.length === 0) {
-                if (mandatory) {
-                    throw new Error("The mandatory element " + name + " was required, but not found");
-                } else {
-                    return null;
-                }
-            } else {
-                throw new Error("The element " + name + " requires to exist in single. But there is " + result.length + " count of elements");
-            }
-        }
-    }, {
-        key: "getAttribute",
-        value: function getAttribute(elem, name, mandatory) {
-            var result = elem.attributes.getNamedItem(name);
-            if (result) {
-                return result.value;
-            } else if (mandatory) {
-                throw new Error("The mandatory attribute " + name + " was required, but it was not found");
-            } else {
-                return null;
-            }
-        }
-    }, {
-        key: "getAttributeFloat",
-        value: function getAttributeFloat(elem, name, mandatory) {
-            var resultStr = XMLReader.getAttribute(elem, name, mandatory);
-            return parseFloat(resultStr);
-        }
-    }, {
-        key: "getAttributeInt",
-        value: function getAttributeInt(elem, name, mandatory) {
-            var resultStr = XMLReader.getAttribute(elem, name, mandatory);
-            return parseInt(resultStr, 10);
-        }
-    }, {
-        key: "getChildElements",
-        value: function getChildElements(elem) {
-            var children = elem.childNodes;
-            var result = [];
-            for (var i = 0; i < children.length; i++) {
-                if (children.item(i) instanceof Element) {
-                    result.push(children.item(i));
-                }
-            }
-            return result;
-        }
-    }, {
-        key: "getAttributes",
-        value: function getAttributes(elem, ns) {
-            var result = {};
-            var attrs = elem.attributes;
-            for (var i = 0; i < attrs.length; i++) {
-                var attr = attrs.item(i);
-                if (!ns || attr.namespaceURI === ns) {
-                    result[attr.localName] = attr.value;
-                }
-            }
-            return result;
-        }
-    }]);
-    return XMLReader;
-}();
-
-XMLReader._parser = new DOMParser();
-
-var domain;
-
-// This constructor is used to store event handlers. Instantiating this is
-// faster than explicitly calling `Object.create(null)` to get a "clean" empty
-// object (tested with v8 v4.9).
-function EventHandlers() {}
-EventHandlers.prototype = (0, _create2.default)(null);
-
-function EventEmitter() {
-    EventEmitter.init.call(this);
-}
-EventEmitter.usingDomains = false;
-
-EventEmitter.prototype.domain = undefined;
-EventEmitter.prototype._events = undefined;
-EventEmitter.prototype._maxListeners = undefined;
-
-// By default EventEmitters will print a warning if more than 10 listeners are
-// added to it. This is a useful default which helps finding memory leaks.
-EventEmitter.defaultMaxListeners = 10;
-
-EventEmitter.init = function () {
-    this.domain = null;
-    if (EventEmitter.usingDomains) {
-        // if there is an active domain, then attach to it.
-        if (domain.active && !(this instanceof domain.Domain)) {
-            this.domain = domain.active;
-        }
-    }
-
-    if (!this._events || this._events === (0, _getPrototypeOf2.default)(this)._events) {
-        this._events = new EventHandlers();
-        this._eventsCount = 0;
-    }
-
-    this._maxListeners = this._maxListeners || undefined;
-};
-
-// Obviously not all Emitters should be limited to 10. This function allows
-// that to be increased. Set to zero for unlimited.
-EventEmitter.prototype.setMaxListeners = function setMaxListeners(n) {
-    if (typeof n !== 'number' || n < 0 || isNaN(n)) throw new TypeError('"n" argument must be a positive number');
-    this._maxListeners = n;
-    return this;
-};
-
-function $getMaxListeners(that) {
-    if (that._maxListeners === undefined) return EventEmitter.defaultMaxListeners;
-    return that._maxListeners;
-}
-
-EventEmitter.prototype.getMaxListeners = function getMaxListeners() {
-    return $getMaxListeners(this);
-};
-
-// These standalone emit* functions are used to optimize calling of event
-// handlers for fast cases because emit() itself often has a variable number of
-// arguments and can be deoptimized because of that. These functions always have
-// the same number of arguments and thus do not get deoptimized, so the code
-// inside them can execute faster.
-function emitNone(handler, isFn, self) {
-    if (isFn) handler.call(self);else {
-        var len = handler.length;
-        var listeners = arrayClone(handler, len);
-        for (var i = 0; i < len; ++i) {
-            listeners[i].call(self);
-        }
-    }
-}
-function emitOne(handler, isFn, self, arg1) {
-    if (isFn) handler.call(self, arg1);else {
-        var len = handler.length;
-        var listeners = arrayClone(handler, len);
-        for (var i = 0; i < len; ++i) {
-            listeners[i].call(self, arg1);
-        }
-    }
-}
-function emitTwo(handler, isFn, self, arg1, arg2) {
-    if (isFn) handler.call(self, arg1, arg2);else {
-        var len = handler.length;
-        var listeners = arrayClone(handler, len);
-        for (var i = 0; i < len; ++i) {
-            listeners[i].call(self, arg1, arg2);
-        }
-    }
-}
-function emitThree(handler, isFn, self, arg1, arg2, arg3) {
-    if (isFn) handler.call(self, arg1, arg2, arg3);else {
-        var len = handler.length;
-        var listeners = arrayClone(handler, len);
-        for (var i = 0; i < len; ++i) {
-            listeners[i].call(self, arg1, arg2, arg3);
-        }
-    }
-}
-
-function emitMany(handler, isFn, self, args) {
-    if (isFn) handler.apply(self, args);else {
-        var len = handler.length;
-        var listeners = arrayClone(handler, len);
-        for (var i = 0; i < len; ++i) {
-            listeners[i].apply(self, args);
-        }
-    }
-}
-
-EventEmitter.prototype.emit = function emit(type) {
-    var er, handler, len, args, i, events, domain;
-    var needDomainExit = false;
-    var doError = type === 'error';
-
-    events = this._events;
-    if (events) doError = doError && events.error == null;else if (!doError) return false;
-
-    domain = this.domain;
-
-    // If there is no 'error' event listener then throw.
-    if (doError) {
-        er = arguments[1];
-        if (domain) {
-            if (!er) er = new Error('Uncaught, unspecified "error" event');
-            er.domainEmitter = this;
-            er.domain = domain;
-            er.domainThrown = false;
-            domain.emit('error', er);
-        } else if (er instanceof Error) {
-            throw er; // Unhandled 'error' event
-        } else {
-            // At least give some kind of context to the user
-            var err = new Error('Uncaught, unspecified "error" event. (' + er + ')');
-            err.context = er;
-            throw err;
-        }
-        return false;
-    }
-
-    handler = events[type];
-
-    if (!handler) return false;
-
-    var isFn = typeof handler === 'function';
-    len = arguments.length;
-    switch (len) {
-        // fast cases
-        case 1:
-            emitNone(handler, isFn, this);
-            break;
-        case 2:
-            emitOne(handler, isFn, this, arguments[1]);
-            break;
-        case 3:
-            emitTwo(handler, isFn, this, arguments[1], arguments[2]);
-            break;
-        case 4:
-            emitThree(handler, isFn, this, arguments[1], arguments[2], arguments[3]);
-            break;
-        // slower
-        default:
-            args = new Array(len - 1);
-            for (i = 1; i < len; i++) {
-                args[i - 1] = arguments[i];
-            }emitMany(handler, isFn, this, args);
-    }
-
-    if (needDomainExit) domain.exit();
-
-    return true;
-};
-
-function _addListener(target, type, listener, prepend) {
-    var m;
-    var events;
-    var existing;
-
-    if (typeof listener !== 'function') throw new TypeError('"listener" argument must be a function');
-
-    events = target._events;
-    if (!events) {
-        events = target._events = new EventHandlers();
-        target._eventsCount = 0;
-    } else {
-        // To avoid recursion in the case that type === "newListener"! Before
-        // adding it to the listeners, first emit "newListener".
-        if (events.newListener) {
-            target.emit('newListener', type, listener.listener ? listener.listener : listener);
-
-            // Re-assign `events` because a newListener handler could have caused the
-            // this._events to be assigned to a new object
-            events = target._events;
-        }
-        existing = events[type];
-    }
-
-    if (!existing) {
-        // Optimize the case of one listener. Don't need the extra array object.
-        existing = events[type] = listener;
-        ++target._eventsCount;
-    } else {
-        if (typeof existing === 'function') {
-            // Adding the second element, need to change to array.
-            existing = events[type] = prepend ? [listener, existing] : [existing, listener];
-        } else {
-            // If we've already got an array, just append.
-            if (prepend) {
-                existing.unshift(listener);
-            } else {
-                existing.push(listener);
-            }
-        }
-
-        // Check for listener leak
-        if (!existing.warned) {
-            m = $getMaxListeners(target);
-            if (m && m > 0 && existing.length > m) {
-                existing.warned = true;
-                var w = new Error('Possible EventEmitter memory leak detected. ' + existing.length + ' ' + type + ' listeners added. ' + 'Use emitter.setMaxListeners() to increase limit');
-                w.name = 'MaxListenersExceededWarning';
-                w.emitter = target;
-                w.type = type;
-                w.count = existing.length;
-                emitWarning(w);
-            }
-        }
-    }
-
-    return target;
-}
-function emitWarning(e) {
-    typeof console.warn === 'function' ? console.warn(e) : console.log(e);
-}
-EventEmitter.prototype.addListener = function addListener(type, listener) {
-    return _addListener(this, type, listener, false);
-};
-
-EventEmitter.prototype.on = EventEmitter.prototype.addListener;
-
-EventEmitter.prototype.prependListener = function prependListener(type, listener) {
-    return _addListener(this, type, listener, true);
-};
-
-function _onceWrap(target, type, listener) {
-    var fired = false;
-    function g() {
-        target.removeListener(type, g);
-        if (!fired) {
-            fired = true;
-            listener.apply(target, arguments);
-        }
-    }
-    g.listener = listener;
-    return g;
-}
-
-EventEmitter.prototype.once = function once(type, listener) {
-    if (typeof listener !== 'function') throw new TypeError('"listener" argument must be a function');
-    this.on(type, _onceWrap(this, type, listener));
-    return this;
-};
-
-EventEmitter.prototype.prependOnceListener = function prependOnceListener(type, listener) {
-    if (typeof listener !== 'function') throw new TypeError('"listener" argument must be a function');
-    this.prependListener(type, _onceWrap(this, type, listener));
-    return this;
-};
-
-// emits a 'removeListener' event iff the listener was removed
-EventEmitter.prototype.removeListener = function removeListener(type, listener) {
-    var list, events, position, i, originalListener;
-
-    if (typeof listener !== 'function') throw new TypeError('"listener" argument must be a function');
-
-    events = this._events;
-    if (!events) return this;
-
-    list = events[type];
-    if (!list) return this;
-
-    if (list === listener || list.listener && list.listener === listener) {
-        if (--this._eventsCount === 0) this._events = new EventHandlers();else {
-            delete events[type];
-            if (events.removeListener) this.emit('removeListener', type, list.listener || listener);
-        }
-    } else if (typeof list !== 'function') {
-        position = -1;
-
-        for (i = list.length; i-- > 0;) {
-            if (list[i] === listener || list[i].listener && list[i].listener === listener) {
-                originalListener = list[i].listener;
-                position = i;
-                break;
-            }
-        }
-
-        if (position < 0) return this;
-
-        if (list.length === 1) {
-            list[0] = undefined;
-            if (--this._eventsCount === 0) {
-                this._events = new EventHandlers();
-                return this;
-            } else {
-                delete events[type];
-            }
-        } else {
-            spliceOne(list, position);
-        }
-
-        if (events.removeListener) this.emit('removeListener', type, originalListener || listener);
-    }
-
-    return this;
-};
-
-EventEmitter.prototype.removeAllListeners = function removeAllListeners(type) {
-    var listeners, events;
-
-    events = this._events;
-    if (!events) return this;
-
-    // not listening for removeListener, no need to emit
-    if (!events.removeListener) {
-        if (arguments.length === 0) {
-            this._events = new EventHandlers();
-            this._eventsCount = 0;
-        } else if (events[type]) {
-            if (--this._eventsCount === 0) this._events = new EventHandlers();else delete events[type];
-        }
-        return this;
-    }
-
-    // emit removeListener for all listeners on all events
-    if (arguments.length === 0) {
-        var keys = (0, _keys2.default)(events);
-        for (var i = 0, key; i < keys.length; ++i) {
-            key = keys[i];
-            if (key === 'removeListener') continue;
-            this.removeAllListeners(key);
-        }
-        this.removeAllListeners('removeListener');
-        this._events = new EventHandlers();
-        this._eventsCount = 0;
-        return this;
-    }
-
-    listeners = events[type];
-
-    if (typeof listeners === 'function') {
-        this.removeListener(type, listeners);
-    } else if (listeners) {
-        // LIFO order
-        do {
-            this.removeListener(type, listeners[listeners.length - 1]);
-        } while (listeners[0]);
-    }
-
-    return this;
-};
-
-EventEmitter.prototype.listeners = function listeners(type) {
-    var evlistener;
-    var ret;
-    var events = this._events;
-
-    if (!events) ret = [];else {
-        evlistener = events[type];
-        if (!evlistener) ret = [];else if (typeof evlistener === 'function') ret = [evlistener.listener || evlistener];else ret = unwrapListeners(evlistener);
-    }
-
-    return ret;
-};
-
-EventEmitter.listenerCount = function (emitter, type) {
-    if (typeof emitter.listenerCount === 'function') {
-        return emitter.listenerCount(type);
-    } else {
-        return listenerCount.call(emitter, type);
-    }
-};
-
-EventEmitter.prototype.listenerCount = listenerCount;
-function listenerCount(type) {
-    var events = this._events;
-
-    if (events) {
-        var evlistener = events[type];
-
-        if (typeof evlistener === 'function') {
-            return 1;
-        } else if (evlistener) {
-            return evlistener.length;
-        }
-    }
-
-    return 0;
-}
-
-EventEmitter.prototype.eventNames = function eventNames() {
-    return this._eventsCount > 0 ? (0, _ownKeys2.default)(this._events) : [];
-};
-
-// About 1.5x faster than the two-arg version of Array#splice().
-function spliceOne(list, index) {
-    for (var i = index, k = i + 1, n = list.length; k < n; i += 1, k += 1) {
-        list[i] = list[k];
-    }list.pop();
-}
-
-function arrayClone(arr, i) {
-    var copy = new Array(i);
-    while (i--) {
-        copy[i] = arr[i];
-    }return copy;
-}
-
-function unwrapListeners(arr) {
-    var ret = new Array(arr.length);
-    for (var i = 0; i < ret.length; ++i) {
-        ret[i] = arr[i].listener || arr[i];
-    }
-    return ret;
-}
-
-/**
- * EventEmitterをmixinしたIDObject
- */
-
-var EEObject = function (_IDObject3) {
-    (0, _inherits3.default)(EEObject, _IDObject3);
-
-    function EEObject() {
-        (0, _classCallCheck3.default)(this, EEObject);
-        return (0, _possibleConstructorReturn3.default)(this, (EEObject.__proto__ || (0, _getPrototypeOf2.default)(EEObject)).call(this));
-    }
-
-    (0, _createClass3.default)(EEObject, [{
-        key: "emitException",
-        value: function emitException(eventName, error) {
-            error.handled = false;
-            var listeners = this.listeners(eventName);
-            for (var i = 0; i < listeners.length; i++) {
-                listeners[listeners.length - i - 1](error);
-                if (error.handled) {
-                    return;
-                }
-            }
-            if (eventName !== "error") {
-                this.emitException("error", error);
-            } else {
-                throw error;
-            }
-        }
-    }]);
-    return EEObject;
-}(IDObject);
-
-function applyMixins(derivedCtor, baseCtors) {
-    baseCtors.forEach(function (baseCtor) {
-        (0, _getOwnPropertyNames2.default)(baseCtor.prototype).forEach(function (name) {
-            derivedCtor.prototype[name] = baseCtor.prototype[name];
-        });
-    });
-}
-applyMixins(EEObject, [EventEmitter]);
-
-var GomlNode = function (_EEObject) {
-    (0, _inherits3.default)(GomlNode, _EEObject);
-
-    /**
-     * 新しいインスタンスの作成
-     * @param  {NodeDeclaration} recipe  作成するノードのDeclaration
-     * @param  {Element}         element 対応するDomElement
-     * @return {[type]}                  [description]
-     */
-    function GomlNode(recipe, element) {
-        (0, _classCallCheck3.default)(this, GomlNode);
-
-        var _this21 = (0, _possibleConstructorReturn3.default)(this, (GomlNode.__proto__ || (0, _getPrototypeOf2.default)(GomlNode)).call(this));
-
-        _this21.children = [];
-        _this21._parent = null;
-        _this21._root = null;
-        _this21._mounted = false;
-        _this21._messageBuffer = [];
-        _this21._tree = null;
-        _this21._companion = new NSDictionary();
-        _this21._deleted = false;
-        _this21._attrBuffer = {};
-        _this21._defaultValueResolved = false;
-        if (!recipe) {
-            throw new Error("recipe must not be null");
-        }
-        _this21.nodeDeclaration = recipe;
-        _this21.element = element ? element : document.createElementNS(recipe.name.ns, recipe.name.name); // TODO Could be undefined or null?
-        _this21.componentsElement = document.createElement("COMPONENTS");
-        _this21._root = _this21;
-        _this21._tree = GomlInterfaceGenerator([_this21]);
-        _this21._components = [];
-        _this21.attributes = new NSDictionary();
-        _this21.element.setAttribute("x-gr-id", _this21.id);
-        var defaultComponentNames = recipe.defaultComponents;
-        // instanciate default components
-        defaultComponentNames.toArray().map(function (id) {
-            _this21.addComponent(id, true);
-        });
-        // register to GrimoireInterface.
-        obtainGomlInterface.nodeDictionary[_this21.id] = _this21;
-        return _this21;
-    }
-    /**
-     * Get actual goml node from element of xml tree.
-     * @param  {Element}  elem [description]
-     * @return {GomlNode}      [description]
-     */
-
-
-    (0, _createClass3.default)(GomlNode, [{
-        key: "getChildrenByClass",
-        value: function getChildrenByClass(className) {
-            var nodes = this.element.getElementsByClassName(className);
-            return new Array(nodes.length).map(function (v, i) {
-                return GomlNode.fromElement(nodes.item(i));
-            });
-        }
-    }, {
-        key: "getChildrenByNodeName",
-        value: function getChildrenByNodeName(nodeName) {
-            var nodes = this.element.getElementsByTagName(nodeName);
-            return new Array(nodes.length).map(function (v, i) {
-                return GomlNode.fromElement(nodes.item(i));
-            });
-        }
-        /**
-         * ノードを削除する。使わなくなったら呼ぶ。子要素も再帰的に削除する。
-         */
-
-    }, {
-        key: "delete",
-        value: function _delete() {
-            this.children.forEach(function (c) {
-                c.delete();
-            });
-            obtainGomlInterface.nodeDictionary[this.id] = null;
-            if (this._parent) {
-                this._parent.detachChild(this);
-            } else {
-                this.setMounted(false);
-                if (this.element.parentNode) {
-                    this.element.parentNode.removeChild(this.element);
-                }
-            }
-            this._deleted = true;
-        }
-    }, {
-        key: "sendMessage",
-        value: function sendMessage(message, args) {
-            var _this22 = this;
-
-            if (!this.enabled || !this.mounted) {
-                return false;
-            }
-            this._components.forEach(function (component) {
-                _this22._sendMessageToComponent(component, message, false, false, args);
-            });
-            return true;
-        }
-    }, {
-        key: "broadcastMessage",
-        value: function broadcastMessage(arg1, arg2, arg3) {
-            if (!this.enabled || !this.mounted) {
-                return;
-            }
-            if (typeof arg1 === "number") {
-                var range = arg1;
-                var message = arg2;
-                var args = arg3;
-                this.sendMessage(message, args);
-                if (range > 0) {
-                    for (var i = 0; i < this.children.length; i++) {
-                        this.children[i].broadcastMessage(range - 1, message, args);
-                    }
-                }
-            } else {
-                var _message = arg1;
-                var _args75 = arg2;
-                this.sendMessage(_message, _args75);
-                for (var _i7 = 0; _i7 < this.children.length; _i7++) {
-                    this.children[_i7].broadcastMessage(_message, _args75);
-                }
-            }
-        }
-        /**
-         * 指定したノード名と属性で生成されたノードの新しいインスタンスを、このノードの子要素として追加
-         * @param {string |   NSIdentity} nodeName      [description]
-         * @param {any    }} attributes   [description]
-         */
-
-    }, {
-        key: "addNode",
-        value: function addNode(nodeName, attributes) {
-            if (typeof nodeName === "string") {
-                this.addNode(new NSIdentity(nodeName), attributes);
-            } else {
-                var nodeDec = obtainGomlInterface.nodeDeclarations.get(nodeName);
-                var node = new GomlNode(nodeDec, null);
-                if (attributes) {
-                    for (var key in attributes) {
-                        var id = key.indexOf("|") !== -1 ? NSIdentity.fromFQN(key) : new NSIdentity(key);
-                        node.attr(id, attributes[key]);
-                    }
-                }
-                this.addChild(node);
-            }
-        }
-        /**
-         * Add child.
-         * @param {GomlNode} child            追加する子ノード
-         * @param {number}   index            追加位置。なければ末尾に追加
-         * @param {[type]}   elementSync=true trueのときはElementのツリーを同期させる。（Elementからパースするときはfalseにする）
-         */
-
-    }, {
-        key: "addChild",
-        value: function addChild(child, index) {
-            var elementSync = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
-
-            if (child._deleted) {
-                throw new Error("deleted node never use.");
-            }
-            if (index != null && typeof index !== "number") {
-                throw new Error("insert index should be number or null or undefined.");
-            }
-            child._parent = this;
-            var insertIndex = index == null ? this.children.length : index;
-            this.children.splice(insertIndex, 0, child);
-            var checkChildConstraints = child.checkTreeConstraints();
-            var checkAncestorConstraint = this._callRecursively(function (n) {
-                return n.checkTreeConstraints();
-            }, function (n) {
-                return n._parent ? [n._parent] : [];
-            }).reduce(function (list, current) {
-                return list.concat(current);
-            });
-            var errors = checkChildConstraints.concat(checkAncestorConstraint).filter(function (m) {
-                return m;
-            });
-            if (errors.length !== 0) {
-                var message = errors.reduce(function (m, current) {
-                    return m + "\n" + current;
-                });
-                throw new Error("tree constraint is not satisfied.\n" + message);
-            }
-            // handling html
-            if (elementSync) {
-                var referenceElement = this.element[NodeUtility.getNodeListIndexByElementIndex(this.element, insertIndex)];
-                this.element.insertBefore(child.element, referenceElement);
-            }
-            child._tree = this.tree;
-            child._companion = this.companion;
-            // mounting
-            if (this.mounted) {
-                child.setMounted(true);
-            }
-        }
-    }, {
-        key: "callRecursively",
-        value: function callRecursively(func) {
-            return this._callRecursively(func, function (n) {
-                return n.children;
-            });
-        }
-        /**
-         * デタッチしてdeleteする。
-         * @param {GomlNode} child Target node to be inserted.
-         */
-
-    }, {
-        key: "removeChild",
-        value: function removeChild(child) {
-            var node = this.detachChild(child);
-            if (node) {
-                node.delete();
-            }
-        }
-        /**
-         * 指定したノードが子要素なら子要素から外す。
-         * @param  {GomlNode} child [description]
-         * @return {GomlNode}       [description]
-         */
-
-    }, {
-        key: "detachChild",
-        value: function detachChild(target) {
-            // search child.
-            var index = this.children.indexOf(target);
-            if (index === -1) {
-                return null;
-            }
-            target.setMounted(false);
-            target._parent = null;
-            this.children.splice(index, 1);
-            // html sync
-            this.element.removeChild(target.element);
-            // check ancestor constraint.
-            var errors = this._callRecursively(function (n) {
-                return n.checkTreeConstraints();
-            }, function (n) {
-                return n._parent ? [n._parent] : [];
-            }).reduce(function (list, current) {
-                return list.concat(current);
-            }).filter(function (m) {
-                return m;
-            });
-            if (errors.length !== 0) {
-                var message = errors.reduce(function (m, current) {
-                    return m + "\n" + current;
-                });
-                throw new Error("tree constraint is not satisfied.\n" + message);
-            }
-            return target;
-        }
-        /**
-         * detach myself
-         */
-
-    }, {
-        key: "detach",
-        value: function detach() {
-            if (this.parent) {
-                this.parent.detachChild(this);
-            } else {
-                throw new Error("root Node cannot be detached.");
-            }
-        }
-    }, {
-        key: "attr",
-        value: function attr(attrName, value) {
-            attrName = Ensure.ensureTobeNSIdentity(attrName);
-            var attr = this.attributes.get(attrName);
-            if (value !== void 0) {
-                // setValue.
-                if (!attr) {
-                    console.warn("attribute \"" + attrName.name + "\" is not found.");
-                    this._attrBuffer[attrName.fqn] = value;
-                } else {
-                    attr.Value = value;
-                }
-            } else {
-                // getValue.
-                if (!attr) {
-                    var attrBuf = this._attrBuffer[attrName.fqn];
-                    if (attrBuf !== void 0) {
-                        console.log("get attrBuf!");
-                        return attrBuf;
-                    }
-                    console.warn("attribute \"" + attrName.name + "\" is not found.");
-                    return;
-                } else {
-                    return attr.Value;
-                }
-            }
-        }
-        /**
-         *  Add new attribute. In most of case, users no need to call this method.
-         *  Use __addAttribute in Component should be used instead.
-         */
-
-    }, {
-        key: "addAttribute",
-        value: function addAttribute(attr) {
-            this.attributes.set(attr.name, attr);
-            // check buffer value.
-            var attrBuf = this._attrBuffer[attr.name.fqn];
-            if (attrBuf !== void 0) {
-                attr.Value = attrBuf;
-                delete this._attrBuffer[attr.name.fqn];
-            }
-        }
-        /**
-         * Update mounted status and emit events
-         * @param {boolean} mounted Mounted status.
-         */
-
-    }, {
-        key: "setMounted",
-        value: function setMounted(mounted) {
-            if (this._mounted === mounted) {
-                return;
-            }
-            if (mounted) {
-                this._mounted = mounted;
-                this._clearMessageBuffer("unmount");
-                this._sendMessage("awake", true, false);
-                this._sendMessage("mount", false, true);
-                this.children.forEach(function (child) {
-                    child.setMounted(mounted);
-                });
-            } else {
-                this._clearMessageBuffer("mount");
-                this.children.forEach(function (child) {
-                    child.setMounted(mounted);
-                });
-                this._sendMessage("unmount", false, true);
-                this._sendMessage("dispose", true, false);
-                this._tree = null;
-                this._companion = null;
-                this._mounted = mounted;
-            }
-        }
-        /**
-         * Get index of this node from parent.
-         * @return {number} number of index.
-         */
-
-    }, {
-        key: "index",
-        value: function index() {
-            return this._parent.children.indexOf(this);
-        }
-    }, {
-        key: "removeAttribute",
-        value: function removeAttribute(attr) {
-            this.attributes.delete(attr.name);
-        }
-        /**
-         * このノードにコンポーネントをアタッチする。
-         * @param {Component} component [description]
-         */
-
-    }, {
-        key: "addComponent",
-        value: function addComponent(component) {
-            var isDefaultComponent = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-
-            var declaration = obtainGomlInterface.componentDeclarations.get(component);
-            var instance = declaration.generateInstance();
-            this._addComponentDirectly(instance, isDefaultComponent);
-            return instance;
-        }
-        /**
-         * Internal use!
-         * Should not operate by users or plugin developpers
-         * @param {Component} component          [description]
-         * @param {boolean}   isDefaultComponent [description]
-         */
-
-    }, {
-        key: "_addComponentDirectly",
-        value: function _addComponentDirectly(component, isDefaultComponent) {
-            var _this23 = this;
-
-            if (isDefaultComponent) {
-                component.isDefaultComponent = true;
-            }
-            var insertIndex = this._components.length;
-            var referenceElement = this.componentsElement[NodeUtility.getNodeListIndexByElementIndex(this.componentsElement, insertIndex)];
-            this.componentsElement.insertBefore(component.element, referenceElement);
-            this._components.push(component);
-            component.node = this;
-            component.addEnabledObserver(function (c) {
-                if (c.enabled) {
-                    // TODO ??
-                    _this23._sendBufferdMessageToComponent(c, "mount", false, true);
-                    _this23._sendBufferdMessageToComponent(c, "unmount", false, true);
-                }
-            });
-            if (isDefaultComponent) {
-                // attributes should be exposed on node
-                component.attributes.forEach(function (p) {
-                    return _this23.addAttribute(p);
-                });
-                if (this._defaultValueResolved) {
-                    component.attributes.forEach(function (p) {
-                        return p.resolveDefaultValue(NodeUtility.getAttributes(_this23.element));
-                    });
-                }
-            }
-            if (this._mounted) {
-                this._sendMessageToComponent(component, "awake", true, false);
-                this._sendMessageToComponent(component, "mount", false, true);
-            }
-        }
-    }, {
-        key: "getComponents",
-        value: function getComponents() {
-            return this._components;
-        }
-    }, {
-        key: "getComponent",
-        value: function getComponent(name) {
-            if (typeof name === "string") {
-                for (var i = 0; i < this._components.length; i++) {
-                    if (this._components[i].name.name === name) {
-                        return this._components[i];
-                    }
-                }
-            } else {
-                for (var _i8 = 0; _i8 < this._components.length; _i8++) {
-                    if (this._components[_i8].name.fqn === name.fqn) {
-                        return this._components[_i8];
-                    }
-                }
-            }
-            return null;
-        }
-        /**
-         * すべてのコンポーネントの属性をエレメントかデフォルト値で初期化
-         */
-
-    }, {
-        key: "resolveAttributesValue",
-        value: function resolveAttributesValue() {
-            var _this24 = this;
-
-            this._defaultValueResolved = true;
-            this._components.forEach(function (component) {
-                component.resolveDefaultAttributes(NodeUtility.getAttributes(_this24.element));
-            });
-        }
-        /**
-         * このノードのtreeConstrainが満たされるか調べる
-         * @return {string[]} [description]
-         */
-
-    }, {
-        key: "checkTreeConstraints",
-        value: function checkTreeConstraints() {
-            var _this25 = this;
-
-            var constraints = this.nodeDeclaration.treeConstraints;
-            if (!constraints) {
-                return [];
-            }
-            var errorMesasges = constraints.map(function (constraint) {
-                return constraint(_this25);
-            }).filter(function (message) {
-                return message !== null;
-            });
-            if (errorMesasges.length === 0) {
-                return null;
-            }
-            return errorMesasges;
-        }
-        /**
-         * バッファしていたmount,unmountが送信されるかもしれない.アクティブなら
-         */
-
-    }, {
-        key: "notifyActivenessUpdate",
-        value: function notifyActivenessUpdate() {
-            if (this.isActive) {
-                this._sendBufferdMessage(this.mounted ? "mount" : "unmount", false);
-                this.children.forEach(function (child) {
-                    child.notifyActivenessUpdate();
-                });
-            }
-        }
-        /**
-         * コンポーネントにメッセージを送る。送信したらバッファからは削除される.
-         * @param  {Component} targetComponent 対象コンポーネント
-         * @param  {string}    message         メッセージ
-         * @param  {boolean}   forced          trueでコンポーネントのenableを無視して送信
-         * @param  {boolean}   toBuffer        trueで送信失敗したらバッファに追加
-         * @param  {any}       args            [description]
-         * @return {boolean}                   送信したか
-         */
-
-    }, {
-        key: "_sendMessageToComponent",
-        value: function _sendMessageToComponent(targetComponent, message, forced, toBuffer, args) {
-            message = Ensure.ensureTobeMessage(message);
-            var bufferdIndex = this._messageBuffer.findIndex(function (obj) {
-                return obj.message === message && obj.target === targetComponent;
-            });
-            if (!forced && (!targetComponent.enabled || !this.isActive)) {
-                if (toBuffer && bufferdIndex < 0) {
-                    this._messageBuffer.push({ message: Ensure.ensureTobeMessage(message), target: targetComponent });
-                }
-                return false;
-            }
-            message = Ensure.ensureTobeMessage(message);
-            var method = targetComponent[message];
-            if (typeof method === "function") {
-                method.bind(targetComponent)(args);
-            }
-            if (bufferdIndex >= 0) {
-                this._messageBuffer.splice(bufferdIndex, 1);
-            }
-            return true;
-        }
-        /**
-         * バッファからメッセージを送信。成功したらバッファから削除
-         * @param  {Component} target  [description]
-         * @param  {string}    message [description]
-         * @param  {boolean}   forced  [description]
-         * @param  {any}       args    [description]
-         * @return {boolean}           成功したか
-         */
-
-    }, {
-        key: "_sendBufferdMessageToComponent",
-        value: function _sendBufferdMessageToComponent(target, message, forced, sendToRemove, args) {
-            if (!forced && (!target.enabled || !this.isActive)) {
-                return false;
-            }
-            message = Ensure.ensureTobeMessage(message);
-            var bufferdIndex = this._messageBuffer.findIndex(function (obj) {
-                return obj.message === message && obj.target === target;
-            });
-            if (bufferdIndex >= 0) {
-                var method = target[message];
-                if (typeof method === "function") {
-                    method.bind(target)(args);
-                }
-                if (sendToRemove) {
-                    this._messageBuffer.splice(bufferdIndex, 1);
-                }
-                return true;
-            }
-            return false;
-        }
-    }, {
-        key: "_sendMessage",
-        value: function _sendMessage(message, forced, toBuffer, args) {
-            var _this26 = this;
-
-            this._components.forEach(function (component) {
-                _this26._sendMessageToComponent(component, message, forced, toBuffer, args);
-            });
-        }
-        /**
-         * バッファのメッセージを送信可能なら送信してバッファから削除
-         */
-
-    }, {
-        key: "_sendBufferdMessage",
-        value: function _sendBufferdMessage(message, forced, args) {
-            var _this27 = this;
-
-            var next = [];
-            message = Ensure.ensureTobeMessage(message);
-            this._messageBuffer.forEach(function (obj) {
-                if (obj.message !== message || !_this27._sendBufferdMessageToComponent(obj.target, message, forced, false, args)) {
-                    next.push(obj);
-                }
-            });
-            this._messageBuffer = next;
-        }
-    }, {
-        key: "_clearMessageBuffer",
-        value: function _clearMessageBuffer(message) {
-            message = Ensure.ensureTobeMessage(message);
-            this._messageBuffer = this._messageBuffer.filter(function (obj) {
-                return obj.message !== message;
-            });
-        }
-    }, {
-        key: "_callRecursively",
-        value: function _callRecursively(func, nextGenerator) {
-            var val = func(this);
-            var nexts = nextGenerator(this);
-            var nextVals = nexts.map(function (c) {
-                return c.callRecursively(func);
-            });
-            var list = nextVals.reduce(function (clist, current) {
-                return clist.concat(current);
-            }, []);
-            list.unshift(val);
-            return list;
-        }
-    }, {
-        key: "name",
-        get: function get() {
-            return this.nodeDeclaration.name;
-        }
-        /**
-         * このノードの属するツリーのGomlInterface。unmountedならnull。
-         * @return {IGomlInterface} [description]
-         */
-
-    }, {
-        key: "tree",
-        get: function get() {
-            return this._tree;
-        }
-    }, {
-        key: "deleted",
-        get: function get() {
-            return this._deleted;
-        }
-    }, {
-        key: "isActive",
-        get: function get() {
-            if (this._parent) {
-                return this._parent.isActive && this.enabled;
-            } else {
-                return this.enabled;
-            }
-        }
-    }, {
-        key: "enabled",
-        get: function get() {
-            return this.attr("enabled");
-        },
-        set: function set(value) {
-            this.attr("enabled", value);
-        }
-        /**
-         * ツリーで共有されるオブジェクト。マウントされていない状態ではnull。
-         * @return {NSDictionary<any>} [description]
-         */
-
-    }, {
-        key: "companion",
-        get: function get() {
-            return this._companion;
-        }
-    }, {
-        key: "nodeName",
-        get: function get() {
-            return this.nodeDeclaration.name;
-        }
-    }, {
-        key: "parent",
-        get: function get() {
-            return this._parent;
-        }
-    }, {
-        key: "hasChildren",
-        get: function get() {
-            return this.children.length > 0;
-        }
-        /**
-         * Get mounted status.
-         * @return {boolean} Whether this node is mounted or not.
-         */
-
-    }, {
-        key: "mounted",
-        get: function get() {
-            return this._mounted;
-        }
-    }], [{
-        key: "fromElement",
-        value: function fromElement(elem) {
-            return obtainGomlInterface.nodeDictionary[elem.getAttribute("x-gr-id")];
-        }
-    }]);
-    return GomlNode;
-}(EEObject);
-
-/**
- * Parser of Goml to Node utilities.
- * This class do not store any nodes and goml properties.
- */
-
-
-var GomlParser = function () {
-    function GomlParser() {
-        (0, _classCallCheck3.default)(this, GomlParser);
-    }
-
-    (0, _createClass3.default)(GomlParser, null, [{
-        key: "parse",
-
-        /**
-         * Domをパースする
-         * @param  {Element}           source    [description]
-         * @param  {GomlNode}          parent    あればこのノードにaddChildされる
-         * @return {GomlNode}                    ルートノード
-         */
-        value: function parse(source, parent, scriptTag) {
-            var newNode = GomlParser._createNode(source);
-            if (!newNode) {
-                // when specified node could not be found
-                console.warn("\"" + source.tagName + "\" was not parsed.");
-                return null;
-            }
-            // Parse children recursively
-            var children = source.childNodes;
-            var childNodeElements = []; // for parse after .Components has resolved.
-            if (children && children.length !== 0) {
-                var removeTarget = [];
-                for (var i = 0; i < children.length; i++) {
-                    var child = children.item(i);
-                    if (!GomlParser._isElement(child)) {
-                        removeTarget.push(child);
-                        continue;
-                    }
-                    if (this._isComponentsTag(child)) {
-                        // parse as components
-                        GomlParser._parseComponents(newNode, child);
-                        removeTarget.push(child);
-                    } else {
-                        // parse as child node.
-                        childNodeElements.push(child);
-                    }
-                }
-                // remove unused elements
-                for (var _i9 = 0; _i9 < removeTarget.length; _i9++) {
-                    source.removeChild(removeTarget[_i9]);
-                }
-            }
-            // generate tree
-            if (parent) {
-                parent.addChild(newNode, null, false);
-            }
-            childNodeElements.forEach(function (child) {
-                GomlParser.parse(child, newNode, null);
-            });
-            return newNode;
-        }
-        /**
-         * GomlNodeのインスタンス化。GrimoireInterfaceへの登録
-         * @param  {HTMLElement}      elem         [description]
-         * @param  {GomlConfigurator} configurator [description]
-         * @return {GomlTreeNodeBase}              [description]
-         */
-
-    }, {
-        key: "_createNode",
-        value: function _createNode(elem) {
-            var tagName = elem.localName;
-            var recipe = obtainGomlInterface.nodeDeclarations.get(elem);
-            if (!recipe) {
-                throw new Error("Tag \"" + tagName + "\" is not found.");
-            }
-            return new GomlNode(recipe, elem);
-        }
-        /**
-         * .COMPONENTSのパース。
-         * @param {GomlNode} node          アタッチされるコンポーネント
-         * @param {Element}  componentsTag .COMPONENTSタグ
-         */
-
-    }, {
-        key: "_parseComponents",
-        value: function _parseComponents(node, componentsTag) {
-            var componentNodes = componentsTag.childNodes;
-            if (!componentNodes) {
-                return;
-            }
-            for (var i = 0; i < componentNodes.length; i++) {
-                var componentNode = componentNodes.item(i);
-                if (!GomlParser._isElement(componentNode)) {
-                    continue; // Skip if the node was not element
-                }
-                var componentDecl = obtainGomlInterface.componentDeclarations.get(componentNode);
-                if (!componentDecl) {
-                    throw new Error("Component " + componentNode.tagName + " is not found.");
-                }
-                var component = componentDecl.generateInstance(componentNode);
-                node._addComponentDirectly(component, false);
-            }
-        }
-    }, {
-        key: "_isElement",
-        value: function _isElement(node) {
-            return node.nodeType === Node.ELEMENT_NODE;
-        }
-    }, {
-        key: "_isComponentsTag",
-        value: function _isComponentsTag(element) {
-            var regexToFindComponent = /\.COMPONENTS$/mi; // TODO might needs to fix
-            return regexToFindComponent.test(element.nodeName);
-        }
-    }]);
-    return GomlParser;
-}();
-
-var ComponentInterface = function () {
-    function ComponentInterface(components) {
-        (0, _classCallCheck3.default)(this, ComponentInterface);
-
-        this.components = components;
-    }
-
-    (0, _createClass3.default)(ComponentInterface, [{
-        key: "get",
-        value: function get(i1, i2, i3) {
-            var c = this.components;
-            if (i1 === void 0) {
-                if (c.length === 0 || c[0].length === 0 || c[0][0].length === 0) {
-                    return null;
-                } else if (c.length === 1 && c[0].length === 1 || c[0][0].length === 1) {
-                    return c[0][0][0];
-                }
-                throw new Error("There are too many candidate");
-            } else if (i2 === void 0) {
-                if (c.length === 0 || c[0].length === 0 || c[0][0].length <= i1) {
-                    return null;
-                } else if (c.length === 1 && c[0].length === 1) {
-                    return c[0][0][i1];
-                }
-                throw new Error("There are too many candidate");
-            } else if (i3 === void 0) {
-                if (c.length === 0 || c[0].length <= i2 || c[0][0].length <= i1) {
-                    return null;
-                } else if (c.length === 1) {
-                    return c[0][i2][i1];
-                }
-                throw new Error("There are too many candidate");
-            } else {
-                if (c.length <= i3 || c[0].length <= i2 || c[0][0].length <= i1) {
-                    return null;
-                }
-                return c[i3][i2][i1];
-            }
-        }
-    }, {
-        key: "forEach",
-        value: function forEach(f) {
-            this.components.forEach(function (tree, ti) {
-                tree.forEach(function (nodes, ni) {
-                    nodes.forEach(function (comp, ci) {
-                        f(comp, ci, ni, ti);
-                    });
-                });
-            });
-            return this;
-        }
-    }, {
-        key: "attr",
-        value: function attr(attrName, value) {
-            if (value === void 0) {
-                // return Attribute.
-                return this.components[0][0][0].getValue(attrName).Value;
-            } else {
-                // set value.
-                this.forEach(function (component) {
-                    component.setValue(attrName, value);
-                });
-            }
-        }
-    }, {
-        key: "on",
-        value: function on() {
-            // TODO implement
-            return;
-        }
-    }, {
-        key: "off",
-        value: function off() {
-            // TODO implement
-            return;
-        }
-    }]);
-    return ComponentInterface;
-}();
-
-/**
- * 複数のノードを対象とした操作を提供するインタフェース
- */
-
-
-var NodeInterface = function () {
-    function NodeInterface(nodes) {
-        (0, _classCallCheck3.default)(this, NodeInterface);
-
-        this.nodes = nodes;
-    }
-
-    (0, _createClass3.default)(NodeInterface, [{
-        key: "queryFunc",
-        value: function queryFunc(query) {
-            return new ComponentInterface(this.queryComponents(query));
-        }
-    }, {
-        key: "queryComponents",
-        value: function queryComponents(query) {
-            return this.nodes.map(function (nodes) {
-                return nodes.map(function (node) {
-                    var componentElements = node.componentsElement.querySelectorAll(query);
-                    var components = [];
-                    for (var i = 0; i < componentElements.length; i++) {
-                        var elem = componentElements[i];
-                        var component = obtainGomlInterface.componentDictionary[elem.getAttribute("x-gr-id")];
-                        if (component) {
-                            components.push(component);
-                        }
-                    }
-                    return components;
-                });
-            });
-        }
-    }, {
-        key: "get",
-        value: function get(i1, i2) {
-            var c = this.nodes;
-            if (i1 === void 0) {
-                if (c.length === 0 || c[0].length === 0) {
-                    return null;
-                } else if (c.length === 1 && c[0].length === 1) {
-                    return c[0][0];
-                }
-                throw new Error("There are too many candidate");
-            } else if (i2 === void 0) {
-                if (c.length === 0 || c[0].length <= i1) {
-                    return null;
-                } else if (c.length === 1 && c[0].length > i1) {
-                    return c[0][i1];
-                }
-                throw new Error("There are too many candidate");
-            } else {
-                if (c.length <= i1 || c[i1].length <= i2) {
-                    return null;
-                } else {
-                    return c[i1][i2];
-                }
-            }
-        }
-    }, {
-        key: "attr",
-        value: function attr(attrName, value) {
-            if (value === void 0) {
-                // return Attribute.
-                return this.nodes[0][0].attributes.get(attrName).Value;
-            } else {
-                // set value.
-                this.forEach(function (node) {
-                    var attr = node.attributes.get(attrName);
-                    if (attr.declaration.readonly) {
-                        throw new Error("The attribute " + attr.name.fqn + " is readonly");
-                    }
-                    if (attr) {
-                        attr.Value = value;
-                    }
-                });
-            }
-        }
-        /**
-         * 対象ノードにイベントリスナを追加します。
-         * @param {string}   eventName [description]
-         * @param {Function} listener  [description]
-         */
-
-    }, {
-        key: "on",
-        value: function on(eventName, listener) {
-            this.forEach(function (node) {
-                node.on(eventName, listener);
-            });
-            return this;
-        }
-        /**
-         * 対象ノードに指定したイベントリスナが登録されていれば削除します
-         * @param {string}   eventName [description]
-         * @param {Function} listener  [description]
-         */
-
-    }, {
-        key: "off",
-        value: function off(eventName, listener) {
-            this.forEach(function (node) {
-                node.removeListener(eventName, listener);
-            });
-            return this;
-        }
-        /**
-         * このノードインタフェースが対象とするノードそれぞれに、
-         * タグで指定したノードを子要素として追加します。
-         * @param {string} tag [description]
-         */
-
-    }, {
-        key: "append",
-        value: function append(tag) {
-            this.forEach(function (node) {
-                var elems = XMLReader.parseXML(tag);
-                elems.forEach(function (elem) {
-                    return GomlParser.parse(elem, node, null);
-                });
-            });
-            return this;
-        }
-        /**
-         * このノードインタフェースが対象とするノードの子に、
-         * 指定されたノードが存在すれば削除します。
-         * @param {GomlNode} child [description]
-         */
-
-    }, {
-        key: "remove",
-        value: function remove(child) {
-            this.forEach(function (node) {
-                node.removeChild(child);
-            });
-            return this;
-        }
-        /**
-         * このノードインタフェースが対象とするノードに対して反復処理を行います
-         * @param  {GomlNode} callback [description]
-         * @return {[type]}            [description]
-         */
-
-    }, {
-        key: "forEach",
-        value: function forEach(callback) {
-            this.nodes.forEach(function (array) {
-                array.forEach(function (node) {
-                    callback(node);
-                });
-            });
-            return this;
-        }
-        /**
-         * このノードインタフェースが対象とするノードを有効、または無効にします。
-         * @param {boolean} enable [description]
-         */
-
-    }, {
-        key: "setEnable",
-        value: function setEnable(enable) {
-            this.forEach(function (node) {
-                node.enabled = !!enable;
-            });
-            return this;
-        }
-        /**
-         * このノードインタフェースにアタッチされたコンポーネントをセレクタで検索します。
-         * @pram  {string}      query [description]
-         * @return {Component[]}       [description]
-         */
-
-    }, {
-        key: "find",
-        value: function find(query) {
-            var allComponents = [];
-            this.queryComponents(query).forEach(function (gomlComps) {
-                gomlComps.forEach(function (nodeComps) {
-                    nodeComps.forEach(function (comp) {
-                        allComponents.push(comp);
-                    });
-                });
-            });
-            return allComponents;
-        }
-        /**
-         * このノードインタフェースが対象とするノードのそれぞれの子ノードを対象とする、
-         * 新しいノードインタフェースを取得します。
-         * @return {NodeInterface} [description]
-         */
-
-    }, {
-        key: "children",
-        value: function children() {
-            var children = this.nodes.map(function (nodes) {
-                return nodes.map(function (node) {
-                    return node.children;
-                }).reduce(function (pre, cur) {
-                    return pre.concat(cur);
-                });
-            });
-            return new NodeInterface(children);
-        }
-        /**
-         * 対象ノードにコンポーネントをアタッチします。
-         * @param {Component} component [description]
-         */
-
-    }, {
-        key: "addCompnent",
-        value: function addCompnent(componentId) {
-            this.forEach(function (node) {
-                node.addComponent(componentId, false);
-            });
-            return this;
-        }
-        /**
-         * 最初の対象ノードを取得する
-         * @return {GomlNode} [description]
-         */
-
-    }, {
-        key: "first",
-        value: function first() {
-            if (this.count() === 0) {
-                return null;
-            }
-            return this.nodes[0][0];
-        }
-        /**
-         * 対象となる唯一のノードを取得する。
-         * 対象が存在しない、あるいは複数存在するときは例外を投げる。
-         * @return {GomlNode} [description]
-         */
-
-    }, {
-        key: "single",
-        value: function single() {
-            if (this.count() !== 1) {
-                throw new Error("this nodeInterface is not single.");
-            }
-            return this.first();
-        }
-        /**
-         * 対象となるノードの個数を取得する
-         * @return {number} [description]
-         */
-
-    }, {
-        key: "count",
-        value: function count() {
-            if (this.nodes.length === 0) {
-                return 0;
-            }
-            var counts = this.nodes.map(function (nodes) {
-                return nodes.length;
-            });
-            return counts.reduce(function (total, current) {
-                return total + current;
-            }, 0);
-        }
-    }]);
-    return NodeInterface;
-}();
-
-/**
- * Provides interfaces to treat whole goml tree for each.
- */
-
-
-var GomlInterface = function () {
-    function GomlInterface(rootNodes) {
-        (0, _classCallCheck3.default)(this, GomlInterface);
-
-        this.rootNodes = rootNodes;
-    }
-
-    (0, _createClass3.default)(GomlInterface, [{
-        key: "getNodeById",
-        value: function getNodeById(id) {
-            var _this28 = this;
-
-            return new Array(this.rootNodes.length).map(function (v, i) {
-                return GomlNode.fromElement(_this28.rootNodes[i].element.ownerDocument.getElementById(id));
-            });
-        }
-    }, {
-        key: "queryFunc",
-        value: function queryFunc(query) {
-            var context = new NodeInterface(this.queryNodes(query));
-            var queryFunc = context.queryFunc.bind(context);
-            (0, _setPrototypeOf2.default)(queryFunc, context);
-            return queryFunc;
-        }
-    }, {
-        key: "queryNodes",
-        value: function queryNodes(query) {
-            return this.rootNodes.map(function (root) {
-                var nodelist = root.element.ownerDocument.querySelectorAll(query);
-                var nodes = [];
-                for (var i = 0; i < nodelist.length; i++) {
-                    var node = obtainGomlInterface.nodeDictionary[nodelist.item(i).getAttribute("x-gr-id")];
-                    if (node) {
-                        nodes.push(node);
-                    }
-                }
-                return nodes;
-            });
-        }
-    }]);
-    return GomlInterface;
-}();
-
-var GomlInterfaceGenerator = function GomlInterfaceGenerator(rootNodes) {
-    var gomlContext = new GomlInterface(rootNodes);
-    var queryFunc = gomlContext.queryFunc.bind(gomlContext);
-    (0, _setPrototypeOf2.default)(queryFunc, gomlContext);
-    return queryFunc;
-};
-
-var GrimoireInterfaceImpl = function () {
-    function GrimoireInterfaceImpl() {
-        (0, _classCallCheck3.default)(this, GrimoireInterfaceImpl);
-
-        this.nodeDeclarations = new NSDictionary();
-        this.converters = new NSDictionary();
-        this.componentDeclarations = new NSDictionary();
-        this.rootNodes = {};
-        this.loadTasks = [];
-        this.nodeDictionary = {};
-        this.componentDictionary = {};
-        this.companion = new NSDictionary();
-        this.initializedEventHandler = [];
-    }
-    /**
-     * Generate namespace helper function
-     * @param  {string} ns namespace URI to be used
-     * @return {[type]}    the namespaced identity
-     */
-
-
-    (0, _createClass3.default)(GrimoireInterfaceImpl, [{
-        key: "ns",
-        value: function ns(_ns) {
-            return function (name) {
-                return new NSIdentity(_ns, name);
-            };
-        }
-    }, {
-        key: "initialize",
-        value: function initialize() {
-            this.registerConverter("String", StringConverter);
-            this.registerConverter("StringArray", StringArrayConverter);
-            this.registerConverter("Boolean", BooleanConverter);
-            this.registerComponent("GrimoireComponent", GrimoireComponent);
-            this.registerNode("GrimoireNodeBase", ["GrimoireComponent"]);
-        }
-        /**
-         * Register plugins
-         * @param  {(}      loadTask [description]
-         * @return {[type]}          [description]
-         */
-
-    }, {
-        key: "register",
-        value: function register(loadTask) {
-            this.loadTasks.push(loadTask);
-        }
-    }, {
-        key: "resolvePlugins",
-        value: function resolvePlugins() {
-            return __awaiter(this, void 0, void 0, _regenerator2.default.mark(function _callee() {
-                var i;
-                return _regenerator2.default.wrap(function _callee$(_context75) {
-                    while (1) {
-                        switch (_context75.prev = _context75.next) {
-                            case 0:
-                                i = 0;
-
-                            case 1:
-                                if (!(i < this.loadTasks.length)) {
-                                    _context75.next = 7;
-                                    break;
-                                }
-
-                                _context75.next = 4;
-                                return this.loadTasks[i]();
-
-                            case 4:
-                                i++;
-                                _context75.next = 1;
-                                break;
-
-                            case 7:
-                            case "end":
-                                return _context75.stop();
-                        }
-                    }
-                }, _callee, this);
-            }));
-        }
-        /**
-         * register custom component
-         * @param  {string                |   NSIdentity} name          [description]
-         * @param  {IAttributeDeclaration }} attributes           [description]
-         * @param  {Object                |   (new                 (}           obj           [description]
-         * @return {[type]}                       [description]
-         */
-
-    }, {
-        key: "registerComponent",
-        value: function registerComponent(name, obj) {
-            name = Ensure.ensureTobeNSIdentity(name);
-            var attrs = obj["attributes"];
-            obj = this._ensureTobeComponentConstructor(obj);
-            this.componentDeclarations.set(name, new ComponentDeclaration(name, attrs, obj));
-        }
-    }, {
-        key: "registerNode",
-        value: function registerNode(name, requiredComponents, defaultValues, superNode) {
-            name = Ensure.ensureTobeNSIdentity(name);
-            requiredComponents = Ensure.ensureTobeNSIdentityArray(requiredComponents);
-            defaultValues = Ensure.ensureTobeNSDictionary(defaultValues, name.ns);
-            superNode = Ensure.ensureTobeNSIdentity(superNode);
-            this.nodeDeclarations.set(name, new NodeDeclaration(name, NSSet.fromArray(requiredComponents), defaultValues, superNode));
-        }
-    }, {
-        key: "registerConverter",
-        value: function registerConverter(name, converter) {
-            name = Ensure.ensureTobeNSIdentity(name);
-            this.converters.set(name, { name: name, convert: converter });
-        }
-    }, {
-        key: "addRootNode",
-        value: function addRootNode(tag, rootNode) {
-            if (!rootNode) {
-                throw new Error("can not register null to rootNodes.");
-            }
-            this.rootNodes[rootNode.id] = rootNode;
-            rootNode.companion.set(this.ns(Constants.defaultNamespace)("scriptElement"), tag);
-            // check tree constraint.
-            var errorMessages = rootNode.callRecursively(function (n) {
-                return n.checkTreeConstraints();
-            }).reduce(function (list, current) {
-                return list.concat(current);
-            }).filter(function (error) {
-                return error;
-            });
-            if (errorMessages.length !== 0) {
-                var message = errorMessages.reduce(function (m, current) {
-                    return m + "\n" + current;
-                });
-                throw new Error("tree constraint is not satisfied.\n" + message);
-            }
-            // awake and mount tree.
-            rootNode.setMounted(true);
-            rootNode.broadcastMessage("treeInitialized", {
-                ownerScriptTag: tag,
-                id: rootNode.id
-            });
-            this._onTreeInitialized(tag);
-            tag.setAttribute("x-rootNodeId", rootNode.id);
-            return rootNode.id;
-        }
-    }, {
-        key: "getRootNode",
-        value: function getRootNode(scriptTag) {
-            var id = scriptTag.getAttribute("x-rootNodeId");
-            return this.rootNodes[id];
-        }
-    }, {
-        key: "queryRootNodes",
-        value: function queryRootNodes(query) {
-            var scriptTags = document.querySelectorAll(query);
-            var nodes = [];
-            for (var i = 0; i < scriptTags.length; i++) {
-                var node = this.getRootNode(scriptTags.item(i));
-                if (node) {
-                    nodes.push(node);
-                }
-            }
-            return nodes;
-        }
-        /**
-         * This method is not for users.
-         * Just for unit testing.
-         *
-         * Clear all configuration that GrimoireInterface contain.
-         */
-
-    }, {
-        key: "clear",
-        value: function clear() {
-            this.nodeDeclarations.clear();
-            this.componentDeclarations.clear();
-            this.converters.clear();
-            for (var key in this.rootNodes) {
-                delete this.rootNodes[key];
-            }
-            this.loadTasks.splice(0, this.loadTasks.length);
-            this.initialize();
-        }
-        /**
-         * Ensure the given object or constructor to be an constructor inherits Component;
-         * @param  {Object | (new ()=> Component} obj [The variable need to be ensured.]
-         * @return {[type]}      [The constructor inherits Component]
-         */
-
-    }, {
-        key: "_ensureTobeComponentConstructor",
-        value: function _ensureTobeComponentConstructor(obj) {
-            if (typeof obj === "function") {
-                if (!(obj.prototype instanceof Component) && obj !== Component) {
-                    throw new Error("Component constructor must extends Component class.");
-                }
-            } else if ((typeof obj === "undefined" ? "undefined" : (0, _typeof3.default)(obj)) === "object") {
-                var newCtor = function newCtor() {
-                    Component.call(this);
-                };
-                var properties = {};
-                for (var key in obj) {
-                    if (key === "attributes") {
-                        continue;
-                    }
-                    properties[key] = { value: obj[key] };
-                }
-                newCtor.prototype = (0, _create2.default)(Component.prototype, properties);
-                Object.defineProperty(newCtor, "attributes", {
-                    value: obj["attributes"]
-                });
-                obj = newCtor;
-            } else if (!obj) {
-                obj = Component;
-            }
-            return obj;
-        }
-    }, {
-        key: "_onTreeInitialized",
-        value: function _onTreeInitialized(tag) {
-            this.initializedEventHandler.forEach(function (h) {
-                h(tag.id, tag.className, tag);
-            });
-        }
-    }]);
-    return GrimoireInterfaceImpl;
-}();
-
-var context = new GrimoireInterfaceImpl();
-var obtainGomlInterface = function obtainGomlInterface(query) {
-    if (typeof query === "string") {
-        return GomlInterfaceGenerator(context.queryRootNodes(query));
-    } else {
-        context.initializedEventHandler.push(query);
-    }
-};
-// const bindedFunction = obtainGomlInterface.bind(context);
-(0, _setPrototypeOf2.default)(obtainGomlInterface, context);
-
-var XMLHttpRequestAsync = function () {
-    function XMLHttpRequestAsync() {
-        (0, _classCallCheck3.default)(this, XMLHttpRequestAsync);
-    }
-
-    (0, _createClass3.default)(XMLHttpRequestAsync, null, [{
-        key: "send",
-        value: function send(xhr, data) {
-            return new _promise2.default(function (resolve, reject) {
-                xhr.onload = function (e) {
-                    resolve(e);
-                };
-                xhr.onerror = function (e) {
-                    reject(e);
-                };
-                xhr.send(data);
-            });
-        }
-    }]);
-    return XMLHttpRequestAsync;
-}();
-
-/**
- * Provides the features to fetch Goml source.
- */
-
-
-var GomlLoader = function () {
-    function GomlLoader() {
-        (0, _classCallCheck3.default)(this, GomlLoader);
-    }
-
-    (0, _createClass3.default)(GomlLoader, null, [{
-        key: "loadFromScriptTag",
-
-        /**
-         * Obtain the Goml source from specified tag.
-         * @param  {HTMLScriptElement} scriptTag [the script tag to load]
-         * @return {Promise<void>}               [the promise to wait for loading]
-         */
-        value: function loadFromScriptTag(scriptTag) {
-            return __awaiter(this, void 0, void 0, _regenerator2.default.mark(function _callee2() {
-                var srcAttr, source, req, doc, rootNode;
-                return _regenerator2.default.wrap(function _callee2$(_context76) {
-                    while (1) {
-                        switch (_context76.prev = _context76.next) {
-                            case 0:
-                                srcAttr = scriptTag.getAttribute("src");
-                                source = void 0;
-
-                                if (!srcAttr) {
-                                    _context76.next = 10;
-                                    break;
-                                }
-
-                                // ignore text element
-                                req = new XMLHttpRequest();
-
-                                req.open("GET", srcAttr);
-                                _context76.next = 7;
-                                return XMLHttpRequestAsync.send(req);
-
-                            case 7:
-                                source = req.responseText;
-                                _context76.next = 11;
-                                break;
-
-                            case 10:
-                                source = scriptTag.text;
-
-                            case 11:
-                                doc = XMLReader.parseXML(source, "GOML");
-                                rootNode = GomlParser.parse(doc[0], null, scriptTag);
-
-                                obtainGomlInterface.addRootNode(scriptTag, rootNode);
-
-                            case 14:
-                            case "end":
-                                return _context76.stop();
-                        }
-                    }
-                }, _callee2, this);
-            }));
-        }
-        /**
-         * Load from the script tags which will be found with specified query.
-         * @param  {string}          query [the query to find script tag]
-         * @return {Promise<void[]>}       [the promise to wait for all goml loading]
-         */
-
-    }, {
-        key: "loadFromQuery",
-        value: function loadFromQuery(query) {
-            var tags = document.querySelectorAll(query);
-            var pArray = [];
-            for (var i = 0; i < tags.length; i++) {
-                pArray[i] = GomlLoader.loadFromScriptTag(tags.item(i));
-            }
-            return _promise2.default.all(pArray);
-        }
-        /**
-         * Load all Goml sources contained in HTML.
-         * @return {Promise<void>} [the promise to wait for all goml loading]
-         */
-
-    }, {
-        key: "loadForPage",
-        value: function loadForPage() {
-            return __awaiter(this, void 0, void 0, _regenerator2.default.mark(function _callee3() {
-                return _regenerator2.default.wrap(function _callee3$(_context77) {
-                    while (1) {
-                        switch (_context77.prev = _context77.next) {
-                            case 0:
-                                _context77.next = 2;
-                                return GomlLoader.loadFromQuery('script[type="text/goml"]');
-
-                            case 2:
-                            case "end":
-                                return _context77.stop();
-                        }
-                    }
-                }, _callee3, this);
-            }));
-        }
-    }]);
-    return GomlLoader;
-}();
-
-/**
- * Provides procedures for initializing.
- */
-
-
-var GrimoireInitializer = function () {
-    function GrimoireInitializer() {
-        (0, _classCallCheck3.default)(this, GrimoireInitializer);
-    }
-
-    (0, _createClass3.default)(GrimoireInitializer, null, [{
-        key: "initialize",
-
-        /**
-         * Start initializing
-         * @return {Promise<void>} The promise which will be resolved when all of the Goml script was loaded.
-         */
-        value: function initialize() {
-            return __awaiter(this, void 0, void 0, _regenerator2.default.mark(function _callee4() {
-                return _regenerator2.default.wrap(function _callee4$(_context78) {
-                    while (1) {
-                        switch (_context78.prev = _context78.next) {
-                            case 0:
-                                _context78.prev = 0;
-
-                                GrimoireInitializer._copyGLConstants();
-                                obtainGomlInterface.initialize();
-                                _context78.next = 5;
-                                return GrimoireInitializer._waitForDOMLoading();
-
-                            case 5:
-                                _context78.next = 7;
-                                return obtainGomlInterface.resolvePlugins();
-
-                            case 7:
-                                _context78.next = 9;
-                                return GomlLoader.loadForPage();
-
-                            case 9:
-                                _context78.next = 14;
-                                break;
-
-                            case 11:
-                                _context78.prev = 11;
-                                _context78.t0 = _context78["catch"](0);
-
-                                console.error(_context78.t0);
-
-                            case 14:
-                            case "end":
-                                return _context78.stop();
-                        }
-                    }
-                }, _callee4, this, [[0, 11]]);
-            }));
-        }
-        /**
-         * Ensure WebGLRenderingContext.[CONSTANTS] is exisiting.
-         * Some of the browsers contains them in prototype.
-         */
-
-    }, {
-        key: "_copyGLConstants",
-        value: function _copyGLConstants() {
-            if (WebGLRenderingContext.ONE) {
-                // Assume the CONSTANTS are already in WebGLRenderingContext
-                // Chrome,Firefox,IE,Edge...
-                return;
-            }
-            // Otherwise like ""Safari""
-            for (var propName in WebGLRenderingContext.prototype) {
-                if (/^[A-Z]/.test(propName)) {
-                    var property = WebGLRenderingContext.prototype[propName];
-                    WebGLRenderingContext[propName] = property;
-                }
-            }
-        }
-        /**
-         * Obtain the promise object which will be resolved when DOMContentLoaded event was rised.
-         * @return {Promise<void>} the promise
-         */
-
-    }, {
-        key: "_waitForDOMLoading",
-        value: function _waitForDOMLoading() {
-            return new _promise2.default(function (resolve) {
-                window.addEventListener("DOMContentLoaded", function () {
-                    resolve();
-                });
-            });
-        }
-    }]);
-    return GrimoireInitializer;
-}();
-/**
- * Just start the process.
- */
-
-
-GrimoireInitializer.initialize();
-window["gr"] = obtainGomlInterface;
-
-/**
- * Provides managing all promise on initializing resources.
- */
-
-var AssetLoader = function (_EEObject2) {
-    (0, _inherits3.default)(AssetLoader, _EEObject2);
-
-    function AssetLoader() {
-        (0, _classCallCheck3.default)(this, AssetLoader);
-
-        /**
-         * Promise count registered.
-         * @type {number}
-         */
-        var _this29 = (0, _possibleConstructorReturn3.default)(this, (AssetLoader.__proto__ || (0, _getPrototypeOf2.default)(AssetLoader)).apply(this, arguments));
-
-        _this29.registerCount = 0;
-        /**
-         * Promise count finished successfully.
-         * @type {number}
-         */
-        _this29.loadCount = 0;
-        /**
-         * Promise count completed(success and errored)
-         * @type {number}
-         */
-        _this29.completeCount = 0;
-        /**
-         * Promise count errored
-         * @type {number}
-         */
-        _this29.errorCount = 0;
-        /**
-         * Main promise to provide tasks for waiting for all resource loading.
-         * @type {Promise<void>}
-         */
-        _this29.promise = new _promise2.default(function (resolve) {
-            _this29._resolve = resolve;
-        });
-        return _this29;
-    }
-    /**
-     * Register an promise to be waited until finished.
-     */
-
-
-    (0, _createClass3.default)(AssetLoader, [{
-        key: "register",
-        value: function register(promise) {
-            var _this30 = this;
-
-            this.registerCount++;
-            return new _promise2.default(function (resolve, reject) {
-                (function () {
-                    return __awaiter(this, void 0, void 0, _regenerator2.default.mark(function _callee5() {
-                        return _regenerator2.default.wrap(function _callee5$(_context79) {
-                            while (1) {
-                                switch (_context79.prev = _context79.next) {
-                                    case 0:
-                                        _context79.prev = 0;
-                                        _context79.next = 3;
-                                        return promise;
-
-                                    case 3:
-                                        _context79.t0 = _context79.sent;
-                                        resolve(_context79.t0);
-
-                                        this.loadCount++;
-                                        _context79.next = 12;
-                                        break;
-
-                                    case 8:
-                                        _context79.prev = 8;
-                                        _context79.t1 = _context79["catch"](0);
-
-                                        reject(_context79.t1);
-                                        this.errorCount++;
-
-                                    case 12:
-                                        this.completeCount++;
-                                        this._checkLoadCompleted();
-
-                                    case 14:
-                                    case "end":
-                                        return _context79.stop();
-                                }
-                            }
-                        }, _callee5, this, [[0, 8]]);
-                    }));
-                }).bind(_this30)();
-            });
-        }
-        /**
-         * Verify all promises are completed.
-         */
-
-    }, {
-        key: "_checkLoadCompleted",
-        value: function _checkLoadCompleted() {
-            this.emit("progress", this);
-            if (this.registerCount === this.completeCount) {
-                this._resolve();
-            }
-        }
-    }]);
-    return AssetLoader;
-}(EEObject);
-
-var DefaultLoaderChunk = "<div style=\"width:100%;height:100%;position: relative;\">\n    <div style=\"width: 55px;height: 55px;border-radius: 100%;border: 5px solid #381794;border-right-color: #FC659D;animation: rotate 1s linear infinite;position: absolute;top: 0;left: 0;right: 0;bottom: 0;margin: auto;\"></div>\n</div>\n<style type=\"text/css\">\n    @keyframes rotate {\n        from {\n            transform: rotate(0deg);\n        }\n        to {\n            transform: rotate(360deg);\n        }\n    }\n</style>\n";
-
-var AssetLoadingManagerComponent = function (_Component2) {
-    (0, _inherits3.default)(AssetLoadingManagerComponent, _Component2);
-
-    function AssetLoadingManagerComponent() {
-        (0, _classCallCheck3.default)(this, AssetLoadingManagerComponent);
-
-        var _this31 = (0, _possibleConstructorReturn3.default)(this, (AssetLoadingManagerComponent.__proto__ || (0, _getPrototypeOf2.default)(AssetLoadingManagerComponent)).apply(this, arguments));
-
-        _this31.loader = new AssetLoader();
-        return _this31;
-    }
-
-    (0, _createClass3.default)(AssetLoadingManagerComponent, [{
-        key: "$treeInitialized",
-        value: function $treeInitialized() {
-            if (this.attributes.get("autoStart").Value) {
-                this._autoStart();
-            }
-            this._documentResolver();
-        }
-    }, {
-        key: "$awake",
-        value: function $awake() {
-            var _this32 = this;
-
-            this.companion.set(obtainGomlInterface.ns(this.name.ns)("loader"), this.loader);
-            this.loader.register(new _promise2.default(function (resolve) {
-                _this32._documentResolver = resolve;
-            }));
-            var canvasContainer = this.companion.get("canvasContainer");
-            if (!this.getValue("enableLoader")) {
-                return;
-            }
-            var loaderContainer = document.createElement("div");
-            loaderContainer.innerHTML = DefaultLoaderChunk;
-            loaderContainer.style.width = loaderContainer.style.height = "100%";
-            canvasContainer.appendChild(loaderContainer);
-            this._loaderElement = loaderContainer;
-        }
-    }, {
-        key: "_autoStart",
-        value: function _autoStart() {
-            return __awaiter(this, void 0, void 0, _regenerator2.default.mark(function _callee6() {
-                return _regenerator2.default.wrap(function _callee6$(_context80) {
-                    while (1) {
-                        switch (_context80.prev = _context80.next) {
-                            case 0:
-                                _context80.next = 2;
-                                return this.loader.promise;
-
-                            case 2:
-                                if (this._loaderElement) {
-                                    this._loaderElement.remove();
-                                }
-                                this.node.emit("asset-load-completed");
-                                this.tree("goml").attr("loopEnabled", true);
-
-                            case 5:
-                            case "end":
-                                return _context80.stop();
-                        }
-                    }
-                }, _callee6, this);
-            }));
-        }
-    }]);
-    return AssetLoadingManagerComponent;
-}(Component);
-
-AssetLoadingManagerComponent.attributes = {
-    loadingProgress: {
-        defaultValue: 0,
-        converter: "Number"
-    },
-    autoStart: {
-        defaultValue: true,
-        converter: "Boolean"
-    },
-    anableLoader: {
-        defaultValue: false,
-        converter: "Boolean"
-    }
-};
-
-/**
- * Provides perspective camera as implementation of ICamera.
- */
-
-var PerspectiveCamera = function () {
-    function PerspectiveCamera() {
-        (0, _classCallCheck3.default)(this, PerspectiveCamera);
-
-        this._viewMatrix = new Matrix();
-        this._projectionMatrix = new Matrix();
-        this._invProjectionMatrix = new Matrix();
-        this._projectionViewMatrix = new Matrix();
-        this._eyeCache = Vector3.Zero;
-        this._lookAtCache = Vector3.Zero;
-        this._upCache = Vector3.Zero;
-    }
-
-    (0, _createClass3.default)(PerspectiveCamera, [{
-        key: "getViewMatrix",
-        value: function getViewMatrix() {
-            return this._viewMatrix;
-        }
-    }, {
-        key: "getProjectionMatrix",
-        value: function getProjectionMatrix() {
-            return this._projectionMatrix;
-        }
-    }, {
-        key: "getInvProjectionMatrix",
-        value: function getInvProjectionMatrix() {
-            return this._invProjectionMatrix;
-        }
-    }, {
-        key: "getProjectionViewMatrix",
-        value: function getProjectionViewMatrix() {
-            return this._projectionViewMatrix;
-        }
-    }, {
-        key: "getFar",
-        value: function getFar() {
-            return this._far;
-        }
-    }, {
-        key: "setFar",
-        value: function setFar(far) {
-            this._far = far;
-            this._recalculateProjection();
-        }
-    }, {
-        key: "getNear",
-        value: function getNear() {
-            return this._near;
-        }
-    }, {
-        key: "setNear",
-        value: function setNear(near) {
-            this._near = near;
-            this._recalculateProjection();
-        }
-    }, {
-        key: "getAspect",
-        value: function getAspect() {
-            return this._aspect;
-        }
-    }, {
-        key: "setAspect",
-        value: function setAspect(aspect) {
-            this._aspect = aspect;
-            this._recalculateProjection();
-        }
-    }, {
-        key: "getFovy",
-        value: function getFovy() {
-            return this._fovy;
-        }
-    }, {
-        key: "setFovy",
-        value: function setFovy(fov) {
-            this._fovy = fov;
-            this._recalculateProjection();
-        }
-    }, {
-        key: "updateTransform",
-        value: function updateTransform(transform) {
-            vec3.transformMat4(this._eyeCache.rawElements, Vector3.Zero.rawElements, transform.globalTransform.rawElements);
-            vec4.transformMat4(this._lookAtCache.rawElements, PerspectiveCamera._frontOrigin.rawElements, transform.globalTransform.rawElements);
-            vec3.add(this._lookAtCache.rawElements, this._lookAtCache.rawElements, this._eyeCache.rawElements);
-            vec4.transformMat4(this._upCache.rawElements, PerspectiveCamera._upOrigin.rawElements, transform.globalTransform.rawElements);
-            mat4.lookAt(this._viewMatrix.rawElements, this._eyeCache.rawElements, this._lookAtCache.rawElements, this._upCache.rawElements);
-            mat4.mul(this._projectionViewMatrix.rawElements, this._projectionMatrix.rawElements, this._viewMatrix.rawElements);
-        }
-    }, {
-        key: "_recalculateProjection",
-        value: function _recalculateProjection() {
-            mat4.perspective(this._projectionMatrix.rawElements, this._fovy, this._aspect, this._near, this._far);
-            mat4.mul(this._projectionViewMatrix.rawElements, this._projectionMatrix.rawElements, this._viewMatrix.rawElements);
-            mat4.invert(this._invProjectionMatrix.rawElements, this._projectionMatrix.rawElements);
-        }
-    }]);
-    return PerspectiveCamera;
-}();
-
-PerspectiveCamera._frontOrigin = new Vector4(0, 0, -1, 0);
-PerspectiveCamera._upOrigin = new Vector4(0, 1, 0, 0);
-
-var SceneComponent = function (_Component3) {
-    (0, _inherits3.default)(SceneComponent, _Component3);
-
-    function SceneComponent() {
-        (0, _classCallCheck3.default)(this, SceneComponent);
-
-        var _this33 = (0, _possibleConstructorReturn3.default)(this, (SceneComponent.__proto__ || (0, _getPrototypeOf2.default)(SceneComponent)).apply(this, arguments));
-
-        _this33.sceneDescription = {};
-        return _this33;
-    }
-    /**
-     * Notify update scene only when send update message is needed.
-     * @param {number} loopIndex [description]
-     */
-
-
-    (0, _createClass3.default)(SceneComponent, [{
-        key: "updateScene",
-        value: function updateScene(loopIndex) {
-            if (this._lastUpdateIndex !== loopIndex) {
-                this.node.broadcastMessage("update", this.sceneDescription);
-                this._lastUpdateIndex = loopIndex;
-            }
-        }
-    }]);
-    return SceneComponent;
-}(Component);
-
-SceneComponent.attributes = {};
-
-var CameraComponent = function (_Component4) {
-    (0, _inherits3.default)(CameraComponent, _Component4);
-
-    function CameraComponent() {
-        (0, _classCallCheck3.default)(this, CameraComponent);
-        return (0, _possibleConstructorReturn3.default)(this, (CameraComponent.__proto__ || (0, _getPrototypeOf2.default)(CameraComponent)).apply(this, arguments));
-    }
-
-    (0, _createClass3.default)(CameraComponent, [{
-        key: "$awake",
-        value: function $awake() {
-            this.containedScene = CameraComponent._findContainedScene(this.node);
-            var c = this.camera = new PerspectiveCamera();
-            this.transform = this.node.getComponent("Transform");
-            this.$transformUpdated(this.transform);
-            this.getAttribute("far").addObserver(function (v) {
-                console.log("far", v.Value);
-                c.setFar(v.Value);
-            }, true);
-            this.getAttribute("near").addObserver(function (v) {
-                c.setNear(v.Value);
-            }, true);
-            this.getAttribute("fovy").addObserver(function (v) {
-                c.setFovy(v.Value);
-            }, true);
-            this.getAttribute("aspect").addObserver(function (v) {
-                c.setAspect(v.Value);
-            }, true);
-            this.getAttribute("autoAspect").boundTo("_autoAspect");
-        }
-    }, {
-        key: "updateContainedScene",
-        value: function updateContainedScene(loopIndex) {
-            if (this.containedScene) {
-                this.containedScene.updateScene(loopIndex);
-            }
-        }
-    }, {
-        key: "renderScene",
-        value: function renderScene(args) {
-            if (this.containedScene) {
-                this._justifyAspect(args);
-                args.sceneDescription = this.containedScene.sceneDescription;
-                this.containedScene.node.broadcastMessage("render", args);
-            }
-        }
-    }, {
-        key: "$transformUpdated",
-        value: function $transformUpdated(t) {
-            if (this.camera) {
-                this.camera.updateTransform(t);
-            }
-        }
-    }, {
-        key: "_justifyAspect",
-        value: function _justifyAspect(args) {
-            if (this._autoAspect) {
-                var asp = args.viewport.Width / args.viewport.Height;
-                if (this._aspectCache !== asp) {
-                    this.setValue("aspect", asp);
-                    this._aspectCache = asp;
-                }
-            }
-        }
-    }], [{
-        key: "_findContainedScene",
-
-        /**
-        * Find scene tag recursively.
-        * @param  {GomlNode}       node [the node to searching currently]
-        * @return {SceneComponent}      [the scene component found]
-        */
-        value: function _findContainedScene(node) {
-            if (node.parent) {
-                var scene = node.parent.getComponent("Scene");
-                if (scene && scene instanceof SceneComponent) {
-                    return scene;
-                } else {
-                    return CameraComponent._findContainedScene(node.parent);
-                }
-            } else {
-                return null;
-            }
-        }
-    }]);
-    return CameraComponent;
-}(Component);
-
-CameraComponent.attributes = {
-    fovy: {
-        defaultValue: 0.3,
-        converter: "Number"
-    },
-    near: {
-        defaultValue: 0.01,
-        converter: "Number"
-    },
-    far: {
-        defaultValue: 10,
-        converter: "Number"
-    },
-    aspect: {
-        defaultValue: 1.6,
-        converter: "Number"
-    },
-    autoAspect: {
-        defaultValue: true,
-        converter: "Boolean"
-    }
-};
-
-var GLExtRequestor = function () {
-    function GLExtRequestor(gl) {
-        (0, _classCallCheck3.default)(this, GLExtRequestor);
-
-        this.gl = gl;
-        this.extensions = {};
-        this._readyExtensions = {};
-        this._resolveRequested();
-        GLExtRequestor._requestObserver.push(this._resolveExtensionSafely);
-    }
-    /**
-     * Request extension to use.
-     * @param {string} str [description]
-     */
-
-
-    (0, _createClass3.default)(GLExtRequestor, [{
-        key: "_resolveRequested",
-
-        /**
-         * Resolve all extension requested already.
-         */
-        value: function _resolveRequested() {
-            var _this35 = this;
-
-            GLExtRequestor._requestedExtensions.forEach(function (e) {
-                _this35._resolveExtensionSafely(e.extensionName);
-            });
-        }
-    }, {
-        key: "_resolveExtensionSafely",
-        value: function _resolveExtensionSafely(extName) {
-            var e = GLExtRequestor._requestedExtensions[GLExtRequestor._requestIndexOf(extName)];
-            if (!this._resolveExtension(e.extensionName) && e.isNecessary) {
-                throw new Error("A WebGL extension '" + e.extensionName + "' was requested. But that is not supported on this device.");
-            }
-        }
-    }, {
-        key: "_resolveExtension",
-        value: function _resolveExtension(name) {
-            if (this._readyExtensions[name]) {
-                return true;
-            }
-            var ext = void 0;
-            if (typeof GLExtRequestor._customExtensionResolvers[name] === "undefined") {
-                ext = this.extensions[name] = this.gl.getExtension(name);
-            } else {
-                ext = this.extensions[name] = GLExtRequestor._customExtensionResolvers[name](this.gl);
-            }
-            this._readyExtensions[name] = this.extensions[name] !== void 0;
-            return !!this._readyExtensions[name];
-        }
-    }], [{
-        key: "request",
-        value: function request(extName) {
-            var isNecessary = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-
-            var index = GLExtRequestor._requestIndexOf(extName);
-            if (index > -1 && isNecessary) {
-                GLExtRequestor._requestedExtensions[index] = { extensionName: extName, isNecessary: isNecessary };
-            } else if (index === -1) {
-                GLExtRequestor._requestedExtensions.push({ extensionName: extName, isNecessary: isNecessary });
-            }
-            GLExtRequestor._requestObserver.forEach(function (o) {
-                return o(extName);
-            });
-        }
-    }, {
-        key: "_requestIndexOf",
-        value: function _requestIndexOf(extName) {
-            for (var i = 0; i < GLExtRequestor._requestedExtensions.length; i++) {
-                if (GLExtRequestor._requestedExtensions[i].extensionName === extName) {
-                    return i;
-                }
-            }
-            return -1;
-        }
-    }]);
-    return GLExtRequestor;
-}();
-/**
- * Extension list requested to use.
- * @type {string[]}
- */
-
-
-GLExtRequestor._requestedExtensions = [];
-/**
- * Some of extensions needed to override resolving extensions by this.
- */
-GLExtRequestor._customExtensionResolvers = {};
-GLExtRequestor._requestObserver = [];
-GLExtRequestor._customExtensionResolvers["WEBGL_color_buffer_float"] = function (gl) {
-    var isSupported = void 0;
-    if (gl.getExtension("WEBGL_color_buffer_float") === null) {
-        var fbo = gl.createFramebuffer();
-        var tex = gl.createTexture();
-        gl.bindFramebuffer(gl.FRAMEBUFFER, fbo);
-        gl.bindTexture(gl.TEXTURE_2D, tex);
-        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.FLOAT, null);
-        gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, tex, 0);
-        if (gl.checkFramebufferStatus(gl.FRAMEBUFFER) !== gl.FRAMEBUFFER_COMPLETE) {
-            isSupported = false;
-        } else {
-            isSupported = true;
-        }
-        gl.deleteTexture(tex);
-        gl.deleteFramebuffer(fbo);
-    } else {
-        isSupported = true;
-    }
-    return isSupported;
-};
-
-var ns = obtainGomlInterface.ns("HTTP://GRIMOIRE.GL/NS/DEFAULT");
-var ResizeMode;
-(function (ResizeMode) {
-    ResizeMode[ResizeMode["Aspect"] = 0] = "Aspect";
-    ResizeMode[ResizeMode["Fit"] = 1] = "Fit";
-    ResizeMode[ResizeMode["Manual"] = 2] = "Manual";
-})(ResizeMode || (ResizeMode = {}));
-
-var CanvasInitializerComponent = function (_Component5) {
-    (0, _inherits3.default)(CanvasInitializerComponent, _Component5);
-
-    function CanvasInitializerComponent() {
-        (0, _classCallCheck3.default)(this, CanvasInitializerComponent);
-        return (0, _possibleConstructorReturn3.default)(this, (CanvasInitializerComponent.__proto__ || (0, _getPrototypeOf2.default)(CanvasInitializerComponent)).apply(this, arguments));
-    }
-
-    (0, _createClass3.default)(CanvasInitializerComponent, [{
-        key: "$awake",
-        value: function $awake() {
-            var _this37 = this;
-
-            this._scriptTag = this.companion.get("scriptElement");
-            if (this._isContainedInBody(this._scriptTag)) {
-                // canvas should be placed siblings of the script tag
-                this._generateCanvas(this._scriptTag);
-            } else {}
-            // apply sizes on changed
-            this.attributes.get("width").addObserver(function (v) {
-                _this37._resize();
-            });
-            this.attributes.get("height").addObserver(function (v) {
-                _this37._resize();
-            });
-        }
-        /**
-         * Generate canvas element
-         * @param  {Element}           parent [description]
-         * @return {HTMLCanvasElement}        [description]
-         */
-
-    }, {
-        key: "_generateCanvas",
-        value: function _generateCanvas(scriptTag) {
-            var _this38 = this;
-
-            this.canvas = document.createElement("canvas");
-            window.addEventListener("resize", function () {
-                return _this38._onWindowResize();
-            });
-            this._configureCanvas(this.canvas, scriptTag);
-            var gl = this._getContext(this.canvas);
-            this.companion.set(ns("gl"), gl);
-            this.companion.set(ns("canvasElement"), this.canvas);
-            this.companion.set(ns("GLExtRequestor"), new GLExtRequestor(gl));
-            return this.canvas;
-        }
-    }, {
-        key: "_resize",
-        value: function _resize(supressBroadcast) {
-            var canvas = this.companion.get("canvasElement");
-            var widthRaw = this.getValue("width");
-            var heightRaw = this.getValue("height");
-            this._widthMode = this._asResizeMode(widthRaw);
-            this._heightMode = this._asResizeMode(heightRaw);
-            if (this._widthMode === this._heightMode && this._widthMode === ResizeMode.Aspect) {
-                throw new Error("Width and height could not have aspect mode in same time!");
-            }
-            if (this._widthMode === ResizeMode.Aspect) {
-                this._ratio = widthRaw.aspect;
-            }
-            if (this._heightMode === ResizeMode.Aspect) {
-                this._ratio = heightRaw.aspect;
-            }
-            if (this._widthMode === ResizeMode.Manual) {
-                this._applyManualWidth(widthRaw.size, supressBroadcast);
-            }
-            if (this._heightMode === ResizeMode.Manual) {
-                this._applyManualHeight(heightRaw.size, supressBroadcast);
-            }
-            this._onWindowResize(supressBroadcast);
-        }
-    }, {
-        key: "_onWindowResize",
-        value: function _onWindowResize(supressBroadcast) {
-            var size = this._getParentSize();
-            if (this._widthMode === ResizeMode.Fit) {
-                this._applyManualWidth(size.width, supressBroadcast);
-            }
-            if (this._heightMode === ResizeMode.Fit) {
-                this._applyManualHeight(size.height, supressBroadcast);
-            }
-        }
-    }, {
-        key: "_applyManualWidth",
-        value: function _applyManualWidth(width, supressBroadcast) {
-            if (width === this.canvas.width) {
-                return;
-            }
-            this.canvas.width = width;
-            this._canvasContainer.style.width = width + "px";
-            if (!supressBroadcast) {
-                this.node.broadcastMessage(1, "resizeCanvas");
-            }
-            if (this._heightMode === ResizeMode.Aspect) {
-                this._applyManualHeight(width / this._ratio, supressBroadcast);
-            }
-        }
-    }, {
-        key: "_applyManualHeight",
-        value: function _applyManualHeight(height, supressBroadcast) {
-            if (height === this.canvas.height) {
-                return;
-            }
-            this.canvas.height = height;
-            this._canvasContainer.style.height = height + "px";
-            if (!supressBroadcast) {
-                this.node.broadcastMessage(1, "resizeCanvas");
-            }
-            if (this._widthMode === ResizeMode.Aspect) {
-                this._applyManualWidth(height * this._ratio, supressBroadcast);
-            }
-        }
-    }, {
-        key: "_getParentSize",
-        value: function _getParentSize() {
-            var parent = this._canvasContainer.parentElement;
-            var boundingBox = parent.getBoundingClientRect();
-            return boundingBox;
-        }
-        /**
-         * Get resize mode from raw attribute of height or width
-         * @param  {string  | number}      mode [description]
-         * @return {ResizeMode}   [description]
-         */
-
-    }, {
-        key: "_asResizeMode",
-        value: function _asResizeMode(cso) {
-            if (cso.mode === "fit") {
-                return ResizeMode.Fit;
-            } else if (cso.mode === "aspect") {
-                return ResizeMode.Aspect;
-            } else {
-                return ResizeMode.Manual;
-            }
-        }
-    }, {
-        key: "_configureCanvas",
-        value: function _configureCanvas(canvas, scriptTag) {
-            canvas.style.position = "absolute";
-            canvas.style.top = "0px";
-            canvas.style.left = "0px";
-            this._canvasContainer = document.createElement("div");
-            this._canvasContainer.style.position = "relative";
-            this._canvasContainer.style.overflow = "hidden";
-            this._canvasContainer.appendChild(canvas);
-            if (this.getValue("containerId")) {
-                this._canvasContainer.id = this.getValue("containerId");
-            }
-            if (this.getValue("containerClass")) {
-                this._canvasContainer.className = this.getValue("containerClass");
-            }
-            this.companion.set(ns("canvasContainer"), this._canvasContainer);
-            scriptTag.parentElement.insertBefore(this._canvasContainer, scriptTag.nextSibling);
-            this._resize(true);
-        }
-    }, {
-        key: "_getContext",
-        value: function _getContext(canvas) {
-            var context = canvas.getContext("webgl");
-            if (!context) {
-                context = canvas.getContext("webgl-experimental");
-            }
-            return context;
-        }
-        /**
-         * Check the tag is included in the body
-         * @param  {Element} tag [description]
-         * @return {boolean}     [description]
-         */
-
-    }, {
-        key: "_isContainedInBody",
-        value: function _isContainedInBody(tag) {
-            if (!tag.parentElement) {
-                return false;
-            }
-            if (tag.parentNode.nodeName === "BODY") {
-                return true;
-            }
-            return this._isContainedInBody(tag.parentElement);
-        }
-    }]);
-    return CanvasInitializerComponent;
-}(Component);
-
-CanvasInitializerComponent.attributes = {
-    width: {
-        defaultValue: "fit",
-        converter: "CanvasSize"
-    },
-    height: {
-        defaultValue: 480,
-        converter: "CanvasSize"
-    },
-    containerId: {
-        defaultValue: undefined,
-        converter: "String"
-    },
-    containerClass: {
-        defaultValue: "gr-container",
-        converter: "String"
-    }
-};
-
-var FullscreenComponent = function (_Component6) {
-    (0, _inherits3.default)(FullscreenComponent, _Component6);
-
-    function FullscreenComponent() {
-        (0, _classCallCheck3.default)(this, FullscreenComponent);
-
-        var _this39 = (0, _possibleConstructorReturn3.default)(this, (FullscreenComponent.__proto__ || (0, _getPrototypeOf2.default)(FullscreenComponent)).apply(this, arguments));
-
-        _this39._fullscreen = false;
-        return _this39;
-    }
-
-    (0, _createClass3.default)(FullscreenComponent, [{
-        key: "$awake",
-        value: function $awake() {
-            var _this40 = this;
-
-            this.getAttribute("fullscreen").addObserver(function (attr) {
-                if (_this40._fullscreen === attr.Value) {
-                    return;
-                }
-                _this40._fullscreen = attr.Value;
-                _this40._switchFullscreen();
-            });
-        }
-    }, {
-        key: "_switchFullscreen",
-        value: function _switchFullscreen() {
-            if (this._fullscreen) {
-                this.requestFullscreen(this.companion.get("canvasContainer"));
-            } else {
-                this.exitFullscreen();
-            }
-        }
-    }, {
-        key: "requestFullscreen",
-        value: function requestFullscreen(target) {
-            if (target.webkitRequestFullscreen) {
-                target.webkitRequestFullscreen(); //Chrome15+, Safari5.1+, Opera15+
-            } else if (target["mozRequestFullScreen"]) {
-                target["mozRequestFullScreen"](); //FF10+
-            } else if (target["msRequestFullscreen"]) {
-                target["msRequestFullscreen"](); //IE11+
-            } else if (target.requestFullscreen) {
-                target.requestFullscreen(); // HTML5 Fullscreen API仕様
-            } else {
-                console.error('ご利用のブラウザはフルスクリーン操作に対応していません');
-                return;
-            }
-        }
-        /*フルスクリーン終了用ファンクション*/
-
-    }, {
-        key: "exitFullscreen",
-        value: function exitFullscreen() {
-            if (document.webkitCancelFullScreen) {
-                document.webkitCancelFullScreen(); //Chrome15+, Safari5.1+, Opera15+
-            } else if (document["mozCancelFullScreen"]) {
-                document["mozCancelFullScreen"](); //FF10+
-            } else if (document["msExitFullscreen"]) {
-                document["msExitFullscreen"](); //IE11+
-            } else if (document["cancelFullScreen"]) {
-                document["cancelFullScreen"](); //Gecko:FullScreenAPI仕様
-            } else if (document.exitFullscreen) {
-                document.exitFullscreen(); // HTML5 Fullscreen API仕様
-            }
-        }
-    }]);
-    return FullscreenComponent;
-}(Component);
-
-FullscreenComponent.attributes = {
-    fullscreen: {
-        converter: "Boolean",
-        defaultValue: false
-    }
-};
-
-var GeometryComponent = function (_Component7) {
-    (0, _inherits3.default)(GeometryComponent, _Component7);
-
-    function GeometryComponent() {
-        (0, _classCallCheck3.default)(this, GeometryComponent);
-        return (0, _possibleConstructorReturn3.default)(this, (GeometryComponent.__proto__ || (0, _getPrototypeOf2.default)(GeometryComponent)).apply(this, arguments));
-    }
-
-    (0, _createClass3.default)(GeometryComponent, [{
-        key: "$mount",
-        value: function $mount() {
-            var type = this.getValue("type");
-            if (type) {
-                var gf = this.companion.get("GeometryFactory");
-                var attrs = GeometryFactory.factoryArgumentDeclarations[type];
-                var geometryArgument = {};
-                for (var key in attrs) {
-                    this.__addAtribute(key, attrs[key]);
-                    geometryArgument[key] = this.getValue(key);
-                }
-                this.geometry = gf.instanciate(type, geometryArgument);
-                var gr = this.companion.get("GeometryRegistory");
-                var name = this.getValue("name");
-                if (!name) {
-                    throw new Error("Name was not specified");
-                }
-                gr.addGeometry(name, this.geometry);
-            }
-        }
-    }]);
-    return GeometryComponent;
-}(Component);
-
-GeometryComponent.attributes = {
-    type: {
-        converter: "String",
-        defaultValue: undefined
-    },
-    name: {
-        converter: "String",
-        defaultValue: undefined
-    }
-};
-
-var GeometryRegistoryComponent = function (_Component8) {
-    (0, _inherits3.default)(GeometryRegistoryComponent, _Component8);
-
-    function GeometryRegistoryComponent() {
-        (0, _classCallCheck3.default)(this, GeometryRegistoryComponent);
-
-        var _this42 = (0, _possibleConstructorReturn3.default)(this, (GeometryRegistoryComponent.__proto__ || (0, _getPrototypeOf2.default)(GeometryRegistoryComponent)).apply(this, arguments));
-
-        _this42._geometries = {};
-        return _this42;
-    }
-
-    (0, _createClass3.default)(GeometryRegistoryComponent, [{
-        key: "$awake",
-        value: function $awake() {
-            this._factory = new GeometryFactory(this.companion.get("gl"));
-            this.companion.set(this.name, this);
-            this.companion.set(obtainGomlInterface.ns(this.name.ns)("GeometryFactory"), this._factory);
-            var _iteratorNormalCompletion6 = true;
-            var _didIteratorError6 = false;
-            var _iteratorError6 = undefined;
-
-            try {
-                for (var _iterator6 = (0, _getIterator3.default)(this.getValue("defaultGeometry")), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
-                    var geometry = _step6.value;
-
-                    this.addGeometry(geometry, this._factory.instanciateAsDefault(geometry));
-                }
-            } catch (err) {
-                _didIteratorError6 = true;
-                _iteratorError6 = err;
-            } finally {
-                try {
-                    if (!_iteratorNormalCompletion6 && _iterator6.return) {
-                        _iterator6.return();
-                    }
-                } finally {
-                    if (_didIteratorError6) {
-                        throw _iteratorError6;
-                    }
-                }
-            }
-        }
-    }, {
-        key: "addGeometry",
-        value: function addGeometry(name, geometry) {
-            this._geometries[name] = geometry;
-        }
-    }, {
-        key: "removeGeometry",
-        value: function removeGeometry(name) {
-            if (this._geometries[name]) {
-                delete this._geometries[name];
-            }
-        }
-    }, {
-        key: "getGeometry",
-        value: function getGeometry(name) {
-            return this._geometries[name];
-        }
-    }]);
-    return GeometryRegistoryComponent;
-}(Component);
-
-GeometryRegistoryComponent.attributes = {
-    defaultGeometry: {
-        converter: "StringArray",
-        defaultValue: ["quad", "cube", "sphere"]
-    }
-};
-
-var HTMLBinderComponent = function (_Component9) {
-    (0, _inherits3.default)(HTMLBinderComponent, _Component9);
-
-    function HTMLBinderComponent() {
-        (0, _classCallCheck3.default)(this, HTMLBinderComponent);
-
-        var _this43 = (0, _possibleConstructorReturn3.default)(this, (HTMLBinderComponent.__proto__ || (0, _getPrototypeOf2.default)(HTMLBinderComponent)).apply(this, arguments));
-
-        _this43._isFirstCall = true;
-        return _this43;
-    }
-
-    (0, _createClass3.default)(HTMLBinderComponent, [{
-        key: "$awake",
-        value: function $awake() {
-            this._canvasContainer = this.companion.get("canvasContainer");
-            this._currentTransform = this.node.getComponent("Transform");
-        }
-    }, {
-        key: "$mount",
-        value: function $mount() {
-            this._canvasContainer = this.companion.get("canvasContainer");
-            this._currentTransform = this.node.getComponent("Transform");
-        }
-    }, {
-        key: "$treeInitialized",
-        value: function $treeInitialized() {
-            var _this44 = this;
-
-            this.getAttribute("targetRenderer").addObserver(function (v) {
-                if (_this44._rendererQuery !== v.Value) {
-                    _this44._onRendererChanged();
-                }
-            }, true);
-            this.getAttribute("htmlQuery").addObserver(function (v) {
-                _this44._onQueryChanged(v.Value);
-            }, true);
-        }
-    }, {
-        key: "$render",
-        value: function $render(args) {
-            if (this._isFirstCall) {
-                this._onRendererChanged();
-                this._isFirstCall = false;
-            }
-            if (this._queriedElement && args.caller.node === this._targetNode) {
-                var vp = args.viewport;
-                var rawPos = Matrix.transform(this._currentTransform.calcPVM(args.camera.camera), new Vector4(0, 0, 0, 1));
-                var rawScPos = {
-                    x: rawPos.X / rawPos.W,
-                    y: rawPos.Y / rawPos.W,
-                    z: rawPos.Z / rawPos.W
-                };
-                if (rawScPos.z >= -1 && rawScPos.z <= 1) {
-                    var scPos = {
-                        x: vp.Left + (rawScPos.x + 1) / 2 * vp.Width,
-                        y: vp.Top + (rawScPos.y + 1) / 2 * vp.Height
-                    };
-                    this._queriedElement.style.visibility = "visible";
-                    this._queriedElement.style.left = scPos.x + "px";
-                    this._queriedElement.style.bottom = scPos.y + "px";
-                } else {
-                    this._queriedElement.style.visibility = "hidden";
-                }
-            }
-        }
-        /**
-         * Restore default position of queried html
-         */
-
-    }, {
-        key: "_restoreDefault",
-        value: function _restoreDefault() {
-            this._canvasContainer.removeChild(this._queriedElement);
-            this._parentCache.appendChild(this._queriedElement);
-            var s = this._queriedElement.style;
-            var c = this._styleCache;
-            s.position = c["position"];
-            s.left = c["left"];
-            s.bottom = c["bottom"];
-            s.visibility = c["visibility"];
-        }
-    }, {
-        key: "_beginTrack",
-        value: function _beginTrack() {
-            this._parentCache.removeChild(this._queriedElement);
-            this._canvasContainer.appendChild(this._queriedElement);
-            this._queriedElement.style.position = "absolute";
-        }
-    }, {
-        key: "_onRendererChanged",
-        value: function _onRendererChanged() {
-            var _this45 = this;
-
-            var returned = false;
-            this.tree(this.getValue("targetRenderer")).forEach(function (n) {
-                if (returned) {
-                    return true;
-                } else {
-                    _this45._targetNode = n;
-                    returned = true;
-                }
-            });
-        }
-    }, {
-        key: "_onQueryChanged",
-        value: function _onQueryChanged(query) {
-            var queried = void 0;
-            if (query && query !== "") {
-                queried = document.querySelectorAll(query);
-            }
-            if (this._queriedElement) {
-                this._restoreDefault();
-            }
-            if (!queried || queried.length === 0) {
-                this._queriedElement = undefined;
-                this._parentCache = undefined;
-            } else {
-                this._queriedElement = queried.item(0);
-                var s = this._queriedElement.style;
-                this._styleCache = {
-                    position: s.position,
-                    visibility: s.visibility,
-                    left: s.left,
-                    bottom: s.bottom
-                };
-                this._parentCache = this._queriedElement.parentElement;
-                this._beginTrack();
-            }
-        }
-    }]);
-    return HTMLBinderComponent;
-}(Component);
-
-HTMLBinderComponent.attributes = {
-    htmlQuery: {
-        defaultValue: undefined,
-        converter: "String"
-    },
-    targetRenderer: {
-        defaultValue: "render-scene",
-        converter: "String"
-    }
-};
-
-var LoopManagerComponent = function (_Component10) {
-    (0, _inherits3.default)(LoopManagerComponent, _Component10);
-
-    function LoopManagerComponent() {
-        (0, _classCallCheck3.default)(this, LoopManagerComponent);
-
-        var _this46 = (0, _possibleConstructorReturn3.default)(this, (LoopManagerComponent.__proto__ || (0, _getPrototypeOf2.default)(LoopManagerComponent)).apply(this, arguments));
-
-        _this46._loopActions = [];
-        _this46._loopIndex = 0;
-        return _this46;
-    }
-
-    (0, _createClass3.default)(LoopManagerComponent, [{
-        key: "$awake",
-        value: function $awake() {
-            var _this47 = this;
-
-            this.attributes.get("loopEnabled").addObserver(function (attr) {
-                _this47._begin();
-            });
-            this._registerNextLoop = window.requestAnimationFrame // if window.requestAnimationFrame is defined or undefined
-            ? function () {
-                window.requestAnimationFrame(_this47._loop.bind(_this47));
-            } : function () {
-                window.setTimeout(_this47._loop.bind(_this47), 1000 / 60);
-            };
-        }
-    }, {
-        key: "register",
-        value: function register(action, priorty) {
-            this._loopActions.push({
-                action: action,
-                priorty: priorty
-            });
-            this._loopActions.sort(function (a, b) {
-                return a.priorty - b.priorty;
-            });
-        }
-    }, {
-        key: "_begin",
-        value: function _begin() {
-            this._registerNextLoop();
-        }
-    }, {
-        key: "_loop",
-        value: function _loop() {
-            var _this48 = this;
-
-            this._loopActions.forEach(function (a) {
-                return a.action(_this48._loopIndex);
-            });
-            this._loopIndex++;
-            this._registerNextLoop();
-        }
-    }]);
-    return LoopManagerComponent;
-}(Component);
-
-LoopManagerComponent.attributes = {
-    loopEnabled: {
-        defaultValue: false,
-        converter: "Boolean"
-    }
-};
-
-var Pass = function () {
-    function Pass(program, attributes, beforeDraw) {
-        (0, _classCallCheck3.default)(this, Pass);
-
-        this.program = program;
-        this.attributes = attributes;
-        this.beforeDraw = beforeDraw;
-    }
-
-    (0, _createClass3.default)(Pass, [{
-        key: "draw",
-        value: function draw(arg) {
-            this.program.use();
-            for (var i = 0; i < this.beforeDraw.length; i++) {
-                this.beforeDraw[i](this, arg);
-            }
-            arg.geometry.draw(arg.targetBuffer, this.attributes, this.program, arg.drawCount, arg.drawOffset);
-        }
-    }]);
-    return Pass;
-}();
-
-var SORTPass = function (_Pass) {
-    (0, _inherits3.default)(SORTPass, _Pass);
-
-    function SORTPass(program, attributes, beforeDraw, programInfo) {
-        (0, _classCallCheck3.default)(this, SORTPass);
-
-        var _this49 = (0, _possibleConstructorReturn3.default)(this, (SORTPass.__proto__ || (0, _getPrototypeOf2.default)(SORTPass)).call(this, program, attributes, beforeDraw));
-
-        _this49.programInfo = programInfo;
-        return _this49;
-    }
-
-    return SORTPass;
-}(Pass);
-
-var MaterialComponent = function (_Component11) {
-    (0, _inherits3.default)(MaterialComponent, _Component11);
-
-    function MaterialComponent() {
-        (0, _classCallCheck3.default)(this, MaterialComponent);
-
-        var _this50 = (0, _possibleConstructorReturn3.default)(this, (MaterialComponent.__proto__ || (0, _getPrototypeOf2.default)(MaterialComponent)).apply(this, arguments));
-
-        _this50.materialArgs = {};
-        return _this50;
-    }
-
-    (0, _createClass3.default)(MaterialComponent, [{
-        key: "$mount",
-        value: function $mount() {
-            var typeName = this.getValue("type");
-            if (typeName) {
-                this.materialPromise = this.companion.get("MaterialFactory").instanciate(typeName);
-                this._registerAttributes();
-            }
-        }
-    }, {
-        key: "_registerAttributes",
-        value: function _registerAttributes() {
-            return __awaiter(this, void 0, void 0, _regenerator2.default.mark(function _callee7() {
-                var _this51 = this;
-
-                var promises;
-                return _regenerator2.default.wrap(function _callee7$(_context81) {
-                    while (1) {
-                        switch (_context81.prev = _context81.next) {
-                            case 0:
-                                _context81.next = 2;
-                                return this.materialPromise;
-
-                            case 2:
-                                this.material = _context81.sent;
-                                promises = [];
-
-                                this.material.pass.forEach(function (p) {
-                                    if (p instanceof SORTPass) {
-                                        var _loop2 = function _loop2(key) {
-                                            _this51.__addAtribute(key, p.programInfo.gomlAttributes[key]);
-                                            _this51.attributes.get(key).addObserver(function (v) {
-                                                _this51.materialArgs[key] = v.Value;
-                                            });
-                                            var value = _this51.materialArgs[key] = _this51.getValue(key);
-                                            if (value instanceof ResourceBase) {
-                                                promises.push(value.validPromise);
-                                            }
-                                        };
-
-                                        for (var key in p.programInfo.gomlAttributes) {
-                                            _loop2(key);
-                                        }
-                                    }
-                                });
-                                _context81.next = 7;
-                                return _promise2.default.all(promises);
-
-                            case 7:
-                                this.ready = true;
-
-                            case 8:
-                            case "end":
-                                return _context81.stop();
-                        }
-                    }
-                }, _callee7, this);
-            }));
-        }
-    }]);
-    return MaterialComponent;
-}(Component);
-
-MaterialComponent.attributes = {
-    type: {
-        converter: "String",
-        defaultValue: undefined
-    }
-};
-
-var MaterialContainerComponent = function (_Component12) {
-    (0, _inherits3.default)(MaterialContainerComponent, _Component12);
-
-    function MaterialContainerComponent() {
-        (0, _classCallCheck3.default)(this, MaterialContainerComponent);
-
-        var _this52 = (0, _possibleConstructorReturn3.default)(this, (MaterialContainerComponent.__proto__ || (0, _getPrototypeOf2.default)(MaterialContainerComponent)).apply(this, arguments));
-
-        _this52.materialArgs = {};
-        _this52.ready = false;
-        return _this52;
-    }
-
-    (0, _createClass3.default)(MaterialContainerComponent, [{
-        key: "$mount",
-        value: function $mount() {
-            this.attributes.get("material").addObserver(this._onMaterialChanged);
-            this.companion.get("loader").register(this._onMaterialChanged());
-        }
-        /**
-         * When the material attribute is changed.
-         */
-
-    }, {
-        key: "_onMaterialChanged",
-        value: function _onMaterialChanged() {
-            return __awaiter(this, void 0, void 0, _regenerator2.default.mark(function _callee8() {
-                var materialPromise;
-                return _regenerator2.default.wrap(function _callee8$(_context82) {
-                    while (1) {
-                        switch (_context82.prev = _context82.next) {
-                            case 0:
-                                materialPromise = this.getValue("material");
-
-                                if (!this._materialComponent) {
-                                    this._prepareInternalMaterial(materialPromise);
-                                } else {
-                                    this._prepareExternalMaterial(materialPromise);
-                                }
-
-                            case 2:
-                            case "end":
-                                return _context82.stop();
-                        }
-                    }
-                }, _callee8, this);
-            }));
-        }
-        /**
-         * Resolve materials only when the material required from external material component.
-         * @return {Promise<void>} [description]
-         */
-
-    }, {
-        key: "_prepareExternalMaterial",
-        value: function _prepareExternalMaterial(materialPromise) {
-            return __awaiter(this, void 0, void 0, _regenerator2.default.mark(function _callee9() {
-                var loader, material;
-                return _regenerator2.default.wrap(function _callee9$(_context83) {
-                    while (1) {
-                        switch (_context83.prev = _context83.next) {
-                            case 0:
-                                loader = this.companion.get("loader");
-
-                                loader.register(materialPromise);
-                                _context83.next = 4;
-                                return materialPromise;
-
-                            case 4:
-                                material = _context83.sent;
-
-                                this.material = material;
-                                this.materialArgs = this._materialComponent.materialArgs;
-                                this.ready = true;
-
-                            case 8:
-                            case "end":
-                                return _context83.stop();
-                        }
-                    }
-                }, _callee9, this);
-            }));
-        }
-    }, {
-        key: "_prepareInternalMaterial",
-        value: function _prepareInternalMaterial(materialPromise) {
-            return __awaiter(this, void 0, void 0, _regenerator2.default.mark(function _callee10() {
-                var _this53 = this;
-
-                var loader, material, promises;
-                return _regenerator2.default.wrap(function _callee10$(_context84) {
-                    while (1) {
-                        switch (_context84.prev = _context84.next) {
-                            case 0:
-                                // obtain promise of instanciating material
-                                loader = this.companion.get("loader");
-
-                                loader.register(materialPromise);
-
-                                if (materialPromise) {
-                                    _context84.next = 4;
-                                    break;
-                                }
-
-                                return _context84.abrupt("return");
-
-                            case 4:
-                                _context84.next = 6;
-                                return materialPromise;
-
-                            case 6:
-                                material = _context84.sent;
-                                promises = [];
-
-                                material.pass.forEach(function (p) {
-                                    if (p instanceof SORTPass) {
-                                        var _loop3 = function _loop3(key) {
-                                            var val = p.programInfo.gomlAttributes[key];
-                                            _this53.__addAtribute(key, val);
-                                            _this53.attributes.get(key).addObserver(function (v) {
-                                                _this53.materialArgs[key] = v.Value;
-                                            });
-                                            _this53.materialArgs[key] = _this53.getValue(key);
-                                        };
-
-                                        for (var key in p.programInfo.gomlAttributes) {
-                                            _loop3(key);
-                                        }
-                                    }
-                                });
-                                _context84.next = 11;
-                                return _promise2.default.all(promises);
-
-                            case 11:
-                                this.material = material;
-                                this.ready = true;
-
-                            case 13:
-                            case "end":
-                                return _context84.stop();
-                        }
-                    }
-                }, _callee10, this);
-            }));
-        }
-    }]);
-    return MaterialContainerComponent;
-}(Component);
-
-MaterialContainerComponent.attributes = {
-    material: {
-        converter: "Material",
-        defaultValue: undefined,
-        componentBoundTo: "_materialComponent" // When the material was specified with the other material tag, this field would be assigned.
-    }
-};
-
-var DefaultMacro = {
-    "GRIMOIRE": null,
-    "WEBGL_VERSION": "1"
-};
-
-/**
- * Manage macros which would be appended head of all shaders grimoire.js would load.
- */
-
-var MacroRegistory = function () {
-    function MacroRegistory() {
-        (0, _classCallCheck3.default)(this, MacroRegistory);
-
-        /**
-         * Macro string which generated by registored macro.
-         * @type {string}
-         */
-        this.macroString = "";
-        /**
-         * The map of macro.
-         */
-        this._macro = {};
-        /**
-         * Handlers functions for changing macro.
-         */
-        this._observers = [];
-        for (var key in DefaultMacro) {
-            this.setValue(key, DefaultMacro[key]);
-        }
-    }
-    /**
-     * Set the value of macros.
-     * @param {string}    key [description]
-     * @param {string =   null}        val [description]
-     */
-
-
-    (0, _createClass3.default)(MacroRegistory, [{
-        key: "setValue",
-        value: function setValue(key) {
-            var val = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-
-            if (this._macro[key] !== val) {
-                this._macro[key] = val;
-                this.macroString = this._getMacroString();
-                this._notifyMacroChanged();
-            }
-        }
-        /**
-         * Get the value of macro.
-         * @param  {string} key [description]
-         * @return {string}     [description]
-         */
-
-    }, {
-        key: "getValue",
-        value: function getValue(key) {
-            return this._macro[key];
-        }
-    }, {
-        key: "addObserver",
-        value: function addObserver(handler) {
-            this._observers.push(handler);
-        }
-    }, {
-        key: "removeObserver",
-        value: function removeObserver(handler) {
-            for (var i = 0; i < this._observers.length; i++) {
-                if (this._observers[i] === handler) {
-                    this._observers.splice(i, 1);
-                }
-            }
-        }
-    }, {
-        key: "_getMacroString",
-        value: function _getMacroString() {
-            var result = "";
-            for (var key in this._macro) {
-                result += this._genSingleMacroString(key, this._macro[key]);
-            }
-            return result;
-        }
-    }, {
-        key: "_notifyMacroChanged",
-        value: function _notifyMacroChanged() {
-            for (var i = 0; i < this._observers.length; i++) {
-                this._observers[i]();
-            }
-        }
-        /**
-         * Generate macro string for single macro
-         * @param  {string} key [description]
-         * @param  {string} val [description]
-         * @return {string}     [description]
-         */
-
-    }, {
-        key: "_genSingleMacroString",
-        value: function _genSingleMacroString(key, val) {
-            if (val === void 0) {
-                throw new Error("Macro value of " + key + " can't be undefined");
-            }
-            if (val === null) {
-                return "#define " + key + "\n";
-            } else {
-                return "#define " + key + " " + val + "\n";
-            }
-        }
-    }]);
-    return MacroRegistory;
-}();
-
-var UniformProxy = function () {
-    function UniformProxy(program) {
-        (0, _classCallCheck3.default)(this, UniformProxy);
-
-        this.program = program;
-        this._currentTextureRegister = 0;
-        this._gl = program.gl;
-    }
-
-    (0, _createClass3.default)(UniformProxy, [{
-        key: "uniformBool",
-        value: function uniformBool(variableName, val) {
-            var _this54 = this;
-
-            this._pass(variableName, function (l) {
-                return _this54._gl.uniform1i(l, val ? 1 : 0);
-            });
-        }
-    }, {
-        key: "uniformMatrix",
-        value: function uniformMatrix(variableName, mat) {
-            var _this55 = this;
-
-            this._pass(variableName, function (l) {
-                return _this55._gl.uniformMatrix4fv(l, false, mat.rawElements);
-            });
-        }
-    }, {
-        key: "uniformFloat",
-        value: function uniformFloat(variableName, val) {
-            var _this56 = this;
-
-            this._pass(variableName, function (l) {
-                return _this56._gl.uniform1f(l, val);
-            });
-        }
-    }, {
-        key: "uniformFloatArray",
-        value: function uniformFloatArray(variableName, val) {
-            var _this57 = this;
-
-            this._pass(variableName, function (l) {
-                return _this57._gl.uniform1fv(l, val);
-            });
-        }
-    }, {
-        key: "uniformInt",
-        value: function uniformInt(variableName, val) {
-            var _this58 = this;
-
-            this._pass(variableName, function (l) {
-                return _this58._gl.uniform1i(l, val);
-            });
-        }
-    }, {
-        key: "uniformVector2",
-        value: function uniformVector2(variableName, val) {
-            var _this59 = this;
-
-            this._pass(variableName, function (l) {
-                return _this59._gl.uniform2f(l, val.X, val.Y);
-            });
-        }
-    }, {
-        key: "uniformVector2Array",
-        value: function uniformVector2Array(variableName, val) {
-            var _this60 = this;
-
-            this._pass(variableName, function (l) {
-                return _this60._gl.uniform2fv(l, val);
-            });
-        }
-    }, {
-        key: "uniformVector3",
-        value: function uniformVector3(variableName, val) {
-            var _this61 = this;
-
-            this._pass(variableName, function (l) {
-                return _this61._gl.uniform3f(l, val.X, val.Y, val.Z);
-            });
-        }
-    }, {
-        key: "uniformVector3Array",
-        value: function uniformVector3Array(variableName, val) {
-            var _this62 = this;
-
-            this._pass(variableName, function (l) {
-                return _this62._gl.uniform3fv(l, val);
-            });
-        }
-    }, {
-        key: "uniformColor3",
-        value: function uniformColor3(variableName, val) {
-            var _this63 = this;
-
-            this._pass(variableName, function (l) {
-                return _this63._gl.uniform3f(l, val.R, val.G, val.B);
-            });
-        }
-    }, {
-        key: "uniformVector4",
-        value: function uniformVector4(variableName, val) {
-            var _this64 = this;
-
-            this._pass(variableName, function (l) {
-                return _this64._gl.uniform4f(l, val.X, val.Y, val.Z, val.W);
-            });
-        }
-    }, {
-        key: "uniformVector4Array",
-        value: function uniformVector4Array(variableName, val) {
-            var _this65 = this;
-
-            this._pass(variableName, function (l) {
-                return _this65._gl.uniform4fv(l, val);
-            });
-        }
-    }, {
-        key: "uniformColor4",
-        value: function uniformColor4(variableName, val) {
-            var _this66 = this;
-
-            this._pass(variableName, function (l) {
-                return _this66._gl.uniform4f(l, val.R, val.G, val.B, val.A);
-            });
-        }
-    }, {
-        key: "uniformTexture2D",
-        value: function uniformTexture2D(variableName, val) {
-            if (val.valid) {
-                val.register(this._currentTextureRegister);
-                this.uniformInt(variableName, this._currentTextureRegister);
-                this._currentTextureRegister++;
-            } else {
-                console.warn("The texture assigned to '" + variableName + "' is not valid.");
-            }
-        }
-    }, {
-        key: "onUse",
-        value: function onUse() {
-            this._currentTextureRegister = 0;
-        }
-    }, {
-        key: "_pass",
-        value: function _pass(variableName, act) {
-            var location = this.program.findUniformLocation(variableName);
-            if (location) {
-                act(location);
-            }
-        }
-    }]);
-    return UniformProxy;
-}();
-
-var Program = function (_ResourceBase2) {
-    (0, _inherits3.default)(Program, _ResourceBase2);
-
-    function Program(gl) {
-        (0, _classCallCheck3.default)(this, Program);
-
-        var _this67 = (0, _possibleConstructorReturn3.default)(this, (Program.__proto__ || (0, _getPrototypeOf2.default)(Program)).call(this, gl));
-
-        _this67._uniformLocations = {};
-        _this67._attributeLocations = {};
-        _this67.uniforms = new UniformProxy(_this67);
-        _this67.program = gl.createProgram();
-        return _this67;
-    }
-
-    (0, _createClass3.default)(Program, [{
-        key: "update",
-        value: function update(shaders) {
-            var _this68 = this;
-
-            if (this.valid) {
-                // detach all attached shaders previously
-                var preciousShaders = this.gl.getAttachedShaders(this.program);
-                preciousShaders.forEach(function (s) {
-                    return _this68.gl.detachShader(_this68.program, s);
-                });
-            }
-            shaders.forEach(function (shader) {
-                _this68.gl.attachShader(_this68.program, shader.shader);
-            });
-            this.gl.linkProgram(this.program);
-            if (!this.gl.getProgramParameter(this.program, WebGLRenderingContext.LINK_STATUS)) {
-                var errorLog = this.gl.getProgramInfoLog(this.program);
-                throw new Error("LINK FAILED\n" + errorLog);
-            }
-            this.valid = true;
-        }
-    }, {
-        key: "use",
-        value: function use() {
-            this.gl.useProgram(this.program);
-            this.uniforms.onUse();
-        }
-    }, {
-        key: "destroy",
-        value: function destroy() {
-            (0, _get3.default)(Program.prototype.__proto__ || (0, _getPrototypeOf2.default)(Program.prototype), "destroy", this).call(this);
-            this.gl.deleteProgram(this.program);
-        }
-    }, {
-        key: "findAttributeLocation",
-        value: function findAttributeLocation(variableName) {
-            if (typeof this._attributeLocations[variableName] === "undefined") {
-                this._attributeLocations[variableName] = this.gl.getAttribLocation(this.program, variableName);
-                this.gl.enableVertexAttribArray(this._attributeLocations[variableName]);
-                return this._attributeLocations[variableName];
-            } else {
-                return this._attributeLocations[variableName];
-            }
-        }
-    }, {
-        key: "findUniformLocation",
-        value: function findUniformLocation(variableName) {
-            if (typeof this._uniformLocations[variableName] === "undefined") {
-                return this._uniformLocations[variableName] = this.gl.getUniformLocation(this.program, variableName);
-            } else {
-                return this._uniformLocations[variableName];
-            }
-        }
-    }]);
-    return Program;
-}(ResourceBase);
-
-var Shader = function (_ResourceBase3) {
-    (0, _inherits3.default)(Shader, _ResourceBase3);
-
-    function Shader(gl, type, sourceCode) {
-        (0, _classCallCheck3.default)(this, Shader);
-
-        var _this69 = (0, _possibleConstructorReturn3.default)(this, (Shader.__proto__ || (0, _getPrototypeOf2.default)(Shader)).call(this, gl));
-
-        _this69.type = type;
-        _this69.sourceCode = sourceCode;
-        _this69.shader = gl.createShader(type);
-        if (sourceCode) {
-            _this69.update(sourceCode);
-        }
-        return _this69;
-    }
-
-    (0, _createClass3.default)(Shader, [{
-        key: "update",
-        value: function update(source) {
-            this.gl.shaderSource(this.shader, source);
-            this.gl.compileShader(this.shader);
-            if (!this.gl.getShaderParameter(this.shader, WebGLRenderingContext.COMPILE_STATUS)) {
-                throw new Error("Compiling shader failed.\nSourceCode:\n" + source + "\n\nErrorCode:" + this.gl.getShaderInfoLog(this.shader));
-            }
-            this.sourceCode = source;
-            this.valid = true;
-        }
-    }, {
-        key: "destroy",
-        value: function destroy() {
-            (0, _get3.default)(Shader.prototype.__proto__ || (0, _getPrototypeOf2.default)(Shader.prototype), "destroy", this).call(this);
-            this.gl.deleteShader(this.shader);
-        }
-    }]);
-    return Shader;
-}(ResourceBase);
-
-var GLSLUtil = function () {
-    function GLSLUtil() {
-        (0, _classCallCheck3.default)(this, GLSLUtil);
-    }
-
-    (0, _createClass3.default)(GLSLUtil, null, [{
-        key: "isPrimitive",
-        value: function isPrimitive(type) {
-            return GLSLUtil._primitives.indexOf(type) >= 0;
-        }
-    }]);
-    return GLSLUtil;
-}();
-
-GLSLUtil._primitives = ["float", "bool", "int", "vec2", "vec3", "vec4", "ivec2", "ivec3", "ivec4", "bvec2", "bvec3", "bvec4", "mat2", "mat3", "mat4", "sampler1D", "sampler2D", "sampler3D", "samplerCube", "sampler1DShadow", "sampler2DShadow"];
-
 /**
  * Environment uniform value resolver
  */
+
 
 var EnvUniformValueResolver = function () {
     function EnvUniformValueResolver() {
@@ -19512,17 +12315,17 @@ function _resolveDefault(vi, defaultValue) {
     }
 }
 function _registerUserUniforms(input) {
-    return __awaiter(this, void 0, void 0, _regenerator2.default.mark(function _callee11() {
-        var promises, attributes, _loop4, variableName, _ret4;
+    return __awaiter(this, void 0, void 0, _regenerator2.default.mark(function _callee() {
+        var promises, attributes, _loop, variableName, _ret;
 
-        return _regenerator2.default.wrap(function _callee11$(_context85) {
+        return _regenerator2.default.wrap(function _callee$(_context) {
             while (1) {
-                switch (_context85.prev = _context85.next) {
+                switch (_context.prev = _context.next) {
                     case 0:
                         promises = [];
                         attributes = input.info.gomlAttributes;
 
-                        _loop4 = function _loop4(variableName) {
+                        _loop = function _loop(variableName) {
                             if (variableName.charAt(0) === "_") {
                                 // this should not assigned by material argument
                                 return "continue";
@@ -19595,12 +12398,14 @@ function _registerUserUniforms(input) {
                                                     }
                                                 }
                                                 attributes[valName] = _getDecl("MaterialTexture", _resolveDefault(variableInfo, undefined), function (proxy, matArgs) {
-                                                    if (matArgs.attributeValues[valName]) {
-                                                        proxy.uniformTexture2D(valName, matArgs.attributeValues[valName](matArgs.buffers));
+                                                    var texture = void 0;
+                                                    if (matArgs.attributeValues[valName] && (texture = matArgs.attributeValues[valName](matArgs.buffers))) {
+                                                        proxy.uniformTexture2D(valName, texture);
                                                         if (flagAssignTo) {
                                                             proxy.uniformBool(flagAssignTo, true);
                                                         }
                                                     } else {
+                                                        proxy.uniformTexture2D(valName, matArgs.defaultTexture);
                                                         if (flagAssignTo) {
                                                             proxy.uniformBool(flagAssignTo, false);
                                                         }
@@ -19617,38 +12422,38 @@ function _registerUserUniforms(input) {
                             }
                         };
 
-                        _context85.t0 = _regenerator2.default.keys(input.info.uniforms);
+                        _context.t0 = _regenerator2.default.keys(input.info.uniforms);
 
                     case 4:
-                        if ((_context85.t1 = _context85.t0()).done) {
-                            _context85.next = 11;
+                        if ((_context.t1 = _context.t0()).done) {
+                            _context.next = 11;
                             break;
                         }
 
-                        variableName = _context85.t1.value;
-                        _ret4 = _loop4(variableName);
+                        variableName = _context.t1.value;
+                        _ret = _loop(variableName);
 
-                        if (!(_ret4 === "continue")) {
-                            _context85.next = 9;
+                        if (!(_ret === "continue")) {
+                            _context.next = 9;
                             break;
                         }
 
-                        return _context85.abrupt("continue", 4);
+                        return _context.abrupt("continue", 4);
 
                     case 9:
-                        _context85.next = 4;
+                        _context.next = 4;
                         break;
 
                     case 11:
-                        _context85.next = 13;
+                        _context.next = 13;
                         return _promise2.default.all(promises);
 
                     case 13:
                     case "end":
-                        return _context85.stop();
+                        return _context.stop();
                 }
             }
-        }, _callee11, this);
+        }, _callee, this);
     }));
 }
 /**
@@ -19671,24 +12476,24 @@ function _registerEnvUniforms(input) {
     }
 }
 var UniformRegisterer = function UniformRegisterer(input) {
-    return __awaiter(this, void 0, void 0, _regenerator2.default.mark(function _callee12() {
-        return _regenerator2.default.wrap(function _callee12$(_context86) {
+    return __awaiter(this, void 0, void 0, _regenerator2.default.mark(function _callee2() {
+        return _regenerator2.default.wrap(function _callee2$(_context2) {
             while (1) {
-                switch (_context86.prev = _context86.next) {
+                switch (_context2.prev = _context2.next) {
                     case 0:
-                        _context86.next = 2;
+                        _context2.next = 2;
                         return _registerUserUniforms(input);
 
                     case 2:
                         _registerEnvUniforms(input);
-                        return _context86.abrupt("return", input);
+                        return _context2.abrupt("return", input);
 
                     case 4:
                     case "end":
-                        return _context86.stop();
+                        return _context2.stop();
                 }
             }
-        }, _callee12, this);
+        }, _callee2, this);
     }));
 };
 
@@ -19727,20 +12532,20 @@ function _removeComment(source) {
     return text;
 }
 var CommentRemover = function CommentRemover(input) {
-    return __awaiter(this, void 0, void 0, _regenerator2.default.mark(function _callee13() {
-        return _regenerator2.default.wrap(function _callee13$(_context87) {
+    return __awaiter(this, void 0, void 0, _regenerator2.default.mark(function _callee3() {
+        return _regenerator2.default.wrap(function _callee3$(_context3) {
             while (1) {
-                switch (_context87.prev = _context87.next) {
+                switch (_context3.prev = _context3.next) {
                     case 0:
                         input.info.shaderSource = _removeComment(input.info.shaderSource);
-                        return _context87.abrupt("return", input);
+                        return _context3.abrupt("return", input);
 
                     case 2:
                     case "end":
-                        return _context87.stop();
+                        return _context3.stop();
                 }
             }
-        }, _callee13, this);
+        }, _callee3, this);
     }));
 };
 
@@ -19760,50 +12565,50 @@ var CacheResolver = function () {
     (0, _createClass3.default)(CacheResolver, [{
         key: "resolve",
         value: function resolve(src, resolver) {
-            return __awaiter(this, void 0, void 0, _regenerator2.default.mark(function _callee14() {
+            return __awaiter(this, void 0, void 0, _regenerator2.default.mark(function _callee4() {
                 var abs, result;
-                return _regenerator2.default.wrap(function _callee14$(_context88) {
+                return _regenerator2.default.wrap(function _callee4$(_context4) {
                     while (1) {
-                        switch (_context88.prev = _context88.next) {
+                        switch (_context4.prev = _context4.next) {
                             case 0:
                                 abs = this.toAbsolute(src);
 
                                 if (!this._cached(abs)) {
-                                    _context88.next = 5;
+                                    _context4.next = 5;
                                     break;
                                 }
 
-                                return _context88.abrupt("return", this.cache[abs]);
+                                return _context4.abrupt("return", this.cache[abs]);
 
                             case 5:
                                 if (!this._resolving(abs)) {
-                                    _context88.next = 11;
+                                    _context4.next = 11;
                                     break;
                                 }
 
-                                _context88.next = 8;
+                                _context4.next = 8;
                                 return this.resolvers[abs];
 
                             case 8:
-                                return _context88.abrupt("return", _context88.sent);
+                                return _context4.abrupt("return", _context4.sent);
 
                             case 11:
                                 this.resolvers[abs] = resolver(abs);
-                                _context88.next = 14;
+                                _context4.next = 14;
                                 return this.resolvers[abs];
 
                             case 14:
-                                result = _context88.sent;
+                                result = _context4.sent;
 
                                 this._resolved(abs, result);
-                                return _context88.abrupt("return", result);
+                                return _context4.abrupt("return", result);
 
                             case 17:
                             case "end":
-                                return _context88.stop();
+                                return _context4.stop();
                         }
                     }
-                }, _callee14, this);
+                }, _callee4, this);
             }));
         }
     }, {
@@ -19832,52 +12637,52 @@ var ImportResolver = function (_CacheResolver) {
     function ImportResolver() {
         (0, _classCallCheck3.default)(this, ImportResolver);
 
-        var _this70 = (0, _possibleConstructorReturn3.default)(this, (ImportResolver.__proto__ || (0, _getPrototypeOf2.default)(ImportResolver)).call(this, function (str) {
+        var _this26 = (0, _possibleConstructorReturn3.default)(this, (ImportResolver.__proto__ || (0, _getPrototypeOf2.default)(ImportResolver)).call(this, function (str) {
             var regex = /^https?:\/\/.*/gm;
             return regex.test(str) ? ImportResolver._toAbsolute(str) : str;
         }));
 
-        _this70.staticImports = {};
-        return _this70;
+        _this26.staticImports = {};
+        return _this26;
     }
 
     (0, _createClass3.default)(ImportResolver, [{
         key: "resolve",
         value: function resolve(path) {
-            var _this71 = this;
+            var _this27 = this;
 
             return (0, _get3.default)(ImportResolver.prototype.__proto__ || (0, _getPrototypeOf2.default)(ImportResolver.prototype), "resolve", this).call(this, path, function (abs) {
-                return _this71._resolve(path);
+                return _this27._resolve(path);
             });
         }
     }, {
         key: "_resolve",
         value: function _resolve(path) {
-            return __awaiter(this, void 0, void 0, _regenerator2.default.mark(function _callee15() {
-                return _regenerator2.default.wrap(function _callee15$(_context89) {
+            return __awaiter(this, void 0, void 0, _regenerator2.default.mark(function _callee5() {
+                return _regenerator2.default.wrap(function _callee5$(_context5) {
                     while (1) {
-                        switch (_context89.prev = _context89.next) {
+                        switch (_context5.prev = _context5.next) {
                             case 0:
                                 if (!this.staticImports[path]) {
-                                    _context89.next = 4;
+                                    _context5.next = 4;
                                     break;
                                 }
 
-                                return _context89.abrupt("return", this.staticImports[path]);
+                                return _context5.abrupt("return", this.staticImports[path]);
 
                             case 4:
-                                _context89.next = 6;
+                                _context5.next = 6;
                                 return this._fromExternal(path);
 
                             case 6:
-                                return _context89.abrupt("return", _context89.sent);
+                                return _context5.abrupt("return", _context5.sent);
 
                             case 7:
                             case "end":
-                                return _context89.stop();
+                                return _context5.stop();
                         }
                     }
-                }, _callee15, this);
+                }, _callee5, this);
             }));
         }
     }, {
@@ -19909,41 +12714,41 @@ var ImportResolver = function (_CacheResolver) {
 var ImportResolver$1 = new ImportResolver();
 
 function _parseImport(source) {
-    return __awaiter(this, void 0, void 0, _regenerator2.default.mark(function _callee16() {
+    return __awaiter(this, void 0, void 0, _regenerator2.default.mark(function _callee6() {
         var regexResult, importContent;
-        return _regenerator2.default.wrap(function _callee16$(_context90) {
+        return _regenerator2.default.wrap(function _callee6$(_context6) {
             while (1) {
-                switch (_context90.prev = _context90.next) {
+                switch (_context6.prev = _context6.next) {
                     case 0:
                         if (!true) {
-                            _context90.next = 16;
+                            _context6.next = 16;
                             break;
                         }
 
                         regexResult = /\s*@import\s+"([^"]+)"/.exec(source);
 
                         if (regexResult) {
-                            _context90.next = 4;
+                            _context6.next = 4;
                             break;
                         }
 
-                        return _context90.abrupt("break", 16);
+                        return _context6.abrupt("break", 16);
 
                     case 4:
                         importContent = void 0;
-                        _context90.next = 7;
+                        _context6.next = 7;
                         return ImportResolver$1.resolve(regexResult[1]);
 
                     case 7:
-                        _context90.t0 = _context90.sent;
-                        _context90.next = 10;
-                        return _parseImport(_context90.t0);
+                        _context6.t0 = _context6.sent;
+                        _context6.next = 10;
+                        return _parseImport(_context6.t0);
 
                     case 10:
-                        importContent = _context90.sent;
+                        importContent = _context6.sent;
 
                         if (importContent) {
-                            _context90.next = 13;
+                            _context6.next = 13;
                             break;
                         }
 
@@ -19951,42 +12756,42 @@ function _parseImport(source) {
 
                     case 13:
                         source = source.replace(regexResult[0], "\n" + importContent + "\n");
-                        _context90.next = 0;
+                        _context6.next = 0;
                         break;
 
                     case 16:
-                        return _context90.abrupt("return", source);
+                        return _context6.abrupt("return", source);
 
                     case 17:
                     case "end":
-                        return _context90.stop();
+                        return _context6.stop();
                 }
             }
-        }, _callee16, this);
+        }, _callee6, this);
     }));
 }
 var ImportTransformer = function ImportTransformer(input) {
-    return __awaiter(this, void 0, void 0, _regenerator2.default.mark(function _callee17() {
+    return __awaiter(this, void 0, void 0, _regenerator2.default.mark(function _callee7() {
         var transformed;
-        return _regenerator2.default.wrap(function _callee17$(_context91) {
+        return _regenerator2.default.wrap(function _callee7$(_context7) {
             while (1) {
-                switch (_context91.prev = _context91.next) {
+                switch (_context7.prev = _context7.next) {
                     case 0:
-                        _context91.next = 2;
+                        _context7.next = 2;
                         return _parseImport(input.info.shaderSource);
 
                     case 2:
-                        transformed = _context91.sent;
+                        transformed = _context7.sent;
 
                         input.info.shaderSource = transformed;
-                        return _context91.abrupt("return", input);
+                        return _context7.abrupt("return", input);
 
                     case 5:
                     case "end":
-                        return _context91.stop();
+                        return _context7.stop();
                 }
             }
-        }, _callee17, this);
+        }, _callee7, this);
     }));
 };
 
@@ -20744,7 +13549,7 @@ function _parseVariables(source, variableType) {
     var regex = _generateVariableFetchRegex(variableType);
     var regexResult = void 0;
 
-    var _loop5 = function _loop5() {
+    var _loop2 = function _loop2() {
         var name = regexResult[4];
         var type = regexResult[3];
         var precision = regexResult[2];
@@ -20759,7 +13564,7 @@ function _parseVariables(source, variableType) {
                 };
                 if (isNaN(c)) {
                     arrayCount = function (_arrayCount) {
-                        function arrayCount(_x10) {
+                        function arrayCount(_x2) {
                             return _arrayCount.apply(this, arguments);
                         }
 
@@ -20785,43 +13590,43 @@ function _parseVariables(source, variableType) {
     };
 
     while (regexResult = regex.exec(source)) {
-        _loop5();
+        _loop2();
     }
     return result;
 }
 var VariableParser = function VariableParser(type) {
     return function (arg) {
-        return __awaiter(this, void 0, void 0, _regenerator2.default.mark(function _callee18() {
+        return __awaiter(this, void 0, void 0, _regenerator2.default.mark(function _callee8() {
             var variables;
-            return _regenerator2.default.wrap(function _callee18$(_context92) {
+            return _regenerator2.default.wrap(function _callee8$(_context8) {
                 while (1) {
-                    switch (_context92.prev = _context92.next) {
+                    switch (_context8.prev = _context8.next) {
                         case 0:
                             variables = _parseVariables(arg.info.shaderSource, type);
-                            _context92.t0 = type;
-                            _context92.next = _context92.t0 === "uniform" ? 4 : _context92.t0 === "attribute" ? 6 : 8;
+                            _context8.t0 = type;
+                            _context8.next = _context8.t0 === "uniform" ? 4 : _context8.t0 === "attribute" ? 6 : 8;
                             break;
 
                         case 4:
                             arg.info.uniforms = variables;
-                            return _context92.abrupt("break", 9);
+                            return _context8.abrupt("break", 9);
 
                         case 6:
                             arg.info.attributes = variables;
-                            return _context92.abrupt("break", 9);
+                            return _context8.abrupt("break", 9);
 
                         case 8:
                             throw new Error("Unknown variable type!!");
 
                         case 9:
-                            return _context92.abrupt("return", arg);
+                            return _context8.abrupt("return", arg);
 
                         case 10:
                         case "end":
-                            return _context92.stop();
+                            return _context8.stop();
                     }
                 }
-            }, _callee18, this);
+            }, _callee8, this);
         }));
     };
 };
@@ -20834,51 +13639,51 @@ function _removeVariableAnnotations(source) {
     return source;
 }
 var VariableAnnotationRemover = function VariableAnnotationRemover(input) {
-    return __awaiter(this, void 0, void 0, _regenerator2.default.mark(function _callee19() {
-        return _regenerator2.default.wrap(function _callee19$(_context93) {
+    return __awaiter(this, void 0, void 0, _regenerator2.default.mark(function _callee9() {
+        return _regenerator2.default.wrap(function _callee9$(_context9) {
             while (1) {
-                switch (_context93.prev = _context93.next) {
+                switch (_context9.prev = _context9.next) {
                     case 0:
                         input.info.shaderSource = _removeVariableAnnotations(input.info.shaderSource);
-                        return _context93.abrupt("return", input);
+                        return _context9.abrupt("return", input);
 
                     case 2:
                     case "end":
-                        return _context93.stop();
+                        return _context9.stop();
                 }
             }
-        }, _callee19, this);
+        }, _callee9, this);
     }));
 };
 
 function _regexGLConfigs(source) {
     var regex, regexResult;
-    return _regenerator2.default.wrap(function _regexGLConfigs$(_context94) {
+    return _regenerator2.default.wrap(function _regexGLConfigs$(_context10) {
         while (1) {
-            switch (_context94.prev = _context94.next) {
+            switch (_context10.prev = _context10.next) {
                 case 0:
                     regex = /@([a-zA-Z]+)\(([^)]*)\)/g;
                     regexResult = void 0;
 
                 case 2:
                     if (!(regexResult = regex.exec(source))) {
-                        _context94.next = 7;
+                        _context10.next = 7;
                         break;
                     }
 
-                    _context94.next = 5;
+                    _context10.next = 5;
                     return {
                         name: regexResult[1],
                         args: regexResult[2].split(",")
                     };
 
                 case 5:
-                    _context94.next = 2;
+                    _context10.next = 2;
                     break;
 
                 case 7:
                 case "end":
-                    return _context94.stop();
+                    return _context10.stop();
             }
         }
     }, _marked[0], this);
@@ -20982,20 +13787,20 @@ function _parseGLConfigs(source) {
     return result;
 }
 var BasicGLConfigParser = function BasicGLConfigParser(input) {
-    return __awaiter(this, void 0, void 0, _regenerator2.default.mark(function _callee20() {
-        return _regenerator2.default.wrap(function _callee20$(_context95) {
+    return __awaiter(this, void 0, void 0, _regenerator2.default.mark(function _callee10() {
+        return _regenerator2.default.wrap(function _callee10$(_context11) {
             while (1) {
-                switch (_context95.prev = _context95.next) {
+                switch (_context11.prev = _context11.next) {
                     case 0:
                         input.info.configurator = _parseGLConfigs(input.info.shaderSource);
-                        return _context95.abrupt("return", input);
+                        return _context11.abrupt("return", input);
 
                     case 2:
                     case "end":
-                        return _context95.stop();
+                        return _context11.stop();
                 }
             }
-        }, _callee20, this);
+        }, _callee10, this);
     }));
 };
 
@@ -21011,20 +13816,20 @@ function _removeAnnotations(source) {
     return source;
 }
 var AnnotationRemover = function AnnotationRemover(input) {
-    return __awaiter(this, void 0, void 0, _regenerator2.default.mark(function _callee21() {
-        return _regenerator2.default.wrap(function _callee21$(_context96) {
+    return __awaiter(this, void 0, void 0, _regenerator2.default.mark(function _callee11() {
+        return _regenerator2.default.wrap(function _callee11$(_context12) {
             while (1) {
-                switch (_context96.prev = _context96.next) {
+                switch (_context12.prev = _context12.next) {
                     case 0:
                         input.info.shaderSource = _removeAnnotations(input.info.shaderSource);
-                        return _context96.abrupt("return", input);
+                        return _context12.abrupt("return", input);
 
                     case 2:
                     case "end":
-                        return _context96.stop();
+                        return _context12.stop();
                 }
             }
-        }, _callee21, this);
+        }, _callee11, this);
     }));
 };
 
@@ -21036,11 +13841,11 @@ var SORTPassParser = function () {
     (0, _createClass3.default)(SORTPassParser, null, [{
         key: "parse",
         value: function parse(source) {
-            return __awaiter(this, void 0, void 0, _regenerator2.default.mark(function _callee22() {
+            return __awaiter(this, void 0, void 0, _regenerator2.default.mark(function _callee12() {
                 var transformingInfo, i;
-                return _regenerator2.default.wrap(function _callee22$(_context97) {
+                return _regenerator2.default.wrap(function _callee12$(_context13) {
                     while (1) {
-                        switch (_context97.prev = _context97.next) {
+                        switch (_context13.prev = _context13.next) {
                             case 0:
                                 transformingInfo = {
                                     origin: source,
@@ -21057,30 +13862,30 @@ var SORTPassParser = function () {
 
                             case 2:
                                 if (!(i < SORTPassParser.transformers.length)) {
-                                    _context97.next = 9;
+                                    _context13.next = 9;
                                     break;
                                 }
 
-                                _context97.next = 5;
+                                _context13.next = 5;
                                 return SORTPassParser.transformers[i](transformingInfo);
 
                             case 5:
-                                transformingInfo = _context97.sent;
+                                transformingInfo = _context13.sent;
 
                             case 6:
                                 i++;
-                                _context97.next = 2;
+                                _context13.next = 2;
                                 break;
 
                             case 9:
-                                return _context97.abrupt("return", transformingInfo.info);
+                                return _context13.abrupt("return", transformingInfo.info);
 
                             case 10:
                             case "end":
-                                return _context97.stop();
+                                return _context13.stop();
                         }
                     }
-                }, _callee22, this);
+                }, _callee12, this);
             }));
         }
     }]);
@@ -21175,14 +13980,14 @@ var PassFactory = function () {
         value: function _appendGLConfigurators(tasks, passInfo) {
             var configurators = passInfo.configurator;
 
-            var _loop6 = function _loop6(i) {
+            var _loop3 = function _loop3(i) {
                 tasks.push(function (p) {
                     return configurators[i](p.program.gl);
                 });
             };
 
             for (var i = 0; i < configurators.length; i++) {
-                _loop6(i);
+                _loop3(i);
             }
         }
         /**
@@ -21194,7 +13999,7 @@ var PassFactory = function () {
     }, {
         key: "_appendUserVariableRegistration",
         value: function _appendUserVariableRegistration(tasks, passInfo) {
-            var _loop7 = function _loop7(key) {
+            var _loop4 = function _loop4(key) {
                 var registerer = passInfo.gomlAttributes[key].register;
                 tasks.push(function (p, m) {
                     return registerer(p.program.uniforms, m);
@@ -21202,7 +14007,7 @@ var PassFactory = function () {
             };
 
             for (var key in passInfo.gomlAttributes) {
-                _loop7(key);
+                _loop4(key);
             }
         }
         /**
@@ -21214,14 +14019,14 @@ var PassFactory = function () {
     }, {
         key: "_appendSystemVariableRegistration",
         value: function _appendSystemVariableRegistration(tasks, passInfo) {
-            var _loop8 = function _loop8(i) {
+            var _loop5 = function _loop5(i) {
                 tasks.push(function (p, args) {
                     return passInfo.systemRegisterers[i](p.program.uniforms, args);
                 });
             };
 
             for (var i = 0; i < passInfo.systemRegisterers.length; i++) {
-                _loop8(i);
+                _loop5(i);
             }
         }
     }]);
@@ -21315,41 +14120,41 @@ var MaterialFactory = function () {
     (0, _createClass3.default)(MaterialFactory, [{
         key: "instanciate",
         value: function instanciate(typeName) {
-            return __awaiter(this, void 0, void 0, _regenerator2.default.mark(function _callee23() {
-                return _regenerator2.default.wrap(function _callee23$(_context98) {
+            return __awaiter(this, void 0, void 0, _regenerator2.default.mark(function _callee13() {
+                return _regenerator2.default.wrap(function _callee13$(_context14) {
                     while (1) {
-                        switch (_context98.prev = _context98.next) {
+                        switch (_context14.prev = _context14.next) {
                             case 0:
                                 if (!MaterialFactory.factories[typeName]) {
-                                    _context98.next = 4;
+                                    _context14.next = 4;
                                     break;
                                 }
 
-                                return _context98.abrupt("return", MaterialFactory.factories[typeName](this));
+                                return _context14.abrupt("return", MaterialFactory.factories[typeName](this));
 
                             case 4:
-                                _context98.next = 6;
+                                _context14.next = 6;
                                 return this._waitForRegistered(typeName);
 
                             case 6:
-                                return _context98.abrupt("return", _context98.sent);
+                                return _context14.abrupt("return", _context14.sent);
 
                             case 7:
                             case "end":
-                                return _context98.stop();
+                                return _context14.stop();
                         }
                     }
-                }, _callee23, this);
+                }, _callee13, this);
             }));
         }
     }, {
         key: "_waitForRegistered",
         value: function _waitForRegistered(typeName) {
-            var _this74 = this;
+            var _this30 = this;
 
             return new _promise2.default(function (resolve) {
                 MaterialFactory._onRegister(typeName, function () {
-                    resolve(MaterialFactory.factories[typeName](_this74));
+                    resolve(MaterialFactory.factories[typeName](_this30));
                 });
             });
         }
@@ -21373,17 +14178,17 @@ var MaterialFactory = function () {
     }, {
         key: "addSORTMaterial",
         value: function addSORTMaterial(typeName, source) {
-            return __awaiter(this, void 0, void 0, _regenerator2.default.mark(function _callee24() {
+            return __awaiter(this, void 0, void 0, _regenerator2.default.mark(function _callee14() {
                 var sortInfos;
-                return _regenerator2.default.wrap(function _callee24$(_context99) {
+                return _regenerator2.default.wrap(function _callee14$(_context15) {
                     while (1) {
-                        switch (_context99.prev = _context99.next) {
+                        switch (_context15.prev = _context15.next) {
                             case 0:
-                                _context99.next = 2;
+                                _context15.next = 2;
                                 return PassFactory.passInfoFromSORT(source);
 
                             case 2:
-                                sortInfos = _context99.sent;
+                                sortInfos = _context15.sent;
 
                                 MaterialFactory.addMaterialType(typeName, function (factory) {
                                     var sorts = sortInfos.map(function (p) {
@@ -21394,10 +14199,10 @@ var MaterialFactory = function () {
 
                             case 4:
                             case "end":
-                                return _context99.stop();
+                                return _context15.stop();
                         }
                     }
-                }, _callee24, this);
+                }, _callee14, this);
             }));
         }
         /**
@@ -21410,26 +14215,26 @@ var MaterialFactory = function () {
     }, {
         key: "addSORTMaterialFromURL",
         value: function addSORTMaterialFromURL(typeName, url) {
-            return __awaiter(this, void 0, void 0, _regenerator2.default.mark(function _callee25() {
+            return __awaiter(this, void 0, void 0, _regenerator2.default.mark(function _callee15() {
                 var source;
-                return _regenerator2.default.wrap(function _callee25$(_context100) {
+                return _regenerator2.default.wrap(function _callee15$(_context16) {
                     while (1) {
-                        switch (_context100.prev = _context100.next) {
+                        switch (_context16.prev = _context16.next) {
                             case 0:
-                                _context100.next = 2;
+                                _context16.next = 2;
                                 return TextFileResolver$1.resolve(url);
 
                             case 2:
-                                source = _context100.sent;
-                                _context100.next = 5;
+                                source = _context16.sent;
+                                _context16.next = 5;
                                 return MaterialFactory.addSORTMaterial(typeName, source);
 
                             case 5:
                             case "end":
-                                return _context100.stop();
+                                return _context16.stop();
                         }
                     }
-                }, _callee25, this);
+                }, _callee15, this);
             }));
         }
     }, {
@@ -21452,6 +14257,7598 @@ MaterialFactory.defaultShaderHeader = ShaderHeader;
 MaterialFactory.factories = {};
 MaterialFactory.registerdHandlers = {};
 
+var Unlit = "@Pass\nFS_PREC_FLOAT(mediump)\nvarying vec2 vTexCoord;\n#ifdef VS\nattribute vec3 position;\nattribute vec2 texCoord;\nuniform mat4 _matPVM;\nvoid main()\n{\n  gl_Position = _matPVM * vec4(position,1.0);\n  vTexCoord = texCoord;\n}\n#endif\n#ifdef FS\n@{type:\"color\",default:\"white\"}\nuniform vec4 color;\n@{usedFlag:\"textureUsed\"}\nuniform sampler2D texture;\nuniform bool textureUsed;\nvoid main(void)\n{\n  if(textureUsed){\n    gl_FragColor = color * texture2D(texture,vTexCoord);\n  }else{\n    gl_FragColor = color;\n }\n}\n#endif\n";
+
+var UnlitColor = "@Pass\nFS_PREC_FLOAT(mediump)\nvarying vec2 vTexCoord;\n#ifdef VS\nattribute vec3 position;\nattribute vec2 texCoord;\nuniform mat4 _matPVM;\nvoid main()\n{\n  gl_Position = _matPVM * vec4(position,1.0);\n  vTexCoord = texCoord;\n}\n#endif\n#ifdef FS\n@{type:\"color\",default:\"white\"}\nuniform vec4 color;\nvoid main(void)\n{\n    gl_FragColor = color;\n}\n#endif\n";
+
+var UnlitTexture = "@Pass\nFS_PREC_FLOAT(mediump)\nvarying vec2 vTexCoord;\n#ifdef VS\nattribute vec3 position;\nattribute vec2 texCoord;\nuniform mat4 _matPVM;\nvoid main()\n{\n  gl_Position = _matPVM * vec4(position,1.0);\n  vTexCoord = texCoord;\n}\n#endif\n#ifdef FS\nuniform sampler2D texture;\nvoid main(void)\n{\n  gl_FragColor = texture2D(texture,vTexCoord);\n}\n#endif\n";
+
+var DefaultMaterial = function () {
+    function DefaultMaterial() {
+        (0, _classCallCheck3.default)(this, DefaultMaterial);
+    }
+
+    (0, _createClass3.default)(DefaultMaterial, null, [{
+        key: "register",
+        value: function register() {
+            MaterialFactory.addSORTMaterial("unlit", Unlit);
+            MaterialFactory.addSORTMaterial("unlit-texture", UnlitTexture);
+            MaterialFactory.addSORTMaterial("unlit-color", UnlitColor);
+        }
+    }]);
+    return DefaultMaterial;
+}();
+
+var GeometryUtility = function () {
+    function GeometryUtility() {
+        (0, _classCallCheck3.default)(this, GeometryUtility);
+    }
+
+    (0, _createClass3.default)(GeometryUtility, null, [{
+        key: "fromArray",
+
+        /**
+         * Generateor wrap for array
+         * @param  {number[]}                 array [description]
+         * @return {IterableIterator<number>}       [description]
+         */
+        value: _regenerator2.default.mark(function fromArray(array) {
+            var i;
+            return _regenerator2.default.wrap(function fromArray$(_context17) {
+                while (1) {
+                    switch (_context17.prev = _context17.next) {
+                        case 0:
+                            i = 0;
+
+                        case 1:
+                            if (!(i < array.length)) {
+                                _context17.next = 7;
+                                break;
+                            }
+
+                            _context17.next = 4;
+                            return array[i];
+
+                        case 4:
+                            i++;
+                            _context17.next = 1;
+                            break;
+
+                        case 7:
+                        case "end":
+                            return _context17.stop();
+                    }
+                }
+            }, fromArray, this);
+        })
+        /**
+         * Convert triangles topology to lines. Basically uses for making wireframes.
+         * @param  {IterableIterator<number>} indicies [description]
+         * @return {IterableIterator<number>}          [description]
+         */
+
+    }, {
+        key: "linesFromTriangles",
+        value: _regenerator2.default.mark(function linesFromTriangles(indicies) {
+            var ic, i, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, _index, a, b, c;
+
+            return _regenerator2.default.wrap(function linesFromTriangles$(_context18) {
+                while (1) {
+                    switch (_context18.prev = _context18.next) {
+                        case 0:
+                            ic = new Array(3);
+                            i = 0;
+                            _iteratorNormalCompletion = true;
+                            _didIteratorError = false;
+                            _iteratorError = undefined;
+                            _context18.prev = 5;
+                            _iterator = (0, _getIterator3.default)(indicies);
+
+                        case 7:
+                            if (_iteratorNormalCompletion = (_step = _iterator.next()).done) {
+                                _context18.next = 17;
+                                break;
+                            }
+
+                            _index = _step.value;
+
+                            ic[i % 3] = _index;
+
+                            if (!(i % 3 === 2)) {
+                                _context18.next = 13;
+                                break;
+                            }
+
+                            a = ic[0], b = ic[1], c = ic[2];
+                            return _context18.delegateYield([a, b, b, c, c, a], "t0", 13);
+
+                        case 13:
+                            i++;
+
+                        case 14:
+                            _iteratorNormalCompletion = true;
+                            _context18.next = 7;
+                            break;
+
+                        case 17:
+                            _context18.next = 23;
+                            break;
+
+                        case 19:
+                            _context18.prev = 19;
+                            _context18.t1 = _context18["catch"](5);
+                            _didIteratorError = true;
+                            _iteratorError = _context18.t1;
+
+                        case 23:
+                            _context18.prev = 23;
+                            _context18.prev = 24;
+
+                            if (!_iteratorNormalCompletion && _iterator.return) {
+                                _iterator.return();
+                            }
+
+                        case 26:
+                            _context18.prev = 26;
+
+                            if (!_didIteratorError) {
+                                _context18.next = 29;
+                                break;
+                            }
+
+                            throw _iteratorError;
+
+                        case 29:
+                            return _context18.finish(26);
+
+                        case 30:
+                            return _context18.finish(23);
+
+                        case 31:
+                        case "end":
+                            return _context18.stop();
+                    }
+                }
+            }, linesFromTriangles, this, [[5, 19, 23, 31], [24,, 26, 30]]);
+        })
+        /**
+         * Generator for ellipse positions
+         * @param  {Vector3}                  center [the center position of ellipse]
+         * @param  {Vector3}                  up     [up vector for ellipse]
+         * @param  {Vector3}                  right  [right vector for ellipse]
+         * @param  {number}                   divide [how many triangles should consists in the ellipse]
+         * @return {IterableIterator<number>}        [Generated iterator for position]
+         */
+
+    }, {
+        key: "ellipsePosition",
+        value: _regenerator2.default.mark(function ellipsePosition(center, up, right, divide) {
+            var step, i, theta, sin, cos;
+            return _regenerator2.default.wrap(function ellipsePosition$(_context19) {
+                while (1) {
+                    switch (_context19.prev = _context19.next) {
+                        case 0:
+                            _context19.next = 2;
+                            return center.X;
+
+                        case 2:
+                            _context19.next = 4;
+                            return center.Y;
+
+                        case 4:
+                            _context19.next = 6;
+                            return center.Z;
+
+                        case 6:
+                            step = 2 * Math.PI / divide;
+                            i = 0;
+
+                        case 8:
+                            if (!(i < divide)) {
+                                _context19.next = 21;
+                                break;
+                            }
+
+                            theta = step * i;
+                            sin = Math.sin(Math.PI * 2 - theta);
+                            cos = Math.cos(Math.PI * 2 - theta);
+                            _context19.next = 14;
+                            return center.X + cos * up.X + sin * right.X;
+
+                        case 14:
+                            _context19.next = 16;
+                            return center.Y + cos * up.Y + sin * right.Y;
+
+                        case 16:
+                            _context19.next = 18;
+                            return center.Z + cos * up.Z + sin * right.Z;
+
+                        case 18:
+                            i++;
+                            _context19.next = 8;
+                            break;
+
+                        case 21:
+                        case "end":
+                            return _context19.stop();
+                    }
+                }
+            }, ellipsePosition, this);
+        })
+    }, {
+        key: "trianglePosition",
+        value: _regenerator2.default.mark(function trianglePosition(center, up, right) {
+            var p0, p1, p2;
+            return _regenerator2.default.wrap(function trianglePosition$(_context20) {
+                while (1) {
+                    switch (_context20.prev = _context20.next) {
+                        case 0:
+                            p0 = center.addWith(up);
+                            p1 = center.subtractWith(up).addWith(right);
+                            p2 = center.subtractWith(up).subtractWith(right);
+                            return _context20.delegateYield(p0.rawElements, "t0", 4);
+
+                        case 4:
+                            return _context20.delegateYield(p1.rawElements, "t1", 5);
+
+                        case 5:
+                            return _context20.delegateYield(p2.rawElements, "t2", 6);
+
+                        case 6:
+                        case "end":
+                            return _context20.stop();
+                    }
+                }
+            }, trianglePosition, this);
+        })
+    }, {
+        key: "cubePosition",
+        value: _regenerator2.default.mark(function cubePosition(center, up, right, forward) {
+            return _regenerator2.default.wrap(function cubePosition$(_context21) {
+                while (1) {
+                    switch (_context21.prev = _context21.next) {
+                        case 0:
+                            return _context21.delegateYield(GeometryUtility.quadPosition(center.subtractWith(forward), up, right), "t0", 1);
+
+                        case 1:
+                            return _context21.delegateYield(GeometryUtility.quadPosition(center.addWith(forward), up, right.negateThis()), "t1", 2);
+
+                        case 2:
+                            return _context21.delegateYield(GeometryUtility.quadPosition(center.addWith(up), forward, right), "t2", 3);
+
+                        case 3:
+                            return _context21.delegateYield(GeometryUtility.quadPosition(center.addWith(right), forward, up.negateThis()), "t3", 4);
+
+                        case 4:
+                            return _context21.delegateYield(GeometryUtility.quadPosition(center.subtractWith(up), forward, right.negateThis()), "t4", 5);
+
+                        case 5:
+                            return _context21.delegateYield(GeometryUtility.quadPosition(center.subtractWith(right), forward, up), "t5", 6);
+
+                        case 6:
+                        case "end":
+                            return _context21.stop();
+                    }
+                }
+            }, cubePosition, this);
+        })
+    }, {
+        key: "quadPosition",
+        value: _regenerator2.default.mark(function quadPosition(center, up, right) {
+            var p0, p1, p2, p3;
+            return _regenerator2.default.wrap(function quadPosition$(_context22) {
+                while (1) {
+                    switch (_context22.prev = _context22.next) {
+                        case 0:
+                            p0 = center.subtractWith(right).addWith(up);
+                            p1 = center.addWith(right).addWith(up);
+                            p2 = center.addWith(right).subtractWith(up);
+                            p3 = center.subtractWith(right).subtractWith(up);
+                            return _context22.delegateYield(p0.rawElements, "t0", 5);
+
+                        case 5:
+                            return _context22.delegateYield(p1.rawElements, "t1", 6);
+
+                        case 6:
+                            return _context22.delegateYield(p2.rawElements, "t2", 7);
+
+                        case 7:
+                            return _context22.delegateYield(p3.rawElements, "t3", 8);
+
+                        case 8:
+                        case "end":
+                            return _context22.stop();
+                    }
+                }
+            }, quadPosition, this);
+        })
+    }, {
+        key: "planePosition",
+        value: _regenerator2.default.mark(function planePosition(center, up, right, divide) {
+            var x, y, i, j, _i, _j;
+
+            return _regenerator2.default.wrap(function planePosition$(_context23) {
+                while (1) {
+                    switch (_context23.prev = _context23.next) {
+                        case 0:
+                            x = center.addWith(right).multiplyWith(2);
+                            y = center.subtractWith(up).multiplyWith(2);
+                            i = -divide / 2;
+
+                        case 3:
+                            if (!(i < divide / 2 + 1)) {
+                                _context23.next = 13;
+                                break;
+                            }
+
+                            j = -divide / 2;
+
+                        case 5:
+                            if (!(j < divide / 2 + 1)) {
+                                _context23.next = 10;
+                                break;
+                            }
+
+                            return _context23.delegateYield(x.multiplyWith(j / divide).addWith(y.multiplyWith(i / divide)).rawElements, "t0", 7);
+
+                        case 7:
+                            j++;
+                            _context23.next = 5;
+                            break;
+
+                        case 10:
+                            i++;
+                            _context23.next = 3;
+                            break;
+
+                        case 13:
+                            _i = -divide / 2;
+
+                        case 14:
+                            if (!(_i < divide / 2 + 1)) {
+                                _context23.next = 24;
+                                break;
+                            }
+
+                            _j = -divide / 2;
+
+                        case 16:
+                            if (!(_j < divide / 2 + 1)) {
+                                _context23.next = 21;
+                                break;
+                            }
+
+                            return _context23.delegateYield(x.multiplyWith(_j / divide).addWith(y.multiplyWith(_i / divide)).rawElements, "t1", 18);
+
+                        case 18:
+                            _j++;
+                            _context23.next = 16;
+                            break;
+
+                        case 21:
+                            _i++;
+                            _context23.next = 14;
+                            break;
+
+                        case 24:
+                        case "end":
+                            return _context23.stop();
+                    }
+                }
+            }, planePosition, this);
+        })
+    }, {
+        key: "cylinderPosition",
+        value: _regenerator2.default.mark(function cylinderPosition(center, up, right, forward, divide) {
+            var step, d, d2, temp, i, theta, sin, cos, currentCenter, currentRight;
+            return _regenerator2.default.wrap(function cylinderPosition$(_context24) {
+                while (1) {
+                    switch (_context24.prev = _context24.next) {
+                        case 0:
+                            return _context24.delegateYield(GeometryUtility.ellipsePosition(center.addWith(up), forward, right, divide), "t0", 1);
+
+                        case 1:
+                            return _context24.delegateYield(GeometryUtility.ellipsePosition(center.subtractWith(up), forward, Vector3.negate(right), divide), "t1", 2);
+
+                        case 2:
+                            step = 2 * Math.PI / divide;
+                            d = Math.cos(step / 2);
+                            d2 = Math.sin(step / 2);
+                            temp = divide % 2 == 0 ? step / 2 : 0;
+                            i = 0;
+
+                        case 7:
+                            if (!(i < divide)) {
+                                _context24.next = 17;
+                                break;
+                            }
+
+                            theta = step / 2 + step * i;
+                            sin = Math.sin((Math.PI - step) / 2 - theta - temp);
+                            cos = Math.cos((Math.PI - step) / 2 - theta - temp);
+                            currentCenter = new Vector3(d * cos, center.Y, d * sin);
+                            currentRight = new Vector3(Math.cos(-step / 2 - theta - temp), center.Y, Math.sin(-step / 2 - theta - temp));
+                            return _context24.delegateYield(GeometryUtility.quadPosition(currentCenter, up, Vector3.multiply(d2, currentRight)), "t2", 14);
+
+                        case 14:
+                            i++;
+                            _context24.next = 7;
+                            break;
+
+                        case 17:
+                        case "end":
+                            return _context24.stop();
+                    }
+                }
+            }, cylinderPosition, this);
+        })
+    }, {
+        key: "conePosition",
+        value: _regenerator2.default.mark(function conePosition(center, up, right, forward, divide) {
+            var step, d, d2, temp, i, theta, sin, cos, currentCenter, currentRight;
+            return _regenerator2.default.wrap(function conePosition$(_context25) {
+                while (1) {
+                    switch (_context25.prev = _context25.next) {
+                        case 0:
+                            return _context25.delegateYield(GeometryUtility.ellipsePosition(center.subtractWith(up), forward, Vector3.negate(right), divide), "t0", 1);
+
+                        case 1:
+                            step = 2 * Math.PI / divide;
+                            d = Math.cos(step / 2) / 2;
+                            d2 = Math.sin(step / 2);
+                            temp = divide % 2 == 1 ? step / 2 : 0;
+                            i = 0;
+
+                        case 6:
+                            if (!(i < divide)) {
+                                _context25.next = 16;
+                                break;
+                            }
+
+                            theta = step * i;
+                            sin = Math.sin((Math.PI - step) / 2 - theta - temp);
+                            cos = Math.cos((Math.PI - step) / 2 - theta - temp);
+                            currentCenter = new Vector3(d * cos, center.Y, d * sin);
+                            currentRight = new Vector3(Math.cos(-step / 2 - theta - temp), center.Y, Math.sin(-step / 2 - theta - temp));
+                            return _context25.delegateYield(GeometryUtility.trianglePosition(currentCenter, up.subtractWith(currentCenter), Vector3.multiply(d2, currentRight)), "t1", 13);
+
+                        case 13:
+                            i++;
+                            _context25.next = 6;
+                            break;
+
+                        case 16:
+                        case "end":
+                            return _context25.stop();
+                    }
+                }
+            }, conePosition, this);
+        })
+    }, {
+        key: "spherePosition",
+        value: _regenerator2.default.mark(function spherePosition(center, up, right, forward, rowDiv, circleDiv) {
+            var ia, ja, j, phi, sinPhi, upVector, i, theta;
+            return _regenerator2.default.wrap(function spherePosition$(_context26) {
+                while (1) {
+                    switch (_context26.prev = _context26.next) {
+                        case 0:
+                            return _context26.delegateYield(center.addWith(up).rawElements, "t0", 1);
+
+                        case 1:
+                            return _context26.delegateYield(center.subtractWith(up).rawElements, "t1", 2);
+
+                        case 2:
+                            ia = 2 * Math.PI / circleDiv;
+                            ja = Math.PI / (rowDiv + 1);
+                            j = 1;
+
+                        case 5:
+                            if (!(j <= rowDiv)) {
+                                _context26.next = 19;
+                                break;
+                            }
+
+                            phi = ja * j;
+                            sinPhi = Math.sin(phi);
+                            upVector = up.multiplyWith(Math.cos(phi));
+                            i = 0;
+
+                        case 10:
+                            if (!(i <= circleDiv)) {
+                                _context26.next = 16;
+                                break;
+                            }
+
+                            theta = ia * i;
+                            return _context26.delegateYield(right.multiplyWith(Math.cos(theta)).addWith(forward.multiplyWith(Math.sin(theta))).multiplyWith(sinPhi).addWith(upVector).rawElements, "t2", 13);
+
+                        case 13:
+                            i++;
+                            _context26.next = 10;
+                            break;
+
+                        case 16:
+                            j++;
+                            _context26.next = 5;
+                            break;
+
+                        case 19:
+                        case "end":
+                            return _context26.stop();
+                    }
+                }
+            }, spherePosition, this);
+        })
+    }, {
+        key: "quadNormal",
+        value: _regenerator2.default.mark(function quadNormal(normal) {
+            return _regenerator2.default.wrap(function quadNormal$(_context27) {
+                while (1) {
+                    switch (_context27.prev = _context27.next) {
+                        case 0:
+                            return _context27.delegateYield(normal.rawElements, "t0", 1);
+
+                        case 1:
+                            return _context27.delegateYield(normal.rawElements, "t1", 2);
+
+                        case 2:
+                            return _context27.delegateYield(normal.rawElements, "t2", 3);
+
+                        case 3:
+                            return _context27.delegateYield(normal.rawElements, "t3", 4);
+
+                        case 4:
+                        case "end":
+                            return _context27.stop();
+                    }
+                }
+            }, quadNormal, this);
+        })
+    }, {
+        key: "ellipseNormal",
+        value: _regenerator2.default.mark(function ellipseNormal(normal, divide) {
+            var i;
+            return _regenerator2.default.wrap(function ellipseNormal$(_context28) {
+                while (1) {
+                    switch (_context28.prev = _context28.next) {
+                        case 0:
+                            i = 0;
+
+                        case 1:
+                            if (!(i < divide + 1)) {
+                                _context28.next = 6;
+                                break;
+                            }
+
+                            return _context28.delegateYield(normal.rawElements, "t0", 3);
+
+                        case 3:
+                            i++;
+                            _context28.next = 1;
+                            break;
+
+                        case 6:
+                        case "end":
+                            return _context28.stop();
+                    }
+                }
+            }, ellipseNormal, this);
+        })
+    }, {
+        key: "triangleNormal",
+        value: _regenerator2.default.mark(function triangleNormal(normal) {
+            return _regenerator2.default.wrap(function triangleNormal$(_context29) {
+                while (1) {
+                    switch (_context29.prev = _context29.next) {
+                        case 0:
+                            return _context29.delegateYield(normal.rawElements, "t0", 1);
+
+                        case 1:
+                            return _context29.delegateYield(normal.rawElements, "t1", 2);
+
+                        case 2:
+                            return _context29.delegateYield(normal.rawElements, "t2", 3);
+
+                        case 3:
+                        case "end":
+                            return _context29.stop();
+                    }
+                }
+            }, triangleNormal, this);
+        })
+    }, {
+        key: "cubeNormal",
+        value: _regenerator2.default.mark(function cubeNormal(center, up, right, forward) {
+            return _regenerator2.default.wrap(function cubeNormal$(_context30) {
+                while (1) {
+                    switch (_context30.prev = _context30.next) {
+                        case 0:
+                            return _context30.delegateYield(GeometryUtility.quadNormal(forward.negateThis()), "t0", 1);
+
+                        case 1:
+                            return _context30.delegateYield(GeometryUtility.quadNormal(forward), "t1", 2);
+
+                        case 2:
+                            return _context30.delegateYield(GeometryUtility.quadNormal(up), "t2", 3);
+
+                        case 3:
+                            return _context30.delegateYield(GeometryUtility.quadNormal(right), "t3", 4);
+
+                        case 4:
+                            return _context30.delegateYield(GeometryUtility.quadNormal(up.negateThis()), "t4", 5);
+
+                        case 5:
+                            return _context30.delegateYield(GeometryUtility.quadNormal(right.negateThis()), "t5", 6);
+
+                        case 6:
+                        case "end":
+                            return _context30.stop();
+                    }
+                }
+            }, cubeNormal, this);
+        })
+    }, {
+        key: "cylinderNormal",
+        value: _regenerator2.default.mark(function cylinderNormal(center, up, right, forward, divide) {
+            var step, lastRight, i, theta, sin, cos, currentRight;
+            return _regenerator2.default.wrap(function cylinderNormal$(_context31) {
+                while (1) {
+                    switch (_context31.prev = _context31.next) {
+                        case 0:
+                            return _context31.delegateYield(GeometryUtility.ellipseNormal(up, divide), "t0", 1);
+
+                        case 1:
+                            return _context31.delegateYield(GeometryUtility.ellipseNormal(up.negateThis(), divide), "t1", 2);
+
+                        case 2:
+                            step = 2 * Math.PI / divide;
+                            lastRight = new Vector3(Math.cos(-step / 2), center.Y, Math.sin(-step / 2));
+                            i = 0;
+
+                        case 5:
+                            if (!(i < divide)) {
+                                _context31.next = 18;
+                                break;
+                            }
+
+                            theta = step * (i + 1);
+                            sin = Math.sin(Math.PI / 2 - theta);
+                            cos = Math.cos(Math.PI / 2 - theta);
+                            currentRight = new Vector3(Math.cos(-step / 2 - theta), center.Y, Math.sin(-step / 2 - theta));
+                            return _context31.delegateYield(Vector3.cross(lastRight, up).rawElements, "t2", 11);
+
+                        case 11:
+                            return _context31.delegateYield(Vector3.cross(currentRight, up).rawElements, "t3", 12);
+
+                        case 12:
+                            return _context31.delegateYield(Vector3.cross(currentRight, up).rawElements, "t4", 13);
+
+                        case 13:
+                            return _context31.delegateYield(Vector3.cross(lastRight, up).rawElements, "t5", 14);
+
+                        case 14:
+                            lastRight = currentRight;
+
+                        case 15:
+                            i++;
+                            _context31.next = 5;
+                            break;
+
+                        case 18:
+                        case "end":
+                            return _context31.stop();
+                    }
+                }
+            }, cylinderNormal, this);
+        })
+    }, {
+        key: "coneNormal",
+        value: _regenerator2.default.mark(function coneNormal(center, up, right, forward, divide) {
+            var step, d, lastNormal, i, theta, sin, cos, currentCenter, currentRight;
+            return _regenerator2.default.wrap(function coneNormal$(_context32) {
+                while (1) {
+                    switch (_context32.prev = _context32.next) {
+                        case 0:
+                            return _context32.delegateYield(GeometryUtility.ellipseNormal(up.negateThis(), divide), "t0", 1);
+
+                        case 1:
+                            step = Math.PI / divide;
+                            d = Math.cos(step / 2) / 2;
+                            lastNormal = Vector3.cross(new Vector3(Math.cos(step / 2), center.Y, Math.sin(step / 2)), up.subtractWith(new Vector3(d * Math.cos((Math.PI + step) / 2), center.Y, d * Math.sin((Math.PI + step) / 2))));
+                            i = 0;
+
+                        case 5:
+                            if (!(i < divide * 2)) {
+                                _context32.next = 18;
+                                break;
+                            }
+
+                            theta = step * i;
+                            sin = Math.sin((Math.PI - step) / 2 - theta);
+                            cos = Math.cos((Math.PI - step) / 2 - theta);
+                            currentCenter = new Vector3(d * cos, center.Y, d * sin);
+                            currentRight = new Vector3(Math.cos(-step / 2 - theta), center.Y, Math.sin(-step / 2 - theta));
+                            return _context32.delegateYield(Vector3.cross(currentRight, up.subtractWith(currentCenter)).rawElements, "t1", 12);
+
+                        case 12:
+                            if (!(i % 2 == 1)) {
+                                _context32.next = 15;
+                                break;
+                            }
+
+                            return _context32.delegateYield(lastNormal.rawElements, "t2", 14);
+
+                        case 14:
+                            lastNormal = Vector3.cross(currentRight, up.subtractWith(currentCenter));
+
+                        case 15:
+                            i++;
+                            _context32.next = 5;
+                            break;
+
+                        case 18:
+                            return _context32.delegateYield(Vector3.cross(new Vector3(Math.cos(step / 2), center.Y, Math.sin(step / 2)), up.subtractWith(new Vector3(d * Math.cos((Math.PI + step) / 2), center.Y, d * Math.sin((Math.PI + step) / 2)))).rawElements, "t3", 19);
+
+                        case 19:
+                        case "end":
+                            return _context32.stop();
+                    }
+                }
+            }, coneNormal, this);
+        })
+    }, {
+        key: "planeNormal",
+        value: _regenerator2.default.mark(function planeNormal(normal, divide) {
+            var s, i, _i2;
+
+            return _regenerator2.default.wrap(function planeNormal$(_context33) {
+                while (1) {
+                    switch (_context33.prev = _context33.next) {
+                        case 0:
+                            s = GeometryUtility.planeSize(divide) / 2;
+                            i = 0;
+
+                        case 2:
+                            if (!(i < s)) {
+                                _context33.next = 7;
+                                break;
+                            }
+
+                            return _context33.delegateYield(normal.rawElements, "t0", 4);
+
+                        case 4:
+                            i++;
+                            _context33.next = 2;
+                            break;
+
+                        case 7:
+                            _i2 = 0;
+
+                        case 8:
+                            if (!(_i2 < s)) {
+                                _context33.next = 13;
+                                break;
+                            }
+
+                            return _context33.delegateYield(normal.negateThis().rawElements, "t1", 10);
+
+                        case 10:
+                            _i2++;
+                            _context33.next = 8;
+                            break;
+
+                        case 13:
+                        case "end":
+                            return _context33.stop();
+                    }
+                }
+            }, planeNormal, this);
+        })
+    }, {
+        key: "sphereNormal",
+        value: _regenerator2.default.mark(function sphereNormal(up, right, forward, rowDiv, circleDiv) {
+            return _regenerator2.default.wrap(function sphereNormal$(_context34) {
+                while (1) {
+                    switch (_context34.prev = _context34.next) {
+                        case 0:
+                            return _context34.delegateYield(GeometryUtility.spherePosition(Vector3.Zero, up, right, forward, rowDiv, circleDiv), "t0", 1);
+
+                        case 1:
+                        case "end":
+                            return _context34.stop();
+                    }
+                }
+            }, sphereNormal, this);
+        })
+    }, {
+        key: "sphereTexCoord",
+        value: _regenerator2.default.mark(function sphereTexCoord(rowDiv, circleDiv) {
+            var ia, ja, j, phi, sinPhi, i, theta;
+            return _regenerator2.default.wrap(function sphereTexCoord$(_context35) {
+                while (1) {
+                    switch (_context35.prev = _context35.next) {
+                        case 0:
+                            return _context35.delegateYield([0, 0, 0, 1], "t0", 1);
+
+                        case 1:
+                            ia = 2 * Math.PI / circleDiv;
+                            ja = Math.PI / (rowDiv + 1);
+                            j = 1;
+
+                        case 4:
+                            if (!(j <= rowDiv)) {
+                                _context35.next = 17;
+                                break;
+                            }
+
+                            phi = ja * j;
+                            sinPhi = Math.sin(phi);
+                            i = 0;
+
+                        case 8:
+                            if (!(i <= circleDiv)) {
+                                _context35.next = 14;
+                                break;
+                            }
+
+                            theta = ia * i;
+                            return _context35.delegateYield([theta / Math.PI / 2, phi / Math.PI], "t1", 11);
+
+                        case 11:
+                            i++;
+                            _context35.next = 8;
+                            break;
+
+                        case 14:
+                            j++;
+                            _context35.next = 4;
+                            break;
+
+                        case 17:
+                        case "end":
+                            return _context35.stop();
+                    }
+                }
+            }, sphereTexCoord, this);
+        })
+    }, {
+        key: "quadTexCoord",
+        value: _regenerator2.default.mark(function quadTexCoord() {
+            return _regenerator2.default.wrap(function quadTexCoord$(_context36) {
+                while (1) {
+                    switch (_context36.prev = _context36.next) {
+                        case 0:
+                            return _context36.delegateYield([0, 0], "t0", 1);
+
+                        case 1:
+                            return _context36.delegateYield([1, 0], "t1", 2);
+
+                        case 2:
+                            return _context36.delegateYield([1, 1], "t2", 3);
+
+                        case 3:
+                            return _context36.delegateYield([0, 1], "t3", 4);
+
+                        case 4:
+                        case "end":
+                            return _context36.stop();
+                    }
+                }
+            }, quadTexCoord, this);
+        })
+    }, {
+        key: "cubeTexCoord",
+        value: _regenerator2.default.mark(function cubeTexCoord() {
+            var i;
+            return _regenerator2.default.wrap(function cubeTexCoord$(_context37) {
+                while (1) {
+                    switch (_context37.prev = _context37.next) {
+                        case 0:
+                            i = 0;
+
+                        case 1:
+                            if (!(i < 6)) {
+                                _context37.next = 6;
+                                break;
+                            }
+
+                            return _context37.delegateYield(GeometryUtility.quadTexCoord(), "t0", 3);
+
+                        case 3:
+                            i++;
+                            _context37.next = 1;
+                            break;
+
+                        case 6:
+                        case "end":
+                            return _context37.stop();
+                    }
+                }
+            }, cubeTexCoord, this);
+        })
+    }, {
+        key: "triangleTexCoord",
+        value: _regenerator2.default.mark(function triangleTexCoord() {
+            return _regenerator2.default.wrap(function triangleTexCoord$(_context38) {
+                while (1) {
+                    switch (_context38.prev = _context38.next) {
+                        case 0:
+                            return _context38.delegateYield([0, 0], "t0", 1);
+
+                        case 1:
+                            return _context38.delegateYield([1, 0], "t1", 2);
+
+                        case 2:
+                            return _context38.delegateYield([0, 1], "t2", 3);
+
+                        case 3:
+                        case "end":
+                            return _context38.stop();
+                    }
+                }
+            }, triangleTexCoord, this);
+        })
+    }, {
+        key: "ellipseTexCoord",
+        value: _regenerator2.default.mark(function ellipseTexCoord(divide) {
+            var step, i, theta;
+            return _regenerator2.default.wrap(function ellipseTexCoord$(_context39) {
+                while (1) {
+                    switch (_context39.prev = _context39.next) {
+                        case 0:
+                            return _context39.delegateYield([0.5, 0.5], "t0", 1);
+
+                        case 1:
+                            step = 2 * Math.PI / divide;
+                            i = 0;
+
+                        case 3:
+                            if (!(i < divide)) {
+                                _context39.next = 9;
+                                break;
+                            }
+
+                            theta = step * i;
+                            return _context39.delegateYield([0.5 + Math.cos(theta + Math.PI) / 2, 0.5 + Math.sin(theta + Math.PI) / 2], "t1", 6);
+
+                        case 6:
+                            i++;
+                            _context39.next = 3;
+                            break;
+
+                        case 9:
+                        case "end":
+                            return _context39.stop();
+                    }
+                }
+            }, ellipseTexCoord, this);
+        })
+    }, {
+        key: "planeTexCoord",
+        value: _regenerator2.default.mark(function planeTexCoord(divide) {
+            var i, j, _i3, _j2;
+
+            return _regenerator2.default.wrap(function planeTexCoord$(_context40) {
+                while (1) {
+                    switch (_context40.prev = _context40.next) {
+                        case 0:
+                            i = 0;
+
+                        case 1:
+                            if (!(i < divide + 1)) {
+                                _context40.next = 11;
+                                break;
+                            }
+
+                            j = 0;
+
+                        case 3:
+                            if (!(j < divide + 1)) {
+                                _context40.next = 8;
+                                break;
+                            }
+
+                            return _context40.delegateYield([j / divide, i / divide], "t0", 5);
+
+                        case 5:
+                            j++;
+                            _context40.next = 3;
+                            break;
+
+                        case 8:
+                            i++;
+                            _context40.next = 1;
+                            break;
+
+                        case 11:
+                            _i3 = 0;
+
+                        case 12:
+                            if (!(_i3 < divide + 1)) {
+                                _context40.next = 22;
+                                break;
+                            }
+
+                            _j2 = 0;
+
+                        case 14:
+                            if (!(_j2 < divide + 1)) {
+                                _context40.next = 19;
+                                break;
+                            }
+
+                            return _context40.delegateYield([_j2 / divide, _i3 / divide], "t1", 16);
+
+                        case 16:
+                            _j2++;
+                            _context40.next = 14;
+                            break;
+
+                        case 19:
+                            _i3++;
+                            _context40.next = 12;
+                            break;
+
+                        case 22:
+                        case "end":
+                            return _context40.stop();
+                    }
+                }
+            }, planeTexCoord, this);
+        })
+    }, {
+        key: "cylinderTexCoord",
+        value: _regenerator2.default.mark(function cylinderTexCoord(divide) {
+            var p, j;
+            return _regenerator2.default.wrap(function cylinderTexCoord$(_context41) {
+                while (1) {
+                    switch (_context41.prev = _context41.next) {
+                        case 0:
+                            return _context41.delegateYield(GeometryUtility.ellipseTexCoord(divide), "t0", 1);
+
+                        case 1:
+                            return _context41.delegateYield(GeometryUtility.ellipseTexCoord(divide), "t1", 2);
+
+                        case 2:
+                            p = 1 / divide;
+                            j = 0;
+
+                        case 4:
+                            if (!(j < divide)) {
+                                _context41.next = 12;
+                                break;
+                            }
+
+                            return _context41.delegateYield([p * j, 0], "t2", 6);
+
+                        case 6:
+                            return _context41.delegateYield([p * (j + 1), 0], "t3", 7);
+
+                        case 7:
+                            return _context41.delegateYield([p * (j + 1), 1], "t4", 8);
+
+                        case 8:
+                            return _context41.delegateYield([p * j, 1], "t5", 9);
+
+                        case 9:
+                            j++;
+                            _context41.next = 4;
+                            break;
+
+                        case 12:
+                        case "end":
+                            return _context41.stop();
+                    }
+                }
+            }, cylinderTexCoord, this);
+        })
+    }, {
+        key: "coneTexCoord",
+        value: _regenerator2.default.mark(function coneTexCoord(divide) {
+            var step, i, theta;
+            return _regenerator2.default.wrap(function coneTexCoord$(_context42) {
+                while (1) {
+                    switch (_context42.prev = _context42.next) {
+                        case 0:
+                            return _context42.delegateYield(GeometryUtility.ellipseTexCoord(divide), "t0", 1);
+
+                        case 1:
+                            step = Math.PI / 2 / divide;
+                            i = 0;
+
+                        case 3:
+                            if (!(i < divide)) {
+                                _context42.next = 11;
+                                break;
+                            }
+
+                            theta = -step * i;
+                            return _context42.delegateYield([0, 0], "t1", 6);
+
+                        case 6:
+                            return _context42.delegateYield([Math.cos(theta - step), Math.sin(theta - step)], "t2", 7);
+
+                        case 7:
+                            return _context42.delegateYield([Math.cos(theta), Math.sin(theta)], "t3", 8);
+
+                        case 8:
+                            i++;
+                            _context42.next = 3;
+                            break;
+
+                        case 11:
+                        case "end":
+                            return _context42.stop();
+                    }
+                }
+            }, coneTexCoord, this);
+        })
+    }, {
+        key: "triangleIndex",
+        value: _regenerator2.default.mark(function triangleIndex(offset) {
+            var o;
+            return _regenerator2.default.wrap(function triangleIndex$(_context43) {
+                while (1) {
+                    switch (_context43.prev = _context43.next) {
+                        case 0:
+                            o = offset;
+                            return _context43.delegateYield([o, o + 2, o + 1], "t0", 2);
+
+                        case 2:
+                        case "end":
+                            return _context43.stop();
+                    }
+                }
+            }, triangleIndex, this);
+        })
+    }, {
+        key: "quadIndex",
+        value: _regenerator2.default.mark(function quadIndex(offset) {
+            var o;
+            return _regenerator2.default.wrap(function quadIndex$(_context44) {
+                while (1) {
+                    switch (_context44.prev = _context44.next) {
+                        case 0:
+                            o = offset;
+                            return _context44.delegateYield([o, o + 2, o + 1, o, o + 3, o + 2], "t0", 2);
+
+                        case 2:
+                        case "end":
+                            return _context44.stop();
+                    }
+                }
+            }, quadIndex, this);
+        })
+    }, {
+        key: "cubeIndex",
+        value: _regenerator2.default.mark(function cubeIndex(offset) {
+            var s, i;
+            return _regenerator2.default.wrap(function cubeIndex$(_context45) {
+                while (1) {
+                    switch (_context45.prev = _context45.next) {
+                        case 0:
+                            s = GeometryUtility.quadSize();
+                            i = 0;
+
+                        case 2:
+                            if (!(i < 6)) {
+                                _context45.next = 7;
+                                break;
+                            }
+
+                            return _context45.delegateYield(GeometryUtility.quadIndex(offset + s * i), "t0", 4);
+
+                        case 4:
+                            i++;
+                            _context45.next = 2;
+                            break;
+
+                        case 7:
+                        case "end":
+                            return _context45.stop();
+                    }
+                }
+            }, cubeIndex, this);
+        })
+    }, {
+        key: "sphereIndex",
+        value: _regenerator2.default.mark(function sphereIndex(offset, rowDiv, circleDiv) {
+            var getIndex, top, bottom, i, j, _i4, _i5;
+
+            return _regenerator2.default.wrap(function sphereIndex$(_context46) {
+                while (1) {
+                    switch (_context46.prev = _context46.next) {
+                        case 0:
+                            getIndex = function getIndex(i, j) {
+                                return offset + (circleDiv + 1) * j + 2 + i;
+                            };
+
+                            top = offset;
+                            bottom = offset + 1;
+                            // upper side
+
+                            i = 0;
+
+                        case 4:
+                            if (!(i < circleDiv)) {
+                                _context46.next = 14;
+                                break;
+                            }
+
+                            _context46.next = 7;
+                            return top;
+
+                        case 7:
+                            _context46.next = 9;
+                            return getIndex(i, 0);
+
+                        case 9:
+                            _context46.next = 11;
+                            return getIndex(i + 1, 0);
+
+                        case 11:
+                            i++;
+                            _context46.next = 4;
+                            break;
+
+                        case 14:
+                            j = 0;
+
+                        case 15:
+                            if (!(j < rowDiv - 1)) {
+                                _context46.next = 36;
+                                break;
+                            }
+
+                            _i4 = 0;
+
+                        case 17:
+                            if (!(_i4 < circleDiv)) {
+                                _context46.next = 33;
+                                break;
+                            }
+
+                            _context46.next = 20;
+                            return getIndex(_i4, j);
+
+                        case 20:
+                            _context46.next = 22;
+                            return getIndex(_i4, j + 1);
+
+                        case 22:
+                            _context46.next = 24;
+                            return getIndex(_i4 + 1, j);
+
+                        case 24:
+                            _context46.next = 26;
+                            return getIndex(_i4, j + 1);
+
+                        case 26:
+                            _context46.next = 28;
+                            return getIndex(_i4 + 1, j + 1);
+
+                        case 28:
+                            _context46.next = 30;
+                            return getIndex(_i4 + 1, j);
+
+                        case 30:
+                            _i4++;
+                            _context46.next = 17;
+                            break;
+
+                        case 33:
+                            j++;
+                            _context46.next = 15;
+                            break;
+
+                        case 36:
+                            _i5 = 0;
+
+                        case 37:
+                            if (!(_i5 < circleDiv)) {
+                                _context46.next = 47;
+                                break;
+                            }
+
+                            _context46.next = 40;
+                            return bottom;
+
+                        case 40:
+                            _context46.next = 42;
+                            return getIndex(_i5 + 1, rowDiv - 1);
+
+                        case 42:
+                            _context46.next = 44;
+                            return getIndex(_i5, rowDiv - 1);
+
+                        case 44:
+                            _i5++;
+                            _context46.next = 37;
+                            break;
+
+                        case 47:
+                        case "end":
+                            return _context46.stop();
+                    }
+                }
+            }, sphereIndex, this);
+        })
+    }, {
+        key: "cylinderIndex",
+        value: _regenerator2.default.mark(function cylinderIndex(offset, divide) {
+            var s, t, i;
+            return _regenerator2.default.wrap(function cylinderIndex$(_context47) {
+                while (1) {
+                    switch (_context47.prev = _context47.next) {
+                        case 0:
+                            s = GeometryUtility.ellipseSize(divide);
+                            t = GeometryUtility.quadSize();
+                            return _context47.delegateYield(GeometryUtility.ellipseIndex(offset, divide), "t0", 3);
+
+                        case 3:
+                            return _context47.delegateYield(GeometryUtility.ellipseIndex(offset + s, divide), "t1", 4);
+
+                        case 4:
+                            i = 0;
+
+                        case 5:
+                            if (!(i < divide)) {
+                                _context47.next = 10;
+                                break;
+                            }
+
+                            return _context47.delegateYield(GeometryUtility.quadIndex(offset + s * 2 + t * i), "t2", 7);
+
+                        case 7:
+                            i++;
+                            _context47.next = 5;
+                            break;
+
+                        case 10:
+                        case "end":
+                            return _context47.stop();
+                    }
+                }
+            }, cylinderIndex, this);
+        })
+    }, {
+        key: "coneIndex",
+        value: _regenerator2.default.mark(function coneIndex(offset, divide) {
+            var s, t, i;
+            return _regenerator2.default.wrap(function coneIndex$(_context48) {
+                while (1) {
+                    switch (_context48.prev = _context48.next) {
+                        case 0:
+                            s = GeometryUtility.ellipseSize(divide);
+                            t = GeometryUtility.triangleSize();
+                            return _context48.delegateYield(GeometryUtility.ellipseIndex(offset, divide), "t0", 3);
+
+                        case 3:
+                            i = 0;
+
+                        case 4:
+                            if (!(i < divide)) {
+                                _context48.next = 9;
+                                break;
+                            }
+
+                            return _context48.delegateYield(GeometryUtility.triangleIndex(offset + s + i * t), "t1", 6);
+
+                        case 6:
+                            i++;
+                            _context48.next = 4;
+                            break;
+
+                        case 9:
+                        case "end":
+                            return _context48.stop();
+                    }
+                }
+            }, coneIndex, this);
+        })
+    }, {
+        key: "planeIndex",
+        value: _regenerator2.default.mark(function planeIndex(offset, divide) {
+            var o, s, j, i, _j3, _i6;
+
+            return _regenerator2.default.wrap(function planeIndex$(_context49) {
+                while (1) {
+                    switch (_context49.prev = _context49.next) {
+                        case 0:
+                            o = offset;
+                            s = GeometryUtility.planeSize(divide) / 2;
+                            j = 0;
+
+                        case 3:
+                            if (!(j < divide)) {
+                                _context49.next = 15;
+                                break;
+                            }
+
+                            i = 0;
+
+                        case 5:
+                            if (!(i < divide)) {
+                                _context49.next = 12;
+                                break;
+                            }
+
+                            o = offset + i + j * (divide + 1);
+                            return _context49.delegateYield([o, o + divide + 2, o + 1], "t0", 8);
+
+                        case 8:
+                            return _context49.delegateYield([o, o + divide + 1, o + divide + 2], "t1", 9);
+
+                        case 9:
+                            i++;
+                            _context49.next = 5;
+                            break;
+
+                        case 12:
+                            j++;
+                            _context49.next = 3;
+                            break;
+
+                        case 15:
+                            _j3 = 0;
+
+                        case 16:
+                            if (!(_j3 < divide)) {
+                                _context49.next = 28;
+                                break;
+                            }
+
+                            _i6 = 0;
+
+                        case 18:
+                            if (!(_i6 < divide)) {
+                                _context49.next = 25;
+                                break;
+                            }
+
+                            o = offset + _i6 + _j3 * (divide + 1) + s;
+                            return _context49.delegateYield([o, o + 1, o + divide + 2], "t2", 21);
+
+                        case 21:
+                            return _context49.delegateYield([o, o + divide + 2, o + divide + 1], "t3", 22);
+
+                        case 22:
+                            _i6++;
+                            _context49.next = 18;
+                            break;
+
+                        case 25:
+                            _j3++;
+                            _context49.next = 16;
+                            break;
+
+                        case 28:
+                        case "end":
+                            return _context49.stop();
+                    }
+                }
+            }, planeIndex, this);
+        })
+    }, {
+        key: "ellipseIndex",
+        value: _regenerator2.default.mark(function ellipseIndex(offset, divide) {
+            var i;
+            return _regenerator2.default.wrap(function ellipseIndex$(_context50) {
+                while (1) {
+                    switch (_context50.prev = _context50.next) {
+                        case 0:
+                            i = 0;
+
+                        case 1:
+                            if (!(i < divide - 1)) {
+                                _context50.next = 6;
+                                break;
+                            }
+
+                            return _context50.delegateYield([offset, offset + 1 + i, offset + 2 + i], "t0", 3);
+
+                        case 3:
+                            i++;
+                            _context50.next = 1;
+                            break;
+
+                        case 6:
+                            return _context50.delegateYield([offset, offset + divide, offset + 1], "t1", 7);
+
+                        case 7:
+                        case "end":
+                            return _context50.stop();
+                    }
+                }
+            }, ellipseIndex, this);
+        })
+    }, {
+        key: "quadSize",
+        value: function quadSize() {
+            return 4;
+        }
+    }, {
+        key: "triangleSize",
+        value: function triangleSize() {
+            return 3;
+        }
+    }, {
+        key: "cubeSize",
+        value: function cubeSize() {
+            return 6 * GeometryUtility.quadSize();
+        }
+    }, {
+        key: "sphereSize",
+        value: function sphereSize(rowDiv, circleDiv) {
+            return 2 + rowDiv * (circleDiv + 1);
+        }
+    }, {
+        key: "cylinderSize",
+        value: function cylinderSize(divide) {
+            return GeometryUtility.ellipseSize(divide) * 2 + divide * GeometryUtility.quadSize();
+        }
+    }, {
+        key: "coneSize",
+        value: function coneSize(divide) {
+            return GeometryUtility.ellipseSize(divide) + divide * GeometryUtility.triangleSize();
+        }
+    }, {
+        key: "planeSize",
+        value: function planeSize(divide) {
+            return (divide + 1) * (divide + 1) * 2;
+        }
+    }, {
+        key: "ellipseSize",
+        value: function ellipseSize(divide) {
+            return divide + 1;
+        }
+    }]);
+    return GeometryUtility;
+}();
+
+/**
+ * Provides the feature to instanciate primitive geometry.
+ */
+
+
+var GeometryFactory = function () {
+    function GeometryFactory(gl) {
+        (0, _classCallCheck3.default)(this, GeometryFactory);
+
+        this.gl = gl;
+    }
+    /**
+     * Add new type geometry
+     * @param {string}                   typeName        [description]
+     * @param {IAttributeDeclaration }}             argumentDeclarations [description]
+     * @param {IGeometryFactoryDelegate} factoryDelegate [description]
+     */
+
+
+    (0, _createClass3.default)(GeometryFactory, [{
+        key: "instanciate",
+        value: function instanciate(type, args) {
+            var factoryDelegate = GeometryFactory.factoryDelegates[type];
+            if (!factoryDelegate) {
+                throw new Error("Can not instanciate unknown geometry type " + type);
+            }
+            return factoryDelegate(this.gl, args);
+        }
+    }, {
+        key: "instanciateAsDefault",
+        value: function instanciateAsDefault(type) {
+            var decl = GeometryFactory.factoryArgumentDeclarations[type];
+            var args = {};
+            for (var attr in decl) {
+                var attrDecl = decl[attr];
+                args[attr] = attrDecl.defaultValue;
+            }
+            return this.instanciate(type, args);
+        }
+    }], [{
+        key: "addType",
+        value: function addType(typeName, argumentDeclarations, factoryDelegate) {
+            GeometryFactory.factoryDelegates[typeName] = factoryDelegate;
+            GeometryFactory.factoryArgumentDeclarations[typeName] = argumentDeclarations;
+        }
+    }]);
+    return GeometryFactory;
+}();
+/**
+ * Delegates to be used as factory
+ */
+
+
+GeometryFactory.factoryDelegates = {};
+/**
+ * Argument inputs to be used for construction of geometry.
+ */
+GeometryFactory.factoryArgumentDeclarations = {};
+
+var Buffer = function (_ResourceBase3) {
+    (0, _inherits3.default)(Buffer, _ResourceBase3);
+
+    function Buffer(gl, target, usage) {
+        (0, _classCallCheck3.default)(this, Buffer);
+
+        var _this31 = (0, _possibleConstructorReturn3.default)(this, (Buffer.__proto__ || (0, _getPrototypeOf2.default)(Buffer)).call(this, gl));
+
+        _this31.target = target;
+        _this31.usage = usage;
+        _this31.buffer = gl.createBuffer();
+        return _this31;
+    }
+
+    (0, _createClass3.default)(Buffer, [{
+        key: "update",
+        value: function update(length, subBuffer) {
+            this.bind();
+            if (subBuffer) {
+                if (!this.valid) {
+                    this.gl.bufferData(this.target, length + subBuffer.byteLength, this.usage);
+                }
+                this.gl.bufferSubData(this.target, length, subBuffer);
+            } else {
+                if (typeof length === "number") {
+                    this.gl.bufferData(this.target, length, this.usage);
+                } else {
+                    this.gl.bufferData(this.target, length, this.usage);
+                }
+            }
+            this.valid = true;
+        }
+    }, {
+        key: "bind",
+        value: function bind() {
+            this.gl.bindBuffer(this.target, this.buffer);
+        }
+    }, {
+        key: "destroy",
+        value: function destroy() {
+            (0, _get3.default)(Buffer.prototype.__proto__ || (0, _getPrototypeOf2.default)(Buffer.prototype), "destroy", this).call(this);
+            this.gl.deleteBuffer(this.buffer);
+        }
+    }]);
+    return Buffer;
+}(ResourceBase);
+
+/**
+ * The geometry class for managing buffer resource
+ */
+
+
+var Geometry = function () {
+    function Geometry(verticies, attribInfo, indicies) {
+        (0, _classCallCheck3.default)(this, Geometry);
+
+        this.verticies = verticies;
+        this.attribInfo = attribInfo;
+        this.indicies = indicies;
+        this._validateGLContext();
+        // check all buffers requested by attribute variables are all contained in verticies
+        for (var attrKey in attribInfo) {
+            if (typeof verticies[attribInfo[attrKey].bufferName] === "undefined") {
+                throw new Error("The buffer request by " + attribInfo[attrKey].bufferName + " is not contained in geometry.");
+            }
+        }
+    }
+
+    (0, _createClass3.default)(Geometry, [{
+        key: "draw",
+        value: function draw(indexName, attribNames, program) {
+            var _this32 = this;
+
+            var count = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : Number.MAX_VALUE;
+            var offset = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 0;
+
+            var targetIndex = this.indicies[indexName];
+            attribNames.forEach(function (name) {
+                var attribInfo = _this32.attribInfo[name];
+                if (!attribInfo) {
+                    throw new Error("There is no such vertex buffer");
+                }
+                var index = program.findAttributeLocation(name);
+                if (index < 0) {
+                    return;
+                }
+                var buffer = _this32.verticies[attribInfo.bufferName];
+                buffer.bind();
+                _this32._gl.vertexAttribPointer(index, attribInfo.size, attribInfo.type, false, attribInfo.stride, attribInfo.offset);
+            });
+            targetIndex.index.bind();
+            this._gl.drawElements(targetIndex.topology, Math.min(targetIndex.count, count), targetIndex.type, Math.min(offset * targetIndex.byteSize, (targetIndex.count - 1) * targetIndex.byteSize));
+        }
+    }, {
+        key: "_validateGLContext",
+        value: function _validateGLContext() {
+            // Check for index buffers
+            for (var indexName in this.indicies) {
+                var _index2 = this.indicies[indexName];
+                if (!this._gl) {
+                    this._gl = _index2.index.gl;
+                }
+                if (this._gl !== _index2.index.gl) {
+                    throw new Error("All index buffers should be initialized with same context");
+                }
+            }
+            // Check for vertex buffers
+            for (var vertexName in this.verticies) {
+                var vertex = this.verticies[vertexName];
+                if (this._gl !== vertex.gl) {
+                    throw new Error("All vertex buffers should be initialized with same context");
+                }
+            }
+        }
+    }]);
+    return Geometry;
+}();
+
+/**
+ * Helper class to instanciate Geometry easily.
+ */
+
+
+var GeometryBuilder = function () {
+    function GeometryBuilder() {
+        (0, _classCallCheck3.default)(this, GeometryBuilder);
+    }
+
+    (0, _createClass3.default)(GeometryBuilder, null, [{
+        key: "build",
+        value: function build(gl, info) {
+            var buffers = {};
+            var attribs = {};
+            for (var bufferKey in info.verticies) {
+                var byteWidth = 4;
+                var buffer = info.verticies[bufferKey];
+                var sizeSum = 0;
+                for (var attribKey in buffer.size) {
+                    if (attribs[attribKey]) {
+                        throw new Error("Attribute variable name was dupelicated");
+                    }
+                    var size = buffer.size[attribKey];
+                    attribs[attribKey] = {
+                        size: size,
+                        offset: sizeSum * byteWidth,
+                        bufferName: bufferKey,
+                        type: buffer.type ? buffer.type : WebGLRenderingContext.FLOAT,
+                        stride: 0
+                    };
+                    sizeSum += size;
+                }
+                for (var _attribKey in buffer.size) {
+                    attribs[_attribKey].stride = sizeSum * byteWidth;
+                }
+                // generate source array of vertex buffer
+                var bufferSource = new Array(sizeSum * buffer.count);
+                var bufferGenerator = buffer.getGenerators();
+                var generators = [];
+                var sizes = [];
+                var beforeEach = bufferGenerator.beforeEach ? bufferGenerator.beforeEach() : undefined;
+                for (var _attribKey2 in buffer.size) {
+                    if (_attribKey2 === "beforeEach") {
+                        continue;
+                    }
+                    var generator = bufferGenerator[_attribKey2];
+                    generators.push(generator());
+                    sizes.push(buffer.size[_attribKey2]);
+                }
+                var i = 0;
+                for (var vertCount = 0; vertCount < buffer.count; vertCount++) {
+                    if (beforeEach && beforeEach.next().done) {
+                        throw new Error("before each was ended before reaching count.");
+                    }
+                    for (var genIndex = 0; genIndex < generators.length; genIndex++) {
+                        var _generator = generators[genIndex];
+                        for (var sizeIndex = 0; sizeIndex < sizes[genIndex]; sizeIndex++) {
+                            var genResult = _generator.next();
+                            if (genResult.done) {
+                                throw new Error("Generator function finished before reaching specified count");
+                            }
+                            bufferSource[i] = genResult.value;
+                            i++;
+                        }
+                    }
+                }
+                // instanciate buffers
+                buffers[bufferKey] = new Buffer(gl, WebGLRenderingContext.ARRAY_BUFFER, buffer.usage ? buffer.usage : WebGLRenderingContext.STATIC_DRAW);
+                buffers[bufferKey].update(new Float32Array(bufferSource));
+            }
+            return new Geometry(buffers, attribs, this._generateIndicies(gl, info.indicies));
+        }
+    }, {
+        key: "_generateIndicies",
+        value: function _generateIndicies(gl, indexGenerator) {
+            var indexMap = {};
+            for (var indexName in indexGenerator) {
+                var indicies = [];
+                var generatorInfo = indexGenerator[indexName];
+                var _iteratorNormalCompletion2 = true;
+                var _didIteratorError2 = false;
+                var _iteratorError2 = undefined;
+
+                try {
+                    for (var _iterator2 = (0, _getIterator3.default)(generatorInfo.generator()), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+                        var variable = _step2.value;
+
+                        indicies.push(variable);
+                    }
+                } catch (err) {
+                    _didIteratorError2 = true;
+                    _iteratorError2 = err;
+                } finally {
+                    try {
+                        if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                            _iterator2.return();
+                        }
+                    } finally {
+                        if (_didIteratorError2) {
+                            throw _iteratorError2;
+                        }
+                    }
+                }
+
+                var bufferType = this._getIndexType(indicies.length);
+                var buffer = new Buffer(gl, WebGLRenderingContext.ELEMENT_ARRAY_BUFFER, WebGLRenderingContext.STATIC_DRAW);
+                buffer.update(new bufferType.ctor(indicies));
+                indexMap[indexName] = {
+                    count: indicies.length,
+                    index: buffer,
+                    type: bufferType.format,
+                    byteSize: bufferType.byteSize,
+                    topology: generatorInfo.topology ? generatorInfo.topology : WebGLRenderingContext.TRIANGLES
+                };
+            }
+            return indexMap;
+        }
+        /**
+         * Determine which index type should be used
+         * @param  {number} length [description]
+         * @return {[type]}        [description]
+         */
+
+    }, {
+        key: "_getIndexType",
+        value: function _getIndexType(length) {
+            var format = WebGLRenderingContext.UNSIGNED_INT;
+            var arrayConstructor = Uint32Array;
+            var byteSize = 4;
+            if (length < 256) {
+                format = WebGLRenderingContext.UNSIGNED_BYTE;
+                arrayConstructor = Uint8Array;
+                byteSize = 1;
+            } else if (length < 65535) {
+                format = WebGLRenderingContext.UNSIGNED_SHORT;
+                arrayConstructor = Uint16Array;
+                byteSize = 2;
+            } else if (length >= 4294967296) {
+                throw new Error("Too many index of geometry!");
+            }
+            return {
+                format: format,
+                ctor: arrayConstructor,
+                byteSize: byteSize
+            };
+        }
+    }]);
+    return GeometryBuilder;
+}();
+
+// TODO add normal and texCoords
+// TODO apply attributes
+
+
+var DefaultPrimitives = function () {
+    function DefaultPrimitives() {
+        (0, _classCallCheck3.default)(this, DefaultPrimitives);
+    }
+
+    (0, _createClass3.default)(DefaultPrimitives, null, [{
+        key: "register",
+        value: function register() {
+            DefaultPrimitives._registerTriangle();
+            DefaultPrimitives._registerQuad();
+            DefaultPrimitives._registerCube();
+            DefaultPrimitives._registerSphere();
+            DefaultPrimitives._registerCircle();
+            DefaultPrimitives._registerCylinder();
+            DefaultPrimitives._registerCone();
+            DefaultPrimitives._registerPlane();
+        }
+    }, {
+        key: "_registerTriangle",
+        value: function _registerTriangle() {
+            GeometryFactory.addType("triangle", {}, function (gl, attrs) {
+                return GeometryBuilder.build(gl, {
+                    indicies: {
+                        default: {
+                            generator: _regenerator2.default.mark(function generator() {
+                                return _regenerator2.default.wrap(function generator$(_context51) {
+                                    while (1) {
+                                        switch (_context51.prev = _context51.next) {
+                                            case 0:
+                                                return _context51.delegateYield(GeometryUtility.triangleIndex(0), "t0", 1);
+
+                                            case 1:
+                                            case "end":
+                                                return _context51.stop();
+                                        }
+                                    }
+                                }, generator, this);
+                            }),
+                            topology: WebGLRenderingContext.TRIANGLES
+                        },
+                        wireframe: {
+                            generator: _regenerator2.default.mark(function generator() {
+                                return _regenerator2.default.wrap(function generator$(_context52) {
+                                    while (1) {
+                                        switch (_context52.prev = _context52.next) {
+                                            case 0:
+                                                return _context52.delegateYield(GeometryUtility.linesFromTriangles(GeometryUtility.triangleIndex(0)), "t0", 1);
+
+                                            case 1:
+                                            case "end":
+                                                return _context52.stop();
+                                        }
+                                    }
+                                }, generator, this);
+                            }),
+                            topology: WebGLRenderingContext.LINES
+                        }
+                    },
+                    verticies: {
+                        main: {
+                            size: {
+                                position: 3,
+                                normal: 3,
+                                texCoord: 2
+                            },
+                            count: GeometryUtility.triangleSize(),
+                            getGenerators: function getGenerators() {
+                                return {
+                                    position: _regenerator2.default.mark(function position() {
+                                        return _regenerator2.default.wrap(function position$(_context53) {
+                                            while (1) {
+                                                switch (_context53.prev = _context53.next) {
+                                                    case 0:
+                                                        return _context53.delegateYield(GeometryUtility.trianglePosition(Vector3.Zero, Vector3.YUnit, Vector3.XUnit), "t0", 1);
+
+                                                    case 1:
+                                                    case "end":
+                                                        return _context53.stop();
+                                                }
+                                            }
+                                        }, position, this);
+                                    }),
+                                    normal: _regenerator2.default.mark(function normal() {
+                                        return _regenerator2.default.wrap(function normal$(_context54) {
+                                            while (1) {
+                                                switch (_context54.prev = _context54.next) {
+                                                    case 0:
+                                                        return _context54.delegateYield(GeometryUtility.triangleNormal(Vector3.ZUnit), "t0", 1);
+
+                                                    case 1:
+                                                    case "end":
+                                                        return _context54.stop();
+                                                }
+                                            }
+                                        }, normal, this);
+                                    }),
+                                    texCoord: _regenerator2.default.mark(function texCoord() {
+                                        return _regenerator2.default.wrap(function texCoord$(_context55) {
+                                            while (1) {
+                                                switch (_context55.prev = _context55.next) {
+                                                    case 0:
+                                                        return _context55.delegateYield(GeometryUtility.triangleTexCoord(), "t0", 1);
+
+                                                    case 1:
+                                                    case "end":
+                                                        return _context55.stop();
+                                                }
+                                            }
+                                        }, texCoord, this);
+                                    })
+                                };
+                            }
+                        }
+                    }
+                });
+            });
+        }
+    }, {
+        key: "_registerQuad",
+        value: function _registerQuad() {
+            GeometryFactory.addType("quad", {}, function (gl, attrs) {
+                return GeometryBuilder.build(gl, {
+                    indicies: {
+                        default: {
+                            generator: _regenerator2.default.mark(function generator() {
+                                return _regenerator2.default.wrap(function generator$(_context56) {
+                                    while (1) {
+                                        switch (_context56.prev = _context56.next) {
+                                            case 0:
+                                                return _context56.delegateYield(GeometryUtility.quadIndex(0), "t0", 1);
+
+                                            case 1:
+                                            case "end":
+                                                return _context56.stop();
+                                        }
+                                    }
+                                }, generator, this);
+                            }),
+                            topology: WebGLRenderingContext.TRIANGLES
+                        },
+                        wireframe: {
+                            generator: _regenerator2.default.mark(function generator() {
+                                return _regenerator2.default.wrap(function generator$(_context57) {
+                                    while (1) {
+                                        switch (_context57.prev = _context57.next) {
+                                            case 0:
+                                                return _context57.delegateYield(GeometryUtility.linesFromTriangles(GeometryUtility.quadIndex(0)), "t0", 1);
+
+                                            case 1:
+                                            case "end":
+                                                return _context57.stop();
+                                        }
+                                    }
+                                }, generator, this);
+                            }),
+                            topology: WebGLRenderingContext.LINES
+                        }
+                    },
+                    verticies: {
+                        main: {
+                            size: {
+                                position: 3,
+                                normal: 3,
+                                texCoord: 2
+                            },
+                            count: GeometryUtility.quadSize(),
+                            getGenerators: function getGenerators() {
+                                return {
+                                    position: _regenerator2.default.mark(function position() {
+                                        return _regenerator2.default.wrap(function position$(_context58) {
+                                            while (1) {
+                                                switch (_context58.prev = _context58.next) {
+                                                    case 0:
+                                                        return _context58.delegateYield(GeometryUtility.quadPosition(Vector3.Zero, Vector3.YUnit, Vector3.XUnit), "t0", 1);
+
+                                                    case 1:
+                                                    case "end":
+                                                        return _context58.stop();
+                                                }
+                                            }
+                                        }, position, this);
+                                    }),
+                                    normal: _regenerator2.default.mark(function normal() {
+                                        return _regenerator2.default.wrap(function normal$(_context59) {
+                                            while (1) {
+                                                switch (_context59.prev = _context59.next) {
+                                                    case 0:
+                                                        return _context59.delegateYield(GeometryUtility.quadNormal(Vector3.ZUnit), "t0", 1);
+
+                                                    case 1:
+                                                    case "end":
+                                                        return _context59.stop();
+                                                }
+                                            }
+                                        }, normal, this);
+                                    }),
+                                    texCoord: _regenerator2.default.mark(function texCoord() {
+                                        return _regenerator2.default.wrap(function texCoord$(_context60) {
+                                            while (1) {
+                                                switch (_context60.prev = _context60.next) {
+                                                    case 0:
+                                                        return _context60.delegateYield(GeometryUtility.quadTexCoord(), "t0", 1);
+
+                                                    case 1:
+                                                    case "end":
+                                                        return _context60.stop();
+                                                }
+                                            }
+                                        }, texCoord, this);
+                                    })
+                                };
+                            }
+                        }
+                    }
+                });
+            });
+        }
+    }, {
+        key: "_registerCube",
+        value: function _registerCube() {
+            GeometryFactory.addType("cube", {}, function (gl, attrs) {
+                return GeometryBuilder.build(gl, {
+                    indicies: {
+                        default: {
+                            generator: _regenerator2.default.mark(function generator() {
+                                return _regenerator2.default.wrap(function generator$(_context61) {
+                                    while (1) {
+                                        switch (_context61.prev = _context61.next) {
+                                            case 0:
+                                                return _context61.delegateYield(GeometryUtility.cubeIndex(0), "t0", 1);
+
+                                            case 1:
+                                            case "end":
+                                                return _context61.stop();
+                                        }
+                                    }
+                                }, generator, this);
+                            }),
+                            topology: WebGLRenderingContext.TRIANGLES
+                        },
+                        wireframe: {
+                            generator: _regenerator2.default.mark(function generator() {
+                                return _regenerator2.default.wrap(function generator$(_context62) {
+                                    while (1) {
+                                        switch (_context62.prev = _context62.next) {
+                                            case 0:
+                                                return _context62.delegateYield(GeometryUtility.linesFromTriangles(GeometryUtility.cubeIndex(0)), "t0", 1);
+
+                                            case 1:
+                                            case "end":
+                                                return _context62.stop();
+                                        }
+                                    }
+                                }, generator, this);
+                            }),
+                            topology: WebGLRenderingContext.LINES
+                        }
+                    },
+                    verticies: {
+                        main: {
+                            size: {
+                                position: 3,
+                                normal: 3,
+                                texCoord: 2
+                            },
+                            count: GeometryUtility.cubeSize(),
+                            getGenerators: function getGenerators() {
+                                return {
+                                    position: _regenerator2.default.mark(function position() {
+                                        return _regenerator2.default.wrap(function position$(_context63) {
+                                            while (1) {
+                                                switch (_context63.prev = _context63.next) {
+                                                    case 0:
+                                                        return _context63.delegateYield(GeometryUtility.cubePosition(Vector3.Zero, Vector3.YUnit, Vector3.XUnit, Vector3.ZUnit.negateThis()), "t0", 1);
+
+                                                    case 1:
+                                                    case "end":
+                                                        return _context63.stop();
+                                                }
+                                            }
+                                        }, position, this);
+                                    }),
+                                    normal: _regenerator2.default.mark(function normal() {
+                                        return _regenerator2.default.wrap(function normal$(_context64) {
+                                            while (1) {
+                                                switch (_context64.prev = _context64.next) {
+                                                    case 0:
+                                                        return _context64.delegateYield(GeometryUtility.cubeNormal(Vector3.Zero, Vector3.YUnit, Vector3.XUnit, Vector3.ZUnit.negateThis()), "t0", 1);
+
+                                                    case 1:
+                                                    case "end":
+                                                        return _context64.stop();
+                                                }
+                                            }
+                                        }, normal, this);
+                                    }),
+                                    texCoord: _regenerator2.default.mark(function texCoord() {
+                                        return _regenerator2.default.wrap(function texCoord$(_context65) {
+                                            while (1) {
+                                                switch (_context65.prev = _context65.next) {
+                                                    case 0:
+                                                        return _context65.delegateYield(GeometryUtility.cubeTexCoord(), "t0", 1);
+
+                                                    case 1:
+                                                    case "end":
+                                                        return _context65.stop();
+                                                }
+                                            }
+                                        }, texCoord, this);
+                                    })
+                                };
+                            }
+                        }
+                    }
+                });
+            });
+        }
+    }, {
+        key: "_registerSphere",
+        value: function _registerSphere() {
+            GeometryFactory.addType("sphere", {
+                divVertical: {
+                    converter: "Number",
+                    defaultValue: 100
+                },
+                divHorizontal: {
+                    converter: "Number",
+                    defaultValue: 100
+                }
+            }, function (gl, attrs) {
+                var dH = attrs["divHorizontal"];
+                var dV = attrs["divVertical"];
+                return GeometryBuilder.build(gl, {
+                    indicies: {
+                        default: {
+                            generator: _regenerator2.default.mark(function generator() {
+                                return _regenerator2.default.wrap(function generator$(_context66) {
+                                    while (1) {
+                                        switch (_context66.prev = _context66.next) {
+                                            case 0:
+                                                return _context66.delegateYield(GeometryUtility.sphereIndex(0, dH, dV), "t0", 1);
+
+                                            case 1:
+                                            case "end":
+                                                return _context66.stop();
+                                        }
+                                    }
+                                }, generator, this);
+                            }),
+                            topology: WebGLRenderingContext.TRIANGLES
+                        },
+                        wireframe: {
+                            generator: _regenerator2.default.mark(function generator() {
+                                return _regenerator2.default.wrap(function generator$(_context67) {
+                                    while (1) {
+                                        switch (_context67.prev = _context67.next) {
+                                            case 0:
+                                                return _context67.delegateYield(GeometryUtility.linesFromTriangles(GeometryUtility.sphereIndex(0, dH, dV)), "t0", 1);
+
+                                            case 1:
+                                            case "end":
+                                                return _context67.stop();
+                                        }
+                                    }
+                                }, generator, this);
+                            }),
+                            topology: WebGLRenderingContext.LINES
+                        }
+                    },
+                    verticies: {
+                        main: {
+                            size: {
+                                position: 3,
+                                normal: 3,
+                                texCoord: 2
+                            },
+                            count: GeometryUtility.sphereSize(dH, dV),
+                            getGenerators: function getGenerators() {
+                                return {
+                                    position: _regenerator2.default.mark(function position() {
+                                        return _regenerator2.default.wrap(function position$(_context68) {
+                                            while (1) {
+                                                switch (_context68.prev = _context68.next) {
+                                                    case 0:
+                                                        return _context68.delegateYield(GeometryUtility.spherePosition(Vector3.Zero, Vector3.YUnit, Vector3.XUnit, Vector3.ZUnit.negateThis(), dH, dV), "t0", 1);
+
+                                                    case 1:
+                                                    case "end":
+                                                        return _context68.stop();
+                                                }
+                                            }
+                                        }, position, this);
+                                    }),
+                                    normal: _regenerator2.default.mark(function normal() {
+                                        return _regenerator2.default.wrap(function normal$(_context69) {
+                                            while (1) {
+                                                switch (_context69.prev = _context69.next) {
+                                                    case 0:
+                                                        return _context69.delegateYield(GeometryUtility.sphereNormal(Vector3.YUnit, Vector3.XUnit, Vector3.ZUnit.negateThis(), dH, dV), "t0", 1);
+
+                                                    case 1:
+                                                    case "end":
+                                                        return _context69.stop();
+                                                }
+                                            }
+                                        }, normal, this);
+                                    }),
+                                    texCoord: _regenerator2.default.mark(function texCoord() {
+                                        return _regenerator2.default.wrap(function texCoord$(_context70) {
+                                            while (1) {
+                                                switch (_context70.prev = _context70.next) {
+                                                    case 0:
+                                                        return _context70.delegateYield(GeometryUtility.sphereTexCoord(dH, dV), "t0", 1);
+
+                                                    case 1:
+                                                    case "end":
+                                                        return _context70.stop();
+                                                }
+                                            }
+                                        }, texCoord, this);
+                                    })
+                                };
+                            }
+                        }
+                    }
+                });
+            });
+        }
+    }, {
+        key: "_registerCircle",
+        value: function _registerCircle() {
+            GeometryFactory.addType("circle", {
+                divide: {
+                    converter: "Number",
+                    defaultValue: 50
+                }
+            }, function (gl, attrs) {
+                var div = attrs["divide"];
+                return GeometryBuilder.build(gl, {
+                    indicies: {
+                        default: {
+                            generator: _regenerator2.default.mark(function generator() {
+                                return _regenerator2.default.wrap(function generator$(_context71) {
+                                    while (1) {
+                                        switch (_context71.prev = _context71.next) {
+                                            case 0:
+                                                return _context71.delegateYield(GeometryUtility.ellipseIndex(0, div), "t0", 1);
+
+                                            case 1:
+                                            case "end":
+                                                return _context71.stop();
+                                        }
+                                    }
+                                }, generator, this);
+                            }),
+                            topology: WebGLRenderingContext.TRIANGLES
+                        },
+                        wireframe: {
+                            generator: _regenerator2.default.mark(function generator() {
+                                return _regenerator2.default.wrap(function generator$(_context72) {
+                                    while (1) {
+                                        switch (_context72.prev = _context72.next) {
+                                            case 0:
+                                                return _context72.delegateYield(GeometryUtility.linesFromTriangles(GeometryUtility.ellipseIndex(0, div)), "t0", 1);
+
+                                            case 1:
+                                            case "end":
+                                                return _context72.stop();
+                                        }
+                                    }
+                                }, generator, this);
+                            }),
+                            topology: WebGLRenderingContext.LINES
+                        }
+                    },
+                    verticies: {
+                        main: {
+                            size: {
+                                position: 3,
+                                normal: 3,
+                                texCoord: 2
+                            },
+                            count: GeometryUtility.ellipseSize(div),
+                            getGenerators: function getGenerators() {
+                                return {
+                                    position: _regenerator2.default.mark(function position() {
+                                        return _regenerator2.default.wrap(function position$(_context73) {
+                                            while (1) {
+                                                switch (_context73.prev = _context73.next) {
+                                                    case 0:
+                                                        return _context73.delegateYield(GeometryUtility.ellipsePosition(Vector3.Zero, Vector3.YUnit, Vector3.XUnit, div), "t0", 1);
+
+                                                    case 1:
+                                                    case "end":
+                                                        return _context73.stop();
+                                                }
+                                            }
+                                        }, position, this);
+                                    }),
+                                    normal: _regenerator2.default.mark(function normal() {
+                                        return _regenerator2.default.wrap(function normal$(_context74) {
+                                            while (1) {
+                                                switch (_context74.prev = _context74.next) {
+                                                    case 0:
+                                                        return _context74.delegateYield(GeometryUtility.ellipseNormal(Vector3.ZUnit, div), "t0", 1);
+
+                                                    case 1:
+                                                    case "end":
+                                                        return _context74.stop();
+                                                }
+                                            }
+                                        }, normal, this);
+                                    }),
+                                    texCoord: _regenerator2.default.mark(function texCoord() {
+                                        return _regenerator2.default.wrap(function texCoord$(_context75) {
+                                            while (1) {
+                                                switch (_context75.prev = _context75.next) {
+                                                    case 0:
+                                                        return _context75.delegateYield(GeometryUtility.ellipseTexCoord(div), "t0", 1);
+
+                                                    case 1:
+                                                    case "end":
+                                                        return _context75.stop();
+                                                }
+                                            }
+                                        }, texCoord, this);
+                                    })
+                                };
+                            }
+                        }
+                    }
+                });
+            });
+        }
+    }, {
+        key: "_registerCylinder",
+        value: function _registerCylinder() {
+            GeometryFactory.addType("cylinder", {
+                divide: {
+                    converter: "Number",
+                    defaultValue: 50
+                }
+            }, function (gl, attrs) {
+                var div = attrs["divide"];
+                return GeometryBuilder.build(gl, {
+                    indicies: {
+                        default: {
+                            generator: _regenerator2.default.mark(function generator() {
+                                return _regenerator2.default.wrap(function generator$(_context76) {
+                                    while (1) {
+                                        switch (_context76.prev = _context76.next) {
+                                            case 0:
+                                                return _context76.delegateYield(GeometryUtility.cylinderIndex(0, div), "t0", 1);
+
+                                            case 1:
+                                            case "end":
+                                                return _context76.stop();
+                                        }
+                                    }
+                                }, generator, this);
+                            }),
+                            topology: WebGLRenderingContext.TRIANGLES
+                        },
+                        wireframe: {
+                            generator: _regenerator2.default.mark(function generator() {
+                                return _regenerator2.default.wrap(function generator$(_context77) {
+                                    while (1) {
+                                        switch (_context77.prev = _context77.next) {
+                                            case 0:
+                                                return _context77.delegateYield(GeometryUtility.linesFromTriangles(GeometryUtility.cylinderIndex(0, div)), "t0", 1);
+
+                                            case 1:
+                                            case "end":
+                                                return _context77.stop();
+                                        }
+                                    }
+                                }, generator, this);
+                            }),
+                            topology: WebGLRenderingContext.LINES
+                        }
+                    },
+                    verticies: {
+                        main: {
+                            size: {
+                                position: 3,
+                                normal: 3,
+                                texCoord: 2
+                            },
+                            count: GeometryUtility.cylinderSize(div),
+                            getGenerators: function getGenerators() {
+                                return {
+                                    position: _regenerator2.default.mark(function position() {
+                                        return _regenerator2.default.wrap(function position$(_context78) {
+                                            while (1) {
+                                                switch (_context78.prev = _context78.next) {
+                                                    case 0:
+                                                        return _context78.delegateYield(GeometryUtility.cylinderPosition(Vector3.Zero, Vector3.YUnit, Vector3.XUnit, Vector3.ZUnit.negateThis(), div), "t0", 1);
+
+                                                    case 1:
+                                                    case "end":
+                                                        return _context78.stop();
+                                                }
+                                            }
+                                        }, position, this);
+                                    }),
+                                    normal: _regenerator2.default.mark(function normal() {
+                                        return _regenerator2.default.wrap(function normal$(_context79) {
+                                            while (1) {
+                                                switch (_context79.prev = _context79.next) {
+                                                    case 0:
+                                                        return _context79.delegateYield(GeometryUtility.cylinderNormal(Vector3.Zero, Vector3.YUnit, Vector3.XUnit, Vector3.ZUnit.negateThis(), div), "t0", 1);
+
+                                                    case 1:
+                                                    case "end":
+                                                        return _context79.stop();
+                                                }
+                                            }
+                                        }, normal, this);
+                                    }),
+                                    texCoord: _regenerator2.default.mark(function texCoord() {
+                                        return _regenerator2.default.wrap(function texCoord$(_context80) {
+                                            while (1) {
+                                                switch (_context80.prev = _context80.next) {
+                                                    case 0:
+                                                        return _context80.delegateYield(GeometryUtility.cylinderTexCoord(div), "t0", 1);
+
+                                                    case 1:
+                                                    case "end":
+                                                        return _context80.stop();
+                                                }
+                                            }
+                                        }, texCoord, this);
+                                    })
+                                };
+                            }
+                        }
+                    }
+                });
+            });
+        }
+    }, {
+        key: "_registerCone",
+        value: function _registerCone() {
+            GeometryFactory.addType("cone", {
+                divide: {
+                    converter: "Number",
+                    defaultValue: 50
+                }
+            }, function (gl, attrs) {
+                var div = attrs["divide"];
+                return GeometryBuilder.build(gl, {
+                    indicies: {
+                        default: {
+                            generator: _regenerator2.default.mark(function generator() {
+                                return _regenerator2.default.wrap(function generator$(_context81) {
+                                    while (1) {
+                                        switch (_context81.prev = _context81.next) {
+                                            case 0:
+                                                return _context81.delegateYield(GeometryUtility.coneIndex(0, div), "t0", 1);
+
+                                            case 1:
+                                            case "end":
+                                                return _context81.stop();
+                                        }
+                                    }
+                                }, generator, this);
+                            }),
+                            topology: WebGLRenderingContext.TRIANGLES
+                        },
+                        wireframe: {
+                            generator: _regenerator2.default.mark(function generator() {
+                                return _regenerator2.default.wrap(function generator$(_context82) {
+                                    while (1) {
+                                        switch (_context82.prev = _context82.next) {
+                                            case 0:
+                                                return _context82.delegateYield(GeometryUtility.linesFromTriangles(GeometryUtility.coneIndex(0, div)), "t0", 1);
+
+                                            case 1:
+                                            case "end":
+                                                return _context82.stop();
+                                        }
+                                    }
+                                }, generator, this);
+                            }),
+                            topology: WebGLRenderingContext.LINES
+                        }
+                    },
+                    verticies: {
+                        main: {
+                            size: {
+                                position: 3,
+                                normal: 3,
+                                texCoord: 2
+                            },
+                            count: GeometryUtility.coneSize(div),
+                            getGenerators: function getGenerators() {
+                                return {
+                                    position: _regenerator2.default.mark(function position() {
+                                        return _regenerator2.default.wrap(function position$(_context83) {
+                                            while (1) {
+                                                switch (_context83.prev = _context83.next) {
+                                                    case 0:
+                                                        return _context83.delegateYield(GeometryUtility.conePosition(Vector3.Zero, Vector3.YUnit, Vector3.XUnit, Vector3.ZUnit.negateThis(), div), "t0", 1);
+
+                                                    case 1:
+                                                    case "end":
+                                                        return _context83.stop();
+                                                }
+                                            }
+                                        }, position, this);
+                                    }),
+                                    normal: _regenerator2.default.mark(function normal() {
+                                        return _regenerator2.default.wrap(function normal$(_context84) {
+                                            while (1) {
+                                                switch (_context84.prev = _context84.next) {
+                                                    case 0:
+                                                        return _context84.delegateYield(GeometryUtility.coneNormal(Vector3.Zero, Vector3.YUnit, Vector3.XUnit, Vector3.ZUnit.negateThis(), div), "t0", 1);
+
+                                                    case 1:
+                                                    case "end":
+                                                        return _context84.stop();
+                                                }
+                                            }
+                                        }, normal, this);
+                                    }),
+                                    texCoord: _regenerator2.default.mark(function texCoord() {
+                                        return _regenerator2.default.wrap(function texCoord$(_context85) {
+                                            while (1) {
+                                                switch (_context85.prev = _context85.next) {
+                                                    case 0:
+                                                        return _context85.delegateYield(GeometryUtility.coneTexCoord(div), "t0", 1);
+
+                                                    case 1:
+                                                    case "end":
+                                                        return _context85.stop();
+                                                }
+                                            }
+                                        }, texCoord, this);
+                                    })
+                                };
+                            }
+                        }
+                    }
+                });
+            });
+        }
+    }, {
+        key: "_registerPlane",
+        value: function _registerPlane() {
+            GeometryFactory.addType("plane", {
+                divide: {
+                    converter: "Number",
+                    defaultValue: 10
+                }
+            }, function (gl, attrs) {
+                var div = attrs["divide"];
+                return GeometryBuilder.build(gl, {
+                    indicies: {
+                        default: {
+                            generator: _regenerator2.default.mark(function generator() {
+                                return _regenerator2.default.wrap(function generator$(_context86) {
+                                    while (1) {
+                                        switch (_context86.prev = _context86.next) {
+                                            case 0:
+                                                return _context86.delegateYield(GeometryUtility.planeIndex(0, div), "t0", 1);
+
+                                            case 1:
+                                            case "end":
+                                                return _context86.stop();
+                                        }
+                                    }
+                                }, generator, this);
+                            }),
+                            topology: WebGLRenderingContext.TRIANGLES
+                        },
+                        wireframe: {
+                            generator: _regenerator2.default.mark(function generator() {
+                                return _regenerator2.default.wrap(function generator$(_context87) {
+                                    while (1) {
+                                        switch (_context87.prev = _context87.next) {
+                                            case 0:
+                                                return _context87.delegateYield(GeometryUtility.linesFromTriangles(GeometryUtility.planeIndex(0, div)), "t0", 1);
+
+                                            case 1:
+                                            case "end":
+                                                return _context87.stop();
+                                        }
+                                    }
+                                }, generator, this);
+                            }),
+                            topology: WebGLRenderingContext.LINES
+                        }
+                    },
+                    verticies: {
+                        main: {
+                            size: {
+                                position: 3,
+                                normal: 3,
+                                texCoord: 2
+                            },
+                            count: GeometryUtility.planeSize(div),
+                            getGenerators: function getGenerators() {
+                                return {
+                                    position: _regenerator2.default.mark(function position() {
+                                        return _regenerator2.default.wrap(function position$(_context88) {
+                                            while (1) {
+                                                switch (_context88.prev = _context88.next) {
+                                                    case 0:
+                                                        return _context88.delegateYield(GeometryUtility.planePosition(Vector3.Zero, Vector3.YUnit, Vector3.XUnit, div), "t0", 1);
+
+                                                    case 1:
+                                                    case "end":
+                                                        return _context88.stop();
+                                                }
+                                            }
+                                        }, position, this);
+                                    }),
+                                    normal: _regenerator2.default.mark(function normal() {
+                                        return _regenerator2.default.wrap(function normal$(_context89) {
+                                            while (1) {
+                                                switch (_context89.prev = _context89.next) {
+                                                    case 0:
+                                                        return _context89.delegateYield(GeometryUtility.planeNormal(Vector3.ZUnit, div), "t0", 1);
+
+                                                    case 1:
+                                                    case "end":
+                                                        return _context89.stop();
+                                                }
+                                            }
+                                        }, normal, this);
+                                    }),
+                                    texCoord: _regenerator2.default.mark(function texCoord() {
+                                        return _regenerator2.default.wrap(function texCoord$(_context90) {
+                                            while (1) {
+                                                switch (_context90.prev = _context90.next) {
+                                                    case 0:
+                                                        return _context90.delegateYield(GeometryUtility.planeTexCoord(div), "t0", 1);
+
+                                                    case 1:
+                                                    case "end":
+                                                        return _context90.stop();
+                                                }
+                                            }
+                                        }, texCoord, this);
+                                    })
+                                };
+                            }
+                        }
+                    }
+                });
+            });
+        }
+    }]);
+    return DefaultPrimitives;
+}();
+
+function BooleanConverter(val) {
+    if (typeof val === "boolean") {
+        return val;
+    } else if (typeof val === "string") {
+        switch (val) {
+            case "true":
+                return true;
+            case "false":
+                return false;
+            default:
+                throw new Error("Invalid string " + val + " for parsing as boolean");
+        }
+    }
+    throw new Error("Parsing failed: " + val);
+}
+
+var NodeUtility = function () {
+    function NodeUtility() {
+        (0, _classCallCheck3.default)(this, NodeUtility);
+    }
+
+    (0, _createClass3.default)(NodeUtility, null, [{
+        key: "getNodeListIndexByElementIndex",
+
+        /**
+         * Get index of NodeList converted from index in Element
+         * @param  {HTMLElement} targetElement Parent element of search target elements
+         * @param  {number}      elementIndex  Index in element
+         * @return {number}                    Index in NodeList
+         */
+        value: function getNodeListIndexByElementIndex(targetElement, elementIndex) {
+            var nodeArray = Array.prototype.slice.call(targetElement.childNodes);
+            var elementArray = nodeArray.filter(function (v) {
+                return v.nodeType === 1;
+            });
+            elementIndex = elementIndex < 0 ? elementArray.length + elementIndex : elementIndex;
+            var index = nodeArray.indexOf(elementArray[elementIndex]);
+            return index === -1 ? null : index;
+        }
+    }, {
+        key: "getAttributes",
+        value: function getAttributes(element) {
+            var attributes = {};
+            var domAttr = element.attributes;
+            for (var i = 0; i < domAttr.length; i++) {
+                var attrNode = domAttr.item(i);
+                var name = attrNode.name;
+                attributes[name] = attrNode.value;
+            }
+            return attributes;
+        }
+    }]);
+    return NodeUtility;
+}();
+
+var Constants = function () {
+    function Constants() {
+        (0, _classCallCheck3.default)(this, Constants);
+    }
+
+    (0, _createClass3.default)(Constants, null, [{
+        key: "defaultNamespace",
+        get: function get() {
+            return "HTTP://GRIMOIRE.GL/NS/DEFAULT";
+        }
+    }]);
+    return Constants;
+}();
+
+/**
+ * The class to identity with XML namespace feature.
+ */
+
+
+var NSIdentity = function () {
+    function NSIdentity(ns, name) {
+        (0, _classCallCheck3.default)(this, NSIdentity);
+
+        if (name) {
+            this.ns = ns.toUpperCase();
+            this.name = name;
+        } else {
+            this.ns = Constants.defaultNamespace;
+            this.name = ns;
+        }
+        // Ensure all of the characters are uppercase
+        this.name = NSIdentity._ensureValidIdentity(this.name, true);
+        this.ns = NSIdentity._ensureValidIdentity(this.ns);
+        this.fqn = this.name + "|" + this.ns;
+    }
+    /**
+     * Generate an instance from Full qualified name.
+     * @param  {string}             fqn [description]
+     * @return {NSIdentity}     [description]
+     */
+
+
+    (0, _createClass3.default)(NSIdentity, null, [{
+        key: "fromFQN",
+        value: function fromFQN(fqn) {
+            var splitted = fqn.split("|");
+            if (splitted.length !== 2) {
+                throw new Error("Invalid fqn was given");
+            }
+            return new NSIdentity(splitted[1], splitted[0]);
+        }
+        /**
+         * Make sure given name is valid for using in identity.
+         * | is prohibited for using in name or namespace.
+         * . is prohibited for using in name.
+         * All lowercase alphabet will be transformed into uppercase.
+         * @param  {string} name        [A name to verify]
+         * @param  {[type]} noDot=false [Ensure not using dot or not]
+         * @return {string}             [Valid name]
+         */
+
+    }, {
+        key: "_ensureValidIdentity",
+        value: function _ensureValidIdentity(name) {
+            var noDot = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+            if (name.indexOf("|") > -1) {
+                throw new Error("Namespace and identity cannnot contain | ");
+            }
+            if (noDot && name.indexOf(".") > -1) {
+                throw new Error("identity cannnot contain .");
+            }
+            if (name == null) {
+                throw new Error("Specified name was null or undefined");
+            }
+            return name;
+        }
+    }]);
+    return NSIdentity;
+}();
+
+var NSDictionary = function () {
+    function NSDictionary() {
+        (0, _classCallCheck3.default)(this, NSDictionary);
+
+        this._nameObjectMap = new _map2.default();
+        this._fqnObjectMap = new _map2.default();
+    }
+
+    (0, _createClass3.default)(NSDictionary, [{
+        key: "set",
+        value: function set(key, value) {
+            var namedChildMap = void 0;
+            if (this._nameObjectMap.has(key.name)) {
+                namedChildMap = this._nameObjectMap.get(key.name);
+            } else {
+                namedChildMap = new _map2.default();
+                this._nameObjectMap.set(key.name, namedChildMap);
+            }
+            namedChildMap.set(key.fqn, value);
+            this._fqnObjectMap.set(key.fqn, value);
+        }
+    }, {
+        key: "delete",
+        value: function _delete(key) {
+            if (this._fqnObjectMap.has(key.fqn)) {
+                var theMap = this._nameObjectMap.get(key.name);
+                if (theMap.size === 1) {
+                    this._nameObjectMap.delete(key.name);
+                } else {
+                    theMap.delete(key.fqn);
+                }
+                this._fqnObjectMap.delete(key.fqn);
+            }
+        }
+    }, {
+        key: "get",
+        value: function get(arg1, name) {
+            if (typeof arg1 === "string") {
+                if (name) {
+                    return this.get(new NSIdentity(arg1, name));
+                } else {
+                    var namedMap = this._nameObjectMap.get(arg1);
+                    if (!namedMap) {
+                        return null;
+                    }
+                    if (namedMap.size === 1) {
+                        var itr = namedMap.values();
+                        return itr.next().value;
+                    } else {
+                        throw new Error("Specified tag name " + arg1 + " is ambigious to identify.");
+                    }
+                }
+            } else {
+                if (arg1 instanceof NSIdentity) {
+                    return this.fromFQN(arg1.fqn);
+                } else {
+                    if (arg1.prefix) {
+                        return this.get(new NSIdentity(arg1.namespaceURI, arg1.localName));
+                    } else {
+                        if (arg1.namespaceURI && this._fqnObjectMap.has(arg1.localName + "|" + arg1.namespaceURI)) {
+                            return this.get(new NSIdentity(arg1.namespaceURI, arg1.localName));
+                        }
+                        if (arg1 && arg1.ownerElement && arg1.ownerElement.namespaceURI && this._fqnObjectMap.has(arg1.localName + "|" + arg1.ownerElement.namespaceURI)) {
+                            return this.get(new NSIdentity(arg1.ownerElement.namespaceURI, arg1.localName));
+                        }
+                        return this.get(arg1.localName);
+                    }
+                }
+            }
+        }
+    }, {
+        key: "fromFQN",
+        value: function fromFQN(fqn) {
+            return this._fqnObjectMap.get(fqn);
+        }
+    }, {
+        key: "isAmbigious",
+        value: function isAmbigious(name) {
+            return this._nameObjectMap.get(name).size > 1;
+        }
+    }, {
+        key: "has",
+        value: function has(name) {
+            return this._nameObjectMap.has(name);
+        }
+    }, {
+        key: "pushDictionary",
+        value: function pushDictionary(dict) {
+            var _this33 = this;
+
+            dict._fqnObjectMap.forEach(function (value, keyFQN) {
+                var id = NSIdentity.fromFQN(keyFQN);
+                _this33.set(id, value);
+            });
+            return this;
+        }
+    }, {
+        key: "toArray",
+        value: function toArray() {
+            var ret = [];
+            this._fqnObjectMap.forEach(function (value) {
+                ret.push(value);
+            });
+            return ret;
+        }
+    }, {
+        key: "clone",
+        value: function clone() {
+            var dict = new NSDictionary();
+            return dict.pushDictionary(this);
+        }
+    }, {
+        key: "forEach",
+        value: function forEach(callback) {
+            this._fqnObjectMap.forEach(function (val, key) {
+                callback(val, key);
+            });
+            return this;
+        }
+    }, {
+        key: "map",
+        value: function map(callback) {
+            var ret = new NSDictionary();
+            this._fqnObjectMap.forEach(function (val, fqn) {
+                var id = NSIdentity.fromFQN(fqn);
+                ret.set(id, callback(val, fqn));
+            });
+            return ret;
+        }
+    }, {
+        key: "clear",
+        value: function clear() {
+            this._nameObjectMap.clear();
+            this._fqnObjectMap.clear();
+        }
+    }]);
+    return NSDictionary;
+}();
+
+/**
+ * Provides static methods to ensure arguments are valid type.
+ */
+
+
+var Ensure = function () {
+    function Ensure() {
+        (0, _classCallCheck3.default)(this, Ensure);
+    }
+
+    (0, _createClass3.default)(Ensure, null, [{
+        key: "ensureString",
+
+        /**
+         * Ensure specified str being string
+         * @param  {string | number}      str [description]
+         * @return {string}      [description]
+         */
+        value: function ensureString(str) {
+            if (typeof str === "string") {
+                return str;
+            } else if (typeof str === "number") {
+                return str.toString();
+            } else {
+                throw new Error("Specified argument can not convert into string");
+            }
+        }
+        /**
+         * Ensure specified number being number
+         * @param  {string | number}      str [description]
+         * @return {string}      [description]
+         */
+
+    }, {
+        key: "ensureNumber",
+        value: function ensureNumber(num) {
+            if (typeof num === "string") {
+                return parseInt(num, 10);
+            } else if (typeof num === "number") {
+                return num;
+            } else {
+                throw new Error("specified argument can not be converted into number");
+            }
+        }
+    }, {
+        key: "ensureTobeNSIdentity",
+        value: function ensureTobeNSIdentity(name) {
+            if (!name) {
+                return undefined;
+            }
+            if (typeof name === "string") {
+                return new NSIdentity(name);
+            } else {
+                return name;
+            }
+        }
+    }, {
+        key: "ensureTobeNSIdentityArray",
+        value: function ensureTobeNSIdentityArray(names) {
+            if (!names) {
+                return [];
+            }
+            var newArr = [];
+            for (var i = 0; i < names.length; i++) {
+                newArr.push(this.ensureTobeNSIdentity(names[i]));
+            }
+            return newArr;
+        }
+    }, {
+        key: "ensureTobeNSDictionary",
+        value: function ensureTobeNSDictionary(dict, defaultNamespace) {
+            if (!dict) {
+                return new NSDictionary();
+            }
+            if (dict instanceof NSDictionary) {
+                return dict;
+            } else {
+                var newDict = new NSDictionary();
+                for (var key in dict) {
+                    newDict.set(new NSIdentity(defaultNamespace, key), dict[key]);
+                }
+                return newDict;
+            }
+        }
+    }, {
+        key: "ensureTobeMessage",
+        value: function ensureTobeMessage(message) {
+            if (message.startsWith("$")) {
+                return message;
+            } else {
+                return "$" + message;
+            }
+        }
+    }]);
+    return Ensure;
+}();
+
+/**
+ * Management a single attribute with specified type. Converter will serve a value with object with any type instead of string.
+ * When attribute is changed, emit a "change" event. When attribute is requested, emit a "get" event.
+ * If responsive flag is not true, event will not be emitted.
+ */
+
+
+var Attribute = function () {
+    function Attribute() {
+        (0, _classCallCheck3.default)(this, Attribute);
+
+        this._handlers = [];
+    }
+
+    (0, _createClass3.default)(Attribute, [{
+        key: "addObserver",
+        value: function addObserver(handler) {
+            var callFirst = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+            this._handlers.push(handler);
+            if (callFirst) {
+                handler(this);
+            }
+        }
+    }, {
+        key: "removeObserver",
+        value: function removeObserver(handler) {
+            var index = -1;
+            for (var i = 0; i < this._handlers.length; i++) {
+                if (handler === this._handlers[i]) {
+                    index = i;
+                    break;
+                }
+            }
+            if (index < 0) {
+                return;
+            }
+            this._handlers.splice(index, 1);
+        }
+        /**
+         * Bind converted value to specified field.
+         * When target object was not specified, field of owner component would be assigned.
+         * @param {string} variableName [description]
+         * @param {any} targetObject [description]
+         */
+
+    }, {
+        key: "boundTo",
+        value: function boundTo(variableName) {
+            var targetObject = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.component;
+
+            this.addObserver(function (v) {
+                targetObject[variableName] = v.Value;
+            });
+            targetObject[variableName] = this.Value;
+        }
+        /**
+         * Apply default value to attribute from DOM values.
+         * @param {string }} domValues [description]
+         */
+
+    }, {
+        key: "resolveDefaultValue",
+        value: function resolveDefaultValue(domValues) {
+            if (this._value !== void 0) {
+                return;
+            }
+            var tagAttrValue = domValues[this.name.name];
+            if (tagAttrValue !== void 0) {
+                this.Value = tagAttrValue; // Dom指定値で解決
+                return;
+            }
+            var nodeDefaultValue = this.component.node.nodeDeclaration.defaultAttributes.get(this.name);
+            if (nodeDefaultValue !== void 0) {
+                this.Value = nodeDefaultValue; // Node指定値で解決
+                return;
+            }
+            var attrDefaultValue = this.declaration.defaultValue;
+            this.Value = attrDefaultValue;
+        }
+    }, {
+        key: "_notifyChange",
+        value: function _notifyChange() {
+            var _this34 = this;
+
+            this._handlers.forEach(function (handler) {
+                handler(_this34);
+            });
+        }
+    }, {
+        key: "tree",
+        get: function get() {
+            return this.component.tree;
+        }
+    }, {
+        key: "companion",
+        get: function get() {
+            return this.component.companion;
+        }
+        /**
+         * Get a value with specified type.
+         * @return {any} value with specified type.
+         */
+
+    }, {
+        key: "Value",
+        get: function get() {
+            try {
+                return this.converter.convert(this._value);
+            } catch (e) {
+                console.error(e); // TODO should be more convenient error handling
+            }
+        }
+        /**
+         * Set a value with any type.
+         * @param {any} val Value with string or specified type.
+         */
+        ,
+        set: function set(val) {
+            this._value = val;
+            this._notifyChange();
+        }
+        /**
+         * Construct a new attribute with name of key and any value with specified type. If constant flag is true, This attribute will be immutable.
+         * If converter is not served, string converter will be set as default.
+         * @param {string}        key       Key of this attribute.
+         * @param {any}           value     Value of this attribute.
+         * @param {ConverterBase} converter Converter of this attribute.
+         * @param {boolean}       constant  Whether this attribute is immutable or not. False as default.
+         */
+
+    }], [{
+        key: "generateAttributeForComponent",
+        value: function generateAttributeForComponent(name, declaration, component) {
+            var attr = new Attribute();
+            attr.name = new NSIdentity(component.name.ns, name);
+            attr.component = component;
+            attr.declaration = declaration;
+            var converterName = Ensure.ensureTobeNSIdentity(declaration.converter);
+            attr.converter = obtainGomlInterface.converters.get(converterName);
+            if (attr.converter === void 0) {
+                // When the specified converter was not found
+                throw new Error("Specified converter " + converterName.name + " was not found from registered converters.\n Component: " + attr.component.name.fqn + "\n Attribute: " + attr.name.name);
+            }
+            attr.converter = {
+                convert: attr.converter.convert.bind(attr),
+                name: attr.converter.name
+            };
+            attr.component.attributes.set(attr.name, attr);
+            return attr;
+        }
+    }]);
+    return Attribute;
+}();
+
+/**
+ * Base class for any components
+ */
+
+
+var Component = function (_IDObject2) {
+    (0, _inherits3.default)(Component, _IDObject2);
+
+    function Component() {
+        (0, _classCallCheck3.default)(this, Component);
+
+        /**
+         * Whether this component was created by nodeDeclaration
+         * @type {boolean}
+         */
+        var _this35 = (0, _possibleConstructorReturn3.default)(this, (Component.__proto__ || (0, _getPrototypeOf2.default)(Component)).apply(this, arguments));
+
+        _this35.isDefaultComponent = false;
+        /**
+         * Flag that this component is activated or not.
+         * @type {boolean}
+         */
+        _this35._enabled = true;
+        _this35._handlers = [];
+        _this35._additionalAttributesNames = [];
+        return _this35;
+    }
+
+    (0, _createClass3.default)(Component, [{
+        key: "getValue",
+
+        /**
+         * Obtain value of attribute. When the attribute is not existing, this method would return undefined.
+         * @param  {string} name [description]
+         * @return {any}         [description]
+         */
+        value: function getValue(name) {
+            var attr = this.attributes.get(name);
+            if (attr) {
+                return attr.Value;
+            } else {
+                return undefined;
+            }
+        }
+        /**
+         * Set value of attribute
+         * @param {string} name  [description]
+         * @param {any}    value [description]
+         */
+
+    }, {
+        key: "setValue",
+        value: function setValue(name, value) {
+            var attr = this.attributes.get(name); // TODO:check readonly?
+            if (attr) {
+                attr.Value = value;
+            }
+        }
+    }, {
+        key: "getAttribute",
+        value: function getAttribute(name) {
+            return this.attributes.get(name);
+        }
+    }, {
+        key: "addEnabledObserver",
+        value: function addEnabledObserver(handler) {
+            this._handlers.push(handler);
+        }
+    }, {
+        key: "removeEnabledObserver",
+        value: function removeEnabledObserver(handler) {
+            var index = -1;
+            for (var i = 0; i < this._handlers.length; i++) {
+                if (handler === this._handlers[i]) {
+                    index = i;
+                    break;
+                }
+            }
+            if (index < 0) {
+                return;
+            }
+            this._handlers.splice(index, 1);
+        }
+    }, {
+        key: "resolveDefaultAttributes",
+        value: function resolveDefaultAttributes(nodeAttributes) {
+            var _this36 = this;
+
+            if (this.isDefaultComponent) {
+                this.attributes.forEach(function (attr) {
+                    return attr.resolveDefaultValue(nodeAttributes);
+                });
+            } else {
+                (function () {
+                    var attrs = NodeUtility.getAttributes(_this36.element);
+                    _this36.attributes.forEach(function (attr) {
+                        return attr.resolveDefaultValue(attrs);
+                    });
+                })();
+            }
+        }
+        /**
+         * Add attribute
+         * @param {string}                name      [description]
+         * @param {IAttributeDeclaration} attribute [description]
+         */
+
+    }, {
+        key: "__addAtribute",
+        value: function __addAtribute(name, attribute) {
+            if (!attribute) {
+                throw new Error("can not add attribute null or undefined.");
+            }
+            var attr = Attribute.generateAttributeForComponent(name, attribute, this);
+            if (this.isDefaultComponent) {
+                this.node.addAttribute(attr);
+            }
+            if (this.isDefaultComponent) {
+                attr.resolveDefaultValue(NodeUtility.getAttributes(this.node.element));
+            } else {
+                var attrs = NodeUtility.getAttributes(this.element);
+                attr.resolveDefaultValue(attrs);
+            }
+            this._additionalAttributesNames.push(attr.name);
+        }
+    }, {
+        key: "__removeAttributes",
+        value: function __removeAttributes(name) {
+            var _this37 = this;
+
+            if (name) {
+                var _index3 = this._additionalAttributesNames.findIndex(function (id) {
+                    return id.name === name;
+                });
+                if (_index3 < 0) {
+                    throw new Error("can not remove attributes :" + name);
+                }
+                var attrId = this._additionalAttributesNames[_index3];
+                if (this.isDefaultComponent) {
+                    this.node.removeAttribute(this.attributes.get(attrId));
+                }
+                this.attributes.delete(attrId);
+                this._additionalAttributesNames.splice(_index3, 1);
+            } else {
+                this._additionalAttributesNames.forEach(function (id) {
+                    _this37.__removeAttributes(id.name);
+                });
+            }
+        }
+    }, {
+        key: "enabled",
+        get: function get() {
+            return this._enabled;
+        },
+        set: function set(val) {
+            var _this38 = this;
+
+            if (this._enabled === val) {
+                return;
+            }
+            this._enabled = val;
+            this._handlers.forEach(function (handler) {
+                handler(_this38);
+            });
+        }
+        /**
+         * The dictionary which is shared in entire tree.
+         * @return {NSDictionary<any>} [description]
+         */
+
+    }, {
+        key: "companion",
+        get: function get() {
+            return this.node ? this.node.companion : null;
+        }
+        /**
+         * Tree interface for the tree this node is attached.
+         * @return {IGomlInterface} [description]
+         */
+
+    }, {
+        key: "tree",
+        get: function get() {
+            return this.node ? this.node.tree : null;
+        }
+    }]);
+    return Component;
+}(IDObject);
+
+var GrimoireComponent = function (_Component) {
+    (0, _inherits3.default)(GrimoireComponent, _Component);
+
+    function GrimoireComponent() {
+        (0, _classCallCheck3.default)(this, GrimoireComponent);
+        return (0, _possibleConstructorReturn3.default)(this, (GrimoireComponent.__proto__ || (0, _getPrototypeOf2.default)(GrimoireComponent)).apply(this, arguments));
+    }
+
+    (0, _createClass3.default)(GrimoireComponent, [{
+        key: "$awake",
+        value: function $awake() {
+            var _this40 = this;
+
+            this.node.resolveAttributesValue();
+            this.getAttribute("id").addObserver(function (attr) {
+                _this40.node.element.id = attr.Value;
+            });
+            this.getAttribute("class").addObserver(function (attr) {
+                _this40.node.element.className = attr.Value.join(" ");
+            });
+            this.getAttribute("enabled").addObserver(function (attr) {
+                if (_this40.node.isActive) {
+                    _this40.node.notifyActivenessUpdate();
+                }
+            });
+        }
+    }]);
+    return GrimoireComponent;
+}(Component);
+
+GrimoireComponent.attributes = {
+    id: {
+        converter: "String",
+        defaultValue: null,
+        readonly: false
+    },
+    class: {
+        converter: "StringArray",
+        defaultValue: null,
+        readonly: false
+    },
+    enabled: {
+        converter: "Boolean",
+        defaultValue: true,
+        readonly: false
+    }
+};
+
+function StringArrayConverter(val) {
+    if (Array.isArray(val) || !val) {
+        return val;
+    }
+    if (typeof val === "string") {
+        return val.split(" ");
+    }
+    throw new Error("value is not supported by StringArrayConverter.:" + val);
+}
+
+function StringConverter(val) {
+    if (typeof val === "string") {
+        return val;
+    } else if (!val) {
+        return val;
+    } else if (typeof val.toString === "function") {
+        return val.toString();
+    }
+    throw new Error("value is not supported by StringConverter.");
+}
+
+var ComponentDeclaration = function () {
+    function ComponentDeclaration(name, attributes, ctor) {
+        (0, _classCallCheck3.default)(this, ComponentDeclaration);
+
+        this.name = name;
+        this.ctor = ctor;
+        this.attributes = attributes;
+    }
+
+    (0, _createClass3.default)(ComponentDeclaration, [{
+        key: "generateInstance",
+        value: function generateInstance(componentElement) {
+            componentElement = componentElement ? componentElement : document.createElementNS(this.name.ns, this.name.name);
+            var component = new this.ctor();
+            componentElement.setAttribute("x-gr-id", component.id);
+            obtainGomlInterface.componentDictionary[component.id] = component;
+            component.name = this.name;
+            component.element = componentElement;
+            component.attributes = new NSDictionary();
+            for (var key in this.attributes) {
+                Attribute.generateAttributeForComponent(key, this.attributes[key], component);
+            }
+            return component;
+        }
+    }]);
+    return ComponentDeclaration;
+}();
+
+var NSSet = function () {
+    function NSSet() {
+        (0, _classCallCheck3.default)(this, NSSet);
+
+        this._contentArray = [];
+    }
+
+    (0, _createClass3.default)(NSSet, [{
+        key: "push",
+        value: function push(item) {
+            var index = this._contentArray.findIndex(function (id) {
+                return id.fqn === item.fqn;
+            });
+            if (index === -1) {
+                this._contentArray.push(item);
+            }
+            return this;
+        }
+    }, {
+        key: "pushArray",
+        value: function pushArray(item) {
+            var _this41 = this;
+
+            item.forEach(function (v) {
+                _this41.push(v);
+            });
+            return this;
+        }
+    }, {
+        key: "values",
+        value: function values() {
+            return this._contentArray.values();
+        }
+    }, {
+        key: "toArray",
+        value: function toArray() {
+            var ret = [];
+            var _iteratorNormalCompletion3 = true;
+            var _didIteratorError3 = false;
+            var _iteratorError3 = undefined;
+
+            try {
+                for (var _iterator3 = (0, _getIterator3.default)(this._contentArray), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+                    var item = _step3.value;
+
+                    ret.push(item);
+                }
+            } catch (err) {
+                _didIteratorError3 = true;
+                _iteratorError3 = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
+                        _iterator3.return();
+                    }
+                } finally {
+                    if (_didIteratorError3) {
+                        throw _iteratorError3;
+                    }
+                }
+            }
+
+            return ret;
+        }
+    }, {
+        key: "clone",
+        value: function clone() {
+            var newSet = new NSSet();
+            var _iteratorNormalCompletion4 = true;
+            var _didIteratorError4 = false;
+            var _iteratorError4 = undefined;
+
+            try {
+                for (var _iterator4 = (0, _getIterator3.default)(this._contentArray), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+                    var i = _step4.value;
+
+                    newSet.push(i);
+                }
+            } catch (err) {
+                _didIteratorError4 = true;
+                _iteratorError4 = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion4 && _iterator4.return) {
+                        _iterator4.return();
+                    }
+                } finally {
+                    if (_didIteratorError4) {
+                        throw _iteratorError4;
+                    }
+                }
+            }
+
+            return newSet;
+        }
+    }, {
+        key: "merge",
+        value: function merge(other) {
+            var _iteratorNormalCompletion5 = true;
+            var _didIteratorError5 = false;
+            var _iteratorError5 = undefined;
+
+            try {
+                for (var _iterator5 = (0, _getIterator3.default)(other._contentArray), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
+                    var elem = _step5.value;
+
+                    this.push(elem);
+                }
+            } catch (err) {
+                _didIteratorError5 = true;
+                _iteratorError5 = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion5 && _iterator5.return) {
+                        _iterator5.return();
+                    }
+                } finally {
+                    if (_didIteratorError5) {
+                        throw _iteratorError5;
+                    }
+                }
+            }
+
+            return this;
+        }
+    }], [{
+        key: "fromArray",
+        value: function fromArray(array) {
+            var nSet = new NSSet();
+            nSet.pushArray(array);
+            return nSet;
+        }
+    }]);
+    return NSSet;
+}();
+
+var NodeDeclaration = function () {
+    function NodeDeclaration(name, _defaultComponents, _defaultAttributes, superNode, _treeConstraints) {
+        (0, _classCallCheck3.default)(this, NodeDeclaration);
+
+        this.name = name;
+        this._defaultComponents = _defaultComponents;
+        this._defaultAttributes = _defaultAttributes;
+        this.superNode = superNode;
+        this._treeConstraints = _treeConstraints;
+        if (!this.superNode && this.name.name.toUpperCase() !== "GRIMOIRENODEBASE") {
+            this.superNode = new NSIdentity("GrimoireNodeBase");
+        }
+    }
+
+    (0, _createClass3.default)(NodeDeclaration, [{
+        key: "addDefaultComponent",
+        value: function addDefaultComponent(componentName) {
+            var componentId = Ensure.ensureTobeNSIdentity(componentName);
+            this._defaultComponents.push(componentId);
+            if (this._defaultComponentsActual) {
+                this._defaultComponentsActual.push(componentId);
+            }
+        }
+    }, {
+        key: "_resolveInherites",
+        value: function _resolveInherites() {
+            if (!this.superNode) {
+                this._defaultComponentsActual = this._defaultComponents;
+                this._defaultAttributesActual = this._defaultAttributes;
+                return;
+            }
+            var superNode = obtainGomlInterface.nodeDeclarations.get(this.superNode);
+            var inheritedDefaultComponents = superNode.defaultComponents;
+            var inheritedDefaultAttribute = superNode.defaultAttributes;
+            this._defaultComponentsActual = inheritedDefaultComponents.clone().merge(this._defaultComponents);
+            this._defaultAttributesActual = inheritedDefaultAttribute.clone().pushDictionary(this._defaultAttributes);
+        }
+    }, {
+        key: "defaultComponents",
+        get: function get() {
+            if (!this._defaultComponentsActual) {
+                this._resolveInherites();
+            }
+            return this._defaultComponentsActual;
+        }
+    }, {
+        key: "defaultAttributes",
+        get: function get() {
+            if (!this._defaultAttributesActual) {
+                this._resolveInherites();
+            }
+            return this._defaultAttributesActual;
+        }
+    }, {
+        key: "treeConstraints",
+        get: function get() {
+            return this._treeConstraints;
+        }
+    }]);
+    return NodeDeclaration;
+}();
+
+/**
+ * Provides safe xml read feature.
+ */
+
+
+var XMLReader = function () {
+    function XMLReader() {
+        (0, _classCallCheck3.default)(this, XMLReader);
+    }
+
+    (0, _createClass3.default)(XMLReader, null, [{
+        key: "parseXML",
+        value: function parseXML(doc, rootElementName) {
+            var parsed = XMLReader._parser.parseFromString(doc, "text/xml");
+            if (rootElementName) {
+                if (parsed.documentElement.tagName.toUpperCase() !== rootElementName.toUpperCase()) {
+                    throw new Error("Specified document is invalid.");
+                } // TODO should throw more detail error
+            }
+            return [parsed.documentElement]; // TODO: implenent!
+        }
+    }, {
+        key: "getElements",
+        value: function getElements(elem, name) {
+            var result = [];
+            var elems = elem.getElementsByTagName(name);
+            for (var i = 0; i < elems.length; i++) {
+                result.push(elems.item(i));
+            }
+            return result;
+        }
+    }, {
+        key: "getSingleElement",
+        value: function getSingleElement(elem, name, mandatory) {
+            var result = XMLReader.getElements(elem, name);
+            if (result.length === 1) {
+                return result[0];
+            } else if (result.length === 0) {
+                if (mandatory) {
+                    throw new Error("The mandatory element " + name + " was required, but not found");
+                } else {
+                    return null;
+                }
+            } else {
+                throw new Error("The element " + name + " requires to exist in single. But there is " + result.length + " count of elements");
+            }
+        }
+    }, {
+        key: "getAttribute",
+        value: function getAttribute(elem, name, mandatory) {
+            var result = elem.attributes.getNamedItem(name);
+            if (result) {
+                return result.value;
+            } else if (mandatory) {
+                throw new Error("The mandatory attribute " + name + " was required, but it was not found");
+            } else {
+                return null;
+            }
+        }
+    }, {
+        key: "getAttributeFloat",
+        value: function getAttributeFloat(elem, name, mandatory) {
+            var resultStr = XMLReader.getAttribute(elem, name, mandatory);
+            return parseFloat(resultStr);
+        }
+    }, {
+        key: "getAttributeInt",
+        value: function getAttributeInt(elem, name, mandatory) {
+            var resultStr = XMLReader.getAttribute(elem, name, mandatory);
+            return parseInt(resultStr, 10);
+        }
+    }, {
+        key: "getChildElements",
+        value: function getChildElements(elem) {
+            var children = elem.childNodes;
+            var result = [];
+            for (var i = 0; i < children.length; i++) {
+                if (children.item(i) instanceof Element) {
+                    result.push(children.item(i));
+                }
+            }
+            return result;
+        }
+    }, {
+        key: "getAttributes",
+        value: function getAttributes(elem, ns) {
+            var result = {};
+            var attrs = elem.attributes;
+            for (var i = 0; i < attrs.length; i++) {
+                var attr = attrs.item(i);
+                if (!ns || attr.namespaceURI === ns) {
+                    result[attr.localName] = attr.value;
+                }
+            }
+            return result;
+        }
+    }]);
+    return XMLReader;
+}();
+
+XMLReader._parser = new DOMParser();
+
+var domain;
+
+// This constructor is used to store event handlers. Instantiating this is
+// faster than explicitly calling `Object.create(null)` to get a "clean" empty
+// object (tested with v8 v4.9).
+function EventHandlers() {}
+EventHandlers.prototype = (0, _create2.default)(null);
+
+function EventEmitter() {
+    EventEmitter.init.call(this);
+}
+EventEmitter.usingDomains = false;
+
+EventEmitter.prototype.domain = undefined;
+EventEmitter.prototype._events = undefined;
+EventEmitter.prototype._maxListeners = undefined;
+
+// By default EventEmitters will print a warning if more than 10 listeners are
+// added to it. This is a useful default which helps finding memory leaks.
+EventEmitter.defaultMaxListeners = 10;
+
+EventEmitter.init = function () {
+    this.domain = null;
+    if (EventEmitter.usingDomains) {
+        // if there is an active domain, then attach to it.
+        if (domain.active && !(this instanceof domain.Domain)) {
+            this.domain = domain.active;
+        }
+    }
+
+    if (!this._events || this._events === (0, _getPrototypeOf2.default)(this)._events) {
+        this._events = new EventHandlers();
+        this._eventsCount = 0;
+    }
+
+    this._maxListeners = this._maxListeners || undefined;
+};
+
+// Obviously not all Emitters should be limited to 10. This function allows
+// that to be increased. Set to zero for unlimited.
+EventEmitter.prototype.setMaxListeners = function setMaxListeners(n) {
+    if (typeof n !== 'number' || n < 0 || isNaN(n)) throw new TypeError('"n" argument must be a positive number');
+    this._maxListeners = n;
+    return this;
+};
+
+function $getMaxListeners(that) {
+    if (that._maxListeners === undefined) return EventEmitter.defaultMaxListeners;
+    return that._maxListeners;
+}
+
+EventEmitter.prototype.getMaxListeners = function getMaxListeners() {
+    return $getMaxListeners(this);
+};
+
+// These standalone emit* functions are used to optimize calling of event
+// handlers for fast cases because emit() itself often has a variable number of
+// arguments and can be deoptimized because of that. These functions always have
+// the same number of arguments and thus do not get deoptimized, so the code
+// inside them can execute faster.
+function emitNone(handler, isFn, self) {
+    if (isFn) handler.call(self);else {
+        var len = handler.length;
+        var listeners = arrayClone(handler, len);
+        for (var i = 0; i < len; ++i) {
+            listeners[i].call(self);
+        }
+    }
+}
+function emitOne(handler, isFn, self, arg1) {
+    if (isFn) handler.call(self, arg1);else {
+        var len = handler.length;
+        var listeners = arrayClone(handler, len);
+        for (var i = 0; i < len; ++i) {
+            listeners[i].call(self, arg1);
+        }
+    }
+}
+function emitTwo(handler, isFn, self, arg1, arg2) {
+    if (isFn) handler.call(self, arg1, arg2);else {
+        var len = handler.length;
+        var listeners = arrayClone(handler, len);
+        for (var i = 0; i < len; ++i) {
+            listeners[i].call(self, arg1, arg2);
+        }
+    }
+}
+function emitThree(handler, isFn, self, arg1, arg2, arg3) {
+    if (isFn) handler.call(self, arg1, arg2, arg3);else {
+        var len = handler.length;
+        var listeners = arrayClone(handler, len);
+        for (var i = 0; i < len; ++i) {
+            listeners[i].call(self, arg1, arg2, arg3);
+        }
+    }
+}
+
+function emitMany(handler, isFn, self, args) {
+    if (isFn) handler.apply(self, args);else {
+        var len = handler.length;
+        var listeners = arrayClone(handler, len);
+        for (var i = 0; i < len; ++i) {
+            listeners[i].apply(self, args);
+        }
+    }
+}
+
+EventEmitter.prototype.emit = function emit(type) {
+    var er, handler, len, args, i, events, domain;
+    var needDomainExit = false;
+    var doError = type === 'error';
+
+    events = this._events;
+    if (events) doError = doError && events.error == null;else if (!doError) return false;
+
+    domain = this.domain;
+
+    // If there is no 'error' event listener then throw.
+    if (doError) {
+        er = arguments[1];
+        if (domain) {
+            if (!er) er = new Error('Uncaught, unspecified "error" event');
+            er.domainEmitter = this;
+            er.domain = domain;
+            er.domainThrown = false;
+            domain.emit('error', er);
+        } else if (er instanceof Error) {
+            throw er; // Unhandled 'error' event
+        } else {
+            // At least give some kind of context to the user
+            var err = new Error('Uncaught, unspecified "error" event. (' + er + ')');
+            err.context = er;
+            throw err;
+        }
+        return false;
+    }
+
+    handler = events[type];
+
+    if (!handler) return false;
+
+    var isFn = typeof handler === 'function';
+    len = arguments.length;
+    switch (len) {
+        // fast cases
+        case 1:
+            emitNone(handler, isFn, this);
+            break;
+        case 2:
+            emitOne(handler, isFn, this, arguments[1]);
+            break;
+        case 3:
+            emitTwo(handler, isFn, this, arguments[1], arguments[2]);
+            break;
+        case 4:
+            emitThree(handler, isFn, this, arguments[1], arguments[2], arguments[3]);
+            break;
+        // slower
+        default:
+            args = new Array(len - 1);
+            for (i = 1; i < len; i++) {
+                args[i - 1] = arguments[i];
+            }emitMany(handler, isFn, this, args);
+    }
+
+    if (needDomainExit) domain.exit();
+
+    return true;
+};
+
+function _addListener(target, type, listener, prepend) {
+    var m;
+    var events;
+    var existing;
+
+    if (typeof listener !== 'function') throw new TypeError('"listener" argument must be a function');
+
+    events = target._events;
+    if (!events) {
+        events = target._events = new EventHandlers();
+        target._eventsCount = 0;
+    } else {
+        // To avoid recursion in the case that type === "newListener"! Before
+        // adding it to the listeners, first emit "newListener".
+        if (events.newListener) {
+            target.emit('newListener', type, listener.listener ? listener.listener : listener);
+
+            // Re-assign `events` because a newListener handler could have caused the
+            // this._events to be assigned to a new object
+            events = target._events;
+        }
+        existing = events[type];
+    }
+
+    if (!existing) {
+        // Optimize the case of one listener. Don't need the extra array object.
+        existing = events[type] = listener;
+        ++target._eventsCount;
+    } else {
+        if (typeof existing === 'function') {
+            // Adding the second element, need to change to array.
+            existing = events[type] = prepend ? [listener, existing] : [existing, listener];
+        } else {
+            // If we've already got an array, just append.
+            if (prepend) {
+                existing.unshift(listener);
+            } else {
+                existing.push(listener);
+            }
+        }
+
+        // Check for listener leak
+        if (!existing.warned) {
+            m = $getMaxListeners(target);
+            if (m && m > 0 && existing.length > m) {
+                existing.warned = true;
+                var w = new Error('Possible EventEmitter memory leak detected. ' + existing.length + ' ' + type + ' listeners added. ' + 'Use emitter.setMaxListeners() to increase limit');
+                w.name = 'MaxListenersExceededWarning';
+                w.emitter = target;
+                w.type = type;
+                w.count = existing.length;
+                emitWarning(w);
+            }
+        }
+    }
+
+    return target;
+}
+function emitWarning(e) {
+    typeof console.warn === 'function' ? console.warn(e) : console.log(e);
+}
+EventEmitter.prototype.addListener = function addListener(type, listener) {
+    return _addListener(this, type, listener, false);
+};
+
+EventEmitter.prototype.on = EventEmitter.prototype.addListener;
+
+EventEmitter.prototype.prependListener = function prependListener(type, listener) {
+    return _addListener(this, type, listener, true);
+};
+
+function _onceWrap(target, type, listener) {
+    var fired = false;
+    function g() {
+        target.removeListener(type, g);
+        if (!fired) {
+            fired = true;
+            listener.apply(target, arguments);
+        }
+    }
+    g.listener = listener;
+    return g;
+}
+
+EventEmitter.prototype.once = function once(type, listener) {
+    if (typeof listener !== 'function') throw new TypeError('"listener" argument must be a function');
+    this.on(type, _onceWrap(this, type, listener));
+    return this;
+};
+
+EventEmitter.prototype.prependOnceListener = function prependOnceListener(type, listener) {
+    if (typeof listener !== 'function') throw new TypeError('"listener" argument must be a function');
+    this.prependListener(type, _onceWrap(this, type, listener));
+    return this;
+};
+
+// emits a 'removeListener' event iff the listener was removed
+EventEmitter.prototype.removeListener = function removeListener(type, listener) {
+    var list, events, position, i, originalListener;
+
+    if (typeof listener !== 'function') throw new TypeError('"listener" argument must be a function');
+
+    events = this._events;
+    if (!events) return this;
+
+    list = events[type];
+    if (!list) return this;
+
+    if (list === listener || list.listener && list.listener === listener) {
+        if (--this._eventsCount === 0) this._events = new EventHandlers();else {
+            delete events[type];
+            if (events.removeListener) this.emit('removeListener', type, list.listener || listener);
+        }
+    } else if (typeof list !== 'function') {
+        position = -1;
+
+        for (i = list.length; i-- > 0;) {
+            if (list[i] === listener || list[i].listener && list[i].listener === listener) {
+                originalListener = list[i].listener;
+                position = i;
+                break;
+            }
+        }
+
+        if (position < 0) return this;
+
+        if (list.length === 1) {
+            list[0] = undefined;
+            if (--this._eventsCount === 0) {
+                this._events = new EventHandlers();
+                return this;
+            } else {
+                delete events[type];
+            }
+        } else {
+            spliceOne(list, position);
+        }
+
+        if (events.removeListener) this.emit('removeListener', type, originalListener || listener);
+    }
+
+    return this;
+};
+
+EventEmitter.prototype.removeAllListeners = function removeAllListeners(type) {
+    var listeners, events;
+
+    events = this._events;
+    if (!events) return this;
+
+    // not listening for removeListener, no need to emit
+    if (!events.removeListener) {
+        if (arguments.length === 0) {
+            this._events = new EventHandlers();
+            this._eventsCount = 0;
+        } else if (events[type]) {
+            if (--this._eventsCount === 0) this._events = new EventHandlers();else delete events[type];
+        }
+        return this;
+    }
+
+    // emit removeListener for all listeners on all events
+    if (arguments.length === 0) {
+        var keys = (0, _keys2.default)(events);
+        for (var i = 0, key; i < keys.length; ++i) {
+            key = keys[i];
+            if (key === 'removeListener') continue;
+            this.removeAllListeners(key);
+        }
+        this.removeAllListeners('removeListener');
+        this._events = new EventHandlers();
+        this._eventsCount = 0;
+        return this;
+    }
+
+    listeners = events[type];
+
+    if (typeof listeners === 'function') {
+        this.removeListener(type, listeners);
+    } else if (listeners) {
+        // LIFO order
+        do {
+            this.removeListener(type, listeners[listeners.length - 1]);
+        } while (listeners[0]);
+    }
+
+    return this;
+};
+
+EventEmitter.prototype.listeners = function listeners(type) {
+    var evlistener;
+    var ret;
+    var events = this._events;
+
+    if (!events) ret = [];else {
+        evlistener = events[type];
+        if (!evlistener) ret = [];else if (typeof evlistener === 'function') ret = [evlistener.listener || evlistener];else ret = unwrapListeners(evlistener);
+    }
+
+    return ret;
+};
+
+EventEmitter.listenerCount = function (emitter, type) {
+    if (typeof emitter.listenerCount === 'function') {
+        return emitter.listenerCount(type);
+    } else {
+        return listenerCount.call(emitter, type);
+    }
+};
+
+EventEmitter.prototype.listenerCount = listenerCount;
+function listenerCount(type) {
+    var events = this._events;
+
+    if (events) {
+        var evlistener = events[type];
+
+        if (typeof evlistener === 'function') {
+            return 1;
+        } else if (evlistener) {
+            return evlistener.length;
+        }
+    }
+
+    return 0;
+}
+
+EventEmitter.prototype.eventNames = function eventNames() {
+    return this._eventsCount > 0 ? (0, _ownKeys2.default)(this._events) : [];
+};
+
+// About 1.5x faster than the two-arg version of Array#splice().
+function spliceOne(list, index) {
+    for (var i = index, k = i + 1, n = list.length; k < n; i += 1, k += 1) {
+        list[i] = list[k];
+    }list.pop();
+}
+
+function arrayClone(arr, i) {
+    var copy = new Array(i);
+    while (i--) {
+        copy[i] = arr[i];
+    }return copy;
+}
+
+function unwrapListeners(arr) {
+    var ret = new Array(arr.length);
+    for (var i = 0; i < ret.length; ++i) {
+        ret[i] = arr[i].listener || arr[i];
+    }
+    return ret;
+}
+
+/**
+ * EventEmitterをmixinしたIDObject
+ */
+
+var EEObject = function (_IDObject3) {
+    (0, _inherits3.default)(EEObject, _IDObject3);
+
+    function EEObject() {
+        (0, _classCallCheck3.default)(this, EEObject);
+        return (0, _possibleConstructorReturn3.default)(this, (EEObject.__proto__ || (0, _getPrototypeOf2.default)(EEObject)).call(this));
+    }
+
+    (0, _createClass3.default)(EEObject, [{
+        key: "emitException",
+        value: function emitException(eventName, error) {
+            error.handled = false;
+            var listeners = this.listeners(eventName);
+            for (var i = 0; i < listeners.length; i++) {
+                listeners[listeners.length - i - 1](error);
+                if (error.handled) {
+                    return;
+                }
+            }
+            if (eventName !== "error") {
+                this.emitException("error", error);
+            } else {
+                throw error;
+            }
+        }
+    }]);
+    return EEObject;
+}(IDObject);
+
+function applyMixins(derivedCtor, baseCtors) {
+    baseCtors.forEach(function (baseCtor) {
+        (0, _getOwnPropertyNames2.default)(baseCtor.prototype).forEach(function (name) {
+            derivedCtor.prototype[name] = baseCtor.prototype[name];
+        });
+    });
+}
+applyMixins(EEObject, [EventEmitter]);
+
+var GomlNode = function (_EEObject) {
+    (0, _inherits3.default)(GomlNode, _EEObject);
+
+    /**
+     * 新しいインスタンスの作成
+     * @param  {NodeDeclaration} recipe  作成するノードのDeclaration
+     * @param  {Element}         element 対応するDomElement
+     * @return {[type]}                  [description]
+     */
+    function GomlNode(recipe, element) {
+        (0, _classCallCheck3.default)(this, GomlNode);
+
+        var _this43 = (0, _possibleConstructorReturn3.default)(this, (GomlNode.__proto__ || (0, _getPrototypeOf2.default)(GomlNode)).call(this));
+
+        _this43.children = [];
+        _this43._parent = null;
+        _this43._root = null;
+        _this43._mounted = false;
+        _this43._messageBuffer = [];
+        _this43._tree = null;
+        _this43._companion = new NSDictionary();
+        _this43._deleted = false;
+        _this43._attrBuffer = {};
+        _this43._defaultValueResolved = false;
+        if (!recipe) {
+            throw new Error("recipe must not be null");
+        }
+        _this43.nodeDeclaration = recipe;
+        _this43.element = element ? element : document.createElementNS(recipe.name.ns, recipe.name.name); // TODO Could be undefined or null?
+        _this43.componentsElement = document.createElement("COMPONENTS");
+        _this43._root = _this43;
+        _this43._tree = GomlInterfaceGenerator([_this43]);
+        _this43._components = [];
+        _this43.attributes = new NSDictionary();
+        _this43.element.setAttribute("x-gr-id", _this43.id);
+        var defaultComponentNames = recipe.defaultComponents;
+        // instanciate default components
+        defaultComponentNames.toArray().map(function (id) {
+            _this43.addComponent(id, true);
+        });
+        // register to GrimoireInterface.
+        obtainGomlInterface.nodeDictionary[_this43.id] = _this43;
+        return _this43;
+    }
+    /**
+     * Get actual goml node from element of xml tree.
+     * @param  {Element}  elem [description]
+     * @return {GomlNode}      [description]
+     */
+
+
+    (0, _createClass3.default)(GomlNode, [{
+        key: "getChildrenByClass",
+        value: function getChildrenByClass(className) {
+            var nodes = this.element.getElementsByClassName(className);
+            return new Array(nodes.length).map(function (v, i) {
+                return GomlNode.fromElement(nodes.item(i));
+            });
+        }
+    }, {
+        key: "getChildrenByNodeName",
+        value: function getChildrenByNodeName(nodeName) {
+            var nodes = this.element.getElementsByTagName(nodeName);
+            return new Array(nodes.length).map(function (v, i) {
+                return GomlNode.fromElement(nodes.item(i));
+            });
+        }
+        /**
+         * ノードを削除する。使わなくなったら呼ぶ。子要素も再帰的に削除する。
+         */
+
+    }, {
+        key: "delete",
+        value: function _delete() {
+            this.children.forEach(function (c) {
+                c.delete();
+            });
+            obtainGomlInterface.nodeDictionary[this.id] = null;
+            if (this._parent) {
+                this._parent.detachChild(this);
+            } else {
+                this.setMounted(false);
+                if (this.element.parentNode) {
+                    this.element.parentNode.removeChild(this.element);
+                }
+            }
+            this._deleted = true;
+        }
+    }, {
+        key: "sendMessage",
+        value: function sendMessage(message, args) {
+            var _this44 = this;
+
+            if (!this.enabled || !this.mounted) {
+                return false;
+            }
+            this._components.forEach(function (component) {
+                _this44._sendMessageToComponent(component, message, false, false, args);
+            });
+            return true;
+        }
+    }, {
+        key: "broadcastMessage",
+        value: function broadcastMessage(arg1, arg2, arg3) {
+            if (!this.enabled || !this.mounted) {
+                return;
+            }
+            if (typeof arg1 === "number") {
+                var range = arg1;
+                var message = arg2;
+                var args = arg3;
+                this.sendMessage(message, args);
+                if (range > 0) {
+                    for (var i = 0; i < this.children.length; i++) {
+                        this.children[i].broadcastMessage(range - 1, message, args);
+                    }
+                }
+            } else {
+                var _message = arg1;
+                var _args91 = arg2;
+                this.sendMessage(_message, _args91);
+                for (var _i7 = 0; _i7 < this.children.length; _i7++) {
+                    this.children[_i7].broadcastMessage(_message, _args91);
+                }
+            }
+        }
+        /**
+         * 指定したノード名と属性で生成されたノードの新しいインスタンスを、このノードの子要素として追加
+         * @param {string |   NSIdentity} nodeName      [description]
+         * @param {any    }} attributes   [description]
+         */
+
+    }, {
+        key: "addNode",
+        value: function addNode(nodeName, attributes) {
+            if (typeof nodeName === "string") {
+                this.addNode(new NSIdentity(nodeName), attributes);
+            } else {
+                var nodeDec = obtainGomlInterface.nodeDeclarations.get(nodeName);
+                var node = new GomlNode(nodeDec, null);
+                if (attributes) {
+                    for (var key in attributes) {
+                        var id = key.indexOf("|") !== -1 ? NSIdentity.fromFQN(key) : new NSIdentity(key);
+                        node.attr(id, attributes[key]);
+                    }
+                }
+                this.addChild(node);
+            }
+        }
+        /**
+         * Add child.
+         * @param {GomlNode} child            追加する子ノード
+         * @param {number}   index            追加位置。なければ末尾に追加
+         * @param {[type]}   elementSync=true trueのときはElementのツリーを同期させる。（Elementからパースするときはfalseにする）
+         */
+
+    }, {
+        key: "addChild",
+        value: function addChild(child, index) {
+            var elementSync = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+
+            if (child._deleted) {
+                throw new Error("deleted node never use.");
+            }
+            if (index != null && typeof index !== "number") {
+                throw new Error("insert index should be number or null or undefined.");
+            }
+            child._parent = this;
+            var insertIndex = index == null ? this.children.length : index;
+            this.children.splice(insertIndex, 0, child);
+            var checkChildConstraints = child.checkTreeConstraints();
+            var checkAncestorConstraint = this._callRecursively(function (n) {
+                return n.checkTreeConstraints();
+            }, function (n) {
+                return n._parent ? [n._parent] : [];
+            }).reduce(function (list, current) {
+                return list.concat(current);
+            });
+            var errors = checkChildConstraints.concat(checkAncestorConstraint).filter(function (m) {
+                return m;
+            });
+            if (errors.length !== 0) {
+                var message = errors.reduce(function (m, current) {
+                    return m + "\n" + current;
+                });
+                throw new Error("tree constraint is not satisfied.\n" + message);
+            }
+            // handling html
+            if (elementSync) {
+                var referenceElement = this.element[NodeUtility.getNodeListIndexByElementIndex(this.element, insertIndex)];
+                this.element.insertBefore(child.element, referenceElement);
+            }
+            child._tree = this.tree;
+            child._companion = this.companion;
+            // mounting
+            if (this.mounted) {
+                child.setMounted(true);
+            }
+        }
+    }, {
+        key: "callRecursively",
+        value: function callRecursively(func) {
+            return this._callRecursively(func, function (n) {
+                return n.children;
+            });
+        }
+        /**
+         * デタッチしてdeleteする。
+         * @param {GomlNode} child Target node to be inserted.
+         */
+
+    }, {
+        key: "removeChild",
+        value: function removeChild(child) {
+            var node = this.detachChild(child);
+            if (node) {
+                node.delete();
+            }
+        }
+        /**
+         * 指定したノードが子要素なら子要素から外す。
+         * @param  {GomlNode} child [description]
+         * @return {GomlNode}       [description]
+         */
+
+    }, {
+        key: "detachChild",
+        value: function detachChild(target) {
+            // search child.
+            var index = this.children.indexOf(target);
+            if (index === -1) {
+                return null;
+            }
+            target.setMounted(false);
+            target._parent = null;
+            this.children.splice(index, 1);
+            // html sync
+            this.element.removeChild(target.element);
+            // check ancestor constraint.
+            var errors = this._callRecursively(function (n) {
+                return n.checkTreeConstraints();
+            }, function (n) {
+                return n._parent ? [n._parent] : [];
+            }).reduce(function (list, current) {
+                return list.concat(current);
+            }).filter(function (m) {
+                return m;
+            });
+            if (errors.length !== 0) {
+                var message = errors.reduce(function (m, current) {
+                    return m + "\n" + current;
+                });
+                throw new Error("tree constraint is not satisfied.\n" + message);
+            }
+            return target;
+        }
+        /**
+         * detach myself
+         */
+
+    }, {
+        key: "detach",
+        value: function detach() {
+            if (this.parent) {
+                this.parent.detachChild(this);
+            } else {
+                throw new Error("root Node cannot be detached.");
+            }
+        }
+    }, {
+        key: "attr",
+        value: function attr(attrName, value) {
+            attrName = Ensure.ensureTobeNSIdentity(attrName);
+            var attr = this.attributes.get(attrName);
+            if (value !== void 0) {
+                // setValue.
+                if (!attr) {
+                    console.warn("attribute \"" + attrName.name + "\" is not found.");
+                    this._attrBuffer[attrName.fqn] = value;
+                } else {
+                    attr.Value = value;
+                }
+            } else {
+                // getValue.
+                if (!attr) {
+                    var attrBuf = this._attrBuffer[attrName.fqn];
+                    if (attrBuf !== void 0) {
+                        console.log("get attrBuf!");
+                        return attrBuf;
+                    }
+                    console.warn("attribute \"" + attrName.name + "\" is not found.");
+                    return;
+                } else {
+                    return attr.Value;
+                }
+            }
+        }
+        /**
+         *  Add new attribute. In most of case, users no need to call this method.
+         *  Use __addAttribute in Component should be used instead.
+         */
+
+    }, {
+        key: "addAttribute",
+        value: function addAttribute(attr) {
+            this.attributes.set(attr.name, attr);
+            // check buffer value.
+            var attrBuf = this._attrBuffer[attr.name.fqn];
+            if (attrBuf !== void 0) {
+                attr.Value = attrBuf;
+                delete this._attrBuffer[attr.name.fqn];
+            }
+        }
+        /**
+         * Update mounted status and emit events
+         * @param {boolean} mounted Mounted status.
+         */
+
+    }, {
+        key: "setMounted",
+        value: function setMounted(mounted) {
+            if (this._mounted === mounted) {
+                return;
+            }
+            if (mounted) {
+                this._mounted = mounted;
+                this._clearMessageBuffer("unmount");
+                this._sendMessage("awake", true, false);
+                this._sendMessage("mount", false, true);
+                this.children.forEach(function (child) {
+                    child.setMounted(mounted);
+                });
+            } else {
+                this._clearMessageBuffer("mount");
+                this.children.forEach(function (child) {
+                    child.setMounted(mounted);
+                });
+                this._sendMessage("unmount", false, true);
+                this._sendMessage("dispose", true, false);
+                this._tree = null;
+                this._companion = null;
+                this._mounted = mounted;
+            }
+        }
+        /**
+         * Get index of this node from parent.
+         * @return {number} number of index.
+         */
+
+    }, {
+        key: "index",
+        value: function index() {
+            return this._parent.children.indexOf(this);
+        }
+    }, {
+        key: "removeAttribute",
+        value: function removeAttribute(attr) {
+            this.attributes.delete(attr.name);
+        }
+        /**
+         * このノードにコンポーネントをアタッチする。
+         * @param {Component} component [description]
+         */
+
+    }, {
+        key: "addComponent",
+        value: function addComponent(component) {
+            var isDefaultComponent = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+            var declaration = obtainGomlInterface.componentDeclarations.get(component);
+            var instance = declaration.generateInstance();
+            this._addComponentDirectly(instance, isDefaultComponent);
+            return instance;
+        }
+        /**
+         * Internal use!
+         * Should not operate by users or plugin developpers
+         * @param {Component} component          [description]
+         * @param {boolean}   isDefaultComponent [description]
+         */
+
+    }, {
+        key: "_addComponentDirectly",
+        value: function _addComponentDirectly(component, isDefaultComponent) {
+            var _this45 = this;
+
+            if (isDefaultComponent) {
+                component.isDefaultComponent = true;
+            }
+            var insertIndex = this._components.length;
+            var referenceElement = this.componentsElement[NodeUtility.getNodeListIndexByElementIndex(this.componentsElement, insertIndex)];
+            this.componentsElement.insertBefore(component.element, referenceElement);
+            this._components.push(component);
+            component.node = this;
+            component.addEnabledObserver(function (c) {
+                if (c.enabled) {
+                    // TODO ??
+                    _this45._sendBufferdMessageToComponent(c, "mount", false, true);
+                    _this45._sendBufferdMessageToComponent(c, "unmount", false, true);
+                }
+            });
+            if (isDefaultComponent) {
+                // attributes should be exposed on node
+                component.attributes.forEach(function (p) {
+                    return _this45.addAttribute(p);
+                });
+                if (this._defaultValueResolved) {
+                    component.attributes.forEach(function (p) {
+                        return p.resolveDefaultValue(NodeUtility.getAttributes(_this45.element));
+                    });
+                }
+            }
+            if (this._mounted) {
+                this._sendMessageToComponent(component, "awake", true, false);
+                this._sendMessageToComponent(component, "mount", false, true);
+            }
+        }
+    }, {
+        key: "getComponents",
+        value: function getComponents() {
+            return this._components;
+        }
+    }, {
+        key: "getComponent",
+        value: function getComponent(name) {
+            if (typeof name === "string") {
+                for (var i = 0; i < this._components.length; i++) {
+                    if (this._components[i].name.name === name) {
+                        return this._components[i];
+                    }
+                }
+            } else {
+                for (var _i8 = 0; _i8 < this._components.length; _i8++) {
+                    if (this._components[_i8].name.fqn === name.fqn) {
+                        return this._components[_i8];
+                    }
+                }
+            }
+            return null;
+        }
+        /**
+         * すべてのコンポーネントの属性をエレメントかデフォルト値で初期化
+         */
+
+    }, {
+        key: "resolveAttributesValue",
+        value: function resolveAttributesValue() {
+            var _this46 = this;
+
+            this._defaultValueResolved = true;
+            this._components.forEach(function (component) {
+                component.resolveDefaultAttributes(NodeUtility.getAttributes(_this46.element));
+            });
+        }
+        /**
+         * このノードのtreeConstrainが満たされるか調べる
+         * @return {string[]} [description]
+         */
+
+    }, {
+        key: "checkTreeConstraints",
+        value: function checkTreeConstraints() {
+            var _this47 = this;
+
+            var constraints = this.nodeDeclaration.treeConstraints;
+            if (!constraints) {
+                return [];
+            }
+            var errorMesasges = constraints.map(function (constraint) {
+                return constraint(_this47);
+            }).filter(function (message) {
+                return message !== null;
+            });
+            if (errorMesasges.length === 0) {
+                return null;
+            }
+            return errorMesasges;
+        }
+        /**
+         * バッファしていたmount,unmountが送信されるかもしれない.アクティブなら
+         */
+
+    }, {
+        key: "notifyActivenessUpdate",
+        value: function notifyActivenessUpdate() {
+            if (this.isActive) {
+                this._sendBufferdMessage(this.mounted ? "mount" : "unmount", false);
+                this.children.forEach(function (child) {
+                    child.notifyActivenessUpdate();
+                });
+            }
+        }
+        /**
+         * コンポーネントにメッセージを送る。送信したらバッファからは削除される.
+         * @param  {Component} targetComponent 対象コンポーネント
+         * @param  {string}    message         メッセージ
+         * @param  {boolean}   forced          trueでコンポーネントのenableを無視して送信
+         * @param  {boolean}   toBuffer        trueで送信失敗したらバッファに追加
+         * @param  {any}       args            [description]
+         * @return {boolean}                   送信したか
+         */
+
+    }, {
+        key: "_sendMessageToComponent",
+        value: function _sendMessageToComponent(targetComponent, message, forced, toBuffer, args) {
+            message = Ensure.ensureTobeMessage(message);
+            var bufferdIndex = this._messageBuffer.findIndex(function (obj) {
+                return obj.message === message && obj.target === targetComponent;
+            });
+            if (!forced && (!targetComponent.enabled || !this.isActive)) {
+                if (toBuffer && bufferdIndex < 0) {
+                    this._messageBuffer.push({ message: Ensure.ensureTobeMessage(message), target: targetComponent });
+                }
+                return false;
+            }
+            message = Ensure.ensureTobeMessage(message);
+            var method = targetComponent[message];
+            if (typeof method === "function") {
+                method.bind(targetComponent)(args);
+            }
+            if (bufferdIndex >= 0) {
+                this._messageBuffer.splice(bufferdIndex, 1);
+            }
+            return true;
+        }
+        /**
+         * バッファからメッセージを送信。成功したらバッファから削除
+         * @param  {Component} target  [description]
+         * @param  {string}    message [description]
+         * @param  {boolean}   forced  [description]
+         * @param  {any}       args    [description]
+         * @return {boolean}           成功したか
+         */
+
+    }, {
+        key: "_sendBufferdMessageToComponent",
+        value: function _sendBufferdMessageToComponent(target, message, forced, sendToRemove, args) {
+            if (!forced && (!target.enabled || !this.isActive)) {
+                return false;
+            }
+            message = Ensure.ensureTobeMessage(message);
+            var bufferdIndex = this._messageBuffer.findIndex(function (obj) {
+                return obj.message === message && obj.target === target;
+            });
+            if (bufferdIndex >= 0) {
+                var method = target[message];
+                if (typeof method === "function") {
+                    method.bind(target)(args);
+                }
+                if (sendToRemove) {
+                    this._messageBuffer.splice(bufferdIndex, 1);
+                }
+                return true;
+            }
+            return false;
+        }
+    }, {
+        key: "_sendMessage",
+        value: function _sendMessage(message, forced, toBuffer, args) {
+            var _this48 = this;
+
+            this._components.forEach(function (component) {
+                _this48._sendMessageToComponent(component, message, forced, toBuffer, args);
+            });
+        }
+        /**
+         * バッファのメッセージを送信可能なら送信してバッファから削除
+         */
+
+    }, {
+        key: "_sendBufferdMessage",
+        value: function _sendBufferdMessage(message, forced, args) {
+            var _this49 = this;
+
+            var next = [];
+            message = Ensure.ensureTobeMessage(message);
+            this._messageBuffer.forEach(function (obj) {
+                if (obj.message !== message || !_this49._sendBufferdMessageToComponent(obj.target, message, forced, false, args)) {
+                    next.push(obj);
+                }
+            });
+            this._messageBuffer = next;
+        }
+    }, {
+        key: "_clearMessageBuffer",
+        value: function _clearMessageBuffer(message) {
+            message = Ensure.ensureTobeMessage(message);
+            this._messageBuffer = this._messageBuffer.filter(function (obj) {
+                return obj.message !== message;
+            });
+        }
+    }, {
+        key: "_callRecursively",
+        value: function _callRecursively(func, nextGenerator) {
+            var val = func(this);
+            var nexts = nextGenerator(this);
+            var nextVals = nexts.map(function (c) {
+                return c.callRecursively(func);
+            });
+            var list = nextVals.reduce(function (clist, current) {
+                return clist.concat(current);
+            }, []);
+            list.unshift(val);
+            return list;
+        }
+    }, {
+        key: "name",
+        get: function get() {
+            return this.nodeDeclaration.name;
+        }
+        /**
+         * このノードの属するツリーのGomlInterface。unmountedならnull。
+         * @return {IGomlInterface} [description]
+         */
+
+    }, {
+        key: "tree",
+        get: function get() {
+            return this._tree;
+        }
+    }, {
+        key: "deleted",
+        get: function get() {
+            return this._deleted;
+        }
+    }, {
+        key: "isActive",
+        get: function get() {
+            if (this._parent) {
+                return this._parent.isActive && this.enabled;
+            } else {
+                return this.enabled;
+            }
+        }
+    }, {
+        key: "enabled",
+        get: function get() {
+            return this.attr("enabled");
+        },
+        set: function set(value) {
+            this.attr("enabled", value);
+        }
+        /**
+         * ツリーで共有されるオブジェクト。マウントされていない状態ではnull。
+         * @return {NSDictionary<any>} [description]
+         */
+
+    }, {
+        key: "companion",
+        get: function get() {
+            return this._companion;
+        }
+    }, {
+        key: "nodeName",
+        get: function get() {
+            return this.nodeDeclaration.name;
+        }
+    }, {
+        key: "parent",
+        get: function get() {
+            return this._parent;
+        }
+    }, {
+        key: "hasChildren",
+        get: function get() {
+            return this.children.length > 0;
+        }
+        /**
+         * Get mounted status.
+         * @return {boolean} Whether this node is mounted or not.
+         */
+
+    }, {
+        key: "mounted",
+        get: function get() {
+            return this._mounted;
+        }
+    }], [{
+        key: "fromElement",
+        value: function fromElement(elem) {
+            return obtainGomlInterface.nodeDictionary[elem.getAttribute("x-gr-id")];
+        }
+    }]);
+    return GomlNode;
+}(EEObject);
+
+/**
+ * Parser of Goml to Node utilities.
+ * This class do not store any nodes and goml properties.
+ */
+
+
+var GomlParser = function () {
+    function GomlParser() {
+        (0, _classCallCheck3.default)(this, GomlParser);
+    }
+
+    (0, _createClass3.default)(GomlParser, null, [{
+        key: "parse",
+
+        /**
+         * Domをパースする
+         * @param  {Element}           source    [description]
+         * @param  {GomlNode}          parent    あればこのノードにaddChildされる
+         * @return {GomlNode}                    ルートノード
+         */
+        value: function parse(source, parent, scriptTag) {
+            var newNode = GomlParser._createNode(source);
+            if (!newNode) {
+                // when specified node could not be found
+                console.warn("\"" + source.tagName + "\" was not parsed.");
+                return null;
+            }
+            // Parse children recursively
+            var children = source.childNodes;
+            var childNodeElements = []; // for parse after .Components has resolved.
+            if (children && children.length !== 0) {
+                var removeTarget = [];
+                for (var i = 0; i < children.length; i++) {
+                    var child = children.item(i);
+                    if (!GomlParser._isElement(child)) {
+                        removeTarget.push(child);
+                        continue;
+                    }
+                    if (this._isComponentsTag(child)) {
+                        // parse as components
+                        GomlParser._parseComponents(newNode, child);
+                        removeTarget.push(child);
+                    } else {
+                        // parse as child node.
+                        childNodeElements.push(child);
+                    }
+                }
+                // remove unused elements
+                for (var _i9 = 0; _i9 < removeTarget.length; _i9++) {
+                    source.removeChild(removeTarget[_i9]);
+                }
+            }
+            // generate tree
+            if (parent) {
+                parent.addChild(newNode, null, false);
+            }
+            childNodeElements.forEach(function (child) {
+                GomlParser.parse(child, newNode, null);
+            });
+            return newNode;
+        }
+        /**
+         * GomlNodeのインスタンス化。GrimoireInterfaceへの登録
+         * @param  {HTMLElement}      elem         [description]
+         * @param  {GomlConfigurator} configurator [description]
+         * @return {GomlTreeNodeBase}              [description]
+         */
+
+    }, {
+        key: "_createNode",
+        value: function _createNode(elem) {
+            var tagName = elem.localName;
+            var recipe = obtainGomlInterface.nodeDeclarations.get(elem);
+            if (!recipe) {
+                throw new Error("Tag \"" + tagName + "\" is not found.");
+            }
+            return new GomlNode(recipe, elem);
+        }
+        /**
+         * .COMPONENTSのパース。
+         * @param {GomlNode} node          アタッチされるコンポーネント
+         * @param {Element}  componentsTag .COMPONENTSタグ
+         */
+
+    }, {
+        key: "_parseComponents",
+        value: function _parseComponents(node, componentsTag) {
+            var componentNodes = componentsTag.childNodes;
+            if (!componentNodes) {
+                return;
+            }
+            for (var i = 0; i < componentNodes.length; i++) {
+                var componentNode = componentNodes.item(i);
+                if (!GomlParser._isElement(componentNode)) {
+                    continue; // Skip if the node was not element
+                }
+                var componentDecl = obtainGomlInterface.componentDeclarations.get(componentNode);
+                if (!componentDecl) {
+                    throw new Error("Component " + componentNode.tagName + " is not found.");
+                }
+                var component = componentDecl.generateInstance(componentNode);
+                node._addComponentDirectly(component, false);
+            }
+        }
+    }, {
+        key: "_isElement",
+        value: function _isElement(node) {
+            return node.nodeType === Node.ELEMENT_NODE;
+        }
+    }, {
+        key: "_isComponentsTag",
+        value: function _isComponentsTag(element) {
+            var regexToFindComponent = /\.COMPONENTS$/mi; // TODO might needs to fix
+            return regexToFindComponent.test(element.nodeName);
+        }
+    }]);
+    return GomlParser;
+}();
+
+var ComponentInterface = function () {
+    function ComponentInterface(components) {
+        (0, _classCallCheck3.default)(this, ComponentInterface);
+
+        this.components = components;
+    }
+
+    (0, _createClass3.default)(ComponentInterface, [{
+        key: "get",
+        value: function get(i1, i2, i3) {
+            var c = this.components;
+            if (i1 === void 0) {
+                if (c.length === 0 || c[0].length === 0 || c[0][0].length === 0) {
+                    return null;
+                } else if (c.length === 1 && c[0].length === 1 || c[0][0].length === 1) {
+                    return c[0][0][0];
+                }
+                throw new Error("There are too many candidate");
+            } else if (i2 === void 0) {
+                if (c.length === 0 || c[0].length === 0 || c[0][0].length <= i1) {
+                    return null;
+                } else if (c.length === 1 && c[0].length === 1) {
+                    return c[0][0][i1];
+                }
+                throw new Error("There are too many candidate");
+            } else if (i3 === void 0) {
+                if (c.length === 0 || c[0].length <= i2 || c[0][0].length <= i1) {
+                    return null;
+                } else if (c.length === 1) {
+                    return c[0][i2][i1];
+                }
+                throw new Error("There are too many candidate");
+            } else {
+                if (c.length <= i3 || c[0].length <= i2 || c[0][0].length <= i1) {
+                    return null;
+                }
+                return c[i3][i2][i1];
+            }
+        }
+    }, {
+        key: "forEach",
+        value: function forEach(f) {
+            this.components.forEach(function (tree, ti) {
+                tree.forEach(function (nodes, ni) {
+                    nodes.forEach(function (comp, ci) {
+                        f(comp, ci, ni, ti);
+                    });
+                });
+            });
+            return this;
+        }
+    }, {
+        key: "attr",
+        value: function attr(attrName, value) {
+            if (value === void 0) {
+                // return Attribute.
+                return this.components[0][0][0].getValue(attrName).Value;
+            } else {
+                // set value.
+                this.forEach(function (component) {
+                    component.setValue(attrName, value);
+                });
+            }
+        }
+    }, {
+        key: "on",
+        value: function on() {
+            // TODO implement
+            return;
+        }
+    }, {
+        key: "off",
+        value: function off() {
+            // TODO implement
+            return;
+        }
+    }]);
+    return ComponentInterface;
+}();
+
+/**
+ * 複数のノードを対象とした操作を提供するインタフェース
+ */
+
+
+var NodeInterface = function () {
+    function NodeInterface(nodes) {
+        (0, _classCallCheck3.default)(this, NodeInterface);
+
+        this.nodes = nodes;
+    }
+
+    (0, _createClass3.default)(NodeInterface, [{
+        key: "queryFunc",
+        value: function queryFunc(query) {
+            return new ComponentInterface(this.queryComponents(query));
+        }
+    }, {
+        key: "queryComponents",
+        value: function queryComponents(query) {
+            return this.nodes.map(function (nodes) {
+                return nodes.map(function (node) {
+                    var componentElements = node.componentsElement.querySelectorAll(query);
+                    var components = [];
+                    for (var i = 0; i < componentElements.length; i++) {
+                        var elem = componentElements[i];
+                        var component = obtainGomlInterface.componentDictionary[elem.getAttribute("x-gr-id")];
+                        if (component) {
+                            components.push(component);
+                        }
+                    }
+                    return components;
+                });
+            });
+        }
+    }, {
+        key: "get",
+        value: function get(i1, i2) {
+            var c = this.nodes;
+            if (i1 === void 0) {
+                if (c.length === 0 || c[0].length === 0) {
+                    return null;
+                } else if (c.length === 1 && c[0].length === 1) {
+                    return c[0][0];
+                }
+                throw new Error("There are too many candidate");
+            } else if (i2 === void 0) {
+                if (c.length === 0 || c[0].length <= i1) {
+                    return null;
+                } else if (c.length === 1 && c[0].length > i1) {
+                    return c[0][i1];
+                }
+                throw new Error("There are too many candidate");
+            } else {
+                if (c.length <= i1 || c[i1].length <= i2) {
+                    return null;
+                } else {
+                    return c[i1][i2];
+                }
+            }
+        }
+    }, {
+        key: "attr",
+        value: function attr(attrName, value) {
+            if (value === void 0) {
+                // return Attribute.
+                return this.nodes[0][0].attributes.get(attrName).Value;
+            } else {
+                // set value.
+                this.forEach(function (node) {
+                    var attr = node.attributes.get(attrName);
+                    if (attr.declaration.readonly) {
+                        throw new Error("The attribute " + attr.name.fqn + " is readonly");
+                    }
+                    if (attr) {
+                        attr.Value = value;
+                    }
+                });
+            }
+        }
+        /**
+         * 対象ノードにイベントリスナを追加します。
+         * @param {string}   eventName [description]
+         * @param {Function} listener  [description]
+         */
+
+    }, {
+        key: "on",
+        value: function on(eventName, listener) {
+            this.forEach(function (node) {
+                node.on(eventName, listener);
+            });
+            return this;
+        }
+        /**
+         * 対象ノードに指定したイベントリスナが登録されていれば削除します
+         * @param {string}   eventName [description]
+         * @param {Function} listener  [description]
+         */
+
+    }, {
+        key: "off",
+        value: function off(eventName, listener) {
+            this.forEach(function (node) {
+                node.removeListener(eventName, listener);
+            });
+            return this;
+        }
+        /**
+         * このノードインタフェースが対象とするノードそれぞれに、
+         * タグで指定したノードを子要素として追加します。
+         * @param {string} tag [description]
+         */
+
+    }, {
+        key: "append",
+        value: function append(tag) {
+            this.forEach(function (node) {
+                var elems = XMLReader.parseXML(tag);
+                elems.forEach(function (elem) {
+                    return GomlParser.parse(elem, node, null);
+                });
+            });
+            return this;
+        }
+        /**
+         * このノードインタフェースが対象とするノードの子に、
+         * 指定されたノードが存在すれば削除します。
+         * @param {GomlNode} child [description]
+         */
+
+    }, {
+        key: "remove",
+        value: function remove(child) {
+            this.forEach(function (node) {
+                node.removeChild(child);
+            });
+            return this;
+        }
+        /**
+         * このノードインタフェースが対象とするノードに対して反復処理を行います
+         * @param  {GomlNode} callback [description]
+         * @return {[type]}            [description]
+         */
+
+    }, {
+        key: "forEach",
+        value: function forEach(callback) {
+            this.nodes.forEach(function (array) {
+                array.forEach(function (node) {
+                    callback(node);
+                });
+            });
+            return this;
+        }
+        /**
+         * このノードインタフェースが対象とするノードを有効、または無効にします。
+         * @param {boolean} enable [description]
+         */
+
+    }, {
+        key: "setEnable",
+        value: function setEnable(enable) {
+            this.forEach(function (node) {
+                node.enabled = !!enable;
+            });
+            return this;
+        }
+        /**
+         * このノードインタフェースにアタッチされたコンポーネントをセレクタで検索します。
+         * @pram  {string}      query [description]
+         * @return {Component[]}       [description]
+         */
+
+    }, {
+        key: "find",
+        value: function find(query) {
+            var allComponents = [];
+            this.queryComponents(query).forEach(function (gomlComps) {
+                gomlComps.forEach(function (nodeComps) {
+                    nodeComps.forEach(function (comp) {
+                        allComponents.push(comp);
+                    });
+                });
+            });
+            return allComponents;
+        }
+        /**
+         * このノードインタフェースが対象とするノードのそれぞれの子ノードを対象とする、
+         * 新しいノードインタフェースを取得します。
+         * @return {NodeInterface} [description]
+         */
+
+    }, {
+        key: "children",
+        value: function children() {
+            var children = this.nodes.map(function (nodes) {
+                return nodes.map(function (node) {
+                    return node.children;
+                }).reduce(function (pre, cur) {
+                    return pre.concat(cur);
+                });
+            });
+            return new NodeInterface(children);
+        }
+        /**
+         * 対象ノードにコンポーネントをアタッチします。
+         * @param {Component} component [description]
+         */
+
+    }, {
+        key: "addCompnent",
+        value: function addCompnent(componentId) {
+            this.forEach(function (node) {
+                node.addComponent(componentId, false);
+            });
+            return this;
+        }
+        /**
+         * 最初の対象ノードを取得する
+         * @return {GomlNode} [description]
+         */
+
+    }, {
+        key: "first",
+        value: function first() {
+            if (this.count() === 0) {
+                return null;
+            }
+            return this.nodes[0][0];
+        }
+        /**
+         * 対象となる唯一のノードを取得する。
+         * 対象が存在しない、あるいは複数存在するときは例外を投げる。
+         * @return {GomlNode} [description]
+         */
+
+    }, {
+        key: "single",
+        value: function single() {
+            if (this.count() !== 1) {
+                throw new Error("this nodeInterface is not single.");
+            }
+            return this.first();
+        }
+        /**
+         * 対象となるノードの個数を取得する
+         * @return {number} [description]
+         */
+
+    }, {
+        key: "count",
+        value: function count() {
+            if (this.nodes.length === 0) {
+                return 0;
+            }
+            var counts = this.nodes.map(function (nodes) {
+                return nodes.length;
+            });
+            return counts.reduce(function (total, current) {
+                return total + current;
+            }, 0);
+        }
+    }]);
+    return NodeInterface;
+}();
+
+/**
+ * Provides interfaces to treat whole goml tree for each.
+ */
+
+
+var GomlInterface = function () {
+    function GomlInterface(rootNodes) {
+        (0, _classCallCheck3.default)(this, GomlInterface);
+
+        this.rootNodes = rootNodes;
+    }
+
+    (0, _createClass3.default)(GomlInterface, [{
+        key: "getNodeById",
+        value: function getNodeById(id) {
+            var _this50 = this;
+
+            return new Array(this.rootNodes.length).map(function (v, i) {
+                return GomlNode.fromElement(_this50.rootNodes[i].element.ownerDocument.getElementById(id));
+            });
+        }
+    }, {
+        key: "queryFunc",
+        value: function queryFunc(query) {
+            var context = new NodeInterface(this.queryNodes(query));
+            var queryFunc = context.queryFunc.bind(context);
+            (0, _setPrototypeOf2.default)(queryFunc, context);
+            return queryFunc;
+        }
+    }, {
+        key: "queryNodes",
+        value: function queryNodes(query) {
+            return this.rootNodes.map(function (root) {
+                var nodelist = root.element.ownerDocument.querySelectorAll(query);
+                var nodes = [];
+                for (var i = 0; i < nodelist.length; i++) {
+                    var node = obtainGomlInterface.nodeDictionary[nodelist.item(i).getAttribute("x-gr-id")];
+                    if (node) {
+                        nodes.push(node);
+                    }
+                }
+                return nodes;
+            });
+        }
+    }]);
+    return GomlInterface;
+}();
+
+var GomlInterfaceGenerator = function GomlInterfaceGenerator(rootNodes) {
+    var gomlContext = new GomlInterface(rootNodes);
+    var queryFunc = gomlContext.queryFunc.bind(gomlContext);
+    (0, _setPrototypeOf2.default)(queryFunc, gomlContext);
+    return queryFunc;
+};
+
+var GrimoireInterfaceImpl = function () {
+    function GrimoireInterfaceImpl() {
+        (0, _classCallCheck3.default)(this, GrimoireInterfaceImpl);
+
+        this.nodeDeclarations = new NSDictionary();
+        this.converters = new NSDictionary();
+        this.componentDeclarations = new NSDictionary();
+        this.rootNodes = {};
+        this.loadTasks = [];
+        this.nodeDictionary = {};
+        this.componentDictionary = {};
+        this.companion = new NSDictionary();
+        this.initializedEventHandler = [];
+    }
+    /**
+     * Generate namespace helper function
+     * @param  {string} ns namespace URI to be used
+     * @return {[type]}    the namespaced identity
+     */
+
+
+    (0, _createClass3.default)(GrimoireInterfaceImpl, [{
+        key: "ns",
+        value: function ns(_ns) {
+            return function (name) {
+                return new NSIdentity(_ns, name);
+            };
+        }
+    }, {
+        key: "initialize",
+        value: function initialize() {
+            this.registerConverter("String", StringConverter);
+            this.registerConverter("StringArray", StringArrayConverter);
+            this.registerConverter("Boolean", BooleanConverter);
+            this.registerComponent("GrimoireComponent", GrimoireComponent);
+            this.registerNode("GrimoireNodeBase", ["GrimoireComponent"]);
+        }
+        /**
+         * Register plugins
+         * @param  {(}      loadTask [description]
+         * @return {[type]}          [description]
+         */
+
+    }, {
+        key: "register",
+        value: function register(loadTask) {
+            this.loadTasks.push(loadTask);
+        }
+    }, {
+        key: "resolvePlugins",
+        value: function resolvePlugins() {
+            return __awaiter(this, void 0, void 0, _regenerator2.default.mark(function _callee16() {
+                var i;
+                return _regenerator2.default.wrap(function _callee16$(_context91) {
+                    while (1) {
+                        switch (_context91.prev = _context91.next) {
+                            case 0:
+                                i = 0;
+
+                            case 1:
+                                if (!(i < this.loadTasks.length)) {
+                                    _context91.next = 7;
+                                    break;
+                                }
+
+                                _context91.next = 4;
+                                return this.loadTasks[i]();
+
+                            case 4:
+                                i++;
+                                _context91.next = 1;
+                                break;
+
+                            case 7:
+                            case "end":
+                                return _context91.stop();
+                        }
+                    }
+                }, _callee16, this);
+            }));
+        }
+        /**
+         * register custom component
+         * @param  {string                |   NSIdentity} name          [description]
+         * @param  {IAttributeDeclaration }} attributes           [description]
+         * @param  {Object                |   (new                 (}           obj           [description]
+         * @return {[type]}                       [description]
+         */
+
+    }, {
+        key: "registerComponent",
+        value: function registerComponent(name, obj) {
+            name = Ensure.ensureTobeNSIdentity(name);
+            var attrs = obj["attributes"];
+            obj = this._ensureTobeComponentConstructor(obj);
+            this.componentDeclarations.set(name, new ComponentDeclaration(name, attrs, obj));
+        }
+    }, {
+        key: "registerNode",
+        value: function registerNode(name, requiredComponents, defaultValues, superNode) {
+            name = Ensure.ensureTobeNSIdentity(name);
+            requiredComponents = Ensure.ensureTobeNSIdentityArray(requiredComponents);
+            defaultValues = Ensure.ensureTobeNSDictionary(defaultValues, name.ns);
+            superNode = Ensure.ensureTobeNSIdentity(superNode);
+            this.nodeDeclarations.set(name, new NodeDeclaration(name, NSSet.fromArray(requiredComponents), defaultValues, superNode));
+        }
+    }, {
+        key: "registerConverter",
+        value: function registerConverter(name, converter) {
+            name = Ensure.ensureTobeNSIdentity(name);
+            this.converters.set(name, { name: name, convert: converter });
+        }
+    }, {
+        key: "addRootNode",
+        value: function addRootNode(tag, rootNode) {
+            if (!rootNode) {
+                throw new Error("can not register null to rootNodes.");
+            }
+            this.rootNodes[rootNode.id] = rootNode;
+            rootNode.companion.set(this.ns(Constants.defaultNamespace)("scriptElement"), tag);
+            // check tree constraint.
+            var errorMessages = rootNode.callRecursively(function (n) {
+                return n.checkTreeConstraints();
+            }).reduce(function (list, current) {
+                return list.concat(current);
+            }).filter(function (error) {
+                return error;
+            });
+            if (errorMessages.length !== 0) {
+                var message = errorMessages.reduce(function (m, current) {
+                    return m + "\n" + current;
+                });
+                throw new Error("tree constraint is not satisfied.\n" + message);
+            }
+            // awake and mount tree.
+            rootNode.setMounted(true);
+            rootNode.broadcastMessage("treeInitialized", {
+                ownerScriptTag: tag,
+                id: rootNode.id
+            });
+            this._onTreeInitialized(tag);
+            tag.setAttribute("x-rootNodeId", rootNode.id);
+            return rootNode.id;
+        }
+    }, {
+        key: "getRootNode",
+        value: function getRootNode(scriptTag) {
+            var id = scriptTag.getAttribute("x-rootNodeId");
+            return this.rootNodes[id];
+        }
+    }, {
+        key: "queryRootNodes",
+        value: function queryRootNodes(query) {
+            var scriptTags = document.querySelectorAll(query);
+            var nodes = [];
+            for (var i = 0; i < scriptTags.length; i++) {
+                var node = this.getRootNode(scriptTags.item(i));
+                if (node) {
+                    nodes.push(node);
+                }
+            }
+            return nodes;
+        }
+        /**
+         * This method is not for users.
+         * Just for unit testing.
+         *
+         * Clear all configuration that GrimoireInterface contain.
+         */
+
+    }, {
+        key: "clear",
+        value: function clear() {
+            this.nodeDeclarations.clear();
+            this.componentDeclarations.clear();
+            this.converters.clear();
+            for (var key in this.rootNodes) {
+                delete this.rootNodes[key];
+            }
+            this.loadTasks.splice(0, this.loadTasks.length);
+            this.initialize();
+        }
+        /**
+         * Ensure the given object or constructor to be an constructor inherits Component;
+         * @param  {Object | (new ()=> Component} obj [The variable need to be ensured.]
+         * @return {[type]}      [The constructor inherits Component]
+         */
+
+    }, {
+        key: "_ensureTobeComponentConstructor",
+        value: function _ensureTobeComponentConstructor(obj) {
+            if (typeof obj === "function") {
+                if (!(obj.prototype instanceof Component) && obj !== Component) {
+                    throw new Error("Component constructor must extends Component class.");
+                }
+            } else if ((typeof obj === "undefined" ? "undefined" : (0, _typeof3.default)(obj)) === "object") {
+                var newCtor = function newCtor() {
+                    Component.call(this);
+                };
+                var properties = {};
+                for (var key in obj) {
+                    if (key === "attributes") {
+                        continue;
+                    }
+                    properties[key] = { value: obj[key] };
+                }
+                newCtor.prototype = (0, _create2.default)(Component.prototype, properties);
+                Object.defineProperty(newCtor, "attributes", {
+                    value: obj["attributes"]
+                });
+                obj = newCtor;
+            } else if (!obj) {
+                obj = Component;
+            }
+            return obj;
+        }
+    }, {
+        key: "_onTreeInitialized",
+        value: function _onTreeInitialized(tag) {
+            this.initializedEventHandler.forEach(function (h) {
+                h(tag.id, tag.className, tag);
+            });
+        }
+    }]);
+    return GrimoireInterfaceImpl;
+}();
+
+var context = new GrimoireInterfaceImpl();
+var obtainGomlInterface = function obtainGomlInterface(query) {
+    if (typeof query === "string") {
+        return GomlInterfaceGenerator(context.queryRootNodes(query));
+    } else {
+        context.initializedEventHandler.push(query);
+    }
+};
+// const bindedFunction = obtainGomlInterface.bind(context);
+(0, _setPrototypeOf2.default)(obtainGomlInterface, context);
+
+var XMLHttpRequestAsync = function () {
+    function XMLHttpRequestAsync() {
+        (0, _classCallCheck3.default)(this, XMLHttpRequestAsync);
+    }
+
+    (0, _createClass3.default)(XMLHttpRequestAsync, null, [{
+        key: "send",
+        value: function send(xhr, data) {
+            return new _promise2.default(function (resolve, reject) {
+                xhr.onload = function (e) {
+                    resolve(e);
+                };
+                xhr.onerror = function (e) {
+                    reject(e);
+                };
+                xhr.send(data);
+            });
+        }
+    }]);
+    return XMLHttpRequestAsync;
+}();
+
+/**
+ * Provides the features to fetch Goml source.
+ */
+
+
+var GomlLoader = function () {
+    function GomlLoader() {
+        (0, _classCallCheck3.default)(this, GomlLoader);
+    }
+
+    (0, _createClass3.default)(GomlLoader, null, [{
+        key: "loadFromScriptTag",
+
+        /**
+         * Obtain the Goml source from specified tag.
+         * @param  {HTMLScriptElement} scriptTag [the script tag to load]
+         * @return {Promise<void>}               [the promise to wait for loading]
+         */
+        value: function loadFromScriptTag(scriptTag) {
+            return __awaiter(this, void 0, void 0, _regenerator2.default.mark(function _callee17() {
+                var srcAttr, source, req, doc, rootNode;
+                return _regenerator2.default.wrap(function _callee17$(_context92) {
+                    while (1) {
+                        switch (_context92.prev = _context92.next) {
+                            case 0:
+                                srcAttr = scriptTag.getAttribute("src");
+                                source = void 0;
+
+                                if (!srcAttr) {
+                                    _context92.next = 10;
+                                    break;
+                                }
+
+                                // ignore text element
+                                req = new XMLHttpRequest();
+
+                                req.open("GET", srcAttr);
+                                _context92.next = 7;
+                                return XMLHttpRequestAsync.send(req);
+
+                            case 7:
+                                source = req.responseText;
+                                _context92.next = 11;
+                                break;
+
+                            case 10:
+                                source = scriptTag.text;
+
+                            case 11:
+                                doc = XMLReader.parseXML(source, "GOML");
+                                rootNode = GomlParser.parse(doc[0], null, scriptTag);
+
+                                obtainGomlInterface.addRootNode(scriptTag, rootNode);
+
+                            case 14:
+                            case "end":
+                                return _context92.stop();
+                        }
+                    }
+                }, _callee17, this);
+            }));
+        }
+        /**
+         * Load from the script tags which will be found with specified query.
+         * @param  {string}          query [the query to find script tag]
+         * @return {Promise<void[]>}       [the promise to wait for all goml loading]
+         */
+
+    }, {
+        key: "loadFromQuery",
+        value: function loadFromQuery(query) {
+            var tags = document.querySelectorAll(query);
+            var pArray = [];
+            for (var i = 0; i < tags.length; i++) {
+                pArray[i] = GomlLoader.loadFromScriptTag(tags.item(i));
+            }
+            return _promise2.default.all(pArray);
+        }
+        /**
+         * Load all Goml sources contained in HTML.
+         * @return {Promise<void>} [the promise to wait for all goml loading]
+         */
+
+    }, {
+        key: "loadForPage",
+        value: function loadForPage() {
+            return __awaiter(this, void 0, void 0, _regenerator2.default.mark(function _callee18() {
+                return _regenerator2.default.wrap(function _callee18$(_context93) {
+                    while (1) {
+                        switch (_context93.prev = _context93.next) {
+                            case 0:
+                                _context93.next = 2;
+                                return GomlLoader.loadFromQuery('script[type="text/goml"]');
+
+                            case 2:
+                            case "end":
+                                return _context93.stop();
+                        }
+                    }
+                }, _callee18, this);
+            }));
+        }
+    }]);
+    return GomlLoader;
+}();
+
+/**
+ * Provides procedures for initializing.
+ */
+
+
+var GrimoireInitializer = function () {
+    function GrimoireInitializer() {
+        (0, _classCallCheck3.default)(this, GrimoireInitializer);
+    }
+
+    (0, _createClass3.default)(GrimoireInitializer, null, [{
+        key: "initialize",
+
+        /**
+         * Start initializing
+         * @return {Promise<void>} The promise which will be resolved when all of the Goml script was loaded.
+         */
+        value: function initialize() {
+            return __awaiter(this, void 0, void 0, _regenerator2.default.mark(function _callee19() {
+                return _regenerator2.default.wrap(function _callee19$(_context94) {
+                    while (1) {
+                        switch (_context94.prev = _context94.next) {
+                            case 0:
+                                _context94.prev = 0;
+
+                                GrimoireInitializer._copyGLConstants();
+                                obtainGomlInterface.initialize();
+                                _context94.next = 5;
+                                return GrimoireInitializer._waitForDOMLoading();
+
+                            case 5:
+                                _context94.next = 7;
+                                return obtainGomlInterface.resolvePlugins();
+
+                            case 7:
+                                _context94.next = 9;
+                                return GomlLoader.loadForPage();
+
+                            case 9:
+                                _context94.next = 14;
+                                break;
+
+                            case 11:
+                                _context94.prev = 11;
+                                _context94.t0 = _context94["catch"](0);
+
+                                console.error(_context94.t0);
+
+                            case 14:
+                            case "end":
+                                return _context94.stop();
+                        }
+                    }
+                }, _callee19, this, [[0, 11]]);
+            }));
+        }
+        /**
+         * Ensure WebGLRenderingContext.[CONSTANTS] is exisiting.
+         * Some of the browsers contains them in prototype.
+         */
+
+    }, {
+        key: "_copyGLConstants",
+        value: function _copyGLConstants() {
+            if (WebGLRenderingContext.ONE) {
+                // Assume the CONSTANTS are already in WebGLRenderingContext
+                // Chrome,Firefox,IE,Edge...
+                return;
+            }
+            // Otherwise like ""Safari""
+            for (var propName in WebGLRenderingContext.prototype) {
+                if (/^[A-Z]/.test(propName)) {
+                    var property = WebGLRenderingContext.prototype[propName];
+                    WebGLRenderingContext[propName] = property;
+                }
+            }
+        }
+        /**
+         * Obtain the promise object which will be resolved when DOMContentLoaded event was rised.
+         * @return {Promise<void>} the promise
+         */
+
+    }, {
+        key: "_waitForDOMLoading",
+        value: function _waitForDOMLoading() {
+            return new _promise2.default(function (resolve) {
+                window.addEventListener("DOMContentLoaded", function () {
+                    resolve();
+                });
+            });
+        }
+    }]);
+    return GrimoireInitializer;
+}();
+/**
+ * Just start the process.
+ */
+
+
+GrimoireInitializer.initialize();
+window["gr"] = obtainGomlInterface;
+
+/**
+ * Provides managing all promise on initializing resources.
+ */
+
+var AssetLoader = function (_EEObject2) {
+    (0, _inherits3.default)(AssetLoader, _EEObject2);
+
+    function AssetLoader() {
+        var _ref;
+
+        (0, _classCallCheck3.default)(this, AssetLoader);
+
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+        }
+
+        /**
+         * Promise count registered.
+         * @type {number}
+         */
+        var _this51 = (0, _possibleConstructorReturn3.default)(this, (_ref = AssetLoader.__proto__ || (0, _getPrototypeOf2.default)(AssetLoader)).call.apply(_ref, [this].concat(args)));
+
+        _this51.registerCount = 0;
+        /**
+         * Promise count finished successfully.
+         * @type {number}
+         */
+        _this51.loadCount = 0;
+        /**
+         * Promise count completed(success and errored)
+         * @type {number}
+         */
+        _this51.completeCount = 0;
+        /**
+         * Promise count errored
+         * @type {number}
+         */
+        _this51.errorCount = 0;
+        /**
+         * Main promise to provide tasks for waiting for all resource loading.
+         * @type {Promise<void>}
+         */
+        _this51.promise = new _promise2.default(function (resolve) {
+            _this51._resolve = resolve;
+        });
+        return _this51;
+    }
+    /**
+     * Register an promise to be waited until finished.
+     */
+
+
+    (0, _createClass3.default)(AssetLoader, [{
+        key: "register",
+        value: function register(promise) {
+            var _this52 = this;
+
+            this.registerCount++;
+            return new _promise2.default(function (resolve, reject) {
+                (function () {
+                    return __awaiter(this, void 0, void 0, _regenerator2.default.mark(function _callee20() {
+                        return _regenerator2.default.wrap(function _callee20$(_context95) {
+                            while (1) {
+                                switch (_context95.prev = _context95.next) {
+                                    case 0:
+                                        _context95.prev = 0;
+                                        _context95.next = 3;
+                                        return promise;
+
+                                    case 3:
+                                        _context95.t0 = _context95.sent;
+                                        resolve(_context95.t0);
+
+                                        this.loadCount++;
+                                        _context95.next = 12;
+                                        break;
+
+                                    case 8:
+                                        _context95.prev = 8;
+                                        _context95.t1 = _context95["catch"](0);
+
+                                        reject(_context95.t1);
+                                        this.errorCount++;
+
+                                    case 12:
+                                        this.completeCount++;
+                                        this._checkLoadCompleted();
+
+                                    case 14:
+                                    case "end":
+                                        return _context95.stop();
+                                }
+                            }
+                        }, _callee20, this, [[0, 8]]);
+                    }));
+                }).bind(_this52)();
+            });
+        }
+        /**
+         * Verify all promises are completed.
+         */
+
+    }, {
+        key: "_checkLoadCompleted",
+        value: function _checkLoadCompleted() {
+            this.emit("progress", this);
+            if (this.registerCount === this.completeCount) {
+                this._resolve();
+            }
+        }
+    }]);
+    return AssetLoader;
+}(EEObject);
+
+var DefaultLoaderChunk = "<div style=\"width:100%;height:100%;position: relative;\">\n    <div style=\"width: 55px;height: 55px;border-radius: 100%;border: 5px solid #381794;border-right-color: #FC659D;animation: rotate 1s linear infinite;position: absolute;top: 0;left: 0;right: 0;bottom: 0;margin: auto;\"></div>\n</div>\n<style type=\"text/css\">\n    @keyframes rotate {\n        from {\n            transform: rotate(0deg);\n        }\n        to {\n            transform: rotate(360deg);\n        }\n    }\n</style>\n";
+
+var AssetLoadingManagerComponent = function (_Component2) {
+    (0, _inherits3.default)(AssetLoadingManagerComponent, _Component2);
+
+    function AssetLoadingManagerComponent() {
+        var _ref2;
+
+        (0, _classCallCheck3.default)(this, AssetLoadingManagerComponent);
+
+        for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+            args[_key2] = arguments[_key2];
+        }
+
+        var _this53 = (0, _possibleConstructorReturn3.default)(this, (_ref2 = AssetLoadingManagerComponent.__proto__ || (0, _getPrototypeOf2.default)(AssetLoadingManagerComponent)).call.apply(_ref2, [this].concat(args)));
+
+        _this53.loader = new AssetLoader();
+        return _this53;
+    }
+
+    (0, _createClass3.default)(AssetLoadingManagerComponent, [{
+        key: "$treeInitialized",
+        value: function $treeInitialized() {
+            if (this.attributes.get("autoStart").Value) {
+                this._autoStart();
+            }
+            this._documentResolver();
+        }
+    }, {
+        key: "$awake",
+        value: function $awake() {
+            var _this54 = this;
+
+            this.companion.set(obtainGomlInterface.ns(this.name.ns)("loader"), this.loader);
+            this.loader.register(new _promise2.default(function (resolve) {
+                _this54._documentResolver = resolve;
+            }));
+            var canvasContainer = this.companion.get("canvasContainer");
+            if (!this.getValue("enableLoader")) {
+                return;
+            }
+            var loaderContainer = document.createElement("div");
+            loaderContainer.innerHTML = DefaultLoaderChunk;
+            loaderContainer.style.width = loaderContainer.style.height = "100%";
+            canvasContainer.appendChild(loaderContainer);
+            this._loaderElement = loaderContainer;
+        }
+    }, {
+        key: "_autoStart",
+        value: function _autoStart() {
+            return __awaiter(this, void 0, void 0, _regenerator2.default.mark(function _callee21() {
+                return _regenerator2.default.wrap(function _callee21$(_context96) {
+                    while (1) {
+                        switch (_context96.prev = _context96.next) {
+                            case 0:
+                                _context96.next = 2;
+                                return this.loader.promise;
+
+                            case 2:
+                                if (this._loaderElement) {
+                                    this._loaderElement.remove();
+                                }
+                                this.node.emit("asset-load-completed");
+                                this.tree("goml").attr("loopEnabled", true);
+
+                            case 5:
+                            case "end":
+                                return _context96.stop();
+                        }
+                    }
+                }, _callee21, this);
+            }));
+        }
+    }]);
+    return AssetLoadingManagerComponent;
+}(Component);
+
+AssetLoadingManagerComponent.attributes = {
+    loadingProgress: {
+        defaultValue: 0,
+        converter: "Number"
+    },
+    autoStart: {
+        defaultValue: true,
+        converter: "Boolean"
+    },
+    anableLoader: {
+        defaultValue: false,
+        converter: "Boolean"
+    }
+};
+
+/**
+ * Provides perspective camera as implementation of ICamera.
+ */
+
+var PerspectiveCamera = function () {
+    function PerspectiveCamera() {
+        (0, _classCallCheck3.default)(this, PerspectiveCamera);
+
+        this._viewMatrix = new Matrix();
+        this._projectionMatrix = new Matrix();
+        this._invProjectionMatrix = new Matrix();
+        this._projectionViewMatrix = new Matrix();
+        this._eyeCache = Vector3.Zero;
+        this._lookAtCache = Vector3.Zero;
+        this._upCache = Vector3.Zero;
+    }
+
+    (0, _createClass3.default)(PerspectiveCamera, [{
+        key: "getViewMatrix",
+        value: function getViewMatrix() {
+            return this._viewMatrix;
+        }
+    }, {
+        key: "getProjectionMatrix",
+        value: function getProjectionMatrix() {
+            return this._projectionMatrix;
+        }
+    }, {
+        key: "getInvProjectionMatrix",
+        value: function getInvProjectionMatrix() {
+            return this._invProjectionMatrix;
+        }
+    }, {
+        key: "getProjectionViewMatrix",
+        value: function getProjectionViewMatrix() {
+            return this._projectionViewMatrix;
+        }
+    }, {
+        key: "getFar",
+        value: function getFar() {
+            return this._far;
+        }
+    }, {
+        key: "setFar",
+        value: function setFar(far) {
+            this._far = far;
+            this._recalculateProjection();
+        }
+    }, {
+        key: "getNear",
+        value: function getNear() {
+            return this._near;
+        }
+    }, {
+        key: "setNear",
+        value: function setNear(near) {
+            this._near = near;
+            this._recalculateProjection();
+        }
+    }, {
+        key: "getAspect",
+        value: function getAspect() {
+            return this._aspect;
+        }
+    }, {
+        key: "setAspect",
+        value: function setAspect(aspect) {
+            this._aspect = aspect;
+            this._recalculateProjection();
+        }
+    }, {
+        key: "getFovy",
+        value: function getFovy() {
+            return this._fovy;
+        }
+    }, {
+        key: "setFovy",
+        value: function setFovy(fov) {
+            this._fovy = fov;
+            this._recalculateProjection();
+        }
+    }, {
+        key: "updateTransform",
+        value: function updateTransform(transform) {
+            vec3.transformMat4(this._eyeCache.rawElements, Vector3.Zero.rawElements, transform.globalTransform.rawElements);
+            vec4.transformMat4(this._lookAtCache.rawElements, PerspectiveCamera._frontOrigin.rawElements, transform.globalTransform.rawElements);
+            vec3.add(this._lookAtCache.rawElements, this._lookAtCache.rawElements, this._eyeCache.rawElements);
+            vec4.transformMat4(this._upCache.rawElements, PerspectiveCamera._upOrigin.rawElements, transform.globalTransform.rawElements);
+            mat4.lookAt(this._viewMatrix.rawElements, this._eyeCache.rawElements, this._lookAtCache.rawElements, this._upCache.rawElements);
+            mat4.mul(this._projectionViewMatrix.rawElements, this._projectionMatrix.rawElements, this._viewMatrix.rawElements);
+        }
+    }, {
+        key: "_recalculateProjection",
+        value: function _recalculateProjection() {
+            mat4.perspective(this._projectionMatrix.rawElements, this._fovy, this._aspect, this._near, this._far);
+            mat4.mul(this._projectionViewMatrix.rawElements, this._projectionMatrix.rawElements, this._viewMatrix.rawElements);
+            mat4.invert(this._invProjectionMatrix.rawElements, this._projectionMatrix.rawElements);
+        }
+    }]);
+    return PerspectiveCamera;
+}();
+
+PerspectiveCamera._frontOrigin = new Vector4(0, 0, -1, 0);
+PerspectiveCamera._upOrigin = new Vector4(0, 1, 0, 0);
+
+var SceneComponent = function (_Component3) {
+    (0, _inherits3.default)(SceneComponent, _Component3);
+
+    function SceneComponent() {
+        var _ref3;
+
+        (0, _classCallCheck3.default)(this, SceneComponent);
+
+        for (var _len3 = arguments.length, args = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+            args[_key3] = arguments[_key3];
+        }
+
+        var _this55 = (0, _possibleConstructorReturn3.default)(this, (_ref3 = SceneComponent.__proto__ || (0, _getPrototypeOf2.default)(SceneComponent)).call.apply(_ref3, [this].concat(args)));
+
+        _this55.sceneDescription = {};
+        return _this55;
+    }
+    /**
+     * Notify update scene only when send update message is needed.
+     * @param {number} loopIndex [description]
+     */
+
+
+    (0, _createClass3.default)(SceneComponent, [{
+        key: "updateScene",
+        value: function updateScene(loopIndex) {
+            if (this._lastUpdateIndex !== loopIndex) {
+                this.node.broadcastMessage("update", this.sceneDescription);
+                this._lastUpdateIndex = loopIndex;
+            }
+        }
+    }]);
+    return SceneComponent;
+}(Component);
+
+SceneComponent.attributes = {};
+
+var CameraComponent = function (_Component4) {
+    (0, _inherits3.default)(CameraComponent, _Component4);
+
+    function CameraComponent() {
+        (0, _classCallCheck3.default)(this, CameraComponent);
+        return (0, _possibleConstructorReturn3.default)(this, (CameraComponent.__proto__ || (0, _getPrototypeOf2.default)(CameraComponent)).apply(this, arguments));
+    }
+
+    (0, _createClass3.default)(CameraComponent, [{
+        key: "$awake",
+        value: function $awake() {
+            this.containedScene = CameraComponent._findContainedScene(this.node);
+            var c = this.camera = new PerspectiveCamera();
+            this.transform = this.node.getComponent("Transform");
+            this.$transformUpdated(this.transform);
+            this.getAttribute("far").addObserver(function (v) {
+                console.log("far", v.Value);
+                c.setFar(v.Value);
+            }, true);
+            this.getAttribute("near").addObserver(function (v) {
+                c.setNear(v.Value);
+            }, true);
+            this.getAttribute("fovy").addObserver(function (v) {
+                c.setFovy(v.Value);
+            }, true);
+            this.getAttribute("aspect").addObserver(function (v) {
+                c.setAspect(v.Value);
+            }, true);
+            this.getAttribute("autoAspect").boundTo("_autoAspect");
+        }
+    }, {
+        key: "updateContainedScene",
+        value: function updateContainedScene(loopIndex) {
+            if (this.containedScene) {
+                this.containedScene.updateScene(loopIndex);
+            }
+        }
+    }, {
+        key: "renderScene",
+        value: function renderScene(args) {
+            if (this.containedScene) {
+                this._justifyAspect(args);
+                args.sceneDescription = this.containedScene.sceneDescription;
+                args.defaultTexture = this.companion.get("defaultTexture");
+                this.containedScene.node.broadcastMessage("render", args);
+            }
+        }
+    }, {
+        key: "$transformUpdated",
+        value: function $transformUpdated(t) {
+            if (this.camera) {
+                this.camera.updateTransform(t);
+            }
+        }
+    }, {
+        key: "_justifyAspect",
+        value: function _justifyAspect(args) {
+            if (this._autoAspect) {
+                var asp = args.viewport.Width / args.viewport.Height;
+                if (this._aspectCache !== asp) {
+                    this.setValue("aspect", asp);
+                    this._aspectCache = asp;
+                }
+            }
+        }
+    }], [{
+        key: "_findContainedScene",
+
+        /**
+        * Find scene tag recursively.
+        * @param  {GomlNode}       node [the node to searching currently]
+        * @return {SceneComponent}      [the scene component found]
+        */
+        value: function _findContainedScene(node) {
+            if (node.parent) {
+                var scene = node.parent.getComponent("Scene");
+                if (scene && scene instanceof SceneComponent) {
+                    return scene;
+                } else {
+                    return CameraComponent._findContainedScene(node.parent);
+                }
+            } else {
+                return null;
+            }
+        }
+    }]);
+    return CameraComponent;
+}(Component);
+
+CameraComponent.attributes = {
+    fovy: {
+        defaultValue: 0.3,
+        converter: "Number"
+    },
+    near: {
+        defaultValue: 0.01,
+        converter: "Number"
+    },
+    far: {
+        defaultValue: 10,
+        converter: "Number"
+    },
+    aspect: {
+        defaultValue: 1.6,
+        converter: "Number"
+    },
+    autoAspect: {
+        defaultValue: true,
+        converter: "Boolean"
+    }
+};
+
+var Texture2D = function (_ResourceBase4) {
+    (0, _inherits3.default)(Texture2D, _ResourceBase4);
+
+    function Texture2D(gl) {
+        (0, _classCallCheck3.default)(this, Texture2D);
+
+        var _this57 = (0, _possibleConstructorReturn3.default)(this, (Texture2D.__proto__ || (0, _getPrototypeOf2.default)(Texture2D)).call(this, gl));
+
+        _this57._texParameterChanged = true;
+        _this57._magFilter = WebGLRenderingContext.LINEAR;
+        _this57._minFilter = WebGLRenderingContext.LINEAR;
+        _this57._wrapS = WebGLRenderingContext.REPEAT;
+        _this57._wrapT = WebGLRenderingContext.REPEAT;
+        _this57.texture = gl.createTexture();
+        return _this57;
+    }
+
+    (0, _createClass3.default)(Texture2D, [{
+        key: "update",
+        value: function update(levelOrImage, widthOrFlipY, height, border, format, type, pixels, flipYForBuffer) {
+            this.gl.bindTexture(WebGLRenderingContext.TEXTURE_2D, this.texture);
+            var flipY = false;
+            var image = void 0;
+            var width = void 0;
+            var level = void 0;
+            if (typeof height === "undefined") {
+                flipY = widthOrFlipY ? true : false;
+                image = levelOrImage;
+            } else {
+                level = levelOrImage;
+                width = widthOrFlipY;
+            }
+            this.gl.pixelStorei(WebGLRenderingContext.UNPACK_FLIP_Y_WEBGL, flipY ? 1 : 0);
+            if (typeof height === "undefined") {
+                this.gl.texImage2D(WebGLRenderingContext.TEXTURE_2D, 0, WebGLRenderingContext.RGBA, WebGLRenderingContext.RGBA, WebGLRenderingContext.UNSIGNED_BYTE, this._checkSize(image));
+            } else {
+                if (typeof pixels === "undefined") {
+                    pixels = null;
+                }
+                this.gl.texImage2D(WebGLRenderingContext.TEXTURE_2D, level, format, width, height, border, format, type, pixels);
+            }
+            this.valid = true;
+        }
+    }, {
+        key: "register",
+        value: function register(registerNumber) {
+            this.gl.activeTexture(WebGLRenderingContext.TEXTURE0 + registerNumber);
+            this.gl.bindTexture(WebGLRenderingContext.TEXTURE_2D, this.texture);
+            if (this._texParameterChanged) {
+                this._updateTexParameter();
+            }
+        }
+    }, {
+        key: "destroy",
+        value: function destroy() {
+            (0, _get3.default)(Texture2D.prototype.__proto__ || (0, _getPrototypeOf2.default)(Texture2D.prototype), "destroy", this).call(this);
+            this.gl.deleteTexture(this.texture);
+        }
+        // There should be more effective way to resize texture
+
+    }, {
+        key: "_checkSize",
+        value: function _checkSize(img) {
+            var w = img.naturalWidth,
+                h = img.naturalHeight;
+            var size = Math.pow(2, Math.log(Math.min(w, h)) / Math.LN2 | 0); // largest 2^n integer that does not exceed s
+            if (w !== h || w !== size) {
+                var canv = document.createElement("canvas");
+                canv.height = canv.width = size;
+                canv.getContext("2d").drawImage(img, 0, 0, w, h, 0, 0, size, size);
+                return canv;
+            }
+            return img;
+        }
+    }, {
+        key: "_updateTexParameter",
+        value: function _updateTexParameter() {
+            this.gl.texParameteri(WebGLRenderingContext.TEXTURE_2D, WebGLRenderingContext.TEXTURE_MIN_FILTER, this._minFilter);
+            this.gl.texParameteri(WebGLRenderingContext.TEXTURE_2D, WebGLRenderingContext.TEXTURE_MAG_FILTER, this._magFilter);
+            this.gl.texParameteri(WebGLRenderingContext.TEXTURE_2D, WebGLRenderingContext.TEXTURE_WRAP_S, this._wrapS);
+            this.gl.texParameteri(WebGLRenderingContext.TEXTURE_2D, WebGLRenderingContext.TEXTURE_WRAP_T, this._wrapT);
+            this._texParameterChanged = false;
+        }
+    }, {
+        key: "magFilter",
+        get: function get() {
+            return this._magFilter;
+        },
+        set: function set(filter) {
+            if (this._magFilter !== filter) {
+                this._texParameterChanged = true;
+                this._magFilter = filter;
+            }
+        }
+    }, {
+        key: "minFilter",
+        get: function get() {
+            return this._minFilter;
+        },
+        set: function set(filter) {
+            if (this._minFilter !== filter) {
+                this._texParameterChanged = true;
+                this._minFilter = filter;
+            }
+        }
+    }, {
+        key: "wrapS",
+        get: function get() {
+            return this._wrapS;
+        },
+        set: function set(filter) {
+            if (this._wrapS !== filter) {
+                this._texParameterChanged = true;
+                this._wrapS = filter;
+            }
+        }
+    }, {
+        key: "wrapT",
+        get: function get() {
+            return this._wrapT;
+        },
+        set: function set(filter) {
+            if (this._wrapT !== filter) {
+                this._texParameterChanged = true;
+                this._wrapT = filter;
+            }
+        }
+    }]);
+    return Texture2D;
+}(ResourceBase);
+
+var GLExtRequestor = function () {
+    function GLExtRequestor(gl) {
+        (0, _classCallCheck3.default)(this, GLExtRequestor);
+
+        this.gl = gl;
+        this.extensions = {};
+        this._readyExtensions = {};
+        this._resolveRequested();
+        GLExtRequestor._requestObserver.push(this._resolveExtensionSafely);
+    }
+    /**
+     * Request extension to use.
+     * @param {string} str [description]
+     */
+
+
+    (0, _createClass3.default)(GLExtRequestor, [{
+        key: "_resolveRequested",
+
+        /**
+         * Resolve all extension requested already.
+         */
+        value: function _resolveRequested() {
+            var _this58 = this;
+
+            GLExtRequestor._requestedExtensions.forEach(function (e) {
+                _this58._resolveExtensionSafely(e.extensionName);
+            });
+        }
+    }, {
+        key: "_resolveExtensionSafely",
+        value: function _resolveExtensionSafely(extName) {
+            var e = GLExtRequestor._requestedExtensions[GLExtRequestor._requestIndexOf(extName)];
+            if (!this._resolveExtension(e.extensionName) && e.isNecessary) {
+                throw new Error("A WebGL extension '" + e.extensionName + "' was requested. But that is not supported on this device.");
+            }
+        }
+    }, {
+        key: "_resolveExtension",
+        value: function _resolveExtension(name) {
+            if (this._readyExtensions[name]) {
+                return true;
+            }
+            var ext = void 0;
+            if (typeof GLExtRequestor._customExtensionResolvers[name] === "undefined") {
+                ext = this.extensions[name] = this.gl.getExtension(name);
+            } else {
+                ext = this.extensions[name] = GLExtRequestor._customExtensionResolvers[name](this.gl);
+            }
+            this._readyExtensions[name] = this.extensions[name] !== void 0;
+            return !!this._readyExtensions[name];
+        }
+    }], [{
+        key: "request",
+        value: function request(extName) {
+            var isNecessary = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+            var index = GLExtRequestor._requestIndexOf(extName);
+            if (index > -1 && isNecessary) {
+                GLExtRequestor._requestedExtensions[index] = { extensionName: extName, isNecessary: isNecessary };
+            } else if (index === -1) {
+                GLExtRequestor._requestedExtensions.push({ extensionName: extName, isNecessary: isNecessary });
+            }
+            GLExtRequestor._requestObserver.forEach(function (o) {
+                return o(extName);
+            });
+        }
+    }, {
+        key: "_requestIndexOf",
+        value: function _requestIndexOf(extName) {
+            for (var i = 0; i < GLExtRequestor._requestedExtensions.length; i++) {
+                if (GLExtRequestor._requestedExtensions[i].extensionName === extName) {
+                    return i;
+                }
+            }
+            return -1;
+        }
+    }]);
+    return GLExtRequestor;
+}();
+/**
+ * Extension list requested to use.
+ * @type {string[]}
+ */
+
+
+GLExtRequestor._requestedExtensions = [];
+/**
+ * Some of extensions needed to override resolving extensions by this.
+ */
+GLExtRequestor._customExtensionResolvers = {};
+GLExtRequestor._requestObserver = [];
+GLExtRequestor._customExtensionResolvers["WEBGL_color_buffer_float"] = function (gl) {
+    var isSupported = void 0;
+    if (gl.getExtension("WEBGL_color_buffer_float") === null) {
+        var fbo = gl.createFramebuffer();
+        var tex = gl.createTexture();
+        gl.bindFramebuffer(gl.FRAMEBUFFER, fbo);
+        gl.bindTexture(gl.TEXTURE_2D, tex);
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.FLOAT, null);
+        gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, tex, 0);
+        if (gl.checkFramebufferStatus(gl.FRAMEBUFFER) !== gl.FRAMEBUFFER_COMPLETE) {
+            isSupported = false;
+        } else {
+            isSupported = true;
+        }
+        gl.deleteTexture(tex);
+        gl.deleteFramebuffer(fbo);
+    } else {
+        isSupported = true;
+    }
+    return isSupported;
+};
+
+var ns = obtainGomlInterface.ns("HTTP://GRIMOIRE.GL/NS/DEFAULT");
+var ResizeMode;
+(function (ResizeMode) {
+    ResizeMode[ResizeMode["Aspect"] = 0] = "Aspect";
+    ResizeMode[ResizeMode["Fit"] = 1] = "Fit";
+    ResizeMode[ResizeMode["Manual"] = 2] = "Manual";
+})(ResizeMode || (ResizeMode = {}));
+
+var CanvasInitializerComponent = function (_Component5) {
+    (0, _inherits3.default)(CanvasInitializerComponent, _Component5);
+
+    function CanvasInitializerComponent() {
+        (0, _classCallCheck3.default)(this, CanvasInitializerComponent);
+        return (0, _possibleConstructorReturn3.default)(this, (CanvasInitializerComponent.__proto__ || (0, _getPrototypeOf2.default)(CanvasInitializerComponent)).apply(this, arguments));
+    }
+
+    (0, _createClass3.default)(CanvasInitializerComponent, [{
+        key: "$awake",
+        value: function $awake() {
+            var _this60 = this;
+
+            this._scriptTag = this.companion.get("scriptElement");
+            if (this._isContainedInBody(this._scriptTag)) {
+                // canvas should be placed siblings of the script tag
+                this._generateCanvas(this._scriptTag);
+            } else {}
+            // apply sizes on changed
+            this.attributes.get("width").addObserver(function (v) {
+                _this60._resize();
+            });
+            this.attributes.get("height").addObserver(function (v) {
+                _this60._resize();
+            });
+        }
+        /**
+         * Generate canvas element
+         * @param  {Element}           parent [description]
+         * @return {HTMLCanvasElement}        [description]
+         */
+
+    }, {
+        key: "_generateCanvas",
+        value: function _generateCanvas(scriptTag) {
+            var _this61 = this;
+
+            this.canvas = document.createElement("canvas");
+            window.addEventListener("resize", function () {
+                return _this61._onWindowResize();
+            });
+            this._configureCanvas(this.canvas, scriptTag);
+            var gl = this._getContext(this.canvas);
+            this._defaultTexture = new Texture2D(gl);
+            this._defaultTexture.update(0, 1, 1, 0, WebGLRenderingContext.RGBA, WebGLRenderingContext.UNSIGNED_BYTE, new Uint8Array([0, 0, 0, 0]));
+            this.companion.set(ns("gl"), gl);
+            this.companion.set(ns("canvasElement"), this.canvas);
+            this.companion.set(ns("GLExtRequestor"), new GLExtRequestor(gl));
+            this.companion.set(ns("defaultTexture"), this._defaultTexture);
+            return this.canvas;
+        }
+    }, {
+        key: "_resize",
+        value: function _resize(supressBroadcast) {
+            var canvas = this.companion.get("canvasElement");
+            var widthRaw = this.getValue("width");
+            var heightRaw = this.getValue("height");
+            this._widthMode = this._asResizeMode(widthRaw);
+            this._heightMode = this._asResizeMode(heightRaw);
+            if (this._widthMode === this._heightMode && this._widthMode === ResizeMode.Aspect) {
+                throw new Error("Width and height could not have aspect mode in same time!");
+            }
+            if (this._widthMode === ResizeMode.Aspect) {
+                this._ratio = widthRaw.aspect;
+            }
+            if (this._heightMode === ResizeMode.Aspect) {
+                this._ratio = heightRaw.aspect;
+            }
+            if (this._widthMode === ResizeMode.Manual) {
+                this._applyManualWidth(widthRaw.size, supressBroadcast);
+            }
+            if (this._heightMode === ResizeMode.Manual) {
+                this._applyManualHeight(heightRaw.size, supressBroadcast);
+            }
+            this._onWindowResize(supressBroadcast);
+        }
+    }, {
+        key: "_onWindowResize",
+        value: function _onWindowResize(supressBroadcast) {
+            var size = this._getParentSize();
+            if (this._widthMode === ResizeMode.Fit) {
+                this._applyManualWidth(size.width, supressBroadcast);
+            }
+            if (this._heightMode === ResizeMode.Fit) {
+                this._applyManualHeight(size.height, supressBroadcast);
+            }
+        }
+    }, {
+        key: "_applyManualWidth",
+        value: function _applyManualWidth(width, supressBroadcast) {
+            if (width === this.canvas.width) {
+                return;
+            }
+            this.canvas.width = width;
+            this._canvasContainer.style.width = width + "px";
+            if (!supressBroadcast) {
+                this.node.broadcastMessage(1, "resizeCanvas");
+            }
+            if (this._heightMode === ResizeMode.Aspect) {
+                this._applyManualHeight(width / this._ratio, supressBroadcast);
+            }
+        }
+    }, {
+        key: "_applyManualHeight",
+        value: function _applyManualHeight(height, supressBroadcast) {
+            if (height === this.canvas.height) {
+                return;
+            }
+            this.canvas.height = height;
+            this._canvasContainer.style.height = height + "px";
+            if (!supressBroadcast) {
+                this.node.broadcastMessage(1, "resizeCanvas");
+            }
+            if (this._widthMode === ResizeMode.Aspect) {
+                this._applyManualWidth(height * this._ratio, supressBroadcast);
+            }
+        }
+    }, {
+        key: "_getParentSize",
+        value: function _getParentSize() {
+            var parent = this._canvasContainer.parentElement;
+            var boundingBox = parent.getBoundingClientRect();
+            return boundingBox;
+        }
+        /**
+         * Get resize mode from raw attribute of height or width
+         * @param  {string  | number}      mode [description]
+         * @return {ResizeMode}   [description]
+         */
+
+    }, {
+        key: "_asResizeMode",
+        value: function _asResizeMode(cso) {
+            if (cso.mode === "fit") {
+                return ResizeMode.Fit;
+            } else if (cso.mode === "aspect") {
+                return ResizeMode.Aspect;
+            } else {
+                return ResizeMode.Manual;
+            }
+        }
+    }, {
+        key: "_configureCanvas",
+        value: function _configureCanvas(canvas, scriptTag) {
+            canvas.style.position = "absolute";
+            canvas.style.top = "0px";
+            canvas.style.left = "0px";
+            this._canvasContainer = document.createElement("div");
+            this._canvasContainer.style.position = "relative";
+            this._canvasContainer.style.overflow = "hidden";
+            this._canvasContainer.appendChild(canvas);
+            if (this.getValue("containerId")) {
+                this._canvasContainer.id = this.getValue("containerId");
+            }
+            if (this.getValue("containerClass")) {
+                this._canvasContainer.className = this.getValue("containerClass");
+            }
+            this.companion.set(ns("canvasContainer"), this._canvasContainer);
+            scriptTag.parentElement.insertBefore(this._canvasContainer, scriptTag.nextSibling);
+            this._resize(true);
+        }
+    }, {
+        key: "_getContext",
+        value: function _getContext(canvas) {
+            var context = canvas.getContext("webgl");
+            if (!context) {
+                context = canvas.getContext("webgl-experimental");
+            }
+            return context;
+        }
+        /**
+         * Check the tag is included in the body
+         * @param  {Element} tag [description]
+         * @return {boolean}     [description]
+         */
+
+    }, {
+        key: "_isContainedInBody",
+        value: function _isContainedInBody(tag) {
+            if (!tag.parentElement) {
+                return false;
+            }
+            if (tag.parentNode.nodeName === "BODY") {
+                return true;
+            }
+            return this._isContainedInBody(tag.parentElement);
+        }
+    }]);
+    return CanvasInitializerComponent;
+}(Component);
+
+CanvasInitializerComponent.attributes = {
+    width: {
+        defaultValue: "fit",
+        converter: "CanvasSize"
+    },
+    height: {
+        defaultValue: 480,
+        converter: "CanvasSize"
+    },
+    containerId: {
+        defaultValue: undefined,
+        converter: "String"
+    },
+    containerClass: {
+        defaultValue: "gr-container",
+        converter: "String"
+    }
+};
+
+var FullscreenComponent = function (_Component6) {
+    (0, _inherits3.default)(FullscreenComponent, _Component6);
+
+    function FullscreenComponent() {
+        var _ref4;
+
+        (0, _classCallCheck3.default)(this, FullscreenComponent);
+
+        for (var _len4 = arguments.length, args = Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
+            args[_key4] = arguments[_key4];
+        }
+
+        var _this62 = (0, _possibleConstructorReturn3.default)(this, (_ref4 = FullscreenComponent.__proto__ || (0, _getPrototypeOf2.default)(FullscreenComponent)).call.apply(_ref4, [this].concat(args)));
+
+        _this62._fullscreen = false;
+        return _this62;
+    }
+
+    (0, _createClass3.default)(FullscreenComponent, [{
+        key: "$awake",
+        value: function $awake() {
+            var _this63 = this;
+
+            this.getAttribute("fullscreen").addObserver(function (attr) {
+                if (_this63._fullscreen === attr.Value) {
+                    return;
+                }
+                _this63._fullscreen = attr.Value;
+                _this63._switchFullscreen();
+            });
+        }
+    }, {
+        key: "_switchFullscreen",
+        value: function _switchFullscreen() {
+            if (this._fullscreen) {
+                this.requestFullscreen(this.companion.get("canvasContainer"));
+            } else {
+                this.exitFullscreen();
+            }
+        }
+    }, {
+        key: "requestFullscreen",
+        value: function requestFullscreen(target) {
+            if (target.webkitRequestFullscreen) {
+                target.webkitRequestFullscreen(); //Chrome15+, Safari5.1+, Opera15+
+            } else if (target["mozRequestFullScreen"]) {
+                target["mozRequestFullScreen"](); //FF10+
+            } else if (target["msRequestFullscreen"]) {
+                target["msRequestFullscreen"](); //IE11+
+            } else if (target.requestFullscreen) {
+                target.requestFullscreen(); // HTML5 Fullscreen API仕様
+            } else {
+                console.error('ご利用のブラウザはフルスクリーン操作に対応していません');
+                return;
+            }
+        }
+        /*フルスクリーン終了用ファンクション*/
+
+    }, {
+        key: "exitFullscreen",
+        value: function exitFullscreen() {
+            if (document.webkitCancelFullScreen) {
+                document.webkitCancelFullScreen(); //Chrome15+, Safari5.1+, Opera15+
+            } else if (document["mozCancelFullScreen"]) {
+                document["mozCancelFullScreen"](); //FF10+
+            } else if (document["msExitFullscreen"]) {
+                document["msExitFullscreen"](); //IE11+
+            } else if (document["cancelFullScreen"]) {
+                document["cancelFullScreen"](); //Gecko:FullScreenAPI仕様
+            } else if (document.exitFullscreen) {
+                document.exitFullscreen(); // HTML5 Fullscreen API仕様
+            }
+        }
+    }]);
+    return FullscreenComponent;
+}(Component);
+
+FullscreenComponent.attributes = {
+    fullscreen: {
+        converter: "Boolean",
+        defaultValue: false
+    }
+};
+
+var GeometryComponent = function (_Component7) {
+    (0, _inherits3.default)(GeometryComponent, _Component7);
+
+    function GeometryComponent() {
+        (0, _classCallCheck3.default)(this, GeometryComponent);
+        return (0, _possibleConstructorReturn3.default)(this, (GeometryComponent.__proto__ || (0, _getPrototypeOf2.default)(GeometryComponent)).apply(this, arguments));
+    }
+
+    (0, _createClass3.default)(GeometryComponent, [{
+        key: "$mount",
+        value: function $mount() {
+            var type = this.getValue("type");
+            if (type) {
+                var gf = this.companion.get("GeometryFactory");
+                var attrs = GeometryFactory.factoryArgumentDeclarations[type];
+                var geometryArgument = {};
+                for (var key in attrs) {
+                    this.__addAtribute(key, attrs[key]);
+                    geometryArgument[key] = this.getValue(key);
+                }
+                this.geometry = gf.instanciate(type, geometryArgument);
+                var gr = this.companion.get("GeometryRegistory");
+                var name = this.getValue("name");
+                if (!name) {
+                    throw new Error("Name was not specified");
+                }
+                gr.addGeometry(name, this.geometry);
+            }
+        }
+    }]);
+    return GeometryComponent;
+}(Component);
+
+GeometryComponent.attributes = {
+    type: {
+        converter: "String",
+        defaultValue: undefined
+    },
+    name: {
+        converter: "String",
+        defaultValue: undefined
+    }
+};
+
+var GeometryRegistoryComponent = function (_Component8) {
+    (0, _inherits3.default)(GeometryRegistoryComponent, _Component8);
+
+    function GeometryRegistoryComponent() {
+        var _ref5;
+
+        (0, _classCallCheck3.default)(this, GeometryRegistoryComponent);
+
+        for (var _len5 = arguments.length, args = Array(_len5), _key5 = 0; _key5 < _len5; _key5++) {
+            args[_key5] = arguments[_key5];
+        }
+
+        var _this65 = (0, _possibleConstructorReturn3.default)(this, (_ref5 = GeometryRegistoryComponent.__proto__ || (0, _getPrototypeOf2.default)(GeometryRegistoryComponent)).call.apply(_ref5, [this].concat(args)));
+
+        _this65._geometries = {};
+        return _this65;
+    }
+
+    (0, _createClass3.default)(GeometryRegistoryComponent, [{
+        key: "$awake",
+        value: function $awake() {
+            this._factory = new GeometryFactory(this.companion.get("gl"));
+            this.companion.set(this.name, this);
+            this.companion.set(obtainGomlInterface.ns(this.name.ns)("GeometryFactory"), this._factory);
+            var _iteratorNormalCompletion6 = true;
+            var _didIteratorError6 = false;
+            var _iteratorError6 = undefined;
+
+            try {
+                for (var _iterator6 = (0, _getIterator3.default)(this.getValue("defaultGeometry")), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
+                    var geometry = _step6.value;
+
+                    this.addGeometry(geometry, this._factory.instanciateAsDefault(geometry));
+                }
+            } catch (err) {
+                _didIteratorError6 = true;
+                _iteratorError6 = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion6 && _iterator6.return) {
+                        _iterator6.return();
+                    }
+                } finally {
+                    if (_didIteratorError6) {
+                        throw _iteratorError6;
+                    }
+                }
+            }
+        }
+    }, {
+        key: "addGeometry",
+        value: function addGeometry(name, geometry) {
+            this._geometries[name] = geometry;
+        }
+    }, {
+        key: "removeGeometry",
+        value: function removeGeometry(name) {
+            if (this._geometries[name]) {
+                delete this._geometries[name];
+            }
+        }
+    }, {
+        key: "getGeometry",
+        value: function getGeometry(name) {
+            return this._geometries[name];
+        }
+    }]);
+    return GeometryRegistoryComponent;
+}(Component);
+
+GeometryRegistoryComponent.attributes = {
+    defaultGeometry: {
+        converter: "StringArray",
+        defaultValue: ["quad", "cube", "sphere"]
+    }
+};
+
+var HTMLBinderComponent = function (_Component9) {
+    (0, _inherits3.default)(HTMLBinderComponent, _Component9);
+
+    function HTMLBinderComponent() {
+        var _ref6;
+
+        (0, _classCallCheck3.default)(this, HTMLBinderComponent);
+
+        for (var _len6 = arguments.length, args = Array(_len6), _key6 = 0; _key6 < _len6; _key6++) {
+            args[_key6] = arguments[_key6];
+        }
+
+        var _this66 = (0, _possibleConstructorReturn3.default)(this, (_ref6 = HTMLBinderComponent.__proto__ || (0, _getPrototypeOf2.default)(HTMLBinderComponent)).call.apply(_ref6, [this].concat(args)));
+
+        _this66._isFirstCall = true;
+        return _this66;
+    }
+
+    (0, _createClass3.default)(HTMLBinderComponent, [{
+        key: "$awake",
+        value: function $awake() {
+            this._canvasContainer = this.companion.get("canvasContainer");
+            this._currentTransform = this.node.getComponent("Transform");
+        }
+    }, {
+        key: "$mount",
+        value: function $mount() {
+            this._canvasContainer = this.companion.get("canvasContainer");
+            this._currentTransform = this.node.getComponent("Transform");
+        }
+    }, {
+        key: "$treeInitialized",
+        value: function $treeInitialized() {
+            var _this67 = this;
+
+            this.getAttribute("targetRenderer").addObserver(function (v) {
+                if (_this67._rendererQuery !== v.Value) {
+                    _this67._onRendererChanged();
+                }
+            }, true);
+            this.getAttribute("htmlQuery").addObserver(function (v) {
+                _this67._onQueryChanged(v.Value);
+            }, true);
+        }
+    }, {
+        key: "$render",
+        value: function $render(args) {
+            if (this._isFirstCall) {
+                this._onRendererChanged();
+                this._isFirstCall = false;
+            }
+            if (this._queriedElement && args.caller.node === this._targetNode) {
+                var vp = args.viewport;
+                var rawPos = Matrix.transform(this._currentTransform.calcPVM(args.camera.camera), new Vector4(0, 0, 0, 1));
+                var rawScPos = {
+                    x: rawPos.X / rawPos.W,
+                    y: rawPos.Y / rawPos.W,
+                    z: rawPos.Z / rawPos.W
+                };
+                if (rawScPos.z >= -1 && rawScPos.z <= 1) {
+                    var scPos = {
+                        x: vp.Left + (rawScPos.x + 1) / 2 * vp.Width,
+                        y: vp.Top + (rawScPos.y + 1) / 2 * vp.Height
+                    };
+                    this._queriedElement.style.visibility = "visible";
+                    this._queriedElement.style.left = scPos.x + "px";
+                    this._queriedElement.style.bottom = scPos.y + "px";
+                } else {
+                    this._queriedElement.style.visibility = "hidden";
+                }
+            }
+        }
+        /**
+         * Restore default position of queried html
+         */
+
+    }, {
+        key: "_restoreDefault",
+        value: function _restoreDefault() {
+            this._canvasContainer.removeChild(this._queriedElement);
+            this._parentCache.appendChild(this._queriedElement);
+            var s = this._queriedElement.style;
+            var c = this._styleCache;
+            s.position = c["position"];
+            s.left = c["left"];
+            s.bottom = c["bottom"];
+            s.visibility = c["visibility"];
+        }
+    }, {
+        key: "_beginTrack",
+        value: function _beginTrack() {
+            this._parentCache.removeChild(this._queriedElement);
+            this._canvasContainer.appendChild(this._queriedElement);
+            this._queriedElement.style.position = "absolute";
+        }
+    }, {
+        key: "_onRendererChanged",
+        value: function _onRendererChanged() {
+            var _this68 = this;
+
+            var returned = false;
+            this.tree(this.getValue("targetRenderer")).forEach(function (n) {
+                if (returned) {
+                    return true;
+                } else {
+                    _this68._targetNode = n;
+                    returned = true;
+                }
+            });
+        }
+    }, {
+        key: "_onQueryChanged",
+        value: function _onQueryChanged(query) {
+            var queried = void 0;
+            if (query && query !== "") {
+                queried = document.querySelectorAll(query);
+            }
+            if (this._queriedElement) {
+                this._restoreDefault();
+            }
+            if (!queried || queried.length === 0) {
+                this._queriedElement = undefined;
+                this._parentCache = undefined;
+            } else {
+                this._queriedElement = queried.item(0);
+                var s = this._queriedElement.style;
+                this._styleCache = {
+                    position: s.position,
+                    visibility: s.visibility,
+                    left: s.left,
+                    bottom: s.bottom
+                };
+                this._parentCache = this._queriedElement.parentElement;
+                this._beginTrack();
+            }
+        }
+    }]);
+    return HTMLBinderComponent;
+}(Component);
+
+HTMLBinderComponent.attributes = {
+    htmlQuery: {
+        defaultValue: undefined,
+        converter: "String"
+    },
+    targetRenderer: {
+        defaultValue: "render-scene",
+        converter: "String"
+    }
+};
+
+var LoopManagerComponent = function (_Component10) {
+    (0, _inherits3.default)(LoopManagerComponent, _Component10);
+
+    function LoopManagerComponent() {
+        var _ref7;
+
+        (0, _classCallCheck3.default)(this, LoopManagerComponent);
+
+        for (var _len7 = arguments.length, args = Array(_len7), _key7 = 0; _key7 < _len7; _key7++) {
+            args[_key7] = arguments[_key7];
+        }
+
+        var _this69 = (0, _possibleConstructorReturn3.default)(this, (_ref7 = LoopManagerComponent.__proto__ || (0, _getPrototypeOf2.default)(LoopManagerComponent)).call.apply(_ref7, [this].concat(args)));
+
+        _this69._loopActions = [];
+        _this69._loopIndex = 0;
+        return _this69;
+    }
+
+    (0, _createClass3.default)(LoopManagerComponent, [{
+        key: "$awake",
+        value: function $awake() {
+            var _this70 = this;
+
+            this.attributes.get("loopEnabled").addObserver(function (attr) {
+                _this70._begin();
+            });
+            this._registerNextLoop = window.requestAnimationFrame // if window.requestAnimationFrame is defined or undefined
+            ? function () {
+                window.requestAnimationFrame(_this70._loop.bind(_this70));
+            } : function () {
+                window.setTimeout(_this70._loop.bind(_this70), 1000 / 60);
+            };
+        }
+    }, {
+        key: "register",
+        value: function register(action, priorty) {
+            this._loopActions.push({
+                action: action,
+                priorty: priorty
+            });
+            this._loopActions.sort(function (a, b) {
+                return a.priorty - b.priorty;
+            });
+        }
+    }, {
+        key: "_begin",
+        value: function _begin() {
+            this._registerNextLoop();
+        }
+    }, {
+        key: "_loop",
+        value: function _loop() {
+            var _this71 = this;
+
+            this._loopActions.forEach(function (a) {
+                return a.action(_this71._loopIndex);
+            });
+            this._loopIndex++;
+            this._registerNextLoop();
+        }
+    }]);
+    return LoopManagerComponent;
+}(Component);
+
+LoopManagerComponent.attributes = {
+    loopEnabled: {
+        defaultValue: false,
+        converter: "Boolean"
+    }
+};
+
+var MaterialComponent = function (_Component11) {
+    (0, _inherits3.default)(MaterialComponent, _Component11);
+
+    function MaterialComponent() {
+        var _ref8;
+
+        (0, _classCallCheck3.default)(this, MaterialComponent);
+
+        for (var _len8 = arguments.length, args = Array(_len8), _key8 = 0; _key8 < _len8; _key8++) {
+            args[_key8] = arguments[_key8];
+        }
+
+        var _this72 = (0, _possibleConstructorReturn3.default)(this, (_ref8 = MaterialComponent.__proto__ || (0, _getPrototypeOf2.default)(MaterialComponent)).call.apply(_ref8, [this].concat(args)));
+
+        _this72.materialArgs = {};
+        return _this72;
+    }
+
+    (0, _createClass3.default)(MaterialComponent, [{
+        key: "$mount",
+        value: function $mount() {
+            var typeName = this.getValue("type");
+            if (typeName) {
+                this.materialPromise = this.companion.get("MaterialFactory").instanciate(typeName);
+                this._registerAttributes();
+            }
+        }
+    }, {
+        key: "_registerAttributes",
+        value: function _registerAttributes() {
+            return __awaiter(this, void 0, void 0, _regenerator2.default.mark(function _callee22() {
+                var _this73 = this;
+
+                var promises;
+                return _regenerator2.default.wrap(function _callee22$(_context97) {
+                    while (1) {
+                        switch (_context97.prev = _context97.next) {
+                            case 0:
+                                _context97.next = 2;
+                                return this.materialPromise;
+
+                            case 2:
+                                this.material = _context97.sent;
+                                promises = [];
+
+                                this.material.pass.forEach(function (p) {
+                                    if (p instanceof SORTPass) {
+                                        var _loop6 = function _loop6(key) {
+                                            _this73.__addAtribute(key, p.programInfo.gomlAttributes[key]);
+                                            _this73.attributes.get(key).addObserver(function (v) {
+                                                _this73.materialArgs[key] = v.Value;
+                                            });
+                                            var value = _this73.materialArgs[key] = _this73.getValue(key);
+                                            if (value instanceof ResourceBase) {
+                                                promises.push(value.validPromise);
+                                            }
+                                        };
+
+                                        for (var key in p.programInfo.gomlAttributes) {
+                                            _loop6(key);
+                                        }
+                                    }
+                                });
+                                _context97.next = 7;
+                                return _promise2.default.all(promises);
+
+                            case 7:
+                                this.ready = true;
+
+                            case 8:
+                            case "end":
+                                return _context97.stop();
+                        }
+                    }
+                }, _callee22, this);
+            }));
+        }
+    }]);
+    return MaterialComponent;
+}(Component);
+
+MaterialComponent.attributes = {
+    type: {
+        converter: "String",
+        defaultValue: undefined
+    }
+};
+
+var MaterialContainerComponent = function (_Component12) {
+    (0, _inherits3.default)(MaterialContainerComponent, _Component12);
+
+    function MaterialContainerComponent() {
+        var _ref9;
+
+        (0, _classCallCheck3.default)(this, MaterialContainerComponent);
+
+        for (var _len9 = arguments.length, args = Array(_len9), _key9 = 0; _key9 < _len9; _key9++) {
+            args[_key9] = arguments[_key9];
+        }
+
+        var _this74 = (0, _possibleConstructorReturn3.default)(this, (_ref9 = MaterialContainerComponent.__proto__ || (0, _getPrototypeOf2.default)(MaterialContainerComponent)).call.apply(_ref9, [this].concat(args)));
+
+        _this74.materialArgs = {};
+        _this74.ready = false;
+        return _this74;
+    }
+
+    (0, _createClass3.default)(MaterialContainerComponent, [{
+        key: "$mount",
+        value: function $mount() {
+            this.attributes.get("material").addObserver(this._onMaterialChanged);
+            this.companion.get("loader").register(this._onMaterialChanged());
+        }
+        /**
+         * When the material attribute is changed.
+         */
+
+    }, {
+        key: "_onMaterialChanged",
+        value: function _onMaterialChanged() {
+            return __awaiter(this, void 0, void 0, _regenerator2.default.mark(function _callee23() {
+                var materialPromise;
+                return _regenerator2.default.wrap(function _callee23$(_context98) {
+                    while (1) {
+                        switch (_context98.prev = _context98.next) {
+                            case 0:
+                                materialPromise = this.getValue("material");
+
+                                if (!this._materialComponent) {
+                                    this._prepareInternalMaterial(materialPromise);
+                                } else {
+                                    this._prepareExternalMaterial(materialPromise);
+                                }
+
+                            case 2:
+                            case "end":
+                                return _context98.stop();
+                        }
+                    }
+                }, _callee23, this);
+            }));
+        }
+        /**
+         * Resolve materials only when the material required from external material component.
+         * @return {Promise<void>} [description]
+         */
+
+    }, {
+        key: "_prepareExternalMaterial",
+        value: function _prepareExternalMaterial(materialPromise) {
+            return __awaiter(this, void 0, void 0, _regenerator2.default.mark(function _callee24() {
+                var loader, material;
+                return _regenerator2.default.wrap(function _callee24$(_context99) {
+                    while (1) {
+                        switch (_context99.prev = _context99.next) {
+                            case 0:
+                                loader = this.companion.get("loader");
+
+                                loader.register(materialPromise);
+                                _context99.next = 4;
+                                return materialPromise;
+
+                            case 4:
+                                material = _context99.sent;
+
+                                this.material = material;
+                                this.materialArgs = this._materialComponent.materialArgs;
+                                this.ready = true;
+
+                            case 8:
+                            case "end":
+                                return _context99.stop();
+                        }
+                    }
+                }, _callee24, this);
+            }));
+        }
+    }, {
+        key: "_prepareInternalMaterial",
+        value: function _prepareInternalMaterial(materialPromise) {
+            return __awaiter(this, void 0, void 0, _regenerator2.default.mark(function _callee25() {
+                var _this75 = this;
+
+                var loader, material, promises;
+                return _regenerator2.default.wrap(function _callee25$(_context100) {
+                    while (1) {
+                        switch (_context100.prev = _context100.next) {
+                            case 0:
+                                // obtain promise of instanciating material
+                                loader = this.companion.get("loader");
+
+                                loader.register(materialPromise);
+
+                                if (materialPromise) {
+                                    _context100.next = 4;
+                                    break;
+                                }
+
+                                return _context100.abrupt("return");
+
+                            case 4:
+                                _context100.next = 6;
+                                return materialPromise;
+
+                            case 6:
+                                material = _context100.sent;
+                                promises = [];
+
+                                material.pass.forEach(function (p) {
+                                    if (p instanceof SORTPass) {
+                                        var _loop7 = function _loop7(key) {
+                                            var val = p.programInfo.gomlAttributes[key];
+                                            _this75.__addAtribute(key, val);
+                                            _this75.attributes.get(key).addObserver(function (v) {
+                                                _this75.materialArgs[key] = v.Value;
+                                            });
+                                            _this75.materialArgs[key] = _this75.getValue(key);
+                                        };
+
+                                        for (var key in p.programInfo.gomlAttributes) {
+                                            _loop7(key);
+                                        }
+                                    }
+                                });
+                                _context100.next = 11;
+                                return _promise2.default.all(promises);
+
+                            case 11:
+                                this.material = material;
+                                this.ready = true;
+
+                            case 13:
+                            case "end":
+                                return _context100.stop();
+                        }
+                    }
+                }, _callee25, this);
+            }));
+        }
+    }]);
+    return MaterialContainerComponent;
+}(Component);
+
+MaterialContainerComponent.attributes = {
+    material: {
+        converter: "Material",
+        defaultValue: "new(unlit)",
+        componentBoundTo: "_materialComponent" // When the material was specified with the other material tag, this field would be assigned.
+    }
+};
+
 var MaterialImporterComponent = function (_Component13) {
     (0, _inherits3.default)(MaterialImporterComponent, _Component13);
 
@@ -21461,12 +21858,12 @@ var MaterialImporterComponent = function (_Component13) {
     }
 
     (0, _createClass3.default)(MaterialImporterComponent, [{
-        key: "$mount",
-        value: function $mount() {
-            if (!this.getValue("type") || !this.getValue("src")) {
+        key: "$awake",
+        value: function $awake() {
+            if (!this.getValue("typeName") || !this.getValue("src")) {
                 throw new Error("type or src cannot be null in material importer");
             } else {
-                MaterialFactory.addSORTMaterialFromURL(this.getValue("type"), this.getValue("src"));
+                MaterialFactory.addSORTMaterialFromURL(this.getValue("typeName"), this.getValue("src"));
             }
         }
     }]);
@@ -21474,7 +21871,7 @@ var MaterialImporterComponent = function (_Component13) {
 }(Component);
 
 MaterialImporterComponent.attributes = {
-    type: {
+    typeName: {
         defaultValue: undefined,
         converter: "String"
     },
@@ -21546,7 +21943,8 @@ var MeshRenderer = function (_Component15) {
                 viewport: args.viewport,
                 drawCount: this._drawCount,
                 drawOffset: this._drawOffset,
-                sceneDescription: args.sceneDescription
+                sceneDescription: args.sceneDescription,
+                defaultTexture: args.defaultTexture
             };
             if (args.material) {
                 renderArgs.attributeValues = args.materialArgs;
@@ -21588,33 +21986,42 @@ var MouseCameraControlComponent = function (_Component16) {
     (0, _inherits3.default)(MouseCameraControlComponent, _Component16);
 
     function MouseCameraControlComponent() {
+        var _ref10;
+
         (0, _classCallCheck3.default)(this, MouseCameraControlComponent);
 
-        var _this78 = (0, _possibleConstructorReturn3.default)(this, (MouseCameraControlComponent.__proto__ || (0, _getPrototypeOf2.default)(MouseCameraControlComponent)).apply(this, arguments));
+        for (var _len10 = arguments.length, args = Array(_len10), _key10 = 0; _key10 < _len10; _key10++) {
+            args[_key10] = arguments[_key10];
+        }
 
-        _this78._lastScreenPos = { x: NaN, y: NaN };
-        _this78._origin = new Vector3(0, 0, 0);
-        _this78._xsum = 0;
-        _this78._ysum = 0;
-        return _this78;
+        var _this79 = (0, _possibleConstructorReturn3.default)(this, (_ref10 = MouseCameraControlComponent.__proto__ || (0, _getPrototypeOf2.default)(MouseCameraControlComponent)).call.apply(_ref10, [this].concat(args)));
+
+        _this79._origin = new Vector3(0, 0, 0);
+        _this79._lastScreenPos = null;
+        _this79._xsum = 0;
+        _this79._ysum = 0;
+        return _this79;
     }
 
     (0, _createClass3.default)(MouseCameraControlComponent, [{
         key: "$awake",
         value: function $awake() {
-            this.getAttribute("rotateX").boundTo("_rotateX");
-            this.getAttribute("rotateY").boundTo("_rotateY");
-            this.getAttribute("moveZ").boundTo("_moveZ");
+            this.getAttribute("rotateSpeed").boundTo("_rotateSpeed");
+            this.getAttribute("zoomSpeed").boundTo("_zoomSpeed");
             this.getAttribute("moveSpeed").boundTo("_moveSpeed");
             this._transform = this.node.getComponent("Transform");
-            this._scriptTag = this.companion.get("canvasElement");
         }
     }, {
         key: "$mount",
         value: function $mount() {
-            this._scriptTag.addEventListener("mousemove", this._mouseMove.bind(this));
-            this._scriptTag.addEventListener("contextmenu", this._contextMenu.bind(this));
-            this._distance = Math.sqrt(Vector3.dot(this._transform.localPosition.subtractWith(this._origin), this._transform.localPosition.subtractWith(this._origin)));
+            this._initialRight = Vector3.copy(this._transform.right);
+            this._initialUp = Vector3.copy(this._transform.up);
+            this._initialDirection = this._transform.localPosition.subtractWith(this._origin);
+            this._initialRotation = this._transform.localRotation;
+            var scriptTag = this.companion.get("canvasElement");
+            scriptTag.addEventListener("mousemove", this._mouseMove.bind(this));
+            scriptTag.addEventListener("contextmenu", this._contextMenu.bind(this));
+            scriptTag.addEventListener("mousewheel", this._mouseWheel.bind(this));
         }
     }, {
         key: "_contextMenu",
@@ -21624,9 +22031,7 @@ var MouseCameraControlComponent = function (_Component16) {
     }, {
         key: "_mouseMove",
         value: function _mouseMove(m) {
-            if (isNaN(this._lastScreenPos.x)) {
-                this._initialDirection = this._transform.localPosition.subtractWith(this._origin);
-                this._initialRotation = this._transform.localRotation;
+            if (this._lastScreenPos === null) {
                 this._lastScreenPos = {
                     x: m.screenX,
                     y: m.screenY
@@ -21634,23 +22039,31 @@ var MouseCameraControlComponent = function (_Component16) {
                 return;
             }
             var updated = false;
-            var diffX = m.screenX - this._lastScreenPos.x,
-                diffY = m.screenY - this._lastScreenPos.y;
+            var diffX = m.screenX - this._lastScreenPos.x;
+            var diffY = m.screenY - this._lastScreenPos.y;
+            var distance = this._transform.localPosition.subtractWith(this._origin).magnitude;
             if ((m.buttons & 1) > 0) {
-                this._xsum += diffX * this._rotateX;
-                this._ysum += diffY * this._rotateY * 0.2;
-                this._ysum = Math.min(this.getValue("maxY"), Math.max(this.getValue("minY"), this._ysum));
+                this._xsum += diffX;
+                this._ysum += diffY;
+                this._ysum = Math.min(Math.PI * 50, this._ysum);
+                this._ysum = Math.max(-Math.PI * 50, this._ysum);
                 updated = true;
             }
             if ((m.buttons & 2) > 0) {
-                this._origin = this._origin.addWith(this._transform.right.multiplyWith(-diffX * 0.05 * this._moveSpeed)).addWith(this._transform.up.multiplyWith(diffY * 0.05 * this._moveSpeed));
+                var moveX = -diffX * this._moveSpeed * 0.01;
+                var moveY = diffY * this._moveSpeed * 0.01;
+                this._origin = this._origin.addWith(this._transform.right.multiplyWith(moveX)).addWith(this._transform.up.multiplyWith(moveY));
+                distance = this._transform.localPosition.subtractWith(this._origin).magnitude;
                 updated = true;
-                this._distance = Math.sqrt(Vector3.dot(this._transform.localPosition.subtractWith(this._origin), this._transform.localPosition.subtractWith(this._origin)));
             }
-            var degToPi = Math.PI / 180;
             if (updated) {
-                var rotation = Quaternion.eulerXYZ(this._ysum * degToPi, this._xsum * degToPi, 0);
+                // rotate excution
+                var rotationVartical = Quaternion.angleAxis(-this._xsum * this._rotateSpeed, this._initialUp);
+                var rotationHorizontal = Quaternion.angleAxis(-this._ysum * this._rotateSpeed, this._initialRight);
+                var rotation = Quaternion.multiply(rotationVartical, rotationHorizontal);
                 var rotationMat = Matrix.rotationQuaternion(rotation);
+                var direction = Matrix.transformNormal(rotationMat, this._initialDirection);
+                this._transform.localPosition = this._origin.addWith(Vector3.normalize(direction).multiplyWith(distance));
                 this._transform.localRotation = Quaternion.multiply(this._initialRotation, rotation);
             }
             this._lastScreenPos = {
@@ -21658,50 +22071,50 @@ var MouseCameraControlComponent = function (_Component16) {
                 y: m.screenY
             };
         }
+    }, {
+        key: "_mouseWheel",
+        value: function _mouseWheel(m) {
+            // let move = m.deltaY * this._moveZ * MouseCameraControlComponent.moveCoefficient;
+            // let toOrigin = Vector3.normalize(Vector3.subtract(this._origin, this._transform.localPosition));
+            // this._origin = this._origin.addWith(toOrigin.multiplyWith(move));
+            // this._transform.localPosition = this._transform.localPosition.addWith(this._transform.forward.multiplyWith(move));
+            // m.preventDefault();
+            var dir = Vector3.normalize(Vector3.subtract(this._transform.localPosition, this._origin));
+            var moveDist = -m.deltaY * this._zoomSpeed;
+            var distance = Vector3.subtract(this._origin, this._transform.localPosition).magnitude;
+            var nextDist = Math.max(1, distance - moveDist);
+            this._transform.localPosition = this._origin.addWith(dir.multiplyWith(nextDist));
+            m.preventDefault();
+        }
     }]);
     return MouseCameraControlComponent;
 }(Component);
 
-MouseCameraControlComponent.rotateCoefficient = 0.003;
-MouseCameraControlComponent.moveCoefficient = 0.05;
 MouseCameraControlComponent.attributes = {
-    // Specify the attributes user can intaract
-    rotateX: {
-        defaultValue: 1,
+    rotateSpeed: {
+        defaultValue: 0.01,
         converter: "Number"
     },
-    rotateY: {
-        defaultValue: 1,
-        converter: "Number"
-    },
-    moveZ: {
-        defaultValue: 1,
+    zoomSpeed: {
+        defaultValue: 0.05,
         converter: "Number"
     },
     moveSpeed: {
         defaultValue: 1,
         converter: "Number"
-    },
-    maxY: {
-        defaultValue: 89,
-        converter: "Number"
-    },
-    minY: {
-        defaultValue: -89,
-        converter: "Number"
     }
 };
 
-var RenderBuffer = function (_ResourceBase4) {
-    (0, _inherits3.default)(RenderBuffer, _ResourceBase4);
+var RenderBuffer = function (_ResourceBase5) {
+    (0, _inherits3.default)(RenderBuffer, _ResourceBase5);
 
     function RenderBuffer(gl) {
         (0, _classCallCheck3.default)(this, RenderBuffer);
 
-        var _this79 = (0, _possibleConstructorReturn3.default)(this, (RenderBuffer.__proto__ || (0, _getPrototypeOf2.default)(RenderBuffer)).call(this, gl));
+        var _this80 = (0, _possibleConstructorReturn3.default)(this, (RenderBuffer.__proto__ || (0, _getPrototypeOf2.default)(RenderBuffer)).call(this, gl));
 
-        _this79.renderBuffer = gl.createRenderbuffer();
-        return _this79;
+        _this80.renderBuffer = gl.createRenderbuffer();
+        return _this80;
     }
 
     (0, _createClass3.default)(RenderBuffer, [{
@@ -21769,28 +22182,34 @@ var RendererComponent = function (_Component18) {
     (0, _inherits3.default)(RendererComponent, _Component18);
 
     function RendererComponent() {
+        var _ref11;
+
         (0, _classCallCheck3.default)(this, RendererComponent);
 
-        var _this81 = (0, _possibleConstructorReturn3.default)(this, (RendererComponent.__proto__ || (0, _getPrototypeOf2.default)(RendererComponent)).apply(this, arguments));
+        for (var _len11 = arguments.length, args = Array(_len11), _key11 = 0; _key11 < _len11; _key11++) {
+            args[_key11] = arguments[_key11];
+        }
 
-        _this81._buffers = {};
-        return _this81;
+        var _this82 = (0, _possibleConstructorReturn3.default)(this, (_ref11 = RendererComponent.__proto__ || (0, _getPrototypeOf2.default)(RendererComponent)).call.apply(_ref11, [this].concat(args)));
+
+        _this82._buffers = {};
+        return _this82;
     }
 
     (0, _createClass3.default)(RendererComponent, [{
         key: "$mount",
         value: function $mount() {
-            var _this82 = this;
+            var _this83 = this;
 
             this._gl = this.companion.get("gl");
             this._canvas = this.companion.get("canvasElement");
             this._camera = this.getValue("camera");
             this.getAttribute("camera").addObserver(function (v) {
-                return _this82._camera = v.Value;
+                return _this83._camera = v.Value;
             });
             this.getAttribute("viewport").addObserver(function (v) {
-                _this82._viewportSizeGenerator = v.Value;
-                _this82.$resizeCanvas();
+                _this83._viewportSizeGenerator = v.Value;
+                _this83.$resizeCanvas();
             });
             this._viewportSizeGenerator = this.getValue("viewport");
         }
@@ -21911,137 +22330,6 @@ RendererManagerComponent.attributes = {
         converter: "Boolean"
     }
 };
-
-var Texture2D = function (_ResourceBase5) {
-    (0, _inherits3.default)(Texture2D, _ResourceBase5);
-
-    function Texture2D(gl) {
-        (0, _classCallCheck3.default)(this, Texture2D);
-
-        var _this84 = (0, _possibleConstructorReturn3.default)(this, (Texture2D.__proto__ || (0, _getPrototypeOf2.default)(Texture2D)).call(this, gl));
-
-        _this84._texParameterChanged = true;
-        _this84._magFilter = WebGLRenderingContext.LINEAR;
-        _this84._minFilter = WebGLRenderingContext.LINEAR;
-        _this84._wrapS = WebGLRenderingContext.REPEAT;
-        _this84._wrapT = WebGLRenderingContext.REPEAT;
-        _this84.texture = gl.createTexture();
-        return _this84;
-    }
-
-    (0, _createClass3.default)(Texture2D, [{
-        key: "update",
-        value: function update(levelOrImage, widthOrFlipY, height, border, format, type, pixels, flipYForBuffer) {
-            this.gl.bindTexture(WebGLRenderingContext.TEXTURE_2D, this.texture);
-            var flipY = false;
-            var image = void 0;
-            var width = void 0;
-            var level = void 0;
-            if (typeof height === "undefined") {
-                flipY = widthOrFlipY ? true : false;
-                image = levelOrImage;
-            } else {
-                level = levelOrImage;
-                width = widthOrFlipY;
-            }
-            this.gl.pixelStorei(WebGLRenderingContext.UNPACK_FLIP_Y_WEBGL, flipY ? 1 : 0);
-            if (typeof height === "undefined") {
-                this.gl.texImage2D(WebGLRenderingContext.TEXTURE_2D, 0, WebGLRenderingContext.RGBA, WebGLRenderingContext.RGBA, WebGLRenderingContext.UNSIGNED_BYTE, this._checkSize(image));
-            } else {
-                if (typeof pixels === "undefined") {
-                    pixels = null;
-                }
-                this.gl.texImage2D(WebGLRenderingContext.TEXTURE_2D, level, format, width, height, border, format, type, pixels);
-            }
-            this.valid = true;
-        }
-    }, {
-        key: "register",
-        value: function register(registerNumber) {
-            this.gl.activeTexture(WebGLRenderingContext.TEXTURE0 + registerNumber);
-            this.gl.bindTexture(WebGLRenderingContext.TEXTURE_2D, this.texture);
-            if (this._texParameterChanged) {
-                this._updateTexParameter();
-            }
-        }
-    }, {
-        key: "destroy",
-        value: function destroy() {
-            (0, _get3.default)(Texture2D.prototype.__proto__ || (0, _getPrototypeOf2.default)(Texture2D.prototype), "destroy", this).call(this);
-            this.gl.deleteTexture(this.texture);
-        }
-        // There should be more effective way to resize texture
-
-    }, {
-        key: "_checkSize",
-        value: function _checkSize(img) {
-            var w = img.naturalWidth,
-                h = img.naturalHeight;
-            var size = Math.pow(2, Math.log(Math.min(w, h)) / Math.LN2 | 0); // largest 2^n integer that does not exceed s
-            if (w !== h || w !== size) {
-                var canv = document.createElement("canvas");
-                canv.height = canv.width = size;
-                canv.getContext("2d").drawImage(img, 0, 0, w, h, 0, 0, size, size);
-                return canv;
-            }
-            return img;
-        }
-    }, {
-        key: "_updateTexParameter",
-        value: function _updateTexParameter() {
-            this.gl.texParameteri(WebGLRenderingContext.TEXTURE_2D, WebGLRenderingContext.TEXTURE_MIN_FILTER, this._minFilter);
-            this.gl.texParameteri(WebGLRenderingContext.TEXTURE_2D, WebGLRenderingContext.TEXTURE_MAG_FILTER, this._magFilter);
-            this.gl.texParameteri(WebGLRenderingContext.TEXTURE_2D, WebGLRenderingContext.TEXTURE_WRAP_S, this._wrapS);
-            this.gl.texParameteri(WebGLRenderingContext.TEXTURE_2D, WebGLRenderingContext.TEXTURE_WRAP_T, this._wrapT);
-            this._texParameterChanged = false;
-        }
-    }, {
-        key: "magFilter",
-        get: function get() {
-            return this._magFilter;
-        },
-        set: function set(filter) {
-            if (this._magFilter !== filter) {
-                this._texParameterChanged = true;
-                this._magFilter = filter;
-            }
-        }
-    }, {
-        key: "minFilter",
-        get: function get() {
-            return this._minFilter;
-        },
-        set: function set(filter) {
-            if (this._minFilter !== filter) {
-                this._texParameterChanged = true;
-                this._minFilter = filter;
-            }
-        }
-    }, {
-        key: "wrapS",
-        get: function get() {
-            return this._wrapS;
-        },
-        set: function set(filter) {
-            if (this._wrapS !== filter) {
-                this._texParameterChanged = true;
-                this._wrapS = filter;
-            }
-        }
-    }, {
-        key: "wrapT",
-        get: function get() {
-            return this._wrapT;
-        },
-        set: function set(filter) {
-            if (this._wrapT !== filter) {
-                this._texParameterChanged = true;
-                this._wrapT = filter;
-            }
-        }
-    }]);
-    return Texture2D;
-}(ResourceBase);
 
 var FrameBuffer = function (_ResourceBase6) {
     (0, _inherits3.default)(FrameBuffer, _ResourceBase6);
@@ -22164,7 +22452,8 @@ var RenderQuadComponent = function (_Component20) {
                 camera: null,
                 transform: null,
                 buffers: args.buffers,
-                viewport: args.viewport
+                viewport: args.viewport,
+                defaultTexture: this.companion.get("defaultTexture")
             };
             renderArgs.attributeValues = this._materialContainer.materialArgs;
             // do render
@@ -22210,9 +22499,15 @@ var RenderSceneComponent = function (_Component21) {
     (0, _inherits3.default)(RenderSceneComponent, _Component21);
 
     function RenderSceneComponent() {
+        var _ref12;
+
         (0, _classCallCheck3.default)(this, RenderSceneComponent);
 
-        var _this87 = (0, _possibleConstructorReturn3.default)(this, (RenderSceneComponent.__proto__ || (0, _getPrototypeOf2.default)(RenderSceneComponent)).apply(this, arguments));
+        for (var _len12 = arguments.length, args = Array(_len12), _key12 = 0; _key12 < _len12; _key12++) {
+            args[_key12] = arguments[_key12];
+        }
+
+        var _this87 = (0, _possibleConstructorReturn3.default)(this, (_ref12 = RenderSceneComponent.__proto__ || (0, _getPrototypeOf2.default)(RenderSceneComponent)).call.apply(_ref12, [this].concat(args)));
 
         _this87._useMaterial = false;
         _this87._materialArgs = {};
@@ -22361,7 +22656,7 @@ var RenderSceneComponent = function (_Component21) {
 
                                 material.pass.forEach(function (p) {
                                     if (p instanceof SORTPass) {
-                                        var _loop9 = function _loop9(key) {
+                                        var _loop8 = function _loop8(key) {
                                             var val = p.programInfo.gomlAttributes[key];
                                             _this88.__addAtribute(key, val);
                                             _this88.attributes.get(key).addObserver(function (v) {
@@ -22374,7 +22669,7 @@ var RenderSceneComponent = function (_Component21) {
                                         };
 
                                         for (var key in p.programInfo.gomlAttributes) {
-                                            _loop9(key);
+                                            _loop8(key);
                                         }
                                     }
                                 });
@@ -22631,13 +22926,19 @@ var TransformComponent = function (_Component24) {
     (0, _inherits3.default)(TransformComponent, _Component24);
 
     function TransformComponent() {
+        var _ref13;
+
         (0, _classCallCheck3.default)(this, TransformComponent);
+
+        for (var _len13 = arguments.length, args = Array(_len13), _key13 = 0; _key13 < _len13; _key13++) {
+            args[_key13] = arguments[_key13];
+        }
 
         /**
          * Local transform matrix representing scaling,rotation and translation of attached object.
          * @return {[type]} [description]
          */
-        var _this93 = (0, _possibleConstructorReturn3.default)(this, (TransformComponent.__proto__ || (0, _getPrototypeOf2.default)(TransformComponent)).apply(this, arguments));
+        var _this93 = (0, _possibleConstructorReturn3.default)(this, (_ref13 = TransformComponent.__proto__ || (0, _getPrototypeOf2.default)(TransformComponent)).call.apply(_ref13, [this].concat(args)));
 
         _this93.localTransform = new Matrix();
         /**
@@ -23307,6 +23608,7 @@ obtainGomlInterface.register(function () {
                         obtainGomlInterface.registerNode("scene", ["Scene"]);
                         obtainGomlInterface.registerNode("camera", ["Transform", "Camera"]);
                         obtainGomlInterface.registerNode("empty", []);
+                        obtainGomlInterface.registerNode("object", ["Transform"]);
                         obtainGomlInterface.registerNode("geometry", ["Geometry"]);
                         obtainGomlInterface.registerNode("texture", ["Texture"]);
                         obtainGomlInterface.registerNode("mesh", ["Transform", "MaterialContainer", "MeshRenderer"]);
@@ -23317,8 +23619,9 @@ obtainGomlInterface.register(function () {
                         obtainGomlInterface.registerNode("render-scene", ["MaterialContainer", "RenderScene"]);
                         obtainGomlInterface.registerNode("render-quad", ["MaterialContainer", "RenderQuad"]);
                         DefaultPrimitives.register();
+                        DefaultMaterial.register();
 
-                    case 60:
+                    case 62:
                     case "end":
                         return _context104.stop();
                 }
@@ -23328,99 +23631,5 @@ obtainGomlInterface.register(function () {
 });
 
 
-
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":143,"babel-runtime/core-js/get-iterator":1,"babel-runtime/core-js/json/stringify":2,"babel-runtime/core-js/map":3,"babel-runtime/core-js/number/parse-float":4,"babel-runtime/core-js/object/create":5,"babel-runtime/core-js/object/get-own-property-names":8,"babel-runtime/core-js/object/get-prototype-of":9,"babel-runtime/core-js/object/keys":10,"babel-runtime/core-js/object/set-prototype-of":11,"babel-runtime/core-js/promise":12,"babel-runtime/core-js/reflect/own-keys":13,"babel-runtime/core-js/symbol":14,"babel-runtime/helpers/classCallCheck":16,"babel-runtime/helpers/createClass":17,"babel-runtime/helpers/get":18,"babel-runtime/helpers/inherits":19,"babel-runtime/helpers/possibleConstructorReturn":20,"babel-runtime/helpers/typeof":21,"babel-runtime/regenerator":22}],143:[function(require,module,exports){
-// shim for using process in browser
-
-var process = module.exports = {};
-var queue = [];
-var draining = false;
-var currentQueue;
-var queueIndex = -1;
-
-function cleanUpNextTick() {
-    draining = false;
-    if (currentQueue.length) {
-        queue = currentQueue.concat(queue);
-    } else {
-        queueIndex = -1;
-    }
-    if (queue.length) {
-        drainQueue();
-    }
-}
-
-function drainQueue() {
-    if (draining) {
-        return;
-    }
-    var timeout = setTimeout(cleanUpNextTick);
-    draining = true;
-
-    var len = queue.length;
-    while(len) {
-        currentQueue = queue;
-        queue = [];
-        while (++queueIndex < len) {
-            if (currentQueue) {
-                currentQueue[queueIndex].run();
-            }
-        }
-        queueIndex = -1;
-        len = queue.length;
-    }
-    currentQueue = null;
-    draining = false;
-    clearTimeout(timeout);
-}
-
-process.nextTick = function (fun) {
-    var args = new Array(arguments.length - 1);
-    if (arguments.length > 1) {
-        for (var i = 1; i < arguments.length; i++) {
-            args[i - 1] = arguments[i];
-        }
-    }
-    queue.push(new Item(fun, args));
-    if (queue.length === 1 && !draining) {
-        setTimeout(drainQueue, 0);
-    }
-};
-
-// v8 likes predictible objects
-function Item(fun, array) {
-    this.fun = fun;
-    this.array = array;
-}
-Item.prototype.run = function () {
-    this.fun.apply(null, this.array);
-};
-process.title = 'browser';
-process.browser = true;
-process.env = {};
-process.argv = [];
-process.version = ''; // empty string to avoid regexp issues
-process.versions = {};
-
-function noop() {}
-
-process.on = noop;
-process.addListener = noop;
-process.once = noop;
-process.off = noop;
-process.removeListener = noop;
-process.removeAllListeners = noop;
-process.emit = noop;
-
-process.binding = function (name) {
-    throw new Error('process.binding is not supported');
-};
-
-process.cwd = function () { return '/' };
-process.chdir = function (dir) {
-    throw new Error('process.chdir is not supported');
-};
-process.umask = function() { return 0; };
-
-},{}]},{},[142]);
+},{"_process":140,"babel-runtime/core-js/get-iterator":1,"babel-runtime/core-js/json/stringify":2,"babel-runtime/core-js/map":3,"babel-runtime/core-js/number/parse-float":4,"babel-runtime/core-js/object/create":5,"babel-runtime/core-js/object/get-own-property-names":8,"babel-runtime/core-js/object/get-prototype-of":9,"babel-runtime/core-js/object/keys":10,"babel-runtime/core-js/object/set-prototype-of":11,"babel-runtime/core-js/promise":12,"babel-runtime/core-js/reflect/own-keys":13,"babel-runtime/core-js/symbol":14,"babel-runtime/helpers/classCallCheck":16,"babel-runtime/helpers/createClass":17,"babel-runtime/helpers/get":18,"babel-runtime/helpers/inherits":19,"babel-runtime/helpers/possibleConstructorReturn":20,"babel-runtime/helpers/typeof":21,"babel-runtime/regenerator":22}]},{},[143]);

@@ -1,5 +1,4 @@
 <goml width="fit" height="512">
-  <import-material type="basic" src="index.sort"/>
   <geometry name="sphere" type="sphere"/>
   <geometry name="cube" type="cube"/>
   <geometry name="cylinder" type="cylinder"/>
@@ -12,17 +11,17 @@
         <MouseCameraControl rotateX="1" moveSpeed="1"/>
       </camera.components>
     </camera>
-    <mesh position="0,0,0" geometry="sphere" material="new(basic)" color="red" targetBuffer="default">
+    <mesh position="0,0,0" geometry="sphere" color="red" targetBuffer="default">
       <mesh.components>
         <HTMLBinder htmlQuery="#sphere"/>
       </mesh.components>
     </mesh>
-    <mesh position="3,0,0" geometry="cube" material="new(basic)" color="green" targetBuffer="default">
+    <mesh position="3,0,0" geometry="cube" color="green" targetBuffer="default">
       <mesh.components>
         <HTMLBinder htmlQuery="#cube"/>
       </mesh.components>
     </mesh>
-    <mesh position="-3,0,0" geometry="cylinder" material="new(basic)" color="blue" targetBuffer="default">
+    <mesh position="-3,0,0" geometry="cylinder" color="blue" targetBuffer="default">
       <mesh.components>
         <HTMLBinder htmlQuery="#cylinder"/>
       </mesh.components>

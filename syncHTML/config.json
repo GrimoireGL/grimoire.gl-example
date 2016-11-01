@@ -13,9 +13,4 @@
     "mode": "xml",
     "content": "",
     "contentUrl": "index.goml"
-}, {
-    "title": "index.sort",
-    "mode": "glsl",
-    "content": "",
-    "contentUrl": "index.sort"
 }]

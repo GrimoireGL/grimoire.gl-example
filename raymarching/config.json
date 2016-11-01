@@ -19,11 +19,6 @@
     "content": "",
     "contentUrl": "index.goml"
 }, {
-    "title": "gray.sort",
-    "mode": "glsl",
-    "content": "",
-    "contentUrl": "gray.sort"
-}, {
     "title": "raymarching.sort",
     "mode": "glsl",
     "content": "",
