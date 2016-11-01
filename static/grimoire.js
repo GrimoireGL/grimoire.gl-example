@@ -18055,7 +18055,6 @@ var CameraComponent = function (_Component4) {
             this.transform = this.node.getComponent("Transform");
             this.$transformUpdated(this.transform);
             this.getAttribute("far").addObserver(function (v) {
-                console.log("far", v.Value);
                 c.setFar(v.Value);
             }, true);
             this.getAttribute("near").addObserver(function (v) {
