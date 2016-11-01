@@ -7,7 +7,7 @@ xhr.addEventListener('load', function () {
     items.forEach(function(v) {
       v.contentUrl = path + '/' + v.contentUrl;
     });
-    window.load(items);
+    window.load(items, true);
   } else {
     console.error(xhr.statusText);
   }

@@ -1,7 +1,7 @@
 <goml width="512" height="512">
   <import-material typeName="lambart" src="./index.sort" />
   <geometry name="cube" type="cube" />
-  <material id="sprite" type="lambart" color="#cc3" sun="0.5,0.5" />
+  <material id="main" type="lambart" color="#cc3" sun="0.5,0.5" />
   <renderer camera=".camera" viewport="0,0,100%,100%">
     <render-scene/>
   </renderer>
@@ -11,8 +11,8 @@
         <MouseCameraControl rotateX="10" moveSpeed="1" />
       </camera.components>
     </camera>
-    <mesh position="0,0,0" geometry="cube" material="#sprite" targetBuffer="default" />
-    <mesh position="5,0,0" geometry="cube" material="#sprite" targetBuffer="default" />
-    <mesh position="-5,0,0" geometry="cube" material="#sprite" targetBuffer="default" />
+    <mesh position="0,0,0" geometry="cube" material="#main" targetBuffer="default" />
+    <mesh position="5,0,0" geometry="cube" material="#main" targetBuffer="default" />
+    <mesh position="-5,0,0" geometry="cube" material="#main" targetBuffer="default" />
   </scene>
 </goml>

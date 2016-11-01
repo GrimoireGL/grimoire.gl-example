@@ -1,3 +1,4 @@
+@Pass
 @DepthFunc(LEQUAL)
 @BlendFunc(SRC_ALPHA,ONE_MINUS_SRC_ALPHA)
 @CullFace(BACK)

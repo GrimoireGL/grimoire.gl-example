@@ -13927,10 +13927,9 @@ var PassFactory = function () {
     }, {
         key: "passInfoFromSORT",
         value: function passInfoFromSORT(source) {
-            var passes = source.split("@Pass").filter(function (p) {
-                return p.indexOf("@") >= 0;
-            }); // Separate with @Pass and if there was some pass without containing @, that would be skipped since that is assumed as empty.
-            return _promise2.default.all(passes.map(function (p) {
+            var splitted = source.split("@Pass");
+            splitted.splice(0, 1); // Separate with @Pass and if there was some pass without containing @, that would be skipped since that is assumed as empty.
+            return _promise2.default.all(splitted.map(function (p) {
                 return SORTPassParser.parse(p);
             }));
         }
@@ -17367,9 +17366,7 @@ var Ensure = function () {
 }();
 
 /**
- * Management a single attribute with specified type. Converter will serve a value with object with any type instead of string.
- * When attribute is changed, emit a "change" event. When attribute is requested, emit a "get" event.
- * If responsive flag is not true, event will not be emitted.
+ * Manage a attribute attached to components.
  */
 
 
@@ -17377,25 +17374,45 @@ var Attribute = function () {
     function Attribute() {
         (0, _classCallCheck3.default)(this, Attribute);
 
-        this._handlers = [];
+        /**
+         * List of functions that is listening changing values.
+         */
+        this._observers = [];
     }
+    /**
+     * Goml tree interface which contains the component this attribute bound to.
+     * @return {IGomlInterface} [description]
+     */
+
 
     (0, _createClass3.default)(Attribute, [{
         key: "addObserver",
+
+        /**
+         * Add event handler to observe changing this attribute.
+         * @param  {(attr: Attribute) => void} handler handler the handler you want to add.
+         * @param {boolean = false} callFirst whether that handler should be called first time.
+         */
         value: function addObserver(handler) {
             var callFirst = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
 
-            this._handlers.push(handler);
+            this._observers.push(handler);
             if (callFirst) {
                 handler(this);
             }
         }
+        /**
+         * Remove event handler you added.
+         * @param  {Attribute} handler [description]
+         * @return {[type]}            [description]
+         */
+
     }, {
         key: "removeObserver",
         value: function removeObserver(handler) {
             var index = -1;
-            for (var i = 0; i < this._handlers.length; i++) {
-                if (handler === this._handlers[i]) {
+            for (var i = 0; i < this._observers.length; i++) {
+                if (handler === this._observers[i]) {
                     index = i;
                     break;
                 }
@@ -17403,7 +17420,7 @@ var Attribute = function () {
             if (index < 0) {
                 return;
             }
-            this._handlers.splice(index, 1);
+            this._observers.splice(index, 1);
         }
         /**
          * Bind converted value to specified field.
@@ -17438,7 +17455,7 @@ var Attribute = function () {
                 this.Value = tagAttrValue; // Dom指定値で解決
                 return;
             }
-            var nodeDefaultValue = this.component.node.nodeDeclaration.defaultAttributes.get(this.name);
+            var nodeDefaultValue = this.component.node.nodeDeclaration.defaultAttributesActual.get(this.name);
             if (nodeDefaultValue !== void 0) {
                 this.Value = nodeDefaultValue; // Node指定値で解決
                 return;
@@ -17451,7 +17468,7 @@ var Attribute = function () {
         value: function _notifyChange() {
             var _this34 = this;
 
-            this._handlers.forEach(function (handler) {
+            this._observers.forEach(function (handler) {
                 handler(_this34);
             });
         }
@@ -17460,6 +17477,11 @@ var Attribute = function () {
         get: function get() {
             return this.component.tree;
         }
+        /**
+         * Companion map which is bounding to the component this attribute bound to.
+         * @return {NSDictionary<any>} [description]
+         */
+
     }, {
         key: "companion",
         get: function get() {
@@ -17784,8 +17806,15 @@ var ComponentDeclaration = function () {
         (0, _classCallCheck3.default)(this, ComponentDeclaration);
 
         this.name = name;
-        this.ctor = ctor;
         this.attributes = attributes;
+        this.ctor = ctor;
+        // if (this.attributes["enabled"]) {//TODO implements enabled
+        //   throw new Error("attribute 'enabled' is already defined by default.");
+        // }
+        // this.attributes["enabled"] = {
+        //   converter: "Boolean",
+        //   defaultValue: true
+        // };
     }
 
     (0, _createClass3.default)(ComponentDeclaration, [{
@@ -17944,12 +17973,12 @@ var NSSet = function () {
 }();
 
 var NodeDeclaration = function () {
-    function NodeDeclaration(name, _defaultComponents, _defaultAttributes, superNode, _treeConstraints) {
+    function NodeDeclaration(name, defaultComponents, defaultAttributes, superNode, _treeConstraints) {
         (0, _classCallCheck3.default)(this, NodeDeclaration);
 
         this.name = name;
-        this._defaultComponents = _defaultComponents;
-        this._defaultAttributes = _defaultAttributes;
+        this.defaultComponents = defaultComponents;
+        this.defaultAttributes = defaultAttributes;
         this.superNode = superNode;
         this._treeConstraints = _treeConstraints;
         if (!this.superNode && this.name.name.toUpperCase() !== "GRIMOIRENODEBASE") {
@@ -17961,7 +17990,7 @@ var NodeDeclaration = function () {
         key: "addDefaultComponent",
         value: function addDefaultComponent(componentName) {
             var componentId = Ensure.ensureTobeNSIdentity(componentName);
-            this._defaultComponents.push(componentId);
+            this.defaultComponents.push(componentId);
             if (this._defaultComponentsActual) {
                 this._defaultComponentsActual.push(componentId);
             }
@@ -17970,18 +17999,18 @@ var NodeDeclaration = function () {
         key: "_resolveInherites",
         value: function _resolveInherites() {
             if (!this.superNode) {
-                this._defaultComponentsActual = this._defaultComponents;
-                this._defaultAttributesActual = this._defaultAttributes;
+                this._defaultComponentsActual = this.defaultComponents;
+                this._defaultAttributesActual = this.defaultAttributes;
                 return;
             }
             var superNode = obtainGomlInterface.nodeDeclarations.get(this.superNode);
-            var inheritedDefaultComponents = superNode.defaultComponents;
-            var inheritedDefaultAttribute = superNode.defaultAttributes;
-            this._defaultComponentsActual = inheritedDefaultComponents.clone().merge(this._defaultComponents);
-            this._defaultAttributesActual = inheritedDefaultAttribute.clone().pushDictionary(this._defaultAttributes);
+            var inheritedDefaultComponents = superNode.defaultComponentsActual;
+            var inheritedDefaultAttribute = superNode.defaultAttributesActual;
+            this._defaultComponentsActual = inheritedDefaultComponents.clone().merge(this.defaultComponents);
+            this._defaultAttributesActual = inheritedDefaultAttribute.clone().pushDictionary(this.defaultAttributes);
         }
     }, {
-        key: "defaultComponents",
+        key: "defaultComponentsActual",
         get: function get() {
             if (!this._defaultComponentsActual) {
                 this._resolveInherites();
@@ -17989,7 +18018,7 @@ var NodeDeclaration = function () {
             return this._defaultComponentsActual;
         }
     }, {
-        key: "defaultAttributes",
+        key: "defaultAttributesActual",
         get: function get() {
             if (!this._defaultAttributesActual) {
                 this._resolveInherites();
@@ -18576,7 +18605,7 @@ var GomlNode = function (_EEObject) {
     (0, _inherits3.default)(GomlNode, _EEObject);
 
     /**
-     * 新しいインスタンスの作成
+     * create new instance.
      * @param  {NodeDeclaration} recipe  作成するノードのDeclaration
      * @param  {Element}         element 対応するDomElement
      * @return {[type]}                  [description]
@@ -18607,10 +18636,10 @@ var GomlNode = function (_EEObject) {
         _this43._components = [];
         _this43.attributes = new NSDictionary();
         _this43.element.setAttribute("x-gr-id", _this43.id);
-        var defaultComponentNames = recipe.defaultComponents;
+        var defaultComponentNames = recipe.defaultComponentsActual;
         // instanciate default components
         defaultComponentNames.toArray().map(function (id) {
-            _this43.addComponent(id, true);
+            _this43.addComponent(id, null, true);
         });
         // register to GrimoireInterface.
         obtainGomlInterface.nodeDictionary[_this43.id] = _this43;
@@ -18625,12 +18654,26 @@ var GomlNode = function (_EEObject) {
 
     (0, _createClass3.default)(GomlNode, [{
         key: "getChildrenByClass",
+
+        /**
+         * search from children node by class property.
+         * return all nodes has same class as given.
+         * @param  {string}     className [description]
+         * @return {GomlNode[]}           [description]
+         */
         value: function getChildrenByClass(className) {
             var nodes = this.element.getElementsByClassName(className);
             return new Array(nodes.length).map(function (v, i) {
                 return GomlNode.fromElement(nodes.item(i));
             });
         }
+        /**
+         * search from children node by name property.
+         * return all nodes has same name as given.
+         * @param  {string}     nodeName [description]
+         * @return {GomlNode[]}          [description]
+         */
+
     }, {
         key: "getChildrenByNodeName",
         value: function getChildrenByNodeName(nodeName) {
@@ -18640,7 +18683,8 @@ var GomlNode = function (_EEObject) {
             });
         }
         /**
-         * ノードを削除する。使わなくなったら呼ぶ。子要素も再帰的に削除する。
+         * detach and delete this node and children.
+         * call when this node will never use.
          */
 
     }, {
@@ -18660,6 +18704,14 @@ var GomlNode = function (_EEObject) {
             }
             this._deleted = true;
         }
+        /**
+         * send message to this node.
+         * invoke component method has same name as message if this node isActive.
+         * @param  {string}  message [description]
+         * @param  {any}     args    [description]
+         * @return {boolean}         is this node active.
+         */
+
     }, {
         key: "sendMessage",
         value: function sendMessage(message, args) {
@@ -18699,32 +18751,32 @@ var GomlNode = function (_EEObject) {
             }
         }
         /**
-         * 指定したノード名と属性で生成されたノードの新しいインスタンスを、このノードの子要素として追加
+         * add new instance created by given name and attributes for this node as child.
          * @param {string |   NSIdentity} nodeName      [description]
          * @param {any    }} attributes   [description]
          */
 
     }, {
-        key: "addNode",
-        value: function addNode(nodeName, attributes) {
+        key: "addChildByName",
+        value: function addChildByName(nodeName, attributes) {
             if (typeof nodeName === "string") {
-                this.addNode(new NSIdentity(nodeName), attributes);
+                this.addChildByName(new NSIdentity(nodeName), attributes);
             } else {
                 var nodeDec = obtainGomlInterface.nodeDeclarations.get(nodeName);
                 var node = new GomlNode(nodeDec, null);
                 if (attributes) {
                     for (var key in attributes) {
                         var id = key.indexOf("|") !== -1 ? NSIdentity.fromFQN(key) : new NSIdentity(key);
-                        node.attr(id, attributes[key]);
+                        node.setValue(id, attributes[key]);
                     }
                 }
                 this.addChild(node);
             }
         }
         /**
-         * Add child.
-         * @param {GomlNode} child            追加する子ノード
-         * @param {number}   index            追加位置。なければ末尾に追加
+         * Add child for this node.
+         * @param {GomlNode} child            child node to add.
+         * @param {number}   index            index for insert.なければ末尾に追加
          * @param {[type]}   elementSync=true trueのときはElementのツリーを同期させる。（Elementからパースするときはfalseにする）
          */
 
@@ -18764,8 +18816,8 @@ var GomlNode = function (_EEObject) {
                 var referenceElement = this.element[NodeUtility.getNodeListIndexByElementIndex(this.element, insertIndex)];
                 this.element.insertBefore(child.element, referenceElement);
             }
-            child._tree = this.tree;
-            child._companion = this.companion;
+            child._tree = this._tree;
+            child._companion = this._companion;
             // mounting
             if (this.mounted) {
                 child.setMounted(true);
@@ -18779,7 +18831,7 @@ var GomlNode = function (_EEObject) {
             });
         }
         /**
-         * デタッチしてdeleteする。
+         * delete child node.
          * @param {GomlNode} child Target node to be inserted.
          */
 
@@ -18792,9 +18844,10 @@ var GomlNode = function (_EEObject) {
             }
         }
         /**
-         * 指定したノードが子要素なら子要素から外す。
+         * detach given node from this node if target is child of this node.
+         * return null if target is not child of this node.
          * @param  {GomlNode} child [description]
-         * @return {GomlNode}       [description]
+         * @return {GomlNode}       detached node.
          */
 
     }, {
@@ -18829,7 +18882,7 @@ var GomlNode = function (_EEObject) {
             return target;
         }
         /**
-         * detach myself
+         * detach this node from parent.
          */
 
     }, {
@@ -18841,32 +18894,44 @@ var GomlNode = function (_EEObject) {
                 throw new Error("root Node cannot be detached.");
             }
         }
+        /**
+         * get value of attribute.
+         * @param  {string | NSIdentity}  attrName [description]
+         * @return {any}         [description]
+         */
+
     }, {
-        key: "attr",
-        value: function attr(attrName, value) {
+        key: "getValue",
+        value: function getValue(attrName) {
             attrName = Ensure.ensureTobeNSIdentity(attrName);
             var attr = this.attributes.get(attrName);
-            if (value !== void 0) {
-                // setValue.
-                if (!attr) {
-                    console.warn("attribute \"" + attrName.name + "\" is not found.");
-                    this._attrBuffer[attrName.fqn] = value;
-                } else {
-                    attr.Value = value;
+            if (!attr) {
+                var attrBuf = this._attrBuffer[attrName.fqn];
+                if (attrBuf !== void 0) {
+                    return attrBuf;
                 }
+                console.warn("attribute \"" + attrName.name + "\" is not found.");
+                return;
             } else {
-                // getValue.
-                if (!attr) {
-                    var attrBuf = this._attrBuffer[attrName.fqn];
-                    if (attrBuf !== void 0) {
-                        console.log("get attrBuf!");
-                        return attrBuf;
-                    }
-                    console.warn("attribute \"" + attrName.name + "\" is not found.");
-                    return;
-                } else {
-                    return attr.Value;
-                }
+                return attr.Value;
+            }
+        }
+        /**
+         * set value to selected attribute.
+         * @param {string |     NSIdentity}  attrName [description]
+         * @param {any}       value [description]
+         */
+
+    }, {
+        key: "setValue",
+        value: function setValue(attrName, value) {
+            attrName = Ensure.ensureTobeNSIdentity(attrName);
+            var attr = this.attributes.get(attrName);
+            if (!attr) {
+                console.warn("attribute \"" + attrName.name + "\" is not found.");
+                this._attrBuffer[attrName.fqn] = value;
+            } else {
+                attr.Value = value;
             }
         }
         /**
@@ -18926,23 +18991,33 @@ var GomlNode = function (_EEObject) {
         value: function index() {
             return this._parent.children.indexOf(this);
         }
+        /**
+         * remove attribute from this node.
+         * @param {Attribute} attr [description]
+         */
+
     }, {
         key: "removeAttribute",
         value: function removeAttribute(attr) {
             this.attributes.delete(attr.name);
         }
         /**
-         * このノードにコンポーネントをアタッチする。
+         * attach component to this node.
          * @param {Component} component [description]
          */
 
     }, {
         key: "addComponent",
         value: function addComponent(component) {
-            var isDefaultComponent = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+            var attributes = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+            var isDefaultComponent = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
 
             var declaration = obtainGomlInterface.componentDeclarations.get(component);
             var instance = declaration.generateInstance();
+            attributes = attributes || {};
+            for (var key in attributes) {
+                instance.setValue(key, attributes[key]);
+            }
             this._addComponentDirectly(instance, isDefaultComponent);
             return instance;
         }
@@ -18994,6 +19069,12 @@ var GomlNode = function (_EEObject) {
         value: function getComponents() {
             return this._components;
         }
+        /**
+         * search component by name from this node.
+         * @param  {string | NSIdentity}  name [description]
+         * @return {Component}   component found first.
+         */
+
     }, {
         key: "getComponent",
         value: function getComponent(name) {
@@ -19013,6 +19094,7 @@ var GomlNode = function (_EEObject) {
             return null;
         }
         /**
+         * resolve default attribute value for all component.
          * すべてのコンポーネントの属性をエレメントかデフォルト値で初期化
          */
 
@@ -19027,7 +19109,7 @@ var GomlNode = function (_EEObject) {
             });
         }
         /**
-         * このノードのtreeConstrainが満たされるか調べる
+         * check tree constraint for this node.
          * @return {string[]} [description]
          */
 
@@ -19179,24 +19261,44 @@ var GomlNode = function (_EEObject) {
         }
     }, {
         key: "name",
+
+        /**
+         * Tag name.
+         */
         get: function get() {
             return this.nodeDeclaration.name;
         }
         /**
-         * このノードの属するツリーのGomlInterface。unmountedならnull。
+         * GomlInterface that this node is bound to.
+         * throw exception if this node is not mounted.
          * @return {IGomlInterface} [description]
          */
 
     }, {
         key: "tree",
         get: function get() {
+            if (!this.mounted) {
+                throw new Error("this node is not mounted");
+            }
             return this._tree;
         }
+        /**
+         * indicate this node is already deleted.
+         * if this node is deleted once, this node will not be mounted.
+         * @return {boolean} [description]
+         */
+
     }, {
         key: "deleted",
         get: function get() {
             return this._deleted;
         }
+        /**
+         * indicate this node is enabled in tree.
+         * This value must be false when ancestor of this node is disabled.
+         * @return {boolean} [description]
+         */
+
     }, {
         key: "isActive",
         get: function get() {
@@ -19206,16 +19308,22 @@ var GomlNode = function (_EEObject) {
                 return this.enabled;
             }
         }
+        /**
+         * indicate this node is enabled.
+         * this node never recieve any message if this node is not enabled.
+         * @return {boolean} [description]
+         */
+
     }, {
         key: "enabled",
         get: function get() {
-            return this.attr("enabled");
+            return this.getValue("enabled");
         },
         set: function set(value) {
-            this.attr("enabled", value);
+            this.setValue("enabled", value);
         }
         /**
-         * ツリーで共有されるオブジェクト。マウントされていない状態ではnull。
+         * the shared object by all nodes in tree.
          * @return {NSDictionary<any>} [description]
          */
 
@@ -19224,23 +19332,31 @@ var GomlNode = function (_EEObject) {
         get: function get() {
             return this._companion;
         }
-    }, {
-        key: "nodeName",
-        get: function get() {
-            return this.nodeDeclaration.name;
-        }
+        /**
+         * parent node of this node.
+         * if this node is root, return null.
+         * @return {GomlNode} [description]
+         */
+
     }, {
         key: "parent",
         get: function get() {
             return this._parent;
         }
+        /**
+         * return true if this node has some child nodes.
+         * @return {boolean} [description]
+         */
+
     }, {
         key: "hasChildren",
         get: function get() {
             return this.children.length > 0;
         }
         /**
-         * Get mounted status.
+         * indicate mounted status.
+         * this property to be true when treeroot registered to GrimoireInterface.
+         * to be false when this node detachd from the tree.
          * @return {boolean} Whether this node is mounted or not.
          */
 
@@ -19441,18 +19557,6 @@ var ComponentInterface = function () {
                 });
             }
         }
-    }, {
-        key: "on",
-        value: function on() {
-            // TODO implement
-            return;
-        }
-    }, {
-        key: "off",
-        value: function off() {
-            // TODO implement
-            return;
-        }
     }]);
     return ComponentInterface;
 }();
@@ -19519,23 +19623,24 @@ var NodeInterface = function () {
             }
         }
     }, {
-        key: "attr",
-        value: function attr(attrName, value) {
-            if (value === void 0) {
-                // return Attribute.
-                return this.nodes[0][0].attributes.get(attrName).Value;
-            } else {
-                // set value.
-                this.forEach(function (node) {
-                    var attr = node.attributes.get(attrName);
-                    if (attr.declaration.readonly) {
-                        throw new Error("The attribute " + attr.name.fqn + " is readonly");
-                    }
-                    if (attr) {
-                        attr.Value = value;
-                    }
-                });
+        key: "getAttribute",
+        value: function getAttribute(attrName) {
+            if (this.nodes.length > 0 && this.nodes[0].length > 0) {
+                throw new Error("node interface is empty.");
             }
+        }
+    }, {
+        key: "setAttribute",
+        value: function setAttribute(attrName, value) {
+            this.forEach(function (node) {
+                var attr = node.attributes.get(attrName);
+                if (attr.declaration.readonly) {
+                    throw new Error("The attribute " + attr.name.fqn + " is readonly");
+                }
+                if (attr) {
+                    attr.Value = value;
+                }
+            });
         }
         /**
          * 対象ノードにイベントリスナを追加します。
@@ -19671,7 +19776,7 @@ var NodeInterface = function () {
         key: "addCompnent",
         value: function addCompnent(componentId) {
             this.forEach(function (node) {
-                node.addComponent(componentId, false);
+                node.addComponent(componentId);
             });
             return this;
         }
@@ -19919,8 +20024,8 @@ var GrimoireInterfaceImpl = function () {
                 ownerScriptTag: tag,
                 id: rootNode.id
             });
-            this._onTreeInitialized(tag);
             tag.setAttribute("x-rootNodeId", rootNode.id);
+            this._onTreeInitialized(tag);
             return rootNode.id;
         }
     }, {
@@ -20424,7 +20529,7 @@ var AssetLoadingManagerComponent = function (_Component2) {
                                     this._loaderElement.remove();
                                 }
                                 this.node.emit("asset-load-completed");
-                                this.tree("goml").attr("loopEnabled", true);
+                                this.tree("goml").setAttribute("loopEnabled", true);
 
                             case 5:
                             case "end":
@@ -21702,6 +21807,7 @@ var MaterialContainerComponent = function (_Component12) {
 
         _this74.materialArgs = {};
         _this74.ready = false;
+        _this74.useMaterial = false;
         return _this74;
     }
 
@@ -21726,13 +21832,23 @@ var MaterialContainerComponent = function (_Component12) {
                             case 0:
                                 materialPromise = this.getValue("material");
 
+                                if (!(materialPromise === void 0)) {
+                                    _context98.next = 4;
+                                    break;
+                                }
+
+                                this.useMaterial = false;
+                                return _context98.abrupt("return");
+
+                            case 4:
+                                this.useMaterial = true;
                                 if (!this._materialComponent) {
                                     this._prepareInternalMaterial(materialPromise);
                                 } else {
                                     this._prepareExternalMaterial(materialPromise);
                                 }
 
-                            case 2:
+                            case 6:
                             case "end":
                                 return _context98.stop();
                         }
@@ -21814,7 +21930,10 @@ var MaterialContainerComponent = function (_Component12) {
                                             _this75.attributes.get(key).addObserver(function (v) {
                                                 _this75.materialArgs[key] = v.Value;
                                             });
-                                            _this75.materialArgs[key] = _this75.getValue(key);
+                                            var value = _this75.materialArgs[key] = _this75.getValue(key);
+                                            if (value instanceof ResourceBase) {
+                                                promises.push(value.validPromise);
+                                            }
                                         };
 
                                         for (var key in p.programInfo.gomlAttributes) {
@@ -21822,14 +21941,11 @@ var MaterialContainerComponent = function (_Component12) {
                                         }
                                     }
                                 });
-                                _context100.next = 11;
-                                return _promise2.default.all(promises);
-
-                            case 11:
+                                _promise2.default.all(promises);
                                 this.material = material;
                                 this.ready = true;
 
-                            case 13:
+                            case 12:
                             case "end":
                                 return _context100.stop();
                         }
@@ -22225,7 +22341,7 @@ var RendererComponent = function (_Component18) {
             this._viewportCache = this._viewportSizeGenerator(this._canvas);
             var newSizes = this._getSizePowerOf2(this._viewportCache.Width, this._viewportCache.Height);
             if (this.node.children.length === 0) {
-                this.node.addNode("render-scene", {});
+                this.node.addChildByName("render-scene", {});
             }
             this.node.broadcastMessage("resizeBuffer", {
                 widthPowerOf2: newSizes.width,
@@ -22298,7 +22414,7 @@ var RendererManagerComponent = function (_Component19) {
         value: function $treeInitialized() {
             this.node.getComponent("LoopManager").register(this.onloop.bind(this), 1000);
             if (this.getValue("complementRenderer") && this.node.getChildrenByNodeName("renderer").length === 0) {
-                this.node.addNode("renderer", {});
+                this.node.addChildByName("renderer", {});
             }
         }
     }, {
@@ -22499,25 +22615,14 @@ var RenderSceneComponent = function (_Component21) {
     (0, _inherits3.default)(RenderSceneComponent, _Component21);
 
     function RenderSceneComponent() {
-        var _ref12;
-
         (0, _classCallCheck3.default)(this, RenderSceneComponent);
-
-        for (var _len12 = arguments.length, args = Array(_len12), _key12 = 0; _key12 < _len12; _key12++) {
-            args[_key12] = arguments[_key12];
-        }
-
-        var _this87 = (0, _possibleConstructorReturn3.default)(this, (_ref12 = RenderSceneComponent.__proto__ || (0, _getPrototypeOf2.default)(RenderSceneComponent)).call.apply(_ref12, [this].concat(args)));
-
-        _this87._useMaterial = false;
-        _this87._materialArgs = {};
-        return _this87;
+        return (0, _possibleConstructorReturn3.default)(this, (RenderSceneComponent.__proto__ || (0, _getPrototypeOf2.default)(RenderSceneComponent)).apply(this, arguments));
     }
-    // messages
-
 
     (0, _createClass3.default)(RenderSceneComponent, [{
         key: "$awake",
+
+        // messages
         value: function $awake() {
             this.getAttribute("layer").boundTo("_layer");
             this.getAttribute("clearColor").boundTo("_clearColor");
@@ -22531,10 +22636,7 @@ var RenderSceneComponent = function (_Component21) {
         value: function $mount() {
             this._gl = this.companion.get("gl");
             this._canvas = this.companion.get("canvasElement");
-            if (typeof this.getValue("material") !== "undefined") {
-                this._onMaterialChanged();
-                this._useMaterial = true;
-            }
+            this._materialContainer = this.node.getComponent("MaterialContainer");
         }
     }, {
         key: "$bufferUpdated",
@@ -22573,119 +22675,17 @@ var RenderSceneComponent = function (_Component21) {
                 this._gl.clear(WebGLRenderingContext.DEPTH_BUFFER_BIT);
             }
             args.camera.updateContainedScene(args.loopIndex);
+            var useMaterial = this._materialContainer.useMaterial;
             args.camera.renderScene({
                 caller: this,
                 camera: camera,
                 buffers: args.buffers,
                 layer: this._layer,
                 viewport: args.viewport,
-                material: this._useMaterial ? this._material : undefined,
-                materialArgs: this._useMaterial ? this._materialArgs : undefined,
+                material: useMaterial ? this._materialContainer.material : undefined,
+                materialArgs: useMaterial ? this._materialContainer.material : undefined,
                 loopIndex: args.loopIndex
             });
-        }
-    }, {
-        key: "_onMaterialChanged",
-        value: function _onMaterialChanged() {
-            if (!this._materialComponent) {
-                this._prepareInternalMaterial();
-            } else {
-                this._prepareExternalMaterial();
-            }
-        }
-    }, {
-        key: "_prepareExternalMaterial",
-        value: function _prepareExternalMaterial() {
-            return __awaiter(this, void 0, void 0, _regenerator2.default.mark(function _callee26() {
-                var materialPromise, loader, material;
-                return _regenerator2.default.wrap(function _callee26$(_context101) {
-                    while (1) {
-                        switch (_context101.prev = _context101.next) {
-                            case 0:
-                                materialPromise = this.getValue("material");
-                                loader = this.companion.get("loader");
-
-                                loader.register(materialPromise);
-                                _context101.next = 5;
-                                return materialPromise;
-
-                            case 5:
-                                material = _context101.sent;
-
-                                this._material = material;
-
-                            case 7:
-                            case "end":
-                                return _context101.stop();
-                        }
-                    }
-                }, _callee26, this);
-            }));
-        }
-    }, {
-        key: "_prepareInternalMaterial",
-        value: function _prepareInternalMaterial() {
-            return __awaiter(this, void 0, void 0, _regenerator2.default.mark(function _callee27() {
-                var _this88 = this;
-
-                var materialPromise, loader, material, promises;
-                return _regenerator2.default.wrap(function _callee27$(_context102) {
-                    while (1) {
-                        switch (_context102.prev = _context102.next) {
-                            case 0:
-                                // obtain promise of instanciating material
-                                materialPromise = this.getValue("material");
-                                loader = this.companion.get("loader");
-
-                                loader.register(materialPromise);
-
-                                if (materialPromise) {
-                                    _context102.next = 5;
-                                    break;
-                                }
-
-                                return _context102.abrupt("return");
-
-                            case 5:
-                                _context102.next = 7;
-                                return materialPromise;
-
-                            case 7:
-                                material = _context102.sent;
-                                promises = [];
-
-                                material.pass.forEach(function (p) {
-                                    if (p instanceof SORTPass) {
-                                        var _loop8 = function _loop8(key) {
-                                            var val = p.programInfo.gomlAttributes[key];
-                                            _this88.__addAtribute(key, val);
-                                            _this88.attributes.get(key).addObserver(function (v) {
-                                                _this88._materialArgs[key] = v.Value;
-                                            });
-                                            var value = _this88._materialArgs[key] = _this88.getValue(key);
-                                            if (value instanceof ResourceBase) {
-                                                promises.push(value.validPromise);
-                                            }
-                                        };
-
-                                        for (var key in p.programInfo.gomlAttributes) {
-                                            _loop8(key);
-                                        }
-                                    }
-                                });
-                                _context102.next = 12;
-                                return _promise2.default.all(promises);
-
-                            case 12:
-                                this._material = material;
-
-                            case 13:
-                            case "end":
-                                return _context102.stop();
-                        }
-                    }
-                }, _callee27, this);
-            }));
         }
     }]);
     return RenderSceneComponent;
@@ -22719,11 +22719,6 @@ RenderSceneComponent.attributes = {
     clearDepth: {
         defaultValue: 1.0,
         converter: "Number"
-    },
-    material: {
-        defaultValue: undefined,
-        converter: "Material",
-        componentBoundTo: "_materialComponent"
     },
     camera: {
         defaultValue: undefined,
@@ -22820,7 +22815,7 @@ var TextureComponent = function (_Component23) {
     (0, _createClass3.default)(TextureComponent, [{
         key: "$mount",
         value: function $mount() {
-            var _this92 = this;
+            var _this91 = this;
 
             var src = this.getValue("src");
             this._texture = new Texture2D(this.companion.get("gl"));
@@ -22829,16 +22824,16 @@ var TextureComponent = function (_Component23) {
             this._texture.wrapT = this.getValue("wrapT");
             this._texture.wrapS = this.getValue("wrapS");
             this.attributes.get("magFilter").addObserver(function (v) {
-                return _this92._texture.magFilter = v.Value;
+                return _this91._texture.magFilter = v.Value;
             });
             this.attributes.get("minFilter").addObserver(function (v) {
-                return _this92._texture.minFilter = v.Value;
+                return _this91._texture.minFilter = v.Value;
             });
             this.attributes.get("wrapS").addObserver(function (v) {
-                return _this92._texture.wrapS = v.Value;
+                return _this91._texture.wrapS = v.Value;
             });
             this.attributes.get("wrapT").addObserver(function (v) {
-                return _this92._texture.wrapT = v.Value;
+                return _this91._texture.wrapT = v.Value;
             });
             if (src) {
                 this._loadTask(src);
@@ -22847,26 +22842,26 @@ var TextureComponent = function (_Component23) {
     }, {
         key: "_loadTask",
         value: function _loadTask(src) {
-            return __awaiter(this, void 0, void 0, _regenerator2.default.mark(function _callee28() {
+            return __awaiter(this, void 0, void 0, _regenerator2.default.mark(function _callee26() {
                 var img;
-                return _regenerator2.default.wrap(function _callee28$(_context103) {
+                return _regenerator2.default.wrap(function _callee26$(_context101) {
                     while (1) {
-                        switch (_context103.prev = _context103.next) {
+                        switch (_context101.prev = _context101.next) {
                             case 0:
-                                _context103.next = 2;
+                                _context101.next = 2;
                                 return ImageResolver$1.resolve(src);
 
                             case 2:
-                                img = _context103.sent;
+                                img = _context101.sent;
 
                                 this._texture.update(img);
 
                             case 4:
                             case "end":
-                                return _context103.stop();
+                                return _context101.stop();
                         }
                     }
-                }, _callee28, this);
+                }, _callee26, this);
             }));
         }
     }]);
@@ -22926,52 +22921,52 @@ var TransformComponent = function (_Component24) {
     (0, _inherits3.default)(TransformComponent, _Component24);
 
     function TransformComponent() {
-        var _ref13;
+        var _ref12;
 
         (0, _classCallCheck3.default)(this, TransformComponent);
 
-        for (var _len13 = arguments.length, args = Array(_len13), _key13 = 0; _key13 < _len13; _key13++) {
-            args[_key13] = arguments[_key13];
+        for (var _len12 = arguments.length, args = Array(_len12), _key12 = 0; _key12 < _len12; _key12++) {
+            args[_key12] = arguments[_key12];
         }
 
         /**
          * Local transform matrix representing scaling,rotation and translation of attached object.
          * @return {[type]} [description]
          */
-        var _this93 = (0, _possibleConstructorReturn3.default)(this, (_ref13 = TransformComponent.__proto__ || (0, _getPrototypeOf2.default)(TransformComponent)).call.apply(_ref13, [this].concat(args)));
+        var _this92 = (0, _possibleConstructorReturn3.default)(this, (_ref12 = TransformComponent.__proto__ || (0, _getPrototypeOf2.default)(TransformComponent)).call.apply(_ref12, [this].concat(args)));
 
-        _this93.localTransform = new Matrix();
+        _this92.localTransform = new Matrix();
         /**
          * Global transform that consider parent transform and local transform
          * @return {[type]} [description]
          */
-        _this93.globalTransform = new Matrix();
+        _this92.globalTransform = new Matrix();
         /**
          * The children transform should be notified when this transform was updated.
          * @type {TransformComponent[]}
          */
-        _this93._children = [];
+        _this92._children = [];
         /**
          * Calculation cache to
          * @return {[type]} [description]
          */
-        _this93._cachePVM = new Matrix();
-        _this93._cacheVM = new Matrix();
+        _this92._cachePVM = new Matrix();
+        _this92._cacheVM = new Matrix();
         /**
          * Cache of forward direction of this object
          */
-        _this93._forward = new Vector3([0, 0, -1, 0]);
+        _this92._forward = new Vector3([0, 0, -1, 0]);
         /**
          * Cache of up direction of this object.
          */
-        _this93._up = new Vector3([0, 1, 0, 0]);
+        _this92._up = new Vector3([0, 1, 0, 0]);
         /**
          * Cache of right direction of this object.
          */
-        _this93._right = new Vector3([1, 0, 0, 0]);
-        _this93._globalPosition = new Vector3([0, 0, 0]);
-        _this93._globalScale = new Vector3([1, 1, 1]);
-        return _this93;
+        _this92._right = new Vector3([1, 0, 0, 0]);
+        _this92._globalPosition = new Vector3([0, 0, 0]);
+        _this92._globalScale = new Vector3([1, 1, 1]);
+        return _this92;
     }
 
     (0, _createClass3.default)(TransformComponent, [{
@@ -22989,20 +22984,20 @@ var TransformComponent = function (_Component24) {
     }, {
         key: "$awake",
         value: function $awake() {
-            var _this94 = this;
+            var _this93 = this;
 
             // register observers
             this.attributes.get("position").addObserver(function () {
-                _this94._localPosition = _this94.attributes.get("position").Value;
-                _this94.updateTransform();
+                _this93._localPosition = _this93.attributes.get("position").Value;
+                _this93.updateTransform();
             });
             this.attributes.get("rotation").addObserver(function () {
-                _this94._localRotation = _this94.attributes.get("rotation").Value;
-                _this94.updateTransform();
+                _this93._localRotation = _this93.attributes.get("rotation").Value;
+                _this93.updateTransform();
             });
             this.attributes.get("scale").addObserver(function () {
-                _this94._localScale = _this94.attributes.get("scale").Value;
-                _this94.updateTransform();
+                _this93._localScale = _this93.attributes.get("scale").Value;
+                _this93.updateTransform();
             });
             // assign attribute values to field
             this._localPosition = this.attributes.get("position").Value;
@@ -23371,7 +23366,7 @@ function MaterialConverter(val) {
 }
 
 function MaterialTextureConverter(val) {
-    var _this95 = this;
+    var _this94 = this;
 
     if (val instanceof Texture2D) {
         return function () {
@@ -23379,12 +23374,12 @@ function MaterialTextureConverter(val) {
         };
     }
     if (typeof val === "string") {
-        var _ret13 = function () {
+        var _ret12 = function () {
             var queryRegex = /^query\((.*)\)$/m;
             var regexResult = void 0;
             // Query texture element
             if (regexResult = queryRegex.exec(val)) {
-                var queried = _this95.tree(regexResult[1]);
+                var queried = _this94.tree(regexResult[1]);
                 throw new Error("Not implemeneted yet");
             }
             // from backbuffer
@@ -23396,11 +23391,11 @@ function MaterialTextureConverter(val) {
                     }
                 };
             }
-            var tex = new Texture2D(_this95.companion.get("gl"));
+            var tex = new Texture2D(_this94.companion.get("gl"));
             ImageResolver$1.resolve(val).then(function (t) {
                 tex.update(t);
             });
-            _this95.companion.get("loader").register(tex.validPromise);
+            _this94.companion.get("loader").register(tex.validPromise);
             return {
                 v: function v() {
                     return tex;
@@ -23408,7 +23403,7 @@ function MaterialTextureConverter(val) {
             };
         }();
 
-        if ((typeof _ret13 === "undefined" ? "undefined" : (0, _typeof3.default)(_ret13)) === "object") return _ret13.v;
+        if ((typeof _ret12 === "undefined" ? "undefined" : (0, _typeof3.default)(_ret12)) === "object") return _ret12.v;
     }
 }
 
@@ -23461,7 +23456,7 @@ function StringConverter$2(val) {
 }
 
 function Texture2DConverter(val) {
-    var _this96 = this;
+    var _this95 = this;
 
     if (typeof val === "string") {
         var regex = /^query\((.*)\)$/m;
@@ -23469,8 +23464,8 @@ function Texture2DConverter(val) {
         if (regexResult = regex.exec(val)) {
             var queried = this.tree(regexResult[1]);
         } else {
-            var _ret14 = function () {
-                var tex = new Texture2D(_this96.companion.get("gl"));
+            var _ret13 = function () {
+                var tex = new Texture2D(_this95.companion.get("gl"));
                 ImageResolver$1.resolve(val).then(function (t) {
                     tex.update(t);
                 });
@@ -23479,7 +23474,7 @@ function Texture2DConverter(val) {
                 };
             }();
 
-            if ((typeof _ret14 === "undefined" ? "undefined" : (0, _typeof3.default)(_ret14)) === "object") return _ret14.v;
+            if ((typeof _ret13 === "undefined" ? "undefined" : (0, _typeof3.default)(_ret13)) === "object") return _ret13.v;
         }
     }
 }
@@ -23530,7 +23525,7 @@ function ViewportConverter(val) {
                 return new Rectangle(0, 0, canvas.width, canvas.height);
             };
         } else {
-            var _ret15 = function () {
+            var _ret14 = function () {
                 var sizes = val.split(",");
                 if (sizes.length !== 4) {
                     throw new Error("Invalid viewport size was specified.");
@@ -23543,19 +23538,19 @@ function ViewportConverter(val) {
                 }
             }();
 
-            if ((typeof _ret15 === "undefined" ? "undefined" : (0, _typeof3.default)(_ret15)) === "object") return _ret15.v;
+            if ((typeof _ret14 === "undefined" ? "undefined" : (0, _typeof3.default)(_ret14)) === "object") return _ret14.v;
         }
     }
     throw new Error(val + " could not be parsed");
 }
 
 obtainGomlInterface.register(function () {
-    return __awaiter(undefined, void 0, void 0, _regenerator2.default.mark(function _callee29() {
+    return __awaiter(undefined, void 0, void 0, _regenerator2.default.mark(function _callee27() {
         var _$ns;
 
-        return _regenerator2.default.wrap(function _callee29$(_context104) {
+        return _regenerator2.default.wrap(function _callee27$(_context102) {
             while (1) {
-                switch (_context104.prev = _context104.next) {
+                switch (_context102.prev = _context102.next) {
                     case 0:
                         _$ns = obtainGomlInterface.ns("HTTP://GRIMOIRE.GL/NS/DEFAULT");
 
@@ -23616,17 +23611,21 @@ obtainGomlInterface.register(function () {
                         obtainGomlInterface.registerNode("import-material", ["MaterialImporter"]);
                         obtainGomlInterface.registerNode("texture-buffer", ["TextureBuffer"]);
                         obtainGomlInterface.registerNode("render-buffer", ["RenderBuffer"]);
-                        obtainGomlInterface.registerNode("render-scene", ["MaterialContainer", "RenderScene"]);
-                        obtainGomlInterface.registerNode("render-quad", ["MaterialContainer", "RenderQuad"]);
+                        obtainGomlInterface.registerNode("render-scene", ["MaterialContainer", "RenderScene"], {
+                            material: null
+                        });
+                        obtainGomlInterface.registerNode("render-quad", ["MaterialContainer", "RenderQuad"], {
+                            material: null
+                        });
                         DefaultPrimitives.register();
                         DefaultMaterial.register();
 
                     case 62:
                     case "end":
-                        return _context104.stop();
+                        return _context102.stop();
                 }
             }
-        }, _callee29, this);
+        }, _callee27, this);
     }));
 });
 
