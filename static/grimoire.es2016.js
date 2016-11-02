@@ -9206,7 +9206,7 @@ function _asGLConstants(args, length) {
     }
     return args.map(arg => {
         const value = WebGLRenderingContext[arg.toUpperCase().trim()];
-        if (value) {
+        if (value !== void 0) {
             return value;
         }
         else {

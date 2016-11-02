@@ -6,7 +6,6 @@
             <MouseCameraControl/>
           </camera.components>
         </camera>
-        <mesh geometry="cube" position="0.5,0,1" material="new(newMaterial)" color="#FF0000"/>
-        <mesh geometry="cube" position="-0.5,0,0" material="new(newMaterial)" color="#0000FF"/>
+        <mesh geometry="cube" position="0.5,0,1" material="new(newMaterial)" color="#FF0000" noise="./t11-02/noise.jpg"/>
     </scene>
 </goml>

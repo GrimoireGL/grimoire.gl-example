@@ -13705,7 +13705,7 @@ function _asGLConstants(args, length) {
     }
     return args.map(function (arg) {
         var value = WebGLRenderingContext[arg.toUpperCase().trim()];
-        if (value) {
+        if (value !== void 0) {
             return value;
         } else {
             throw new Error("Specified WebGL constant " + arg + " was not found");

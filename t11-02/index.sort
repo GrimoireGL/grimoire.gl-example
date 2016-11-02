@@ -1,0 +1,26 @@
+@Pass
+@BlendFunc(ONE,ONE)
+FS_PREC(mediump,float)
+
+varying vec2 vTexCoord;
+#ifdef VS
+  attribute vec3 position;
+  attribute vec2 texCoord;
+  uniform mat4 _matPVM;
+  void main(){
+    gl_Position = _matPVM * vec4(position,1);
+    vTexCoord = texCoord;
+  }
+#endif
+
+#ifdef FS
+  @{type:"color", default:"#381794"}
+  uniform vec4 color;
+
+  uniform sampler2D noise;
+
+  uniform float _time;
+  void main(){
+    gl_FragColor = color * texture2D(noise,vTexCoord + vec2(sin(_time/1000.)));
+  }
+#endif
