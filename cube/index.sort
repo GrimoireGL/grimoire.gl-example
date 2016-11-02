@@ -3,7 +3,7 @@
 @BlendFunc(SRC_ALPHA,ONE_MINUS_SRC_ALPHA)
 @CullFace(BACK)
 
-FS_PREC_FLOAT(mediump)
+FS_PREC(mediump,float)
 
 varying vec2 vUV;
 varying vec3 vNormal;

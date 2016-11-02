@@ -1,6 +1,6 @@
 @Pass
 
-FS_PREC_FLOAT(mediump)
+FS_PREC(mediump,float)
 varying vec2 vUV;
 
 #ifdef VS
