@@ -1,0 +1,51 @@
+@Pass
+@BlendFunc(ONE,ONE)
+@CullFace(FRONT)
+FS_PREC(mediump,float)
+
+varying vec2 vTexCoord;
+#ifdef VS
+  attribute vec3 position;
+  attribute vec2 texCoord;
+  uniform mat4 _matPVM;
+  @{default:1.1}
+  uniform float edgeScaling;
+  void main(){
+    gl_Position = _matPVM * vec4(position * edgeScaling,1);
+    vTexCoord = texCoord;
+  }
+#endif
+
+#ifdef FS
+  @{type:"color"}
+  uniform vec4 edgeColor;
+
+  void main(){
+    gl_FragColor = edgeColor;
+  }
+#endif
+
+@Pass
+@BlendFunc(ONE,ONE)
+@CullFace(BACK)
+FS_PREC(mediump,float)
+
+varying vec2 vTexCoord;
+#ifdef VS
+  attribute vec3 position;
+  attribute vec2 texCoord;
+  uniform mat4 _matPVM;
+  void main(){
+    gl_Position = _matPVM * vec4(position,1);
+    vTexCoord = texCoord;
+  }
+#endif
+
+#ifdef FS
+  @{type:"color"}
+  uniform vec4 color;
+
+  void main(){
+    gl_FragColor = color;
+  }
+#endif
