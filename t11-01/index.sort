@@ -1,4 +1,5 @@
 @Pass
+@BlendFunc(ONE,ONE)
 FS_PREC(mediump,float)
 #ifdef VS
   attribute vec3 position;
