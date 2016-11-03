@@ -1,6 +1,8 @@
 gr(function() {
     var $$ = gr("#main");
-    setTimeout(function(){
-      $$("scene").append('<mesh geometry="cube" position="0,1,0" color="green" />');
-    },1000);
+        for (var i = -5; i < 5; i++) {
+            for (var j = -5; j < 5; j++) {
+                $$("scene").append(`<mesh geometry="quad" scale="0.4" position="${i},${j},0" color="brown" />`);
+            }
+        }
 });
