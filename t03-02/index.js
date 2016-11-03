@@ -1,6 +1,6 @@
 gr(function() {
     var $$ = gr("#main");
     setTimeout(function(){
-      $$("mesh").setAttribute("position", "3,0,0");
+      $$("scene").append('<mesh geometry="cube" position="0,1,0" color="green" />');
     },1000);
 });
