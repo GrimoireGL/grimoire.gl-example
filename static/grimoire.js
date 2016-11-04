@@ -18929,7 +18929,7 @@ var GomlNode = function (_EEObject) {
             }
         }
         /**
-         * get value of attribute.
+         * [[[OBSOLETE!]]]get value of attribute.
          * @param  {string | NSIdentity}  attrName [description]
          * @return {any}         [description]
          */
@@ -19363,10 +19363,10 @@ var GomlNode = function (_EEObject) {
     }, {
         key: "enabled",
         get: function get() {
-            return this.getValue("enabled");
+            return this.getAttribute("enabled");
         },
         set: function set(value) {
-            this.setValue("enabled", value);
+            this.setAttribute("enabled", value);
         }
         /**
          * the shared object by all nodes in tree.

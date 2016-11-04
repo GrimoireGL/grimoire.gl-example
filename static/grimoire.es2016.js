@@ -12034,10 +12034,10 @@ class GomlNode extends EEObject {
      * @return {boolean} [description]
      */
     get enabled() {
-        return this.getValue("enabled");
+        return this.getAttribute("enabled");
     }
     set enabled(value) {
-        this.setValue("enabled", value);
+        this.setAttribute("enabled", value);
     }
     /**
      * the shared object by all nodes in tree.
@@ -12260,7 +12260,7 @@ class GomlNode extends EEObject {
         }
     }
     /**
-     * get value of attribute.
+     * [[[OBSOLETE!]]]get value of attribute.
      * @param  {string | NSIdentity}  attrName [description]
      * @return {any}         [description]
      */
