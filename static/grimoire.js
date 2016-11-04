@@ -4293,7 +4293,7 @@ var Program = function (_ResourceBase2) {
         value: function findAttributeLocation(variableName) {
             if (typeof this._attributeLocations[variableName] === "undefined") {
                 this._attributeLocations[variableName] = this.gl.getAttribLocation(this.program, variableName);
-                this.gl.enableVertexAttribArray(this._attributeLocations[variableName]);
+                this._safeEnableVertexAttribArray(this._attributeLocations[variableName]);
                 return this._attributeLocations[variableName];
             } else {
                 return this._attributeLocations[variableName];
@@ -4307,6 +4307,14 @@ var Program = function (_ResourceBase2) {
             } else {
                 return this._uniformLocations[variableName];
             }
+        }
+    }, {
+        key: "_safeEnableVertexAttribArray",
+        value: function _safeEnableVertexAttribArray(location) {
+            if (location < 0) {
+                return;
+            }
+            this.gl.enableVertexAttribArray(location);
         }
     }]);
     return Program;
@@ -18058,7 +18066,21 @@ var XMLReader = function () {
     (0, _createClass3.default)(XMLReader, null, [{
         key: "parseXML",
         value: function parseXML(doc, rootElementName) {
+            var isParseError = function isParseError(parsedDocument) {
+                var errorneousParse = XMLReader._parser.parseFromString('<', 'text/xml');
+                if (errorneousParse.documentURI === void 0) {
+                    return false;
+                }
+                var parsererrorNS = errorneousParse.getElementsByTagName("parsererror").item(0).namespaceURI;
+                if (parsererrorNS === 'http://www.w3.org/1999/xhtml') {
+                    return parsedDocument.getElementsByTagName("parsererror").length > 0;
+                }
+                return parsedDocument.getElementsByTagNameNS(parsererrorNS, 'parsererror').length > 0;
+            };
             var parsed = XMLReader._parser.parseFromString(doc, "text/xml");
+            if (isParseError(parsed)) {
+                throw new Error('Error parsing XML');
+            }
             if (rootElementName) {
                 if (parsed.documentElement.tagName.toUpperCase() !== rootElementName.toUpperCase()) {
                     throw new Error("Specified document is invalid.");
@@ -18782,6 +18804,7 @@ var GomlNode = function (_EEObject) {
                     }
                 }
                 this.addChild(node);
+                return node;
             }
         }
         /**
@@ -18914,6 +18937,12 @@ var GomlNode = function (_EEObject) {
     }, {
         key: "getValue",
         value: function getValue(attrName) {
+            console.warn("getValue is obsolate. please use getAttribute instead of");
+            return this.getAttribute(attrName);
+        }
+    }, {
+        key: "getAttribute",
+        value: function getAttribute(attrName) {
             attrName = Ensure.ensureTobeNSIdentity(attrName);
             var attr = this.attributes.get(attrName);
             if (!attr) {
@@ -18936,6 +18965,12 @@ var GomlNode = function (_EEObject) {
     }, {
         key: "setValue",
         value: function setValue(attrName, value) {
+            console.warn("setValue is obsolate. please use setAttribute instead of");
+            this.setAttribute(attrName, value);
+        }
+    }, {
+        key: "setAttribute",
+        value: function setAttribute(attrName, value) {
             attrName = Ensure.ensureTobeNSIdentity(attrName);
             var attr = this.attributes.get(attrName);
             if (!attr) {
@@ -19570,7 +19605,7 @@ var ComponentInterface = function () {
             if (this.isEmpty()) {
                 throw new Error("component interface is empty.");
             }
-            return this.components[0][0][0].getValue(attrName).Value;
+            return this.components[0][0][0].getValue(attrName);
         }
     }, {
         key: "setAttribute",
@@ -19589,6 +19624,22 @@ var ComponentInterface = function () {
                 console.warn("attr is obsolate. please use setAttribute instead of.");
                 this.setAttribute(attrName, value);
             }
+        }
+    }, {
+        key: "count",
+        value: function count() {
+            if (this.components.length === 0) {
+                return 0;
+            }
+            return this.components.map(function (components) {
+                return components.map(function (c) {
+                    return c.length;
+                }).reduce(function (total, current) {
+                    return total + current;
+                }, 0);
+            }).reduce(function (total, current) {
+                return total + current;
+            }, 0);
         }
     }]);
     return ComponentInterface;
@@ -19633,28 +19684,46 @@ var NodeInterface = function () {
             });
         }
     }, {
+        key: "isEmpty",
+        value: function isEmpty() {
+            return this.count() === 0;
+        }
+    }, {
         key: "get",
         value: function get(i1, i2) {
-            var c = this.nodes;
+            var _this50 = this;
+
             if (i1 === void 0) {
-                if (c.length === 0 || c[0].length === 0) {
-                    return null;
-                } else if (c.length === 1 && c[0].length === 1) {
-                    return c[0][0];
-                }
-                throw new Error("There are too many candidate");
-            } else if (i2 === void 0) {
-                if (c.length === 0 || c[0].length <= i1) {
-                    return null;
-                } else if (c.length === 1 && c[0].length > i1) {
-                    return c[0][i1];
-                }
-                throw new Error("There are too many candidate");
-            } else {
-                if (c.length <= i1 || c[i1].length <= i2) {
-                    return null;
+                if (this.isEmpty()) {
+                    throw new Error("this NodeInterface is empty.");
                 } else {
-                    return c[i1][i2];
+                    return this.nodes[0][0];
+                }
+            } else if (i2 === void 0) {
+                if (this.count() <= i1) {
+                    throw new Error("index out of range.");
+                } else {
+                    var _ret7 = function () {
+                        var c = i1;
+                        var returnNode = null;
+                        _this50.forEach(function (node) {
+                            if (c === 0) {
+                                returnNode = node;
+                            }
+                            c--;
+                        });
+                        return {
+                            v: returnNode
+                        };
+                    }();
+
+                    if ((typeof _ret7 === "undefined" ? "undefined" : (0, _typeof3.default)(_ret7)) === "object") return _ret7.v;
+                }
+            } else {
+                if (this.nodes.length <= i1 || this.nodes[i1].length <= i2) {
+                    throw new Error("index out of range.");
+                } else {
+                    return this.nodes[i1][i2];
                 }
             }
         }
@@ -19662,8 +19731,9 @@ var NodeInterface = function () {
         key: "getAttribute",
         value: function getAttribute(attrName) {
             if (this.nodes.length > 0 && this.nodes[0].length > 0) {
-                throw new Error("node interface is empty.");
+                throw new Error("this NodeInterface is empty.");
             }
+            return this.get().attributes.get(Ensure.ensureTobeNSIdentity(attrName)).Value;
         }
     }, {
         key: "setAttribute",
@@ -19732,9 +19802,9 @@ var NodeInterface = function () {
 
     }, {
         key: "remove",
-        value: function remove(child) {
+        value: function remove() {
             this.forEach(function (node) {
-                node.removeChild(child);
+                node.delete();
             });
             return this;
         }
@@ -19747,9 +19817,9 @@ var NodeInterface = function () {
     }, {
         key: "forEach",
         value: function forEach(callback) {
-            this.nodes.forEach(function (array) {
-                array.forEach(function (node) {
-                    callback(node);
+            this.nodes.forEach(function (array, gomlIndex) {
+                array.forEach(function (node, nodeIndex) {
+                    callback(node, gomlIndex, nodeIndex);
                 });
             });
             return this;
@@ -19776,6 +19846,7 @@ var NodeInterface = function () {
     }, {
         key: "find",
         value: function find(query) {
+            console.warn("'find' is obsolate.use componentInterface instead.");
             var allComponents = [];
             this.queryComponents(query).forEach(function (gomlComps) {
                 gomlComps.forEach(function (nodeComps) {
@@ -19881,10 +19952,10 @@ var GomlInterface = function () {
     (0, _createClass3.default)(GomlInterface, [{
         key: "getNodeById",
         value: function getNodeById(id) {
-            var _this50 = this;
+            var _this51 = this;
 
             return new Array(this.rootNodes.length).map(function (v, i) {
-                return GomlNode.fromElement(_this50.rootNodes[i].element.ownerDocument.getElementById(id));
+                return GomlNode.fromElement(_this51.rootNodes[i].element.ownerDocument.getElementById(id));
             });
         }
     }, {
@@ -20409,32 +20480,32 @@ var AssetLoader = function (_EEObject2) {
          * Promise count registered.
          * @type {number}
          */
-        var _this51 = (0, _possibleConstructorReturn3.default)(this, (_ref = AssetLoader.__proto__ || (0, _getPrototypeOf2.default)(AssetLoader)).call.apply(_ref, [this].concat(args)));
+        var _this52 = (0, _possibleConstructorReturn3.default)(this, (_ref = AssetLoader.__proto__ || (0, _getPrototypeOf2.default)(AssetLoader)).call.apply(_ref, [this].concat(args)));
 
-        _this51.registerCount = 0;
+        _this52.registerCount = 0;
         /**
          * Promise count finished successfully.
          * @type {number}
          */
-        _this51.loadCount = 0;
+        _this52.loadCount = 0;
         /**
          * Promise count completed(success and errored)
          * @type {number}
          */
-        _this51.completeCount = 0;
+        _this52.completeCount = 0;
         /**
          * Promise count errored
          * @type {number}
          */
-        _this51.errorCount = 0;
+        _this52.errorCount = 0;
         /**
          * Main promise to provide tasks for waiting for all resource loading.
          * @type {Promise<void>}
          */
-        _this51.promise = new _promise2.default(function (resolve) {
-            _this51._resolve = resolve;
+        _this52.promise = new _promise2.default(function (resolve) {
+            _this52._resolve = resolve;
         });
-        return _this51;
+        return _this52;
     }
     /**
      * Register an promise to be waited until finished.
@@ -20444,7 +20515,7 @@ var AssetLoader = function (_EEObject2) {
     (0, _createClass3.default)(AssetLoader, [{
         key: "register",
         value: function register(promise) {
-            var _this52 = this;
+            var _this53 = this;
 
             this.registerCount++;
             return new _promise2.default(function (resolve, reject) {
@@ -20484,7 +20555,7 @@ var AssetLoader = function (_EEObject2) {
                             }
                         }, _callee20, this, [[0, 8]]);
                     }));
-                }).bind(_this52)();
+                }).bind(_this53)();
             });
         }
         /**
@@ -20517,10 +20588,10 @@ var AssetLoadingManagerComponent = function (_Component2) {
             args[_key2] = arguments[_key2];
         }
 
-        var _this53 = (0, _possibleConstructorReturn3.default)(this, (_ref2 = AssetLoadingManagerComponent.__proto__ || (0, _getPrototypeOf2.default)(AssetLoadingManagerComponent)).call.apply(_ref2, [this].concat(args)));
+        var _this54 = (0, _possibleConstructorReturn3.default)(this, (_ref2 = AssetLoadingManagerComponent.__proto__ || (0, _getPrototypeOf2.default)(AssetLoadingManagerComponent)).call.apply(_ref2, [this].concat(args)));
 
-        _this53.loader = new AssetLoader();
-        return _this53;
+        _this54.loader = new AssetLoader();
+        return _this54;
     }
 
     (0, _createClass3.default)(AssetLoadingManagerComponent, [{
@@ -20534,11 +20605,11 @@ var AssetLoadingManagerComponent = function (_Component2) {
     }, {
         key: "$awake",
         value: function $awake() {
-            var _this54 = this;
+            var _this55 = this;
 
             this.companion.set(obtainGomlInterface.ns(this.name.ns)("loader"), this.loader);
             this.loader.register(new _promise2.default(function (resolve) {
-                _this54._documentResolver = resolve;
+                _this55._documentResolver = resolve;
             }));
             var canvasContainer = this.companion.get("canvasContainer");
             if (!this.getValue("enableLoader")) {
@@ -26491,10 +26562,10 @@ var SceneComponent = function (_Component3) {
             args[_key3] = arguments[_key3];
         }
 
-        var _this55 = (0, _possibleConstructorReturn3.default)(this, (_ref3 = SceneComponent.__proto__ || (0, _getPrototypeOf2.default)(SceneComponent)).call.apply(_ref3, [this].concat(args)));
+        var _this56 = (0, _possibleConstructorReturn3.default)(this, (_ref3 = SceneComponent.__proto__ || (0, _getPrototypeOf2.default)(SceneComponent)).call.apply(_ref3, [this].concat(args)));
 
-        _this55.sceneDescription = {};
-        return _this55;
+        _this56.sceneDescription = {};
+        return _this56;
     }
     /**
      * Notify update scene only when send update message is needed.
@@ -26532,7 +26603,6 @@ var CameraComponent = function (_Component4) {
             this.transform = this.node.getComponent("Transform");
             this.$transformUpdated(this.transform);
             this.getAttribute("far").addObserver(function (v) {
-                console.log("far", v.Value);
                 c.setFar(v.Value);
             }, true);
             this.getAttribute("near").addObserver(function (v) {
@@ -26634,15 +26704,15 @@ var Texture2D = function (_ResourceBase4) {
     function Texture2D(gl) {
         (0, _classCallCheck3.default)(this, Texture2D);
 
-        var _this57 = (0, _possibleConstructorReturn3.default)(this, (Texture2D.__proto__ || (0, _getPrototypeOf2.default)(Texture2D)).call(this, gl));
+        var _this58 = (0, _possibleConstructorReturn3.default)(this, (Texture2D.__proto__ || (0, _getPrototypeOf2.default)(Texture2D)).call(this, gl));
 
-        _this57._texParameterChanged = true;
-        _this57._magFilter = WebGLRenderingContext.LINEAR;
-        _this57._minFilter = WebGLRenderingContext.LINEAR;
-        _this57._wrapS = WebGLRenderingContext.REPEAT;
-        _this57._wrapT = WebGLRenderingContext.REPEAT;
-        _this57.texture = gl.createTexture();
-        return _this57;
+        _this58._texParameterChanged = true;
+        _this58._magFilter = WebGLRenderingContext.LINEAR;
+        _this58._minFilter = WebGLRenderingContext.LINEAR;
+        _this58._wrapS = WebGLRenderingContext.REPEAT;
+        _this58._wrapT = WebGLRenderingContext.REPEAT;
+        _this58.texture = gl.createTexture();
+        return _this58;
     }
 
     (0, _createClass3.default)(Texture2D, [{
@@ -26782,10 +26852,10 @@ var GLExtRequestor = function () {
          * Resolve all extension requested already.
          */
         value: function _resolveRequested() {
-            var _this58 = this;
+            var _this59 = this;
 
             GLExtRequestor._requestedExtensions.forEach(function (e) {
-                _this58._resolveExtensionSafely(e.extensionName);
+                _this59._resolveExtensionSafely(e.extensionName);
             });
         }
     }, {
@@ -26892,7 +26962,7 @@ var CanvasInitializerComponent = function (_Component5) {
     (0, _createClass3.default)(CanvasInitializerComponent, [{
         key: "$awake",
         value: function $awake() {
-            var _this60 = this;
+            var _this61 = this;
 
             this._scriptTag = this.companion.get("scriptElement");
             if (this._isContainedInBody(this._scriptTag)) {
@@ -26901,10 +26971,10 @@ var CanvasInitializerComponent = function (_Component5) {
             } else {}
             // apply sizes on changed
             this.attributes.get("width").addObserver(function (v) {
-                _this60._resize();
+                _this61._resize();
             });
             this.attributes.get("height").addObserver(function (v) {
-                _this60._resize();
+                _this61._resize();
             });
         }
         /**
@@ -26916,11 +26986,11 @@ var CanvasInitializerComponent = function (_Component5) {
     }, {
         key: "_generateCanvas",
         value: function _generateCanvas(scriptTag) {
-            var _this61 = this;
+            var _this62 = this;
 
             this.canvas = document.createElement("canvas");
             window.addEventListener("resize", function () {
-                return _this61._onWindowResize();
+                return _this62._onWindowResize();
             });
             this._configureCanvas(this.canvas, scriptTag);
             var gl = this._getContext(this.canvas);
@@ -27103,23 +27173,23 @@ var FullscreenComponent = function (_Component6) {
             args[_key4] = arguments[_key4];
         }
 
-        var _this62 = (0, _possibleConstructorReturn3.default)(this, (_ref4 = FullscreenComponent.__proto__ || (0, _getPrototypeOf2.default)(FullscreenComponent)).call.apply(_ref4, [this].concat(args)));
+        var _this63 = (0, _possibleConstructorReturn3.default)(this, (_ref4 = FullscreenComponent.__proto__ || (0, _getPrototypeOf2.default)(FullscreenComponent)).call.apply(_ref4, [this].concat(args)));
 
-        _this62._fullscreen = false;
-        return _this62;
+        _this63._fullscreen = false;
+        return _this63;
     }
 
     (0, _createClass3.default)(FullscreenComponent, [{
         key: "$awake",
         value: function $awake() {
-            var _this63 = this;
+            var _this64 = this;
 
             this.getAttribute("fullscreen").addObserver(function (attr) {
-                if (_this63._fullscreen === attr.Value) {
+                if (_this64._fullscreen === attr.Value) {
                     return;
                 }
-                _this63._fullscreen = attr.Value;
-                _this63._switchFullscreen();
+                _this64._fullscreen = attr.Value;
+                _this64._switchFullscreen();
             });
         }
     }, {
@@ -27231,10 +27301,10 @@ var GeometryRegistoryComponent = function (_Component8) {
             args[_key5] = arguments[_key5];
         }
 
-        var _this65 = (0, _possibleConstructorReturn3.default)(this, (_ref5 = GeometryRegistoryComponent.__proto__ || (0, _getPrototypeOf2.default)(GeometryRegistoryComponent)).call.apply(_ref5, [this].concat(args)));
+        var _this66 = (0, _possibleConstructorReturn3.default)(this, (_ref5 = GeometryRegistoryComponent.__proto__ || (0, _getPrototypeOf2.default)(GeometryRegistoryComponent)).call.apply(_ref5, [this].concat(args)));
 
-        _this65._geometries = {};
-        return _this65;
+        _this66._geometries = {};
+        return _this66;
     }
 
     (0, _createClass3.default)(GeometryRegistoryComponent, [{
@@ -27308,10 +27378,10 @@ var HTMLBinderComponent = function (_Component9) {
             args[_key6] = arguments[_key6];
         }
 
-        var _this66 = (0, _possibleConstructorReturn3.default)(this, (_ref6 = HTMLBinderComponent.__proto__ || (0, _getPrototypeOf2.default)(HTMLBinderComponent)).call.apply(_ref6, [this].concat(args)));
+        var _this67 = (0, _possibleConstructorReturn3.default)(this, (_ref6 = HTMLBinderComponent.__proto__ || (0, _getPrototypeOf2.default)(HTMLBinderComponent)).call.apply(_ref6, [this].concat(args)));
 
-        _this66._isFirstCall = true;
-        return _this66;
+        _this67._isFirstCall = true;
+        return _this67;
     }
 
     (0, _createClass3.default)(HTMLBinderComponent, [{
@@ -27329,15 +27399,15 @@ var HTMLBinderComponent = function (_Component9) {
     }, {
         key: "$treeInitialized",
         value: function $treeInitialized() {
-            var _this67 = this;
+            var _this68 = this;
 
             this.getAttribute("targetRenderer").addObserver(function (v) {
-                if (_this67._rendererQuery !== v.Value) {
-                    _this67._onRendererChanged();
+                if (_this68._rendererQuery !== v.Value) {
+                    _this68._onRendererChanged();
                 }
             }, true);
             this.getAttribute("htmlQuery").addObserver(function (v) {
-                _this67._onQueryChanged(v.Value);
+                _this68._onQueryChanged(v.Value);
             }, true);
         }
     }, {
@@ -27394,14 +27464,14 @@ var HTMLBinderComponent = function (_Component9) {
     }, {
         key: "_onRendererChanged",
         value: function _onRendererChanged() {
-            var _this68 = this;
+            var _this69 = this;
 
             var returned = false;
             this.tree(this.getValue("targetRenderer")).forEach(function (n) {
                 if (returned) {
                     return true;
                 } else {
-                    _this68._targetNode = n;
+                    _this69._targetNode = n;
                     returned = true;
                 }
             });
@@ -27459,26 +27529,26 @@ var LoopManagerComponent = function (_Component10) {
             args[_key7] = arguments[_key7];
         }
 
-        var _this69 = (0, _possibleConstructorReturn3.default)(this, (_ref7 = LoopManagerComponent.__proto__ || (0, _getPrototypeOf2.default)(LoopManagerComponent)).call.apply(_ref7, [this].concat(args)));
+        var _this70 = (0, _possibleConstructorReturn3.default)(this, (_ref7 = LoopManagerComponent.__proto__ || (0, _getPrototypeOf2.default)(LoopManagerComponent)).call.apply(_ref7, [this].concat(args)));
 
-        _this69._loopActions = [];
-        _this69._loopIndex = 0;
-        return _this69;
+        _this70._loopActions = [];
+        _this70._loopIndex = 0;
+        return _this70;
     }
 
     (0, _createClass3.default)(LoopManagerComponent, [{
         key: "$awake",
         value: function $awake() {
-            var _this70 = this;
+            var _this71 = this;
 
             this.attributes.get("loopEnabled").addObserver(function (attr) {
-                _this70._begin();
+                _this71._begin();
             });
             this._registerNextLoop = window.requestAnimationFrame // if window.requestAnimationFrame is defined or undefined
             ? function () {
-                window.requestAnimationFrame(_this70._loop.bind(_this70));
+                window.requestAnimationFrame(_this71._loop.bind(_this71));
             } : function () {
-                window.setTimeout(_this70._loop.bind(_this70), 1000 / 60);
+                window.setTimeout(_this71._loop.bind(_this71), 1000 / 60);
             };
         }
     }, {
@@ -27500,10 +27570,10 @@ var LoopManagerComponent = function (_Component10) {
     }, {
         key: "_loop",
         value: function _loop() {
-            var _this71 = this;
+            var _this72 = this;
 
             this._loopActions.forEach(function (a) {
-                return a.action(_this71._loopIndex);
+                return a.action(_this72._loopIndex);
             });
             this._loopIndex++;
             this._registerNextLoop();
@@ -27531,10 +27601,10 @@ var MaterialComponent = function (_Component11) {
             args[_key8] = arguments[_key8];
         }
 
-        var _this72 = (0, _possibleConstructorReturn3.default)(this, (_ref8 = MaterialComponent.__proto__ || (0, _getPrototypeOf2.default)(MaterialComponent)).call.apply(_ref8, [this].concat(args)));
+        var _this73 = (0, _possibleConstructorReturn3.default)(this, (_ref8 = MaterialComponent.__proto__ || (0, _getPrototypeOf2.default)(MaterialComponent)).call.apply(_ref8, [this].concat(args)));
 
-        _this72.materialArgs = {};
-        return _this72;
+        _this73.materialArgs = {};
+        return _this73;
     }
 
     (0, _createClass3.default)(MaterialComponent, [{
@@ -27550,7 +27620,7 @@ var MaterialComponent = function (_Component11) {
         key: "_registerAttributes",
         value: function _registerAttributes() {
             return __awaiter(this, void 0, void 0, _regenerator2.default.mark(function _callee22() {
-                var _this73 = this;
+                var _this74 = this;
 
                 var promises;
                 return _regenerator2.default.wrap(function _callee22$(_context97) {
@@ -27566,15 +27636,15 @@ var MaterialComponent = function (_Component11) {
 
                                 this.material.pass.forEach(function (p) {
                                     if (p instanceof SORTPass) {
-                                        var _ret7 = function () {
+                                        var _ret8 = function () {
                                             var cp = p;
 
                                             var _loop3 = function _loop3(key) {
-                                                _this73.__addAtribute(key, cp.sort.gomlAttributes[key]);
-                                                _this73.attributes.get(key).addObserver(function (v) {
-                                                    _this73.materialArgs[key] = v.Value;
+                                                _this74.__addAtribute(key, cp.sort.gomlAttributes[key]);
+                                                _this74.attributes.get(key).addObserver(function (v) {
+                                                    _this74.materialArgs[key] = v.Value;
                                                 });
-                                                var value = _this73.materialArgs[key] = _this73.getValue(key);
+                                                var value = _this74.materialArgs[key] = _this74.getValue(key);
                                                 if (value instanceof ResourceBase) {
                                                     promises.push(value.validPromise);
                                                 }
@@ -27593,11 +27663,11 @@ var MaterialComponent = function (_Component11) {
 
                                                     switch (macro.type) {
                                                         case "int":
-                                                            _this73.__addAtribute(macro.attributeName, {
+                                                            _this74.__addAtribute(macro.attributeName, {
                                                                 converter: "Number",
                                                                 defaultValue: macro.default
                                                             });
-                                                            _this73.getAttribute(macro.attributeName).addObserver(function (v) {
+                                                            _this74.getAttribute(macro.attributeName).addObserver(function (v) {
                                                                 cp.setMacro(macro.macroName, "" + Math.floor(v.Value));
                                                             }, true);
                                                             return {
@@ -27606,11 +27676,11 @@ var MaterialComponent = function (_Component11) {
                                                                 }
                                                             };
                                                         case "bool":
-                                                            _this73.__addAtribute(macro.attributeName, {
+                                                            _this74.__addAtribute(macro.attributeName, {
                                                                 converter: "Boolean",
                                                                 defaultValue: macro.default
                                                             });
-                                                            _this73.getAttribute(macro.attributeName).addObserver(function (v) {
+                                                            _this74.getAttribute(macro.attributeName).addObserver(function (v) {
                                                                 cp.setMacro(macro.macroName, v.Value);
                                                             }, true);
                                                             return {
@@ -27624,9 +27694,9 @@ var MaterialComponent = function (_Component11) {
                                                 };
 
                                                 for (var _iterator9 = (0, _getIterator3.default)(cp.sort.macros), _step9; !(_iteratorNormalCompletion9 = (_step9 = _iterator9.next()).done); _iteratorNormalCompletion9 = true) {
-                                                    var _ret9 = _loop4();
+                                                    var _ret10 = _loop4();
 
-                                                    if ((typeof _ret9 === "undefined" ? "undefined" : (0, _typeof3.default)(_ret9)) === "object") return _ret9.v;
+                                                    if ((typeof _ret10 === "undefined" ? "undefined" : (0, _typeof3.default)(_ret10)) === "object") return _ret10.v;
                                                 }
                                             } catch (err) {
                                                 _didIteratorError9 = true;
@@ -27644,7 +27714,7 @@ var MaterialComponent = function (_Component11) {
                                             }
                                         }();
 
-                                        if ((typeof _ret7 === "undefined" ? "undefined" : (0, _typeof3.default)(_ret7)) === "object") return _ret7.v;
+                                        if ((typeof _ret8 === "undefined" ? "undefined" : (0, _typeof3.default)(_ret8)) === "object") return _ret8.v;
                                     }
                                 });
                                 _context97.next = 7;
@@ -27684,12 +27754,12 @@ var MaterialContainerComponent = function (_Component12) {
             args[_key9] = arguments[_key9];
         }
 
-        var _this74 = (0, _possibleConstructorReturn3.default)(this, (_ref9 = MaterialContainerComponent.__proto__ || (0, _getPrototypeOf2.default)(MaterialContainerComponent)).call.apply(_ref9, [this].concat(args)));
+        var _this75 = (0, _possibleConstructorReturn3.default)(this, (_ref9 = MaterialContainerComponent.__proto__ || (0, _getPrototypeOf2.default)(MaterialContainerComponent)).call.apply(_ref9, [this].concat(args)));
 
-        _this74.materialArgs = {};
-        _this74.ready = false;
-        _this74.useMaterial = false;
-        return _this74;
+        _this75.materialArgs = {};
+        _this75.ready = false;
+        _this75.useMaterial = false;
+        return _this75;
     }
 
     (0, _createClass3.default)(MaterialContainerComponent, [{
@@ -27776,7 +27846,7 @@ var MaterialContainerComponent = function (_Component12) {
         key: "_prepareInternalMaterial",
         value: function _prepareInternalMaterial(materialPromise) {
             return __awaiter(this, void 0, void 0, _regenerator2.default.mark(function _callee25() {
-                var _this75 = this;
+                var _this76 = this;
 
                 var loader, material, promises;
                 return _regenerator2.default.wrap(function _callee25$(_context100) {
@@ -27805,16 +27875,16 @@ var MaterialContainerComponent = function (_Component12) {
 
                                 material.pass.forEach(function (p) {
                                     if (p instanceof SORTPass) {
-                                        var _ret10 = function () {
+                                        var _ret11 = function () {
                                             var cp = p;
 
                                             var _loop5 = function _loop5(key) {
                                                 var val = cp.sort.gomlAttributes[key];
-                                                _this75.__addAtribute(key, val);
-                                                _this75.getAttribute(key).addObserver(function (v) {
-                                                    _this75.materialArgs[key] = v.Value;
+                                                _this76.__addAtribute(key, val);
+                                                _this76.getAttribute(key).addObserver(function (v) {
+                                                    _this76.materialArgs[key] = v.Value;
                                                 });
-                                                var value = _this75.materialArgs[key] = _this75.getValue(key);
+                                                var value = _this76.materialArgs[key] = _this76.getValue(key);
                                                 if (value instanceof ResourceBase) {
                                                     promises.push(value.validPromise);
                                                 }
@@ -27833,11 +27903,11 @@ var MaterialContainerComponent = function (_Component12) {
 
                                                     switch (macro.type) {
                                                         case "int":
-                                                            _this75.__addAtribute(macro.attributeName, {
+                                                            _this76.__addAtribute(macro.attributeName, {
                                                                 converter: "Number",
                                                                 defaultValue: macro.default
                                                             });
-                                                            _this75.getAttribute(macro.attributeName).addObserver(function (v) {
+                                                            _this76.getAttribute(macro.attributeName).addObserver(function (v) {
                                                                 cp.setMacro(macro.macroName, "" + Math.floor(v.Value));
                                                             }, true);
                                                             return {
@@ -27846,11 +27916,11 @@ var MaterialContainerComponent = function (_Component12) {
                                                                 }
                                                             };
                                                         case "bool":
-                                                            _this75.__addAtribute(macro.attributeName, {
+                                                            _this76.__addAtribute(macro.attributeName, {
                                                                 converter: "Boolean",
                                                                 defaultValue: macro.default
                                                             });
-                                                            _this75.getAttribute(macro.attributeName).addObserver(function (v) {
+                                                            _this76.getAttribute(macro.attributeName).addObserver(function (v) {
                                                                 cp.setMacro(macro.macroName, v.Value);
                                                             }, true);
                                                             return {
@@ -27862,9 +27932,9 @@ var MaterialContainerComponent = function (_Component12) {
                                                 };
 
                                                 for (var _iterator10 = (0, _getIterator3.default)(cp.sort.macros), _step10; !(_iteratorNormalCompletion10 = (_step10 = _iterator10.next()).done); _iteratorNormalCompletion10 = true) {
-                                                    var _ret12 = _loop6();
+                                                    var _ret13 = _loop6();
 
-                                                    if ((typeof _ret12 === "undefined" ? "undefined" : (0, _typeof3.default)(_ret12)) === "object") return _ret12.v;
+                                                    if ((typeof _ret13 === "undefined" ? "undefined" : (0, _typeof3.default)(_ret13)) === "object") return _ret13.v;
                                                 }
                                             } catch (err) {
                                                 _didIteratorError10 = true;
@@ -27882,7 +27952,7 @@ var MaterialContainerComponent = function (_Component12) {
                                             }
                                         }();
 
-                                        if ((typeof _ret10 === "undefined" ? "undefined" : (0, _typeof3.default)(_ret10)) === "object") return _ret10.v;
+                                        if ((typeof _ret11 === "undefined" ? "undefined" : (0, _typeof3.default)(_ret11)) === "object") return _ret11.v;
                                     }
                                 });
                                 _promise2.default.all(promises);
@@ -28054,18 +28124,20 @@ var MouseCameraControlComponent = function (_Component16) {
             args[_key10] = arguments[_key10];
         }
 
-        var _this79 = (0, _possibleConstructorReturn3.default)(this, (_ref10 = MouseCameraControlComponent.__proto__ || (0, _getPrototypeOf2.default)(MouseCameraControlComponent)).call.apply(_ref10, [this].concat(args)));
+        var _this80 = (0, _possibleConstructorReturn3.default)(this, (_ref10 = MouseCameraControlComponent.__proto__ || (0, _getPrototypeOf2.default)(MouseCameraControlComponent)).call.apply(_ref10, [this].concat(args)));
 
-        _this79._origin = new Vector3(0, 0, 0);
-        _this79._lastScreenPos = null;
-        _this79._xsum = 0;
-        _this79._ysum = 0;
-        return _this79;
+        _this80._origin = new Vector3(0, 0, 0);
+        _this80._lastScreenPos = null;
+        _this80._xsum = 0;
+        _this80._ysum = 0;
+        _this80._center = 0;
+        return _this80;
     }
 
     (0, _createClass3.default)(MouseCameraControlComponent, [{
         key: "$awake",
         value: function $awake() {
+            this.getAttribute("center").boundTo("_center");
             this.getAttribute("rotateSpeed").boundTo("_rotateSpeed");
             this.getAttribute("zoomSpeed").boundTo("_zoomSpeed");
             this.getAttribute("moveSpeed").boundTo("_moveSpeed");
@@ -28078,6 +28150,7 @@ var MouseCameraControlComponent = function (_Component16) {
             this._initialUp = Vector3.copy(this._transform.up);
             this._initialDirection = this._transform.localPosition.subtractWith(this._origin);
             this._initialRotation = this._transform.localRotation;
+            this._origin = this._transform.localPosition.addWith(this._transform.forward.multiplyWith(this._center));
             var scriptTag = this.companion.get("canvasElement");
             scriptTag.addEventListener("mousemove", this._mouseMove.bind(this));
             scriptTag.addEventListener("contextmenu", this._contextMenu.bind(this));
@@ -28134,11 +28207,6 @@ var MouseCameraControlComponent = function (_Component16) {
     }, {
         key: "_mouseWheel",
         value: function _mouseWheel(m) {
-            // let move = m.deltaY * this._moveZ * MouseCameraControlComponent.moveCoefficient;
-            // let toOrigin = Vector3.normalize(Vector3.subtract(this._origin, this._transform.localPosition));
-            // this._origin = this._origin.addWith(toOrigin.multiplyWith(move));
-            // this._transform.localPosition = this._transform.localPosition.addWith(this._transform.forward.multiplyWith(move));
-            // m.preventDefault();
             var dir = Vector3.normalize(Vector3.subtract(this._transform.localPosition, this._origin));
             var moveDist = -m.deltaY * this._zoomSpeed;
             var distance = Vector3.subtract(this._origin, this._transform.localPosition).magnitude;
@@ -28162,6 +28230,10 @@ MouseCameraControlComponent.attributes = {
     moveSpeed: {
         defaultValue: 1,
         converter: "Number"
+    },
+    center: {
+        defaultValue: 20,
+        converter: "Number"
     }
 };
 
@@ -28171,10 +28243,10 @@ var RenderBuffer = function (_ResourceBase5) {
     function RenderBuffer(gl) {
         (0, _classCallCheck3.default)(this, RenderBuffer);
 
-        var _this80 = (0, _possibleConstructorReturn3.default)(this, (RenderBuffer.__proto__ || (0, _getPrototypeOf2.default)(RenderBuffer)).call(this, gl));
+        var _this81 = (0, _possibleConstructorReturn3.default)(this, (RenderBuffer.__proto__ || (0, _getPrototypeOf2.default)(RenderBuffer)).call(this, gl));
 
-        _this80.renderBuffer = gl.createRenderbuffer();
-        return _this80;
+        _this81.renderBuffer = gl.createRenderbuffer();
+        return _this81;
     }
 
     (0, _createClass3.default)(RenderBuffer, [{
@@ -28250,26 +28322,26 @@ var RendererComponent = function (_Component18) {
             args[_key11] = arguments[_key11];
         }
 
-        var _this82 = (0, _possibleConstructorReturn3.default)(this, (_ref11 = RendererComponent.__proto__ || (0, _getPrototypeOf2.default)(RendererComponent)).call.apply(_ref11, [this].concat(args)));
+        var _this83 = (0, _possibleConstructorReturn3.default)(this, (_ref11 = RendererComponent.__proto__ || (0, _getPrototypeOf2.default)(RendererComponent)).call.apply(_ref11, [this].concat(args)));
 
-        _this82._buffers = {};
-        return _this82;
+        _this83._buffers = {};
+        return _this83;
     }
 
     (0, _createClass3.default)(RendererComponent, [{
         key: "$mount",
         value: function $mount() {
-            var _this83 = this;
+            var _this84 = this;
 
             this._gl = this.companion.get("gl");
             this._canvas = this.companion.get("canvasElement");
             this._camera = this.getValue("camera");
             this.getAttribute("camera").addObserver(function (v) {
-                return _this83._camera = v.Value;
+                return _this84._camera = v.Value;
             });
             this.getAttribute("viewport").addObserver(function (v) {
-                _this83._viewportSizeGenerator = v.Value;
-                _this83.$resizeCanvas();
+                _this84._viewportSizeGenerator = v.Value;
+                _this84.$resizeCanvas();
             });
             this._viewportSizeGenerator = this.getValue("viewport");
         }
@@ -28397,10 +28469,10 @@ var FrameBuffer = function (_ResourceBase6) {
     function FrameBuffer(gl) {
         (0, _classCallCheck3.default)(this, FrameBuffer);
 
-        var _this85 = (0, _possibleConstructorReturn3.default)(this, (FrameBuffer.__proto__ || (0, _getPrototypeOf2.default)(FrameBuffer)).call(this, gl));
+        var _this86 = (0, _possibleConstructorReturn3.default)(this, (FrameBuffer.__proto__ || (0, _getPrototypeOf2.default)(FrameBuffer)).call(this, gl));
 
-        _this85.fbo = gl.createFramebuffer();
-        return _this85;
+        _this86.fbo = gl.createFramebuffer();
+        return _this86;
     }
 
     (0, _createClass3.default)(FrameBuffer, [{
@@ -28759,7 +28831,7 @@ var TextureComponent = function (_Component23) {
     (0, _createClass3.default)(TextureComponent, [{
         key: "$mount",
         value: function $mount() {
-            var _this91 = this;
+            var _this92 = this;
 
             var src = this.getValue("src");
             this._texture = new Texture2D(this.companion.get("gl"));
@@ -28768,16 +28840,16 @@ var TextureComponent = function (_Component23) {
             this._texture.wrapT = this.getValue("wrapT");
             this._texture.wrapS = this.getValue("wrapS");
             this.attributes.get("magFilter").addObserver(function (v) {
-                return _this91._texture.magFilter = v.Value;
+                return _this92._texture.magFilter = v.Value;
             });
             this.attributes.get("minFilter").addObserver(function (v) {
-                return _this91._texture.minFilter = v.Value;
+                return _this92._texture.minFilter = v.Value;
             });
             this.attributes.get("wrapS").addObserver(function (v) {
-                return _this91._texture.wrapS = v.Value;
+                return _this92._texture.wrapS = v.Value;
             });
             this.attributes.get("wrapT").addObserver(function (v) {
-                return _this91._texture.wrapT = v.Value;
+                return _this92._texture.wrapT = v.Value;
             });
             if (src) {
                 this._loadTask(src);
@@ -28877,40 +28949,40 @@ var TransformComponent = function (_Component24) {
          * Local transform matrix representing scaling,rotation and translation of attached object.
          * @return {[type]} [description]
          */
-        var _this92 = (0, _possibleConstructorReturn3.default)(this, (_ref12 = TransformComponent.__proto__ || (0, _getPrototypeOf2.default)(TransformComponent)).call.apply(_ref12, [this].concat(args)));
+        var _this93 = (0, _possibleConstructorReturn3.default)(this, (_ref12 = TransformComponent.__proto__ || (0, _getPrototypeOf2.default)(TransformComponent)).call.apply(_ref12, [this].concat(args)));
 
-        _this92.localTransform = new Matrix();
+        _this93.localTransform = new Matrix();
         /**
          * Global transform that consider parent transform and local transform
          * @return {[type]} [description]
          */
-        _this92.globalTransform = new Matrix();
+        _this93.globalTransform = new Matrix();
         /**
          * The children transform should be notified when this transform was updated.
          * @type {TransformComponent[]}
          */
-        _this92._children = [];
+        _this93._children = [];
         /**
          * Calculation cache to
          * @return {[type]} [description]
          */
-        _this92._cachePVM = new Matrix();
-        _this92._cacheVM = new Matrix();
+        _this93._cachePVM = new Matrix();
+        _this93._cacheVM = new Matrix();
         /**
          * Cache of forward direction of this object
          */
-        _this92._forward = new Vector3([0, 0, -1, 0]);
+        _this93._forward = new Vector3([0, 0, -1, 0]);
         /**
          * Cache of up direction of this object.
          */
-        _this92._up = new Vector3([0, 1, 0, 0]);
+        _this93._up = new Vector3([0, 1, 0, 0]);
         /**
          * Cache of right direction of this object.
          */
-        _this92._right = new Vector3([1, 0, 0, 0]);
-        _this92._globalPosition = new Vector3([0, 0, 0]);
-        _this92._globalScale = new Vector3([1, 1, 1]);
-        return _this92;
+        _this93._right = new Vector3([1, 0, 0, 0]);
+        _this93._globalPosition = new Vector3([0, 0, 0]);
+        _this93._globalScale = new Vector3([1, 1, 1]);
+        return _this93;
     }
 
     (0, _createClass3.default)(TransformComponent, [{
@@ -28928,20 +29000,20 @@ var TransformComponent = function (_Component24) {
     }, {
         key: "$awake",
         value: function $awake() {
-            var _this93 = this;
+            var _this94 = this;
 
             // register observers
             this.attributes.get("position").addObserver(function () {
-                _this93._localPosition = _this93.attributes.get("position").Value;
-                _this93.updateTransform();
+                _this94._localPosition = _this94.attributes.get("position").Value;
+                _this94.updateTransform();
             });
             this.attributes.get("rotation").addObserver(function () {
-                _this93._localRotation = _this93.attributes.get("rotation").Value;
-                _this93.updateTransform();
+                _this94._localRotation = _this94.attributes.get("rotation").Value;
+                _this94.updateTransform();
             });
             this.attributes.get("scale").addObserver(function () {
-                _this93._localScale = _this93.attributes.get("scale").Value;
-                _this93.updateTransform();
+                _this94._localScale = _this94.attributes.get("scale").Value;
+                _this94.updateTransform();
             });
             // assign attribute values to field
             this._localPosition = this.attributes.get("position").Value;
@@ -29310,7 +29382,7 @@ function MaterialConverter(val) {
 }
 
 function MaterialTextureConverter(val) {
-    var _this94 = this;
+    var _this95 = this;
 
     if (val instanceof Texture2D) {
         return function () {
@@ -29318,12 +29390,12 @@ function MaterialTextureConverter(val) {
         };
     }
     if (typeof val === "string") {
-        var _ret13 = function () {
+        var _ret14 = function () {
             var queryRegex = /^query\((.*)\)$/m;
             var regexResult = void 0;
             // Query texture element
             if (regexResult = queryRegex.exec(val)) {
-                var queried = _this94.tree(regexResult[1]);
+                var queried = _this95.tree(regexResult[1]);
                 throw new Error("Not implemeneted yet");
             }
             // from backbuffer
@@ -29335,11 +29407,11 @@ function MaterialTextureConverter(val) {
                     }
                 };
             }
-            var tex = new Texture2D(_this94.companion.get("gl"));
+            var tex = new Texture2D(_this95.companion.get("gl"));
             ImageResolver$1.resolve(val).then(function (t) {
                 tex.update(t);
             });
-            _this94.companion.get("loader").register(tex.validPromise);
+            _this95.companion.get("loader").register(tex.validPromise);
             return {
                 v: function v() {
                     return tex;
@@ -29347,7 +29419,7 @@ function MaterialTextureConverter(val) {
             };
         }();
 
-        if ((typeof _ret13 === "undefined" ? "undefined" : (0, _typeof3.default)(_ret13)) === "object") return _ret13.v;
+        if ((typeof _ret14 === "undefined" ? "undefined" : (0, _typeof3.default)(_ret14)) === "object") return _ret14.v;
     }
 }
 
@@ -29400,7 +29472,7 @@ function StringConverter$2(val) {
 }
 
 function Texture2DConverter(val) {
-    var _this95 = this;
+    var _this96 = this;
 
     if (typeof val === "string") {
         var regex = /^query\((.*)\)$/m;
@@ -29408,8 +29480,8 @@ function Texture2DConverter(val) {
         if (regexResult = regex.exec(val)) {
             var queried = this.tree(regexResult[1]);
         } else {
-            var _ret14 = function () {
-                var tex = new Texture2D(_this95.companion.get("gl"));
+            var _ret15 = function () {
+                var tex = new Texture2D(_this96.companion.get("gl"));
                 ImageResolver$1.resolve(val).then(function (t) {
                     tex.update(t);
                 });
@@ -29418,7 +29490,7 @@ function Texture2DConverter(val) {
                 };
             }();
 
-            if ((typeof _ret14 === "undefined" ? "undefined" : (0, _typeof3.default)(_ret14)) === "object") return _ret14.v;
+            if ((typeof _ret15 === "undefined" ? "undefined" : (0, _typeof3.default)(_ret15)) === "object") return _ret15.v;
         }
     }
 }
@@ -29469,7 +29541,7 @@ function ViewportConverter(val) {
                 return new Rectangle(0, 0, canvas.width, canvas.height);
             };
         } else {
-            var _ret15 = function () {
+            var _ret16 = function () {
                 var sizes = val.split(",");
                 if (sizes.length !== 4) {
                     throw new Error("Invalid viewport size was specified.");
@@ -29482,7 +29554,7 @@ function ViewportConverter(val) {
                 }
             }();
 
-            if ((typeof _ret15 === "undefined" ? "undefined" : (0, _typeof3.default)(_ret15)) === "object") return _ret15.v;
+            if ((typeof _ret16 === "undefined" ? "undefined" : (0, _typeof3.default)(_ret16)) === "object") return _ret16.v;
         }
     }
     throw new Error(val + " could not be parsed");

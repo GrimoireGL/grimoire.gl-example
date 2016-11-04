@@ -885,7 +885,7 @@ class Program extends ResourceBase {
     findAttributeLocation(variableName) {
         if (typeof this._attributeLocations[variableName] === "undefined") {
             this._attributeLocations[variableName] = this.gl.getAttribLocation(this.program, variableName);
-            this.gl.enableVertexAttribArray(this._attributeLocations[variableName]);
+            this._safeEnableVertexAttribArray(this._attributeLocations[variableName]);
             return this._attributeLocations[variableName];
         }
         else {
@@ -899,6 +899,12 @@ class Program extends ResourceBase {
         else {
             return this._uniformLocations[variableName];
         }
+    }
+    _safeEnableVertexAttribArray(location) {
+        if (location < 0) {
+            return;
+        }
+        this.gl.enableVertexAttribArray(location);
     }
 }
 
@@ -11347,7 +11353,21 @@ class NodeDeclaration {
  */
 class XMLReader {
     static parseXML(doc, rootElementName) {
+        let isParseError = (parsedDocument) => {
+            var errorneousParse = XMLReader._parser.parseFromString('<', 'text/xml');
+            if (errorneousParse.documentURI === void 0) {
+                return false;
+            }
+            let parsererrorNS = errorneousParse.getElementsByTagName("parsererror").item(0).namespaceURI;
+            if (parsererrorNS === 'http://www.w3.org/1999/xhtml') {
+                return parsedDocument.getElementsByTagName("parsererror").length > 0;
+            }
+            return parsedDocument.getElementsByTagNameNS(parsererrorNS, 'parsererror').length > 0;
+        };
         const parsed = XMLReader._parser.parseFromString(doc, "text/xml");
+        if (isParseError(parsed)) {
+            throw new Error('Error parsing XML');
+        }
         if (rootElementName) {
             if (parsed.documentElement.tagName.toUpperCase() !== rootElementName.toUpperCase()) {
                 throw new Error("Specified document is invalid.");
@@ -12149,6 +12169,7 @@ class GomlNode extends EEObject {
                 }
             }
             this.addChild(node);
+            return node;
         }
     }
     /**
@@ -12244,6 +12265,10 @@ class GomlNode extends EEObject {
      * @return {any}         [description]
      */
     getValue(attrName) {
+        console.warn("getValue is obsolate. please use getAttribute instead of");
+        return this.getAttribute(attrName);
+    }
+    getAttribute(attrName) {
         attrName = Ensure.ensureTobeNSIdentity(attrName);
         const attr = this.attributes.get(attrName);
         if (!attr) {
@@ -12264,6 +12289,10 @@ class GomlNode extends EEObject {
      * @param {any}       value [description]
      */
     setValue(attrName, value) {
+        console.warn("setValue is obsolate. please use setAttribute instead of");
+        this.setAttribute(attrName, value);
+    }
+    setAttribute(attrName, value) {
         attrName = Ensure.ensureTobeNSIdentity(attrName);
         const attr = this.attributes.get(attrName);
         if (!attr) {
@@ -12687,7 +12716,7 @@ class ComponentInterface {
         if (this.isEmpty()) {
             throw new Error("component interface is empty.");
         }
-        return this.components[0][0][0].getValue(attrName).Value;
+        return this.components[0][0][0].getValue(attrName);
     }
     setAttribute(attrName, value) {
         this.forEach((component) => {
@@ -12703,6 +12732,12 @@ class ComponentInterface {
             console.warn("attr is obsolate. please use setAttribute instead of.");
             this.setAttribute(attrName, value);
         }
+    }
+    count() {
+        if (this.components.length === 0) {
+            return 0;
+        }
+        return this.components.map(components => components.map(c => c.length).reduce((total, current) => total + current, 0)).reduce((total, current) => total + current, 0);
     }
 }
 
@@ -12735,39 +12770,48 @@ class NodeInterface {
             });
         });
     }
+    isEmpty() {
+        return this.count() === 0;
+    }
     get(i1, i2) {
-        const c = this.nodes;
         if (i1 === void 0) {
-            if (c.length === 0 || c[0].length === 0) {
-                return null;
-            }
-            else if (c.length === 1 && c[0].length === 1) {
-                return c[0][0];
-            }
-            throw new Error("There are too many candidate");
-        }
-        else if (i2 === void 0) {
-            if (c.length === 0 || c[0].length <= i1) {
-                return null;
-            }
-            else if (c.length === 1 && c[0].length > i1) {
-                return c[0][i1];
-            }
-            throw new Error("There are too many candidate");
-        }
-        else {
-            if (c.length <= i1 || c[i1].length <= i2) {
-                return null;
+            if (this.isEmpty()) {
+                throw new Error("this NodeInterface is empty.");
             }
             else {
-                return c[i1][i2];
+                return this.nodes[0][0];
+            }
+        }
+        else if (i2 === void 0) {
+            if (this.count() <= i1) {
+                throw new Error("index out of range.");
+            }
+            else {
+                let c = i1;
+                let returnNode = null;
+                this.forEach(node => {
+                    if (c === 0) {
+                        returnNode = node;
+                    }
+                    c--;
+                });
+                return returnNode;
+            }
+        }
+        else {
+            if (this.nodes.length <= i1 || this.nodes[i1].length <= i2) {
+                throw new Error("index out of range.");
+            }
+            else {
+                return this.nodes[i1][i2];
             }
         }
     }
     getAttribute(attrName) {
         if (this.nodes.length > 0 && this.nodes[0].length > 0) {
-            throw new Error("node interface is empty.");
+            throw new Error("this NodeInterface is empty.");
         }
+        return this.get().attributes.get(Ensure.ensureTobeNSIdentity(attrName)).Value;
     }
     setAttribute(attrName, value) {
         this.forEach((node) => {
@@ -12822,9 +12866,9 @@ class NodeInterface {
      * 指定されたノードが存在すれば削除します。
      * @param {GomlNode} child [description]
      */
-    remove(child) {
+    remove() {
         this.forEach((node) => {
-            node.removeChild(child);
+            node.delete();
         });
         return this;
     }
@@ -12834,9 +12878,9 @@ class NodeInterface {
      * @return {[type]}            [description]
      */
     forEach(callback) {
-        this.nodes.forEach((array) => {
-            array.forEach((node) => {
-                callback(node);
+        this.nodes.forEach((array, gomlIndex) => {
+            array.forEach((node, nodeIndex) => {
+                callback(node, gomlIndex, nodeIndex);
             });
         });
         return this;
@@ -12857,6 +12901,7 @@ class NodeInterface {
      * @return {Component[]}       [description]
      */
     find(query) {
+        console.warn("'find' is obsolate.use componentInterface instead.");
         const allComponents = [];
         this.queryComponents(query).forEach((gomlComps) => {
             gomlComps.forEach((nodeComps) => {
@@ -19067,7 +19112,6 @@ class CameraComponent extends Component {
         this.transform = this.node.getComponent("Transform");
         this.$transformUpdated(this.transform);
         this.getAttribute("far").addObserver((v) => {
-            console.log("far", v.Value);
             c.setFar(v.Value);
         }, true);
         this.getAttribute("near").addObserver((v) => {
@@ -20075,8 +20119,10 @@ class MouseCameraControlComponent extends Component {
         this._lastScreenPos = null;
         this._xsum = 0;
         this._ysum = 0;
+        this._center = 0;
     }
     $awake() {
+        this.getAttribute("center").boundTo("_center");
         this.getAttribute("rotateSpeed").boundTo("_rotateSpeed");
         this.getAttribute("zoomSpeed").boundTo("_zoomSpeed");
         this.getAttribute("moveSpeed").boundTo("_moveSpeed");
@@ -20087,6 +20133,7 @@ class MouseCameraControlComponent extends Component {
         this._initialUp = Vector3.copy(this._transform.up);
         this._initialDirection = this._transform.localPosition.subtractWith(this._origin);
         this._initialRotation = this._transform.localRotation;
+        this._origin = this._transform.localPosition.addWith(this._transform.forward.multiplyWith(this._center));
         let scriptTag = this.companion.get("canvasElement");
         scriptTag.addEventListener("mousemove", this._mouseMove.bind(this));
         scriptTag.addEventListener("contextmenu", this._contextMenu.bind(this));
@@ -20137,11 +20184,6 @@ class MouseCameraControlComponent extends Component {
         };
     }
     _mouseWheel(m) {
-        // let move = m.deltaY * this._moveZ * MouseCameraControlComponent.moveCoefficient;
-        // let toOrigin = Vector3.normalize(Vector3.subtract(this._origin, this._transform.localPosition));
-        // this._origin = this._origin.addWith(toOrigin.multiplyWith(move));
-        // this._transform.localPosition = this._transform.localPosition.addWith(this._transform.forward.multiplyWith(move));
-        // m.preventDefault();
         let dir = Vector3.normalize(Vector3.subtract(this._transform.localPosition, this._origin));
         let moveDist = -m.deltaY * this._zoomSpeed;
         let distance = Vector3.subtract(this._origin, this._transform.localPosition).magnitude;
@@ -20161,6 +20203,10 @@ MouseCameraControlComponent.attributes = {
     },
     moveSpeed: {
         defaultValue: 1,
+        converter: "Number"
+    },
+    center: {
+        defaultValue: 20,
         converter: "Number"
     }
 };
