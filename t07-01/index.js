@@ -1,5 +1,6 @@
 gr(function() {
     var $$ = gr("#main");
+    debugger;
     gr.registerComponent("Print", {
         attributes: {
             test: {
@@ -8,8 +9,11 @@ gr(function() {
             }
         },
         $awake:()=>{
-          console.log(111);
+          console.log("This is test!");
         }
     });
-    gr.registerNode("print",{"Print"});
+   $$("mesh").addComponent("Print");
+   var data = $$("mesh")("Print").getAttribute("test");
+    console.log(gr.componentDeclarations);
+    console.log(data);
 });
