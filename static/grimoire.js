@@ -12595,7 +12595,6 @@ function _registerEnvUniforms(input) {
                 registerers.push(resolver);
                 continue;
             }
-            throw new Error("Unknown environment uniform variable " + variableName);
         }
     }
 }
@@ -14275,7 +14274,7 @@ MaterialFactory.defaultShaderHeader = ShaderHeader;
 MaterialFactory.factories = {};
 MaterialFactory.registerdHandlers = {};
 
-var Unlit = "@Pass\nFS_PREC(mediump,float)\nvarying vec2 vTexCoord;\n#ifdef VS\nattribute vec3 position;\nattribute vec2 texCoord;\nuniform mat4 _matPVM;\nvoid main()\n{\n  gl_Position = _matPVM * vec4(position,1.0);\n  vTexCoord = texCoord;\n}\n#endif\n#ifdef FS\n@{type:\"color\",default:\"white\"}\nuniform vec4 color;\n@{usedFlag:\"textureUsed\"}\nuniform sampler2D texture;\nuniform bool textureUsed;\nvoid main(void)\n{\n  if(textureUsed){\n    gl_FragColor = color * texture2D(texture,vTexCoord);\n  }else{\n    gl_FragColor = color;\n }\n}\n#endif\n";
+var Unlit = "@Pass\nFS_PREC(mediump,float)\nvarying vec2 vTexCoord;\n#ifdef VS\nattribute vec3 position;\nattribute vec2 texCoord;\nuniform mat4 _matPVM;\nvoid main()\n{\n  gl_Position = _matPVM * vec4(position,1.0);\n  vTexCoord = texCoord;\n}\n#endif\n#ifdef FS\n@{type:\"color\",default:\"white\"}\nuniform vec4 color;\n@{usedFlag:\"_textureUsed\"}\nuniform sampler2D texture;\nuniform bool _textureUsed;\nvoid main(void)\n{\n  if(_textureUsed){\n    gl_FragColor = color * texture2D(texture,vTexCoord);\n  }else{\n    gl_FragColor = color;\n }\n}\n#endif\n";
 
 var UnlitColor = "@Pass\nFS_PREC(mediump,float)\nvarying vec2 vTexCoord;\n#ifdef VS\nattribute vec3 position;\nattribute vec2 texCoord;\nuniform mat4 _matPVM;\nvoid main()\n{\n  gl_Position = _matPVM * vec4(position,1.0);\n  vTexCoord = texCoord;\n}\n#endif\n#ifdef FS\n@{type:\"color\",default:\"white\"}\nuniform vec4 color;\nvoid main(void)\n{\n    gl_FragColor = color;\n}\n#endif\n";
 
