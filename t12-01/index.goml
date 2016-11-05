@@ -1,0 +1,9 @@
+<goml width="fit" height="fit">
+    <import-material typeName="render-image" src="render-image.sort"/>
+    <import-material typeName="negate" src="negate.sort"/>
+    <renderer>
+      <texture-buffer name="bb1"/>
+      <render-quad material="new(render-image)" source="./img2.jpg" out="bb1"/>
+      <render-quad material="new(negate)" source="backbuffer(bb1)"/>
+    </renderer>
+</goml>

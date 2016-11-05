@@ -17012,6 +17012,8 @@ var DefaultPrimitives = function () {
     return DefaultPrimitives;
 }();
 
+window.__awaiter = index;
+
 function BooleanConverter(val) {
     if (typeof val === "boolean") {
         return val;
@@ -27967,6 +27969,19 @@ var MaterialContainerComponent = function (_Component12) {
                 }, _callee25, this);
             }));
         }
+    }], [{
+        key: "rewriteDefaultMaterial",
+        value: function rewriteDefaultMaterial(materialName) {
+            if (materialName !== MaterialContainerComponent._defaultMaterial) {
+                MaterialContainerComponent._defaultMaterial = materialName;
+                obtainGomlInterface.componentDeclarations.get("MaterialContainer").attributes["material"].defaultValue = "new(" + materialName + ")";
+            }
+        }
+    }, {
+        key: "defaultMaterial",
+        get: function get() {
+            return this._defaultMaterial;
+        }
     }]);
     return MaterialContainerComponent;
 }(Component);
@@ -27978,6 +27993,7 @@ MaterialContainerComponent.attributes = {
         componentBoundTo: "_materialComponent" // When the material was specified with the other material tag, this field would be assigned.
     }
 };
+MaterialContainerComponent._defaultMaterial = "unlit";
 
 var MaterialImporterComponent = function (_Component13) {
     (0, _inherits3.default)(MaterialImporterComponent, _Component13);

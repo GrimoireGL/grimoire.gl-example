@@ -10588,6 +10588,8 @@ class DefaultPrimitives {
     }
 }
 
+window.__awaiter = index;
+
 function BooleanConverter(val) {
     if (typeof val === "boolean") {
         return val;
@@ -19918,6 +19920,15 @@ class MaterialContainerComponent extends Component {
         this.ready = false;
         this.useMaterial = false;
     }
+    static rewriteDefaultMaterial(materialName) {
+        if (materialName !== MaterialContainerComponent._defaultMaterial) {
+            MaterialContainerComponent._defaultMaterial = materialName;
+            obtainGomlInterface.componentDeclarations.get("MaterialContainer").attributes["material"].defaultValue = `new(${materialName})`;
+        }
+    }
+    static get defaultMaterial() {
+        return this._defaultMaterial;
+    }
     $mount() {
         this.getAttribute("material").addObserver(this._onMaterialChanged);
         this.companion.get("loader").register(this._onMaterialChanged());
@@ -20016,6 +20027,7 @@ MaterialContainerComponent.attributes = {
         componentBoundTo: "_materialComponent" // When the material was specified with the other material tag, this field would be assigned.
     }
 };
+MaterialContainerComponent._defaultMaterial = "unlit";
 
 class MaterialImporterComponent extends Component {
     $awake() {
