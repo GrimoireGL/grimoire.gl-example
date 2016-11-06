@@ -8,5 +8,4 @@ gr(function() {
             }
         }
     });
-    gr.registerNode("print",{"Print"});
 });
