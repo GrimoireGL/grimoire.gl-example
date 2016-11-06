@@ -12415,13 +12415,6 @@ EnvUniformValueResolver.addResolver("_cameraDirection", function (valInfo, name)
         return proxy.uniformVector3(name, args.camera.transform.forward);
     };
 });
-EnvUniformValueResolver.addDynamicResolver(function (valInfo, name) {
-    if (valInfo.variableType === "sampler2D" && valInfo.variableAnnotation["type"] === "backbuffer") {
-        return function (proxy, mat) {
-            proxy.uniformTexture2D(name, mat.buffers[valInfo.variableAnnotation["name"]]);
-        };
-    }
-});
 
 function _getDecl(converter, defaultValue, register) {
     return {
@@ -12521,9 +12514,9 @@ function _registerUserUniforms(input) {
                                                         flagAssignTo = annotations["usedFlag"];
                                                     }
                                                 }
-                                                attributes[valName] = _getDecl("MaterialTexture", _resolveDefault(variableInfo, undefined), function (proxy, matArgs) {
+                                                attributes[valName] = _getDecl("Texture", _resolveDefault(variableInfo, undefined), function (proxy, matArgs) {
                                                     var texture = void 0;
-                                                    if (matArgs.attributeValues[valName] && (texture = matArgs.attributeValues[valName](matArgs.buffers))) {
+                                                    if (matArgs.attributeValues[valName] && (texture = matArgs.attributeValues[valName].get(matArgs.buffers))) {
                                                         proxy.uniformTexture2D(valName, texture);
                                                         if (flagAssignTo) {
                                                             proxy.uniformBool(flagAssignTo, true);
@@ -12595,7 +12588,6 @@ function _registerEnvUniforms(input) {
                 registerers.push(resolver);
                 continue;
             }
-            throw new Error("Unknown environment uniform variable " + variableName);
         }
     }
 }
@@ -14275,7 +14267,7 @@ MaterialFactory.defaultShaderHeader = ShaderHeader;
 MaterialFactory.factories = {};
 MaterialFactory.registerdHandlers = {};
 
-var Unlit = "@Pass\nFS_PREC(mediump,float)\nvarying vec2 vTexCoord;\n#ifdef VS\nattribute vec3 position;\nattribute vec2 texCoord;\nuniform mat4 _matPVM;\nvoid main()\n{\n  gl_Position = _matPVM * vec4(position,1.0);\n  vTexCoord = texCoord;\n}\n#endif\n#ifdef FS\n@{type:\"color\",default:\"white\"}\nuniform vec4 color;\n@{usedFlag:\"textureUsed\"}\nuniform sampler2D texture;\nuniform bool textureUsed;\nvoid main(void)\n{\n  if(textureUsed){\n    gl_FragColor = color * texture2D(texture,vTexCoord);\n  }else{\n    gl_FragColor = color;\n }\n}\n#endif\n";
+var Unlit = "@Pass\nFS_PREC(mediump,float)\nvarying vec2 vTexCoord;\n#ifdef VS\nattribute vec3 position;\nattribute vec2 texCoord;\nuniform mat4 _matPVM;\nvoid main()\n{\n  gl_Position = _matPVM * vec4(position,1.0);\n  vTexCoord = texCoord;\n}\n#endif\n#ifdef FS\n@{type:\"color\",default:\"white\"}\nuniform vec4 color;\n@{usedFlag:\"_textureUsed\"}\nuniform sampler2D texture;\nuniform bool _textureUsed;\nvoid main(void)\n{\n  if(_textureUsed){\n    gl_FragColor = color * texture2D(texture,vTexCoord);\n  }else{\n    gl_FragColor = color;\n }\n}\n#endif\n";
 
 var UnlitColor = "@Pass\nFS_PREC(mediump,float)\nvarying vec2 vTexCoord;\n#ifdef VS\nattribute vec3 position;\nattribute vec2 texCoord;\nuniform mat4 _matPVM;\nvoid main()\n{\n  gl_Position = _matPVM * vec4(position,1.0);\n  vTexCoord = texCoord;\n}\n#endif\n#ifdef FS\n@{type:\"color\",default:\"white\"}\nuniform vec4 color;\nvoid main(void)\n{\n    gl_FragColor = color;\n}\n#endif\n";
 
@@ -19037,6 +19029,9 @@ var GomlNode = function (_EEObject) {
     }, {
         key: "index",
         value: function index() {
+            if (!this._parent) {
+                return -1;
+            }
             return this._parent.children.indexOf(this);
         }
         /**
@@ -19567,14 +19562,14 @@ var ComponentInterface = function () {
                 }
                 throw new Error("There are too many candidate");
             } else if (i3 === void 0) {
-                if (c.length === 0 || c[0].length <= i2 || c[0][0].length <= i1) {
+                if (c.length === 0 || c[0].length <= i2 || c[0][i2].length <= i1) {
                     return null;
                 } else if (c.length === 1) {
                     return c[0][i2][i1];
                 }
                 throw new Error("There are too many candidate");
             } else {
-                if (c.length <= i3 || c[0].length <= i2 || c[0][0].length <= i1) {
+                if (c.length <= i3 || c[i3].length <= i2 || c[i3][i2].length <= i1) {
                     return null;
                 }
                 return c[i3][i2][i1];
@@ -19591,6 +19586,28 @@ var ComponentInterface = function () {
                 });
             });
             return this;
+        }
+    }, {
+        key: "first",
+        value: function first(pred) {
+            if (!pred) {
+                return this.first(function () {
+                    return true;
+                });
+            }
+            for (var i = 0; i < this.components.length; i++) {
+                var array1 = this.components[i];
+                for (var j = 0; j < array1.length; i++) {
+                    var array2 = array1[j];
+                    for (var k = 0; k < array2.length; k++) {
+                        var c = array2[k];
+                        if (pred(c, i, j, k)) {
+                            return c;
+                        }
+                    }
+                }
+            }
+            return null;
         }
     }, {
         key: "isEmpty",
@@ -19741,13 +19758,7 @@ var NodeInterface = function () {
         key: "setAttribute",
         value: function setAttribute(attrName, value) {
             this.forEach(function (node) {
-                var attr = node.attributes.get(attrName);
-                if (attr.declaration.readonly) {
-                    throw new Error("The attribute " + attr.name.fqn + " is readonly");
-                }
-                if (attr) {
-                    attr.Value = value;
-                }
+                node.setAttribute(attrName, value);
             });
         }
         /**
@@ -26725,18 +26736,23 @@ var Texture2D = function (_ResourceBase4) {
             var image = void 0;
             var width = void 0;
             var level = void 0;
-            if (typeof height === "undefined") {
+            if (height === void 0) {
                 flipY = widthOrFlipY ? true : false;
                 image = levelOrImage;
             } else {
                 level = levelOrImage;
                 width = widthOrFlipY;
             }
-            this.gl.pixelStorei(WebGLRenderingContext.UNPACK_FLIP_Y_WEBGL, flipY ? 1 : 0);
-            if (typeof height === "undefined") {
-                this.gl.texImage2D(WebGLRenderingContext.TEXTURE_2D, 0, WebGLRenderingContext.RGBA, WebGLRenderingContext.RGBA, WebGLRenderingContext.UNSIGNED_BYTE, this._checkSize(image));
+            if (height === void 0) {
+                if (image instanceof HTMLImageElement) {
+                    this.gl.texImage2D(WebGLRenderingContext.TEXTURE_2D, 0, WebGLRenderingContext.RGBA, WebGLRenderingContext.RGBA, WebGLRenderingContext.UNSIGNED_BYTE, this._justifyImage(image));
+                } else if (image instanceof HTMLCanvasElement) {
+                    this.gl.texImage2D(WebGLRenderingContext.TEXTURE_2D, 0, WebGLRenderingContext.RGBA, WebGLRenderingContext.RGBA, WebGLRenderingContext.UNSIGNED_BYTE, this._justifyCanvas(image));
+                } else if (image instanceof HTMLVideoElement) {
+                    this.gl.texImage2D(WebGLRenderingContext.TEXTURE_2D, 0, WebGLRenderingContext.RGBA, WebGLRenderingContext.RGBA, WebGLRenderingContext.UNSIGNED_BYTE, this._justifyVideo(image));
+                }
             } else {
-                if (typeof pixels === "undefined") {
+                if (pixels === void 0) {
                     pixels = null;
                 }
                 this.gl.texImage2D(WebGLRenderingContext.TEXTURE_2D, level, format, width, height, border, format, type, pixels);
@@ -26761,8 +26777,8 @@ var Texture2D = function (_ResourceBase4) {
         // There should be more effective way to resize texture
 
     }, {
-        key: "_checkSize",
-        value: function _checkSize(img) {
+        key: "_justifyImage",
+        value: function _justifyImage(img) {
             var w = img.naturalWidth,
                 h = img.naturalHeight;
             var size = Math.pow(2, Math.log(Math.min(w, h)) / Math.LN2 | 0); // largest 2^n integer that does not exceed s
@@ -26773,6 +26789,31 @@ var Texture2D = function (_ResourceBase4) {
                 return canv;
             }
             return img;
+        }
+    }, {
+        key: "_justifyCanvas",
+        value: function _justifyCanvas(canvas) {
+            var w = canvas.width;
+            var h = canvas.height;
+            var size = Math.pow(2, Math.log(Math.min(w, h)) / Math.LN2 | 0); // largest 2^n integer that does not exceed s
+            if (w !== h || w !== size) {
+                canvas.height = canvas.width = size;
+            }
+            return canvas;
+        }
+    }, {
+        key: "_justifyVideo",
+        value: function _justifyVideo(video) {
+            var w = video.videoWidth,
+                h = video.videoHeight;
+            var size = Math.pow(2, Math.log(Math.min(w, h)) / Math.LN2 | 0); // largest 2^n integer that does not exceed s
+            if (w !== h || w !== size) {
+                var canv = document.createElement("canvas");
+                canv.height = canv.width = size;
+                canv.getContext("2d").drawImage(video, 0, 0, w, h, 0, 0, size, size);
+                return canv;
+            }
+            return video;
         }
     }, {
         key: "_updateTexParameter",
@@ -29397,48 +29438,6 @@ function MaterialConverter(val) {
     }
 }
 
-function MaterialTextureConverter(val) {
-    var _this95 = this;
-
-    if (val instanceof Texture2D) {
-        return function () {
-            return val;
-        };
-    }
-    if (typeof val === "string") {
-        var _ret14 = function () {
-            var queryRegex = /^query\((.*)\)$/m;
-            var regexResult = void 0;
-            // Query texture element
-            if (regexResult = queryRegex.exec(val)) {
-                var queried = _this95.tree(regexResult[1]);
-                throw new Error("Not implemeneted yet");
-            }
-            // from backbuffer
-            var backbufferRegex = /^backbuffer\((.*)\)$/m;
-            if (regexResult = backbufferRegex.exec(val)) {
-                return {
-                    v: function v(buffers) {
-                        return buffers[regexResult[1]];
-                    }
-                };
-            }
-            var tex = new Texture2D(_this95.companion.get("gl"));
-            ImageResolver$1.resolve(val).then(function (t) {
-                tex.update(t);
-            });
-            _this95.companion.get("loader").register(tex.validPromise);
-            return {
-                v: function v() {
-                    return tex;
-                }
-            };
-        }();
-
-        if ((typeof _ret14 === "undefined" ? "undefined" : (0, _typeof3.default)(_ret14)) === "object") return _ret14.v;
-    }
-}
-
 function NumberArrayConverter(val) {
     if (val instanceof Array) {
         return val;
@@ -29487,8 +29486,14 @@ function StringConverter$2(val) {
     }
 }
 
+function updateVideo(tex, video) {
+    tex.update(video);
+    requestAnimationFrame(function () {
+        return updateVideo(tex, video);
+    });
+}
 function Texture2DConverter(val) {
-    var _this96 = this;
+    var _this95 = this;
 
     if (typeof val === "string") {
         var regex = /^query\((.*)\)$/m;
@@ -29496,8 +29501,8 @@ function Texture2DConverter(val) {
         if (regexResult = regex.exec(val)) {
             var queried = this.tree(regexResult[1]);
         } else {
-            var _ret15 = function () {
-                var tex = new Texture2D(_this96.companion.get("gl"));
+            var _ret14 = function () {
+                var tex = new Texture2D(_this95.companion.get("gl"));
                 ImageResolver$1.resolve(val).then(function (t) {
                     tex.update(t);
                 });
@@ -29506,7 +29511,129 @@ function Texture2DConverter(val) {
                 };
             }();
 
+            if ((typeof _ret14 === "undefined" ? "undefined" : (0, _typeof3.default)(_ret14)) === "object") return _ret14.v;
+        }
+    }
+}
+
+/**
+ * Proxy of texture reference
+ */
+
+var TextureReference = function () {
+    function TextureReference(rawResource) {
+        (0, _classCallCheck3.default)(this, TextureReference);
+
+        this.rawResource = rawResource;
+        this._isFunctionalProxy = typeof rawResource === "function";
+    }
+
+    (0, _createClass3.default)(TextureReference, [{
+        key: "get",
+        value: function get(buffers) {
+            if (!this._isFunctionalProxy) {
+                return this.rawResource;
+            } else {
+                return this.rawResource(buffers);
+            }
+        }
+    }]);
+    return TextureReference;
+}();
+
+function updateVideo$1(tex, video) {
+    tex.update(video);
+    requestAnimationFrame(function () {
+        return updateVideo$1(tex, video);
+    });
+}
+function _parseQuery(query) {
+    var regex = /(query|backbuffer|video)\((.+)\)[^\)]*$/;
+    var regexResult = void 0;
+    if (regexResult = regex.exec(query)) {
+        return {
+            type: regexResult[1],
+            param: regexResult[2]
+        };
+    }
+    return null;
+}
+function generateVideoTag(src) {
+    var vTag = document.createElement("video");
+    vTag.src = src;
+    return vTag;
+}
+function fromVideoTexture(gl, val) {
+    var tex = new Texture2D(gl);
+    val.play();
+    tex.update(val);
+    updateVideo$1(tex, val);
+    return tex;
+}
+function TextureConverter(val) {
+    var _this96 = this;
+
+    if (val instanceof Texture2D) {
+        return new TextureReference(val);
+    }
+    if (typeof val === "string") {
+        var parseResult = _parseQuery(val);
+        if (parseResult) {
+            var _ret15 = function () {
+                var param = parseResult.param;
+                switch (parseResult.type) {
+                    case "backbuffer":
+                        return {
+                            v: new TextureReference(function (buffers) {
+                                return buffers[param];
+                            })
+                        };
+                    case "video":
+                        return {
+                            v: new TextureReference(fromVideoTexture(_this96.companion.get("gl"), generateVideoTag(param)))
+                        };
+                }
+            }();
+
             if ((typeof _ret15 === "undefined" ? "undefined" : (0, _typeof3.default)(_ret15)) === "object") return _ret15.v;
+        } else {
+            var _ret16 = function () {
+                var tex = new Texture2D(_this96.companion.get("gl"));
+                ImageResolver$1.resolve(val).then(function (t) {
+                    tex.update(t);
+                });
+                _this96.companion.get("loader").register(tex.validPromise);
+                return {
+                    v: new TextureReference(tex)
+                };
+            }();
+
+            if ((typeof _ret16 === "undefined" ? "undefined" : (0, _typeof3.default)(_ret16)) === "object") return _ret16.v;
+        }
+    }
+    if ((typeof val === "undefined" ? "undefined" : (0, _typeof3.default)(val)) === "object") {
+        if (val instanceof HTMLImageElement) {
+            var _ret17 = function () {
+                var tex = new Texture2D(_this96.companion.get("gl"));
+                if (val.complete && val.naturalWidth) {
+                    tex.update(val);
+                } else {
+                    val.onload = function () {
+                        tex.update(val);
+                    };
+                }
+                return {
+                    v: new TextureReference(tex)
+                };
+            }();
+
+            if ((typeof _ret17 === "undefined" ? "undefined" : (0, _typeof3.default)(_ret17)) === "object") return _ret17.v;
+        } else if (val instanceof HTMLCanvasElement) {
+            var _tex = new Texture2D(this.companion.get("gl"));
+            _tex.update(val);
+            return new TextureReference(_tex);
+        } else if (val instanceof HTMLVideoElement) {
+            return new TextureReference(fromVideoTexture(this.companion.get("gl"), val));
         }
     }
 }
@@ -29557,7 +29684,7 @@ function ViewportConverter(val) {
                 return new Rectangle(0, 0, canvas.width, canvas.height);
             };
         } else {
-            var _ret16 = function () {
+            var _ret18 = function () {
                 var sizes = val.split(",");
                 if (sizes.length !== 4) {
                     throw new Error("Invalid viewport size was specified.");
@@ -29570,7 +29697,7 @@ function ViewportConverter(val) {
                 }
             }();
 
-            if ((typeof _ret16 === "undefined" ? "undefined" : (0, _typeof3.default)(_ret16)) === "object") return _ret16.v;
+            if ((typeof _ret18 === "undefined" ? "undefined" : (0, _typeof3.default)(_ret18)) === "object") return _ret18.v;
         }
     }
     throw new Error(val + " could not be parsed");
@@ -29618,7 +29745,6 @@ obtainGomlInterface.register(function () {
                         obtainGomlInterface.registerConverter(_$ns("Enum"), EnumConverter);
                         obtainGomlInterface.registerConverter(_$ns("Geometry"), GeometryConverter);
                         obtainGomlInterface.registerConverter(_$ns("Material"), MaterialConverter);
-                        obtainGomlInterface.registerConverter(_$ns("MaterialTexture"), MaterialTextureConverter);
                         obtainGomlInterface.registerConverter(_$ns("NumberArray"), NumberArrayConverter);
                         obtainGomlInterface.registerConverter(_$ns("Number"), NumberConverter);
                         obtainGomlInterface.registerConverter(_$ns("Object"), ObjectConverter);
@@ -29626,6 +29752,7 @@ obtainGomlInterface.register(function () {
                         obtainGomlInterface.registerConverter(_$ns("StringArray"), StringArrayConverter$2);
                         obtainGomlInterface.registerConverter(_$ns("String"), StringConverter$2);
                         obtainGomlInterface.registerConverter(_$ns("Texture2D"), Texture2DConverter);
+                        obtainGomlInterface.registerConverter(_$ns("Texture"), TextureConverter);
                         obtainGomlInterface.registerConverter(_$ns("Vector2"), Vector2Converter);
                         obtainGomlInterface.registerConverter(_$ns("Vector3"), Vector3Converter);
                         obtainGomlInterface.registerConverter(_$ns("Vector4"), Vector4Converter);
