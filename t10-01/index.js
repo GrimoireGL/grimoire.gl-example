@@ -7,9 +7,9 @@ gr(function() {
                 converter: "String"
             }
         },
-        $awake:()=>{
+        $awake:function(){
           console.log(111);
         }
     });
-    gr.registerNode("print",{"Print"});
+    gr.registerNode("print",["Print"]);
 });
