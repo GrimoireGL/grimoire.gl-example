@@ -1,4 +1,4 @@
-<goml width="480" height="320">
+<goml width="fit" height="fit">
     <import-material typeName="skybox" src="index.sort" />
     <geometry name="sphere" type="sphere" />
     <material id="skybox" type="skybox" texture="./360-image/theta.jpg" />

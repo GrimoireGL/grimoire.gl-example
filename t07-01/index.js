@@ -1,19 +1,21 @@
+gr.registerComponent('Rotate', {
+  attributes: {
+    speed: {
+      defaultValue: '1',
+      converter: 'Number',
+    },
+  },
+  $mount: function() {
+    this.phi = 0;
+  },
+  $update: function() {
+    this.phi += this.getValue('speed');
+    this.node.setAttribute('rotation', this.phi + ',' + this.phi + ',' + this.phi);
+  },
+});
+
 gr(function() {
-    var $$ = gr("#main");
-    debugger;
-    gr.registerComponent("Print", {
-        attributes: {
-            test: {
-                defaultValue: "HELLO WORLD!",
-                converter: "String"
-            }
-        },
-        $awake:()=>{
-          console.log("This is test!");
-        }
-    });
-   $$("mesh").addComponent("Print");
-   var data = $$("mesh")("Print").getAttribute("test");
-    console.log(gr.componentDeclarations);
-    console.log(data);
+  var $$ = gr('#main');
+  $$('mesh').addComponent('Rotate');
+  $$('mesh')('Rotate').setAttribute('speed', 1);
 });

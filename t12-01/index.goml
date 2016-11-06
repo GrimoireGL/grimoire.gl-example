@@ -3,7 +3,7 @@
     <import-material typeName="negate" src="negate.sort"/>
     <renderer>
       <texture-buffer name="bb1"/>
-      <render-quad material="new(render-image)" source="video(/t12-01/bunny.mp4)" out="bb1"/>
+      <render-quad material="new(render-image)" source="./t12-01/img2.jpg" out="bb1"/>
       <render-quad material="new(negate)" source="backbuffer(bb1)"/>
     </renderer>
 </goml>

@@ -1,4 +1,4 @@
-<goml width="480" height="320">
+<goml width="fit" height="fit">
     <geometry name="circle" type="circle" divide="6" />
     <material id="color" type="unlit" color="red"/>
     <scene>
