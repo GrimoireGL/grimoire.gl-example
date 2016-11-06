@@ -1,4 +1,4 @@
-<goml width="fit" height="512">
+<goml width="fit" height="fit">
   <geometry name="sphere" type="sphere"/>
   <geometry name="cube" type="cube"/>
   <geometry name="cylinder" type="cylinder"/>

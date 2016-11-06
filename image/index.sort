@@ -5,11 +5,11 @@ varying vec2 vUV;
 
 #ifdef VS
   attribute vec3 position;
-  attribute vec2 uv;
+  attribute vec2 texCoord;
   uniform mat4 _matPVM;
   void main(){
     gl_Position = _matPVM * vec4(position,1);
-    vUV = uv;
+    vUV = texCoord;
   }
 #endif
 

@@ -1,4 +1,4 @@
-<goml width="512" height="512">
+<goml width="fit" height="fit">
     <import-material typeName="test" src="/earth/index.sort"/>
     <renderer>
       <render-scene/>
