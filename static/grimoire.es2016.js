@@ -8101,13 +8101,6 @@ EnvUniformValueResolver.addResolver("_viewportSize", (valInfo, name) => {
 });
 EnvUniformValueResolver.addResolver("_cameraPosition", (valInfo, name) => (proxy, args) => proxy.uniformVector3(name, args.camera.transform.globalPosition));
 EnvUniformValueResolver.addResolver("_cameraDirection", (valInfo, name) => (proxy, args) => proxy.uniformVector3(name, args.camera.transform.forward));
-EnvUniformValueResolver.addDynamicResolver((valInfo, name) => {
-    if (valInfo.variableType === "sampler2D" && valInfo.variableAnnotation["type"] === "backbuffer") {
-        return (proxy, mat) => {
-            proxy.uniformTexture2D(name, mat.buffers[valInfo.variableAnnotation["name"]]);
-        };
-    }
-});
 
 function _getDecl(converter, defaultValue, register) {
     return {
@@ -8201,9 +8194,9 @@ function _registerUserUniforms(input) {
                                     flagAssignTo = annotations["usedFlag"];
                                 }
                             }
-                            attributes[valName] = _getDecl("MaterialTexture", _resolveDefault(variableInfo, undefined), (proxy, matArgs) => {
+                            attributes[valName] = _getDecl("Texture", _resolveDefault(variableInfo, undefined), (proxy, matArgs) => {
                                 let texture;
-                                if (matArgs.attributeValues[valName] && (texture = matArgs.attributeValues[valName](matArgs.buffers))) {
+                                if (matArgs.attributeValues[valName] && (texture = matArgs.attributeValues[valName].get(matArgs.buffers))) {
                                     proxy.uniformTexture2D(valName, texture);
                                     if (flagAssignTo) {
                                         proxy.uniformBool(flagAssignTo, true);
@@ -12351,6 +12344,9 @@ class GomlNode extends EEObject {
      * @return {number} number of index.
      */
     index() {
+        if (!this._parent) {
+            return -1;
+        }
         return this._parent.children.indexOf(this);
     }
     /**
@@ -12681,7 +12677,7 @@ class ComponentInterface {
             throw new Error("There are too many candidate");
         }
         else if (i3 === void 0) {
-            if (c.length === 0 || c[0].length <= i2 || c[0][0].length <= i1) {
+            if (c.length === 0 || c[0].length <= i2 || c[0][i2].length <= i1) {
                 return null;
             }
             else if (c.length === 1) {
@@ -12690,7 +12686,7 @@ class ComponentInterface {
             throw new Error("There are too many candidate");
         }
         else {
-            if (c.length <= i3 || c[0].length <= i2 || c[0][0].length <= i1) {
+            if (c.length <= i3 || c[i3].length <= i2 || c[i3][i2].length <= i1) {
                 return null;
             }
             return c[i3][i2][i1];
@@ -12705,6 +12701,24 @@ class ComponentInterface {
             });
         });
         return this;
+    }
+    first(pred) {
+        if (!pred) {
+            return this.first(() => true);
+        }
+        for (let i = 0; i < this.components.length; i++) {
+            let array1 = this.components[i];
+            for (let j = 0; j < array1.length; i++) {
+                let array2 = array1[j];
+                for (let k = 0; k < array2.length; k++) {
+                    let c = array2[k];
+                    if (pred(c, i, j, k)) {
+                        return c;
+                    }
+                }
+            }
+        }
+        return null;
     }
     isEmpty() {
         let _isEmpty = true;
@@ -12816,13 +12830,7 @@ class NodeInterface {
     }
     setAttribute(attrName, value) {
         this.forEach((node) => {
-            const attr = node.attributes.get(attrName);
-            if (attr.declaration.readonly) {
-                throw new Error(`The attribute ${attr.name.fqn} is readonly`);
-            }
-            if (attr) {
-                attr.Value = value;
-            }
+            node.setAttribute(attrName, value);
         });
     }
     /**
@@ -19229,7 +19237,7 @@ class Texture2D extends ResourceBase {
         let image;
         let width;
         let level;
-        if (typeof height === "undefined") {
+        if (height === void 0) {
             flipY = widthOrFlipY ? true : false;
             image = levelOrImage;
         }
@@ -19237,12 +19245,19 @@ class Texture2D extends ResourceBase {
             level = levelOrImage;
             width = widthOrFlipY;
         }
-        this.gl.pixelStorei(WebGLRenderingContext.UNPACK_FLIP_Y_WEBGL, flipY ? 1 : 0);
-        if (typeof height === "undefined") {
-            this.gl.texImage2D(WebGLRenderingContext.TEXTURE_2D, 0, WebGLRenderingContext.RGBA, WebGLRenderingContext.RGBA, WebGLRenderingContext.UNSIGNED_BYTE, this._checkSize(image));
+        if (height === void 0) {
+            if (image instanceof HTMLImageElement) {
+                this.gl.texImage2D(WebGLRenderingContext.TEXTURE_2D, 0, WebGLRenderingContext.RGBA, WebGLRenderingContext.RGBA, WebGLRenderingContext.UNSIGNED_BYTE, this._justifyImage(image));
+            }
+            else if (image instanceof HTMLCanvasElement) {
+                this.gl.texImage2D(WebGLRenderingContext.TEXTURE_2D, 0, WebGLRenderingContext.RGBA, WebGLRenderingContext.RGBA, WebGLRenderingContext.UNSIGNED_BYTE, this._justifyCanvas(image));
+            }
+            else if (image instanceof HTMLVideoElement) {
+                this.gl.texImage2D(WebGLRenderingContext.TEXTURE_2D, 0, WebGLRenderingContext.RGBA, WebGLRenderingContext.RGBA, WebGLRenderingContext.UNSIGNED_BYTE, this._justifyVideo(image));
+            }
         }
         else {
-            if (typeof pixels === "undefined") {
+            if (pixels === void 0) {
                 pixels = null;
             }
             this.gl.texImage2D(WebGLRenderingContext.TEXTURE_2D, level, format, width, height, border, format, type, pixels);
@@ -19261,7 +19276,7 @@ class Texture2D extends ResourceBase {
         this.gl.deleteTexture(this.texture);
     }
     // There should be more effective way to resize texture
-    _checkSize(img) {
+    _justifyImage(img) {
         const w = img.naturalWidth, h = img.naturalHeight;
         const size = Math.pow(2, Math.log(Math.min(w, h)) / Math.LN2 | 0); // largest 2^n integer that does not exceed s
         if (w !== h || w !== size) {
@@ -19271,6 +19286,26 @@ class Texture2D extends ResourceBase {
             return canv;
         }
         return img;
+    }
+    _justifyCanvas(canvas) {
+        const w = canvas.width;
+        const h = canvas.height;
+        const size = Math.pow(2, Math.log(Math.min(w, h)) / Math.LN2 | 0); // largest 2^n integer that does not exceed s
+        if (w !== h || w !== size) {
+            canvas.height = canvas.width = size;
+        }
+        return canvas;
+    }
+    _justifyVideo(video) {
+        const w = video.videoWidth, h = video.videoHeight;
+        const size = Math.pow(2, Math.log(Math.min(w, h)) / Math.LN2 | 0); // largest 2^n integer that does not exceed s
+        if (w !== h || w !== size) {
+            const canv = document.createElement("canvas");
+            canv.height = canv.width = size;
+            canv.getContext("2d").drawImage(video, 0, 0, w, h, 0, 0, size, size);
+            return canv;
+        }
+        return video;
     }
     _updateTexParameter() {
         this.gl.texParameteri(WebGLRenderingContext.TEXTURE_2D, WebGLRenderingContext.TEXTURE_MIN_FILTER, this._minFilter);
@@ -21114,32 +21149,6 @@ function MaterialConverter(val) {
     }
 }
 
-function MaterialTextureConverter(val) {
-    if (val instanceof Texture2D) {
-        return () => val;
-    }
-    if (typeof val === "string") {
-        const queryRegex = /^query\((.*)\)$/m;
-        let regexResult;
-        // Query texture element
-        if ((regexResult = queryRegex.exec(val))) {
-            const queried = this.tree(regexResult[1]);
-            throw new Error("Not implemeneted yet");
-        }
-        // from backbuffer
-        const backbufferRegex = /^backbuffer\((.*)\)$/m;
-        if ((regexResult = backbufferRegex.exec(val))) {
-            return (buffers) => buffers[regexResult[1]];
-        }
-        const tex = new Texture2D(this.companion.get("gl"));
-        ImageResolver$1.resolve(val).then(t => {
-            tex.update(t);
-        });
-        this.companion.get("loader").register(tex.validPromise);
-        return () => tex;
-    }
-}
-
 function NumberArrayConverter(val) {
     if (val instanceof Array) {
         return val;
@@ -21187,6 +21196,10 @@ function StringConverter$2(val) {
     }
 }
 
+function updateVideo(tex, video) {
+    tex.update(video);
+    requestAnimationFrame(() => updateVideo(tex, video));
+}
 function Texture2DConverter(val) {
     if (typeof val === "string") {
         const regex = /^query\((.*)\)$/m;
@@ -21200,6 +21213,99 @@ function Texture2DConverter(val) {
                 tex.update(t);
             });
             return tex;
+        }
+    }
+}
+
+/**
+ * Proxy of texture reference
+ */
+class TextureReference {
+    constructor(rawResource) {
+        this.rawResource = rawResource;
+        this._isFunctionalProxy = (typeof rawResource) === "function";
+    }
+    get(buffers) {
+        if (!this._isFunctionalProxy) {
+            return this.rawResource;
+        }
+        else {
+            return this.rawResource(buffers);
+        }
+    }
+}
+
+function updateVideo$1(tex, video) {
+    tex.update(video);
+    requestAnimationFrame(() => updateVideo$1(tex, video));
+}
+function _parseQuery(query) {
+    const regex = /(query|backbuffer|video)\((.+)\)[^\)]*$/;
+    let regexResult;
+    if ((regexResult = regex.exec(query))) {
+        return {
+            type: regexResult[1],
+            param: regexResult[2]
+        };
+    }
+    return null;
+}
+function generateVideoTag(src) {
+    const vTag = document.createElement("video");
+    vTag.src = src;
+    return vTag;
+}
+function fromVideoTexture(gl, val) {
+    const tex = new Texture2D(gl);
+    val.play();
+    tex.update(val);
+    updateVideo$1(tex, val);
+    return tex;
+}
+function TextureConverter(val) {
+    if (val instanceof Texture2D) {
+        return new TextureReference(val);
+    }
+    if (typeof val === "string") {
+        const parseResult = _parseQuery(val);
+        if (parseResult) {
+            const param = parseResult.param;
+            switch (parseResult.type) {
+                case "backbuffer":
+                    return new TextureReference((buffers) => buffers[param]);
+                case "video":
+                    return new TextureReference(fromVideoTexture(this.companion.get("gl"), generateVideoTag(param)));
+            }
+        }
+        else {
+            const tex = new Texture2D(this.companion.get("gl"));
+            ImageResolver$1.resolve(val).then(t => {
+                tex.update(t);
+            });
+            this.companion.get("loader").register(tex.validPromise);
+            return new TextureReference(tex);
+        }
+    }
+    if (typeof val === "object") {
+        if (val instanceof HTMLImageElement) {
+            const tex = new Texture2D(this.companion.get("gl"));
+            if (val.complete && val.naturalWidth) {
+                tex.update(val);
+            }
+            else {
+                val.onload = function () {
+                    tex.update(val);
+                };
+            }
+            return new TextureReference(tex);
+        }
+        else if (val instanceof HTMLCanvasElement) {
+            const tex = new Texture2D(this.companion.get("gl"));
+            tex.update(val);
+            return new TextureReference(tex);
+        }
+        else if (val instanceof HTMLVideoElement) {
+            return new TextureReference(fromVideoTexture(this.companion.get("gl"), val));
         }
     }
 }
@@ -21297,7 +21403,6 @@ obtainGomlInterface.register(() => __awaiter(undefined, void 0, void 0, function
     obtainGomlInterface.registerConverter(_$ns("Enum"), EnumConverter);
     obtainGomlInterface.registerConverter(_$ns("Geometry"), GeometryConverter);
     obtainGomlInterface.registerConverter(_$ns("Material"), MaterialConverter);
-    obtainGomlInterface.registerConverter(_$ns("MaterialTexture"), MaterialTextureConverter);
     obtainGomlInterface.registerConverter(_$ns("NumberArray"), NumberArrayConverter);
     obtainGomlInterface.registerConverter(_$ns("Number"), NumberConverter);
     obtainGomlInterface.registerConverter(_$ns("Object"), ObjectConverter);
@@ -21305,6 +21410,7 @@ obtainGomlInterface.register(() => __awaiter(undefined, void 0, void 0, function
     obtainGomlInterface.registerConverter(_$ns("StringArray"), StringArrayConverter$2);
     obtainGomlInterface.registerConverter(_$ns("String"), StringConverter$2);
     obtainGomlInterface.registerConverter(_$ns("Texture2D"), Texture2DConverter);
+    obtainGomlInterface.registerConverter(_$ns("Texture"), TextureConverter);
     obtainGomlInterface.registerConverter(_$ns("Vector2"), Vector2Converter);
     obtainGomlInterface.registerConverter(_$ns("Vector3"), Vector3Converter);
     obtainGomlInterface.registerConverter(_$ns("Vector4"), Vector4Converter);

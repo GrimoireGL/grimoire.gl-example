@@ -1,5 +1,5 @@
 <goml width="fit" height="fit">
-  <import-material type="normal" src="index.sort" />
+  <import-material typeName="normal" src="index.sort" />
   <geometry name="sphere" type="sphere" />
   <material id="normal" type="normal"/>
   <renderer camera=".camera" viewport="0,0,100%,100%">

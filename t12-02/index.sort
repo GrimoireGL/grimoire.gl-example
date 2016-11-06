@@ -1,0 +1,30 @@
+@Pass
+@BlendFunc(ONE,ONE)
+@CullFace(FRONT)
+@ExposeMacro(bool,viewspace,VIEW_SPACE,false)
+FS_PREC(mediump,float)
+
+varying vec3 vNormal;
+#ifdef VS
+  attribute vec3 position;
+  attribute vec3 normal;
+  uniform mat4 _matPVM;
+  uniform mat4 _matVM;
+  @{default:1.1}
+  uniform float edgeScaling;
+  void main(){
+    gl_Position = _matPVM * vec4(position * edgeScaling,1);
+    #ifdef VIEW_SPACE
+      vNormal = (_matVM * vec4(normal,0)).xyz;
+    #else
+      vNormal = normal;
+    #endif
+
+  }
+#endif
+
+#ifdef FS
+  void main(){
+    gl_FragColor = vec4(vNormal,1);
+  }
+#endif
