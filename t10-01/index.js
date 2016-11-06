@@ -6,9 +6,6 @@ gr(function() {
                 defaultValue: "HELLO WORLD!",
                 converter: "String"
             }
-        },
-        $awake:()=>{
-          console.log(111);
         }
     });
     gr.registerNode("print",{"Print"});
