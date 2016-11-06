@@ -7,7 +7,6 @@ gr.registerComponent('Rotate', {
   },
   $mount: function() {
     this.phi = 0;
-    // console.log(this.node.getAttribute('speed'));
   },
   $update: function() {
     this.phi += this.getValue('speed');
@@ -18,5 +17,5 @@ gr.registerComponent('Rotate', {
 gr(function() {
   var $$ = gr('#main');
   $$('mesh').addComponent('Rotate');
-  $$('mesh').setAttribute('speed', 1);
+  $$('mesh')('Rotate').setAttribute('speed', 1);
 });
