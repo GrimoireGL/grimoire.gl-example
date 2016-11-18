@@ -17,7 +17,6 @@ gr.registerComponent('Rotate', {
 gr.registerNode("rotate", ["Rotate"], {}, "mesh");
 
 gr(function() {
-<<<<<<< HEAD
     var $$ = gr("#main");
     gr.registerComponent("Print", {
         attributes: {
@@ -31,7 +30,4 @@ gr(function() {
         }
     });
     gr.registerNode("print",["Print"]);
-=======
-  var $$ = gr('#main');
->>>>>>> a72400dceb6075ddda6c5906f021a7552f0d8777
 });
