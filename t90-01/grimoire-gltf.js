@@ -2424,7 +2424,8 @@
                     case 0:
                       return _context2.abrupt("return", new _promise2.default(function (resolve, reject) {
                         var xhr = new XMLHttpRequest();
-                        xhr.open("GET", baseUrl + tf.buffers[bufferName].uri);
+                        xhr.open("GET", baseUrl + tf.buffers[bufferName].uri,true);
+                        xhr.setRequestHeader("Accept", "application/octet-stream");
                         xhr.responseType = "arraybuffer";
                         xhr.onload = function (v) {
                           resolve(xhr.response);
