@@ -1,4 +1,4 @@
 gr(function() {
     var $$ = gr("#main");
-    $$("camera").addComponent("MouseCameraControl");
+    $$(".camera")("MouseCameraControl").setAttribute("zoomSpeend", 1);
 });
