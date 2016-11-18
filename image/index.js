@@ -1,5 +1,7 @@
-let i = 0;
-setInterval(function() {
-    gr("#main")("mesh").setAttribute("rotation", "y(" + i / 10 + "d)");
-    i++;
-}, 10);
+// gr(function() {
+//   let i = 0;
+//   setInterval(function() {
+//     gr('#main')('#screen').setAttribute('rotation', 'y(' + i / 10 + 'd)');
+//     i++;
+//   }, 10);
+// });
