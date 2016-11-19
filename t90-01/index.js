@@ -21,12 +21,12 @@ gr(function () {
 });
 
 
-
-$(function () {
-  $("input").change(function (v) {
-    gr("#main")("mesh").setAttribute("color", v.target.value);
-  });
-});
+// 
+// $(function () {
+//   $("input").change(function (v) {
+//     gr("#main")("mesh").setAttribute("color", v.target.value);
+//   });
+// });
 
 /*
 gomlでかんたんに機能を追加できる。

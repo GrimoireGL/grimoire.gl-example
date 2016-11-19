@@ -10,7 +10,7 @@
               <MouseCameraControl center = "10"/>
           </camera.components> -->
         </camera>
-        <mesh geometry="cube" position="0,0,0" color="#FFF" texture="./t90-01/logo-01.png" />
-        <!-- <model src="./t90-01/Duck/Duck.gltf"/> -->
+        <!-- <mesh geometry="cube" position="0,0,0" color="#FFF" texture="./t90-01/logo-01.png" /> -->
+        <model src="./t90-01/Duck/Duck.gltf"/>
     </scene>
 </goml>
