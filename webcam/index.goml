@@ -5,7 +5,7 @@
       <texture-buffer name="bb1"/>
       <render-quad id="video-renderer" material="new(render-image)" source="video(./t12-01/bunny.mp4)" out="bb1">
         <render-quad.components>
-          <Webcam/>
+          <Webcam target="source"/>
         </render-quad.components>
       </render-quad>
       <render-quad material="new(negate)" source="backbuffer(bb1)"/>
