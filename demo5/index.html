@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="static/grimoire.js"></script>
+    <script type="text/javascript" src="./demo5/grimoire-gltf.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="index.js"></script>
+    <link rel="stylesheet" type="text/css" href="index.css">
+  </head>
+  <body>
+    <label>color:</label>
+    <input type="text" onchange="gr('#main')('#box').setAttribute('color',this.value)"/>
+    <script id="main" type="text/goml" src="index.goml"></script>
+  </body>
+</html>

@@ -1,0 +1,26 @@
+<goml width="fit" height="fit" bgColor="gray">
+  <renderer>
+    <!-- <texture-buffer name="bb1"/>
+    <render-scene out="bb1"/>
+    <render-sepia source="backbuffer(bb1)"/> -->
+  </renderer>
+    <scene>
+        <camera class="camera" position="0,0,5">
+          <camera.components>
+            <MouseCameraControl center="5"/>
+          </camera.components>
+        </camera>
+        <mesh id="box" geometry="cube" texture="./demo/logo.png"/>
+        <!-- <mesh geometry="cube" position="2.5,0,0">
+          <mesh.components>
+            <Webcam target="texture"/>
+          </mesh.components>
+        </mesh>
+        <model src="./demo/Duck/Duck.gltf" position="0,2,0"/>
+        <model src="./demo/Duck/Duck.gltf" position="0,0,2.5">
+          <model.components>
+            <Rotate/>
+          </model.components>
+        </model> -->
+    </scene>
+</goml>

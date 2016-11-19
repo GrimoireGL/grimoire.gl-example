@@ -1,0 +1,10 @@
+<goml width="fit" height="fit" bgColor="gray">
+    <scene>
+        <camera class="camera" position="0,0,5">
+          <camera.components>
+            <MouseCameraControl center="5"/>
+          </camera.components>
+        </camera>
+        <mesh id="box" geometry="cube" texture="./demo3/logo.png"/>
+    </scene>
+</goml>

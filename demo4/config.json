@@ -1,0 +1,21 @@
+[{
+    "title": "index.goml",
+    "mode": "xml",
+    "content": "",
+    "contentUrl": "index.goml"
+}, {
+    "title": "index.html",
+    "mode": "htmlmixed",
+    "content": "",
+    "contentUrl": "index.html"
+}, {
+    "title": "index.css",
+    "mode": "css",
+    "content": "",
+    "contentUrl": "index.css"
+}, {
+    "title": "index.js",
+    "mode": "javascript",
+    "content": "",
+    "contentUrl": "index.js"
+}]

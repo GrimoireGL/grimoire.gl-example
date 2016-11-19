@@ -1,0 +1,6 @@
+<goml width="fit" height="fit" bgColor="gray">
+    <scene>
+        <camera class="camera" position="0,0,5"/>
+        <mesh geometry="cube"/>
+    </scene>
+</goml>
