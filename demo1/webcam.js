@@ -5,6 +5,7 @@ gr.registerComponent("Webcam", {
       default: "texture"
     }
   },
+
   $mount: function () {
     var _this = this;
     navigator.getUserMedia = (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia);

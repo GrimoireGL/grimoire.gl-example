@@ -18,4 +18,9 @@
     "mode": "javascript",
     "content": "",
     "contentUrl": "index.js"
+}, {
+    "title": "webcam.js",
+    "mode": "javascript",
+    "content": "",
+    "contentUrl": "webcam.js"
 }]

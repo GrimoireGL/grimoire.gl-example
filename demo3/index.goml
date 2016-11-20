@@ -1,10 +1,16 @@
 <goml width="fit" height="fit" bgColor="gray">
-    <scene>
-        <camera class="camera" position="0,0,5">
-          <camera.components>
-            <MouseCameraControl center="5"/>
-          </camera.components>
-        </camera>
-        <mesh id="box" geometry="cube" texture="./demo3/logo.png"/>
-    </scene>
+  <scene>
+    <camera position="0,0,10">
+      <camera.components>
+        <MouseCameraControl center="10"/>
+      </camera.components>
+    </camera>
+    <mesh geometry="sphere" color="red"/>
+    <mesh geometry="cube" position="-2.5,0,0" texture="logo.png"/>
+    <mesh geometry="cube" position="2.5,0,0">
+      <mesh.components>
+        <Webcam target="texture"/>
+      </mesh.components>
+    </mesh>
+  </scene>
 </goml>
