@@ -1,4 +1,10 @@
 <goml width="fit" height="fit" bgColor="gray">
+  <renderer>
+    <texture-buffer name="bb1"/>
+    <render-buffer name="rb1"/>
+    <render-scene out="bb1" depthBuffer="rb1"/>
+    <render-sepia source="backbuffer(bb1)"/>
+  </renderer>
   <scene>
     <camera position="0,0,10">
       <camera.components>
