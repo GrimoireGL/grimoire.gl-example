@@ -15,6 +15,14 @@ gr.registerComponent('StareAt', {
       defaultValue: 0.03,
       converter: 'Number',
     },
+    zoom: {
+      defaultValue: 1.0,
+      converter: 'Number',
+    },
+    zoomPhase: {
+      defaultValue: 1.3,
+      converter: 'Number',
+    },
   },
   $awake: function() {
     this._transform = this.node.getComponent('Transform');
@@ -31,7 +39,8 @@ gr.registerComponent('StareAt', {
     var rotateQuaternion = Quaternion.angleAxis(this.phi, this.getValue('axis'));
     var rotateMatrix = Matrix.rotationQuaternion(rotateQuaternion);
     var rotatedDirection = Matrix.transformNormal(rotateMatrix, this.direction);
-    this._transform.localPosition = this.getValue('center').addWith(rotatedDirection.multiplyWith(this.distance));
+    this._transform.localPosition = this.getValue('center')
+      .addWith(rotatedDirection.multiplyWith(this.distance - this.getValue('zoom') * Math.sin(this.phi * this.getValue('zoomPhase'))));
     this._transform.localRotation = Quaternion.multiply(rotateQuaternion, this.baseRotation);
   },
 });
