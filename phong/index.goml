@@ -1,0 +1,22 @@
+<goml width="fit" height="fit">
+  <import-material typeName="phong" src="./index.sort"/>
+  <material id="main" type="phong" color="#933" sun="n(1,-1.1,-1.2)" power="10"/>
+  <renderer camera=".camera" viewport="0,0,100%,100%">
+    <render-scene/>
+  </renderer>
+  <scene>
+    <camera class="camera" near="0.01" far="40.0" aspect="1.0" fovy="45d" position="0,0,15" rotation="0,0,0" >
+      <camera.components>
+        <MouseCameraControl rotateX="10" moveSpeed="1" center="15"/>
+      </camera.components>
+    </camera>
+    <mesh position="0,0,0" geometry="cube" material="#main" targetBuffer="default" id="central"/>
+    <mesh position="0,0,1" geometry="sphere" material="#main" targetBuffer="default"/>
+    <mesh position="0,2,0" geometry="sphere" material="new(phong)" targetBuffer="default" color="#339" sun="n(1,-1.1,-1.2)" power="10"/>
+    <mesh position="0,3,3" rotation="30,0,0" geometry="cube" material="#main" targetBuffer="default">
+      <mesh.components>
+        <StareAt position="0,0,0" />
+      </mesh.components>
+    </mesh>
+  </scene>
+</goml>

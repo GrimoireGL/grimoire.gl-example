@@ -5,7 +5,7 @@
 
 FS_PREC(mediump,float)
 
-varying vec2 vUV;
+varying vec2 vTexCoord;
 varying vec3 vNormal;
 
 #ifdef VS
@@ -13,20 +13,27 @@ varying vec3 vNormal;
   attribute vec3 normal;
   attribute vec2 texCoord;
   uniform mat4 _matPVM;
+  uniform mat4 _matM;
   void main(){
     gl_Position = _matPVM * vec4(position, 1.);
-    vUV = texCoord;
-    vNormal = (_matPVM * vec4(normal, 0.)).xyz;
+    vTexCoord = texCoord;
+    vNormal = (_matM * vec4(normal, 0.)).xyz;
   }
 #endif
 
 #ifdef FS
+  @{usedFlag:"_textureUsed"}
+  uniform sampler2D texture;
+  uniform bool _textureUsed;
   @{type:"color", default:"#6E183D"}
   uniform vec4 color;
-  @{type:"sun", default:"3.14,3.14"}
-  uniform vec2 sun;
+  @{type:"vec3", default:"n(1,1,1)"}
+  uniform vec3 sun;
   void main(){
-    vec3 sun_vec = vec3(sin(sun.x) * cos(sun.y), sin(sun.x) * sin(sun.y), cos(sun.x));
-    gl_FragColor = vec4(clamp(dot(vNormal, -1.0 * sun_vec), 0.3, 1.0) * color.rgb, 1.0);
+    vec3 diffuse = max(dot(vNormal, -1. * sun), 0.3) * color.rgb;
+    if (_textureUsed) {
+      diffuse = diffuse * texture2D(texture, vTexCoord).rgb;
+    }
+    gl_FragColor = vec4(diffuse, 1.0);
   }
 #endif

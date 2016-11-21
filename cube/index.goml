@@ -1,8 +1,8 @@
 <goml width="fit" height="fit">
   <import-material typeName="lambert" src="./index.sort" />
   <geometry name="cube" type="cube" />
-  <material id="main" type="lambert" color="#cc3" sun="0.5,0.5" />
-  <renderer camera=".camera" viewport="0,0,100%,100%">
+  <material id="main" type="lambert" color="#cc3" sun="n(1,-1.1,-1.2)" />
+  <renderer camera=".camera" viewport="0,0,100%,100%" far="100">
     <render-scene/>
   </renderer>
   <scene>
