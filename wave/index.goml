@@ -1,6 +1,4 @@
 <goml width="fit" height="fit">
-  <import-material typeName="phong" src="./index.sort"/>
-  <material id="main" type="phong" color="#933" sun="n(1,-1.1,-1.2)" power="10"/>
   <renderer camera=".camera" viewport="0,0,100%,100%">
     <render-scene/>
   </renderer>

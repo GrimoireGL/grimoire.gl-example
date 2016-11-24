@@ -30,12 +30,6 @@
     "contentUrl": "Wave.js"
   },
   {
-    "title": "index.sort",
-    "mode": "glsl",
-    "content": "",
-    "contentUrl": "index.sort"
-  },
-  {
     "title": "index.css",
     "mode": "css",
     "content": "",

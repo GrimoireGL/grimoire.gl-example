@@ -18,7 +18,7 @@ varying vec3 vPosition;
   void main(){
     gl_Position = _matPVM * vec4(position, 1.);
     vTexCoord = texCoord;
-    vNormal = (_matM * vec4(normal, 0.)).xyz;
+    vNormal = normalize((_matM * vec4(normal, 0.)).xyz);
     vec4 p = _matM * vec4(position, 1.);
     vPosition = p.xyz / p.w;
   }
