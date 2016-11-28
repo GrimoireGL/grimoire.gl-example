@@ -1,0 +1,26 @@
+{
+  "name": "grimoire.gl-examples",
+  "version": "1.0.0",
+  "description": "The resources of the examples section for grimoire.gl.",
+  "scripts": {
+    "copy": "sh ./libcopy.sh"
+  },
+  "dependencies": {
+    "grimoirejs": "^0.11.11",
+    "grimoirejs-forward-shading": "^1.1.8",
+    "grimoirejs-fundamental": "^0.7.4",
+    "grimoirejs-gltf": "^1.1.2",
+    "grimoirejs-math": "^1.6.1",
+    "grimoirejs-preset-basic": "^1.2.3"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GrimoireGL/grimoire.gl-example.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/GrimoireGL/grimoire.gl-example/issues"
+  },
+  "homepage": "https://github.com/GrimoireGL/grimoire.gl-example#readme"
+}
