@@ -1,6 +1,6 @@
-<goml width="fit" height="fit">
+<goml height="fit">
   <import-material typeName="shader" src="index.sort"/>
   <renderer>
-    <render-quad material="new(shader)" out="default" />
+    <render-quad material="new(shader)"/>
   </renderer>
 </goml>
