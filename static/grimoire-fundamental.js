@@ -2360,7 +2360,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        converter: "CanvasSize"
 	    },
 	    containerId: {
-	        defaultValue: undefined,
+	        defaultValue: "",
 	        converter: "String"
 	    },
 	    containerClass: {
@@ -7406,7 +7406,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: "render",
 	        value: function render(args) {
-	            if (this._layer !== args.layer) {
+	            if (!this.node.isActive || !this.enabled || this._layer !== args.layer) {
 	                return;
 	            }
 	            if (!this._geometry || !args.material && !this._materialContainer.ready) {
@@ -8988,6 +8988,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return new _Color2.default(val.R, val.G, val.B);
 	    } else if (typeof val === "string") {
 	        return _Color2.default.parse(val);
+	    } else if (Array.isArray(val)) {
+	        return new _Color2.default(val[0], val[1], val[2]);
 	    } else {
 	        throw new Error(val + " can not be parsed as Color4.");
 	    }
@@ -9029,6 +9031,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return new _Color4.default(val.R, val.G, val.B, 1.0);
 	    } else if (typeof val === "string") {
 	        return _Color4.default.parse(val);
+	    } else if (Array.isArray(val)) {
+	        return new _Color4.default(val[0], val[1], val[2], val[3]);
 	    } else {
 	        throw new Error(val + " can not be parsed as Color4.");
 	    }
@@ -9152,12 +9156,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * The geometry class for managing buffer resource
 	 */
 	var Geometry = function () {
-	    function Geometry(verticies, attribInfo, indicies, aabb) {
+	    function Geometry(verticies, attribInfo, indices, aabb) {
 	        _classCallCheck(this, Geometry);
 	
 	        this.verticies = verticies;
 	        this.attribInfo = attribInfo;
-	        this.indicies = indicies;
+	        this.indices = indices;
 	        this.aabb = aabb;
 	        this._validateGLContext();
 	        // check all buffers requested by attribute variables are all contained in verticies
@@ -9176,7 +9180,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var count = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : Number.MAX_VALUE;
 	            var offset = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 0;
 	
-	            var targetIndex = this.indicies[indexName];
+	            var targetIndex = this.indices[indexName];
 	            attribNames.forEach(function (name) {
 	                var index = program.findAttributeLocation(name);
 	                if (index < 0) {
@@ -9197,8 +9201,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: "_validateGLContext",
 	        value: function _validateGLContext() {
 	            // Check for index buffers
-	            for (var indexName in this.indicies) {
-	                var index = this.indicies[indexName];
+	            for (var indexName in this.indices) {
+	                var index = this.indices[indexName];
 	                if (!this._gl) {
 	                    this._gl = index.index.gl;
 	                }
@@ -9736,7 +9740,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function _registerTriangle() {
 	            _GeometryFactory2.default.addType("triangle", {}, function (gl, attrs) {
 	                return _GeometryBuilder2.default.build(gl, {
-	                    indicies: {
+	                    indices: {
 	                        default: {
 	                            generator: regeneratorRuntime.mark(function generator() {
 	                                return regeneratorRuntime.wrap(function generator$(_context) {
@@ -9772,7 +9776,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                            topology: WebGLRenderingContext.LINES
 	                        }
 	                    },
-	                    verticies: {
+	                    vertices: {
 	                        main: {
 	                            size: {
 	                                position: 3,
@@ -9836,7 +9840,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function _registerQuad() {
 	            _GeometryFactory2.default.addType("quad", {}, function (gl, attrs) {
 	                return _GeometryBuilder2.default.build(gl, {
-	                    indicies: {
+	                    indices: {
 	                        default: {
 	                            generator: regeneratorRuntime.mark(function generator() {
 	                                return regeneratorRuntime.wrap(function generator$(_context6) {
@@ -9872,7 +9876,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                            topology: WebGLRenderingContext.LINES
 	                        }
 	                    },
-	                    verticies: {
+	                    vertices: {
 	                        main: {
 	                            size: {
 	                                position: 3,
@@ -9936,7 +9940,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function _registerCube() {
 	            _GeometryFactory2.default.addType("cube", {}, function (gl, attrs) {
 	                return _GeometryBuilder2.default.build(gl, {
-	                    indicies: {
+	                    indices: {
 	                        default: {
 	                            generator: regeneratorRuntime.mark(function generator() {
 	                                return regeneratorRuntime.wrap(function generator$(_context11) {
@@ -9972,7 +9976,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                            topology: WebGLRenderingContext.LINES
 	                        }
 	                    },
-	                    verticies: {
+	                    vertices: {
 	                        main: {
 	                            size: {
 	                                position: 3,
@@ -10048,7 +10052,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                var dH = attrs["divHorizontal"];
 	                var dV = attrs["divVertical"];
 	                return _GeometryBuilder2.default.build(gl, {
-	                    indicies: {
+	                    indices: {
 	                        default: {
 	                            generator: regeneratorRuntime.mark(function generator() {
 	                                return regeneratorRuntime.wrap(function generator$(_context16) {
@@ -10084,7 +10088,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                            topology: WebGLRenderingContext.LINES
 	                        }
 	                    },
-	                    verticies: {
+	                    vertices: {
 	                        main: {
 	                            size: {
 	                                position: 3,
@@ -10155,7 +10159,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }, function (gl, attrs) {
 	                var div = attrs["divide"];
 	                return _GeometryBuilder2.default.build(gl, {
-	                    indicies: {
+	                    indices: {
 	                        default: {
 	                            generator: regeneratorRuntime.mark(function generator() {
 	                                return regeneratorRuntime.wrap(function generator$(_context21) {
@@ -10191,7 +10195,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                            topology: WebGLRenderingContext.LINES
 	                        }
 	                    },
-	                    verticies: {
+	                    vertices: {
 	                        main: {
 	                            size: {
 	                                position: 3,
@@ -10261,7 +10265,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }, function (gl, attrs) {
 	                var div = attrs["divide"];
 	                return _GeometryBuilder2.default.build(gl, {
-	                    indicies: {
+	                    indices: {
 	                        default: {
 	                            generator: regeneratorRuntime.mark(function generator() {
 	                                return regeneratorRuntime.wrap(function generator$(_context26) {
@@ -10297,7 +10301,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                            topology: WebGLRenderingContext.LINES
 	                        }
 	                    },
-	                    verticies: {
+	                    vertices: {
 	                        main: {
 	                            size: {
 	                                position: 3,
@@ -10368,7 +10372,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }, function (gl, attrs) {
 	                var div = attrs["divide"];
 	                return _GeometryBuilder2.default.build(gl, {
-	                    indicies: {
+	                    indices: {
 	                        default: {
 	                            generator: regeneratorRuntime.mark(function generator() {
 	                                return regeneratorRuntime.wrap(function generator$(_context31) {
@@ -10404,7 +10408,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                            topology: WebGLRenderingContext.LINES
 	                        }
 	                    },
-	                    verticies: {
+	                    vertices: {
 	                        main: {
 	                            size: {
 	                                position: 3,
@@ -10475,7 +10479,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }, function (gl, attrs) {
 	                var div = attrs["divide"];
 	                return _GeometryBuilder2.default.build(gl, {
-	                    indicies: {
+	                    indices: {
 	                        default: {
 	                            generator: regeneratorRuntime.mark(function generator() {
 	                                return regeneratorRuntime.wrap(function generator$(_context36) {
@@ -10511,7 +10515,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                            topology: WebGLRenderingContext.LINES
 	                        }
 	                    },
-	                    verticies: {
+	                    vertices: {
 	                        main: {
 	                            size: {
 	                                position: 3,
@@ -10615,10 +10619,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	        /**
 	         * Convert triangles topology to lines. Basically uses for making wireframes.
-	         * @param  {IterableIterator<number>} indicies [description]
+	         * @param  {IterableIterator<number>} indices [description]
 	         * @return {IterableIterator<number>}          [description]
 	         */
-	        value: regeneratorRuntime.mark(function linesFromTriangles(indicies) {
+	        value: regeneratorRuntime.mark(function linesFromTriangles(indices) {
 	            var ic, i, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, index, a, b, c;
 	
 	            return regeneratorRuntime.wrap(function linesFromTriangles$(_context) {
@@ -10631,7 +10635,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                            _didIteratorError = false;
 	                            _iteratorError = undefined;
 	                            _context.prev = 5;
-	                            _iterator = indicies[Symbol.iterator]();
+	                            _iterator = indices[Symbol.iterator]();
 	
 	                        case 7:
 	                            if (_iteratorNormalCompletion = (_step = _iterator.next()).done) {
@@ -12141,6 +12145,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _createClass(GeometryBuilder, null, [{
 	        key: "build",
 	        value: function build(gl, info) {
+	            if (info["verticies"] | info["indicies"]) {
+	                throw new Error("Misspelled API was fixed already. use vertices and indices");
+	            }
 	            var buffers = {};
 	            var attribs = {};
 	            var aabb = info.aabb;
@@ -12148,9 +12155,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if (needConstructAABB) {
 	                aabb = new _AABB2.default();
 	            }
-	            for (var bufferKey in info.verticies) {
+	            for (var bufferKey in info.vertices) {
 	                var byteWidth = 4;
-	                var buffer = info.verticies[bufferKey];
+	                var buffer = info.vertices[bufferKey];
 	                var sizeSum = 0;
 	                for (var attribKey in buffer.size) {
 	                    if (attribs[attribKey]) {
@@ -12211,14 +12218,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	                buffers[bufferKey] = new _Buffer2.default(gl, WebGLRenderingContext.ARRAY_BUFFER, buffer.usage ? buffer.usage : WebGLRenderingContext.STATIC_DRAW);
 	                buffers[bufferKey].update(new Float32Array(bufferSource));
 	            }
-	            return new _Geometry2.default(buffers, attribs, this._generateIndicies(gl, info.indicies), aabb);
+	            return new _Geometry2.default(buffers, attribs, this._generateIndices(gl, info.indices), aabb);
 	        }
 	    }, {
-	        key: "_generateIndicies",
-	        value: function _generateIndicies(gl, indexGenerator) {
+	        key: "_generateIndices",
+	        value: function _generateIndices(gl, indexGenerator) {
 	            var indexMap = {};
 	            for (var indexName in indexGenerator) {
-	                var indicies = [];
+	                var indices = [];
 	                var generatorInfo = indexGenerator[indexName];
 	                var _iteratorNormalCompletion = true;
 	                var _didIteratorError = false;
@@ -12228,7 +12235,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    for (var _iterator = generatorInfo.generator()[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
 	                        var variable = _step.value;
 	
-	                        indicies.push(variable);
+	                        indices.push(variable);
 	                    }
 	                } catch (err) {
 	                    _didIteratorError = true;
@@ -12245,11 +12252,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    }
 	                }
 	
-	                var bufferType = this._getIndexType(indicies.length);
+	                var bufferType = this._getIndexType(indices.length);
 	                var buffer = new _Buffer2.default(gl, WebGLRenderingContext.ELEMENT_ARRAY_BUFFER, WebGLRenderingContext.STATIC_DRAW);
-	                buffer.update(new bufferType.ctor(indicies));
+	                buffer.update(new bufferType.ctor(indices));
 	                indexMap[indexName] = {
-	                    count: indicies.length,
+	                    count: indices.length,
 	                    index: buffer,
 	                    type: bufferType.format,
 	                    byteSize: bufferType.byteSize,

@@ -9698,13 +9698,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: "find",
 	        value: function find(predicate) {
-	            this.nodes.forEach(function (array, gomlIndex) {
-	                array.forEach(function (node, nodeIndex) {
-	                    if (predicate(node, gomlIndex, nodeIndex)) {
+	            var nodes = this.nodes;
+	            for (var i = 0; i < nodes.length; i++) {
+	                var array = nodes[i];
+	                for (var j = 0; j < array.length; j++) {
+	                    var node = array[j];
+	                    if (predicate(node, i, j)) {
 	                        return node;
 	                    }
-	                });
-	            });
+	                }
+	            }
 	            return null;
 	        }
 	        /**
@@ -9761,8 +9764,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: "first",
 	        value: function first() {
-	            return this.find(function (node) {
-	                return !!node;
+	            return this.find(function () {
+	                return true;
 	            });
 	        }
 	        /**
@@ -10525,7 +10528,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	            attrName = _Ensure2.default.ensureTobeNSIdentity(attrName);
 	            var attr = this.attributes.get(attrName);
 	            if (!attr) {
-	                console.warn("attribute \"" + attrName.name + "\" is not found.");
+	                if (_GrimoireInterface2.default.debug) {
+	                    console.warn("attribute \"" + attrName.name + "\" is not found.");
+	                }
 	                this._attrBuffer[attrName.fqn] = value;
 	            } else {
 	                attr.Value = value;
@@ -11588,15 +11593,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var idAttribute = this.getAttribute("id");
 	            var classAttribute = this.getAttribute("class");
 	            idAttribute.addObserver(function (attr) {
-	                _this2.node.element.id = attr.Value;
-	            });
+	                _this2.node.element.id = attr.Value ? attr.Value : "";
+	            }, true);
 	            classAttribute.addObserver(function (attr) {
 	                var v = attr.Value;
-	                _this2.node.element.className = v ? v.join(" ") : null;
-	            });
-	            this.node.element.id = idAttribute.Value;
-	            var v = classAttribute.Value;
-	            this.node.element.className = v ? v.join(" ") : null;
+	                _this2.node.element.className = v ? v.join(" ") : "";
+	            }, true);
 	            this.getAttribute("enabled").addObserver(function (attr) {
 	                if (_this2.node.isActive) {
 	                    _this2.node.notifyActivenessUpdate();
@@ -11611,12 +11613,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	GrimoireComponent.attributes = {
 	    id: {
 	        converter: "String",
-	        defaultValue: null,
+	        defaultValue: "",
 	        readonly: false
 	    },
 	    class: {
 	        converter: "StringArray",
-	        defaultValue: null,
+	        defaultValue: "",
 	        readonly: false
 	    },
 	    enabled: {

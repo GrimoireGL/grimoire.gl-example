@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script src="https://unpkg.com/grimoirejs-preset-basic/register/grimoire-preset-basic.js"></script>
+</head>
+
+<body>
+  <script type="text/goml" id="canvas1">
+    <goml>
+      <scene>
+        <camera/>
+        <rotated-mesh color="blue" position="-2,0,0" geometry="cube"/>
+        <rotated-mesh color="red" position="0,0,0" geometry="cube" speed="2"/>
+        <rotated-mesh color="green" position="2,0,0" geometry="cube" speed="3"/>
+      </scene>
+    </goml>
+  </script>
+  <script type="text/javascript">
+    gr.registerComponent("Rotate",{
+      attributes:{
+        speed:
+        {
+          defaultValue:1,
+          converter:"Number"
+        }
+      },
+      $mount:function(){
+        this.phi = 0;
+      },
+      $update:function(){
+        this.phi += this.getValue("speed");
+        this.node.setAttribute("rotation",this.phi + "," + this.phi + "," + this.phi);
+      }
+    });
+    gr.registerNode("rotated-mesh",["Rotate"],{},"mesh");
+  </script>
+</body>
+
+</html>

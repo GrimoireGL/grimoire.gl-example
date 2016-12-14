@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script src="https://unpkg.com/grimoirejs-preset-basic/register/grimoire-preset-basic.js"></script>
+</head>
+
+<body>
+  <script type="text/goml" id="canvas1">
+    <goml>
+      <scene>
+        <camera/>
+        <mesh color="red" position="0,0,0" geometry="cube"/>
+      </scene>
+    </goml>
+  </script>
+  <script type="text/goml">
+    <goml>
+      <scene>
+        <camera/>
+        <mesh color="green" position="0,0,0" geometry="cube"/>
+      </scene>
+    </goml>
+  </script>
+  <script type="text/javascript">
+    gr(function() {
+      setTimeout(function() {
+        gr("#canvas1")("mesh").setAttribute("color", "blue");
+      }, 1000);
+    });
+  </script>
+</body>
+
+</html>
