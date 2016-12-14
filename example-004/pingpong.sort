@@ -1,0 +1,25 @@
+@Pass
+@NoDepth()
+FS_PREC(mediump,float)
+varying vec2 vUV;
+#ifdef VS
+  attribute vec3 position;
+  attribute vec2 texCoord;
+  void main(){
+    gl_Position = vec4(position, 1.);
+    vUV = texCoord;
+  }
+#endif
+
+#ifdef FS
+
+  uniform sampler2D source;
+
+  void main() {
+    vec2 uv = vUV;
+    uv.y = 1. - uv.y;
+    vec2 uv2 = vec2(uv.y,1.-uv.x);
+    gl_FragColor.rgb = (texture2D(source,uv2).rgb + texture2D(source,uv).gbr)/2.;
+    gl_FragColor.a = 1.0;
+  }
+#endif
