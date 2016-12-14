@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "The resources of the examples section for grimoire.gl.",
   "scripts": {
-    "copy": "sh ./libcopy.sh"
+    "copy": "sh ./libcopy.sh",
+    "check": "sh ./check-example.sh"
   },
   "dependencies": {
     "grimoirejs": "^0.11.19",
