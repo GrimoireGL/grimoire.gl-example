@@ -4,6 +4,7 @@ for i in $(seq 1 10);do
   open http://localhost:8080/\#example-$i
 done
 
+hs
 # for a  in ./t* ; do
 # echo $a | sed -e "s/\.\///"
 # open http://localhost:8080/\#$a
