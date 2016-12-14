@@ -55,53 +55,53 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	
+
 	var _Accessor = __webpack_require__(1);
-	
+
 	var _Accessor2 = _interopRequireDefault(_Accessor);
-	
+
 	var _Animation = __webpack_require__(5);
-	
+
 	var _Animation2 = _interopRequireDefault(_Animation);
-	
+
 	var _Interpolators = __webpack_require__(6);
-	
+
 	var _Interpolators2 = _interopRequireDefault(_Interpolators);
-	
+
 	var _GLTFAnimationComponent = __webpack_require__(8);
-	
+
 	var _GLTFAnimationComponent2 = _interopRequireDefault(_GLTFAnimationComponent);
-	
-	var _GLTFJointComponent = __webpack_require__(10);
-	
+
+	var _GLTFJointComponent = __webpack_require__(11);
+
 	var _GLTFJointComponent2 = _interopRequireDefault(_GLTFJointComponent);
-	
+
 	var _GLTFModelComponent = __webpack_require__(13);
-	
+
 	var _GLTFModelComponent2 = _interopRequireDefault(_GLTFModelComponent);
-	
+
 	var _ConstantConverter = __webpack_require__(2);
-	
+
 	var _ConstantConverter2 = _interopRequireDefault(_ConstantConverter);
-	
+
 	var _MaterialsCommonParser = __webpack_require__(15);
-	
+
 	var _MaterialsCommonParser2 = _interopRequireDefault(_MaterialsCommonParser);
-	
+
 	var _Parser = __webpack_require__(14);
-	
+
 	var _Parser2 = _interopRequireDefault(_Parser);
-	
+
 	var _main = __webpack_require__(23);
-	
+
 	var _main2 = _interopRequireDefault(_main);
-	
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
+
 	var __EXPOSE__ = {
 	    "Accessor": {
 	        "Accessor": _Accessor2.default
@@ -131,28 +131,28 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
+
 	var _ConstantConverter = __webpack_require__(2);
-	
+
 	var _ConstantConverter2 = _interopRequireDefault(_ConstantConverter);
-	
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
+
 	/**
 	 * The accessor class to be used for fetching animation frames
 	 */
 	var Accessor = function () {
 	    function Accessor(buffer, count, componentType, elementSize, byteOffset, byteStride) {
 	        _classCallCheck(this, Accessor);
-	
+
 	        this.buffer = buffer;
 	        this.count = count;
 	        this.componentType = componentType;
@@ -161,8 +161,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.byteStride = byteStride;
 	        this._dView = new DataView(buffer.buffer, buffer.byteOffset + byteOffset);
 	        this._elementByteSize = _ConstantConverter2.default.asByteSize(componentType);
+	        if (byteStride === 0) {
+	            this.byteStride = this.elementSize * this._elementByteSize;
+	        }
 	    }
-	
+
 	    _createClass(Accessor, [{
 	        key: "getByIndex",
 	        value: function getByIndex(index) {
@@ -180,16 +183,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function _getSingleByIndex(index, elementIndex) {
 	            switch (this.componentType) {
 	                case WebGLRenderingContext.FLOAT:
-	                    return this._dView.getFloat32(index * (this.elementSize * this._elementByteSize + this.byteStride) + this._elementByteSize * elementIndex, true);
+	                    return this._dView.getFloat32(index * this.byteStride + this._elementByteSize * elementIndex, true);
 	                default:
 	                    throw new Error("Unsupported element type");
 	            }
 	        }
 	    }]);
-	
+
 	    return Accessor;
 	}();
-	
+
 	exports.default = Accessor;
 
 /***/ },
@@ -197,30 +200,30 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
+
 	var _Color = __webpack_require__(3);
-	
+
 	var _Color2 = _interopRequireDefault(_Color);
-	
+
 	var _Color3 = __webpack_require__(4);
-	
+
 	var _Color4 = _interopRequireDefault(_Color3);
-	
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
+
 	var GLTFConstantConvert = function () {
 	    function GLTFConstantConvert() {
 	        _classCallCheck(this, GLTFConstantConvert);
 	    }
-	
+
 	    _createClass(GLTFConstantConvert, null, [{
 	        key: "asColorValue",
 	        value: function asColorValue(a) {
@@ -333,10 +336,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 	        }
 	    }]);
-	
+
 	    return GLTFConstantConvert;
 	}();
-	
+
 	exports.default = GLTFConstantConvert;
 
 /***/ },
@@ -360,33 +363,33 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
+
 	var _Interpolators = __webpack_require__(6);
-	
+
 	var _Interpolators2 = _interopRequireDefault(_Interpolators);
-	
+
 	var _ConstantConverter = __webpack_require__(2);
-	
+
 	var _ConstantConverter2 = _interopRequireDefault(_ConstantConverter);
-	
+
 	var _Accessor = __webpack_require__(1);
-	
+
 	var _Accessor2 = _interopRequireDefault(_Accessor);
-	
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
+
 	var Animator = function () {
 	    function Animator(tf, animationKey, _buffers) {
 	        _classCallCheck(this, Animator);
-	
+
 	        this.tf = tf;
 	        this.animationKey = animationKey;
 	        this._buffers = _buffers;
@@ -402,11 +405,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var _iteratorNormalCompletion = true;
 	        var _didIteratorError = false;
 	        var _iteratorError = undefined;
-	
+
 	        try {
 	            for (var _iterator = this._animationData.channels[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
 	                var channel = _step.value;
-	
+
 	                var sampler = this._animationData.samplers[channel.sampler];
 	                var input = this.accessors[sampler.input];
 	                this.timeLength = Math.max(this.timeLength, input.getByIndex(input.count - 1)[0]);
@@ -430,7 +433,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 	        }
 	    }
-	
+
 	    _createClass(Animator, [{
 	        key: "processCurrentFrame",
 	        value: function processCurrentFrame(time, processor) {
@@ -468,10 +471,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return _Interpolators2.default[interpolation](delta, v1, v2);
 	        }
 	    }]);
-	
+
 	    return Animator;
 	}();
-	
+
 	exports.default = Animator;
 
 /***/ },
@@ -479,17 +482,17 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	
+
 	var _GLM = __webpack_require__(7);
-	
+
 	var _GLM2 = _interopRequireDefault(_GLM);
-	
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
+
 	var quat = _GLM2.default.quat;
 	exports.default = {
 	    LINEAR: function LINEAR(t, v1, v2) {
@@ -519,34 +522,38 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _Component2 = __webpack_require__(9);
-	
+
+	var _TransformComponent = __webpack_require__(9);
+
+	var _TransformComponent2 = _interopRequireDefault(_TransformComponent);
+
+	var _Component2 = __webpack_require__(10);
+
 	var _Component3 = _interopRequireDefault(_Component2);
-	
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
+
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
+
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
+
 	var GLTFAnimationComponent = function (_Component) {
 	    _inherits(GLTFAnimationComponent, _Component);
-	
+
 	    function GLTFAnimationComponent() {
 	        _classCallCheck(this, GLTFAnimationComponent);
-	
+
 	        return _possibleConstructorReturn(this, (GLTFAnimationComponent.__proto__ || Object.getPrototypeOf(GLTFAnimationComponent)).apply(this, arguments));
 	    }
-	
+
 	    _createClass(GLTFAnimationComponent, [{
 	        key: "$mount",
 	        value: function $mount() {
@@ -557,20 +564,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: "$update",
 	        value: function $update() {
 	            var _this2 = this;
-	
+
 	            if (!this._targetTransforms) {
 	                this._targetTransforms = {};
 	                var targets = this._animation.targetNodes;
 	                var _iteratorNormalCompletion = true;
 	                var _didIteratorError = false;
 	                var _iteratorError = undefined;
-	
+
 	                try {
 	                    for (var _iterator = targets[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
 	                        var target = _step.value;
-	
+
 	                        var nodes = this.node.parent.parent.parent.getChildrenByClass(target);
-	                        this._targetTransforms[target] = nodes[0].getComponent("Transform");
+	                        if (nodes.length > 0) {
+	                            this._targetTransforms[target] = nodes[0].getComponent(_TransformComponent2.default);
+	                        }
 	                    }
 	                } catch (err) {
 	                    _didIteratorError = true;
@@ -588,8 +597,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	                }
 	            }
 	            var t = (new Date().getTime() - this._startTime) / 1000;
-	            this._animation.processCurrentFrame(t % 5, function (id, path, v) {
+	            this._animation.processCurrentFrame(t % this._animation.timeLength, function (id, path, v) {
 	                var transform = _this2._targetTransforms[id];
+	                if (!transform) {
+	                    return;
+	                }
 	                switch (path) {
 	                    case "translation":
 	                        transform.localPosition.rawElements = v;
@@ -597,6 +609,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    case "rotation":
 	                        transform.localRotation.rawElements = v;
 	                        break;
+	                    case "scale":
+	                        transform.localScale.rawElements = v;
 	                }
 	            });
 	            for (var tr in this._targetTransforms) {
@@ -607,12 +621,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: "$unmount",
 	        value: function $unmount() {}
 	    }]);
-	
+
 	    return GLTFAnimationComponent;
 	}(_Component3.default);
-	
+
 	exports.default = GLTFAnimationComponent;
-	
+
 	GLTFAnimationComponent.attributes = {
 	    play: {
 	        converter: "Boolean",
@@ -630,49 +644,57 @@ return /******/ (function(modules) { // webpackBootstrap
 
 		Object.defineProperty(exports, "__esModule", {
 		    value: true
-		});exports.default=window.GrimoireJS.Node.Component;
+		});exports.default=window.GrimoireJS.lib.fundamental.Components.TransformComponent;
 
 /***/ },
 /* 10 */
+/***/ function(module, exports) {
+
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});exports.default=window.GrimoireJS.Node.Component;
+
+/***/ },
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _Matrix = __webpack_require__(11);
-	
+
+	var _Matrix = __webpack_require__(12);
+
 	var _Matrix2 = _interopRequireDefault(_Matrix);
-	
-	var _TransformComponent = __webpack_require__(12);
-	
+
+	var _TransformComponent = __webpack_require__(9);
+
 	var _TransformComponent2 = _interopRequireDefault(_TransformComponent);
-	
-	var _Component2 = __webpack_require__(9);
-	
+
+	var _Component2 = __webpack_require__(10);
+
 	var _Component3 = _interopRequireDefault(_Component2);
-	
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
+
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
+
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
+
 	var GLTFJointComponent = function (_Component) {
 	    _inherits(GLTFJointComponent, _Component);
-	
+
 	    function GLTFJointComponent() {
 	        _classCallCheck(this, GLTFJointComponent);
-	
+
 	        return _possibleConstructorReturn(this, (GLTFJointComponent.__proto__ || Object.getPrototypeOf(GLTFJointComponent)).apply(this, arguments));
 	    }
-	
+
 	    _createClass(GLTFJointComponent, [{
 	        key: "$mount",
 	        value: function $mount() {
@@ -693,12 +715,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 	        }
 	    }]);
-	
+
 	    return GLTFJointComponent;
 	}(_Component3.default);
-	
+
 	exports.default = GLTFJointComponent;
-	
+
 	GLTFJointComponent.attributes = {
 	    skinInfo: {
 	        converter: "Object",
@@ -719,7 +741,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 11 */
+/* 12 */
 /***/ function(module, exports) {
 
 		Object.defineProperty(exports, "__esModule", {
@@ -727,67 +749,60 @@ return /******/ (function(modules) { // webpackBootstrap
 		});exports.default=window.GrimoireJS.lib.math.Matrix;
 
 /***/ },
-/* 12 */
-/***/ function(module, exports) {
-
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});exports.default=window.GrimoireJS.lib.fundamental.Components.TransformComponent;
-
-/***/ },
 /* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _TransformComponent = __webpack_require__(12);
-	
+
+	var _TransformComponent = __webpack_require__(9);
+
 	var _TransformComponent2 = _interopRequireDefault(_TransformComponent);
-	
-	var _Matrix = __webpack_require__(11);
-	
+
+	var _Matrix = __webpack_require__(12);
+
 	var _Matrix2 = _interopRequireDefault(_Matrix);
-	
-	var _Component2 = __webpack_require__(9);
-	
+
+	var _Component2 = __webpack_require__(10);
+
 	var _Component3 = _interopRequireDefault(_Component2);
-	
+
 	var _Parser = __webpack_require__(14);
-	
+
 	var _Parser2 = _interopRequireDefault(_Parser);
-	
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
+
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
+
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
+
 	var GLTFModelComponent = function (_Component) {
 	    _inherits(GLTFModelComponent, _Component);
-	
+
 	    function GLTFModelComponent() {
 	        _classCallCheck(this, GLTFModelComponent);
-	
+
 	        return _possibleConstructorReturn(this, (GLTFModelComponent.__proto__ || Object.getPrototypeOf(GLTFModelComponent)).apply(this, arguments));
 	    }
-	
+
 	    _createClass(GLTFModelComponent, [{
 	        key: "$mount",
 	        value: function $mount() {
 	            var _this2 = this;
-	
+
 	            var src = this.getValue("src");
 	            if (src) {
 	                var gl = this.companion.get("gl");
 	                _Parser2.default.parseFromURL(gl, src).then(function (data) {
+	                    _this2._parsedData = data;
 	                    _this2._populateAssets(data);
 	                    _this2._populateScene(data);
 	                });
@@ -804,11 +819,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var _iteratorNormalCompletion = true;
 	            var _didIteratorError = false;
 	            var _iteratorError = undefined;
-	
+
 	            try {
 	                for (var _iterator = sceneNodes.nodes[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
 	                    var nodeName = _step.value;
-	
+
 	                    this._populateNode(data, nodeName, this.node);
 	                }
 	            } catch (err) {
@@ -829,32 +844,53 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: "_populateAssets",
 	        value: function _populateAssets(data) {
-	            var assetRoot = this.node.addChildByName("gltf-assets", {});
-	            for (var key in data.materials) {
-	                //data.materials[key]["boneMatricies"] = data.skins["Armature_Cylinder-skin"].jointMatrices;
-	                var node = assetRoot.addChildByName("material", data.materials[key]);
-	                node.element.className = data.materials[key]["class"]; // hack for bug
-	            }
-	            for (var _key in data.animations) {
-	                assetRoot.addChildByName("gltf-animation", {
-	                    animation: data.animations[_key]
+	            this._assetRoot = this.node.addChildByName("gltf-assets", {});
+	            for (var key in data.animations) {
+	                this._assetRoot.addChildByName("gltf-animation", {
+	                    animation: data.animations[key]
 	                });
 	            }
+	        }
+	    }, {
+	        key: "_populateMaterial",
+	        value: function _populateMaterial(data, materialName, skinName) {
+	            var query = skinName ? "gltf-" + materialName + "-" + skinName : "gltf-" + materialName;
+	            var matNodes = this.node.getChildrenByClass(query);
+	            if (matNodes.length === 0) {
+	                var mat = this._assetRoot.addChildByName("material", Object.assign({
+	                    boneMatrices: skinName ? data.skins[skinName].jointMatrices : undefined,
+	                    boneCount: skinName ? data.skins[skinName].jointNames.length : undefined
+	                }, data.materials[materialName]));
+	                var className = data.materials[materialName]["class"];
+	                if (!!skinName) {
+	                    className += " " + query;
+	                }
+	                mat.element.className = className;
+	            }
+	            return "." + query;
 	        }
 	    }, {
 	        key: "_populateNode",
 	        value: function _populateNode(data, nodeName, parentNode) {
 	            var node = data.tf.nodes[nodeName];
+	            if (node.skin) {
+	                // adjust skin to node
+	                parentNode = parentNode.addChildByName("object", {});
+	                var mat = _Matrix2.default.inverse(data.skins[node.skin].bindShapeMatrix);
+	                parentNode.setAttribute("position", mat.getTranslation());
+	                parentNode.setAttribute("scale", mat.getScaling());
+	                parentNode.setAttribute("rotation", mat.getRotation());
+	            }
 	            var gomlNode = parentNode.addChildByName("object", {});
 	            gomlNode.element.className = nodeName;
 	            if (node.meshes !== void 0) {
 	                for (var i = 0; i < node.meshes.length; i++) {
 	                    var mesh = data.meshes[node.meshes[i]];
 	                    for (var j = 0; j < mesh.length; j++) {
+	                        var matquery = this._populateMaterial(data, data.tf.meshes[node.meshes[i]].primitives[j].material, node.skin);
 	                        gomlNode.addChildByName("gltf-mesh", {
 	                            geometry: mesh[j],
-	                            material: ".gltf-" + data.tf.meshes[node.meshes[i]].primitives[j].material,
-	                            boneMatricies: node.skin ? data.skins[node.skin].jointMatrices : undefined
+	                            material: matquery
 	                        });
 	                    }
 	                }
@@ -864,11 +900,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	                var _iteratorNormalCompletion2 = true;
 	                var _didIteratorError2 = false;
 	                var _iteratorError2 = undefined;
-	
+
 	                try {
 	                    for (var _iterator2 = node.children[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
 	                        var chNodeName = _step2.value;
-	
+
 	                        this._populateNode(data, chNodeName, gomlNode);
 	                    }
 	                } catch (err) {
@@ -889,7 +925,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if (node.skeletons && node.skin) {
 	                for (var _i = 0; _i < node.skeletons.length; _i++) {
 	                    var jointNode = this.node.getChildrenByClass(node.skeletons[_i]);
-	                    this._injectJoint(data, jointNode[0], node.skeletons[_i], this.node.getComponent(_TransformComponent2.default), node.skin);
+	                    this._injectJoint(data, jointNode[0], node.skeletons[_i], gomlNode.getComponent(_TransformComponent2.default), node.skin);
 	                }
 	            }
 	        }
@@ -898,7 +934,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function _injectJoint(data, gomlNode, nodeName, skeletonTransform, skinName) {
 	            gomlNode.addComponent("GLTFJoint", {
 	                skinInfo: data.skins[skinName],
-	                jointName: nodeName,
+	                jointName: data.tf.nodes[nodeName].jointName,
 	                skeletonTransform: skeletonTransform,
 	                jointMatrices: data.skins[skinName].jointMatrices
 	            });
@@ -924,18 +960,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 	            if (node.matrix) {
 	                var mat = new _Matrix2.default(node.matrix);
-	                gomlNode.setAttribute("position", mat.getTranslation());
-	                gomlNode.setAttribute("scale", mat.getScaling());
-	                gomlNode.setAttribute("rotation", mat.getRotation());
+	                gomlNode.setAttribute("rawMatrix", mat);
 	            }
 	        }
 	    }]);
-	
+
 	    return GLTFModelComponent;
 	}(_Component3.default);
-	
+
 	exports.default = GLTFModelComponent;
-	
+
 	GLTFModelComponent.componentName = "GLTFModelComponent";
 	GLTFModelComponent.attributes = {
 	    src: {
@@ -953,65 +987,65 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
+
 	var _Accessor = __webpack_require__(1);
-	
+
 	var _Accessor2 = _interopRequireDefault(_Accessor);
-	
-	var _Matrix = __webpack_require__(11);
-	
+
+	var _Matrix = __webpack_require__(12);
+
 	var _Matrix2 = _interopRequireDefault(_Matrix);
-	
+
 	var _Animation = __webpack_require__(5);
-	
+
 	var _Animation2 = _interopRequireDefault(_Animation);
-	
+
 	var _MaterialsCommonParser = __webpack_require__(15);
-	
+
 	var _MaterialsCommonParser2 = _interopRequireDefault(_MaterialsCommonParser);
-	
+
 	var _ConstantConverter = __webpack_require__(2);
-	
+
 	var _ConstantConverter2 = _interopRequireDefault(_ConstantConverter);
-	
+
 	var _Vector = __webpack_require__(16);
-	
+
 	var _Vector2 = _interopRequireDefault(_Vector);
-	
+
 	var _AABB = __webpack_require__(17);
-	
+
 	var _AABB2 = _interopRequireDefault(_AABB);
-	
+
 	var _TextFileResolver = __webpack_require__(18);
-	
+
 	var _TextFileResolver2 = _interopRequireDefault(_TextFileResolver);
-	
+
 	var _Buffer = __webpack_require__(19);
-	
+
 	var _Buffer2 = _interopRequireDefault(_Buffer);
-	
+
 	var _Geometry = __webpack_require__(20);
-	
+
 	var _Geometry2 = _interopRequireDefault(_Geometry);
-	
+
 	var _ImageResolver = __webpack_require__(21);
-	
+
 	var _ImageResolver2 = _interopRequireDefault(_ImageResolver);
-	
+
 	var _Texture2D = __webpack_require__(22);
-	
+
 	var _Texture2D2 = _interopRequireDefault(_Texture2D);
-	
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
+
 	var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
 	    return new (P || (P = Promise))(function (resolve, reject) {
 	        function fulfilled(value) {
@@ -1036,20 +1070,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	        step((generator = generator.apply(thisArg, _arguments)).next());
 	    });
 	};
-	
+
 	var GLTFParser = function () {
 	    function GLTFParser() {
 	        _classCallCheck(this, GLTFParser);
 	    }
-	
+
 	    _createClass(GLTFParser, null, [{
 	        key: "parseFromURL",
 	        value: function parseFromURL(gl, url) {
 	            return __awaiter(this, void 0, void 0, regeneratorRuntime.mark(function _callee() {
 	                var _this = this;
-	
-	                var baseUrl, resolved, tf, rawBuffer, rawbufferView, meshes, buffers, images, textures, animations, skins, materials, accessors, key, _key, bufferView, currentBuffer, buffer, _key2, imgLoadTask, _loop, _key3, _key4, texInfo, tex, _key5, material, _key6, _key7, skin, accessor;
-	
+
+	                var baseUrl, resolved, tf, rawBuffer, rawbufferView, meshes, buffers, images, textures, animations, skins, materials, accessors, key, _key, bufferView, currentBuffer, buffer, _key2, imgLoadTask, _loop, _key3, _key4, texInfo, sampler, tex, _key5, material, _key6, _key7, skin, accessor;
+
 	                return regeneratorRuntime.wrap(function _callee$(_context) {
 	                    while (1) {
 	                        switch (_context.prev = _context.next) {
@@ -1057,7 +1091,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                                baseUrl = GLTFParser.getBaseDir(url);
 	                                _context.next = 3;
 	                                return _TextFileResolver2.default.resolve(url);
-	
+
 	                            case 3:
 	                                resolved = _context.sent;
 	                                tf = JSON.parse(resolved);
@@ -1072,33 +1106,33 @@ return /******/ (function(modules) { // webpackBootstrap
 	                                materials = {};
 	                                accessors = {};
 	                                // constructing buffers
-	
+
 	                                _context.t0 = regeneratorRuntime.keys(tf.buffers);
-	
+
 	                            case 16:
 	                                if ((_context.t1 = _context.t0()).done) {
 	                                    _context.next = 23;
 	                                    break;
 	                                }
-	
+
 	                                key = _context.t1.value;
 	                                _context.next = 20;
 	                                return GLTFParser.bufferFromURL(tf, key, baseUrl);
-	
+
 	                            case 20:
 	                                rawBuffer[key] = _context.sent;
 	                                _context.next = 16;
 	                                break;
-	
+
 	                            case 23:
 	                                for (_key in tf.bufferViews) {
 	                                    bufferView = tf.bufferViews[_key];
 	                                    currentBuffer = rawBuffer[bufferView.buffer];
-	
+
 	                                    rawbufferView[_key] = new Uint8Array(currentBuffer, bufferView.byteOffset, bufferView.byteLength);
 	                                    if (bufferView.target === void 0) {} else {
 	                                        buffer = buffers[_key] = new _Buffer2.default(gl, bufferView.target, WebGLRenderingContext.STATIC_DRAW);
-	
+
 	                                        buffer.update(rawbufferView[_key]);
 	                                    }
 	                                }
@@ -1108,7 +1142,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                                }
 	                                // constructing textures
 	                                imgLoadTask = [];
-	
+
 	                                _loop = function _loop(_key3) {
 	                                    if (GLTFParser.isDataUri(tf.images[_key3].uri)) {
 	                                        imgLoadTask.push(_this.imageFromDataUrl(tf.images[_key3].uri).then(function (t) {
@@ -1120,23 +1154,28 @@ return /******/ (function(modules) { // webpackBootstrap
 	                                        }));
 	                                    }
 	                                };
-	
+
 	                                for (_key3 in tf.images) {
 	                                    _loop(_key3);
 	                                }
 	                                _context.next = 30;
 	                                return Promise.all(imgLoadTask);
-	
+
 	                            case 30:
 	                                for (_key4 in tf.textures) {
 	                                    texInfo = tf.textures[_key4];
+	                                    sampler = tf.samplers[texInfo.sampler];
 	                                    tex = textures[_key4] = new _Texture2D2.default(gl);
-	
+
+	                                    tex.magFilter = sampler.magFilter || WebGLRenderingContext.LINEAR;
+	                                    tex.minFilter = sampler.minFilter || WebGLRenderingContext.NEAREST_MIPMAP_LINEAR;
+	                                    tex.wrapS = sampler.wrapS || WebGLRenderingContext.REPEAT;
+	                                    tex.wrapT = sampler.wrapT || WebGLRenderingContext.REPEAT;
 	                                    tex.update(images[texInfo.source]);
 	                                }
 	                                for (_key5 in tf.materials) {
 	                                    material = tf.materials[_key5];
-	
+
 	                                    if (material.extensions !== void 0 && material.extensions.KHR_materials_common) {
 	                                        materials[_key5] = _MaterialsCommonParser2.default.parse(tf, _key5, baseUrl, textures);
 	                                    } else {
@@ -1162,7 +1201,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                                    for (_key7 in tf.skins) {
 	                                        skin = tf.skins[_key7];
 	                                        accessor = tf.accessors[skin.inverseBindMatrices];
-	
+
 	                                        skins[_key7] = {
 	                                            bindShapeMatrix: new _Matrix2.default(skin.bindShapeMatrix),
 	                                            jointNames: skin.jointNames,
@@ -1179,7 +1218,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                                    animations: animations,
 	                                    skins: skins
 	                                });
-	
+
 	                            case 35:
 	                            case "end":
 	                                return _context.stop();
@@ -1325,8 +1364,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	                var image = new Image();
 	                image.src = dataUrl;
 	                image.onload = function () {
-	                    var cWidth = Math.pow(2, Math.log(image.width) / Math.LN2 | 0) * 2;
-	                    var cHeight = Math.pow(2, Math.log(image.height) / Math.LN2 | 0) * 2;
+	                    var cWidth = Math.pow(2, Math.ceil(Math.log(image.width) / Math.LN2));
+	                    var cHeight = Math.pow(2, Math.ceil(Math.log(image.height) / Math.LN2));
+	                    if (cWidth === image.width && cHeight == image.height) {
+	                        resolve(image);
+	                    }
 	                    canvas.width = cWidth;
 	                    canvas.height = cHeight;
 	                    context.drawImage(image, 0, 0, image.width, image.height, 0, 0, cWidth, cHeight);
@@ -1340,10 +1382,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return url.substr(0, url.lastIndexOf("/") + 1);
 	        }
 	    }]);
-	
+
 	    return GLTFParser;
 	}();
-	
+
 	exports.default = GLTFParser;
 
 /***/ },
@@ -1351,26 +1393,26 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
+
 	var _ConstantConverter = __webpack_require__(2);
-	
+
 	var _ConstantConverter2 = _interopRequireDefault(_ConstantConverter);
-	
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
+
 	var GLTFMaterialsCommonParser = function () {
 	    function GLTFMaterialsCommonParser() {
 	        _classCallCheck(this, GLTFMaterialsCommonParser);
 	    }
-	
+
 	    _createClass(GLTFMaterialsCommonParser, null, [{
 	        key: "parse",
 	        value: function parse(tf, matKey, baseUrl, textures) {
@@ -1397,10 +1439,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 	        }
 	    }]);
-	
+
 	    return GLTFMaterialsCommonParser;
 	}();
-	
+
 	exports.default = GLTFMaterialsCommonParser;
 
 /***/ },
@@ -1464,37 +1506,37 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	
+
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	
-	var _GLTFJointComponent = __webpack_require__(10);
-	
+
+	var _GLTFJointComponent = __webpack_require__(11);
+
 	var _GLTFJointComponent2 = _interopRequireDefault(_GLTFJointComponent);
-	
+
 	var _GLTFAnimationComponent = __webpack_require__(8);
-	
+
 	var _GLTFAnimationComponent2 = _interopRequireDefault(_GLTFAnimationComponent);
-	
+
 	var _GLTFModelComponent = __webpack_require__(13);
-	
+
 	var _GLTFModelComponent2 = _interopRequireDefault(_GLTFModelComponent);
-	
+
 	var _grimoirejs = __webpack_require__(24);
-	
+
 	var _grimoirejs2 = _interopRequireDefault(_grimoirejs);
-	
+
 	var _MaterialFactory = __webpack_require__(25);
-	
+
 	var _MaterialFactory2 = _interopRequireDefault(_MaterialFactory);
-	
+
 	var _gltfUnlit = __webpack_require__(26);
-	
+
 	var _gltfUnlit2 = _interopRequireDefault(_gltfUnlit);
-	
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
+
 	var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
 	    return new (P || (P = Promise))(function (resolve, reject) {
 	        function fulfilled(value) {
@@ -1519,7 +1561,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        step((generator = generator.apply(thisArg, _arguments)).next());
 	    });
 	};
-	
+
 	exports.default = function () {
 	    _grimoirejs2.default.register(function () {
 	        return __awaiter(undefined, void 0, void 0, regeneratorRuntime.mark(function _callee() {
@@ -1538,7 +1580,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                            _grimoirejs2.default.registerNode("gltf-assets", [], {});
 	                            _grimoirejs2.default.registerNode("gltf-animation", ["GLTFAnimation"], {});
 	                            _MaterialFactory2.default.addSORTMaterial("gltf-unlit", _gltfUnlit2.default);
-	
+
 	                        case 9:
 	                        case "end":
 	                            return _context.stop();
@@ -1569,7 +1611,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 26 */
 /***/ function(module, exports) {
 
-	module.exports = "@Pass\n@NoCull()\nFS_PREC(mediump,float)\n varying vec3 vNormal;\nvarying vec2 vUV;\n\n#ifdef VS\n  uniform mat4 boneMatricies[2];\n  attribute vec3 normal;\n  attribute vec3 position;\n  attribute vec2 texCoord;\n  // attribute vec4 joint;\n  // attribute vec4 weight;\n\n  uniform mat4 _matPVM;\n  uniform mat4 _matM;\n\n  void main(){\n  //  mat4 skinMat = weight.x * boneMatricies[int(joint.x)] + weight.y * boneMatricies[int(joint.y)] + weight.z * boneMatricies[int(joint.z)] + weight.w * boneMatricies[int(joint.w)];\n    gl_Position = _matPVM  * vec4(position,1);\n    vNormal = normalize((_matM  * vec4(normal,0)).xyz);\n    vUV = texCoord;\n  }\n\n\n#endif\n\n\n#ifdef FS\n  @{usedFlag:\"_textureUsed\"}\n  uniform sampler2D texture;\n\n  uniform bool _textureUsed;\n\n  @{type:\"color\"}\n  uniform vec4 diffuse;\n\n  @{default:\"n(1,1,-1)\"}\n  uniform vec3 sunDir;\n\n  void main(){\n    vec4 dColor;\n    if(_textureUsed){\n      dColor = texture2D(texture,vUV);\n    }else{\n      dColor = diffuse;\n    }\n    gl_FragColor.xyz = dot(sunDir,vNormal) * dColor.xyz;\n    gl_FragColor.w = dColor.w;\n  }\n#endif\n"
+	module.exports = "@Pass\n@NoCull()\n@ExposeMacro(int,boneCount,BONE_COUNT,0)\nFS_PREC(mediump,float)\n varying vec3 vNormal;\nvarying vec2 vUV;\n\n#ifdef VS\n#if BONE_COUNT > 0\n  uniform mat4 boneMatrices[BONE_COUNT];\n#endif\n  attribute vec3 normal;\n  attribute vec3 position;\n  attribute vec2 texCoord;\n#if BONE_COUNT > 0\n  attribute vec4 joint;\n  attribute vec4 weight;\n#endif\n  uniform mat4 _matPVM;\n  uniform mat4 _matM;\n  void main(){\n    #if BONE_COUNT > 0\n      mat4 skinMat = weight.x * boneMatrices[int(joint.x)] + weight.y * boneMatrices[int(joint.y)] + weight.z * boneMatrices[int(joint.z)] + weight.w * boneMatrices[int(joint.w)];\n      gl_Position = _matPVM * skinMat * vec4(position,1);\n      vNormal = normalize((_matM * skinMat  * vec4(normal,0)).xyz);\n    #else\n      gl_Position = _matPVM  * vec4(position,1);\n      vNormal = normalize((_matM  * vec4(normal,0)).xyz);\n    #endif\n    vUV = texCoord;\n  }\n\n\n#endif\n\n\n#ifdef FS\n  @{usedFlag:\"_textureUsed\"}\n  uniform sampler2D texture;\n\n  uniform bool _textureUsed;\n\n  @{type:\"color\"}\n  uniform vec4 diffuse;\n\n  @{default:\"n(1,1,-1)\"}\n  uniform vec3 sunDir;\n\n  void main(){\n    vec4 dColor;\n    if(_textureUsed){\n      dColor = texture2D(texture,vUV);\n    }else{\n      dColor = diffuse;\n    }\n    gl_FragColor.xyz = dot(sunDir,vNormal) * dColor.xyz;\n    gl_FragColor.w = dColor.w;\n  }\n#endif\n"
 
 /***/ }
 /******/ ])

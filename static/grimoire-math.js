@@ -596,7 +596,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: "__parse",
 	        value: function __parse(str) {
-	            var checkRegex = /(-?)([\d,E\+\-\.]+)?(n)?\(([-\d,E\+\.\s]+)\)/g;
+	            var checkRegex = /(-?)([\d,Ee\+\-\.]+)?(n)?\(([-\d,Ee\+\.\s]+)\)/g;
 	            var matches = checkRegex.exec(str);
 	            if (matches) {
 	                if (!matches[4]) {

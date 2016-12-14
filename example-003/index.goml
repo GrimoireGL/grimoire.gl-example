@@ -1,0 +1,6 @@
+<goml width="fit" height="fit">
+    <scene>
+        <camera />
+        <mesh id="earth" scale="2" geometry="sphere" texture="/example-003/earthmap.jpeg"/>
+    </scene>
+</goml>

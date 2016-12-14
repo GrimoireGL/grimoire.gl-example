@@ -1,0 +1,44 @@
+@Pass
+@NoBlend()
+@NoDepth()
+FS_PREC(mediump,float)
+varying vec2 vTexCoord;
+
+#ifdef VS
+attribute vec3 position;
+attribute vec2 texCoord;
+
+void main(){
+  gl_Position = vec4(position,1);
+  vTexCoord = vec2(1) - texCoord;
+}
+
+#endif
+
+#ifdef FS
+
+  uniform sampler2D source;
+
+  uniform float _time;
+
+
+const float redScale   = 0.298912;
+const float greenScale = 0.586611;
+const float blueScale  = 0.114478;
+const vec3  monochromeScale = vec3(redScale, greenScale, blueScale);
+
+const float sRedScale   = 1.07;
+const float sGreenScale = 0.74;
+const float sBlueScale  = 0.43;
+const vec3  sepiaScale = vec3(sRedScale, sGreenScale, sBlueScale);
+
+  void main(){
+    float l = 1.;
+    l = 0.5 + sin(2000.*vTexCoord.y + _time/100.);
+    vec4 sCol = texture2D(source,vTexCoord);
+    float gray = l * dot(sCol.rgb,monochromeScale);
+    sCol.a = 1.0;
+    sCol.rgb = vec3(gray * sepiaScale);
+    gl_FragColor = sCol;
+  }
+#endif

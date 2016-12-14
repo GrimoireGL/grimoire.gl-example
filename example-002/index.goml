@@ -1,0 +1,6 @@
+<goml width="fit" height="fit">
+  <scene>
+    <camera/>
+    <mesh color="green" texture="./example-002/image.jpg"/>
+  </scene>
+</goml>

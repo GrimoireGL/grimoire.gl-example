@@ -8222,7 +8222,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _NSSet2 = _interopRequireDefault(_NSSet);
 	
-	var _Utility = __webpack_require__(310);
+	var _Utility = __webpack_require__(305);
 	
 	var _Utility2 = _interopRequireDefault(_Utility);
 	
@@ -8230,7 +8230,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _XMLHttpRequestAsync2 = _interopRequireDefault(_XMLHttpRequestAsync);
 	
-	var _XMLReader = __webpack_require__(307);
+	var _XMLReader = __webpack_require__(308);
 	
 	var _XMLReader2 = _interopRequireDefault(_XMLReader);
 	
@@ -8258,11 +8258,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _ComponentInterface2 = _interopRequireDefault(_ComponentInterface);
 	
-	var _GomlInterface = __webpack_require__(305);
+	var _GomlInterface = __webpack_require__(306);
 	
 	var _GomlInterface2 = _interopRequireDefault(_GomlInterface);
 	
-	var _NodeInterface = __webpack_require__(306);
+	var _NodeInterface = __webpack_require__(307);
 	
 	var _NodeInterface2 = _interopRequireDefault(_NodeInterface);
 	
@@ -8282,11 +8282,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _GomlLoader2 = _interopRequireDefault(_GomlLoader);
 	
-	var _GomlNode = __webpack_require__(309);
+	var _GomlNode = __webpack_require__(310);
 	
 	var _GomlNode2 = _interopRequireDefault(_GomlNode);
 	
-	var _GomlParser = __webpack_require__(308);
+	var _GomlParser = __webpack_require__(309);
 	
 	var _GomlParser2 = _interopRequireDefault(_GomlParser);
 	
@@ -8882,6 +8882,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	                return undefined;
 	            }
 	            if (typeof name === "string") {
+	                if (name.indexOf("|") !== -1) {
+	                    return _NSIdentity2.default.fromFQN(name);
+	                }
 	                return new _NSIdentity2.default(name);
 	            } else {
 	                return name;
@@ -8960,7 +8963,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _GomlInterface = __webpack_require__(305);
+	var _Utility = __webpack_require__(305);
+	
+	var _Utility2 = _interopRequireDefault(_Utility);
+	
+	var _GomlInterface = __webpack_require__(306);
 	
 	var _GomlInterface2 = _interopRequireDefault(_GomlInterface);
 	
@@ -9139,6 +9146,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if (this.componentDeclarations.get(name)) {
 	                throw new Error("component " + name.fqn + " is already registerd.");
 	            }
+	            if (this.debug && !_Utility2.default.isCamelCase(name.name)) {
+	                console.warn("component " + name.name + " is registerd. but,it should be 'CamelCase'.");
+	            }
 	            obj = this._ensureTobeComponentConstructor(obj, this._ensureNameTobeConstructor(superComponent));
 	            var attrs = obj["attributes"] || {};
 	            this.componentDeclarations.set(name, new _ComponentDeclaration2.default(name, attrs, obj));
@@ -9149,6 +9159,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	            name = _Ensure2.default.ensureTobeNSIdentity(name);
 	            if (this.nodeDeclarations.get(name)) {
 	                throw new Error("gomlnode " + name.fqn + " is already registerd.");
+	            }
+	            if (this.debug && !_Utility2.default.isSnakeCase(name.name)) {
+	                console.warn("node " + name.name + " is registerd. but,it should be 'snake-case'.");
 	            }
 	            requiredComponents = _Ensure2.default.ensureTobeNSIdentityArray(requiredComponents);
 	            defaultValues = _Ensure2.default.ensureTobeNSDictionary(defaultValues, name.ns);
@@ -9351,6 +9364,57 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
+	var _GrimoireInterface = __webpack_require__(304);
+	
+	var _GrimoireInterface2 = _interopRequireDefault(_GrimoireInterface);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	var Utility = function () {
+	    function Utility() {
+	        _classCallCheck(this, Utility);
+	    }
+	
+	    _createClass(Utility, null, [{
+	        key: "w",
+	        value: function w(message) {
+	            if (_GrimoireInterface2.default.debug) {
+	                console.warn(message);
+	            }
+	        }
+	    }, {
+	        key: "isCamelCase",
+	        value: function isCamelCase(str) {
+	            return (/^[A-Z][a-zA-Z0-9]*$/.test(str)
+	            );
+	        }
+	    }, {
+	        key: "isSnakeCase",
+	        value: function isSnakeCase(str) {
+	            return (/^[a-z0-9\-]+$/.test(str)
+	            );
+	        }
+	    }]);
+	
+	    return Utility;
+	}();
+	
+	exports.default = Utility;
+
+/***/ },
+/* 306 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
 	var _Constants = __webpack_require__(299);
 	
 	var _Constants2 = _interopRequireDefault(_Constants);
@@ -9359,11 +9423,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _GrimoireInterface2 = _interopRequireDefault(_GrimoireInterface);
 	
-	var _NodeInterface = __webpack_require__(306);
+	var _NodeInterface = __webpack_require__(307);
 	
 	var _NodeInterface2 = _interopRequireDefault(_NodeInterface);
 	
-	var _GomlNode = __webpack_require__(309);
+	var _GomlNode = __webpack_require__(310);
 	
 	var _GomlNode2 = _interopRequireDefault(_GomlNode);
 	
@@ -9421,7 +9485,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = GomlInterface;
 
 /***/ },
-/* 306 */
+/* 307 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9442,11 +9506,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _GrimoireInterface2 = _interopRequireDefault(_GrimoireInterface);
 	
-	var _XMLReader = __webpack_require__(307);
+	var _XMLReader = __webpack_require__(308);
 	
 	var _XMLReader2 = _interopRequireDefault(_XMLReader);
 	
-	var _GomlParser = __webpack_require__(308);
+	var _GomlParser = __webpack_require__(309);
 	
 	var _GomlParser2 = _interopRequireDefault(_GomlParser);
 	
@@ -9634,13 +9698,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: "find",
 	        value: function find(predicate) {
-	            this.nodes.forEach(function (array, gomlIndex) {
-	                array.forEach(function (node, nodeIndex) {
-	                    if (predicate(node, gomlIndex, nodeIndex)) {
+	            var nodes = this.nodes;
+	            for (var i = 0; i < nodes.length; i++) {
+	                var array = nodes[i];
+	                for (var j = 0; j < array.length; j++) {
+	                    var node = array[j];
+	                    if (predicate(node, i, j)) {
 	                        return node;
 	                    }
-	                });
-	            });
+	                }
+	            }
 	            return null;
 	        }
 	        /**
@@ -9697,8 +9764,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: "first",
 	        value: function first() {
-	            return this.find(function (node) {
-	                return !!node;
+	            return this.find(function () {
+	                return true;
 	            });
 	        }
 	        /**
@@ -9713,7 +9780,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if (this.count() !== 1) {
 	                throw new Error("this nodeInterface is not single.");
 	            }
-	            return this.first();
+	            var first = this.first();
+	            if (!first) {
+	                throw new Error("this nodeInterface is not single,but is empty.");
+	            }
+	            return first;
 	        }
 	        /**
 	         * 対象となるノードの個数を取得する
@@ -9733,6 +9804,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	                return total + current;
 	            }, 0);
 	        }
+	    }, {
+	        key: "filter",
+	        value: function filter(predicate) {
+	            var newNodes = this.nodes.map(function (nodes, gomlIndex) {
+	                return nodes.filter(function (node, nodeIndex) {
+	                    return predicate(node, gomlIndex, nodeIndex);
+	                });
+	            });
+	            return new NodeInterface(newNodes);
+	        }
+	    }, {
+	        key: "toArray",
+	        value: function toArray() {
+	            return this.nodes.reduce(function (pre, current) {
+	                return pre.concat(current);
+	            }, []);
+	        }
 	    }]);
 	
 	    return NodeInterface;
@@ -9741,7 +9829,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = NodeInterface;
 
 /***/ },
-/* 307 */
+/* 308 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -9766,9 +9854,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: 'parseXML',
 	        value: function parseXML(doc, rootElementName) {
 	            var isParseError = function isParseError(parsedDocument) {
+	                var defaultError = console.error;
 	                console.error = function () {}; //disable error message!
 	                var errorneousParse = XMLReader._parser.parseFromString('<', 'text/xml');
 	                delete console.error; //restore...
+	                console.error = defaultError;
 	                if (errorneousParse.documentURI === void 0) {
 	                    return false;
 	                }
@@ -9873,7 +9963,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = XMLReader;
 
 /***/ },
-/* 308 */
+/* 309 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9884,7 +9974,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _GomlNode = __webpack_require__(309);
+	var _GomlNode = __webpack_require__(310);
 	
 	var _GomlNode2 = _interopRequireDefault(_GomlNode);
 	
@@ -10017,7 +10107,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = GomlParser;
 
 /***/ },
-/* 309 */
+/* 310 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -10030,7 +10120,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _Utility = __webpack_require__(310);
+	var _Utility = __webpack_require__(305);
 	
 	var _Utility2 = _interopRequireDefault(_Utility);
 	
@@ -10038,11 +10128,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _Constants2 = _interopRequireDefault(_Constants);
 	
-	var _GomlParser = __webpack_require__(308);
+	var _GomlParser = __webpack_require__(309);
 	
 	var _GomlParser2 = _interopRequireDefault(_GomlParser);
 	
-	var _XMLReader = __webpack_require__(307);
+	var _XMLReader = __webpack_require__(308);
 	
 	var _XMLReader2 = _interopRequireDefault(_XMLReader);
 	
@@ -10263,7 +10353,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                var node = new GomlNode(nodeDec, null);
 	                if (attributes) {
 	                    for (var key in attributes) {
-	                        var id = key.indexOf("|") !== -1 ? _NSIdentity2.default.fromFQN(key) : new _NSIdentity2.default(key);
+	                        var id = _Ensure2.default.ensureTobeNSIdentity(key);
 	                        node.setAttribute(id, attributes[key]);
 	                    }
 	                }
@@ -10438,7 +10528,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	            attrName = _Ensure2.default.ensureTobeNSIdentity(attrName);
 	            var attr = this.attributes.get(attrName);
 	            if (!attr) {
-	                console.warn("attribute \"" + attrName.name + "\" is not found.");
+	                if (_GrimoireInterface2.default.debug) {
+	                    console.warn("attribute \"" + attrName.name + "\" is not found.");
+	                }
 	                this._attrBuffer[attrName.fqn] = value;
 	            } else {
 	                attr.Value = value;
@@ -10979,45 +11071,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = GomlNode;
 
 /***/ },
-/* 310 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _GrimoireInterface = __webpack_require__(304);
-	
-	var _GrimoireInterface2 = _interopRequireDefault(_GrimoireInterface);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	var Utility = function () {
-	    function Utility() {
-	        _classCallCheck(this, Utility);
-	    }
-	
-	    _createClass(Utility, null, [{
-	        key: "w",
-	        value: function w(message) {
-	            if (_GrimoireInterface2.default.debug) {
-	                console.warn(message);
-	            }
-	        }
-	    }]);
-	
-	    return Utility;
-	}();
-	
-	exports.default = Utility;
-
-/***/ },
 /* 311 */
 /***/ function(module, exports) {
 
@@ -11493,7 +11546,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                throw new Error("Invalid string " + val + " for parsing as boolean");
 	        }
 	    }
-	    throw new Error("Parsing failed: " + val);
+	    throw new Error("Invalid string " + val + " for parsing as boolean");
 	}
 	exports.default = BooleanConverter;
 
@@ -11536,12 +11589,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var _this2 = this;
 	
 	            this.node.resolveAttributesValue();
-	            this.getAttribute("id").addObserver(function (attr) {
-	                _this2.node.element.id = attr.Value;
-	            });
-	            this.getAttribute("class").addObserver(function (attr) {
-	                _this2.node.element.className = attr.Value.join(" ");
-	            });
+	            this.__bindAttributes();
+	            var idAttribute = this.getAttribute("id");
+	            var classAttribute = this.getAttribute("class");
+	            idAttribute.addObserver(function (attr) {
+	                _this2.node.element.id = attr.Value ? attr.Value : "";
+	            }, true);
+	            classAttribute.addObserver(function (attr) {
+	                var v = attr.Value;
+	                _this2.node.element.className = v ? v.join(" ") : "";
+	            }, true);
 	            this.getAttribute("enabled").addObserver(function (attr) {
 	                if (_this2.node.isActive) {
 	                    _this2.node.notifyActivenessUpdate();
@@ -11556,12 +11613,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	GrimoireComponent.attributes = {
 	    id: {
 	        converter: "String",
-	        defaultValue: null,
+	        defaultValue: "",
 	        readonly: false
 	    },
 	    class: {
 	        converter: "StringArray",
-	        defaultValue: null,
+	        defaultValue: "",
 	        readonly: false
 	    },
 	    enabled: {
@@ -11584,7 +11641,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _Utility = __webpack_require__(310);
+	var _Utility = __webpack_require__(305);
 	
 	var _Utility2 = _interopRequireDefault(_Utility);
 	
@@ -11765,6 +11822,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    _this3.__removeAttributes(id.name);
 	                });
 	            }
+	        }
+	    }, {
+	        key: "__bindAttributes",
+	        value: function __bindAttributes() {
+	            this.attributes.forEach(function (attr) {
+	                var name = attr.name.name;
+	                attr.boundTo("_" + name);
+	            });
 	        }
 	    }, {
 	        key: "enabled",
@@ -12427,11 +12492,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _GrimoireInterface2 = _interopRequireDefault(_GrimoireInterface);
 	
-	var _GomlParser = __webpack_require__(308);
+	var _GomlParser = __webpack_require__(309);
 	
 	var _GomlParser2 = _interopRequireDefault(_GomlParser);
 	
-	var _XMLReader = __webpack_require__(307);
+	var _XMLReader = __webpack_require__(308);
 	
 	var _XMLReader2 = _interopRequireDefault(_XMLReader);
 	

@@ -1,4 +1,9 @@
 [{
+    "title": "index.goml",
+    "mode": "xml",
+    "content": "",
+    "contentUrl": "index.goml"
+}, {
     "title": "index.html",
     "mode": "htmlmixed",
     "content": "",
@@ -8,9 +13,4 @@
     "mode": "css",
     "content": "",
     "contentUrl": "index.css"
-}, {
-    "title": "index.goml",
-    "mode": "xml",
-    "content": "",
-    "contentUrl": "index.goml"
 }]
