@@ -1,0 +1,17 @@
+<goml width="fit" height="fit">
+    <geometry name="circle" type="circle" divide="6" />
+    <material id="color" type="unlit" color="red"/>
+    <scene>
+        <camera class="camera" near="0.01" far="40.0" aspect="1.5" fovy="45d" position="0,0,10" />
+        <mesh class="circle" position="1,0,0" geometry="circle" material="#color" rotation="0,0,0" />
+        <mesh class="circle" position="-1,0,0" geometry="circle" material="#color" rotation="0,0,0" />
+        <mesh class="circle" position="3,0,0" geometry="circle" material="#color" rotation="0,0,0" />
+        <mesh class="circle" position="-3,0,0" geometry="circle" material="#color" rotation="0,0,0" />
+        <mesh class="circle" position="0,2,0" geometry="circle" material="#color" rotation="0,0,0" />
+        <mesh class="circle" position="0,-2,0" geometry="circle" material="#color" rotation="0,0,0" />
+        <mesh class="circle" position="2,2,0" geometry="circle" material="#color" rotation="0,0,0" />
+        <mesh class="circle" position="2,-2,0" geometry="circle" material="#color" rotation="0,0,0" />
+        <mesh class="circle" position="-2,2,0" geometry="circle" material="#color" rotation="0,0,0" />
+        <mesh class="circle" position="-2,-2,0" geometry="circle" material="#color" rotation="0,0,0" />
+    </scene>
+</goml>

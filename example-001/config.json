@@ -1,4 +1,9 @@
 [{
+    "title": "index.goml",
+    "mode": "xml",
+    "content": "",
+    "contentUrl": "index.goml"
+}, {
     "title": "render-image.sort",
     "mode": "glsl",
     "content": "",
@@ -8,11 +13,6 @@
     "mode": "glsl",
     "content": "",
     "contentUrl": "negate.sort"
-}, {
-    "title": "index.goml",
-    "mode": "xml",
-    "content": "",
-    "contentUrl": "index.goml"
 }, {
     "title": "index.html",
     "mode": "htmlmixed",

@@ -1,0 +1,38 @@
+[
+  {
+    "title": "index.goml",
+    "mode": "xml",
+    "content": "",
+    "contentUrl": "index.goml"
+  },
+  {
+    "title": "index.html",
+    "mode": "htmlmixed",
+    "content": "",
+    "contentUrl": "index.html"
+  },
+  {
+    "title": "index.js",
+    "mode": "javascript",
+    "content": "",
+    "contentUrl": "index.js"
+  },
+  {
+    "title": "StareAt.js",
+    "mode": "javascript",
+    "content": "",
+    "contentUrl": "StareAt.js"
+  },
+  {
+    "title": "Wave.js",
+    "mode": "javascript",
+    "content": "",
+    "contentUrl": "Wave.js"
+  },
+  {
+    "title": "index.css",
+    "mode": "css",
+    "content": "",
+    "contentUrl": "index.css"
+  }
+]
