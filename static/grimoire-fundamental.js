@@ -1329,7 +1329,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _createClass(AssetLoadingManagerComponent, [{
 	        key: "$treeInitialized",
 	        value: function $treeInitialized() {
-	            if (this.attributes.get("autoStart").Value) {
+	            if (this.getAttribute("autoStart")) {
 	                this._autoStart();
 	            }
 	            this._documentResolver();
@@ -1344,7 +1344,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                _this2._documentResolver = resolve;
 	            }));
 	            var canvasContainer = this.companion.get("canvasContainer");
-	            if (!this.getValue("enableLoader")) {
+	            if (!this.getAttribute("enableLoader")) {
 	                return;
 	            }
 	            var loaderContainer = document.createElement("div");
@@ -1388,15 +1388,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	AssetLoadingManagerComponent.attributes = {
 	    loadingProgress: {
-	        defaultValue: 0,
+	        default: 0,
 	        converter: "Number"
 	    },
 	    autoStart: {
-	        defaultValue: true,
+	        default: true,
 	        converter: "Boolean"
 	    },
 	    anableLoader: {
-	        defaultValue: false,
+	        default: false,
 	        converter: "Boolean"
 	    }
 	};
@@ -1487,25 +1487,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var c = this.camera = new _BasicCamera2.default();
 	            this.transform = this.node.getComponent(_TransformComponent2.default);
 	            this.$transformUpdated(this.transform);
-	            this.getAttribute("far").addObserver(function (v) {
-	                c.setFar(v.Value);
+	            this.getAttributeRaw("far").watch(function (v) {
+	                c.setFar(v);
 	            }, true);
-	            this.getAttribute("near").addObserver(function (v) {
-	                c.setNear(v.Value);
+	            this.getAttributeRaw("near").watch(function (v) {
+	                c.setNear(v);
 	            }, true);
-	            this.getAttribute("fovy").addObserver(function (v) {
-	                c.setFovy(v.Value);
+	            this.getAttributeRaw("fovy").watch(function (v) {
+	                c.setFovy(v);
 	            }, true);
-	            this.getAttribute("aspect").addObserver(function (v) {
-	                c.setAspect(v.Value);
+	            this.getAttributeRaw("aspect").watch(function (v) {
+	                c.setAspect(v);
 	            }, true);
-	            this.getAttribute("orthoSize").addObserver(function (v) {
-	                c.setOrthoSize(v.Value);
+	            this.getAttributeRaw("orthoSize").watch(function (v) {
+	                c.setOrthoSize(v);
 	            }, true);
-	            this.getAttribute("orthogonal").addObserver(function (v) {
-	                c.setOrthographicMode(v.Value);
+	            this.getAttributeRaw("orthogonal").watch(function (v) {
+	                c.setOrthographicMode(v);
 	            }, true);
-	            this.getAttribute("autoAspect").boundTo("_autoAspect");
+	            this.getAttributeRaw("autoAspect").boundTo("_autoAspect");
 	        }
 	    }, {
 	        key: "$mount",
@@ -1550,7 +1550,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if (this._autoAspect) {
 	                var asp = args.viewport.Width / args.viewport.Height;
 	                if (this._aspectCache !== asp) {
-	                    this.setValue("aspect", asp);
+	                    this.setAttribute("aspect", asp);
 	                    this._aspectCache = asp;
 	                }
 	            }
@@ -1578,31 +1578,31 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	CameraComponent.attributes = {
 	    fovy: {
-	        defaultValue: "45d",
+	        default: "45d",
 	        converter: "Angle2D"
 	    },
 	    near: {
-	        defaultValue: 0.01,
+	        default: 0.01,
 	        converter: "Number"
 	    },
 	    far: {
-	        defaultValue: 100,
+	        default: 100,
 	        converter: "Number"
 	    },
 	    aspect: {
-	        defaultValue: 1.6,
+	        default: 1.6,
 	        converter: "Number"
 	    },
 	    autoAspect: {
-	        defaultValue: true,
+	        default: true,
 	        converter: "Boolean"
 	    },
 	    orthoSize: {
-	        defaultValue: 100,
+	        default: 100,
 	        converter: "Number"
 	    },
 	    orthogonal: {
-	        defaultValue: false,
+	        default: false,
 	        converter: "Boolean"
 	    }
 	};
@@ -1786,35 +1786,37 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var _this2 = this;
 	
 	            // register observers
-	            this.getAttribute("position").addObserver(function (v) {
-	                _this2._localPosition = v.Value;
+	            this.getAttributeRaw("position").watch(function (v) {
+	                _this2._localPosition = v;
 	                _this2._matrixTransformMode = false;
 	                _this2.updateTransform();
 	            });
-	            this.getAttribute("rotation").addObserver(function (v) {
-	                _this2._localRotation = v.Value;
+	            this.getAttributeRaw("rotation").watch(function (v) {
+	                _this2._localRotation = v;
 	                _this2._matrixTransformMode = false;
 	                _this2.updateTransform();
 	            });
-	            this.getAttribute("scale").addObserver(function (v) {
-	                _this2._localScale = v.Value;
+	            this.getAttributeRaw("scale").watch(function (v) {
+	                _this2._localScale = v;
 	                _this2._matrixTransformMode = false;
 	                _this2.updateTransform();
 	            });
-	            this.getAttribute("rawMatrix").addObserver(function (v) {
-	                var mat = v.Value;
-	                _this2._matrixTransformMode = true;
-	                // TODO should be addded?
-	                // mat4.getTranslation(this._localPosition.rawElements, mat.rawElements);
-	                // mat4.getScaling(this._localScale.rawElements, mat.rawElements);
-	                // mat4.getRotation(this._localRotation.rawElements, mat.rawElements);
-	                _this2.localTransform = mat;
-	                _this2.updateGlobalTransform();
+	            this.getAttributeRaw("rawMatrix").watch(function (v) {
+	                if (v !== null) {
+	                    var mat = v;
+	                    _this2._matrixTransformMode = true;
+	                    // TODO should be addded?
+	                    // mat4.getTranslation(this._localPosition.rawElements, mat.rawElements);
+	                    // mat4.getScaling(this._localScale.rawElements, mat.rawElements);
+	                    // mat4.getRotation(this._localRotation.rawElements, mat.rawElements);
+	                    _this2.localTransform = mat;
+	                    _this2.updateGlobalTransform();
+	                }
 	            });
 	            // assign attribute values to field
-	            this._localPosition = this.getValue("position");
-	            this._localRotation = this.getValue("rotation");
-	            this._localScale = this.getValue("scale");
+	            this._localPosition = this.getAttribute("position");
+	            this._localRotation = this.getAttribute("rotation");
+	            this._localScale = this.getAttribute("scale");
 	            this.updateTransform();
 	        }
 	    }, {
@@ -1896,7 +1898,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        },
 	        set: function set(val) {
 	            this._localPosition = val;
-	            this.setValue("position", val);
+	            this.setAttribute("position", val);
 	        }
 	    }, {
 	        key: "localRotation",
@@ -1905,7 +1907,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        },
 	        set: function set(val) {
 	            this._localRotation = val;
-	            this.setValue("rotation", val);
+	            this.setAttribute("rotation", val);
 	        }
 	    }, {
 	        key: "globalScale",
@@ -1919,7 +1921,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        },
 	        set: function set(val) {
 	            this._localScale = val;
-	            this.setValue("scale", val);
+	            this.setAttribute("scale", val);
 	        }
 	    }, {
 	        key: "forward",
@@ -1946,19 +1948,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	TransformComponent.attributes = {
 	    "position": {
 	        converter: "Vector3",
-	        defaultValue: _Vector2.default.Zero
+	        default: _Vector2.default.Zero
 	    },
 	    "rotation": {
 	        converter: "Rotation3",
-	        defaultValue: _Quaternion2.default.Identity
+	        default: _Quaternion2.default.Identity
 	    },
 	    "scale": {
 	        converter: "Vector3",
-	        defaultValue: _Vector2.default.One
+	        default: _Vector2.default.One
 	    },
 	    "rawMatrix": {
 	        converter: "Object",
-	        defaultValue: null
+	        default: null
 	    }
 	};
 	/**
@@ -2174,10 +2176,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	                this._generateCanvas(this._scriptTag);
 	            } else {}
 	            // apply sizes on changed
-	            this.attributes.get("width").addObserver(function (v) {
+	            this.getAttributeRaw("width").watch(function (v) {
 	                _this2._resize();
 	            });
-	            this.attributes.get("height").addObserver(function (v) {
+	            this.getAttributeRaw("height").watch(function (v) {
 	                _this2._resize();
 	            });
 	        }
@@ -2210,8 +2212,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: "_resize",
 	        value: function _resize(supressBroadcast) {
 	            var canvas = this.companion.get("canvasElement");
-	            var widthRaw = this.getValue("width");
-	            var heightRaw = this.getValue("height");
+	            var widthRaw = this.getAttribute("width");
+	            var heightRaw = this.getAttribute("height");
 	            this._widthMode = this._asResizeMode(widthRaw);
 	            this._heightMode = this._asResizeMode(heightRaw);
 	            if (this._widthMode === this._heightMode && this._widthMode === ResizeMode.Aspect) {
@@ -2309,11 +2311,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this._canvasContainer.style.position = "relative";
 	            this._canvasContainer.style.overflow = "hidden";
 	            this._canvasContainer.appendChild(canvas);
-	            if (this.getValue("containerId")) {
-	                this._canvasContainer.id = this.getValue("containerId");
+	            if (this.getAttribute("containerId")) {
+	                this._canvasContainer.id = this.getAttribute("containerId");
 	            }
-	            if (this.getValue("containerClass")) {
-	                this._canvasContainer.className = this.getValue("containerClass");
+	            if (this.getAttribute("containerClass")) {
+	                this._canvasContainer.className = this.getAttribute("containerClass");
 	            }
 	            this.companion.set(ns("canvasContainer"), this._canvasContainer);
 	            scriptTag.parentElement.insertBefore(this._canvasContainer, scriptTag.nextSibling);
@@ -2352,19 +2354,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	CanvasInitializerComponent.attributes = {
 	    width: {
-	        defaultValue: "fit",
+	        default: "fit",
 	        converter: "CanvasSize"
 	    },
 	    height: {
-	        defaultValue: 480,
+	        default: 480,
 	        converter: "CanvasSize"
 	    },
 	    containerId: {
-	        defaultValue: "",
+	        default: "",
 	        converter: "String"
 	    },
 	    containerClass: {
-	        defaultValue: "gr-container",
+	        default: "gr-container",
 	        converter: "String"
 	    }
 	};
@@ -2849,11 +2851,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function $awake() {
 	            var _this2 = this;
 	
-	            this.getAttribute("fullscreen").addObserver(function (attr) {
-	                if (_this2._fullscreen === attr.Value) {
+	            this.getAttributeRaw("fullscreen").watch(function (attr) {
+	                if (_this2._fullscreen === attr) {
 	                    return;
 	                }
-	                _this2._fullscreen = attr.Value;
+	                _this2._fullscreen = attr;
 	                _this2._switchFullscreen();
 	            });
 	        }
@@ -2909,7 +2911,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	FullscreenComponent.attributes = {
 	    fullscreen: {
 	        converter: "Boolean",
-	        defaultValue: false
+	        default: false
 	    }
 	};
 
@@ -2953,18 +2955,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _createClass(GeometryComponent, [{
 	        key: "$mount",
 	        value: function $mount() {
-	            var type = this.getValue("type");
+	            var type = this.getAttribute("type");
 	            if (type) {
 	                var gf = this.companion.get("GeometryFactory");
 	                var attrs = _GeometryFactory2.default.factoryArgumentDeclarations[type];
 	                var geometryArgument = {};
 	                for (var key in attrs) {
 	                    this.__addAtribute(key, attrs[key]);
-	                    geometryArgument[key] = this.getValue(key);
+	                    geometryArgument[key] = this.getAttribute(key);
 	                }
 	                this.geometry = gf.instanciate(type, geometryArgument);
 	                var gr = this.companion.get("GeometryRegistory");
-	                var name = this.getValue("name");
+	                var name = this.getAttribute("name");
 	                if (!name) {
 	                    throw new Error("Name was not specified");
 	                }
@@ -2981,11 +2983,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	GeometryComponent.attributes = {
 	    type: {
 	        converter: "String",
-	        defaultValue: undefined
+	        default: null
 	    },
 	    name: {
 	        converter: "String",
-	        defaultValue: undefined
+	        default: null
 	    }
 	};
 
@@ -3036,7 +3038,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var args = {};
 	            for (var attr in decl) {
 	                var attrDecl = decl[attr];
-	                args[attr] = attrDecl.defaultValue;
+	                args[attr] = attrDecl.default;
 	            }
 	            return this.instanciate(type, args);
 	        }
@@ -3117,7 +3119,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var _iteratorError = undefined;
 	
 	            try {
-	                for (var _iterator = this.getValue("defaultGeometry")[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	                for (var _iterator = this.getAttribute("defaultGeometry")[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
 	                    var geometry = _step.value;
 	
 	                    this.addGeometry(geometry, this._factory.instanciateAsDefault(geometry));
@@ -3164,7 +3166,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	GeometryRegistoryComponent.attributes = {
 	    defaultGeometry: {
 	        converter: "StringArray",
-	        defaultValue: ["quad", "cube", "sphere"]
+	        default: ["quad", "cube", "sphere"]
 	    }
 	};
 
@@ -3233,13 +3235,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function $treeInitialized() {
 	            var _this2 = this;
 	
-	            this.getAttribute("targetRenderer").addObserver(function (v) {
-	                if (_this2._rendererQuery !== v.Value) {
+	            this.getAttributeRaw("targetRenderer").watch(function (v) {
+	                if (_this2._rendererQuery !== v) {
 	                    _this2._onRendererChanged();
 	                }
 	            }, true);
-	            this.getAttribute("htmlQuery").addObserver(function (v) {
-	                _this2._onQueryChanged(v.Value);
+	            this.getAttributeRaw("htmlQuery").watch(function (v) {
+	                _this2._onQueryChanged(v);
 	            }, true);
 	        }
 	    }, {
@@ -3299,7 +3301,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var _this3 = this;
 	
 	            var returned = false;
-	            this.tree(this.getValue("targetRenderer")).forEach(function (n) {
+	            this.tree(this.getAttribute("targetRenderer")).forEach(function (n) {
 	                if (returned) {
 	                    return true;
 	                } else {
@@ -3343,11 +3345,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	HTMLBinderComponent.attributes = {
 	    htmlQuery: {
-	        defaultValue: undefined,
+	        default: null,
 	        converter: "String"
 	    },
 	    targetRenderer: {
-	        defaultValue: "render-scene",
+	        default: "render-scene",
 	        converter: "String"
 	    }
 	};
@@ -3394,8 +3396,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function $awake() {
 	            var _this2 = this;
 	
-	            this.attributes.get("loopEnabled").addObserver(function (attr) {
-	                _this2._begin();
+	            this.getAttributeRaw("loopEnabled").watch(function (attr) {
+	                if (attr) {
+	                    _this2._begin();
+	                }
 	            });
 	            this._registerNextLoop = window.requestAnimationFrame // if window.requestAnimationFrame is defined or undefined
 	            ? function () {
@@ -3438,7 +3442,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	LoopManagerComponent.attributes = {
 	    loopEnabled: {
-	        defaultValue: false,
+	        default: false,
 	        converter: "Boolean"
 	    }
 	};
@@ -3518,7 +3522,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _createClass(MaterialComponent, [{
 	        key: "$mount",
 	        value: function $mount() {
-	            var typeName = this.getValue("type");
+	            var typeName = this.getAttribute("type");
 	            if (typeName) {
 	                this.materialPromise = this.companion.get("MaterialFactory").instanciate(typeName);
 	                this._registerAttributes();
@@ -3549,10 +3553,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	                                            var _loop = function _loop(key) {
 	                                                _this2.__addAtribute(key, cp.sort.gomlAttributes[key]);
-	                                                _this2.attributes.get(key).addObserver(function (v) {
-	                                                    _this2.materialArgs[key] = v.Value;
+	                                                _this2.getAttributeRaw(key).watch(function (v) {
+	                                                    _this2.materialArgs[key] = v;
 	                                                });
-	                                                var value = _this2.materialArgs[key] = _this2.getValue(key);
+	                                                var value = _this2.materialArgs[key] = _this2.getAttribute(key);
 	                                                if (value instanceof _ResourceBase2.default) {
 	                                                    promises.push(value.validPromise);
 	                                                }
@@ -3573,10 +3577,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	                                                        case "int":
 	                                                            _this2.__addAtribute(macro.attributeName, {
 	                                                                converter: "Number",
-	                                                                defaultValue: macro.default
+	                                                                default: macro.default
 	                                                            });
-	                                                            _this2.getAttribute(macro.attributeName).addObserver(function (v) {
-	                                                                cp.setMacro(macro.macroName, "" + Math.floor(v.Value));
+	                                                            _this2.getAttributeRaw(macro.attributeName).watch(function (v) {
+	                                                                cp.setMacro(macro.macroName, "" + Math.floor(v));
 	                                                            }, true);
 	                                                            return {
 	                                                                v: {
@@ -3586,10 +3590,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	                                                        case "bool":
 	                                                            _this2.__addAtribute(macro.attributeName, {
 	                                                                converter: "Boolean",
-	                                                                defaultValue: macro.default
+	                                                                default: macro.default
 	                                                            });
-	                                                            _this2.getAttribute(macro.attributeName).addObserver(function (v) {
-	                                                                cp.setMacro(macro.macroName, v.Value);
+	                                                            _this2.getAttributeRaw(macro.attributeName).watch(function (v) {
+	                                                                cp.setMacro(macro.macroName, v);
 	                                                            }, true);
 	                                                            return {
 	                                                                v: {
@@ -3649,7 +3653,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	MaterialComponent.attributes = {
 	    type: {
 	        converter: "String",
-	        defaultValue: undefined
+	        default: null
 	    }
 	};
 
@@ -4346,9 +4350,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: "$mount",
 	        value: function $mount() {
-	            this.getAttribute("material").addObserver(this._onMaterialChanged);
+	            this.getAttributeRaw("material").watch(this._onMaterialChanged);
 	            this.companion.get("loader").register(this._onMaterialChanged());
-	            this.getAttribute("drawOrder").boundTo("_drawOrder");
+	            this.getAttributeRaw("drawOrder").boundTo("_drawOrder");
 	        }
 	        /**
 	         * When the material attribute is changed.
@@ -4363,7 +4367,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    while (1) {
 	                        switch (_context.prev = _context.next) {
 	                            case 0:
-	                                materialPromise = this.getValue("material");
+	                                materialPromise = this.getAttribute("material");
 	
 	                                if (!(materialPromise === void 0)) {
 	                                    _context.next = 4;
@@ -4463,10 +4467,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	                                            var _loop = function _loop(key) {
 	                                                var val = cp.sort.gomlAttributes[key];
 	                                                _this2.__addAtribute(key, val);
-	                                                _this2.getAttribute(key).addObserver(function (v) {
-	                                                    _this2.materialArgs[key] = v.Value;
+	                                                _this2.getAttributeRaw(key).watch(function (v) {
+	                                                    _this2.materialArgs[key] = v;
 	                                                });
-	                                                var value = _this2.materialArgs[key] = _this2.getValue(key);
+	                                                var value = _this2.materialArgs[key] = _this2.getAttribute(key);
 	                                                if (value instanceof _ResourceBase2.default) {
 	                                                    promises.push(value.validPromise);
 	                                                }
@@ -4487,10 +4491,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	                                                        case "int":
 	                                                            _this2.__addAtribute(macro.attributeName, {
 	                                                                converter: "Number",
-	                                                                defaultValue: macro.default
+	                                                                default: macro.default
 	                                                            });
-	                                                            _this2.getAttribute(macro.attributeName).addObserver(function (v) {
-	                                                                cp.setMacro(macro.macroName, "" + Math.floor(v.Value));
+	                                                            _this2.getAttributeRaw(macro.attributeName).watch(function (v) {
+	                                                                cp.setMacro(macro.macroName, "" + Math.floor(v));
 	                                                            }, true);
 	                                                            return {
 	                                                                v: {
@@ -4500,10 +4504,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	                                                        case "bool":
 	                                                            _this2.__addAtribute(macro.attributeName, {
 	                                                                converter: "Boolean",
-	                                                                defaultValue: macro.default
+	                                                                default: macro.default
 	                                                            });
-	                                                            _this2.getAttribute(macro.attributeName).addObserver(function (v) {
-	                                                                cp.setMacro(macro.macroName, v.Value);
+	                                                            _this2.getAttributeRaw(macro.attributeName).watch(function (v) {
+	                                                                cp.setMacro(macro.macroName, v);
 	                                                            }, true);
 	                                                            return {
 	                                                                v: {
@@ -4554,7 +4558,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function rewriteDefaultMaterial(materialName) {
 	            if (materialName !== MaterialContainerComponent._defaultMaterial) {
 	                MaterialContainerComponent._defaultMaterial = materialName;
-	                _grimoirejs2.default.componentDeclarations.get("MaterialContainer").attributes["material"].defaultValue = "new(" + materialName + ")";
+	                _grimoirejs2.default.componentDeclarations.get("MaterialContainer").attributes["material"].default = "new(" + materialName + ")";
 	            }
 	        }
 	    }, {
@@ -4572,12 +4576,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	MaterialContainerComponent.attributes = {
 	    material: {
 	        converter: "Material",
-	        defaultValue: "new(unlit)",
+	        default: "new(unlit)",
 	        componentBoundTo: "_materialComponent" // When the material was specified with the other material tag, this field would be assigned.
 	    },
 	    drawOrder: {
 	        converter: "String",
-	        defaultValue: null
+	        default: null
 	    }
 	};
 	MaterialContainerComponent._defaultMaterial = "unlit";
@@ -4639,10 +4643,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _createClass(MaterialImporterComponent, [{
 	        key: "$awake",
 	        value: function $awake() {
-	            if (!this.getValue("typeName") || !this.getValue("src")) {
+	            if (!this.getAttribute("typeName") || !this.getAttribute("src")) {
 	                throw new Error("type or src cannot be null in material importer");
 	            } else {
-	                _MaterialFactory2.default.addSORTMaterialFromURL(this.getValue("typeName"), this.getValue("src"));
+	                _MaterialFactory2.default.addSORTMaterialFromURL(this.getAttribute("typeName"), this.getAttribute("src"));
 	            }
 	        }
 	    }]);
@@ -4654,11 +4658,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	MaterialImporterComponent.attributes = {
 	    typeName: {
-	        defaultValue: undefined,
+	        default: null,
 	        converter: "String"
 	    },
 	    src: {
-	        defaultValue: undefined,
+	        default: null,
 	        converter: "String"
 	    }
 	};
@@ -5292,7 +5296,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	function _getDecl(converter, defaultValue, register) {
 	    return {
 	        converter: converter,
-	        defaultValue: defaultValue,
+	        default: defaultValue,
 	        register: register
 	    };
 	}
@@ -5396,7 +5400,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                                                        flagAssignTo = annotations["usedFlag"];
 	                                                    }
 	                                                }
-	                                                attributes[valName] = _getDecl("Texture", _resolveDefault(variableInfo, undefined), function (proxy, matArgs) {
+	                                                attributes[valName] = _getDecl("Texture", _resolveDefault(variableInfo, null), function (proxy, matArgs) {
 	                                                    var texture = void 0;
 	                                                    if (matArgs.attributeValues[valName] && (texture = matArgs.attributeValues[valName].get(matArgs.buffers))) {
 	                                                        proxy.uniformTexture2D(valName, texture);
@@ -7384,11 +7388,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: "$awake",
 	        value: function $awake() {
-	            this.getAttribute("targetBuffer").boundTo("_targetBuffer");
-	            this.getAttribute("layer").boundTo("_layer");
-	            this.getAttribute("drawOffset").boundTo("_drawOffset");
-	            this.getAttribute("drawCount").boundTo("_drawCount");
-	            this.getAttribute("geometry").boundTo("_geometry");
+	            this.getAttributeRaw("targetBuffer").boundTo("_targetBuffer");
+	            this.getAttributeRaw("layer").boundTo("_layer");
+	            this.getAttributeRaw("drawOffset").boundTo("_drawOffset");
+	            this.getAttributeRaw("drawCount").boundTo("_drawCount");
+	            this.getAttributeRaw("geometry").boundTo("_geometry");
 	        }
 	    }, {
 	        key: "$mount",
@@ -7433,6 +7437,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                this._materialContainer.material.draw(renderArgs);
 	            }
 	            this.companion.get("gl").flush();
+	            this.node.sendMessage("render", args);
 	        }
 	    }], [{
 	        key: "_findContainedScene",
@@ -7464,23 +7469,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	MeshRenderer.attributes = {
 	    geometry: {
 	        converter: "Geometry",
-	        defaultValue: "quad"
+	        default: "quad"
 	    },
 	    targetBuffer: {
 	        converter: "String",
-	        defaultValue: "default"
+	        default: "default"
 	    },
 	    layer: {
 	        converter: "String",
-	        defaultValue: "default"
+	        default: "default"
 	    },
 	    drawCount: {
 	        converter: "Number",
-	        defaultValue: Number.MAX_VALUE
+	        default: Number.MAX_VALUE
 	    },
 	    drawOffset: {
 	        converter: "Number",
-	        defaultValue: 0
+	        default: 0
 	    }
 	};
 
@@ -7542,11 +7547,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _createClass(MouseCameraControlComponent, [{
 	        key: "$awake",
 	        value: function $awake() {
-	            this.getAttribute("center").boundTo("_center");
-	            this.getAttribute("rotateSpeed").boundTo("_rotateSpeed");
-	            this.getAttribute("zoomSpeed").boundTo("_zoomSpeed");
-	            this.getAttribute("moveSpeed").boundTo("_moveSpeed");
-	            this.getAttribute("origin").boundTo("_origin");
+	            this.getAttributeRaw("center").boundTo("_center");
+	            this.getAttributeRaw("rotateSpeed").boundTo("_rotateSpeed");
+	            this.getAttributeRaw("zoomSpeed").boundTo("_zoomSpeed");
+	            this.getAttributeRaw("moveSpeed").boundTo("_moveSpeed");
+	            this.getAttributeRaw("origin").boundTo("_origin");
 	            this._transform = this.node.getComponent(_TransformComponent2.default);
 	        }
 	    }, {
@@ -7629,23 +7634,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	MouseCameraControlComponent.attributes = {
 	    rotateSpeed: {
-	        defaultValue: 1,
+	        default: 1,
 	        converter: "Number"
 	    },
 	    zoomSpeed: {
-	        defaultValue: 1,
+	        default: 1,
 	        converter: "Number"
 	    },
 	    moveSpeed: {
-	        defaultValue: 1,
+	        default: 1,
 	        converter: "Number"
 	    },
 	    center: {
-	        defaultValue: 20,
+	        default: 20,
 	        converter: "Number"
 	    },
 	    origin: {
-	        defaultValue: "0,0,0",
+	        default: "0,0,0",
 	        converter: "Vector3"
 	    }
 	};
@@ -7705,7 +7710,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: "$resizeBuffer",
 	        value: function $resizeBuffer(arg) {
-	            var name = this.getValue("name");
+	            var name = this.getAttribute("name");
 	            if (!name) {
 	                throw new Error("Attribute 'name' must be specified.");
 	            }
@@ -7724,7 +7729,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	RenderBufferComponent.attributes = {
 	    name: {
 	        converter: "String",
-	        defaultValue: undefined
+	        default: null
 	    }
 	};
 
@@ -7871,15 +7876,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	            this._gl = this.companion.get("gl");
 	            this._canvas = this.companion.get("canvasElement");
-	            this._camera = this.getValue("camera");
-	            this.getAttribute("camera").addObserver(function (v) {
-	                return _this2._camera = v.Value;
+	            this._camera = this.getAttribute("camera");
+	            this.getAttributeRaw("camera").watch(function (v) {
+	                return _this2._camera = v;
 	            });
-	            this.getAttribute("viewport").addObserver(function (v) {
-	                _this2._viewportSizeGenerator = v.Value;
+	            this.getAttributeRaw("viewport").watch(function (v) {
+	                _this2._viewportSizeGenerator = v;
 	                _this2.$resizeCanvas();
 	            });
-	            this._viewportSizeGenerator = this.getValue("viewport");
+	            this._viewportSizeGenerator = this.getAttribute("viewport");
 	        }
 	    }, {
 	        key: "$treeInitialized",
@@ -7926,12 +7931,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	RendererComponent.attributes = {
 	    camera: {
 	        converter: "Component",
-	        defaultValue: "camera",
+	        default: "camera",
 	        target: "Camera"
 	    },
 	    viewport: {
 	        converter: "Viewport",
-	        defaultValue: "auto"
+	        default: "auto"
 	    }
 	};
 
@@ -7975,8 +7980,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _createClass(RendererManagerComponent, [{
 	        key: "$awake",
 	        value: function $awake() {
-	            this.getAttribute("bgColor").boundTo("_bgColor");
-	            this.getAttribute("clearDepth").boundTo("_clearDepth");
+	            this.getAttributeRaw("bgColor").boundTo("_bgColor");
+	            this.getAttributeRaw("clearDepth").boundTo("_clearDepth");
 	        }
 	    }, {
 	        key: "$mount",
@@ -7987,7 +7992,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: "$treeInitialized",
 	        value: function $treeInitialized() {
 	            this.node.getComponent("LoopManager").register(this.onloop.bind(this), 1000);
-	            if (this.getValue("complementRenderer") && this.node.getChildrenByNodeName("renderer").length === 0) {
+	            if (this.getAttribute("complementRenderer") && this.node.getChildrenByNodeName("renderer").length === 0) {
 	                this.node.addChildByName("renderer", {});
 	            }
 	        }
@@ -8011,15 +8016,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	RendererManagerComponent.attributes = {
 	    bgColor: {
-	        defaultValue: new _Color2.default(0, 0, 0, 0),
+	        default: new _Color2.default(0, 0, 0, 0),
 	        converter: "Color4"
 	    },
 	    clearDepth: {
-	        defaultValue: 1.0,
+	        default: 1.0,
 	        converter: "Number"
 	    },
 	    complementRenderer: {
-	        defaultValue: true,
+	        default: true,
 	        converter: "Boolean"
 	    }
 	};
@@ -8072,11 +8077,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _createClass(RenderQuadComponent, [{
 	        key: "$awake",
 	        value: function $awake() {
-	            this.getAttribute("targetBuffer").boundTo("_targetBuffer");
-	            this.getAttribute("clearColor").boundTo("_clearColor");
-	            this.getAttribute("clearColorEnabled").boundTo("_clearColorEnabled");
-	            this.getAttribute("clearDepthEnabled").boundTo("_clearDepthEnabled");
-	            this.getAttribute("clearDepth").boundTo("_clearDepth");
+	            this.getAttributeRaw("targetBuffer").boundTo("_targetBuffer");
+	            this.getAttributeRaw("clearColor").boundTo("_clearColor");
+	            this.getAttributeRaw("clearColorEnabled").boundTo("_clearColorEnabled");
+	            this.getAttributeRaw("clearDepthEnabled").boundTo("_clearDepthEnabled");
+	            this.getAttributeRaw("clearDepth").boundTo("_clearDepth");
 	        }
 	    }, {
 	        key: "$mount",
@@ -8090,13 +8095,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: "$bufferUpdated",
 	        value: function $bufferUpdated(args) {
-	            var out = this.getValue("out");
+	            var out = this.getAttribute("out");
 	            if (out !== "default") {
 	                this._fbo = new _FrameBuffer2.default(this.companion.get("gl"));
 	                this._fbo.update(args.buffers[out]);
 	                this._fboSize = args.bufferSizes[out];
 	            }
-	            var depthBuffer = this.getValue("depthBuffer");
+	            var depthBuffer = this.getAttribute("depthBuffer");
 	            if (depthBuffer && this._fbo) {
 	                this._fbo.update(args.buffers[depthBuffer]);
 	            }
@@ -8149,31 +8154,31 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	RenderQuadComponent.attributes = {
 	    out: {
-	        defaultValue: "default",
+	        default: "default",
 	        converter: "String"
 	    },
 	    depthBuffer: {
-	        defaultValue: undefined,
+	        default: null,
 	        converter: "String"
 	    },
 	    targetBuffer: {
-	        defaultValue: "default",
+	        default: "default",
 	        converter: "String"
 	    },
 	    clearColor: {
-	        defaultValue: "#0000",
+	        default: "#0000",
 	        converter: "Color4"
 	    },
 	    clearColorEnabled: {
-	        defaultValue: true,
+	        default: true,
 	        converter: "Boolean"
 	    },
 	    clearDepthEnabled: {
-	        defaultValue: true,
+	        default: true,
 	        converter: "Boolean"
 	    },
 	    clearDepth: {
-	        defaultValue: 1.0,
+	        default: 1.0,
 	        converter: "Number"
 	    }
 	};
@@ -8308,12 +8313,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	        // messages
 	        value: function $awake() {
-	            this.getAttribute("layer").boundTo("_layer");
-	            this.getAttribute("clearColor").boundTo("_clearColor");
-	            this.getAttribute("clearColorEnabled").boundTo("_clearColorEnabled");
-	            this.getAttribute("clearDepthEnabled").boundTo("_clearDepthEnabled");
-	            this.getAttribute("clearDepth").boundTo("_clearDepth");
-	            this.getAttribute("camera").boundTo("_camera");
+	            this.getAttributeRaw("layer").boundTo("_layer");
+	            this.getAttributeRaw("clearColor").boundTo("_clearColor");
+	            this.getAttributeRaw("clearColorEnabled").boundTo("_clearColorEnabled");
+	            this.getAttributeRaw("clearDepthEnabled").boundTo("_clearDepthEnabled");
+	            this.getAttributeRaw("clearDepth").boundTo("_clearDepth");
+	            this.getAttributeRaw("camera").boundTo("_camera");
 	        }
 	    }, {
 	        key: "$mount",
@@ -8325,13 +8330,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: "$bufferUpdated",
 	        value: function $bufferUpdated(args) {
-	            var out = this.getValue("out");
+	            var out = this.getAttribute("out");
 	            if (out !== "default") {
 	                this._fbo = new _FrameBuffer2.default(this.companion.get("gl"));
 	                this._fbo.update(args.buffers[out]);
 	                this._fboSize = args.bufferSizes[out];
 	            }
-	            var depthBuffer = this.getValue("depthBuffer");
+	            var depthBuffer = this.getAttribute("depthBuffer");
 	            if (depthBuffer && this._fbo) {
 	                this._fbo.update(args.buffers[depthBuffer]);
 	            }
@@ -8382,34 +8387,34 @@ return /******/ (function(modules) { // webpackBootstrap
 	RenderSceneComponent.attributes = {
 	    layer: {
 	        converter: "String",
-	        defaultValue: "default"
+	        default: "default"
 	    },
 	    depthBuffer: {
-	        defaultValue: undefined,
+	        default: null,
 	        converter: "String"
 	    },
 	    out: {
 	        converter: "String",
-	        defaultValue: "default"
+	        default: "default"
 	    },
 	    clearColor: {
-	        defaultValue: "#0000",
+	        default: "#0000",
 	        converter: "Color4"
 	    },
 	    clearColorEnabled: {
-	        defaultValue: true,
+	        default: true,
 	        converter: "Boolean"
 	    },
 	    clearDepthEnabled: {
-	        defaultValue: true,
+	        default: true,
 	        converter: "Boolean"
 	    },
 	    clearDepth: {
-	        defaultValue: 1.0,
+	        default: 1.0,
 	        converter: "Number"
 	    },
 	    camera: {
-	        defaultValue: undefined,
+	        default: null,
 	        converter: "Component",
 	        target: "Camera"
 	    }
@@ -8470,11 +8475,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: "$resizeBuffer",
 	        value: function $resizeBuffer(arg) {
-	            var bufferName = this.getValue("name");
+	            var bufferName = this.getAttribute("name");
 	            if (!bufferName) {
 	                throw new Error("Attribute 'name' must be specified.");
 	            }
-	            var format = this.getValue("format");
+	            var format = this.getAttribute("format");
 	            var newSize = _TextureSizeCalculator2.default.getPow2Size(arg.width, arg.height);
 	            this.buffer.update(0, newSize.width, newSize.height, 0, format, WebGLRenderingContext.UNSIGNED_BYTE, null);
 	            arg.bufferSizes[bufferName] = { width: newSize.width, height: newSize.height };
@@ -8490,11 +8495,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	TextureBufferComponent.attributes = {
 	    name: {
 	        converter: "String",
-	        defaultValue: undefined
+	        default: null
 	    },
 	    format: {
 	        converter: "Enum",
-	        defaultValue: WebGLRenderingContext.RGBA,
+	        default: WebGLRenderingContext.RGBA,
 	        table: {
 	            RGBA: WebGLRenderingContext.RGBA,
 	            RGB: WebGLRenderingContext.RGB,
@@ -8580,23 +8585,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function $mount() {
 	            var _this2 = this;
 	
-	            var src = this.getValue("src");
+	            var src = this.getAttribute("src");
 	            this.texture = new _Texture2D2.default(this.companion.get("gl"));
-	            this.texture.magFilter = this.getValue("magFilter");
-	            this.texture.minFilter = this.getValue("minFilter");
-	            this.texture.wrapT = this.getValue("wrapT");
-	            this.texture.wrapS = this.getValue("wrapS");
-	            this.attributes.get("magFilter").addObserver(function (v) {
-	                return _this2.texture.magFilter = v.Value;
+	            this.texture.magFilter = this.getAttribute("magFilter");
+	            this.texture.minFilter = this.getAttribute("minFilter");
+	            this.texture.wrapT = this.getAttribute("wrapT");
+	            this.texture.wrapS = this.getAttribute("wrapS");
+	            this.getAttributeRaw("magFilter").watch(function (v) {
+	                return _this2.texture.magFilter = v;
 	            });
-	            this.attributes.get("minFilter").addObserver(function (v) {
-	                return _this2.texture.minFilter = v.Value;
+	            this.getAttributeRaw("minFilter").watch(function (v) {
+	                return _this2.texture.minFilter = v;
 	            });
-	            this.attributes.get("wrapS").addObserver(function (v) {
-	                return _this2.texture.wrapS = v.Value;
+	            this.getAttributeRaw("wrapS").watch(function (v) {
+	                return _this2.texture.wrapS = v;
 	            });
-	            this.attributes.get("wrapT").addObserver(function (v) {
-	                return _this2.texture.wrapT = v.Value;
+	            this.getAttributeRaw("wrapT").watch(function (v) {
+	                return _this2.texture.wrapT = v;
 	            });
 	            if (src) {
 	                this._loadTask(src);
@@ -8637,11 +8642,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	TextureComponent.attributes = {
 	    src: {
 	        converter: "String",
-	        defaultValue: undefined
+	        default: null
 	    },
 	    minFilter: {
 	        converter: "Enum",
-	        defaultValue: "LINEAR",
+	        default: "LINEAR",
 	        table: {
 	            LINEAR: WebGLRenderingContext.LINEAR,
 	            NEAREST: WebGLRenderingContext.NEAREST,
@@ -8653,7 +8658,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	    magFilter: {
 	        converter: "Enum",
-	        defaultValue: "LINEAR",
+	        default: "LINEAR",
 	        table: {
 	            LINEAR: WebGLRenderingContext.LINEAR,
 	            NEAREST: WebGLRenderingContext.NEAREST
@@ -8661,7 +8666,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	    wrapS: {
 	        converter: "Enum",
-	        defaultValue: "REPEAT",
+	        default: "REPEAT",
 	        table: {
 	            REPEAT: WebGLRenderingContext.REPEAT,
 	            MIRRORED_REPEAT: WebGLRenderingContext.MIRRORED_REPEAT,
@@ -8670,7 +8675,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	    wrapT: {
 	        converter: "Enum",
-	        defaultValue: "REPEAT",
+	        default: "REPEAT",
 	        table: {
 	            REPEAT: WebGLRenderingContext.REPEAT,
 	            MIRRORED_REPEAT: WebGLRenderingContext.MIRRORED_REPEAT,
@@ -9063,6 +9068,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (!this.declaration["target"]) {
 	        throw new Error("Component converter require to be specified target");
 	    }
+	    if (val === null) {
+	        return null;
+	    }
 	    if (val instanceof _GomlNode2.default) {
 	        return val.getComponent(this.declaration["target"]);
 	    } else if (val instanceof _Component2.default) {
@@ -9072,7 +9080,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	            throw new Error("Specified component must be " + this.declaration["target"]);
 	        }
 	    } else {
-	        return this.tree(val)(this.declaration["target"]).get(0, 0, 0);
+	        var n = this.tree(val).first();
+	        if (n) {
+	            return n.getComponent(this.declaration["target"]);
+	        }
+	        return null;
 	    }
 	}
 	exports.default = ComponentConverter;
@@ -9227,13 +9239,20 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 93 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	
+	var _MaterialComponent = __webpack_require__(35);
+	
+	var _MaterialComponent2 = _interopRequireDefault(_MaterialComponent);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
 	function MaterialConverter(val) {
 	    if (typeof val === "string") {
 	        var regex = /\s*new\s*\(\s*([a-zA-Z\d\-]+)\s*\)/;
@@ -9242,11 +9261,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this.component[this.declaration["componentBoundTo"]] = null;
 	            return this.companion.get("MaterialFactory").instanciate(regexResult[1]);
 	        } else {
-	            var mc = this.tree(val)("Material").get();
+	            var mc = this.tree(val).single().getComponent(_MaterialComponent2.default);
 	            this.component[this.declaration["componentBoundTo"]] = mc;
 	            return mc.materialPromise;
 	        }
 	    }
+	    return null; // TODO ??
 	}
 	exports.default = MaterialConverter;
 
@@ -9479,6 +9499,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return new _TextureReference2.default(fromVideoTexture(this.companion.get("gl"), val));
 	        }
 	    }
+	    return null;
 	}
 	exports.default = TextureConverter;
 
@@ -10042,11 +10063,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	            _GeometryFactory2.default.addType("sphere", {
 	                divVertical: {
 	                    converter: "Number",
-	                    defaultValue: 100
+	                    default: 100
 	                },
 	                divHorizontal: {
 	                    converter: "Number",
-	                    defaultValue: 100
+	                    default: 100
 	                }
 	            }, function (gl, attrs) {
 	                var dH = attrs["divHorizontal"];
@@ -10154,7 +10175,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            _GeometryFactory2.default.addType("circle", {
 	                divide: {
 	                    converter: "Number",
-	                    defaultValue: 50
+	                    default: 50
 	                }
 	            }, function (gl, attrs) {
 	                var div = attrs["divide"];
@@ -10260,7 +10281,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            _GeometryFactory2.default.addType("cylinder", {
 	                divide: {
 	                    converter: "Number",
-	                    defaultValue: 50
+	                    default: 50
 	                }
 	            }, function (gl, attrs) {
 	                var div = attrs["divide"];
@@ -10367,7 +10388,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            _GeometryFactory2.default.addType("cone", {
 	                divide: {
 	                    converter: "Number",
-	                    defaultValue: 50
+	                    default: 50
 	                }
 	            }, function (gl, attrs) {
 	                var div = attrs["divide"];
@@ -10474,7 +10495,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            _GeometryFactory2.default.addType("plane", {
 	                divide: {
 	                    converter: "Number",
-	                    defaultValue: 10
+	                    default: 10
 	                }
 	            }, function (gl, attrs) {
 	                var div = attrs["divide"];

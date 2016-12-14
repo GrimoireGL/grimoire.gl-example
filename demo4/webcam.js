@@ -20,7 +20,7 @@ gr.registerComponent("Webcam", {
         video.addEventListener('canplay', function () {
           video.removeEventListener('canplay', arguments.callee, true);
           video.play();
-          _this.node.setAttribute(_this.getValue("target"), video);
+          _this.node.setAttribute(_this.getAttribute("target"), video);
         }, true);
         video.src = url.createObjectURL(localMediaStream);
       },
