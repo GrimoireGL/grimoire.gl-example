@@ -397,7 +397,7 @@ grimoirejs-forward-shading@^1.1.8:
     grimoirejs-fundamental "^0.5.2"
     grimoirejs-math "^1.4.1"
 
-grimoirejs-fundamental@^0.5.2, grimoirejs-fundamental@^0.5.3:
+grimoirejs-fundamental@^0.5.2:
   version "0.5.5"
   resolved "https://registry.yarnpkg.com/grimoirejs-fundamental/-/grimoirejs-fundamental-0.5.5.tgz#1145f8f78d28da8cf07c9d18bb9ac2e5cbd24818"
   dependencies:
@@ -406,39 +406,49 @@ grimoirejs-fundamental@^0.5.2, grimoirejs-fundamental@^0.5.3:
     grimoirejs-math "^1.4.1"
     json5 "^0.5.0"
 
-grimoirejs-fundamental@^0.7.3, grimoirejs-fundamental@^0.7.4:
-  version "0.7.4"
-  resolved "https://registry.yarnpkg.com/grimoirejs-fundamental/-/grimoirejs-fundamental-0.7.4.tgz#c42a0190dcf6204d754ed7b7c133d3549e3a2582"
+grimoirejs-fundamental@^0.7.13, grimoirejs-fundamental@latest:
+  version "0.7.13"
+  resolved "https://registry.yarnpkg.com/grimoirejs-fundamental/-/grimoirejs-fundamental-0.7.13.tgz#0bc108df361f2ef6a9c557a9bc7f19e429fae551"
   dependencies:
     "@types/json5" "0.0.29"
-    grimoirejs "^0.11.11"
-    grimoirejs-math "^1.6.1"
-    json5 "^0.5.0"
+    grimoirejs "^0.11.16"
+    grimoirejs-math "^1.7.0"
+    json5 "^0.5.1"
 
-grimoirejs-gltf@^1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/grimoirejs-gltf/-/grimoirejs-gltf-1.1.2.tgz#89410c763ffae95c61f77f9a395513143b95b551"
+grimoirejs-fundamental@^0.7.9:
+  version "0.7.10"
+  resolved "https://registry.yarnpkg.com/grimoirejs-fundamental/-/grimoirejs-fundamental-0.7.10.tgz#1f5b5274783ebcb91aff1370c760c5b4d120c4fc"
   dependencies:
-    grimoirejs "^0.11.7"
-    grimoirejs-fundamental "^0.5.3"
+    "@types/json5" "0.0.29"
+    grimoirejs "^0.11.15"
+    grimoirejs-math "^1.7.0"
+    json5 "^0.5.1"
 
-grimoirejs-math@^1.4.1, grimoirejs-math@^1.6.1:
-  version "1.6.1"
-  resolved "https://registry.yarnpkg.com/grimoirejs-math/-/grimoirejs-math-1.6.1.tgz#4bff63b4686ecdf4b1c1890780f9401df8dca11c"
+grimoirejs-gltf@^1.2.6:
+  version "1.2.6"
+  resolved "https://registry.yarnpkg.com/grimoirejs-gltf/-/grimoirejs-gltf-1.2.6.tgz#6ec7a3e196c9f2f116082ed6bf2ee4e0511f6799"
+  dependencies:
+    grimoirejs "^0.11.15"
+    grimoirejs-fundamental "^0.7.9"
+    grimoirejs-math "^1.7.0"
+
+grimoirejs-math@^1.4.1, grimoirejs-math@^1.7.0, grimoirejs-math@latest:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/grimoirejs-math/-/grimoirejs-math-1.7.0.tgz#a93885708d4daaf1b44384be837f95ebc3b4e614"
   dependencies:
     gl-matrix "git+https://github.com/GrimoireGL/gl-matrix.git#master"
 
-grimoirejs-preset-basic@^1.2.3:
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/grimoirejs-preset-basic/-/grimoirejs-preset-basic-1.2.3.tgz#58cafef4ac9e88775d703d541fe5c7e6afe85949"
+grimoirejs-preset-basic@^1.3.6:
+  version "1.3.6"
+  resolved "https://registry.yarnpkg.com/grimoirejs-preset-basic/-/grimoirejs-preset-basic-1.3.6.tgz#08a752ab842098fe8f66b500459560390fbdd1a8"
   dependencies:
-    grimoirejs "^0.11.11"
-    grimoirejs-fundamental "^0.7.3"
-    grimoirejs-math "^1.6.1"
+    grimoirejs latest
+    grimoirejs-fundamental latest
+    grimoirejs-math latest
 
-grimoirejs@^0.11.11, grimoirejs@^0.11.7:
-  version "0.11.11"
-  resolved "https://registry.yarnpkg.com/grimoirejs/-/grimoirejs-0.11.11.tgz#9630529ccb0c6abbeebdce7c3feba09105d20fd9"
+grimoirejs@^0.11.15, grimoirejs@^0.11.16, grimoirejs@^0.11.7, grimoirejs@latest:
+  version "0.11.16"
+  resolved "https://registry.yarnpkg.com/grimoirejs/-/grimoirejs-0.11.16.tgz#fd6828d624d808525d507bf286f21bbbb9eeb1b5"
   dependencies:
     "@types/node" "^6.0.47"
     events "^1.1.1"
@@ -542,7 +552,7 @@ jsesc@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/jsesc/-/jsesc-1.3.0.tgz#46c3fec8c1892b12b0833db9bc7622176dbab34b"
 
-json5@^0.5.0:
+json5@^0.5.0, json5@^0.5.1:
   version "0.5.1"
   resolved "https://registry.yarnpkg.com/json5/-/json5-0.5.1.tgz#1eade7acc012034ad84e2396767ead9fa5495821"
 
@@ -615,17 +625,13 @@ minimatch@^3.0.2:
   dependencies:
     brace-expansion "^1.0.0"
 
-minimist@0.0.8:
+minimist@0.0.8, minimist@~0.0.1:
   version "0.0.8"
   resolved "https://registry.yarnpkg.com/minimist/-/minimist-0.0.8.tgz#857fcabfc3397d2625b8228262e86aa7a011b05d"
 
 minimist@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.0.tgz#a35008b20f41383eec1fb914f4cd5df79a264284"
-
-minimist@~0.0.1:
-  version "0.0.10"
-  resolved "https://registry.yarnpkg.com/minimist/-/minimist-0.0.10.tgz#de3f98543dbf96082be48ad1a0c7cda836301dcf"
 
 mkdirp@0.5, mkdirp@0.x.x, mkdirp@^0.5.1:
   version "0.5.1"

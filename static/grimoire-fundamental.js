@@ -248,35 +248,27 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _Rotation3Converter2 = _interopRequireDefault(_Rotation3Converter);
 	
-	var _StringArrayConverter = __webpack_require__(98);
-	
-	var _StringArrayConverter2 = _interopRequireDefault(_StringArrayConverter);
-	
-	var _StringConverter = __webpack_require__(99);
-	
-	var _StringConverter2 = _interopRequireDefault(_StringConverter);
-	
-	var _TextureConverter = __webpack_require__(100);
+	var _TextureConverter = __webpack_require__(98);
 	
 	var _TextureConverter2 = _interopRequireDefault(_TextureConverter);
 	
-	var _Vector2Converter = __webpack_require__(102);
+	var _Vector2Converter = __webpack_require__(100);
 	
 	var _Vector2Converter2 = _interopRequireDefault(_Vector2Converter);
 	
-	var _Vector3Converter = __webpack_require__(103);
+	var _Vector3Converter = __webpack_require__(101);
 	
 	var _Vector3Converter2 = _interopRequireDefault(_Vector3Converter);
 	
-	var _Vector4Converter = __webpack_require__(104);
+	var _Vector4Converter = __webpack_require__(102);
 	
 	var _Vector4Converter2 = _interopRequireDefault(_Vector4Converter);
 	
-	var _ViewportConverter = __webpack_require__(105);
+	var _ViewportConverter = __webpack_require__(103);
 	
 	var _ViewportConverter2 = _interopRequireDefault(_ViewportConverter);
 	
-	var _DefaultPrimitives = __webpack_require__(107);
+	var _DefaultPrimitives = __webpack_require__(105);
 	
 	var _DefaultPrimitives2 = _interopRequireDefault(_DefaultPrimitives);
 	
@@ -284,7 +276,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _Geometry2 = _interopRequireDefault(_Geometry);
 	
-	var _GeometryBuilder = __webpack_require__(110);
+	var _GeometryBuilder = __webpack_require__(108);
 	
 	var _GeometryBuilder2 = _interopRequireDefault(_GeometryBuilder);
 	
@@ -292,7 +284,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _GeometryFactory2 = _interopRequireDefault(_GeometryFactory);
 	
-	var _GeometryUtility = __webpack_require__(109);
+	var _GeometryUtility = __webpack_require__(107);
 	
 	var _GeometryUtility2 = _interopRequireDefault(_GeometryUtility);
 	
@@ -300,7 +292,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _DefaultMacro2 = _interopRequireDefault(_DefaultMacro);
 	
-	var _DefaultMaterial = __webpack_require__(112);
+	var _DefaultMaterial = __webpack_require__(110);
 	
 	var _DefaultMaterial2 = _interopRequireDefault(_DefaultMaterial);
 	
@@ -336,7 +328,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _SORTPass2 = _interopRequireDefault(_SORTPass);
 	
-	var _TextureReference = __webpack_require__(101);
+	var _TextureReference = __webpack_require__(99);
 	
 	var _TextureReference2 = _interopRequireDefault(_TextureReference);
 	
@@ -372,7 +364,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _VariableParser2 = _interopRequireDefault(_VariableParser);
 	
-	var _Buffer = __webpack_require__(111);
+	var _Buffer = __webpack_require__(109);
 	
 	var _Buffer2 = _interopRequireDefault(_Buffer);
 	
@@ -428,7 +420,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _TextureSizeCalculator2 = _interopRequireDefault(_TextureSizeCalculator);
 	
-	var _main = __webpack_require__(116);
+	var _main = __webpack_require__(114);
 	
 	var _main2 = _interopRequireDefault(_main);
 	
@@ -491,8 +483,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        "NumberConverter": _NumberConverter2.default,
 	        "ObjectConverter": _ObjectConverter2.default,
 	        "Rotation3Converter": _Rotation3Converter2.default,
-	        "StringArrayConverter": _StringArrayConverter2.default,
-	        "StringConverter": _StringConverter2.default,
 	        "TextureConverter": _TextureConverter2.default,
 	        "Vector2Converter": _Vector2Converter2.default,
 	        "Vector3Converter": _Vector3Converter2.default,
@@ -1592,7 +1582,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        converter: "Number"
 	    },
 	    far: {
-	        defaultValue: 200,
+	        defaultValue: 100,
 	        converter: "Number"
 	    },
 	    aspect: {
@@ -2117,19 +2107,34 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    _createClass(Texture2D, [{
 	        key: "update",
-	        value: function update(levelOrImage, widthOrFlipY, height, border, format, type, pixels, flipYForBuffer) {
+	        value: function update(levelOrImage, widthOrConfig, height, border, format, type, pixels, config) {
 	            this.gl.bindTexture(WebGLRenderingContext.TEXTURE_2D, this.texture);
-	            var flipY = false;
+	            var uploadConfig = void 0;
 	            var image = void 0;
 	            var width = void 0;
 	            var level = void 0;
 	            if (height === void 0) {
-	                flipY = widthOrFlipY ? true : false;
+	                uploadConfig = widthOrConfig || {
+	                    flipY: false,
+	                    premultipliedAlpha: false
+	                };
 	                image = levelOrImage;
 	            } else {
 	                level = levelOrImage;
-	                width = widthOrFlipY;
+	                width = widthOrConfig;
+	                uploadConfig = config || {
+	                    flipY: false,
+	                    premultipliedAlpha: false
+	                };
 	            }
+	            if (uploadConfig.flipY === void 0) {
+	                uploadConfig.flipY = false;
+	            }
+	            if (uploadConfig.premultipliedAlpha === void 0) {
+	                uploadConfig.premultipliedAlpha = false;
+	            }
+	            this.gl.pixelStorei(WebGLRenderingContext.UNPACK_FLIP_Y_WEBGL, uploadConfig.flipY ? 1 : 0);
+	            this.gl.pixelStorei(WebGLRenderingContext.UNPACK_PREMULTIPLY_ALPHA_WEBGL, uploadConfig.premultipliedAlpha ? 1 : 0);
 	            if (height === void 0) {
 	                if (image instanceof HTMLImageElement) {
 	                    this.gl.texImage2D(WebGLRenderingContext.TEXTURE_2D, 0, WebGLRenderingContext.RGBA, WebGLRenderingContext.RGBA, WebGLRenderingContext.UNSIGNED_BYTE, this._justifyImage(image));
@@ -2144,6 +2149,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                }
 	                this.gl.texImage2D(WebGLRenderingContext.TEXTURE_2D, level, format, width, height, border, format, type, pixels);
 	            }
+	            this._ensureMipmap();
 	            this.valid = true;
 	        }
 	    }, {
@@ -2184,7 +2190,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var h = canvas.height;
 	            var size = Math.pow(2, Math.log(Math.min(w, h)) / Math.LN2 | 0); // largest 2^n integer that does not exceed s
 	            if (w !== h || w !== size) {
-	                canvas.height = canvas.width = size;
+	                canvas.height = canvas.width = size * 2;
 	            }
 	            return canvas;
 	        }
@@ -2212,6 +2218,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this._texParameterChanged = false;
 	        }
 	    }, {
+	        key: "_ensureMipmap",
+	        value: function _ensureMipmap() {
+	            if (Texture2D._filtersNeedsMipmap.indexOf(this.magFilter) >= 0 || Texture2D._filtersNeedsMipmap.indexOf(this.minFilter) >= 0) {
+	                this.gl.bindTexture(WebGLRenderingContext.TEXTURE_2D, this.texture);
+	                this.gl.generateMipmap(WebGLRenderingContext.TEXTURE_2D);
+	            }
+	        }
+	    }, {
 	        key: "magFilter",
 	        get: function get() {
 	            return this._magFilter;
@@ -2220,6 +2234,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if (this._magFilter !== filter) {
 	                this._texParameterChanged = true;
 	                this._magFilter = filter;
+	                this._ensureMipmap();
 	            }
 	        }
 	    }, {
@@ -2231,6 +2246,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if (this._minFilter !== filter) {
 	                this._texParameterChanged = true;
 	                this._minFilter = filter;
+	                this._ensureMipmap();
 	            }
 	        }
 	    }, {
@@ -2259,8 +2275,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    return Texture2D;
 	}(_ResourceBase3.default);
+	/**
+	 * ミップマップの更新が必要なフィルタ
+	 * @type {number[]}
+	 */
+	
 	
 	exports.default = Texture2D;
+	Texture2D._filtersNeedsMipmap = [WebGLRenderingContext.LINEAR_MIPMAP_LINEAR, WebGLRenderingContext.LINEAR_MIPMAP_NEAREST, WebGLRenderingContext.NEAREST_MIPMAP_LINEAR, WebGLRenderingContext.NEAREST_MIPMAP_NEAREST];
 
 /***/ },
 /* 24 */
@@ -3359,6 +3381,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	        _this.fs = new _Shader2.default(_this.gl, WebGLRenderingContext.FRAGMENT_SHADER);
 	        _this.vs = new _Shader2.default(_this.gl, WebGLRenderingContext.VERTEX_SHADER);
 	        _this.program = new _Program2.default(_this.gl);
+	        for (var i = 0; i < sort.macros.length; i++) {
+	            var macroInfo = sort.macros[i];
+	            if (macroInfo.type === "boolean") {
+	                if (macroInfo.default) {
+	                    _this._macroValues[macroInfo.macroName] = "";
+	                }
+	            } else {
+	                _this._macroValues[macroInfo.macroName] = macroInfo.default;
+	            }
+	        }
 	        factory.macro.addObserver(function () {
 	            _this._updateProgram();
 	        });
@@ -3369,6 +3401,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _createClass(SORTPass, [{
 	        key: "setMacro",
 	        value: function setMacro(key, value) {
+	            if (this._macroValues[key] === value) {
+	                return; // Nothing to do if specified value is unchanged
+	            }
 	            if (typeof value === "boolean") {
 	                this._macroValues[key] = value ? "" : null;
 	            } else {
@@ -3697,102 +3732,119 @@ return /******/ (function(modules) { // webpackBootstrap
 	            });
 	        }
 	    }, {
-	        key: "uniformFloat",
-	        value: function uniformFloat(variableName, val) {
+	        key: "uniformMatrixArray",
+	        value: function uniformMatrixArray(variableName, matricies) {
 	            var _this3 = this;
 	
+	            var length = matricies.length / 16;
+	
+	            var _loop = function _loop(i) {
+	                _this3._passAsArray(variableName, i, function (l) {
+	                    return _this3._gl.uniformMatrix4fv(l, false, new Float32Array(matricies.buffer, matricies.byteOffset + i * 64));
+	                });
+	            };
+	
+	            for (var i = 0; i < length; i++) {
+	                _loop(i);
+	            }
+	        }
+	    }, {
+	        key: "uniformFloat",
+	        value: function uniformFloat(variableName, val) {
+	            var _this4 = this;
+	
 	            this._pass(variableName, function (l) {
-	                return _this3._gl.uniform1f(l, val);
+	                return _this4._gl.uniform1f(l, val);
 	            });
 	        }
 	    }, {
 	        key: "uniformFloatArray",
 	        value: function uniformFloatArray(variableName, val) {
-	            var _this4 = this;
+	            var _this5 = this;
 	
 	            this._pass(variableName, function (l) {
-	                return _this4._gl.uniform1fv(l, val);
+	                return _this5._gl.uniform1fv(l, val);
 	            });
 	        }
 	    }, {
 	        key: "uniformInt",
 	        value: function uniformInt(variableName, val) {
-	            var _this5 = this;
+	            var _this6 = this;
 	
 	            this._pass(variableName, function (l) {
-	                return _this5._gl.uniform1i(l, val);
+	                return _this6._gl.uniform1i(l, val);
 	            });
 	        }
 	    }, {
 	        key: "uniformVector2",
 	        value: function uniformVector2(variableName, val) {
-	            var _this6 = this;
+	            var _this7 = this;
 	
 	            this._pass(variableName, function (l) {
-	                return _this6._gl.uniform2f(l, val.X, val.Y);
+	                return _this7._gl.uniform2f(l, val.X, val.Y);
 	            });
 	        }
 	    }, {
 	        key: "uniformVector2Array",
 	        value: function uniformVector2Array(variableName, val) {
-	            var _this7 = this;
+	            var _this8 = this;
 	
 	            this._pass(variableName, function (l) {
-	                return _this7._gl.uniform2fv(l, val);
+	                return _this8._gl.uniform2fv(l, val);
 	            });
 	        }
 	    }, {
 	        key: "uniformVector3",
 	        value: function uniformVector3(variableName, val) {
-	            var _this8 = this;
+	            var _this9 = this;
 	
 	            this._pass(variableName, function (l) {
-	                return _this8._gl.uniform3f(l, val.X, val.Y, val.Z);
+	                return _this9._gl.uniform3f(l, val.X, val.Y, val.Z);
 	            });
 	        }
 	    }, {
 	        key: "uniformVector3Array",
 	        value: function uniformVector3Array(variableName, val) {
-	            var _this9 = this;
+	            var _this10 = this;
 	
 	            this._pass(variableName, function (l) {
-	                return _this9._gl.uniform3fv(l, val);
+	                return _this10._gl.uniform3fv(l, val);
 	            });
 	        }
 	    }, {
 	        key: "uniformColor3",
 	        value: function uniformColor3(variableName, val) {
-	            var _this10 = this;
+	            var _this11 = this;
 	
 	            this._pass(variableName, function (l) {
-	                return _this10._gl.uniform3f(l, val.R, val.G, val.B);
+	                return _this11._gl.uniform3f(l, val.R, val.G, val.B);
 	            });
 	        }
 	    }, {
 	        key: "uniformVector4",
 	        value: function uniformVector4(variableName, val) {
-	            var _this11 = this;
+	            var _this12 = this;
 	
 	            this._pass(variableName, function (l) {
-	                return _this11._gl.uniform4f(l, val.X, val.Y, val.Z, val.W);
+	                return _this12._gl.uniform4f(l, val.X, val.Y, val.Z, val.W);
 	            });
 	        }
 	    }, {
 	        key: "uniformVector4Array",
 	        value: function uniformVector4Array(variableName, val) {
-	            var _this12 = this;
+	            var _this13 = this;
 	
 	            this._pass(variableName, function (l) {
-	                return _this12._gl.uniform4fv(l, val);
+	                return _this13._gl.uniform4fv(l, val);
 	            });
 	        }
 	    }, {
 	        key: "uniformColor4",
 	        value: function uniformColor4(variableName, val) {
-	            var _this13 = this;
+	            var _this14 = this;
 	
 	            this._pass(variableName, function (l) {
-	                return _this13._gl.uniform4f(l, val.R, val.G, val.B, val.A);
+	                return _this14._gl.uniform4f(l, val.R, val.G, val.B, val.A);
 	            });
 	        }
 	    }, {
@@ -3815,6 +3867,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: "_pass",
 	        value: function _pass(variableName, act) {
 	            var location = this.program.findUniformLocation(variableName);
+	            if (location) {
+	                act(location);
+	            }
+	        }
+	    }, {
+	        key: "_passAsArray",
+	        value: function _passAsArray(variableName, index, act) {
+	            var location = this.program.findUniformLocation(variableName + "[" + index + "]");
 	            if (location) {
 	                act(location);
 	            }
@@ -4954,6 +5014,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	                                            });
 	                                            attributes[valName] = _getDecl("NumberArray", _resolveDefault(variableInfo, defaultArray), function (proxy, matArg) {
 	                                                proxy.uniformFloatArray(valName, matArg.attributeValues[valName]);
+	                                            });
+	                                            break;
+	                                        case "mat4":
+	                                            var defaultArray2 = new Array();
+	                                            defaultArray = defaultArray2.map(function (p) {
+	                                                return 0;
+	                                            });
+	                                            attributes[valName] = _getDecl("Object", _resolveDefault(variableInfo, defaultArray), function (proxy, matArg) {
+	                                                proxy.uniformMatrixArray(valName, matArg.attributeValues[valName]);
 	                                            });
 	                                            break;
 	                                        default:
@@ -6477,7 +6546,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        }
 	                    }
 	                    objStack.pop();
-	                    buffer += makeIndent(indentStr, objStack.length, true) + "]";
+	                    if (obj_part.length) {
+	                        buffer += makeIndent(indentStr, objStack.length, true)
+	                    }
+	                    buffer += "]";
 	                } else {
 	                    checkForCircular(obj_part);
 	                    buffer = "{";
@@ -7132,7 +7204,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	        var _this = _possibleConstructorReturn(this, (MouseCameraControlComponent.__proto__ || Object.getPrototypeOf(MouseCameraControlComponent)).apply(this, arguments));
 	
-	        _this._origin = new _Vector2.default(0, 0, 0);
 	        _this._lastScreenPos = null;
 	        _this._xsum = 0;
 	        _this._ysum = 0;
@@ -7147,6 +7218,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this.getAttribute("rotateSpeed").boundTo("_rotateSpeed");
 	            this.getAttribute("zoomSpeed").boundTo("_zoomSpeed");
 	            this.getAttribute("moveSpeed").boundTo("_moveSpeed");
+	            this.getAttribute("origin").boundTo("_origin");
 	            this._transform = this.node.getComponent("Transform");
 	        }
 	    }, {
@@ -7197,8 +7269,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 	            if (updated) {
 	                // rotate excution
-	                var rotationVartical = _Quaternion2.default.angleAxis(-this._xsum * this._rotateSpeed, this._initialUp);
-	                var rotationHorizontal = _Quaternion2.default.angleAxis(-this._ysum * this._rotateSpeed, this._initialRight);
+	                var rotationVartical = _Quaternion2.default.angleAxis(-this._xsum * this._rotateSpeed * 0.01, this._initialUp);
+	                var rotationHorizontal = _Quaternion2.default.angleAxis(-this._ysum * this._rotateSpeed * 0.01, this._initialRight);
 	                var rotation = _Quaternion2.default.multiply(rotationVartical, rotationHorizontal);
 	                var rotationMat = _Matrix2.default.rotationQuaternion(rotation);
 	                var direction = _Matrix2.default.transformNormal(rotationMat, this._initialDirection);
@@ -7214,7 +7286,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: "_mouseWheel",
 	        value: function _mouseWheel(m) {
 	            var dir = _Vector2.default.normalize(_Vector2.default.subtract(this._transform.localPosition, this._origin));
-	            var moveDist = -m.deltaY * this._zoomSpeed;
+	            var moveDist = -m.deltaY * this._zoomSpeed * 0.05;
 	            var distance = _Vector2.default.subtract(this._origin, this._transform.localPosition).magnitude;
 	            var nextDist = Math.max(1, distance - moveDist);
 	            this._transform.localPosition = this._origin.addWith(dir.multiplyWith(nextDist));
@@ -7229,11 +7301,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	MouseCameraControlComponent.attributes = {
 	    rotateSpeed: {
-	        defaultValue: 0.01,
+	        defaultValue: 1,
 	        converter: "Number"
 	    },
 	    zoomSpeed: {
-	        defaultValue: 0.05,
+	        defaultValue: 1,
 	        converter: "Number"
 	    },
 	    moveSpeed: {
@@ -7243,6 +7315,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    center: {
 	        defaultValue: 20,
 	        converter: "Number"
+	    },
+	    origin: {
+	        defaultValue: "0,0,0",
+	        converter: "Vector3"
 	    }
 	};
 
@@ -8719,7 +8795,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	         * @returns {number} parsed angle in radians.
 	         */
 	        value: function parseAngle(input) {
-	            var regex = /^ *(-? *(?:0|[1-9]\d*)(?: *\.\d+)?) *(?:\/ *((?:0|[1-9]\d*)(?: *\.\d+)?))? *(p|prad|deg|d|r|rad)? *$/gm;
+	            var regex = /^ *(-?[\de+-.]*) *(?:\/ *([\de+-.]*))? *(p|prad|deg|d|r|rad)? *$/gm;
 	            var result = regex.exec(input);
 	            if (result == null) {
 	                throw new Error("faild parse Angle string:'" + input + "'");
@@ -9066,20 +9142,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	            var targetIndex = this.indicies[indexName];
 	            attribNames.forEach(function (name) {
-	                var attribInfo = _this.attribInfo[name];
-	                if (!attribInfo) {
-	                    throw new Error("There is no such vertex buffer");
-	                }
 	                var index = program.findAttributeLocation(name);
 	                if (index < 0) {
 	                    return;
+	                }
+	                var attribInfo = _this.attribInfo[name];
+	                if (!attribInfo) {
+	                    throw new Error("There is no such vertex buffer");
 	                }
 	                var buffer = _this.verticies[attribInfo.bufferName];
 	                buffer.bind();
 	                _this._gl.vertexAttribPointer(index, attribInfo.size, attribInfo.type, false, attribInfo.stride, attribInfo.offset);
 	            });
 	            targetIndex.index.bind();
-	            this._gl.drawElements(targetIndex.topology, Math.min(targetIndex.count, count), targetIndex.type, Math.min(offset * targetIndex.byteSize, (targetIndex.count - 1) * targetIndex.byteSize));
+	            this._gl.drawElements(targetIndex.topology, Math.min(targetIndex.count, count), targetIndex.type, Math.min(offset * targetIndex.byteSize + targetIndex.byteOffset, (targetIndex.count - 1) * targetIndex.byteSize));
 	        }
 	    }, {
 	        key: "_validateGLContext",
@@ -9212,6 +9288,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	function Rotation3Converter(val) {
 	    if (val instanceof _Quaternion2.default) {
 	        return val;
+	    } else if (Array.isArray(val)) {
+	        return new _Quaternion2.default([val[0], val[1], val[2], val[3]]);
 	    }
 	    return _RotationParser2.default.parseRotation3D(val);
 	}
@@ -9219,49 +9297,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 98 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	function StringArrayConverter(val) {
-	    if (Array.isArray(val)) {
-	        return val; // should we check the elements are actualy string?
-	    } else if (typeof val === "string") {
-	        var splitted = val.split(",");
-	        return splitted.map(function (s) {
-	            return s;
-	        });
-	    }
-	}
-	exports.default = StringArrayConverter;
-
-/***/ },
-/* 99 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	function StringConverter(val) {
-	    if (typeof val === "string") {
-	        return val;
-	    } else if (typeof val === "undefined") {
-	        return val;
-	    } else if (val === null) {
-	        return val;
-	    } else if (typeof val.toString === "function") {
-	        return val.toString();
-	    }
-	}
-	exports.default = StringConverter;
-
-/***/ },
-/* 100 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9272,7 +9307,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 	
-	var _TextureReference = __webpack_require__(101);
+	var _TextureReference = __webpack_require__(99);
 	
 	var _TextureReference2 = _interopRequireDefault(_TextureReference);
 	
@@ -9385,7 +9420,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = TextureConverter;
 
 /***/ },
-/* 101 */
+/* 99 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -9426,7 +9461,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = TextureReference;
 
 /***/ },
-/* 102 */
+/* 100 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9448,12 +9483,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return _Vector2.default.parse(val);
 	    } else if (typeof val === "number") {
 	        return new _Vector2.default(val, val);
+	    } else if (Array.isArray(val)) {
+	        return new _Vector2.default(val[0], val[1]);
 	    }
 	}
 	exports.default = Vector2Converter;
 
 /***/ },
-/* 103 */
+/* 101 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9475,12 +9512,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return _Vector2.default.parse(val);
 	    } else if (typeof val == "number") {
 	        return new _Vector2.default(val, val, val);
+	    } else if (Array.isArray(val)) {
+	        return new _Vector2.default(val[0], val[1], val[2]);
 	    }
 	}
 	exports.default = Vector3Converter;
 
 /***/ },
-/* 104 */
+/* 102 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9502,12 +9541,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return _Vector2.default.parse(val);
 	    } else if (typeof val === "number") {
 	        return new _Vector2.default(val, val, val, val);
+	    } else if (Array.isArray(val)) {
+	        return new _Vector2.default(val[0], val[1], val[2], val[3]);
 	    }
 	}
 	exports.default = Vector4Converter;
 
 /***/ },
-/* 105 */
+/* 103 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9518,7 +9559,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 	
-	var _Rectangle = __webpack_require__(106);
+	var _Rectangle = __webpack_require__(104);
 	
 	var _Rectangle2 = _interopRequireDefault(_Rectangle);
 	
@@ -9567,7 +9608,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = ViewportConverter;
 
 /***/ },
-/* 106 */
+/* 104 */
 /***/ function(module, exports) {
 
 		Object.defineProperty(exports, "__esModule", {
@@ -9575,7 +9616,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		});exports.default=window.GrimoireJS.lib.math.Rectangle;
 
 /***/ },
-/* 107 */
+/* 105 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9586,7 +9627,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _AABB = __webpack_require__(108);
+	var _AABB = __webpack_require__(106);
 	
 	var _AABB2 = _interopRequireDefault(_AABB);
 	
@@ -9594,7 +9635,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _Vector2 = _interopRequireDefault(_Vector);
 	
-	var _GeometryUtility = __webpack_require__(109);
+	var _GeometryUtility = __webpack_require__(107);
 	
 	var _GeometryUtility2 = _interopRequireDefault(_GeometryUtility);
 	
@@ -9602,7 +9643,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _GeometryFactory2 = _interopRequireDefault(_GeometryFactory);
 	
-	var _GeometryBuilder = __webpack_require__(110);
+	var _GeometryBuilder = __webpack_require__(108);
 	
 	var _GeometryBuilder2 = _interopRequireDefault(_GeometryBuilder);
 	
@@ -10478,7 +10519,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = DefaultPrimitives;
 
 /***/ },
-/* 108 */
+/* 106 */
 /***/ function(module, exports) {
 
 		Object.defineProperty(exports, "__esModule", {
@@ -10486,7 +10527,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		});exports.default=window.GrimoireJS.lib.math.AABB;
 
 /***/ },
-/* 109 */
+/* 107 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -11999,7 +12040,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = GeometryUtility;
 
 /***/ },
-/* 110 */
+/* 108 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -12014,11 +12055,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _Vector2 = _interopRequireDefault(_Vector);
 	
-	var _AABB = __webpack_require__(108);
+	var _AABB = __webpack_require__(106);
 	
 	var _AABB2 = _interopRequireDefault(_AABB);
 	
-	var _Buffer = __webpack_require__(111);
+	var _Buffer = __webpack_require__(109);
 	
 	var _Buffer2 = _interopRequireDefault(_Buffer);
 	
@@ -12153,6 +12194,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    index: buffer,
 	                    type: bufferType.format,
 	                    byteSize: bufferType.byteSize,
+	                    byteOffset: 0,
 	                    topology: generatorInfo.topology ? generatorInfo.topology : WebGLRenderingContext.TRIANGLES
 	                };
 	            }
@@ -12195,7 +12237,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = GeometryBuilder;
 
 /***/ },
-/* 111 */
+/* 109 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -12271,7 +12313,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = Buffer;
 
 /***/ },
-/* 112 */
+/* 110 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -12286,15 +12328,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _MaterialFactory2 = _interopRequireDefault(_MaterialFactory);
 	
-	var _Unlit = __webpack_require__(113);
+	var _Unlit = __webpack_require__(111);
 	
 	var _Unlit2 = _interopRequireDefault(_Unlit);
 	
-	var _UnlitColor = __webpack_require__(114);
+	var _UnlitColor = __webpack_require__(112);
 	
 	var _UnlitColor2 = _interopRequireDefault(_UnlitColor);
 	
-	var _UnlitTextured = __webpack_require__(115);
+	var _UnlitTextured = __webpack_require__(113);
 	
 	var _UnlitTextured2 = _interopRequireDefault(_UnlitTextured);
 	
@@ -12322,25 +12364,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = DefaultMaterial;
 
 /***/ },
-/* 113 */
+/* 111 */
 /***/ function(module, exports) {
 
-	module.exports = "@Pass\n@BlendFunc(SRC_ALPHA,ONE)\nFS_PREC(mediump,float)\nvarying vec2 vTexCoord;\n#ifdef VS\nattribute vec3 position;\nattribute vec2 texCoord;\nuniform mat4 _matPVM;\nvoid main()\n{\n  gl_Position = _matPVM * vec4(position,1.0);\n  vTexCoord = texCoord;\n}\n#endif\n#ifdef FS\n@{type:\"color\",default:\"white\"}\nuniform vec4 color;\n@{usedFlag:\"_textureUsed\"}\nuniform sampler2D texture;\nuniform bool _textureUsed;\nvoid main(void)\n{\n  if(_textureUsed){\n    gl_FragColor = color * texture2D(texture,vTexCoord);\n  }else{\n    gl_FragColor = color;\n }\n}\n#endif\n"
+	module.exports = "@Pass\n@BlendFunc(SRC_ALPHA,ONE_MINUS_SRC_ALPHA)\nFS_PREC(mediump,float)\nvarying vec2 vTexCoord;\n#ifdef VS\nattribute vec3 position;\nattribute vec2 texCoord;\nuniform mat4 _matPVM;\nvoid main()\n{\n  gl_Position = _matPVM * vec4(position,1.0);\n  vTexCoord = texCoord;\n}\n#endif\n#ifdef FS\n@{type:\"color\",default:\"white\"}\nuniform vec4 color;\n@{usedFlag:\"_textureUsed\"}\nuniform sampler2D texture;\nuniform bool _textureUsed;\nvoid main(void)\n{\n  if(_textureUsed){\n    gl_FragColor = color * texture2D(texture,vTexCoord);\n  }else{\n    gl_FragColor = color;\n }\n}\n#endif\n"
 
 /***/ },
-/* 114 */
+/* 112 */
 /***/ function(module, exports) {
 
 	module.exports = "@Pass\nFS_PREC(mediump,float)\nvarying vec2 vTexCoord;\n#ifdef VS\nattribute vec3 position;\nattribute vec2 texCoord;\nuniform mat4 _matPVM;\nvoid main()\n{\n  gl_Position = _matPVM * vec4(position,1.0);\n  vTexCoord = texCoord;\n}\n#endif\n#ifdef FS\n@{type:\"color\",default:\"white\"}\nuniform vec4 color;\nvoid main(void)\n{\n    gl_FragColor = color;\n}\n#endif\n"
 
 /***/ },
-/* 115 */
+/* 113 */
 /***/ function(module, exports) {
 
 	module.exports = "@Pass\nFS_PREC(mediump,float)\nvarying vec2 vTexCoord;\n#ifdef VS\nattribute vec3 position;\nattribute vec2 texCoord;\nuniform mat4 _matPVM;\nvoid main()\n{\n  gl_Position = _matPVM * vec4(position,1.0);\n  vTexCoord = texCoord;\n}\n#endif\n#ifdef FS\nuniform sampler2D texture;\nvoid main(void)\n{\n  gl_FragColor = texture2D(texture,vTexCoord);\n}\n#endif\n"
 
 /***/ },
-/* 116 */
+/* 114 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -12349,11 +12391,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	
-	var _DefaultMaterial = __webpack_require__(112);
+	var _DefaultMaterial = __webpack_require__(110);
 	
 	var _DefaultMaterial2 = _interopRequireDefault(_DefaultMaterial);
 	
-	var _DefaultPrimitives = __webpack_require__(107);
+	var _DefaultPrimitives = __webpack_require__(105);
 	
 	var _DefaultPrimitives2 = _interopRequireDefault(_DefaultPrimitives);
 	
@@ -12489,7 +12531,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _MaterialConverter2 = _interopRequireDefault(_MaterialConverter);
 	
-	var _TextureConverter = __webpack_require__(100);
+	var _TextureConverter = __webpack_require__(98);
 	
 	var _TextureConverter2 = _interopRequireDefault(_TextureConverter);
 	
@@ -12509,27 +12551,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _Rotation3Converter2 = _interopRequireDefault(_Rotation3Converter);
 	
-	var _StringArrayConverter = __webpack_require__(98);
-	
-	var _StringArrayConverter2 = _interopRequireDefault(_StringArrayConverter);
-	
-	var _StringConverter = __webpack_require__(99);
-	
-	var _StringConverter2 = _interopRequireDefault(_StringConverter);
-	
-	var _Vector2Converter = __webpack_require__(102);
+	var _Vector2Converter = __webpack_require__(100);
 	
 	var _Vector2Converter2 = _interopRequireDefault(_Vector2Converter);
 	
-	var _Vector3Converter = __webpack_require__(103);
+	var _Vector3Converter = __webpack_require__(101);
 	
 	var _Vector3Converter2 = _interopRequireDefault(_Vector3Converter);
 	
-	var _Vector4Converter = __webpack_require__(104);
+	var _Vector4Converter = __webpack_require__(102);
 	
 	var _Vector4Converter2 = _interopRequireDefault(_Vector4Converter);
 	
-	var _ViewportConverter = __webpack_require__(105);
+	var _ViewportConverter = __webpack_require__(103);
 	
 	var _ViewportConverter2 = _interopRequireDefault(_ViewportConverter);
 	
@@ -12611,8 +12645,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	                            _grimoirejs2.default.registerConverter(_$ns("Number"), _NumberConverter2.default);
 	                            _grimoirejs2.default.registerConverter(_$ns("Object"), _ObjectConverter2.default);
 	                            _grimoirejs2.default.registerConverter(_$ns("Rotation3"), _Rotation3Converter2.default);
-	                            _grimoirejs2.default.registerConverter(_$ns("StringArray"), _StringArrayConverter2.default);
-	                            _grimoirejs2.default.registerConverter(_$ns("String"), _StringConverter2.default);
 	                            _grimoirejs2.default.registerConverter(_$ns("Texture2D"), _TextureConverter2.default);
 	                            _grimoirejs2.default.registerConverter(_$ns("Vector2"), _Vector2Converter2.default);
 	                            _grimoirejs2.default.registerConverter(_$ns("Vector3"), _Vector3Converter2.default);
@@ -12640,7 +12672,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                            _DefaultPrimitives2.default.register();
 	                            _DefaultMaterial2.default.register();
 	
-	                        case 62:
+	                        case 60:
 	                        case "end":
 	                            return _context.stop();
 	                    }

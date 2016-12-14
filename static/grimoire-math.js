@@ -273,109 +273,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var Vector3 = function (_VectorBase) {
 	    _inherits(Vector3, _VectorBase);
 	
-	    function Vector3(x, y, z) {
-	        _classCallCheck(this, Vector3);
-	
-	        var _this = _possibleConstructorReturn(this, (Vector3.__proto__ || Object.getPrototypeOf(Vector3)).call(this));
-	
-	        if (typeof y === "undefined") {
-	            _this.rawElements = x;
-	            return _possibleConstructorReturn(_this);
-	        }
-	        _this.rawElements = [x, y, z];
-	        return _this;
-	    }
-	
-	    _createClass(Vector3, [{
-	        key: "normalizeThis",
-	        value: function normalizeThis() {
-	            return Vector3.normalize(this);
-	        }
-	    }, {
-	        key: "dotWith",
-	        value: function dotWith(v) {
-	            return Vector3.dot(this, v);
-	        }
-	    }, {
-	        key: "addWith",
-	        value: function addWith(v) {
-	            return Vector3.add(this, v);
-	        }
-	    }, {
-	        key: "subtractWith",
-	        value: function subtractWith(v) {
-	            return Vector3.subtract(this, v);
-	        }
-	    }, {
-	        key: "multiplyWith",
-	        value: function multiplyWith(s) {
-	            return Vector3.multiply(s, this);
-	        }
-	    }, {
-	        key: "negateThis",
-	        value: function negateThis() {
-	            return Vector3.negate(this);
-	        }
-	    }, {
-	        key: "equalWith",
-	        value: function equalWith(v) {
-	            return Vector3.equals(this, v);
-	        }
-	    }, {
-	        key: "nearlyEqualWith",
-	        value: function nearlyEqualWith(v) {
-	            return Vector3.nearlyEquals(this, v);
-	        }
-	    }, {
-	        key: "crossWith",
-	        value: function crossWith(v) {
-	            return Vector3.cross(this, v);
-	        }
-	    }, {
-	        key: "toString",
-	        value: function toString() {
-	            return "(" + this.X + ", " + this.Y + ", " + this.Z + ")";
-	        }
-	    }, {
-	        key: "toDisplayString",
-	        value: function toDisplayString() {
-	            return "Vector3" + this.toString();
-	        }
-	    }, {
-	        key: "normalized",
-	        get: function get() {
-	            return this.multiplyWith(1 / this.magnitude);
-	        }
-	    }, {
-	        key: "X",
-	        get: function get() {
-	            return this.rawElements[0];
-	        },
-	        set: function set(x) {
-	            this.rawElements[0] = +x;
-	        }
-	    }, {
-	        key: "Y",
-	        get: function get() {
-	            return this.rawElements[1];
-	        },
-	        set: function set(y) {
-	            this.rawElements[1] = +y;
-	        }
-	    }, {
-	        key: "Z",
-	        get: function get() {
-	            return this.rawElements[2];
-	        },
-	        set: function set(z) {
-	            this.rawElements[2] = +z;
-	        }
-	    }, {
-	        key: "ElementCount",
-	        get: function get() {
-	            return 3;
-	        }
-	    }], [{
+	    _createClass(Vector3, null, [{
 	        key: "copy",
 	        value: function copy(source) {
 	            return new Vector3(source.X, source.Y, source.Z);
@@ -498,6 +396,110 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: "One",
 	        get: function get() {
 	            return new Vector3(1, 1, 1);
+	        }
+	    }]);
+	
+	    function Vector3(x, y, z) {
+	        _classCallCheck(this, Vector3);
+	
+	        var _this = _possibleConstructorReturn(this, (Vector3.__proto__ || Object.getPrototypeOf(Vector3)).call(this));
+	
+	        if (typeof y === "undefined") {
+	            _this.rawElements = x;
+	            return _possibleConstructorReturn(_this);
+	        }
+	        _this.rawElements = [x, y, z];
+	        return _this;
+	    }
+	
+	    _createClass(Vector3, [{
+	        key: "normalizeThis",
+	        value: function normalizeThis() {
+	            return Vector3.normalize(this);
+	        }
+	    }, {
+	        key: "dotWith",
+	        value: function dotWith(v) {
+	            return Vector3.dot(this, v);
+	        }
+	    }, {
+	        key: "addWith",
+	        value: function addWith(v) {
+	            return Vector3.add(this, v);
+	        }
+	    }, {
+	        key: "subtractWith",
+	        value: function subtractWith(v) {
+	            return Vector3.subtract(this, v);
+	        }
+	    }, {
+	        key: "multiplyWith",
+	        value: function multiplyWith(s) {
+	            return Vector3.multiply(s, this);
+	        }
+	    }, {
+	        key: "negateThis",
+	        value: function negateThis() {
+	            return Vector3.negate(this);
+	        }
+	    }, {
+	        key: "equalWith",
+	        value: function equalWith(v) {
+	            return Vector3.equals(this, v);
+	        }
+	    }, {
+	        key: "nearlyEqualWith",
+	        value: function nearlyEqualWith(v) {
+	            return Vector3.nearlyEquals(this, v);
+	        }
+	    }, {
+	        key: "crossWith",
+	        value: function crossWith(v) {
+	            return Vector3.cross(this, v);
+	        }
+	    }, {
+	        key: "toString",
+	        value: function toString() {
+	            return "(" + this.X + ", " + this.Y + ", " + this.Z + ")";
+	        }
+	    }, {
+	        key: "toDisplayString",
+	        value: function toDisplayString() {
+	            return "Vector3" + this.toString();
+	        }
+	    }, {
+	        key: "normalized",
+	        get: function get() {
+	            return this.multiplyWith(1 / this.magnitude);
+	        }
+	    }, {
+	        key: "X",
+	        get: function get() {
+	            return this.rawElements[0];
+	        },
+	        set: function set(x) {
+	            this.rawElements[0] = +x;
+	        }
+	    }, {
+	        key: "Y",
+	        get: function get() {
+	            return this.rawElements[1];
+	        },
+	        set: function set(y) {
+	            this.rawElements[1] = +y;
+	        }
+	    }, {
+	        key: "Z",
+	        get: function get() {
+	            return this.rawElements[2];
+	        },
+	        set: function set(z) {
+	            this.rawElements[2] = +z;
+	        }
+	    }, {
+	        key: "ElementCount",
+	        get: function get() {
+	            return 3;
 	        }
 	    }]);
 	
@@ -2408,7 +2410,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	mat3.equals = function (a, b) {
 	    var a0 = a[0], a1 = a[1], a2 = a[2], a3 = a[3], a4 = a[4], a5 = a[5], a6 = a[6], a7 = a[7], a8 = a[8];
-	    var b0 = b[0], b1 = b[1], b2 = b[2], b3 = b[3], b4 = b[4], b5 = b[5], b6 = a[6], b7 = b[7], b8 = b[8];
+	    var b0 = b[0], b1 = b[1], b2 = b[2], b3 = b[3], b4 = b[4], b5 = b[5], b6 = b[6], b7 = b[7], b8 = b[8];
 	    return (Math.abs(a0 - b0) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a0), Math.abs(b0)) &&
 	            Math.abs(a1 - b1) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a1), Math.abs(b1)) &&
 	            Math.abs(a2 - b2) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a2), Math.abs(b2)) &&
@@ -3926,6 +3928,34 @@ return /******/ (function(modules) { // webpackBootstrap
 	  out[0] = mat[12];
 	  out[1] = mat[13];
 	  out[2] = mat[14];
+	
+	  return out;
+	};
+	
+	/**
+	 * Returns the scaling factor component of a transformation
+	 *  matrix. If a matrix is built with fromRotationTranslationScale
+	 *  with a normalized Quaternion paramter, the returned vector will be 
+	 *  the same as the scaling vector
+	 *  originally supplied.
+	 * @param  {vec3} out Vector to receive scaling factor component
+	 * @param  {mat4} mat Matrix to be decomposed (input)
+	 * @return {vec3} out
+	 */
+	mat4.getScaling = function (out, mat) {
+	  var m11 = mat[0],
+	      m12 = mat[1],
+	      m13 = mat[2],
+	      m21 = mat[4],
+	      m22 = mat[5],
+	      m23 = mat[6],
+	      m31 = mat[8],
+	      m32 = mat[9],
+	      m33 = mat[10];
+	
+	  out[0] = Math.sqrt(m11 * m11 + m12 * m12 + m13 * m13);
+	  out[1] = Math.sqrt(m21 * m21 + m22 * m22 + m23 * m23);
+	  out[2] = Math.sqrt(m31 * m31 + m32 * m32 + m33 * m33);
 	
 	  return out;
 	};
@@ -5909,8 +5939,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	 
 	    var cosine = vec3.dot(tempA, tempB);
 	
-	    if(cosine > 1.0){
+	    if(cosine > 1.0) {
 	        return 0;
+	    }
+	    else if(cosine < -1.0) {
+	        return Math.PI;
 	    } else {
 	        return Math.acos(cosine);
 	    }     
@@ -7207,6 +7240,56 @@ return /******/ (function(modules) { // webpackBootstrap
 	var Color3 = function (_VectorBase) {
 	    _inherits(Color3, _VectorBase);
 	
+	    _createClass(Color3, null, [{
+	        key: "fromColor4",
+	        value: function fromColor4(col) {
+	            return new Color3(col.R, col.G, col.B);
+	        }
+	    }, {
+	        key: "parse",
+	        value: function parse(color, tryParse) {
+	            return Color3.internalParse(color, true, tryParse);
+	        }
+	        /// Color parser for css like syntax
+	
+	    }, {
+	        key: "internalParse",
+	        value: function internalParse(color, isFirst, tryParse) {
+	            if (isFirst && _Colors2.default[color]) {
+	                var col = _Color2.default.internalParse(_Colors2.default[color], false, tryParse);
+	                return Color3.fromColor4(col);
+	            }
+	            var m = void 0;
+	            if (isFirst) {
+	                m = color.match(/^#([0-9a-f]{3})$/i);
+	                // #fff
+	                if (m) {
+	                    var s = m[1];
+	                    return new Color3(parseInt(s.charAt(0), 16) / 0xf, parseInt(s.charAt(1), 16) / 0xf, parseInt(s.charAt(2), 16) / 0xf);
+	                }
+	            }
+	            // #ffffff
+	            m = color.match(/^#([0-9a-f]{6})$/i);
+	            if (m) {
+	                var _s = m[1];
+	                return new Color3(parseInt(_s.substr(0, 2), 16) / 0xff, parseInt(_s.substr(2, 2), 16) / 0xff, parseInt(_s.substr(4, 2), 16) / 0xff);
+	            }
+	            var n = color.match(/^\s*rgb\s*\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)\s*$/i);
+	            if (n && isFirst) {
+	                return new Color3(parseInt(n[1], 10) / 0xff, parseInt(n[2], 10) / 0xff, parseInt(n[3], 10) / 0xff);
+	            }
+	            if (tryParse) {
+	                return undefined;
+	            }
+	            throw new Error("Unexpected color string" + color);
+	        }
+	    }, {
+	        key: "equals",
+	        value: function equals(col1, col2) {
+	            return _VectorBase3.default.__elementEquals(col1, col2);
+	        }
+	    }]);
+	
 	    function Color3(r, g, b) {
 	        _classCallCheck(this, Color3);
 	
@@ -7268,54 +7351,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        get: function get() {
 	            return 3;
 	        }
-	    }], [{
-	        key: "fromColor4",
-	        value: function fromColor4(col) {
-	            return new Color3(col.R, col.G, col.B);
-	        }
-	    }, {
-	        key: "parse",
-	        value: function parse(color, tryParse) {
-	            return Color3.internalParse(color, true, tryParse);
-	        }
-	        /// Color parser for css like syntax
-	
-	    }, {
-	        key: "internalParse",
-	        value: function internalParse(color, isFirst, tryParse) {
-	            if (isFirst && _Colors2.default[color]) {
-	                var col = _Color2.default.internalParse(_Colors2.default[color], false, tryParse);
-	                return Color3.fromColor4(col);
-	            }
-	            var m = void 0;
-	            if (isFirst) {
-	                m = color.match(/^#([0-9a-f]{3})$/i);
-	                // #fff
-	                if (m) {
-	                    var s = m[1];
-	                    return new Color3(parseInt(s.charAt(0), 16) / 0xf, parseInt(s.charAt(1), 16) / 0xf, parseInt(s.charAt(2), 16) / 0xf);
-	                }
-	            }
-	            // #ffffff
-	            m = color.match(/^#([0-9a-f]{6})$/i);
-	            if (m) {
-	                var _s = m[1];
-	                return new Color3(parseInt(_s.substr(0, 2), 16) / 0xff, parseInt(_s.substr(2, 2), 16) / 0xff, parseInt(_s.substr(4, 2), 16) / 0xff);
-	            }
-	            var n = color.match(/^\s*rgb\s*\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)\s*$/i);
-	            if (n && isFirst) {
-	                return new Color3(parseInt(n[1], 10) / 0xff, parseInt(n[2], 10) / 0xff, parseInt(n[3], 10) / 0xff);
-	            }
-	            if (tryParse) {
-	                return undefined;
-	            }
-	            throw new Error("Unexpected color string" + color);
-	        }
-	    }, {
-	        key: "equals",
-	        value: function equals(col1, col2) {
-	            return _VectorBase3.default.__elementEquals(col1, col2);
-	        }
 	    }]);
 	
 	    return Color3;
@@ -7359,69 +7394,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	var Color4 = function (_VectorBase) {
 	    _inherits(Color4, _VectorBase);
 	
-	    function Color4(r, g, b, a) {
-	        _classCallCheck(this, Color4);
-	
-	        var _this = _possibleConstructorReturn(this, (Color4.__proto__ || Object.getPrototypeOf(Color4)).call(this));
-	
-	        _this.rawElements = [r, g, b, a];
-	        return _this;
-	    }
-	    /// Color parser for css like syntax
-	
-	
-	    _createClass(Color4, [{
-	        key: "toVector",
-	        value: function toVector() {
-	            return new _Vector2.default(this.R, this.G, this.B, this.A);
-	        }
-	    }, {
-	        key: "equalWith",
-	        value: function equalWith(col) {
-	            return Color4.equals(col, this);
-	        }
-	    }, {
-	        key: "toString",
-	        value: function toString() {
-	            return "rgba(" + Math.round(this.R * 255) + ", " + Math.round(this.G * 255) + ", " + Math.round(this.B * 255) + ", " + Math.round(this.A * 255) + ")";
-	        }
-	    }, {
-	        key: "toDisplayString",
-	        value: function toDisplayString() {
-	            var st = "#";
-	            st += Math.round(this.R * 0xff).toString(16).toUpperCase();
-	            st += Math.round(this.G * 0xff).toString(16).toUpperCase();
-	            st += Math.round(this.B * 0xff).toString(16).toUpperCase();
-	            st += Math.round(this.A * 0xff).toString(16).toUpperCase();
-	            return "Color4(" + this.R + ", " + this.G + ", " + this.B + ", " + this.A + ", " + st + ")";
-	        }
-	    }, {
-	        key: "R",
-	        get: function get() {
-	            return this.rawElements[0];
-	        }
-	    }, {
-	        key: "G",
-	        get: function get() {
-	            return this.rawElements[1];
-	        }
-	    }, {
-	        key: "B",
-	        get: function get() {
-	            return this.rawElements[2];
-	        }
-	    }, {
-	        key: "A",
-	        get: function get() {
-	            return this.rawElements[3];
-	        }
-	    }, {
-	        key: "ElementCount",
-	        get: function get() {
-	            return 4;
-	        }
-	    }], [{
+	    _createClass(Color4, null, [{
 	        key: "internalParse",
+	
+	        /// Color parser for css like syntax
 	        value: function internalParse(color, isFirst, tryParse) {
 	            if (isFirst && _Colors2.default[color]) {
 	                return Color4.internalParse(_Colors2.default[color], false);
@@ -7484,6 +7460,67 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    }]);
 	
+	    function Color4(r, g, b, a) {
+	        _classCallCheck(this, Color4);
+	
+	        var _this = _possibleConstructorReturn(this, (Color4.__proto__ || Object.getPrototypeOf(Color4)).call(this));
+	
+	        _this.rawElements = [r, g, b, a];
+	        return _this;
+	    }
+	
+	    _createClass(Color4, [{
+	        key: "toVector",
+	        value: function toVector() {
+	            return new _Vector2.default(this.R, this.G, this.B, this.A);
+	        }
+	    }, {
+	        key: "equalWith",
+	        value: function equalWith(col) {
+	            return Color4.equals(col, this);
+	        }
+	    }, {
+	        key: "toString",
+	        value: function toString() {
+	            return "rgba(" + Math.round(this.R * 255) + ", " + Math.round(this.G * 255) + ", " + Math.round(this.B * 255) + ", " + Math.round(this.A * 255) + ")";
+	        }
+	    }, {
+	        key: "toDisplayString",
+	        value: function toDisplayString() {
+	            var st = "#";
+	            st += Math.round(this.R * 0xff).toString(16).toUpperCase();
+	            st += Math.round(this.G * 0xff).toString(16).toUpperCase();
+	            st += Math.round(this.B * 0xff).toString(16).toUpperCase();
+	            st += Math.round(this.A * 0xff).toString(16).toUpperCase();
+	            return "Color4(" + this.R + ", " + this.G + ", " + this.B + ", " + this.A + ", " + st + ")";
+	        }
+	    }, {
+	        key: "R",
+	        get: function get() {
+	            return this.rawElements[0];
+	        }
+	    }, {
+	        key: "G",
+	        get: function get() {
+	            return this.rawElements[1];
+	        }
+	    }, {
+	        key: "B",
+	        get: function get() {
+	            return this.rawElements[2];
+	        }
+	    }, {
+	        key: "A",
+	        get: function get() {
+	            return this.rawElements[3];
+	        }
+	    }, {
+	        key: "ElementCount",
+	        get: function get() {
+	            return 4;
+	        }
+	    }]);
+	
 	    return Color4;
 	}(_VectorBase3.default);
 	
@@ -7519,112 +7556,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var Vector4 = function (_VectorBase) {
 	    _inherits(Vector4, _VectorBase);
 	
-	    function Vector4(x, y, z, w) {
-	        _classCallCheck(this, Vector4);
-	
-	        var _this = _possibleConstructorReturn(this, (Vector4.__proto__ || Object.getPrototypeOf(Vector4)).call(this));
-	
-	        if (typeof y === "undefined") {
-	            _this.rawElements = x;
-	            return _possibleConstructorReturn(_this);
-	        }
-	        _this.rawElements = [x, y, z, w];
-	        return _this;
-	    }
-	
-	    _createClass(Vector4, [{
-	        key: "normalizeThis",
-	        value: function normalizeThis() {
-	            return Vector4.normalize(this);
-	        }
-	    }, {
-	        key: "dotWith",
-	        value: function dotWith(v) {
-	            return Vector4.dot(this, v);
-	        }
-	    }, {
-	        key: "addWith",
-	        value: function addWith(v) {
-	            return Vector4.add(this, v);
-	        }
-	    }, {
-	        key: "subtractWith",
-	        value: function subtractWith(v) {
-	            return Vector4.subtract(this, v);
-	        }
-	    }, {
-	        key: "multiplyWith",
-	        value: function multiplyWith(s) {
-	            return Vector4.multiply(s, this);
-	        }
-	    }, {
-	        key: "negateThis",
-	        value: function negateThis() {
-	            return Vector4.negate(this);
-	        }
-	    }, {
-	        key: "equalWith",
-	        value: function equalWith(v) {
-	            return Vector4.equals(this, v);
-	        }
-	    }, {
-	        key: "nearlyEqualWith",
-	        value: function nearlyEqualWith(v) {
-	            return Vector4.nearlyEquals(this, v);
-	        }
-	    }, {
-	        key: "toString",
-	        value: function toString() {
-	            return "(" + this.X + ", " + this.Y + ", " + this.Z + ", " + this.W + ")";
-	        }
-	    }, {
-	        key: "toDisplayString",
-	        value: function toDisplayString() {
-	            return "Vector4" + this.toString();
-	        }
-	    }, {
-	        key: "normalized",
-	        get: function get() {
-	            return this.multiplyWith(1 / this.magnitude);
-	        }
-	    }, {
-	        key: "X",
-	        get: function get() {
-	            return this.rawElements[0];
-	        },
-	        set: function set(x) {
-	            this.rawElements[0] = +x;
-	        }
-	    }, {
-	        key: "Y",
-	        get: function get() {
-	            return this.rawElements[1];
-	        },
-	        set: function set(y) {
-	            this.rawElements[1] = +y;
-	        }
-	    }, {
-	        key: "Z",
-	        get: function get() {
-	            return this.rawElements[2];
-	        },
-	        set: function set(z) {
-	            this.rawElements[2] = +z;
-	        }
-	    }, {
-	        key: "W",
-	        get: function get() {
-	            return this.rawElements[3];
-	        },
-	        set: function set(w) {
-	            this.rawElements[3] = +w;
-	        }
-	    }, {
-	        key: "ElementCount",
-	        get: function get() {
-	            return 4;
-	        }
-	    }], [{
+	    _createClass(Vector4, null, [{
 	        key: "copy",
 	        value: function copy(vec) {
 	            return new Vector4(vec.X, vec.Y, vec.Z, vec.W);
@@ -7746,6 +7678,113 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: "Zero",
 	        get: function get() {
 	            return new Vector4(0, 0, 0, 0);
+	        }
+	    }]);
+	
+	    function Vector4(x, y, z, w) {
+	        _classCallCheck(this, Vector4);
+	
+	        var _this = _possibleConstructorReturn(this, (Vector4.__proto__ || Object.getPrototypeOf(Vector4)).call(this));
+	
+	        if (typeof y === "undefined") {
+	            _this.rawElements = x;
+	            return _possibleConstructorReturn(_this);
+	        }
+	        _this.rawElements = [x, y, z, w];
+	        return _this;
+	    }
+	
+	    _createClass(Vector4, [{
+	        key: "normalizeThis",
+	        value: function normalizeThis() {
+	            return Vector4.normalize(this);
+	        }
+	    }, {
+	        key: "dotWith",
+	        value: function dotWith(v) {
+	            return Vector4.dot(this, v);
+	        }
+	    }, {
+	        key: "addWith",
+	        value: function addWith(v) {
+	            return Vector4.add(this, v);
+	        }
+	    }, {
+	        key: "subtractWith",
+	        value: function subtractWith(v) {
+	            return Vector4.subtract(this, v);
+	        }
+	    }, {
+	        key: "multiplyWith",
+	        value: function multiplyWith(s) {
+	            return Vector4.multiply(s, this);
+	        }
+	    }, {
+	        key: "negateThis",
+	        value: function negateThis() {
+	            return Vector4.negate(this);
+	        }
+	    }, {
+	        key: "equalWith",
+	        value: function equalWith(v) {
+	            return Vector4.equals(this, v);
+	        }
+	    }, {
+	        key: "nearlyEqualWith",
+	        value: function nearlyEqualWith(v) {
+	            return Vector4.nearlyEquals(this, v);
+	        }
+	    }, {
+	        key: "toString",
+	        value: function toString() {
+	            return "(" + this.X + ", " + this.Y + ", " + this.Z + ", " + this.W + ")";
+	        }
+	    }, {
+	        key: "toDisplayString",
+	        value: function toDisplayString() {
+	            return "Vector4" + this.toString();
+	        }
+	    }, {
+	        key: "normalized",
+	        get: function get() {
+	            return this.multiplyWith(1 / this.magnitude);
+	        }
+	    }, {
+	        key: "X",
+	        get: function get() {
+	            return this.rawElements[0];
+	        },
+	        set: function set(x) {
+	            this.rawElements[0] = +x;
+	        }
+	    }, {
+	        key: "Y",
+	        get: function get() {
+	            return this.rawElements[1];
+	        },
+	        set: function set(y) {
+	            this.rawElements[1] = +y;
+	        }
+	    }, {
+	        key: "Z",
+	        get: function get() {
+	            return this.rawElements[2];
+	        },
+	        set: function set(z) {
+	            this.rawElements[2] = +z;
+	        }
+	    }, {
+	        key: "W",
+	        get: function get() {
+	            return this.rawElements[3];
+	        },
+	        set: function set(w) {
+	            this.rawElements[3] = +w;
+	        }
+	    }, {
+	        key: "ElementCount",
+	        get: function get() {
+	            return 4;
 	        }
 	    }]);
 	
@@ -7960,6 +7999,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _Vector4 = _interopRequireDefault(_Vector3);
 	
+	var _Quaternion = __webpack_require__(21);
+	
+	var _Quaternion2 = _interopRequireDefault(_Quaternion);
+	
 	var _glMatrix = __webpack_require__(4);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -7974,80 +8017,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var Matrix = function (_MatrixBase) {
 	    _inherits(Matrix, _MatrixBase);
 	
-	    function Matrix(arr) {
-	        _classCallCheck(this, Matrix);
-	
-	        var _this = _possibleConstructorReturn(this, (Matrix.__proto__ || Object.getPrototypeOf(Matrix)).call(this));
-	
-	        if (arr) {
-	            _this.rawElements = arr;
-	        } else {
-	            _this.rawElements = _glMatrix.mat4.create();
-	        }
-	        return _this;
-	    }
-	
-	    _createClass(Matrix, [{
-	        key: "getAt",
-	        value: function getAt(row, colmun) {
-	            return this.rawElements[colmun * 4 + row];
-	        }
-	    }, {
-	        key: "setAt",
-	        value: function setAt(row, colmun, val) {
-	            this.rawElements[colmun * 4 + row] = val;
-	        }
-	    }, {
-	        key: "getBySingleIndex",
-	        value: function getBySingleIndex(index) {
-	            return this.rawElements[index];
-	        }
-	    }, {
-	        key: "getColmun",
-	        value: function getColmun(col) {
-	            return new _Vector4.default(this.rawElements[col * 4], this.rawElements[col * 4 + 1], this.rawElements[col * 4 + 2], this.rawElements[col * 4 + 3]);
-	        }
-	        /**
-	        * Get row
-	        * @params row [0-3]
-	        */
-	
-	    }, {
-	        key: "getRow",
-	        value: function getRow(row) {
-	            return new _Vector4.default(this.rawElements[row], this.rawElements[row + 4], this.rawElements[row + 8], this.rawElements[row + 12]);
-	        }
-	    }, {
-	        key: "multiplyWith",
-	        value: function multiplyWith(m) {
-	            return Matrix.multiply(this, m);
-	        }
-	    }, {
-	        key: "equalWith",
-	        value: function equalWith(m) {
-	            return Matrix.equals(m, this);
-	        }
-	    }, {
-	        key: "toString",
-	        value: function toString() {
-	            return "|" + this.getBySingleIndex(0) + " " + this.getBySingleIndex(4) + " " + this.getBySingleIndex(8) + " " + this.getBySingleIndex(12) + "|\n\n                 |" + this.getBySingleIndex(1) + " " + this.getBySingleIndex(5) + " " + this.getBySingleIndex(9) + " " + this.getBySingleIndex(13) + "|\n\n                 |" + this.getBySingleIndex(2) + " " + this.getBySingleIndex(6) + " " + this.getBySingleIndex(10) + " " + this.getBySingleIndex(14) + "|\n\n                 |" + this.getBySingleIndex(3) + " " + this.getBySingleIndex(7) + " " + this.getBySingleIndex(11) + " " + this.getBySingleIndex(15) + "|";
-	        }
-	    }, {
-	        key: "ElementCount",
-	        get: function get() {
-	            return 16;
-	        }
-	    }, {
-	        key: "RowCount",
-	        get: function get() {
-	            return 4;
-	        }
-	    }, {
-	        key: "ColmunCount",
-	        get: function get() {
-	            return 4;
-	        }
-	    }], [{
+	    _createClass(Matrix, null, [{
 	        key: "zero",
 	        value: function zero() {
 	            return new Matrix([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
@@ -8251,6 +8221,102 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    }]);
 	
+	    function Matrix(arr) {
+	        _classCallCheck(this, Matrix);
+	
+	        var _this = _possibleConstructorReturn(this, (Matrix.__proto__ || Object.getPrototypeOf(Matrix)).call(this));
+	
+	        if (arr) {
+	            _this.rawElements = arr;
+	        } else {
+	            _this.rawElements = _glMatrix.mat4.create();
+	        }
+	        return _this;
+	    }
+	
+	    _createClass(Matrix, [{
+	        key: "getAt",
+	        value: function getAt(row, colmun) {
+	            return this.rawElements[colmun * 4 + row];
+	        }
+	    }, {
+	        key: "setAt",
+	        value: function setAt(row, colmun, val) {
+	            this.rawElements[colmun * 4 + row] = val;
+	        }
+	    }, {
+	        key: "getBySingleIndex",
+	        value: function getBySingleIndex(index) {
+	            return this.rawElements[index];
+	        }
+	    }, {
+	        key: "getColmun",
+	        value: function getColmun(col) {
+	            return new _Vector4.default(this.rawElements[col * 4], this.rawElements[col * 4 + 1], this.rawElements[col * 4 + 2], this.rawElements[col * 4 + 3]);
+	        }
+	        /**
+	        * Get row
+	        * @params row [0-3]
+	        */
+	
+	    }, {
+	        key: "getRow",
+	        value: function getRow(row) {
+	            return new _Vector4.default(this.rawElements[row], this.rawElements[row + 4], this.rawElements[row + 8], this.rawElements[row + 12]);
+	        }
+	    }, {
+	        key: "multiplyWith",
+	        value: function multiplyWith(m) {
+	            return Matrix.multiply(this, m);
+	        }
+	    }, {
+	        key: "equalWith",
+	        value: function equalWith(m) {
+	            return Matrix.equals(m, this);
+	        }
+	    }, {
+	        key: "getTranslation",
+	        value: function getTranslation() {
+	            var res = [0, 0, 0];
+	            _glMatrix.mat4.getTranslation(res, this.rawElements);
+	            return new _Vector2.default(res);
+	        }
+	    }, {
+	        key: "getScaling",
+	        value: function getScaling() {
+	            var res = [0, 0, 0];
+	            _glMatrix.mat4.getScaling(res, this.rawElements);
+	            return new _Vector2.default(res);
+	        }
+	    }, {
+	        key: "getRotation",
+	        value: function getRotation() {
+	            var res = [0, 0, 0, 0];
+	            _glMatrix.mat4.getRotation(res, this.rawElements);
+	            return new _Quaternion2.default(res);
+	        }
+	    }, {
+	        key: "toString",
+	        value: function toString() {
+	            return "|" + this.getBySingleIndex(0) + " " + this.getBySingleIndex(4) + " " + this.getBySingleIndex(8) + " " + this.getBySingleIndex(12) + "|\n\n                 |" + this.getBySingleIndex(1) + " " + this.getBySingleIndex(5) + " " + this.getBySingleIndex(9) + " " + this.getBySingleIndex(13) + "|\n\n                 |" + this.getBySingleIndex(2) + " " + this.getBySingleIndex(6) + " " + this.getBySingleIndex(10) + " " + this.getBySingleIndex(14) + "|\n\n                 |" + this.getBySingleIndex(3) + " " + this.getBySingleIndex(7) + " " + this.getBySingleIndex(11) + " " + this.getBySingleIndex(15) + "|";
+	        }
+	    }, {
+	        key: "ElementCount",
+	        get: function get() {
+	            return 16;
+	        }
+	    }, {
+	        key: "RowCount",
+	        get: function get() {
+	            return 4;
+	        }
+	    }, {
+	        key: "ColmunCount",
+	        get: function get() {
+	            return 4;
+	        }
+	    }]);
+	
 	    return Matrix;
 	}(_MatrixBase3.default);
 	
@@ -8354,9 +8420,130 @@ return /******/ (function(modules) { // webpackBootstrap
 	*
 	*/
 	var Quaternion = function () {
-	    /**
-	    * Constructor by specifing each elements.
-	    */
+	    _createClass(Quaternion, null, [{
+	        key: "equals",
+	        value: function equals(q1, q2) {
+	            for (var i = 0; i < 4; i++) {
+	                if (q1.rawElements[i] !== q2.rawElements[i]) {
+	                    return false;
+	                }
+	            }
+	            return true;
+	        }
+	        /**
+	        * Calculate add result of two quaternion
+	        */
+	
+	    }, {
+	        key: "add",
+	        value: function add(q1, q2) {
+	            var newQuat = _glMatrix.quat.create();
+	            return new Quaternion(_glMatrix.quat.add(newQuat, q1.rawElements, q2.rawElements));
+	        }
+	        /**
+	        * Calculate multiply result of two quaternion
+	        */
+	
+	    }, {
+	        key: "multiply",
+	        value: function multiply(q1, q2) {
+	            var newQuat = _glMatrix.quat.create();
+	            return new Quaternion(_glMatrix.quat.mul(newQuat, q1.rawElements, q2.rawElements));
+	        }
+	        /**
+	        * Calculate the rotation quaternion represented as pair of angle and axis.
+	        */
+	
+	    }, {
+	        key: "angleAxis",
+	        value: function angleAxis(angle, axis) {
+	            var axisVec = _glMatrix.vec3.create();
+	            axisVec[0] = axis.X;
+	            axisVec[1] = axis.Y;
+	            axisVec[2] = axis.Z;
+	            var newQuat = _glMatrix.quat.create();
+	            return new Quaternion(_glMatrix.quat.setAxisAngle(newQuat, axisVec, +angle));
+	        }
+	    }, {
+	        key: "euler",
+	        value: function euler(x, y, z) {
+	            return Quaternion.multiply(Quaternion.angleAxis(z, _Vector2.default.ZUnit), Quaternion.multiply(Quaternion.angleAxis(x, _Vector2.default.XUnit), Quaternion.angleAxis(y, _Vector2.default.YUnit)));
+	        }
+	    }, {
+	        key: "eulerXYZ",
+	        value: function eulerXYZ(x, y, z) {
+	            return Quaternion.multiply(Quaternion.angleAxis(z, _Vector2.default.ZUnit), Quaternion.multiply(Quaternion.angleAxis(y, _Vector2.default.YUnit), Quaternion.angleAxis(x, _Vector2.default.XUnit)));
+	        }
+	    }, {
+	        key: "slerp",
+	        value: function slerp(q1, q2, t) {
+	            var newQuat = _glMatrix.quat.create();
+	            return new Quaternion(_glMatrix.quat.slerp(newQuat, q1.rawElements, q2.rawElements, +t));
+	        }
+	        /**
+	         * Returns the angle in degrees between two rotations q1 and q2.
+	         * @param q1 the quaternion represents begin angle.
+	         * @param q2 the quaternion represents end angle.
+	         * @returns {number} angle represented in radians.
+	         */
+	
+	    }, {
+	        key: "angle",
+	        value: function angle(q1, q2) {
+	            var delta = Quaternion.multiply(q2, q1.inverse());
+	            delta = delta.normalize();
+	            return 2 * Math.acos(delta.W);
+	        }
+	    }, {
+	        key: "fromToRotation",
+	        value: function fromToRotation(from, to) {
+	            var crossed = _Vector2.default.cross(from.normalized, to.normalized);
+	            var angle = _Vector2.default.dot(from.normalized, to.normalized);
+	            return Quaternion.angleAxis(angle, crossed);
+	        }
+	    }, {
+	        key: "lookRotation",
+	        value: function lookRotation(forward, upVec) {
+	            upVec = upVec || _Vector2.default.YUnit;
+	            var normalizedForward = forward.normalized;
+	            var upForwardCross = _Vector2.default.cross(upVec, normalizedForward).normalized;
+	            var thirdAxis = _Vector2.default.cross(normalizedForward, upForwardCross);
+	            var m00 = upForwardCross.X;
+	            var m01 = upForwardCross.Y;
+	            var m02 = upForwardCross.Z;
+	            var m10 = thirdAxis.X;
+	            var m11 = thirdAxis.Y;
+	            var m12 = thirdAxis.Z;
+	            var m20 = normalizedForward.X;
+	            var m21 = normalizedForward.Y;
+	            var m22 = normalizedForward.Z;
+	            var num8 = m00 + m11 + m22;
+	            if (num8 > 0) {
+	                var num = Math.sqrt(1 + num8);
+	                return new Quaternion([(m12 - m21) * 0.5 / num, (m20 - m02) * 0.5 / num, (m01 - m10) * 0.5 / num, num / 2]);
+	            }
+	            if (m00 >= m11 && m00 >= m22) {
+	                var num7 = Math.sqrt(1 + m00 - m11 - m22);
+	                return new Quaternion([(m01 + m10) * 0.5 / num7, (m02 + m20) * 0.5 / num7, (m12 - m21) * 0.5 / num7, num7 / 2]);
+	            }
+	            if (m11 > m22) {
+	                var num6 = Math.sqrt(1 + m11 - m00 - m22);
+	                return new Quaternion([(m10 + m01) * 0, 5 / num6, 0.5 * num6, (m21 + m12) * 0.5 / num6, (m20 - m02) * 0.5 / num6]);
+	            }
+	            var num5 = Math.sqrt(1 + m22 - m00 - m11);
+	            return new Quaternion([(m20 + m02) * 0.5 / num5, (m21 + m12) * 0.5 / num5, 0.5 * num5, (m01 - m10) * 0.5 / num5]);
+	        }
+	    }, {
+	        key: "Identity",
+	        get: function get() {
+	            return new Quaternion(_glMatrix.quat.create());
+	        }
+	        /**
+	        * Constructor by specifing each elements.
+	        */
+	
+	    }]);
+	
 	    function Quaternion(rawElements) {
 	        _classCallCheck(this, Quaternion);
 	
@@ -8510,124 +8697,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        get: function get() {
 	            return _glMatrix.quat.len(this.rawElements);
 	        }
-	    }], [{
-	        key: "equals",
-	        value: function equals(q1, q2) {
-	            for (var i = 0; i < 4; i++) {
-	                if (q1.rawElements[i] !== q2.rawElements[i]) {
-	                    return false;
-	                }
-	            }
-	            return true;
-	        }
-	        /**
-	        * Calculate add result of two quaternion
-	        */
-	
-	    }, {
-	        key: "add",
-	        value: function add(q1, q2) {
-	            var newQuat = _glMatrix.quat.create();
-	            return new Quaternion(_glMatrix.quat.add(newQuat, q1.rawElements, q2.rawElements));
-	        }
-	        /**
-	        * Calculate multiply result of two quaternion
-	        */
-	
-	    }, {
-	        key: "multiply",
-	        value: function multiply(q1, q2) {
-	            var newQuat = _glMatrix.quat.create();
-	            return new Quaternion(_glMatrix.quat.mul(newQuat, q1.rawElements, q2.rawElements));
-	        }
-	        /**
-	        * Calculate the rotation quaternion represented as pair of angle and axis.
-	        */
-	
-	    }, {
-	        key: "angleAxis",
-	        value: function angleAxis(angle, axis) {
-	            var axisVec = _glMatrix.vec3.create();
-	            axisVec[0] = axis.X;
-	            axisVec[1] = axis.Y;
-	            axisVec[2] = axis.Z;
-	            var newQuat = _glMatrix.quat.create();
-	            return new Quaternion(_glMatrix.quat.setAxisAngle(newQuat, axisVec, +angle));
-	        }
-	    }, {
-	        key: "euler",
-	        value: function euler(x, y, z) {
-	            return Quaternion.multiply(Quaternion.angleAxis(z, _Vector2.default.ZUnit), Quaternion.multiply(Quaternion.angleAxis(x, _Vector2.default.XUnit), Quaternion.angleAxis(y, _Vector2.default.YUnit)));
-	        }
-	    }, {
-	        key: "eulerXYZ",
-	        value: function eulerXYZ(x, y, z) {
-	            return Quaternion.multiply(Quaternion.angleAxis(z, _Vector2.default.ZUnit), Quaternion.multiply(Quaternion.angleAxis(y, _Vector2.default.YUnit), Quaternion.angleAxis(x, _Vector2.default.XUnit)));
-	        }
-	    }, {
-	        key: "slerp",
-	        value: function slerp(q1, q2, t) {
-	            var newQuat = _glMatrix.quat.create();
-	            return new Quaternion(_glMatrix.quat.slerp(newQuat, q1.rawElements, q2.rawElements, +t));
-	        }
-	        /**
-	         * Returns the angle in degrees between two rotations q1 and q2.
-	         * @param q1 the quaternion represents begin angle.
-	         * @param q2 the quaternion represents end angle.
-	         * @returns {number} angle represented in radians.
-	         */
-	
-	    }, {
-	        key: "angle",
-	        value: function angle(q1, q2) {
-	            var delta = Quaternion.multiply(q2, q1.inverse());
-	            delta = delta.normalize();
-	            return 2 * Math.acos(delta.W);
-	        }
-	    }, {
-	        key: "fromToRotation",
-	        value: function fromToRotation(from, to) {
-	            var crossed = _Vector2.default.cross(from.normalized, to.normalized);
-	            var angle = _Vector2.default.dot(from.normalized, to.normalized);
-	            return Quaternion.angleAxis(angle, crossed);
-	        }
-	    }, {
-	        key: "lookRotation",
-	        value: function lookRotation(forward, upVec) {
-	            upVec = upVec || _Vector2.default.YUnit;
-	            var normalizedForward = forward.normalized;
-	            var upForwardCross = _Vector2.default.cross(upVec, normalizedForward).normalized;
-	            var thirdAxis = _Vector2.default.cross(normalizedForward, upForwardCross);
-	            var m00 = upForwardCross.X;
-	            var m01 = upForwardCross.Y;
-	            var m02 = upForwardCross.Z;
-	            var m10 = thirdAxis.X;
-	            var m11 = thirdAxis.Y;
-	            var m12 = thirdAxis.Z;
-	            var m20 = normalizedForward.X;
-	            var m21 = normalizedForward.Y;
-	            var m22 = normalizedForward.Z;
-	            var num8 = m00 + m11 + m22;
-	            if (num8 > 0) {
-	                var num = Math.sqrt(1 + num8);
-	                return new Quaternion([(m12 - m21) * 0.5 / num, (m20 - m02) * 0.5 / num, (m01 - m10) * 0.5 / num, num / 2]);
-	            }
-	            if (m00 >= m11 && m00 >= m22) {
-	                var num7 = Math.sqrt(1 + m00 - m11 - m22);
-	                return new Quaternion([(m01 + m10) * 0.5 / num7, (m02 + m20) * 0.5 / num7, (m12 - m21) * 0.5 / num7, num7 / 2]);
-	            }
-	            if (m11 > m22) {
-	                var num6 = Math.sqrt(1 + m11 - m00 - m22);
-	                return new Quaternion([(m10 + m01) * 0, 5 / num6, 0.5 * num6, (m21 + m12) * 0.5 / num6, (m20 - m02) * 0.5 / num6]);
-	            }
-	            var num5 = Math.sqrt(1 + m22 - m00 - m11);
-	            return new Quaternion([(m20 + m02) * 0.5 / num5, (m21 + m12) * 0.5 / num5, 0.5 * num5, (m01 - m10) * 0.5 / num5]);
-	        }
-	    }, {
-	        key: "Identity",
-	        get: function get() {
-	            return new Quaternion(_glMatrix.quat.create());
-	        }
 	    }]);
 	
 	    return Quaternion;
@@ -8656,6 +8725,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
 	var Rectangle = function () {
+	    _createClass(Rectangle, null, [{
+	        key: "equals",
+	        value: function equals(r1, r2) {
+	            return r1.Left === r2.Left && r1.Right === r2.Right && r1.Top === r2.Top && r1.Bottom === r2.Bottom;
+	        }
+	    }, {
+	        key: "edgeSizeEquals",
+	        value: function edgeSizeEquals(r1, r2) {
+	            return r1.Width === r2.Width && r1.Height === r2.Height;
+	        }
+	    }]);
+	
 	    function Rectangle(left, top, width, height) {
 	        _classCallCheck(this, Rectangle);
 	
@@ -8726,16 +8807,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        get: function get() {
 	            return this._height;
 	        }
-	    }], [{
-	        key: "equals",
-	        value: function equals(r1, r2) {
-	            return r1.Left === r2.Left && r1.Right === r2.Right && r1.Top === r2.Top && r1.Bottom === r2.Bottom;
-	        }
-	    }, {
-	        key: "edgeSizeEquals",
-	        value: function edgeSizeEquals(r1, r2) {
-	            return r1.Width === r2.Width && r1.Height === r2.Height;
-	        }
 	    }]);
 	
 	    return Rectangle;
@@ -8773,96 +8844,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var Vector2 = function (_VectorBase) {
 	    _inherits(Vector2, _VectorBase);
 	
-	    function Vector2(x, y) {
-	        _classCallCheck(this, Vector2);
-	
-	        var _this = _possibleConstructorReturn(this, (Vector2.__proto__ || Object.getPrototypeOf(Vector2)).call(this));
-	
-	        if (typeof y === "undefined") {
-	            _this.rawElements = x;
-	            return _possibleConstructorReturn(_this);
-	        }
-	        _this.rawElements = [x, y];
-	        return _this;
-	    }
-	
-	    _createClass(Vector2, [{
-	        key: "dotWith",
-	        value: function dotWith(v) {
-	            return Vector2.dot(this, v);
-	        }
-	    }, {
-	        key: "addWith",
-	        value: function addWith(v) {
-	            return Vector2.add(this, v);
-	        }
-	    }, {
-	        key: "subtractWith",
-	        value: function subtractWith(v) {
-	            return Vector2.subtract(v, this);
-	        }
-	    }, {
-	        key: "multiplyWith",
-	        value: function multiplyWith(s) {
-	            return Vector2.multiply(s, this);
-	        }
-	    }, {
-	        key: "negateThis",
-	        value: function negateThis() {
-	            return Vector2.negate(this);
-	        }
-	    }, {
-	        key: "equalWith",
-	        value: function equalWith(v) {
-	            return Vector2.equals(this, v);
-	        }
-	    }, {
-	        key: "nearlyEqualWith",
-	        value: function nearlyEqualWith(v) {
-	            return Vector2.nearlyEquals(this, v);
-	        }
-	    }, {
-	        key: "normalizeThis",
-	        value: function normalizeThis() {
-	            return Vector2.normalize(this);
-	        }
-	    }, {
-	        key: "toString",
-	        value: function toString() {
-	            return "(" + this.X + ", " + this.Y + ")";
-	        }
-	    }, {
-	        key: "toDisplayString",
-	        value: function toDisplayString() {
-	            return "Vector2" + this.toString();
-	        }
-	    }, {
-	        key: "normalized",
-	        get: function get() {
-	            return this.multiplyWith(1 / this.magnitude);
-	        }
-	    }, {
-	        key: "X",
-	        get: function get() {
-	            return this.rawElements[0];
-	        },
-	        set: function set(x) {
-	            this.rawElements[0] = +x;
-	        }
-	    }, {
-	        key: "Y",
-	        get: function get() {
-	            return this.rawElements[1];
-	        },
-	        set: function set(y) {
-	            this.rawElements[1] = +y;
-	        }
-	    }, {
-	        key: "ElementCount",
-	        get: function get() {
-	            return 2;
-	        }
-	    }], [{
+	    _createClass(Vector2, null, [{
 	        key: "copy",
 	        value: function copy(vec) {
 	            return new Vector2(vec.X, vec.Y);
@@ -8974,6 +8956,97 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: "Zero",
 	        get: function get() {
 	            return new Vector2(0, 0);
+	        }
+	    }]);
+	
+	    function Vector2(x, y) {
+	        _classCallCheck(this, Vector2);
+	
+	        var _this = _possibleConstructorReturn(this, (Vector2.__proto__ || Object.getPrototypeOf(Vector2)).call(this));
+	
+	        if (typeof y === "undefined") {
+	            _this.rawElements = x;
+	            return _possibleConstructorReturn(_this);
+	        }
+	        _this.rawElements = [x, y];
+	        return _this;
+	    }
+	
+	    _createClass(Vector2, [{
+	        key: "dotWith",
+	        value: function dotWith(v) {
+	            return Vector2.dot(this, v);
+	        }
+	    }, {
+	        key: "addWith",
+	        value: function addWith(v) {
+	            return Vector2.add(this, v);
+	        }
+	    }, {
+	        key: "subtractWith",
+	        value: function subtractWith(v) {
+	            return Vector2.subtract(v, this);
+	        }
+	    }, {
+	        key: "multiplyWith",
+	        value: function multiplyWith(s) {
+	            return Vector2.multiply(s, this);
+	        }
+	    }, {
+	        key: "negateThis",
+	        value: function negateThis() {
+	            return Vector2.negate(this);
+	        }
+	    }, {
+	        key: "equalWith",
+	        value: function equalWith(v) {
+	            return Vector2.equals(this, v);
+	        }
+	    }, {
+	        key: "nearlyEqualWith",
+	        value: function nearlyEqualWith(v) {
+	            return Vector2.nearlyEquals(this, v);
+	        }
+	    }, {
+	        key: "normalizeThis",
+	        value: function normalizeThis() {
+	            return Vector2.normalize(this);
+	        }
+	    }, {
+	        key: "toString",
+	        value: function toString() {
+	            return "(" + this.X + ", " + this.Y + ")";
+	        }
+	    }, {
+	        key: "toDisplayString",
+	        value: function toDisplayString() {
+	            return "Vector2" + this.toString();
+	        }
+	    }, {
+	        key: "normalized",
+	        get: function get() {
+	            return this.multiplyWith(1 / this.magnitude);
+	        }
+	    }, {
+	        key: "X",
+	        get: function get() {
+	            return this.rawElements[0];
+	        },
+	        set: function set(x) {
+	            this.rawElements[0] = +x;
+	        }
+	    }, {
+	        key: "Y",
+	        get: function get() {
+	            return this.rawElements[1];
+	        },
+	        set: function set(y) {
+	            this.rawElements[1] = +y;
+	        }
+	    }, {
+	        key: "ElementCount",
+	        get: function get() {
+	            return 2;
 	        }
 	    }]);
 	
