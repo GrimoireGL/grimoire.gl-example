@@ -8304,27 +8304,31 @@ return /******/ (function(modules) { // webpackBootstrap
 		    value: true
 		});
 		
-		var _Constants = __webpack_require__(1);
+		var _AttributeManager = __webpack_require__(1);
+		
+		var _AttributeManager2 = _interopRequireDefault(_AttributeManager);
+		
+		var _Constants = __webpack_require__(6);
 		
 		var _Constants2 = _interopRequireDefault(_Constants);
 		
-		var _EEObject = __webpack_require__(2);
+		var _EEObject = __webpack_require__(11);
 		
 		var _EEObject2 = _interopRequireDefault(_EEObject);
 		
-		var _Ensure = __webpack_require__(5);
+		var _Ensure = __webpack_require__(2);
 		
 		var _Ensure2 = _interopRequireDefault(_Ensure);
 		
-		var _IDObject = __webpack_require__(4);
+		var _IDObject = __webpack_require__(13);
 		
 		var _IDObject2 = _interopRequireDefault(_IDObject);
 		
-		var _NSDictionary = __webpack_require__(14);
+		var _NSDictionary = __webpack_require__(15);
 		
 		var _NSDictionary2 = _interopRequireDefault(_NSDictionary);
 		
-		var _NSIdentity = __webpack_require__(15);
+		var _NSIdentity = __webpack_require__(16);
 		
 		var _NSIdentity2 = _interopRequireDefault(_NSIdentity);
 		
@@ -8332,7 +8336,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _NSSet2 = _interopRequireDefault(_NSSet);
 		
-		var _Utility = __webpack_require__(7);
+		var _Utility = __webpack_require__(4);
 		
 		var _Utility2 = _interopRequireDefault(_Utility);
 		
@@ -8340,7 +8344,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _XMLHttpRequestAsync2 = _interopRequireDefault(_XMLHttpRequestAsync);
 		
-		var _XMLReader = __webpack_require__(10);
+		var _XMLReader = __webpack_require__(8);
 		
 		var _XMLReader2 = _interopRequireDefault(_XMLReader);
 		
@@ -8360,19 +8364,15 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _StringConverter2 = _interopRequireDefault(_StringConverter);
 		
-		var _GrimoireInterface = __webpack_require__(6);
+		var _GrimoireInterface = __webpack_require__(3);
 		
 		var _GrimoireInterface2 = _interopRequireDefault(_GrimoireInterface);
 		
-		var _ComponentInterface = __webpack_require__(16);
-		
-		var _ComponentInterface2 = _interopRequireDefault(_ComponentInterface);
-		
-		var _GomlInterface = __webpack_require__(8);
+		var _GomlInterface = __webpack_require__(5);
 		
 		var _GomlInterface2 = _interopRequireDefault(_GomlInterface);
 		
-		var _NodeInterface = __webpack_require__(9);
+		var _NodeInterface = __webpack_require__(7);
 		
 		var _NodeInterface2 = _interopRequireDefault(_NodeInterface);
 		
@@ -8392,11 +8392,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _GomlLoader2 = _interopRequireDefault(_GomlLoader);
 		
-		var _GomlNode = __webpack_require__(12);
+		var _GomlNode = __webpack_require__(10);
 		
 		var _GomlNode2 = _interopRequireDefault(_GomlNode);
 		
-		var _GomlParser = __webpack_require__(11);
+		var _GomlParser = __webpack_require__(9);
 		
 		var _GomlParser2 = _interopRequireDefault(_GomlParser);
 		
@@ -8404,7 +8404,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _NodeDeclaration2 = _interopRequireDefault(_NodeDeclaration);
 		
-		var _NodeUtility = __webpack_require__(13);
+		var _NodeUtility = __webpack_require__(14);
 		
 		var _NodeUtility2 = _interopRequireDefault(_NodeUtility);
 		
@@ -8416,6 +8416,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var __EXPOSE__ = {
 		    "Base": {
+		        "AttributeManager": _AttributeManager2.default,
 		        "Constants": _Constants2.default,
 		        "EEObject": _EEObject2.default,
 		        "Ensure": _Ensure2.default,
@@ -8437,7 +8438,6 @@ return /******/ (function(modules) { // webpackBootstrap
 		    },
 		    "GrimoireInterface": _GrimoireInterface2.default,
 		    "Interface": {
-		        "ComponentInterface": _ComponentInterface2.default,
 		        "GomlInterface": _GomlInterface2.default,
 		        "NodeInterface": _NodeInterface2.default
 		    },
@@ -8458,6 +8458,789 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	/***/ },
 	/* 1 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+		
+		var _Ensure = __webpack_require__(2);
+		
+		var _Ensure2 = _interopRequireDefault(_Ensure);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+		
+		var AttributeManager = function () {
+		    function AttributeManager(tag, attributes) {
+		        _classCallCheck(this, AttributeManager);
+		
+		        this.tag = tag;
+		        this.attributes = attributes;
+		        this._attrBuffer = {};
+		        this._watchBuffer = {};
+		    }
+		
+		    _createClass(AttributeManager, [{
+		        key: "addAttribute",
+		        value: function addAttribute(attr) {
+		            if (this.attributes.get(attr.name)) {
+		                console.warn("attribute " + attr.name + " is already exist in " + this.tag);
+		            }
+		            this.attributes.set(attr.name, attr);
+		            // check buffer value.
+		            var attrBuf = this._attrBuffer[attr.name.fqn];
+		            if (attrBuf !== void 0) {
+		                attr.Value = attrBuf;
+		                delete this._attrBuffer[attr.name.fqn];
+		            }
+		            var watchBuf = this._watchBuffer[attr.name.fqn];
+		            if (watchBuf) {
+		                attr.watch(watchBuf, true);
+		            }
+		        }
+		    }, {
+		        key: "watch",
+		        value: function watch(attrName, watcher) {
+		            var immediate = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+		
+		            attrName = _Ensure2.default.ensureTobeNSIdentity(attrName);
+		            var attr = this.attributes.get(attrName);
+		            if (!attr) {
+		                this._watchBuffer[attrName.fqn] = watcher;
+		            } else {
+		                attr.watch(watcher, immediate);
+		            }
+		        }
+		    }, {
+		        key: "setAttribute",
+		        value: function setAttribute(attrName, value) {
+		            attrName = _Ensure2.default.ensureTobeNSIdentity(attrName);
+		            var attr = this.attributes.get(attrName);
+		            if (!attr) {
+		                this._attrBuffer[attrName.fqn] = value;
+		            } else {
+		                attr.Value = value;
+		            }
+		        }
+		    }, {
+		        key: "getAttribute",
+		        value: function getAttribute(attrName) {
+		            attrName = _Ensure2.default.ensureTobeNSIdentity(attrName);
+		            var attr = this.attributes.get(attrName);
+		            if (!attr) {
+		                var attrBuf = this._attrBuffer[attrName.fqn];
+		                if (attrBuf !== void 0) {
+		                    return attrBuf;
+		                }
+		                console.warn("attribute \"" + attrName.name + "\" is not found.");
+		                return;
+		            } else {
+		                return attr.Value;
+		            }
+		        }
+		    }, {
+		        key: "removeAttribute",
+		        value: function removeAttribute(attr) {
+		            return this.attributes.delete(attr.name);
+		        }
+		    }]);
+		
+		    return AttributeManager;
+		}();
+		
+		exports.default = AttributeManager;
+	
+	/***/ },
+	/* 2 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+		
+		var _GrimoireInterface = __webpack_require__(3);
+		
+		var _GrimoireInterface2 = _interopRequireDefault(_GrimoireInterface);
+		
+		var _NSIdentity = __webpack_require__(16);
+		
+		var _NSIdentity2 = _interopRequireDefault(_NSIdentity);
+		
+		var _NSDictionary = __webpack_require__(15);
+		
+		var _NSDictionary2 = _interopRequireDefault(_NSDictionary);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+		
+		/**
+		 * Provides static methods to ensure arguments are valid type.
+		 */
+		var Ensure = function () {
+		    function Ensure() {
+		        _classCallCheck(this, Ensure);
+		    }
+		
+		    _createClass(Ensure, null, [{
+		        key: "ensureString",
+		
+		        /**
+		         * Ensure specified str being string
+		         * @param  {string | number}      str [description]
+		         * @return {string}      [description]
+		         */
+		        value: function ensureString(str) {
+		            if (typeof str === "string") {
+		                return str;
+		            } else if (typeof str === "number") {
+		                return str.toString();
+		            } else {
+		                throw new Error("Specified argument can not convert into string");
+		            }
+		        }
+		        /**
+		         * Ensure specified number being number
+		         * @param  {string | number}      str [description]
+		         * @return {string}      [description]
+		         */
+		
+		    }, {
+		        key: "ensureNumber",
+		        value: function ensureNumber(num) {
+		            if (typeof num === "string") {
+		                return parseInt(num, 10);
+		            } else if (typeof num === "number") {
+		                return num;
+		            } else {
+		                throw new Error("specified argument can not be converted into number");
+		            }
+		        }
+		    }, {
+		        key: "ensureTobeNSIdentity",
+		        value: function ensureTobeNSIdentity(name) {
+		            if (!name) {
+		                return undefined;
+		            }
+		            if (typeof name === "string") {
+		                if (name.indexOf("|") !== -1) {
+		                    return _NSIdentity2.default.fromFQN(name);
+		                }
+		                return new _NSIdentity2.default(name);
+		            } else {
+		                return name;
+		            }
+		        }
+		    }, {
+		        key: "ensureTobeNSIdentityArray",
+		        value: function ensureTobeNSIdentityArray(names) {
+		            if (!names) {
+		                return [];
+		            }
+		            var newArr = [];
+		            for (var i = 0; i < names.length; i++) {
+		                newArr.push(this.ensureTobeNSIdentity(names[i]));
+		            }
+		            return newArr;
+		        }
+		    }, {
+		        key: "ensureTobeNSDictionary",
+		        value: function ensureTobeNSDictionary(dict, defaultNamespace) {
+		            if (!dict) {
+		                return new _NSDictionary2.default();
+		            }
+		            if (dict instanceof _NSDictionary2.default) {
+		                return dict;
+		            } else {
+		                var newDict = new _NSDictionary2.default();
+		                for (var key in dict) {
+		                    newDict.set(new _NSIdentity2.default(defaultNamespace, key), dict[key]);
+		                }
+		                return newDict;
+		            }
+		        }
+		    }, {
+		        key: "ensureTobeMessage",
+		        value: function ensureTobeMessage(message) {
+		            if (message.startsWith("$")) {
+		                if (message.startsWith("$$")) {
+		                    return message;
+		                } else {
+		                    return "$" + message;
+		                }
+		            } else {
+		                return "$$" + message;
+		            }
+		        }
+		    }, {
+		        key: "ensureTobeComponentConstructor",
+		        value: function ensureTobeComponentConstructor(c) {
+		            if (typeof c === "function") {
+		                return c;
+		            } else if (typeof c === "string") {
+		                return _GrimoireInterface2.default.componentDeclarations.get(c).ctor;
+		            } else {
+		                return _GrimoireInterface2.default.componentDeclarations.get(c).ctor;
+		            }
+		        }
+		    }]);
+		
+		    return Ensure;
+		}();
+		
+		exports.default = Ensure;
+	
+	/***/ },
+	/* 3 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+		
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+		
+		var _Utility = __webpack_require__(4);
+		
+		var _Utility2 = _interopRequireDefault(_Utility);
+		
+		var _GomlInterface = __webpack_require__(5);
+		
+		var _GomlInterface2 = _interopRequireDefault(_GomlInterface);
+		
+		var _BooleanConverter = __webpack_require__(17);
+		
+		var _BooleanConverter2 = _interopRequireDefault(_BooleanConverter);
+		
+		var _GrimoireComponent = __webpack_require__(18);
+		
+		var _GrimoireComponent2 = _interopRequireDefault(_GrimoireComponent);
+		
+		var _StringArrayConverter = __webpack_require__(21);
+		
+		var _StringArrayConverter2 = _interopRequireDefault(_StringArrayConverter);
+		
+		var _StringConverter = __webpack_require__(22);
+		
+		var _StringConverter2 = _interopRequireDefault(_StringConverter);
+		
+		var _Constants = __webpack_require__(6);
+		
+		var _Constants2 = _interopRequireDefault(_Constants);
+		
+		var _ComponentDeclaration = __webpack_require__(23);
+		
+		var _ComponentDeclaration2 = _interopRequireDefault(_ComponentDeclaration);
+		
+		var _Component = __webpack_require__(19);
+		
+		var _Component2 = _interopRequireDefault(_Component);
+		
+		var _NSSet = __webpack_require__(24);
+		
+		var _NSSet2 = _interopRequireDefault(_NSSet);
+		
+		var _NodeDeclaration = __webpack_require__(25);
+		
+		var _NodeDeclaration2 = _interopRequireDefault(_NodeDeclaration);
+		
+		var _NSIdentity = __webpack_require__(16);
+		
+		var _NSIdentity2 = _interopRequireDefault(_NSIdentity);
+		
+		var _NSDictionary = __webpack_require__(15);
+		
+		var _NSDictionary2 = _interopRequireDefault(_NSDictionary);
+		
+		var _Ensure = __webpack_require__(2);
+		
+		var _Ensure2 = _interopRequireDefault(_Ensure);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+		
+		var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
+		    return new (P || (P = Promise))(function (resolve, reject) {
+		        function fulfilled(value) {
+		            try {
+		                step(generator.next(value));
+		            } catch (e) {
+		                reject(e);
+		            }
+		        }
+		        function rejected(value) {
+		            try {
+		                step(generator.throw(value));
+		            } catch (e) {
+		                reject(e);
+		            }
+		        }
+		        function step(result) {
+		            result.done ? resolve(result.value) : new P(function (resolve) {
+		                resolve(result.value);
+		            }).then(fulfilled, rejected);
+		        }
+		        step((generator = generator.apply(thisArg, _arguments)).next());
+		    });
+		};
+		
+		var GrimoireInterfaceImpl = function () {
+		    function GrimoireInterfaceImpl() {
+		        _classCallCheck(this, GrimoireInterfaceImpl);
+		
+		        this.nodeDeclarations = new _NSDictionary2.default();
+		        this.converters = new _NSDictionary2.default();
+		        this.componentDeclarations = new _NSDictionary2.default();
+		        this.rootNodes = {};
+		        this.loadTasks = [];
+		        this.lib = {};
+		        this.nodeDictionary = {};
+		        this.componentDictionary = {};
+		        this.companion = new _NSDictionary2.default();
+		        this.initializedEventHandler = [];
+		        this.debug = false;
+		    }
+		    /**
+		     * Generate namespace helper function
+		     * @param  {string} ns namespace URI to be used
+		     * @return {[type]}    the namespaced identity
+		     */
+		
+		
+		    _createClass(GrimoireInterfaceImpl, [{
+		        key: "ns",
+		        value: function ns(_ns) {
+		            return function (name) {
+		                return new _NSIdentity2.default(_ns, name);
+		            };
+		        }
+		    }, {
+		        key: "initialize",
+		        value: function initialize() {
+		            this.registerConverter("String", _StringConverter2.default);
+		            this.registerConverter("StringArray", _StringArrayConverter2.default);
+		            this.registerConverter("Boolean", _BooleanConverter2.default);
+		            this.registerComponent("GrimoireComponent", _GrimoireComponent2.default);
+		            this.registerNode("grimoire-node-base", ["GrimoireComponent"]);
+		        }
+		        /**
+		         * Register plugins
+		         * @param  {(}      loadTask [description]
+		         * @return {[type]}          [description]
+		         */
+		
+		    }, {
+		        key: "register",
+		        value: function register(loadTask) {
+		            this.loadTasks.push(loadTask);
+		        }
+		    }, {
+		        key: "resolvePlugins",
+		        value: function resolvePlugins() {
+		            return __awaiter(this, void 0, void 0, regeneratorRuntime.mark(function _callee() {
+		                var i;
+		                return regeneratorRuntime.wrap(function _callee$(_context) {
+		                    while (1) {
+		                        switch (_context.prev = _context.next) {
+		                            case 0:
+		                                i = 0;
+		
+		                            case 1:
+		                                if (!(i < this.loadTasks.length)) {
+		                                    _context.next = 7;
+		                                    break;
+		                                }
+		
+		                                _context.next = 4;
+		                                return this.loadTasks[i]();
+		
+		                            case 4:
+		                                i++;
+		                                _context.next = 1;
+		                                break;
+		
+		                            case 7:
+		                            case "end":
+		                                return _context.stop();
+		                        }
+		                    }
+		                }, _callee, this);
+		            }));
+		        }
+		        /**
+		         * register custom component
+		         * @param  {string                |   NSIdentity} name          [description]
+		         * @param  {IAttributeDeclaration }} attributes           [description]
+		         * @param  {Object                |   (new                 (}           obj           [description]
+		         * @return {[type]}                       [description]
+		         */
+		
+		    }, {
+		        key: "registerComponent",
+		        value: function registerComponent(name, obj, superComponent) {
+		            name = _Ensure2.default.ensureTobeNSIdentity(name);
+		            if (this.componentDeclarations.get(name)) {
+		                throw new Error("component " + name.fqn + " is already registerd.");
+		            }
+		            if (this.debug && !_Utility2.default.isCamelCase(name.name)) {
+		                console.warn("component " + name.name + " is registerd. but,it should be 'CamelCase'.");
+		            }
+		            obj = this._ensureTobeComponentConstructor(obj, this._ensureNameTobeConstructor(superComponent));
+		            var attrs = obj["attributes"] || {};
+		            for (var key in attrs) {
+		                if (attrs[key].default === void 0) {
+		                    throw new Error("default value of attribute " + key + " in " + name.fqn + " must be not 'undefined'.");
+		                }
+		            }
+		            var dec = new _ComponentDeclaration2.default(name, attrs, obj);
+		            this.componentDeclarations.set(name, dec);
+		            return dec;
+		        }
+		    }, {
+		        key: "registerNode",
+		        value: function registerNode(name, requiredComponents, defaults, superNode) {
+		            name = _Ensure2.default.ensureTobeNSIdentity(name);
+		            if (this.nodeDeclarations.get(name)) {
+		                throw new Error("gomlnode " + name.fqn + " is already registerd.");
+		            }
+		            if (this.debug && !_Utility2.default.isSnakeCase(name.name)) {
+		                console.warn("node " + name.name + " is registerd. but,it should be 'snake-case'.");
+		            }
+		            requiredComponents = _Ensure2.default.ensureTobeNSIdentityArray(requiredComponents);
+		            defaults = _Ensure2.default.ensureTobeNSDictionary(defaults, name.ns);
+		            superNode = _Ensure2.default.ensureTobeNSIdentity(superNode);
+		            this.nodeDeclarations.set(name, new _NodeDeclaration2.default(name, _NSSet2.default.fromArray(requiredComponents), defaults, superNode));
+		        }
+		    }, {
+		        key: "registerConverter",
+		        value: function registerConverter(name, converter) {
+		            name = _Ensure2.default.ensureTobeNSIdentity(name);
+		            this.converters.set(name, { name: name, convert: converter });
+		        }
+		    }, {
+		        key: "addRootNode",
+		        value: function addRootNode(tag, rootNode) {
+		            if (!rootNode) {
+		                throw new Error("can not register null to rootNodes.");
+		            }
+		            this.rootNodes[rootNode.id] = rootNode;
+		            rootNode.companion.set(this.ns(_Constants2.default.defaultNamespace)("scriptElement"), tag);
+		            // check tree constraint.
+		            var errorMessages = rootNode.callRecursively(function (n) {
+		                return n.checkTreeConstraints();
+		            }).reduce(function (list, current) {
+		                return list.concat(current);
+		            }).filter(function (error) {
+		                return error;
+		            });
+		            if (errorMessages.length !== 0) {
+		                var message = errorMessages.reduce(function (m, current) {
+		                    return m + "\n" + current;
+		                });
+		                throw new Error("tree constraint is not satisfied.\n" + message);
+		            }
+		            // awake and mount tree.
+		            rootNode.setMounted(true);
+		            rootNode.broadcastMessage("treeInitialized", {
+		                ownerScriptTag: tag,
+		                id: rootNode.id
+		            });
+		            tag.setAttribute("x-rootNodeId", rootNode.id);
+		            this._onTreeInitialized(tag);
+		            return rootNode.id;
+		        }
+		    }, {
+		        key: "getRootNode",
+		        value: function getRootNode(scriptTag) {
+		            var id = scriptTag.getAttribute("x-rootNodeId");
+		            return this.rootNodes[id];
+		        }
+		    }, {
+		        key: "noConflict",
+		        value: function noConflict() {
+		            window["gr"] = this.noConflictPreserve;
+		        }
+		    }, {
+		        key: "queryRootNodes",
+		        value: function queryRootNodes(query) {
+		            var scriptTags = document.querySelectorAll(query);
+		            var nodes = [];
+		            for (var i = 0; i < scriptTags.length; i++) {
+		                var node = this.getRootNode(scriptTags.item(i));
+		                if (node) {
+		                    nodes.push(node);
+		                }
+		            }
+		            return nodes;
+		        }
+		        /**
+		         * This method is not for users.
+		         * Just for unit testing.
+		         *
+		         * Clear all configuration that GrimoireInterface contain.
+		         */
+		
+		    }, {
+		        key: "clear",
+		        value: function clear() {
+		            this.nodeDeclarations.clear();
+		            this.componentDeclarations.clear();
+		            this.converters.clear();
+		            for (var key in this.rootNodes) {
+		                delete this.rootNodes[key];
+		            }
+		            this.loadTasks.splice(0, this.loadTasks.length);
+		            this.initialize();
+		        }
+		        /**
+		         * Ensure the given object or constructor to be an constructor inherits Component;
+		         * @param  {Object | (new ()=> Component} obj [The variable need to be ensured.]
+		         * @return {[type]}      [The constructor inherits Component]
+		         */
+		
+		    }, {
+		        key: "_ensureTobeComponentConstructor",
+		        value: function _ensureTobeComponentConstructor(obj, baseConstructor) {
+		            if (typeof obj === "function") {
+		                if (!(obj.prototype instanceof _Component2.default) && obj !== _Component2.default) {
+		                    throw new Error("Component constructor must extends Component class.");
+		                }
+		                return obj;
+		            } else if ((typeof obj === "undefined" ? "undefined" : _typeof(obj)) === "object") {
+		                var _ret = function () {
+		                    if (baseConstructor && !(baseConstructor.prototype instanceof _Component2.default)) {
+		                        throw new Error("Base component comstructor must extends Compoent class.");
+		                    }
+		                    var ctor = baseConstructor || _Component2.default;
+		                    var newCtor = function newCtor() {
+		                        ctor.call(this);
+		                    };
+		                    var properties = {};
+		                    for (var key in obj) {
+		                        if (key === "attributes") {
+		                            continue;
+		                        }
+		                        properties[key] = { value: obj[key] };
+		                    }
+		                    var attributes = {};
+		                    for (var _key in ctor["attributes"]) {
+		                        attributes[_key] = ctor["attributes"][_key];
+		                    }
+		                    for (var _key2 in obj["attributes"]) {
+		                        attributes[_key2] = obj["attributes"][_key2];
+		                    }
+		                    newCtor.prototype = Object.create(ctor.prototype, properties);
+		                    Object.defineProperty(newCtor, "attributes", {
+		                        value: attributes
+		                    });
+		                    obj = newCtor;
+		                    return {
+		                        v: obj
+		                    };
+		                }();
+		
+		                if ((typeof _ret === "undefined" ? "undefined" : _typeof(_ret)) === "object") return _ret.v;
+		            }
+		            return _Component2.default;
+		        }
+		    }, {
+		        key: "_ensureNameTobeConstructor",
+		        value: function _ensureNameTobeConstructor(component) {
+		            if (!component) {
+		                return null;
+		            }
+		            if (typeof component === "function") {
+		                return component;
+		            } else if (typeof component === "string") {
+		                return this._ensureNameTobeConstructor(_Ensure2.default.ensureTobeNSIdentity(component));
+		            } else {
+		                //here NSIdentity.
+		                var c = this.componentDeclarations.get(component);
+		                if (!c) {
+		                    return null;
+		                }
+		                return c.ctor;
+		            }
+		        }
+		    }, {
+		        key: "_onTreeInitialized",
+		        value: function _onTreeInitialized(tag) {
+		            this.initializedEventHandler.forEach(function (h) {
+		                h(tag.id, tag.className, tag);
+		            });
+		        }
+		    }]);
+		
+		    return GrimoireInterfaceImpl;
+		}();
+		
+		var context = new GrimoireInterfaceImpl();
+		var obtainGomlInterface = function obtainGomlInterface(query) {
+		    if (typeof query === "string") {
+		        // return GomlInterfaceGenerator(context.queryRootNodes(query));
+		        var gomlContext = new _GomlInterface2.default(context.queryRootNodes(query));
+		        var queryFunc = gomlContext.queryFunc.bind(gomlContext);
+		        Object.setPrototypeOf(queryFunc, gomlContext);
+		        return queryFunc;
+		    } else if (typeof query === "function") {
+		        context.initializedEventHandler.push(query);
+		    } else {
+		        var _gomlContext = new _GomlInterface2.default(query);
+		        var _queryFunc = _gomlContext.queryFunc.bind(_gomlContext);
+		        Object.setPrototypeOf(_queryFunc, _gomlContext);
+		        return _queryFunc;
+		    }
+		};
+		// const bindedFunction = obtainGomlInterface.bind(context);
+		Object.setPrototypeOf(obtainGomlInterface, context);
+		exports.default = obtainGomlInterface;
+	
+	/***/ },
+	/* 4 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+		
+		var _GrimoireInterface = __webpack_require__(3);
+		
+		var _GrimoireInterface2 = _interopRequireDefault(_GrimoireInterface);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+		
+		var Utility = function () {
+		    function Utility() {
+		        _classCallCheck(this, Utility);
+		    }
+		
+		    _createClass(Utility, null, [{
+		        key: "w",
+		        value: function w(message) {
+		            if (_GrimoireInterface2.default.debug) {
+		                console.warn(message);
+		            }
+		        }
+		    }, {
+		        key: "isCamelCase",
+		        value: function isCamelCase(str) {
+		            return (/^[A-Z][a-zA-Z0-9]*$/.test(str)
+		            );
+		        }
+		    }, {
+		        key: "isSnakeCase",
+		        value: function isSnakeCase(str) {
+		            return (/^[a-z0-9\-]+$/.test(str)
+		            );
+		        }
+		    }]);
+		
+		    return Utility;
+		}();
+		
+		exports.default = Utility;
+	
+	/***/ },
+	/* 5 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+		
+		var _Constants = __webpack_require__(6);
+		
+		var _Constants2 = _interopRequireDefault(_Constants);
+		
+		var _GrimoireInterface = __webpack_require__(3);
+		
+		var _GrimoireInterface2 = _interopRequireDefault(_GrimoireInterface);
+		
+		var _NodeInterface = __webpack_require__(7);
+		
+		var _NodeInterface2 = _interopRequireDefault(_NodeInterface);
+		
+		var _GomlNode = __webpack_require__(10);
+		
+		var _GomlNode2 = _interopRequireDefault(_GomlNode);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+		
+		/**
+		 * Provides interfaces to treat whole goml tree for each.
+		 */
+		var GomlInterface = function () {
+		    function GomlInterface(rootNodes) {
+		        _classCallCheck(this, GomlInterface);
+		
+		        this.rootNodes = rootNodes;
+		    }
+		
+		    _createClass(GomlInterface, [{
+		        key: "getNodeById",
+		        value: function getNodeById(id) {
+		            var _this = this;
+		
+		            return new Array(this.rootNodes.length).map(function (v, i) {
+		                return _GomlNode2.default.fromElement(_this.rootNodes[i].element.ownerDocument.getElementById(id));
+		            });
+		        }
+		    }, {
+		        key: "queryFunc",
+		        value: function queryFunc(query) {
+		            return new _NodeInterface2.default(this.queryNodes(query));
+		        }
+		    }, {
+		        key: "queryNodes",
+		        value: function queryNodes(query) {
+		            return this.rootNodes.map(function (root) {
+		                var nodelist = root.element.ownerDocument.querySelectorAll(query);
+		                var nodes = [];
+		                for (var i = 0; i < nodelist.length; i++) {
+		                    var node = _GrimoireInterface2.default.nodeDictionary[nodelist.item(i).getAttribute(_Constants2.default.x_gr_id)];
+		                    if (node) {
+		                        nodes.push(node);
+		                    }
+		                }
+		                return nodes;
+		            });
+		        }
+		    }]);
+		
+		    return GomlInterface;
+		}();
+		
+		exports.default = GomlInterface;
+	
+	/***/ },
+	/* 6 */
 	/***/ function(module, exports) {
 	
 		"use strict";
@@ -8493,7 +9276,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = Constants;
 	
 	/***/ },
-	/* 2 */
+	/* 7 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -8502,9 +9285,1585 @@ return /******/ (function(modules) { // webpackBootstrap
 		    value: true
 		});
 		
-		var _events = __webpack_require__(3);
+		var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 		
-		var _IDObject2 = __webpack_require__(4);
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+		
+		var _Constants = __webpack_require__(6);
+		
+		var _Constants2 = _interopRequireDefault(_Constants);
+		
+		var _GrimoireInterface = __webpack_require__(3);
+		
+		var _GrimoireInterface2 = _interopRequireDefault(_GrimoireInterface);
+		
+		var _XMLReader = __webpack_require__(8);
+		
+		var _XMLReader2 = _interopRequireDefault(_XMLReader);
+		
+		var _GomlParser = __webpack_require__(9);
+		
+		var _GomlParser2 = _interopRequireDefault(_GomlParser);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+		
+		/**
+		 * 複数のノードを対象とした操作を提供するインタフェース
+		 */
+		var NodeInterface = function () {
+		    function NodeInterface(nodes) {
+		        _classCallCheck(this, NodeInterface);
+		
+		        this.nodes = nodes;
+		        if (!nodes) {
+		            throw new Error("nodes is null");
+		        }
+		    }
+		
+		    _createClass(NodeInterface, [{
+		        key: "_queryComponents",
+		        value: function _queryComponents(query) {
+		            return this.nodes.map(function (nodes) {
+		                return nodes.map(function (node) {
+		                    var componentElements = node.componentsElement.querySelectorAll(query);
+		                    var components = [];
+		                    for (var i = 0; i < componentElements.length; i++) {
+		                        var elem = componentElements[i];
+		                        var component = _GrimoireInterface2.default.componentDictionary[elem.getAttribute(_Constants2.default.x_gr_id)];
+		                        if (component) {
+		                            components.push(component);
+		                        }
+		                    }
+		                    return components;
+		                });
+		            });
+		        }
+		    }, {
+		        key: "isEmpty",
+		        value: function isEmpty() {
+		            return this.count() === 0;
+		        }
+		    }, {
+		        key: "get",
+		        value: function get(i1, i2) {
+		            var _this = this;
+		
+		            if (i1 === void 0) {
+		                var first = this.first();
+		                if (!first) {
+		                    throw new Error("this NodeInterface is empty.");
+		                } else {
+		                    return first;
+		                }
+		            } else if (i2 === void 0) {
+		                if (this.count() <= i1) {
+		                    throw new Error("index out of range.");
+		                } else {
+		                    var _ret = function () {
+		                        var c = i1;
+		                        var returnNode = null;
+		                        _this.forEach(function (node) {
+		                            if (c === 0) {
+		                                returnNode = node;
+		                            }
+		                            c--;
+		                        });
+		                        return {
+		                            v: returnNode
+		                        };
+		                    }();
+		
+		                    if ((typeof _ret === "undefined" ? "undefined" : _typeof(_ret)) === "object") return _ret.v;
+		                }
+		            } else {
+		                if (this.nodes.length <= i1 || this.nodes[i1].length <= i2) {
+		                    throw new Error("index out of range.");
+		                } else {
+		                    return this.nodes[i1][i2];
+		                }
+		            }
+		        }
+		    }, {
+		        key: "getAttribute",
+		        value: function getAttribute(attrName) {
+		            var first = this.first();
+		            if (!first) {
+		                throw new Error("this NodeInterface is empty.");
+		            }
+		            return first.getAttribute(attrName);
+		        }
+		    }, {
+		        key: "setAttribute",
+		        value: function setAttribute(attrName, value) {
+		            this.forEach(function (node) {
+		                node.setAttribute(attrName, value);
+		            });
+		        }
+		        /**
+		         * 対象ノードにイベントリスナを追加します。
+		         * @param {string}   eventName [description]
+		         * @param {Function} listener  [description]
+		         */
+		
+		    }, {
+		        key: "on",
+		        value: function on(eventName, listener) {
+		            this.forEach(function (node) {
+		                node.on(eventName, listener);
+		            });
+		            return this;
+		        }
+		        /**
+		         * 対象ノードに指定したイベントリスナが登録されていれば削除します
+		         * @param {string}   eventName [description]
+		         * @param {Function} listener  [description]
+		         */
+		
+		    }, {
+		        key: "off",
+		        value: function off(eventName, listener) {
+		            this.forEach(function (node) {
+		                node.removeListener(eventName, listener);
+		            });
+		            return this;
+		        }
+		        /**
+		         * このノードインタフェースが対象とするノードそれぞれに、
+		         * タグで指定したノードを子要素として追加します。
+		         * @param {string} tag [description]
+		         */
+		
+		    }, {
+		        key: "append",
+		        value: function append(tag) {
+		            this.forEach(function (node) {
+		                var elems = _XMLReader2.default.parseXML(tag);
+		                elems.forEach(function (elem) {
+		                    var child = _GomlParser2.default.parse(elem, null, null);
+		                    node.addChild(child);
+		                });
+		            });
+		            return this;
+		        }
+		        /**
+		         * このノードインタフェースが対象とするノードの子に、
+		         * 指定されたノードが存在すれば削除します。
+		         * @param {GomlNode} child [description]
+		         */
+		
+		    }, {
+		        key: "remove",
+		        value: function remove() {
+		            this.forEach(function (node) {
+		                node.delete();
+		            });
+		            return this;
+		        }
+		        /**
+		         * このノードインタフェースが対象とするノードに対して反復処理を行います
+		         * @param  {GomlNode} callback [description]
+		         * @return {[type]}            [description]
+		         */
+		
+		    }, {
+		        key: "forEach",
+		        value: function forEach(callback) {
+		            this.nodes.forEach(function (array, gomlIndex) {
+		                array.forEach(function (node, nodeIndex) {
+		                    callback(node, gomlIndex, nodeIndex);
+		                });
+		            });
+		            return this;
+		        }
+		    }, {
+		        key: "find",
+		        value: function find(predicate) {
+		            var nodes = this.nodes;
+		            for (var i = 0; i < nodes.length; i++) {
+		                var array = nodes[i];
+		                for (var j = 0; j < array.length; j++) {
+		                    var node = array[j];
+		                    if (predicate(node, i, j)) {
+		                        return node;
+		                    }
+		                }
+		            }
+		            return null;
+		        }
+		    }, {
+		        key: "watch",
+		        value: function watch(attrName, watcher) {
+		            var immediate = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+		
+		            this.forEach(function (node) {
+		                node.watch(attrName, watcher, immediate);
+		            });
+		        }
+		        /**
+		         * このノードインタフェースが対象とするノードを有効、または無効にします。
+		         * @param {boolean} enable [description]
+		         */
+		
+		    }, {
+		        key: "setEnable",
+		        value: function setEnable(enable) {
+		            this.forEach(function (node) {
+		                node.enabled = !!enable;
+		            });
+		            return this;
+		        }
+		        /**
+		         * このノードインタフェースが対象とするノードのそれぞれの子ノードを対象とする、
+		         * 新しいノードインタフェースを取得します。
+		         * @return {NodeInterface} [description]
+		         */
+		
+		    }, {
+		        key: "children",
+		        value: function children() {
+		            var children = this.nodes.map(function (nodes) {
+		                return nodes.map(function (node) {
+		                    return node.children;
+		                }).reduce(function (pre, cur) {
+		                    return pre.concat(cur);
+		                });
+		            });
+		            return new NodeInterface(children);
+		        }
+		        /**
+		         * 対象ノードにコンポーネントをアタッチします。
+		         * @param {Component} component [description]
+		         */
+		
+		    }, {
+		        key: "addComponent",
+		        value: function addComponent(componentId) {
+		            var attributes = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+		
+		            this.forEach(function (node) {
+		                node.addComponent(componentId, attributes);
+		            });
+		            return this;
+		        }
+		        /**
+		         * 最初の対象ノードを取得する
+		         * @return {GomlNode} [description]
+		         */
+		
+		    }, {
+		        key: "first",
+		        value: function first() {
+		            return this.find(function () {
+		                return true;
+		            });
+		        }
+		        /**
+		         * 対象となる唯一のノードを取得する。
+		         * 対象が存在しない、あるいは複数存在するときは例外を投げる。
+		         * @return {GomlNode} [description]
+		         */
+		
+		    }, {
+		        key: "single",
+		        value: function single() {
+		            if (this.count() !== 1) {
+		                throw new Error("this nodeInterface is not single.");
+		            }
+		            var first = this.first();
+		            if (!first) {
+		                throw new Error("this nodeInterface is not single,but is empty.");
+		            }
+		            return first;
+		        }
+		        /**
+		         * 対象となるノードの個数を取得する
+		         * @return {number} [description]
+		         */
+		
+		    }, {
+		        key: "count",
+		        value: function count() {
+		            if (this.nodes.length === 0) {
+		                return 0;
+		            }
+		            var counts = this.nodes.map(function (nodes) {
+		                return nodes.length;
+		            });
+		            return counts.reduce(function (total, current) {
+		                return total + current;
+		            }, 0);
+		        }
+		    }, {
+		        key: "filter",
+		        value: function filter(predicate) {
+		            var newNodes = this.nodes.map(function (nodes, gomlIndex) {
+		                return nodes.filter(function (node, nodeIndex) {
+		                    return predicate(node, gomlIndex, nodeIndex);
+		                });
+		            });
+		            return new NodeInterface(newNodes);
+		        }
+		    }, {
+		        key: "toArray",
+		        value: function toArray() {
+		            return this.nodes.reduce(function (pre, current) {
+		                return pre.concat(current);
+		            }, []);
+		        }
+		    }]);
+		
+		    return NodeInterface;
+		}();
+		
+		exports.default = NodeInterface;
+	
+	/***/ },
+	/* 8 */
+	/***/ function(module, exports) {
+	
+		'use strict';
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+		
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+		
+		/**
+		 * Provides safe xml read feature.
+		 */
+		var XMLReader = function () {
+		    function XMLReader() {
+		        _classCallCheck(this, XMLReader);
+		    }
+		
+		    _createClass(XMLReader, null, [{
+		        key: 'parseXML',
+		        value: function parseXML(doc, rootElementName) {
+		            var isParseError = function isParseError(parsedDocument) {
+		                var defaultError = console.error;
+		                console.error = function () {}; //disable error message!
+		                var errorneousParse = XMLReader._parser.parseFromString('<', 'text/xml');
+		                delete console.error; //restore...
+		                console.error = defaultError;
+		                if (errorneousParse.documentURI === void 0) {
+		                    return false;
+		                }
+		                var parsererrorNS = errorneousParse.getElementsByTagName("parsererror").item(0).namespaceURI;
+		                if (parsererrorNS === 'http://www.w3.org/1999/xhtml') {
+		                    return parsedDocument.getElementsByTagName("parsererror").length > 0;
+		                }
+		                return parsedDocument.getElementsByTagNameNS(parsererrorNS, 'parsererror').length > 0;
+		            };
+		            var parsed = XMLReader._parser.parseFromString(doc, "text/xml");
+		            if (isParseError(parsed)) {
+		                throw new Error('Error parsing XML');
+		            }
+		            if (rootElementName) {
+		                if (parsed.documentElement.tagName.toUpperCase() !== rootElementName.toUpperCase()) {
+		                    throw new Error("Specified document is invalid.");
+		                } // TODO should throw more detail error
+		            }
+		            return [parsed.documentElement]; // TODO: implenent!
+		        }
+		    }, {
+		        key: 'getElements',
+		        value: function getElements(elem, name) {
+		            var result = [];
+		            var elems = elem.getElementsByTagName(name);
+		            for (var i = 0; i < elems.length; i++) {
+		                result.push(elems.item(i));
+		            }
+		            return result;
+		        }
+		    }, {
+		        key: 'getSingleElement',
+		        value: function getSingleElement(elem, name, mandatory) {
+		            var result = XMLReader.getElements(elem, name);
+		            if (result.length === 1) {
+		                return result[0];
+		            } else if (result.length === 0) {
+		                if (mandatory) {
+		                    throw new Error('The mandatory element ' + name + ' was required, but not found');
+		                } else {
+		                    return null;
+		                }
+		            } else {
+		                throw new Error('The element ' + name + ' requires to exist in single. But there is ' + result.length + ' count of elements');
+		            }
+		        }
+		    }, {
+		        key: 'getAttribute',
+		        value: function getAttribute(elem, name, mandatory) {
+		            var result = elem.attributes.getNamedItem(name);
+		            if (result) {
+		                return result.value;
+		            } else if (mandatory) {
+		                throw new Error('The mandatory attribute ' + name + ' was required, but it was not found');
+		            } else {
+		                return null;
+		            }
+		        }
+		    }, {
+		        key: 'getAttributeFloat',
+		        value: function getAttributeFloat(elem, name, mandatory) {
+		            var resultStr = XMLReader.getAttribute(elem, name, mandatory);
+		            return parseFloat(resultStr);
+		        }
+		    }, {
+		        key: 'getAttributeInt',
+		        value: function getAttributeInt(elem, name, mandatory) {
+		            var resultStr = XMLReader.getAttribute(elem, name, mandatory);
+		            return parseInt(resultStr, 10);
+		        }
+		    }, {
+		        key: 'getChildElements',
+		        value: function getChildElements(elem) {
+		            var children = elem.childNodes;
+		            var result = [];
+		            for (var i = 0; i < children.length; i++) {
+		                if (children.item(i) instanceof Element) {
+		                    result.push(children.item(i));
+		                }
+		            }
+		            return result;
+		        }
+		    }, {
+		        key: 'getAttributes',
+		        value: function getAttributes(elem, ns) {
+		            var result = {};
+		            var attrs = elem.attributes;
+		            for (var i = 0; i < attrs.length; i++) {
+		                var attr = attrs.item(i);
+		                if (!ns || attr.namespaceURI === ns) {
+		                    result[attr.localName] = attr.value;
+		                }
+		            }
+		            return result;
+		        }
+		    }]);
+		
+		    return XMLReader;
+		}();
+		
+		XMLReader._parser = new DOMParser();
+		exports.default = XMLReader;
+	
+	/***/ },
+	/* 9 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+		
+		var _GomlNode = __webpack_require__(10);
+		
+		var _GomlNode2 = _interopRequireDefault(_GomlNode);
+		
+		var _GrimoireInterface = __webpack_require__(3);
+		
+		var _GrimoireInterface2 = _interopRequireDefault(_GrimoireInterface);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+		
+		/**
+		 * Parser of Goml to Node utilities.
+		 * This class do not store any nodes and goml properties.
+		 */
+		var GomlParser = function () {
+		    function GomlParser() {
+		        _classCallCheck(this, GomlParser);
+		    }
+		
+		    _createClass(GomlParser, null, [{
+		        key: "parse",
+		
+		        /**
+		         * Domをパースする
+		         * @param  {Element}           source    [description]
+		         * @param  {GomlNode}          parent    あればこのノードにaddChildされる
+		         * @return {GomlNode}                    ルートノード
+		         */
+		        value: function parse(source, parent, scriptTag) {
+		            var newNode = GomlParser._createNode(source);
+		            if (!newNode) {
+		                // when specified node could not be found
+		                console.warn("\"" + source.tagName + "\" was not parsed.");
+		                return null;
+		            }
+		            // Parse children recursively
+		            var children = source.childNodes;
+		            var childNodeElements = []; // for parse after .Components has resolved.
+		            if (children && children.length !== 0) {
+		                var removeTarget = [];
+		                for (var i = 0; i < children.length; i++) {
+		                    var child = children.item(i);
+		                    if (!GomlParser._isElement(child)) {
+		                        removeTarget.push(child);
+		                        continue;
+		                    }
+		                    if (this._isComponentsTag(child)) {
+		                        // parse as components
+		                        GomlParser._parseComponents(newNode, child);
+		                        removeTarget.push(child);
+		                    } else {
+		                        // parse as child node.
+		                        childNodeElements.push(child);
+		                    }
+		                }
+		                // remove unused elements
+		                for (var _i = 0; _i < removeTarget.length; _i++) {
+		                    source.removeChild(removeTarget[_i]);
+		                }
+		            }
+		            // generate tree
+		            if (parent) {
+		                parent.addChild(newNode, null, false);
+		            }
+		            childNodeElements.forEach(function (child) {
+		                GomlParser.parse(child, newNode, null);
+		            });
+		            return newNode;
+		        }
+		        /**
+		         * GomlNodeのインスタンス化。GrimoireInterfaceへの登録
+		         * @param  {HTMLElement}      elem         [description]
+		         * @param  {GomlConfigurator} configurator [description]
+		         * @return {GomlTreeNodeBase}              [description]
+		         */
+		
+		    }, {
+		        key: "_createNode",
+		        value: function _createNode(elem) {
+		            var tagName = elem.localName;
+		            var recipe = _GrimoireInterface2.default.nodeDeclarations.get(elem);
+		            if (!recipe) {
+		                throw new Error("Tag \"" + tagName + "\" is not found.");
+		            }
+		            return new _GomlNode2.default(recipe, elem);
+		        }
+		        /**
+		         * .COMPONENTSのパース。
+		         * @param {GomlNode} node          アタッチされるコンポーネント
+		         * @param {Element}  componentsTag .COMPONENTSタグ
+		         */
+		
+		    }, {
+		        key: "_parseComponents",
+		        value: function _parseComponents(node, componentsTag) {
+		            var componentNodes = componentsTag.childNodes;
+		            if (!componentNodes) {
+		                return;
+		            }
+		            for (var i = 0; i < componentNodes.length; i++) {
+		                var componentNode = componentNodes.item(i);
+		                if (!GomlParser._isElement(componentNode)) {
+		                    continue; // Skip if the node was not element
+		                }
+		                var componentDecl = _GrimoireInterface2.default.componentDeclarations.get(componentNode);
+		                if (!componentDecl) {
+		                    throw new Error("Component " + componentNode.tagName + " is not found.");
+		                }
+		                var component = componentDecl.generateInstance(componentNode);
+		                node._addComponentDirectly(component, false);
+		            }
+		        }
+		    }, {
+		        key: "_isElement",
+		        value: function _isElement(node) {
+		            return node.nodeType === Node.ELEMENT_NODE;
+		        }
+		    }, {
+		        key: "_isComponentsTag",
+		        value: function _isComponentsTag(element) {
+		            var regexToFindComponent = /\.COMPONENTS$/mi; // TODO might needs to fix
+		            return regexToFindComponent.test(element.nodeName);
+		        }
+		    }]);
+		
+		    return GomlParser;
+		}();
+		
+		exports.default = GomlParser;
+	
+	/***/ },
+	/* 10 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+		
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+		
+		var _AttributeManager = __webpack_require__(1);
+		
+		var _AttributeManager2 = _interopRequireDefault(_AttributeManager);
+		
+		var _Utility = __webpack_require__(4);
+		
+		var _Utility2 = _interopRequireDefault(_Utility);
+		
+		var _Constants = __webpack_require__(6);
+		
+		var _Constants2 = _interopRequireDefault(_Constants);
+		
+		var _GomlParser = __webpack_require__(9);
+		
+		var _GomlParser2 = _interopRequireDefault(_GomlParser);
+		
+		var _XMLReader = __webpack_require__(8);
+		
+		var _XMLReader2 = _interopRequireDefault(_XMLReader);
+		
+		var _GrimoireInterface = __webpack_require__(3);
+		
+		var _GrimoireInterface2 = _interopRequireDefault(_GrimoireInterface);
+		
+		var _EEObject2 = __webpack_require__(11);
+		
+		var _EEObject3 = _interopRequireDefault(_EEObject2);
+		
+		var _NodeUtility = __webpack_require__(14);
+		
+		var _NodeUtility2 = _interopRequireDefault(_NodeUtility);
+		
+		var _NSDictionary = __webpack_require__(15);
+		
+		var _NSDictionary2 = _interopRequireDefault(_NSDictionary);
+		
+		var _NSIdentity = __webpack_require__(16);
+		
+		var _NSIdentity2 = _interopRequireDefault(_NSIdentity);
+		
+		var _Ensure = __webpack_require__(2);
+		
+		var _Ensure2 = _interopRequireDefault(_Ensure);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+		
+		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+		
+		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+		
+		var GomlNode = function (_EEObject) {
+		    _inherits(GomlNode, _EEObject);
+		
+		    /**
+		     * create new instance.
+		     * @param  {NodeDeclaration} recipe  作成するノードのDeclaration
+		     * @param  {Element}         element 対応するDomElement
+		     * @return {[type]}                  [description]
+		     */
+		    function GomlNode(recipe, element) {
+		        _classCallCheck(this, GomlNode);
+		
+		        var _this = _possibleConstructorReturn(this, (GomlNode.__proto__ || Object.getPrototypeOf(GomlNode)).call(this));
+		
+		        _this.children = [];
+		        _this._parent = null;
+		        _this._root = null;
+		        _this._mounted = false;
+		        _this._messageBuffer = [];
+		        _this._tree = null;
+		        _this._companion = new _NSDictionary2.default();
+		        _this._deleted = false;
+		        _this._attrBuffer = {};
+		        _this._defaultValueResolved = false;
+		        if (!recipe) {
+		            throw new Error("recipe must not be null");
+		        }
+		        _this.nodeDeclaration = recipe;
+		        _this.element = element ? element : document.createElementNS(recipe.name.ns, recipe.name.name); // TODO Could be undefined or null?
+		        _this.componentsElement = document.createElement("COMPONENTS");
+		        _this._root = _this;
+		        _this._tree = (0, _GrimoireInterface2.default)([_this]);
+		        _this._components = [];
+		        _this._attributeManager = new _AttributeManager2.default(recipe.name.name, new _NSDictionary2.default());
+		        _this.element.setAttribute(_Constants2.default.x_gr_id, _this.id);
+		        var defaultComponentNames = recipe.defaultComponentsActual;
+		        // instanciate default components
+		        defaultComponentNames.toArray().map(function (id) {
+		            _this.addComponent(id, null, true);
+		        });
+		        // register to GrimoireInterface.
+		        _GrimoireInterface2.default.nodeDictionary[_this.id] = _this;
+		        return _this;
+		    }
+		    /**
+		     * Get actual goml node from element of xml tree.
+		     * @param  {Element}  elem [description]
+		     * @return {GomlNode}      [description]
+		     */
+		
+		
+		    _createClass(GomlNode, [{
+		        key: "getChildrenByClass",
+		
+		        /**
+		         * search from children node by class property.
+		         * return all nodes has same class as given.
+		         * @param  {string}     className [description]
+		         * @return {GomlNode[]}           [description]
+		         */
+		        value: function getChildrenByClass(className) {
+		            var nodes = this.element.getElementsByClassName(className);
+		            var array = new Array(nodes.length);
+		            for (var i = 0; i < nodes.length; i++) {
+		                array[i] = GomlNode.fromElement(nodes.item(i));
+		            }
+		            return array;
+		        }
+		        /**
+		         * search from children node by name property.
+		         * return all nodes has same name as given.
+		         * @param  {string}     nodeName [description]
+		         * @return {GomlNode[]}          [description]
+		         */
+		
+		    }, {
+		        key: "getChildrenByNodeName",
+		        value: function getChildrenByNodeName(nodeName) {
+		            var nodes = this.element.getElementsByTagName(nodeName);
+		            var array = new Array(nodes.length);
+		            for (var i = 0; i < nodes.length; i++) {
+		                array[i] = GomlNode.fromElement(nodes.item(i));
+		            }
+		            return array;
+		        }
+		        /**
+		         * detach and delete this node and children.
+		         * call when this node will never use.
+		         */
+		
+		    }, {
+		        key: "delete",
+		        value: function _delete() {
+		            console.warn("delete is obsolate. please use remove() instead of");
+		            this.remove();
+		        }
+		    }, {
+		        key: "remove",
+		        value: function remove() {
+		            this.children.forEach(function (c) {
+		                c.remove();
+		            });
+		            _GrimoireInterface2.default.nodeDictionary[this.id] = null;
+		            if (this._parent) {
+		                this._parent.detachChild(this);
+		            } else {
+		                this.setMounted(false);
+		                if (this.element.parentNode) {
+		                    this.element.parentNode.removeChild(this.element);
+		                }
+		            }
+		            this._deleted = true;
+		        }
+		        /**
+		         * send message to this node.
+		         * invoke component method has same name as message if this node isActive.
+		         * @param  {string}  message [description]
+		         * @param  {any}     args    [description]
+		         * @return {boolean}         is this node active.
+		         */
+		
+		    }, {
+		        key: "sendMessage",
+		        value: function sendMessage(message, args) {
+		            if (!this.isActive) {
+		                return false;
+		            }
+		            this._sendMessage(message, args);
+		            return true;
+		        }
+		    }, {
+		        key: "broadcastMessage",
+		        value: function broadcastMessage(arg1, arg2, arg3) {
+		            if (!this.enabled || !this.mounted) {
+		                return;
+		            }
+		            if (typeof arg1 === "number") {
+		                var range = arg1;
+		                var message = arg2;
+		                var args = arg3;
+		                this.sendMessage(message, args);
+		                if (range > 0) {
+		                    for (var i = 0; i < this.children.length; i++) {
+		                        this.children[i].broadcastMessage(range - 1, message, args);
+		                    }
+		                }
+		            } else {
+		                var _message = arg1;
+		                var _args = arg2;
+		                this.sendMessage(_message, _args);
+		                for (var _i = 0; _i < this.children.length; _i++) {
+		                    this.children[_i].broadcastMessage(_message, _args);
+		                }
+		            }
+		        }
+		    }, {
+		        key: "append",
+		        value: function append(tag) {
+		            var _this2 = this;
+		
+		            var elems = _XMLReader2.default.parseXML(tag);
+		            var ret = [];
+		            elems.forEach(function (elem) {
+		                var child = _GomlParser2.default.parse(elem, null, null);
+		                _this2.addChild(child);
+		                ret.push(child);
+		            });
+		            return ret;
+		        }
+		        /**
+		         * add new instance created by given name and attributes for this node as child.
+		         * @param {string |   NSIdentity} nodeName      [description]
+		         * @param {any    }} attributes   [description]
+		         */
+		
+		    }, {
+		        key: "addChildByName",
+		        value: function addChildByName(nodeName, attributes) {
+		            if (typeof nodeName === "string") {
+		                return this.addChildByName(new _NSIdentity2.default(nodeName), attributes);
+		            } else {
+		                var nodeDec = _GrimoireInterface2.default.nodeDeclarations.get(nodeName);
+		                var node = new GomlNode(nodeDec, null);
+		                if (attributes) {
+		                    for (var key in attributes) {
+		                        var id = _Ensure2.default.ensureTobeNSIdentity(key);
+		                        node.setAttribute(id, attributes[key]);
+		                    }
+		                }
+		                this.addChild(node);
+		                return node;
+		            }
+		        }
+		        /**
+		         * Add child for this node.
+		         * @param {GomlNode} child            child node to add.
+		         * @param {number}   index            index for insert.なければ末尾に追加
+		         * @param {[type]}   elementSync=true trueのときはElementのツリーを同期させる。（Elementからパースするときはfalseにする）
+		         */
+		
+		    }, {
+		        key: "addChild",
+		        value: function addChild(child, index) {
+		            var elementSync = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+		
+		            if (child._deleted) {
+		                throw new Error("deleted node never use.");
+		            }
+		            if (index != null && typeof index !== "number") {
+		                throw new Error("insert index should be number or null or undefined.");
+		            }
+		            child._parent = this;
+		            var insertIndex = index == null ? this.children.length : index;
+		            this.children.splice(insertIndex, 0, child);
+		            var checkChildConstraints = child.checkTreeConstraints();
+		            var checkAncestorConstraint = this._callRecursively(function (n) {
+		                return n.checkTreeConstraints();
+		            }, function (n) {
+		                return n._parent ? [n._parent] : [];
+		            }).reduce(function (list, current) {
+		                return list.concat(current);
+		            });
+		            var errors = checkChildConstraints.concat(checkAncestorConstraint).filter(function (m) {
+		                return m;
+		            });
+		            if (errors.length !== 0) {
+		                var message = errors.reduce(function (m, current) {
+		                    return m + "\n" + current;
+		                });
+		                throw new Error("tree constraint is not satisfied.\n" + message);
+		            }
+		            // handling html
+		            if (elementSync) {
+		                var referenceElement = this.element[_NodeUtility2.default.getNodeListIndexByElementIndex(this.element, insertIndex)];
+		                this.element.insertBefore(child.element, referenceElement);
+		            }
+		            child._tree = this._tree;
+		            child._companion = this._companion;
+		            // mounting
+		            if (this.mounted) {
+		                child.setMounted(true);
+		            }
+		        }
+		    }, {
+		        key: "callRecursively",
+		        value: function callRecursively(func) {
+		            return this._callRecursively(func, function (n) {
+		                return n.children;
+		            });
+		        }
+		        /**
+		         * delete child node.
+		         * @param {GomlNode} child Target node to be inserted.
+		         */
+		
+		    }, {
+		        key: "removeChild",
+		        value: function removeChild(child) {
+		            var node = this.detachChild(child);
+		            if (node) {
+		                node.remove();
+		            }
+		        }
+		        /**
+		         * detach given node from this node if target is child of this node.
+		         * return null if target is not child of this node.
+		         * @param  {GomlNode} child [description]
+		         * @return {GomlNode}       detached node.
+		         */
+		
+		    }, {
+		        key: "detachChild",
+		        value: function detachChild(target) {
+		            // search child.
+		            var index = this.children.indexOf(target);
+		            if (index === -1) {
+		                return null;
+		            }
+		            target.setMounted(false);
+		            target._parent = null;
+		            this.children.splice(index, 1);
+		            // html sync
+		            this.element.removeChild(target.element);
+		            // check ancestor constraint.
+		            var errors = this._callRecursively(function (n) {
+		                return n.checkTreeConstraints();
+		            }, function (n) {
+		                return n._parent ? [n._parent] : [];
+		            }).reduce(function (list, current) {
+		                return list.concat(current);
+		            }).filter(function (m) {
+		                return m;
+		            });
+		            if (errors.length !== 0) {
+		                var message = errors.reduce(function (m, current) {
+		                    return m + "\n" + current;
+		                });
+		                throw new Error("tree constraint is not satisfied.\n" + message);
+		            }
+		            return target;
+		        }
+		        /**
+		         * detach this node from parent.
+		         */
+		
+		    }, {
+		        key: "detach",
+		        value: function detach() {
+		            if (this.parent) {
+		                this.parent.detachChild(this);
+		            } else {
+		                throw new Error("root Node cannot be detached.");
+		            }
+		        }
+		        /**
+		         * [[[OBSOLETE!]]]get value of attribute.
+		         * @param  {string | NSIdentity}  attrName [description]
+		         * @return {any}         [description]
+		         */
+		
+		    }, {
+		        key: "getValue",
+		        value: function getValue(attrName) {
+		            console.warn("getValue is obsolate. please use getAttribute instead of");
+		            return this.getAttribute(attrName);
+		        }
+		    }, {
+		        key: "getAttribute",
+		        value: function getAttribute(attrName) {
+		            return this._attributeManager.getAttribute(attrName);
+		        }
+		        /**
+		         * set value to selected attribute.
+		         * @param {string |     NSIdentity}  attrName [description]
+		         * @param {any}       value [description]
+		         */
+		
+		    }, {
+		        key: "setValue",
+		        value: function setValue(attrName, value) {
+		            console.warn("setValue is obsolate. please use setAttribute instead of");
+		            this.setAttribute(attrName, value);
+		        }
+		    }, {
+		        key: "setAttribute",
+		        value: function setAttribute(attrName, value) {
+		            return this._attributeManager.setAttribute(attrName, value);
+		        }
+		        /**
+		         *  Add new attribute. In most of case, users no need to call this method.
+		         *  Use __addAttribute in Component should be used instead.
+		         */
+		
+		    }, {
+		        key: "addAttribute",
+		        value: function addAttribute(attr) {
+		            return this._attributeManager.addAttribute(attr);
+		        }
+		        /**
+		         * Update mounted status and emit events
+		         * @param {boolean} mounted Mounted status.
+		         */
+		
+		    }, {
+		        key: "setMounted",
+		        value: function setMounted(mounted) {
+		            if (this._mounted === mounted) {
+		                return;
+		            }
+		            if (mounted) {
+		                this._mounted = mounted;
+		                this._clearMessageBuffer("unmount");
+		                this._sendMessageForced("awake");
+		                this._sendMessageBuffer("mount");
+		                this.children.forEach(function (child) {
+		                    child.setMounted(mounted);
+		                });
+		            } else {
+		                this._clearMessageBuffer("mount");
+		                this.children.forEach(function (child) {
+		                    child.setMounted(mounted);
+		                });
+		                this._sendMessageBuffer("unmount");
+		                this._sendMessageForced("dispose");
+		                this._tree = null;
+		                this._companion = null;
+		                this._mounted = mounted;
+		            }
+		        }
+		        /**
+		         * Get index of this node from parent.
+		         * @return {number} number of index.
+		         */
+		
+		    }, {
+		        key: "index",
+		        value: function index() {
+		            if (!this._parent) {
+		                return -1;
+		            }
+		            return this._parent.children.indexOf(this);
+		        }
+		        /**
+		         * remove attribute from this node.
+		         * @param {Attribute} attr [description]
+		         */
+		
+		    }, {
+		        key: "removeAttribute",
+		        value: function removeAttribute(attr) {
+		            return this._attributeManager.removeAttribute(attr);
+		        }
+		        /**
+		         * attach component to this node.
+		         * @param {Component} component [description]
+		         */
+		
+		    }, {
+		        key: "addComponent",
+		        value: function addComponent(component) {
+		            var attributes = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+		            var isDefaultComponent = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+		
+		            var declaration = _GrimoireInterface2.default.componentDeclarations.get(component);
+		            var instance = declaration.generateInstance();
+		            attributes = attributes || {};
+		            for (var key in attributes) {
+		                instance.setAttribute(key, attributes[key]);
+		            }
+		            this._addComponentDirectly(instance, isDefaultComponent);
+		            return instance;
+		        }
+		        /**
+		         * Internal use!
+		         * Should not operate by users or plugin developpers
+		         * @param {Component} component          [description]
+		         * @param {boolean}   isDefaultComponent [description]
+		         */
+		
+		    }, {
+		        key: "_addComponentDirectly",
+		        value: function _addComponentDirectly(component, isDefaultComponent) {
+		            var _this3 = this;
+		
+		            if (component.node) {
+		                throw new Error("component never change attached node");
+		            }
+		            component.isDefaultComponent = !!isDefaultComponent;
+		            component.node = this;
+		            var referenceElement = this.componentsElement[_NodeUtility2.default.getNodeListIndexByElementIndex(this.componentsElement, this._components.length)];
+		            this.componentsElement.insertBefore(component.element, referenceElement);
+		            var propNames = [];
+		            var o = component;
+		            while (o) {
+		                propNames = propNames.concat(Object.getOwnPropertyNames(o));
+		                o = Object.getPrototypeOf(o);
+		            }
+		            propNames.filter(function (name) {
+		                return name.startsWith("$") && typeof component[name] === "function";
+		            }).forEach(function (method) {
+		                component["$" + method] = component[method].bind(component);
+		            });
+		            this._components.push(component);
+		            component.addEnabledObserver(function (c) {
+		                if (c.enabled) {
+		                    _this3._resolveBufferdMessageTo(c, "mount");
+		                    _this3._resolveBufferdMessageTo(c, "unmount");
+		                }
+		            });
+		            if (isDefaultComponent) {
+		                // attributes should be exposed on node
+		                component.attributes.forEach(function (p) {
+		                    return _this3.addAttribute(p);
+		                });
+		                if (this._defaultValueResolved) {
+		                    component.attributes.forEach(function (p) {
+		                        return p.resolveDefaultValue(_NodeUtility2.default.getAttributes(_this3.element));
+		                    });
+		                }
+		            }
+		            if (this._mounted) {
+		                component.resolveDefaultAttributes(null); // here must be optional component.should not use node element attributes.
+		                this._sendMessageForcedTo(component, "awake");
+		                this._sendMessageBufferTo(component, "mount");
+		            }
+		        }
+		    }, {
+		        key: "getComponents",
+		        value: function getComponents(filter) {
+		            var _this4 = this;
+		
+		            if (!filter) {
+		                return this._components;
+		            } else {
+		                var _ret = function () {
+		                    var ctor = _Ensure2.default.ensureTobeComponentConstructor(filter);
+		                    return {
+		                        v: _this4._components.filter(function (c) {
+		                            return c instanceof ctor;
+		                        })
+		                    };
+		                }();
+		
+		                if ((typeof _ret === "undefined" ? "undefined" : _typeof(_ret)) === "object") return _ret.v;
+		            }
+		        }
+		    }, {
+		        key: "getComponent",
+		        value: function getComponent(name) {
+		            // 事情により<T extends Component>とはできない。
+		            // これはref/Node/Componentによって参照されるのが外部ライブラリにおけるコンポーネントであるが、
+		            // src/Node/Componentがこのプロジェクトにおけるコンポーネントのため、別のコンポーネントとみなされ、型の制約をみたさなくなるからである。
+		            if (!name) {
+		                throw new Error("name must be not null or undefined");
+		            } else if (typeof name === "function") {
+		                return this._components.find(function (c) {
+		                    return c instanceof name;
+		                }) || null;
+		            } else {
+		                var ctor = _Ensure2.default.ensureTobeComponentConstructor(name);
+		                if (!ctor) {
+		                    throw new Error("component " + name + " is not exist");
+		                }
+		                return this.getComponent(ctor);
+		            }
+		        }
+		    }, {
+		        key: "getComponentsInChildren",
+		        value: function getComponentsInChildren(name) {
+		            if (typeof name === "function") {
+		                return this.callRecursively(function (node) {
+		                    return node.getComponent(name);
+		                });
+		            } else {
+		                return this.callRecursively(function (node) {
+		                    return node.getComponent(name);
+		                });
+		            }
+		        }
+		        /**
+		         * resolve default attribute value for all component.
+		         * すべてのコンポーネントの属性をエレメントかデフォルト値で初期化
+		         */
+		
+		    }, {
+		        key: "resolveAttributesValue",
+		        value: function resolveAttributesValue() {
+		            this._defaultValueResolved = true;
+		            var attrs = _NodeUtility2.default.getAttributes(this.element);
+		            for (var key in attrs) {
+		                if (!this.attributes.get(key)) {
+		                    _Utility2.default.w("attribute '" + key + "' is not exist in this node '" + this.name.fqn + "'");
+		                }
+		            }
+		            this._components.forEach(function (component) {
+		                component.resolveDefaultAttributes(attrs);
+		            });
+		        }
+		        /**
+		         * check tree constraint for this node.
+		         * @return {string[]} [description]
+		         */
+		
+		    }, {
+		        key: "checkTreeConstraints",
+		        value: function checkTreeConstraints() {
+		            var _this5 = this;
+		
+		            var constraints = this.nodeDeclaration.treeConstraints;
+		            if (!constraints) {
+		                return [];
+		            }
+		            var errorMesasges = constraints.map(function (constraint) {
+		                return constraint(_this5);
+		            }).filter(function (message) {
+		                return message !== null;
+		            });
+		            if (errorMesasges.length === 0) {
+		                return null;
+		            }
+		            return errorMesasges;
+		        }
+		        /**
+		         * バッファしていたmount,unmountが送信されるかもしれない.アクティブなら
+		         */
+		
+		    }, {
+		        key: "notifyActivenessUpdate",
+		        value: function notifyActivenessUpdate() {
+		            if (this.isActive) {
+		                this._resolveBufferdMessage(this.mounted ? "mount" : "unmount");
+		                this.children.forEach(function (child) {
+		                    child.notifyActivenessUpdate();
+		                });
+		            }
+		        }
+		    }, {
+		        key: "watch",
+		        value: function watch(attrName, watcher) {
+		            var immediate = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+		
+		            this._attributeManager.watch(attrName, watcher, immediate);
+		        }
+		        /**
+		         * コンポーネントにメッセージを送る。送信したらバッファからは削除される.
+		         * @param  {Component} targetComponent 対象コンポーネント
+		         * @param  {string}    message         メッセージ
+		         * @param  {boolean}   forced          trueでコンポーネントのenableを無視して送信
+		         * @param  {boolean}   toBuffer        trueで送信失敗したらバッファに追加
+		         * @param  {any}       args            [description]
+		         * @return {boolean}                   送信したか
+		         */
+		
+		    }, {
+		        key: "_sendMessageToComponent",
+		        value: function _sendMessageToComponent(targetComponent, message, args) {
+		            message = _Ensure2.default.ensureTobeMessage(message);
+		            if (!targetComponent.enabled || !this.isActive) {
+		                return false;
+		            }
+		            var method = targetComponent[message];
+		            if (typeof method === "function") {
+		                method(args);
+		            }
+		            return true;
+		        }
+		        /**
+		         * バッファにあればメッセージを送信。成功したらバッファから削除
+		         * @param  {Component} target  [description]
+		         * @param  {string}    message [description]
+		         * @param  {boolean}   forced  [description]
+		         * @param  {any}       args    [description]
+		         * @return {boolean}           成功したか
+		         */
+		
+		    }, {
+		        key: "_resolveBufferdMessageTo",
+		        value: function _resolveBufferdMessageTo(target, message) {
+		            if (!target.enabled || !this.isActive) {
+		                return false;
+		            }
+		            message = _Ensure2.default.ensureTobeMessage(message);
+		            var bufferdIndex = this._messageBuffer.findIndex(function (obj) {
+		                return obj.message === message && obj.target === target;
+		            });
+		            if (bufferdIndex >= 0) {
+		                var method = target[message];
+		                if (typeof method === "function") {
+		                    method();
+		                }
+		                this._messageBuffer.splice(bufferdIndex, 1);
+		                return true;
+		            }
+		            return false;
+		        }
+		    }, {
+		        key: "_sendMessage",
+		        value: function _sendMessage(message, args) {
+		            var _this6 = this;
+		
+		            this._components.forEach(function (component) {
+		                _this6._sendMessageToComponent(component, message, args);
+		            });
+		        }
+		    }, {
+		        key: "_sendMessageForced",
+		        value: function _sendMessageForced(message) {
+		            var _this7 = this;
+		
+		            this._components.forEach(function (c) {
+		                _this7._sendMessageForcedTo(c, message);
+		            });
+		        }
+		    }, {
+		        key: "_sendMessageBuffer",
+		        value: function _sendMessageBuffer(message) {
+		            var _this8 = this;
+		
+		            this._components.forEach(function (c) {
+		                _this8._sendMessageBufferTo(c, message);
+		            });
+		        }
+		        /**
+		         * for $mount
+		         * @param  {Component} target  [description]
+		         * @param  {string}    message [description]
+		         * @return {boolean}           [description]
+		         */
+		
+		    }, {
+		        key: "_sendMessageBufferTo",
+		        value: function _sendMessageBufferTo(target, message) {
+		            message = _Ensure2.default.ensureTobeMessage(message);
+		            var bufferdIndex = this._messageBuffer.findIndex(function (obj) {
+		                return obj.message === message && obj.target === target;
+		            });
+		            if (!target.enabled || !this.isActive) {
+		                if (bufferdIndex < 0) {
+		                    this._messageBuffer.push({ message: message, target: target });
+		                }
+		                return false;
+		            }
+		            var method = target[message];
+		            if (typeof method === "function") {
+		                method();
+		            }
+		            if (bufferdIndex >= 0) {
+		                this._messageBuffer.splice(bufferdIndex, 1);
+		            }
+		            return true;
+		        }
+		        /**
+		         * for $awake
+		         * @param {Component} target  [description]
+		         * @param {string}    message [description]
+		         */
+		
+		    }, {
+		        key: "_sendMessageForcedTo",
+		        value: function _sendMessageForcedTo(target, message) {
+		            message = _Ensure2.default.ensureTobeMessage(message);
+		            var method = target[message];
+		            if (typeof method === "function") {
+		                method();
+		            }
+		        }
+		        /**
+		         * バッファのメッセージを送信可能なら送信してバッファから削除
+		         */
+		
+		    }, {
+		        key: "_resolveBufferdMessage",
+		        value: function _resolveBufferdMessage(message) {
+		            var _this9 = this;
+		
+		            message = _Ensure2.default.ensureTobeMessage(message);
+		            var copy = this._messageBuffer.filter(function (obj) {
+		                return obj.message === message;
+		            });
+		            copy.forEach(function (obj) {
+		                _this9._resolveBufferdMessageTo(obj.target, message);
+		            });
+		        }
+		    }, {
+		        key: "_clearMessageBuffer",
+		        value: function _clearMessageBuffer(message) {
+		            message = _Ensure2.default.ensureTobeMessage(message);
+		            this._messageBuffer = this._messageBuffer.filter(function (obj) {
+		                return obj.message !== message;
+		            });
+		        }
+		    }, {
+		        key: "_callRecursively",
+		        value: function _callRecursively(func, nextGenerator) {
+		            var val = func(this);
+		            var nexts = nextGenerator(this);
+		            var nextVals = nexts.map(function (c) {
+		                return c.callRecursively(func);
+		            });
+		            var list = nextVals.reduce(function (clist, current) {
+		                return clist.concat(current);
+		            }, []);
+		            list.unshift(val);
+		            return list;
+		        }
+		    }, {
+		        key: "name",
+		
+		        /**
+		         * Tag name.
+		         */
+		        get: function get() {
+		            return this.nodeDeclaration.name;
+		        }
+		    }, {
+		        key: "attributes",
+		        get: function get() {
+		            return this._attributeManager.attributes;
+		        }
+		        /**
+		         * GomlInterface that this node is bound to.
+		         * throw exception if this node is not mounted.
+		         * @return {IGomlInterface} [description]
+		         */
+		
+		    }, {
+		        key: "tree",
+		        get: function get() {
+		            if (!this.mounted) {
+		                throw new Error("this node is not mounted");
+		            }
+		            return this._tree;
+		        }
+		        /**
+		         * indicate this node is already deleted.
+		         * if this node is deleted once, this node will not be mounted.
+		         * @return {boolean} [description]
+		         */
+		
+		    }, {
+		        key: "deleted",
+		        get: function get() {
+		            return this._deleted;
+		        }
+		        /**
+		         * indicate this node is enabled in tree.
+		         * This value must be false when ancestor of this node is disabled.
+		         * @return {boolean} [description]
+		         */
+		
+		    }, {
+		        key: "isActive",
+		        get: function get() {
+		            if (this._parent) {
+		                return this._parent.isActive && this.enabled;
+		            } else {
+		                return this.enabled;
+		            }
+		        }
+		        /**
+		         * indicate this node is enabled.
+		         * this node never recieve any message if this node is not enabled.
+		         * @return {boolean} [description]
+		         */
+		
+		    }, {
+		        key: "enabled",
+		        get: function get() {
+		            return this.getAttribute("enabled");
+		        },
+		        set: function set(value) {
+		            this.setAttribute("enabled", value);
+		        }
+		        /**
+		         * the shared object by all nodes in tree.
+		         * @return {NSDictionary<any>} [description]
+		         */
+		
+		    }, {
+		        key: "companion",
+		        get: function get() {
+		            return this._companion;
+		        }
+		        /**
+		         * parent node of this node.
+		         * if this node is root, return null.
+		         * @return {GomlNode} [description]
+		         */
+		
+		    }, {
+		        key: "parent",
+		        get: function get() {
+		            return this._parent;
+		        }
+		        /**
+		         * return true if this node has some child nodes.
+		         * @return {boolean} [description]
+		         */
+		
+		    }, {
+		        key: "hasChildren",
+		        get: function get() {
+		            return this.children.length > 0;
+		        }
+		        /**
+		         * indicate mounted status.
+		         * this property to be true when treeroot registered to GrimoireInterface.
+		         * to be false when this node detachd from the tree.
+		         * @return {boolean} Whether this node is mounted or not.
+		         */
+		
+		    }, {
+		        key: "mounted",
+		        get: function get() {
+		            return this._mounted;
+		        }
+		    }], [{
+		        key: "fromElement",
+		        value: function fromElement(elem) {
+		            return _GrimoireInterface2.default.nodeDictionary[elem.getAttribute(_Constants2.default.x_gr_id)];
+		        }
+		    }]);
+		
+		    return GomlNode;
+		}(_EEObject3.default);
+		
+		exports.default = GomlNode;
+	
+	/***/ },
+	/* 11 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _events = __webpack_require__(12);
+		
+		var _IDObject2 = __webpack_require__(13);
 		
 		var _IDObject3 = _interopRequireDefault(_IDObject2);
 		
@@ -8542,7 +10901,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = EEObject;
 	
 	/***/ },
-	/* 3 */
+	/* 12 */
 	/***/ function(module, exports) {
 	
 		// Copyright Joyent, Inc. and other Node contributors.
@@ -8850,7 +11209,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	
 	/***/ },
-	/* 4 */
+	/* 13 */
 	/***/ function(module, exports) {
 	
 		"use strict";
@@ -8916,2272 +11275,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = IDObject;
 	
 	/***/ },
-	/* 5 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-		
-		var _GrimoireInterface = __webpack_require__(6);
-		
-		var _GrimoireInterface2 = _interopRequireDefault(_GrimoireInterface);
-		
-		var _NSIdentity = __webpack_require__(15);
-		
-		var _NSIdentity2 = _interopRequireDefault(_NSIdentity);
-		
-		var _NSDictionary = __webpack_require__(14);
-		
-		var _NSDictionary2 = _interopRequireDefault(_NSDictionary);
-		
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-		
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-		
-		/**
-		 * Provides static methods to ensure arguments are valid type.
-		 */
-		var Ensure = function () {
-		    function Ensure() {
-		        _classCallCheck(this, Ensure);
-		    }
-		
-		    _createClass(Ensure, null, [{
-		        key: "ensureString",
-		
-		        /**
-		         * Ensure specified str being string
-		         * @param  {string | number}      str [description]
-		         * @return {string}      [description]
-		         */
-		        value: function ensureString(str) {
-		            if (typeof str === "string") {
-		                return str;
-		            } else if (typeof str === "number") {
-		                return str.toString();
-		            } else {
-		                throw new Error("Specified argument can not convert into string");
-		            }
-		        }
-		        /**
-		         * Ensure specified number being number
-		         * @param  {string | number}      str [description]
-		         * @return {string}      [description]
-		         */
-		
-		    }, {
-		        key: "ensureNumber",
-		        value: function ensureNumber(num) {
-		            if (typeof num === "string") {
-		                return parseInt(num, 10);
-		            } else if (typeof num === "number") {
-		                return num;
-		            } else {
-		                throw new Error("specified argument can not be converted into number");
-		            }
-		        }
-		    }, {
-		        key: "ensureTobeNSIdentity",
-		        value: function ensureTobeNSIdentity(name) {
-		            if (!name) {
-		                return undefined;
-		            }
-		            if (typeof name === "string") {
-		                if (name.indexOf("|") !== -1) {
-		                    return _NSIdentity2.default.fromFQN(name);
-		                }
-		                return new _NSIdentity2.default(name);
-		            } else {
-		                return name;
-		            }
-		        }
-		    }, {
-		        key: "ensureTobeNSIdentityArray",
-		        value: function ensureTobeNSIdentityArray(names) {
-		            if (!names) {
-		                return [];
-		            }
-		            var newArr = [];
-		            for (var i = 0; i < names.length; i++) {
-		                newArr.push(this.ensureTobeNSIdentity(names[i]));
-		            }
-		            return newArr;
-		        }
-		    }, {
-		        key: "ensureTobeNSDictionary",
-		        value: function ensureTobeNSDictionary(dict, defaultNamespace) {
-		            if (!dict) {
-		                return new _NSDictionary2.default();
-		            }
-		            if (dict instanceof _NSDictionary2.default) {
-		                return dict;
-		            } else {
-		                var newDict = new _NSDictionary2.default();
-		                for (var key in dict) {
-		                    newDict.set(new _NSIdentity2.default(defaultNamespace, key), dict[key]);
-		                }
-		                return newDict;
-		            }
-		        }
-		    }, {
-		        key: "ensureTobeMessage",
-		        value: function ensureTobeMessage(message) {
-		            if (message.startsWith("$")) {
-		                if (message.startsWith("$$")) {
-		                    return message;
-		                } else {
-		                    return "$" + message;
-		                }
-		            } else {
-		                return "$$" + message;
-		            }
-		        }
-		    }, {
-		        key: "ensureTobeComponentConstructor",
-		        value: function ensureTobeComponentConstructor(c) {
-		            if (typeof c === "function") {
-		                return c;
-		            } else if (typeof c === "string") {
-		                return _GrimoireInterface2.default.componentDeclarations.get(c).ctor;
-		            } else {
-		                return _GrimoireInterface2.default.componentDeclarations.get(c).ctor;
-		            }
-		        }
-		    }]);
-		
-		    return Ensure;
-		}();
-		
-		exports.default = Ensure;
-	
-	/***/ },
-	/* 6 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-		
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-		
-		var _Utility = __webpack_require__(7);
-		
-		var _Utility2 = _interopRequireDefault(_Utility);
-		
-		var _GomlInterface = __webpack_require__(8);
-		
-		var _GomlInterface2 = _interopRequireDefault(_GomlInterface);
-		
-		var _BooleanConverter = __webpack_require__(17);
-		
-		var _BooleanConverter2 = _interopRequireDefault(_BooleanConverter);
-		
-		var _GrimoireComponent = __webpack_require__(18);
-		
-		var _GrimoireComponent2 = _interopRequireDefault(_GrimoireComponent);
-		
-		var _StringArrayConverter = __webpack_require__(21);
-		
-		var _StringArrayConverter2 = _interopRequireDefault(_StringArrayConverter);
-		
-		var _StringConverter = __webpack_require__(22);
-		
-		var _StringConverter2 = _interopRequireDefault(_StringConverter);
-		
-		var _Constants = __webpack_require__(1);
-		
-		var _Constants2 = _interopRequireDefault(_Constants);
-		
-		var _ComponentDeclaration = __webpack_require__(23);
-		
-		var _ComponentDeclaration2 = _interopRequireDefault(_ComponentDeclaration);
-		
-		var _Component = __webpack_require__(19);
-		
-		var _Component2 = _interopRequireDefault(_Component);
-		
-		var _NSSet = __webpack_require__(24);
-		
-		var _NSSet2 = _interopRequireDefault(_NSSet);
-		
-		var _NodeDeclaration = __webpack_require__(25);
-		
-		var _NodeDeclaration2 = _interopRequireDefault(_NodeDeclaration);
-		
-		var _NSIdentity = __webpack_require__(15);
-		
-		var _NSIdentity2 = _interopRequireDefault(_NSIdentity);
-		
-		var _NSDictionary = __webpack_require__(14);
-		
-		var _NSDictionary2 = _interopRequireDefault(_NSDictionary);
-		
-		var _Ensure = __webpack_require__(5);
-		
-		var _Ensure2 = _interopRequireDefault(_Ensure);
-		
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-		
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-		
-		var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
-		    return new (P || (P = Promise))(function (resolve, reject) {
-		        function fulfilled(value) {
-		            try {
-		                step(generator.next(value));
-		            } catch (e) {
-		                reject(e);
-		            }
-		        }
-		        function rejected(value) {
-		            try {
-		                step(generator.throw(value));
-		            } catch (e) {
-		                reject(e);
-		            }
-		        }
-		        function step(result) {
-		            result.done ? resolve(result.value) : new P(function (resolve) {
-		                resolve(result.value);
-		            }).then(fulfilled, rejected);
-		        }
-		        step((generator = generator.apply(thisArg, _arguments)).next());
-		    });
-		};
-		
-		var GrimoireInterfaceImpl = function () {
-		    function GrimoireInterfaceImpl() {
-		        _classCallCheck(this, GrimoireInterfaceImpl);
-		
-		        this.nodeDeclarations = new _NSDictionary2.default();
-		        this.converters = new _NSDictionary2.default();
-		        this.componentDeclarations = new _NSDictionary2.default();
-		        this.rootNodes = {};
-		        this.loadTasks = [];
-		        this.lib = {};
-		        this.nodeDictionary = {};
-		        this.componentDictionary = {};
-		        this.companion = new _NSDictionary2.default();
-		        this.initializedEventHandler = [];
-		        this.debug = false;
-		    }
-		    /**
-		     * Generate namespace helper function
-		     * @param  {string} ns namespace URI to be used
-		     * @return {[type]}    the namespaced identity
-		     */
-		
-		
-		    _createClass(GrimoireInterfaceImpl, [{
-		        key: "ns",
-		        value: function ns(_ns) {
-		            return function (name) {
-		                return new _NSIdentity2.default(_ns, name);
-		            };
-		        }
-		    }, {
-		        key: "initialize",
-		        value: function initialize() {
-		            this.registerConverter("String", _StringConverter2.default);
-		            this.registerConverter("StringArray", _StringArrayConverter2.default);
-		            this.registerConverter("Boolean", _BooleanConverter2.default);
-		            this.registerComponent("GrimoireComponent", _GrimoireComponent2.default);
-		            this.registerNode("GrimoireNodeBase", ["GrimoireComponent"]);
-		        }
-		        /**
-		         * Register plugins
-		         * @param  {(}      loadTask [description]
-		         * @return {[type]}          [description]
-		         */
-		
-		    }, {
-		        key: "register",
-		        value: function register(loadTask) {
-		            this.loadTasks.push(loadTask);
-		        }
-		    }, {
-		        key: "resolvePlugins",
-		        value: function resolvePlugins() {
-		            return __awaiter(this, void 0, void 0, regeneratorRuntime.mark(function _callee() {
-		                var i;
-		                return regeneratorRuntime.wrap(function _callee$(_context) {
-		                    while (1) {
-		                        switch (_context.prev = _context.next) {
-		                            case 0:
-		                                i = 0;
-		
-		                            case 1:
-		                                if (!(i < this.loadTasks.length)) {
-		                                    _context.next = 7;
-		                                    break;
-		                                }
-		
-		                                _context.next = 4;
-		                                return this.loadTasks[i]();
-		
-		                            case 4:
-		                                i++;
-		                                _context.next = 1;
-		                                break;
-		
-		                            case 7:
-		                            case "end":
-		                                return _context.stop();
-		                        }
-		                    }
-		                }, _callee, this);
-		            }));
-		        }
-		        /**
-		         * register custom component
-		         * @param  {string                |   NSIdentity} name          [description]
-		         * @param  {IAttributeDeclaration }} attributes           [description]
-		         * @param  {Object                |   (new                 (}           obj           [description]
-		         * @return {[type]}                       [description]
-		         */
-		
-		    }, {
-		        key: "registerComponent",
-		        value: function registerComponent(name, obj, superComponent) {
-		            name = _Ensure2.default.ensureTobeNSIdentity(name);
-		            if (this.componentDeclarations.get(name)) {
-		                throw new Error("component " + name.fqn + " is already registerd.");
-		            }
-		            if (this.debug && !_Utility2.default.isCamelCase(name.name)) {
-		                console.warn("component " + name.name + " is registerd. but,it should be 'CamelCase'.");
-		            }
-		            obj = this._ensureTobeComponentConstructor(obj, this._ensureNameTobeConstructor(superComponent));
-		            var attrs = obj["attributes"] || {};
-		            this.componentDeclarations.set(name, new _ComponentDeclaration2.default(name, attrs, obj));
-		        }
-		    }, {
-		        key: "registerNode",
-		        value: function registerNode(name, requiredComponents, defaultValues, superNode) {
-		            name = _Ensure2.default.ensureTobeNSIdentity(name);
-		            if (this.nodeDeclarations.get(name)) {
-		                throw new Error("gomlnode " + name.fqn + " is already registerd.");
-		            }
-		            if (this.debug && !_Utility2.default.isSnakeCase(name.name)) {
-		                console.warn("node " + name.name + " is registerd. but,it should be 'snake-case'.");
-		            }
-		            requiredComponents = _Ensure2.default.ensureTobeNSIdentityArray(requiredComponents);
-		            defaultValues = _Ensure2.default.ensureTobeNSDictionary(defaultValues, name.ns);
-		            superNode = _Ensure2.default.ensureTobeNSIdentity(superNode);
-		            this.nodeDeclarations.set(name, new _NodeDeclaration2.default(name, _NSSet2.default.fromArray(requiredComponents), defaultValues, superNode));
-		        }
-		    }, {
-		        key: "registerConverter",
-		        value: function registerConverter(name, converter) {
-		            name = _Ensure2.default.ensureTobeNSIdentity(name);
-		            this.converters.set(name, { name: name, convert: converter });
-		        }
-		    }, {
-		        key: "addRootNode",
-		        value: function addRootNode(tag, rootNode) {
-		            if (!rootNode) {
-		                throw new Error("can not register null to rootNodes.");
-		            }
-		            this.rootNodes[rootNode.id] = rootNode;
-		            rootNode.companion.set(this.ns(_Constants2.default.defaultNamespace)("scriptElement"), tag);
-		            // check tree constraint.
-		            var errorMessages = rootNode.callRecursively(function (n) {
-		                return n.checkTreeConstraints();
-		            }).reduce(function (list, current) {
-		                return list.concat(current);
-		            }).filter(function (error) {
-		                return error;
-		            });
-		            if (errorMessages.length !== 0) {
-		                var message = errorMessages.reduce(function (m, current) {
-		                    return m + "\n" + current;
-		                });
-		                throw new Error("tree constraint is not satisfied.\n" + message);
-		            }
-		            // awake and mount tree.
-		            rootNode.setMounted(true);
-		            rootNode.broadcastMessage("treeInitialized", {
-		                ownerScriptTag: tag,
-		                id: rootNode.id
-		            });
-		            tag.setAttribute("x-rootNodeId", rootNode.id);
-		            this._onTreeInitialized(tag);
-		            return rootNode.id;
-		        }
-		    }, {
-		        key: "getRootNode",
-		        value: function getRootNode(scriptTag) {
-		            var id = scriptTag.getAttribute("x-rootNodeId");
-		            return this.rootNodes[id];
-		        }
-		    }, {
-		        key: "noConflict",
-		        value: function noConflict() {
-		            window["gr"] = this.noConflictPreserve;
-		        }
-		    }, {
-		        key: "queryRootNodes",
-		        value: function queryRootNodes(query) {
-		            var scriptTags = document.querySelectorAll(query);
-		            var nodes = [];
-		            for (var i = 0; i < scriptTags.length; i++) {
-		                var node = this.getRootNode(scriptTags.item(i));
-		                if (node) {
-		                    nodes.push(node);
-		                }
-		            }
-		            return nodes;
-		        }
-		        /**
-		         * This method is not for users.
-		         * Just for unit testing.
-		         *
-		         * Clear all configuration that GrimoireInterface contain.
-		         */
-		
-		    }, {
-		        key: "clear",
-		        value: function clear() {
-		            this.nodeDeclarations.clear();
-		            this.componentDeclarations.clear();
-		            this.converters.clear();
-		            for (var key in this.rootNodes) {
-		                delete this.rootNodes[key];
-		            }
-		            this.loadTasks.splice(0, this.loadTasks.length);
-		            this.initialize();
-		        }
-		        /**
-		         * Ensure the given object or constructor to be an constructor inherits Component;
-		         * @param  {Object | (new ()=> Component} obj [The variable need to be ensured.]
-		         * @return {[type]}      [The constructor inherits Component]
-		         */
-		
-		    }, {
-		        key: "_ensureTobeComponentConstructor",
-		        value: function _ensureTobeComponentConstructor(obj, baseConstructor) {
-		            if (typeof obj === "function") {
-		                if (!(obj.prototype instanceof _Component2.default) && obj !== _Component2.default) {
-		                    throw new Error("Component constructor must extends Component class.");
-		                }
-		                return obj;
-		            } else if ((typeof obj === "undefined" ? "undefined" : _typeof(obj)) === "object") {
-		                var _ret = function () {
-		                    if (baseConstructor && !(baseConstructor.prototype instanceof _Component2.default)) {
-		                        throw new Error("Base component comstructor must extends Compoent class.");
-		                    }
-		                    var ctor = baseConstructor || _Component2.default;
-		                    var newCtor = function newCtor() {
-		                        ctor.call(this);
-		                    };
-		                    var properties = {};
-		                    for (var key in obj) {
-		                        if (key === "attributes") {
-		                            continue;
-		                        }
-		                        properties[key] = { value: obj[key] };
-		                    }
-		                    var attributes = {};
-		                    for (var _key in ctor["attributes"]) {
-		                        attributes[_key] = ctor["attributes"][_key];
-		                    }
-		                    for (var _key2 in obj["attributes"]) {
-		                        attributes[_key2] = obj["attributes"][_key2];
-		                    }
-		                    newCtor.prototype = Object.create(ctor.prototype, properties);
-		                    Object.defineProperty(newCtor, "attributes", {
-		                        value: attributes
-		                    });
-		                    obj = newCtor;
-		                    return {
-		                        v: obj
-		                    };
-		                }();
-		
-		                if ((typeof _ret === "undefined" ? "undefined" : _typeof(_ret)) === "object") return _ret.v;
-		            }
-		            return _Component2.default;
-		        }
-		    }, {
-		        key: "_ensureNameTobeConstructor",
-		        value: function _ensureNameTobeConstructor(component) {
-		            if (!component) {
-		                return null;
-		            }
-		            if (typeof component === "function") {
-		                return component;
-		            } else if (typeof component === "string") {
-		                return this._ensureNameTobeConstructor(_Ensure2.default.ensureTobeNSIdentity(component));
-		            } else {
-		                //here NSIdentity.
-		                var c = this.componentDeclarations.get(component);
-		                if (!c) {
-		                    return null;
-		                }
-		                return c.ctor;
-		            }
-		        }
-		    }, {
-		        key: "_onTreeInitialized",
-		        value: function _onTreeInitialized(tag) {
-		            this.initializedEventHandler.forEach(function (h) {
-		                h(tag.id, tag.className, tag);
-		            });
-		        }
-		    }]);
-		
-		    return GrimoireInterfaceImpl;
-		}();
-		
-		var context = new GrimoireInterfaceImpl();
-		var obtainGomlInterface = function obtainGomlInterface(query) {
-		    if (typeof query === "string") {
-		        // return GomlInterfaceGenerator(context.queryRootNodes(query));
-		        var gomlContext = new _GomlInterface2.default(context.queryRootNodes(query));
-		        var queryFunc = gomlContext.queryFunc.bind(gomlContext);
-		        Object.setPrototypeOf(queryFunc, gomlContext);
-		        return queryFunc;
-		    } else if (typeof query === "function") {
-		        context.initializedEventHandler.push(query);
-		    } else {
-		        var _gomlContext = new _GomlInterface2.default(query);
-		        var _queryFunc = _gomlContext.queryFunc.bind(_gomlContext);
-		        Object.setPrototypeOf(_queryFunc, _gomlContext);
-		        return _queryFunc;
-		    }
-		};
-		// const bindedFunction = obtainGomlInterface.bind(context);
-		Object.setPrototypeOf(obtainGomlInterface, context);
-		exports.default = obtainGomlInterface;
-	
-	/***/ },
-	/* 7 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-		
-		var _GrimoireInterface = __webpack_require__(6);
-		
-		var _GrimoireInterface2 = _interopRequireDefault(_GrimoireInterface);
-		
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-		
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-		
-		var Utility = function () {
-		    function Utility() {
-		        _classCallCheck(this, Utility);
-		    }
-		
-		    _createClass(Utility, null, [{
-		        key: "w",
-		        value: function w(message) {
-		            if (_GrimoireInterface2.default.debug) {
-		                console.warn(message);
-		            }
-		        }
-		    }, {
-		        key: "isCamelCase",
-		        value: function isCamelCase(str) {
-		            return (/^[A-Z][a-zA-Z0-9]*$/.test(str)
-		            );
-		        }
-		    }, {
-		        key: "isSnakeCase",
-		        value: function isSnakeCase(str) {
-		            return (/^[a-z0-9\-]+$/.test(str)
-		            );
-		        }
-		    }]);
-		
-		    return Utility;
-		}();
-		
-		exports.default = Utility;
-	
-	/***/ },
-	/* 8 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-		
-		var _Constants = __webpack_require__(1);
-		
-		var _Constants2 = _interopRequireDefault(_Constants);
-		
-		var _GrimoireInterface = __webpack_require__(6);
-		
-		var _GrimoireInterface2 = _interopRequireDefault(_GrimoireInterface);
-		
-		var _NodeInterface = __webpack_require__(9);
-		
-		var _NodeInterface2 = _interopRequireDefault(_NodeInterface);
-		
-		var _GomlNode = __webpack_require__(12);
-		
-		var _GomlNode2 = _interopRequireDefault(_GomlNode);
-		
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-		
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-		
-		/**
-		 * Provides interfaces to treat whole goml tree for each.
-		 */
-		var GomlInterface = function () {
-		    function GomlInterface(rootNodes) {
-		        _classCallCheck(this, GomlInterface);
-		
-		        this.rootNodes = rootNodes;
-		    }
-		
-		    _createClass(GomlInterface, [{
-		        key: "getNodeById",
-		        value: function getNodeById(id) {
-		            var _this = this;
-		
-		            return new Array(this.rootNodes.length).map(function (v, i) {
-		                return _GomlNode2.default.fromElement(_this.rootNodes[i].element.ownerDocument.getElementById(id));
-		            });
-		        }
-		    }, {
-		        key: "queryFunc",
-		        value: function queryFunc(query) {
-		            var context = new _NodeInterface2.default(this.queryNodes(query));
-		            var queryFunc = context.queryFunc.bind(context);
-		            Object.setPrototypeOf(queryFunc, context);
-		            return queryFunc;
-		        }
-		    }, {
-		        key: "queryNodes",
-		        value: function queryNodes(query) {
-		            return this.rootNodes.map(function (root) {
-		                var nodelist = root.element.ownerDocument.querySelectorAll(query);
-		                var nodes = [];
-		                for (var i = 0; i < nodelist.length; i++) {
-		                    var node = _GrimoireInterface2.default.nodeDictionary[nodelist.item(i).getAttribute(_Constants2.default.x_gr_id)];
-		                    if (node) {
-		                        nodes.push(node);
-		                    }
-		                }
-		                return nodes;
-		            });
-		        }
-		    }]);
-		
-		    return GomlInterface;
-		}();
-		
-		exports.default = GomlInterface;
-	
-	/***/ },
-	/* 9 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-		
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-		
-		var _Constants = __webpack_require__(1);
-		
-		var _Constants2 = _interopRequireDefault(_Constants);
-		
-		var _GrimoireInterface = __webpack_require__(6);
-		
-		var _GrimoireInterface2 = _interopRequireDefault(_GrimoireInterface);
-		
-		var _XMLReader = __webpack_require__(10);
-		
-		var _XMLReader2 = _interopRequireDefault(_XMLReader);
-		
-		var _GomlParser = __webpack_require__(11);
-		
-		var _GomlParser2 = _interopRequireDefault(_GomlParser);
-		
-		var _ComponentInterface = __webpack_require__(16);
-		
-		var _ComponentInterface2 = _interopRequireDefault(_ComponentInterface);
-		
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-		
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-		
-		/**
-		 * 複数のノードを対象とした操作を提供するインタフェース
-		 */
-		var NodeInterface = function () {
-		    function NodeInterface(nodes) {
-		        _classCallCheck(this, NodeInterface);
-		
-		        this.nodes = nodes;
-		        if (!nodes) {
-		            throw new Error("nodes is null");
-		        }
-		    }
-		
-		    _createClass(NodeInterface, [{
-		        key: "queryFunc",
-		        value: function queryFunc(query) {
-		            return new _ComponentInterface2.default(this._queryComponents(query));
-		        }
-		    }, {
-		        key: "_queryComponents",
-		        value: function _queryComponents(query) {
-		            return this.nodes.map(function (nodes) {
-		                return nodes.map(function (node) {
-		                    var componentElements = node.componentsElement.querySelectorAll(query);
-		                    var components = [];
-		                    for (var i = 0; i < componentElements.length; i++) {
-		                        var elem = componentElements[i];
-		                        var component = _GrimoireInterface2.default.componentDictionary[elem.getAttribute(_Constants2.default.x_gr_id)];
-		                        if (component) {
-		                            components.push(component);
-		                        }
-		                    }
-		                    return components;
-		                });
-		            });
-		        }
-		    }, {
-		        key: "isEmpty",
-		        value: function isEmpty() {
-		            return this.count() === 0;
-		        }
-		    }, {
-		        key: "get",
-		        value: function get(i1, i2) {
-		            var _this = this;
-		
-		            if (i1 === void 0) {
-		                var first = this.first();
-		                if (!first) {
-		                    throw new Error("this NodeInterface is empty.");
-		                } else {
-		                    return first;
-		                }
-		            } else if (i2 === void 0) {
-		                if (this.count() <= i1) {
-		                    throw new Error("index out of range.");
-		                } else {
-		                    var _ret = function () {
-		                        var c = i1;
-		                        var returnNode = null;
-		                        _this.forEach(function (node) {
-		                            if (c === 0) {
-		                                returnNode = node;
-		                            }
-		                            c--;
-		                        });
-		                        return {
-		                            v: returnNode
-		                        };
-		                    }();
-		
-		                    if ((typeof _ret === "undefined" ? "undefined" : _typeof(_ret)) === "object") return _ret.v;
-		                }
-		            } else {
-		                if (this.nodes.length <= i1 || this.nodes[i1].length <= i2) {
-		                    throw new Error("index out of range.");
-		                } else {
-		                    return this.nodes[i1][i2];
-		                }
-		            }
-		        }
-		    }, {
-		        key: "getAttribute",
-		        value: function getAttribute(attrName) {
-		            var first = this.first();
-		            if (!first) {
-		                throw new Error("this NodeInterface is empty.");
-		            }
-		            return first.getAttribute(attrName);
-		        }
-		    }, {
-		        key: "setAttribute",
-		        value: function setAttribute(attrName, value) {
-		            this.forEach(function (node) {
-		                node.setAttribute(attrName, value);
-		            });
-		        }
-		        /**
-		         * 対象ノードにイベントリスナを追加します。
-		         * @param {string}   eventName [description]
-		         * @param {Function} listener  [description]
-		         */
-		
-		    }, {
-		        key: "on",
-		        value: function on(eventName, listener) {
-		            this.forEach(function (node) {
-		                node.on(eventName, listener);
-		            });
-		            return this;
-		        }
-		        /**
-		         * 対象ノードに指定したイベントリスナが登録されていれば削除します
-		         * @param {string}   eventName [description]
-		         * @param {Function} listener  [description]
-		         */
-		
-		    }, {
-		        key: "off",
-		        value: function off(eventName, listener) {
-		            this.forEach(function (node) {
-		                node.removeListener(eventName, listener);
-		            });
-		            return this;
-		        }
-		        /**
-		         * このノードインタフェースが対象とするノードそれぞれに、
-		         * タグで指定したノードを子要素として追加します。
-		         * @param {string} tag [description]
-		         */
-		
-		    }, {
-		        key: "append",
-		        value: function append(tag) {
-		            this.forEach(function (node) {
-		                var elems = _XMLReader2.default.parseXML(tag);
-		                elems.forEach(function (elem) {
-		                    var child = _GomlParser2.default.parse(elem, null, null);
-		                    node.addChild(child);
-		                });
-		            });
-		            return this;
-		        }
-		        /**
-		         * このノードインタフェースが対象とするノードの子に、
-		         * 指定されたノードが存在すれば削除します。
-		         * @param {GomlNode} child [description]
-		         */
-		
-		    }, {
-		        key: "remove",
-		        value: function remove() {
-		            this.forEach(function (node) {
-		                node.delete();
-		            });
-		            return this;
-		        }
-		        /**
-		         * このノードインタフェースが対象とするノードに対して反復処理を行います
-		         * @param  {GomlNode} callback [description]
-		         * @return {[type]}            [description]
-		         */
-		
-		    }, {
-		        key: "forEach",
-		        value: function forEach(callback) {
-		            this.nodes.forEach(function (array, gomlIndex) {
-		                array.forEach(function (node, nodeIndex) {
-		                    callback(node, gomlIndex, nodeIndex);
-		                });
-		            });
-		            return this;
-		        }
-		    }, {
-		        key: "find",
-		        value: function find(predicate) {
-		            var nodes = this.nodes;
-		            for (var i = 0; i < nodes.length; i++) {
-		                var array = nodes[i];
-		                for (var j = 0; j < array.length; j++) {
-		                    var node = array[j];
-		                    if (predicate(node, i, j)) {
-		                        return node;
-		                    }
-		                }
-		            }
-		            return null;
-		        }
-		        /**
-		         * このノードインタフェースが対象とするノードを有効、または無効にします。
-		         * @param {boolean} enable [description]
-		         */
-		
-		    }, {
-		        key: "setEnable",
-		        value: function setEnable(enable) {
-		            this.forEach(function (node) {
-		                node.enabled = !!enable;
-		            });
-		            return this;
-		        }
-		        /**
-		         * このノードインタフェースが対象とするノードのそれぞれの子ノードを対象とする、
-		         * 新しいノードインタフェースを取得します。
-		         * @return {NodeInterface} [description]
-		         */
-		
-		    }, {
-		        key: "children",
-		        value: function children() {
-		            var children = this.nodes.map(function (nodes) {
-		                return nodes.map(function (node) {
-		                    return node.children;
-		                }).reduce(function (pre, cur) {
-		                    return pre.concat(cur);
-		                });
-		            });
-		            return new NodeInterface(children);
-		        }
-		        /**
-		         * 対象ノードにコンポーネントをアタッチします。
-		         * @param {Component} component [description]
-		         */
-		
-		    }, {
-		        key: "addComponent",
-		        value: function addComponent(componentId) {
-		            var attributes = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-		
-		            this.forEach(function (node) {
-		                node.addComponent(componentId, attributes);
-		            });
-		            return this;
-		        }
-		        /**
-		         * 最初の対象ノードを取得する
-		         * @return {GomlNode} [description]
-		         */
-		
-		    }, {
-		        key: "first",
-		        value: function first() {
-		            return this.find(function () {
-		                return true;
-		            });
-		        }
-		        /**
-		         * 対象となる唯一のノードを取得する。
-		         * 対象が存在しない、あるいは複数存在するときは例外を投げる。
-		         * @return {GomlNode} [description]
-		         */
-		
-		    }, {
-		        key: "single",
-		        value: function single() {
-		            if (this.count() !== 1) {
-		                throw new Error("this nodeInterface is not single.");
-		            }
-		            var first = this.first();
-		            if (!first) {
-		                throw new Error("this nodeInterface is not single,but is empty.");
-		            }
-		            return first;
-		        }
-		        /**
-		         * 対象となるノードの個数を取得する
-		         * @return {number} [description]
-		         */
-		
-		    }, {
-		        key: "count",
-		        value: function count() {
-		            if (this.nodes.length === 0) {
-		                return 0;
-		            }
-		            var counts = this.nodes.map(function (nodes) {
-		                return nodes.length;
-		            });
-		            return counts.reduce(function (total, current) {
-		                return total + current;
-		            }, 0);
-		        }
-		    }, {
-		        key: "filter",
-		        value: function filter(predicate) {
-		            var newNodes = this.nodes.map(function (nodes, gomlIndex) {
-		                return nodes.filter(function (node, nodeIndex) {
-		                    return predicate(node, gomlIndex, nodeIndex);
-		                });
-		            });
-		            return new NodeInterface(newNodes);
-		        }
-		    }, {
-		        key: "toArray",
-		        value: function toArray() {
-		            return this.nodes.reduce(function (pre, current) {
-		                return pre.concat(current);
-		            }, []);
-		        }
-		    }]);
-		
-		    return NodeInterface;
-		}();
-		
-		exports.default = NodeInterface;
-	
-	/***/ },
-	/* 10 */
-	/***/ function(module, exports) {
-	
-		'use strict';
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-		
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-		
-		/**
-		 * Provides safe xml read feature.
-		 */
-		var XMLReader = function () {
-		    function XMLReader() {
-		        _classCallCheck(this, XMLReader);
-		    }
-		
-		    _createClass(XMLReader, null, [{
-		        key: 'parseXML',
-		        value: function parseXML(doc, rootElementName) {
-		            var isParseError = function isParseError(parsedDocument) {
-		                var defaultError = console.error;
-		                console.error = function () {}; //disable error message!
-		                var errorneousParse = XMLReader._parser.parseFromString('<', 'text/xml');
-		                delete console.error; //restore...
-		                console.error = defaultError;
-		                if (errorneousParse.documentURI === void 0) {
-		                    return false;
-		                }
-		                var parsererrorNS = errorneousParse.getElementsByTagName("parsererror").item(0).namespaceURI;
-		                if (parsererrorNS === 'http://www.w3.org/1999/xhtml') {
-		                    return parsedDocument.getElementsByTagName("parsererror").length > 0;
-		                }
-		                return parsedDocument.getElementsByTagNameNS(parsererrorNS, 'parsererror').length > 0;
-		            };
-		            var parsed = XMLReader._parser.parseFromString(doc, "text/xml");
-		            if (isParseError(parsed)) {
-		                throw new Error('Error parsing XML');
-		            }
-		            if (rootElementName) {
-		                if (parsed.documentElement.tagName.toUpperCase() !== rootElementName.toUpperCase()) {
-		                    throw new Error("Specified document is invalid.");
-		                } // TODO should throw more detail error
-		            }
-		            return [parsed.documentElement]; // TODO: implenent!
-		        }
-		    }, {
-		        key: 'getElements',
-		        value: function getElements(elem, name) {
-		            var result = [];
-		            var elems = elem.getElementsByTagName(name);
-		            for (var i = 0; i < elems.length; i++) {
-		                result.push(elems.item(i));
-		            }
-		            return result;
-		        }
-		    }, {
-		        key: 'getSingleElement',
-		        value: function getSingleElement(elem, name, mandatory) {
-		            var result = XMLReader.getElements(elem, name);
-		            if (result.length === 1) {
-		                return result[0];
-		            } else if (result.length === 0) {
-		                if (mandatory) {
-		                    throw new Error('The mandatory element ' + name + ' was required, but not found');
-		                } else {
-		                    return null;
-		                }
-		            } else {
-		                throw new Error('The element ' + name + ' requires to exist in single. But there is ' + result.length + ' count of elements');
-		            }
-		        }
-		    }, {
-		        key: 'getAttribute',
-		        value: function getAttribute(elem, name, mandatory) {
-		            var result = elem.attributes.getNamedItem(name);
-		            if (result) {
-		                return result.value;
-		            } else if (mandatory) {
-		                throw new Error('The mandatory attribute ' + name + ' was required, but it was not found');
-		            } else {
-		                return null;
-		            }
-		        }
-		    }, {
-		        key: 'getAttributeFloat',
-		        value: function getAttributeFloat(elem, name, mandatory) {
-		            var resultStr = XMLReader.getAttribute(elem, name, mandatory);
-		            return parseFloat(resultStr);
-		        }
-		    }, {
-		        key: 'getAttributeInt',
-		        value: function getAttributeInt(elem, name, mandatory) {
-		            var resultStr = XMLReader.getAttribute(elem, name, mandatory);
-		            return parseInt(resultStr, 10);
-		        }
-		    }, {
-		        key: 'getChildElements',
-		        value: function getChildElements(elem) {
-		            var children = elem.childNodes;
-		            var result = [];
-		            for (var i = 0; i < children.length; i++) {
-		                if (children.item(i) instanceof Element) {
-		                    result.push(children.item(i));
-		                }
-		            }
-		            return result;
-		        }
-		    }, {
-		        key: 'getAttributes',
-		        value: function getAttributes(elem, ns) {
-		            var result = {};
-		            var attrs = elem.attributes;
-		            for (var i = 0; i < attrs.length; i++) {
-		                var attr = attrs.item(i);
-		                if (!ns || attr.namespaceURI === ns) {
-		                    result[attr.localName] = attr.value;
-		                }
-		            }
-		            return result;
-		        }
-		    }]);
-		
-		    return XMLReader;
-		}();
-		
-		XMLReader._parser = new DOMParser();
-		exports.default = XMLReader;
-	
-	/***/ },
-	/* 11 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-		
-		var _GomlNode = __webpack_require__(12);
-		
-		var _GomlNode2 = _interopRequireDefault(_GomlNode);
-		
-		var _GrimoireInterface = __webpack_require__(6);
-		
-		var _GrimoireInterface2 = _interopRequireDefault(_GrimoireInterface);
-		
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-		
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-		
-		/**
-		 * Parser of Goml to Node utilities.
-		 * This class do not store any nodes and goml properties.
-		 */
-		var GomlParser = function () {
-		    function GomlParser() {
-		        _classCallCheck(this, GomlParser);
-		    }
-		
-		    _createClass(GomlParser, null, [{
-		        key: "parse",
-		
-		        /**
-		         * Domをパースする
-		         * @param  {Element}           source    [description]
-		         * @param  {GomlNode}          parent    あればこのノードにaddChildされる
-		         * @return {GomlNode}                    ルートノード
-		         */
-		        value: function parse(source, parent, scriptTag) {
-		            var newNode = GomlParser._createNode(source);
-		            if (!newNode) {
-		                // when specified node could not be found
-		                console.warn("\"" + source.tagName + "\" was not parsed.");
-		                return null;
-		            }
-		            // Parse children recursively
-		            var children = source.childNodes;
-		            var childNodeElements = []; // for parse after .Components has resolved.
-		            if (children && children.length !== 0) {
-		                var removeTarget = [];
-		                for (var i = 0; i < children.length; i++) {
-		                    var child = children.item(i);
-		                    if (!GomlParser._isElement(child)) {
-		                        removeTarget.push(child);
-		                        continue;
-		                    }
-		                    if (this._isComponentsTag(child)) {
-		                        // parse as components
-		                        GomlParser._parseComponents(newNode, child);
-		                        removeTarget.push(child);
-		                    } else {
-		                        // parse as child node.
-		                        childNodeElements.push(child);
-		                    }
-		                }
-		                // remove unused elements
-		                for (var _i = 0; _i < removeTarget.length; _i++) {
-		                    source.removeChild(removeTarget[_i]);
-		                }
-		            }
-		            // generate tree
-		            if (parent) {
-		                parent.addChild(newNode, null, false);
-		            }
-		            childNodeElements.forEach(function (child) {
-		                GomlParser.parse(child, newNode, null);
-		            });
-		            return newNode;
-		        }
-		        /**
-		         * GomlNodeのインスタンス化。GrimoireInterfaceへの登録
-		         * @param  {HTMLElement}      elem         [description]
-		         * @param  {GomlConfigurator} configurator [description]
-		         * @return {GomlTreeNodeBase}              [description]
-		         */
-		
-		    }, {
-		        key: "_createNode",
-		        value: function _createNode(elem) {
-		            var tagName = elem.localName;
-		            var recipe = _GrimoireInterface2.default.nodeDeclarations.get(elem);
-		            if (!recipe) {
-		                throw new Error("Tag \"" + tagName + "\" is not found.");
-		            }
-		            return new _GomlNode2.default(recipe, elem);
-		        }
-		        /**
-		         * .COMPONENTSのパース。
-		         * @param {GomlNode} node          アタッチされるコンポーネント
-		         * @param {Element}  componentsTag .COMPONENTSタグ
-		         */
-		
-		    }, {
-		        key: "_parseComponents",
-		        value: function _parseComponents(node, componentsTag) {
-		            var componentNodes = componentsTag.childNodes;
-		            if (!componentNodes) {
-		                return;
-		            }
-		            for (var i = 0; i < componentNodes.length; i++) {
-		                var componentNode = componentNodes.item(i);
-		                if (!GomlParser._isElement(componentNode)) {
-		                    continue; // Skip if the node was not element
-		                }
-		                var componentDecl = _GrimoireInterface2.default.componentDeclarations.get(componentNode);
-		                if (!componentDecl) {
-		                    throw new Error("Component " + componentNode.tagName + " is not found.");
-		                }
-		                var component = componentDecl.generateInstance(componentNode);
-		                node._addComponentDirectly(component, false);
-		            }
-		        }
-		    }, {
-		        key: "_isElement",
-		        value: function _isElement(node) {
-		            return node.nodeType === Node.ELEMENT_NODE;
-		        }
-		    }, {
-		        key: "_isComponentsTag",
-		        value: function _isComponentsTag(element) {
-		            var regexToFindComponent = /\.COMPONENTS$/mi; // TODO might needs to fix
-		            return regexToFindComponent.test(element.nodeName);
-		        }
-		    }]);
-		
-		    return GomlParser;
-		}();
-		
-		exports.default = GomlParser;
-	
-	/***/ },
-	/* 12 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-		
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-		
-		var _Utility = __webpack_require__(7);
-		
-		var _Utility2 = _interopRequireDefault(_Utility);
-		
-		var _Constants = __webpack_require__(1);
-		
-		var _Constants2 = _interopRequireDefault(_Constants);
-		
-		var _GomlParser = __webpack_require__(11);
-		
-		var _GomlParser2 = _interopRequireDefault(_GomlParser);
-		
-		var _XMLReader = __webpack_require__(10);
-		
-		var _XMLReader2 = _interopRequireDefault(_XMLReader);
-		
-		var _GrimoireInterface = __webpack_require__(6);
-		
-		var _GrimoireInterface2 = _interopRequireDefault(_GrimoireInterface);
-		
-		var _EEObject2 = __webpack_require__(2);
-		
-		var _EEObject3 = _interopRequireDefault(_EEObject2);
-		
-		var _NodeUtility = __webpack_require__(13);
-		
-		var _NodeUtility2 = _interopRequireDefault(_NodeUtility);
-		
-		var _NSDictionary = __webpack_require__(14);
-		
-		var _NSDictionary2 = _interopRequireDefault(_NSDictionary);
-		
-		var _NSIdentity = __webpack_require__(15);
-		
-		var _NSIdentity2 = _interopRequireDefault(_NSIdentity);
-		
-		var _Ensure = __webpack_require__(5);
-		
-		var _Ensure2 = _interopRequireDefault(_Ensure);
-		
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-		
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-		
-		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-		
-		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-		
-		var GomlNode = function (_EEObject) {
-		    _inherits(GomlNode, _EEObject);
-		
-		    /**
-		     * create new instance.
-		     * @param  {NodeDeclaration} recipe  作成するノードのDeclaration
-		     * @param  {Element}         element 対応するDomElement
-		     * @return {[type]}                  [description]
-		     */
-		    function GomlNode(recipe, element) {
-		        _classCallCheck(this, GomlNode);
-		
-		        var _this = _possibleConstructorReturn(this, (GomlNode.__proto__ || Object.getPrototypeOf(GomlNode)).call(this));
-		
-		        _this.children = [];
-		        _this._parent = null;
-		        _this._root = null;
-		        _this._mounted = false;
-		        _this._messageBuffer = [];
-		        _this._tree = null;
-		        _this._companion = new _NSDictionary2.default();
-		        _this._deleted = false;
-		        _this._attrBuffer = {};
-		        _this._defaultValueResolved = false;
-		        if (!recipe) {
-		            throw new Error("recipe must not be null");
-		        }
-		        _this.nodeDeclaration = recipe;
-		        _this.element = element ? element : document.createElementNS(recipe.name.ns, recipe.name.name); // TODO Could be undefined or null?
-		        _this.componentsElement = document.createElement("COMPONENTS");
-		        _this._root = _this;
-		        _this._tree = (0, _GrimoireInterface2.default)([_this]);
-		        _this._components = [];
-		        _this.attributes = new _NSDictionary2.default();
-		        _this.element.setAttribute(_Constants2.default.x_gr_id, _this.id);
-		        var defaultComponentNames = recipe.defaultComponentsActual;
-		        // instanciate default components
-		        defaultComponentNames.toArray().map(function (id) {
-		            _this.addComponent(id, null, true);
-		        });
-		        // register to GrimoireInterface.
-		        _GrimoireInterface2.default.nodeDictionary[_this.id] = _this;
-		        return _this;
-		    }
-		    /**
-		     * Get actual goml node from element of xml tree.
-		     * @param  {Element}  elem [description]
-		     * @return {GomlNode}      [description]
-		     */
-		
-		
-		    _createClass(GomlNode, [{
-		        key: "getChildrenByClass",
-		
-		        /**
-		         * search from children node by class property.
-		         * return all nodes has same class as given.
-		         * @param  {string}     className [description]
-		         * @return {GomlNode[]}           [description]
-		         */
-		        value: function getChildrenByClass(className) {
-		            var nodes = this.element.getElementsByClassName(className);
-		            var array = new Array(nodes.length);
-		            for (var i = 0; i < nodes.length; i++) {
-		                array[i] = GomlNode.fromElement(nodes.item(i));
-		            }
-		            return array;
-		        }
-		        /**
-		         * search from children node by name property.
-		         * return all nodes has same name as given.
-		         * @param  {string}     nodeName [description]
-		         * @return {GomlNode[]}          [description]
-		         */
-		
-		    }, {
-		        key: "getChildrenByNodeName",
-		        value: function getChildrenByNodeName(nodeName) {
-		            var nodes = this.element.getElementsByTagName(nodeName);
-		            var array = new Array(nodes.length);
-		            for (var i = 0; i < nodes.length; i++) {
-		                array[i] = GomlNode.fromElement(nodes.item(i));
-		            }
-		            return array;
-		        }
-		        /**
-		         * detach and delete this node and children.
-		         * call when this node will never use.
-		         */
-		
-		    }, {
-		        key: "delete",
-		        value: function _delete() {
-		            console.warn("delete is obsolate. please use remove() instead of");
-		            this.remove();
-		        }
-		    }, {
-		        key: "remove",
-		        value: function remove() {
-		            this.children.forEach(function (c) {
-		                c.remove();
-		            });
-		            _GrimoireInterface2.default.nodeDictionary[this.id] = null;
-		            if (this._parent) {
-		                this._parent.detachChild(this);
-		            } else {
-		                this.setMounted(false);
-		                if (this.element.parentNode) {
-		                    this.element.parentNode.removeChild(this.element);
-		                }
-		            }
-		            this._deleted = true;
-		        }
-		        /**
-		         * send message to this node.
-		         * invoke component method has same name as message if this node isActive.
-		         * @param  {string}  message [description]
-		         * @param  {any}     args    [description]
-		         * @return {boolean}         is this node active.
-		         */
-		
-		    }, {
-		        key: "sendMessage",
-		        value: function sendMessage(message, args) {
-		            if (!this.isActive) {
-		                return false;
-		            }
-		            this._sendMessage(message, args);
-		            return true;
-		        }
-		    }, {
-		        key: "broadcastMessage",
-		        value: function broadcastMessage(arg1, arg2, arg3) {
-		            if (!this.enabled || !this.mounted) {
-		                return;
-		            }
-		            if (typeof arg1 === "number") {
-		                var range = arg1;
-		                var message = arg2;
-		                var args = arg3;
-		                this.sendMessage(message, args);
-		                if (range > 0) {
-		                    for (var i = 0; i < this.children.length; i++) {
-		                        this.children[i].broadcastMessage(range - 1, message, args);
-		                    }
-		                }
-		            } else {
-		                var _message = arg1;
-		                var _args = arg2;
-		                this.sendMessage(_message, _args);
-		                for (var _i = 0; _i < this.children.length; _i++) {
-		                    this.children[_i].broadcastMessage(_message, _args);
-		                }
-		            }
-		        }
-		    }, {
-		        key: "append",
-		        value: function append(tag) {
-		            var _this2 = this;
-		
-		            var elems = _XMLReader2.default.parseXML(tag);
-		            var ret = [];
-		            elems.forEach(function (elem) {
-		                var child = _GomlParser2.default.parse(elem, null, null);
-		                _this2.addChild(child);
-		                ret.push(child);
-		            });
-		            return ret;
-		        }
-		        /**
-		         * add new instance created by given name and attributes for this node as child.
-		         * @param {string |   NSIdentity} nodeName      [description]
-		         * @param {any    }} attributes   [description]
-		         */
-		
-		    }, {
-		        key: "addChildByName",
-		        value: function addChildByName(nodeName, attributes) {
-		            if (typeof nodeName === "string") {
-		                return this.addChildByName(new _NSIdentity2.default(nodeName), attributes);
-		            } else {
-		                var nodeDec = _GrimoireInterface2.default.nodeDeclarations.get(nodeName);
-		                var node = new GomlNode(nodeDec, null);
-		                if (attributes) {
-		                    for (var key in attributes) {
-		                        var id = _Ensure2.default.ensureTobeNSIdentity(key);
-		                        node.setAttribute(id, attributes[key]);
-		                    }
-		                }
-		                this.addChild(node);
-		                return node;
-		            }
-		        }
-		        /**
-		         * Add child for this node.
-		         * @param {GomlNode} child            child node to add.
-		         * @param {number}   index            index for insert.なければ末尾に追加
-		         * @param {[type]}   elementSync=true trueのときはElementのツリーを同期させる。（Elementからパースするときはfalseにする）
-		         */
-		
-		    }, {
-		        key: "addChild",
-		        value: function addChild(child, index) {
-		            var elementSync = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
-		
-		            if (child._deleted) {
-		                throw new Error("deleted node never use.");
-		            }
-		            if (index != null && typeof index !== "number") {
-		                throw new Error("insert index should be number or null or undefined.");
-		            }
-		            child._parent = this;
-		            var insertIndex = index == null ? this.children.length : index;
-		            this.children.splice(insertIndex, 0, child);
-		            var checkChildConstraints = child.checkTreeConstraints();
-		            var checkAncestorConstraint = this._callRecursively(function (n) {
-		                return n.checkTreeConstraints();
-		            }, function (n) {
-		                return n._parent ? [n._parent] : [];
-		            }).reduce(function (list, current) {
-		                return list.concat(current);
-		            });
-		            var errors = checkChildConstraints.concat(checkAncestorConstraint).filter(function (m) {
-		                return m;
-		            });
-		            if (errors.length !== 0) {
-		                var message = errors.reduce(function (m, current) {
-		                    return m + "\n" + current;
-		                });
-		                throw new Error("tree constraint is not satisfied.\n" + message);
-		            }
-		            // handling html
-		            if (elementSync) {
-		                var referenceElement = this.element[_NodeUtility2.default.getNodeListIndexByElementIndex(this.element, insertIndex)];
-		                this.element.insertBefore(child.element, referenceElement);
-		            }
-		            child._tree = this._tree;
-		            child._companion = this._companion;
-		            // mounting
-		            if (this.mounted) {
-		                child.setMounted(true);
-		            }
-		        }
-		    }, {
-		        key: "callRecursively",
-		        value: function callRecursively(func) {
-		            return this._callRecursively(func, function (n) {
-		                return n.children;
-		            });
-		        }
-		        /**
-		         * delete child node.
-		         * @param {GomlNode} child Target node to be inserted.
-		         */
-		
-		    }, {
-		        key: "removeChild",
-		        value: function removeChild(child) {
-		            var node = this.detachChild(child);
-		            if (node) {
-		                node.remove();
-		            }
-		        }
-		        /**
-		         * detach given node from this node if target is child of this node.
-		         * return null if target is not child of this node.
-		         * @param  {GomlNode} child [description]
-		         * @return {GomlNode}       detached node.
-		         */
-		
-		    }, {
-		        key: "detachChild",
-		        value: function detachChild(target) {
-		            // search child.
-		            var index = this.children.indexOf(target);
-		            if (index === -1) {
-		                return null;
-		            }
-		            target.setMounted(false);
-		            target._parent = null;
-		            this.children.splice(index, 1);
-		            // html sync
-		            this.element.removeChild(target.element);
-		            // check ancestor constraint.
-		            var errors = this._callRecursively(function (n) {
-		                return n.checkTreeConstraints();
-		            }, function (n) {
-		                return n._parent ? [n._parent] : [];
-		            }).reduce(function (list, current) {
-		                return list.concat(current);
-		            }).filter(function (m) {
-		                return m;
-		            });
-		            if (errors.length !== 0) {
-		                var message = errors.reduce(function (m, current) {
-		                    return m + "\n" + current;
-		                });
-		                throw new Error("tree constraint is not satisfied.\n" + message);
-		            }
-		            return target;
-		        }
-		        /**
-		         * detach this node from parent.
-		         */
-		
-		    }, {
-		        key: "detach",
-		        value: function detach() {
-		            if (this.parent) {
-		                this.parent.detachChild(this);
-		            } else {
-		                throw new Error("root Node cannot be detached.");
-		            }
-		        }
-		        /**
-		         * [[[OBSOLETE!]]]get value of attribute.
-		         * @param  {string | NSIdentity}  attrName [description]
-		         * @return {any}         [description]
-		         */
-		
-		    }, {
-		        key: "getValue",
-		        value: function getValue(attrName) {
-		            console.warn("getValue is obsolate. please use getAttribute instead of");
-		            return this.getAttribute(attrName);
-		        }
-		    }, {
-		        key: "getAttribute",
-		        value: function getAttribute(attrName) {
-		            attrName = _Ensure2.default.ensureTobeNSIdentity(attrName);
-		            var attr = this.attributes.get(attrName);
-		            if (!attr) {
-		                var attrBuf = this._attrBuffer[attrName.fqn];
-		                if (attrBuf !== void 0) {
-		                    return attrBuf;
-		                }
-		                console.warn("attribute \"" + attrName.name + "\" is not found.");
-		                return;
-		            } else {
-		                return attr.Value;
-		            }
-		        }
-		        /**
-		         * set value to selected attribute.
-		         * @param {string |     NSIdentity}  attrName [description]
-		         * @param {any}       value [description]
-		         */
-		
-		    }, {
-		        key: "setValue",
-		        value: function setValue(attrName, value) {
-		            console.warn("setValue is obsolate. please use setAttribute instead of");
-		            this.setAttribute(attrName, value);
-		        }
-		    }, {
-		        key: "setAttribute",
-		        value: function setAttribute(attrName, value) {
-		            attrName = _Ensure2.default.ensureTobeNSIdentity(attrName);
-		            var attr = this.attributes.get(attrName);
-		            if (!attr) {
-		                if (_GrimoireInterface2.default.debug) {
-		                    console.warn("attribute \"" + attrName.name + "\" is not found.");
-		                }
-		                this._attrBuffer[attrName.fqn] = value;
-		            } else {
-		                attr.Value = value;
-		            }
-		        }
-		        /**
-		         *  Add new attribute. In most of case, users no need to call this method.
-		         *  Use __addAttribute in Component should be used instead.
-		         */
-		
-		    }, {
-		        key: "addAttribute",
-		        value: function addAttribute(attr) {
-		            this.attributes.set(attr.name, attr);
-		            // check buffer value.
-		            var attrBuf = this._attrBuffer[attr.name.fqn];
-		            if (attrBuf !== void 0) {
-		                attr.Value = attrBuf;
-		                delete this._attrBuffer[attr.name.fqn];
-		            }
-		        }
-		        /**
-		         * Update mounted status and emit events
-		         * @param {boolean} mounted Mounted status.
-		         */
-		
-		    }, {
-		        key: "setMounted",
-		        value: function setMounted(mounted) {
-		            if (this._mounted === mounted) {
-		                return;
-		            }
-		            if (mounted) {
-		                this._mounted = mounted;
-		                this._clearMessageBuffer("unmount");
-		                this._sendMessageForced("awake");
-		                this._sendMessageBuffer("mount");
-		                this.children.forEach(function (child) {
-		                    child.setMounted(mounted);
-		                });
-		            } else {
-		                this._clearMessageBuffer("mount");
-		                this.children.forEach(function (child) {
-		                    child.setMounted(mounted);
-		                });
-		                this._sendMessageBuffer("unmount");
-		                this._sendMessageForced("dispose");
-		                this._tree = null;
-		                this._companion = null;
-		                this._mounted = mounted;
-		            }
-		        }
-		        /**
-		         * Get index of this node from parent.
-		         * @return {number} number of index.
-		         */
-		
-		    }, {
-		        key: "index",
-		        value: function index() {
-		            if (!this._parent) {
-		                return -1;
-		            }
-		            return this._parent.children.indexOf(this);
-		        }
-		        /**
-		         * remove attribute from this node.
-		         * @param {Attribute} attr [description]
-		         */
-		
-		    }, {
-		        key: "removeAttribute",
-		        value: function removeAttribute(attr) {
-		            this.attributes.delete(attr.name);
-		        }
-		        /**
-		         * attach component to this node.
-		         * @param {Component} component [description]
-		         */
-		
-		    }, {
-		        key: "addComponent",
-		        value: function addComponent(component) {
-		            var attributes = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-		            var isDefaultComponent = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-		
-		            var declaration = _GrimoireInterface2.default.componentDeclarations.get(component);
-		            var instance = declaration.generateInstance();
-		            attributes = attributes || {};
-		            for (var key in attributes) {
-		                instance.setValue(key, attributes[key]);
-		            }
-		            this._addComponentDirectly(instance, isDefaultComponent);
-		            return instance;
-		        }
-		        /**
-		         * Internal use!
-		         * Should not operate by users or plugin developpers
-		         * @param {Component} component          [description]
-		         * @param {boolean}   isDefaultComponent [description]
-		         */
-		
-		    }, {
-		        key: "_addComponentDirectly",
-		        value: function _addComponentDirectly(component, isDefaultComponent) {
-		            var _this3 = this;
-		
-		            if (component.node) {
-		                throw new Error("component never change attached node");
-		            }
-		            component.isDefaultComponent = !!isDefaultComponent;
-		            component.node = this;
-		            var referenceElement = this.componentsElement[_NodeUtility2.default.getNodeListIndexByElementIndex(this.componentsElement, this._components.length)];
-		            this.componentsElement.insertBefore(component.element, referenceElement);
-		            var propNames = [];
-		            var o = component;
-		            while (o) {
-		                propNames = propNames.concat(Object.getOwnPropertyNames(o));
-		                o = Object.getPrototypeOf(o);
-		            }
-		            propNames.filter(function (name) {
-		                return name.startsWith("$") && typeof component[name] === "function";
-		            }).forEach(function (method) {
-		                component["$" + method] = component[method].bind(component);
-		            });
-		            this._components.push(component);
-		            component.addEnabledObserver(function (c) {
-		                if (c.enabled) {
-		                    _this3._resolveBufferdMessageTo(c, "mount");
-		                    _this3._resolveBufferdMessageTo(c, "unmount");
-		                }
-		            });
-		            if (isDefaultComponent) {
-		                // attributes should be exposed on node
-		                component.attributes.forEach(function (p) {
-		                    return _this3.addAttribute(p);
-		                });
-		                if (this._defaultValueResolved) {
-		                    component.attributes.forEach(function (p) {
-		                        return p.resolveDefaultValue(_NodeUtility2.default.getAttributes(_this3.element));
-		                    });
-		                }
-		            }
-		            if (this._mounted) {
-		                component.resolveDefaultAttributes(null); // here must be optional component.should not use node element attributes.
-		                this._sendMessageForcedTo(component, "awake");
-		                this._sendMessageBufferTo(component, "mount");
-		            }
-		        }
-		    }, {
-		        key: "getComponents",
-		        value: function getComponents(filter) {
-		            var _this4 = this;
-		
-		            if (!filter) {
-		                return this._components;
-		            } else {
-		                var _ret = function () {
-		                    var ctor = _Ensure2.default.ensureTobeComponentConstructor(filter);
-		                    return {
-		                        v: _this4._components.filter(function (c) {
-		                            return c instanceof ctor;
-		                        })
-		                    };
-		                }();
-		
-		                if ((typeof _ret === "undefined" ? "undefined" : _typeof(_ret)) === "object") return _ret.v;
-		            }
-		        }
-		    }, {
-		        key: "getComponent",
-		        value: function getComponent(name) {
-		            // 事情により<T extends Component>とはできない。
-		            // これはref/Node/Componentによって参照されるのが外部ライブラリにおけるコンポーネントであるが、
-		            // src/Node/Componentがこのプロジェクトにおけるコンポーネントのため、別のコンポーネントとみなされ、型の制約をみたさなくなるからである。
-		            if (!name) {
-		                throw new Error("name must be not null or undefined");
-		            } else if (typeof name === "function") {
-		                return this._components.find(function (c) {
-		                    return c instanceof name;
-		                }) || null;
-		            } else {
-		                var ctor = _Ensure2.default.ensureTobeComponentConstructor(name);
-		                if (!ctor) {
-		                    throw new Error("component " + name + " is not exist");
-		                }
-		                return this.getComponent(ctor);
-		            }
-		        }
-		    }, {
-		        key: "getComponentsInChildren",
-		        value: function getComponentsInChildren(name) {
-		            if (typeof name === "function") {
-		                return this.callRecursively(function (node) {
-		                    return node.getComponent(name);
-		                });
-		            } else {
-		                return this.callRecursively(function (node) {
-		                    return node.getComponent(name);
-		                });
-		            }
-		        }
-		        /**
-		         * resolve default attribute value for all component.
-		         * すべてのコンポーネントの属性をエレメントかデフォルト値で初期化
-		         */
-		
-		    }, {
-		        key: "resolveAttributesValue",
-		        value: function resolveAttributesValue() {
-		            this._defaultValueResolved = true;
-		            var attrs = _NodeUtility2.default.getAttributes(this.element);
-		            for (var key in attrs) {
-		                if (!this.attributes.get(key)) {
-		                    _Utility2.default.w("attribute '" + key + "' is not exist in this node '" + this.name.fqn + "'");
-		                }
-		            }
-		            this._components.forEach(function (component) {
-		                component.resolveDefaultAttributes(attrs);
-		            });
-		        }
-		        /**
-		         * check tree constraint for this node.
-		         * @return {string[]} [description]
-		         */
-		
-		    }, {
-		        key: "checkTreeConstraints",
-		        value: function checkTreeConstraints() {
-		            var _this5 = this;
-		
-		            var constraints = this.nodeDeclaration.treeConstraints;
-		            if (!constraints) {
-		                return [];
-		            }
-		            var errorMesasges = constraints.map(function (constraint) {
-		                return constraint(_this5);
-		            }).filter(function (message) {
-		                return message !== null;
-		            });
-		            if (errorMesasges.length === 0) {
-		                return null;
-		            }
-		            return errorMesasges;
-		        }
-		        /**
-		         * バッファしていたmount,unmountが送信されるかもしれない.アクティブなら
-		         */
-		
-		    }, {
-		        key: "notifyActivenessUpdate",
-		        value: function notifyActivenessUpdate() {
-		            if (this.isActive) {
-		                this._resolveBufferdMessage(this.mounted ? "mount" : "unmount");
-		                this.children.forEach(function (child) {
-		                    child.notifyActivenessUpdate();
-		                });
-		            }
-		        }
-		        /**
-		         * コンポーネントにメッセージを送る。送信したらバッファからは削除される.
-		         * @param  {Component} targetComponent 対象コンポーネント
-		         * @param  {string}    message         メッセージ
-		         * @param  {boolean}   forced          trueでコンポーネントのenableを無視して送信
-		         * @param  {boolean}   toBuffer        trueで送信失敗したらバッファに追加
-		         * @param  {any}       args            [description]
-		         * @return {boolean}                   送信したか
-		         */
-		
-		    }, {
-		        key: "_sendMessageToComponent",
-		        value: function _sendMessageToComponent(targetComponent, message, args) {
-		            message = _Ensure2.default.ensureTobeMessage(message);
-		            if (!targetComponent.enabled || !this.isActive) {
-		                return false;
-		            }
-		            var method = targetComponent[message];
-		            if (typeof method === "function") {
-		                method(args);
-		            }
-		            return true;
-		        }
-		        /**
-		         * バッファにあればメッセージを送信。成功したらバッファから削除
-		         * @param  {Component} target  [description]
-		         * @param  {string}    message [description]
-		         * @param  {boolean}   forced  [description]
-		         * @param  {any}       args    [description]
-		         * @return {boolean}           成功したか
-		         */
-		
-		    }, {
-		        key: "_resolveBufferdMessageTo",
-		        value: function _resolveBufferdMessageTo(target, message) {
-		            if (!target.enabled || !this.isActive) {
-		                return false;
-		            }
-		            message = _Ensure2.default.ensureTobeMessage(message);
-		            var bufferdIndex = this._messageBuffer.findIndex(function (obj) {
-		                return obj.message === message && obj.target === target;
-		            });
-		            if (bufferdIndex >= 0) {
-		                var method = target[message];
-		                if (typeof method === "function") {
-		                    method();
-		                }
-		                this._messageBuffer.splice(bufferdIndex, 1);
-		                return true;
-		            }
-		            return false;
-		        }
-		    }, {
-		        key: "_sendMessage",
-		        value: function _sendMessage(message, args) {
-		            var _this6 = this;
-		
-		            this._components.forEach(function (component) {
-		                _this6._sendMessageToComponent(component, message, args);
-		            });
-		        }
-		    }, {
-		        key: "_sendMessageForced",
-		        value: function _sendMessageForced(message) {
-		            var _this7 = this;
-		
-		            this._components.forEach(function (c) {
-		                _this7._sendMessageForcedTo(c, message);
-		            });
-		        }
-		    }, {
-		        key: "_sendMessageBuffer",
-		        value: function _sendMessageBuffer(message) {
-		            var _this8 = this;
-		
-		            this._components.forEach(function (c) {
-		                _this8._sendMessageBufferTo(c, message);
-		            });
-		        }
-		        /**
-		         * for $mount
-		         * @param  {Component} target  [description]
-		         * @param  {string}    message [description]
-		         * @return {boolean}           [description]
-		         */
-		
-		    }, {
-		        key: "_sendMessageBufferTo",
-		        value: function _sendMessageBufferTo(target, message) {
-		            message = _Ensure2.default.ensureTobeMessage(message);
-		            var bufferdIndex = this._messageBuffer.findIndex(function (obj) {
-		                return obj.message === message && obj.target === target;
-		            });
-		            if (!target.enabled || !this.isActive) {
-		                if (bufferdIndex < 0) {
-		                    this._messageBuffer.push({ message: message, target: target });
-		                }
-		                return false;
-		            }
-		            var method = target[message];
-		            if (typeof method === "function") {
-		                method();
-		            }
-		            if (bufferdIndex >= 0) {
-		                this._messageBuffer.splice(bufferdIndex, 1);
-		            }
-		            return true;
-		        }
-		        /**
-		         * for $awake
-		         * @param {Component} target  [description]
-		         * @param {string}    message [description]
-		         */
-		
-		    }, {
-		        key: "_sendMessageForcedTo",
-		        value: function _sendMessageForcedTo(target, message) {
-		            message = _Ensure2.default.ensureTobeMessage(message);
-		            var method = target[message];
-		            if (typeof method === "function") {
-		                method();
-		            }
-		        }
-		        /**
-		         * バッファのメッセージを送信可能なら送信してバッファから削除
-		         */
-		
-		    }, {
-		        key: "_resolveBufferdMessage",
-		        value: function _resolveBufferdMessage(message) {
-		            var _this9 = this;
-		
-		            message = _Ensure2.default.ensureTobeMessage(message);
-		            var copy = this._messageBuffer.filter(function (obj) {
-		                return obj.message === message;
-		            });
-		            copy.forEach(function (obj) {
-		                _this9._resolveBufferdMessageTo(obj.target, message);
-		            });
-		        }
-		    }, {
-		        key: "_clearMessageBuffer",
-		        value: function _clearMessageBuffer(message) {
-		            message = _Ensure2.default.ensureTobeMessage(message);
-		            this._messageBuffer = this._messageBuffer.filter(function (obj) {
-		                return obj.message !== message;
-		            });
-		        }
-		    }, {
-		        key: "_callRecursively",
-		        value: function _callRecursively(func, nextGenerator) {
-		            var val = func(this);
-		            var nexts = nextGenerator(this);
-		            var nextVals = nexts.map(function (c) {
-		                return c.callRecursively(func);
-		            });
-		            var list = nextVals.reduce(function (clist, current) {
-		                return clist.concat(current);
-		            }, []);
-		            list.unshift(val);
-		            return list;
-		        }
-		    }, {
-		        key: "name",
-		
-		        /**
-		         * Tag name.
-		         */
-		        get: function get() {
-		            return this.nodeDeclaration.name;
-		        }
-		        /**
-		         * GomlInterface that this node is bound to.
-		         * throw exception if this node is not mounted.
-		         * @return {IGomlInterface} [description]
-		         */
-		
-		    }, {
-		        key: "tree",
-		        get: function get() {
-		            if (!this.mounted) {
-		                throw new Error("this node is not mounted");
-		            }
-		            return this._tree;
-		        }
-		        /**
-		         * indicate this node is already deleted.
-		         * if this node is deleted once, this node will not be mounted.
-		         * @return {boolean} [description]
-		         */
-		
-		    }, {
-		        key: "deleted",
-		        get: function get() {
-		            return this._deleted;
-		        }
-		        /**
-		         * indicate this node is enabled in tree.
-		         * This value must be false when ancestor of this node is disabled.
-		         * @return {boolean} [description]
-		         */
-		
-		    }, {
-		        key: "isActive",
-		        get: function get() {
-		            if (this._parent) {
-		                return this._parent.isActive && this.enabled;
-		            } else {
-		                return this.enabled;
-		            }
-		        }
-		        /**
-		         * indicate this node is enabled.
-		         * this node never recieve any message if this node is not enabled.
-		         * @return {boolean} [description]
-		         */
-		
-		    }, {
-		        key: "enabled",
-		        get: function get() {
-		            return this.getAttribute("enabled");
-		        },
-		        set: function set(value) {
-		            this.setAttribute("enabled", value);
-		        }
-		        /**
-		         * the shared object by all nodes in tree.
-		         * @return {NSDictionary<any>} [description]
-		         */
-		
-		    }, {
-		        key: "companion",
-		        get: function get() {
-		            return this._companion;
-		        }
-		        /**
-		         * parent node of this node.
-		         * if this node is root, return null.
-		         * @return {GomlNode} [description]
-		         */
-		
-		    }, {
-		        key: "parent",
-		        get: function get() {
-		            return this._parent;
-		        }
-		        /**
-		         * return true if this node has some child nodes.
-		         * @return {boolean} [description]
-		         */
-		
-		    }, {
-		        key: "hasChildren",
-		        get: function get() {
-		            return this.children.length > 0;
-		        }
-		        /**
-		         * indicate mounted status.
-		         * this property to be true when treeroot registered to GrimoireInterface.
-		         * to be false when this node detachd from the tree.
-		         * @return {boolean} Whether this node is mounted or not.
-		         */
-		
-		    }, {
-		        key: "mounted",
-		        get: function get() {
-		            return this._mounted;
-		        }
-		    }], [{
-		        key: "fromElement",
-		        value: function fromElement(elem) {
-		            return _GrimoireInterface2.default.nodeDictionary[elem.getAttribute(_Constants2.default.x_gr_id)];
-		        }
-		    }]);
-		
-		    return GomlNode;
-		}(_EEObject3.default);
-		
-		exports.default = GomlNode;
-	
-	/***/ },
-	/* 13 */
+	/* 14 */
 	/***/ function(module, exports) {
 	
 		"use strict";
@@ -11237,7 +11331,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = NodeUtility;
 	
 	/***/ },
-	/* 14 */
+	/* 15 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -11248,7 +11342,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 		
-		var _NSIdentity = __webpack_require__(15);
+		var _NSIdentity = __webpack_require__(16);
 		
 		var _NSIdentity2 = _interopRequireDefault(_NSIdentity);
 		
@@ -11288,7 +11382,9 @@ return /******/ (function(modules) { // webpackBootstrap
 		                    theMap.delete(key.fqn);
 		                }
 		                this._fqnObjectMap.delete(key.fqn);
+		                return true;
 		            }
+		            return false;
 		        }
 		    }, {
 		        key: "get",
@@ -11402,7 +11498,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = NSDictionary;
 	
 	/***/ },
-	/* 15 */
+	/* 16 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -11413,7 +11509,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 		
-		var _Constants = __webpack_require__(1);
+		var _Constants = __webpack_require__(6);
 		
 		var _Constants2 = _interopRequireDefault(_Constants);
 		
@@ -11490,151 +11586,6 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = NSIdentity;
 	
 	/***/ },
-	/* 16 */
-	/***/ function(module, exports) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-		
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-		
-		var ComponentInterface = exports.ComponentInterface = function () {
-		    function ComponentInterface(components) {
-		        _classCallCheck(this, ComponentInterface);
-		
-		        this.components = components;
-		    }
-		
-		    _createClass(ComponentInterface, [{
-		        key: "get",
-		        value: function get(i1, i2, i3) {
-		            var c = this.components;
-		            if (i1 === void 0) {
-		                if (c.length === 0 || c[0].length === 0 || c[0][0].length === 0) {
-		                    return null;
-		                } else if (c.length === 1 && c[0].length === 1 || c[0][0].length === 1) {
-		                    return c[0][0][0];
-		                }
-		                throw new Error("There are too many candidate");
-		            } else if (i2 === void 0) {
-		                if (c.length === 0 || c[0].length === 0 || c[0][0].length <= i1) {
-		                    return null;
-		                } else if (c.length === 1 && c[0].length === 1) {
-		                    return c[0][0][i1];
-		                }
-		                throw new Error("There are too many candidate");
-		            } else if (i3 === void 0) {
-		                if (c.length === 0 || c[0].length <= i2 || c[0][i2].length <= i1) {
-		                    return null;
-		                } else if (c.length === 1) {
-		                    return c[0][i2][i1];
-		                }
-		                throw new Error("There are too many candidate");
-		            } else {
-		                if (c.length <= i3 || c[i3].length <= i2 || c[i3][i2].length <= i1) {
-		                    return null;
-		                }
-		                return c[i3][i2][i1];
-		            }
-		        }
-		    }, {
-		        key: "forEach",
-		        value: function forEach(f) {
-		            this.components.forEach(function (tree, ti) {
-		                tree.forEach(function (nodes, ni) {
-		                    nodes.forEach(function (comp, ci) {
-		                        f(comp, ci, ni, ti);
-		                    });
-		                });
-		            });
-		            return this;
-		        }
-		    }, {
-		        key: "first",
-		        value: function first(pred) {
-		            if (!pred) {
-		                return this.first(function () {
-		                    return true;
-		                });
-		            }
-		            for (var i = 0; i < this.components.length; i++) {
-		                var array1 = this.components[i];
-		                for (var j = 0; j < array1.length; i++) {
-		                    var array2 = array1[j];
-		                    for (var k = 0; k < array2.length; k++) {
-		                        var c = array2[k];
-		                        if (pred(c, i, j, k)) {
-		                            return c;
-		                        }
-		                    }
-		                }
-		            }
-		            return null;
-		        }
-		    }, {
-		        key: "isEmpty",
-		        value: function isEmpty() {
-		            var _isEmpty = true;
-		            this.forEach(function (component) {
-		                _isEmpty = false;
-		            });
-		            return _isEmpty;
-		        }
-		    }, {
-		        key: "getAttribute",
-		        value: function getAttribute(attrName) {
-		            if (this.isEmpty()) {
-		                throw new Error("component interface is empty.");
-		            }
-		            return this.components[0][0][0].getValue(attrName);
-		        }
-		    }, {
-		        key: "setAttribute",
-		        value: function setAttribute(attrName, value) {
-		            this.forEach(function (component) {
-		                component.setValue(attrName, value);
-		            });
-		        }
-		    }, {
-		        key: "attr",
-		        value: function attr(attrName, value) {
-		            if (value === void 0) {
-		                console.warn("attr is obsolate. please use getAttribute instead of.");
-		                return this.getAttribute(attrName);
-		            } else {
-		                console.warn("attr is obsolate. please use setAttribute instead of.");
-		                this.setAttribute(attrName, value);
-		            }
-		        }
-		    }, {
-		        key: "count",
-		        value: function count() {
-		            if (this.components.length === 0) {
-		                return 0;
-		            }
-		            return this.components.map(function (components) {
-		                return components.map(function (c) {
-		                    return c.length;
-		                }).reduce(function (total, current) {
-		                    return total + current;
-		                }, 0);
-		            }).reduce(function (total, current) {
-		                return total + current;
-		            }, 0);
-		        }
-		    }]);
-		
-		    return ComponentInterface;
-		}();
-		
-		exports.default = ComponentInterface;
-	
-	/***/ },
 	/* 17 */
 	/***/ function(module, exports) {
 	
@@ -11653,10 +11604,9 @@ return /******/ (function(modules) { // webpackBootstrap
 		            case "false":
 		                return false;
 		            default:
-		                throw new Error("Invalid string " + val + " for parsing as boolean");
+		                return undefined;
 		        }
 		    }
-		    throw new Error("Invalid string " + val + " for parsing as boolean");
 		}
 		exports.default = BooleanConverter;
 	
@@ -11699,17 +11649,13 @@ return /******/ (function(modules) { // webpackBootstrap
 		            var _this2 = this;
 		
 		            this.node.resolveAttributesValue();
-		            this.__bindAttributes();
-		            var idAttribute = this.getAttribute("id");
-		            var classAttribute = this.getAttribute("class");
-		            idAttribute.addObserver(function (attr) {
-		                _this2.node.element.id = attr.Value ? attr.Value : "";
+		            this.getAttributeRaw("id").watch(function (attr) {
+		                _this2.node.element.id = attr ? attr : "";
 		            }, true);
-		            classAttribute.addObserver(function (attr) {
-		                var v = attr.Value;
-		                _this2.node.element.className = v ? v.join(" ") : "";
+		            this.getAttributeRaw("class").watch(function (attr) {
+		                _this2.node.element.className = Array.isArray(attr) ? attr.join(" ") : "";
 		            }, true);
-		            this.getAttribute("enabled").addObserver(function (attr) {
+		            this.getAttributeRaw("enabled").watch(function (attr) {
 		                if (_this2.node.isActive) {
 		                    _this2.node.notifyActivenessUpdate();
 		                }
@@ -11723,17 +11669,17 @@ return /******/ (function(modules) { // webpackBootstrap
 		GrimoireComponent.attributes = {
 		    id: {
 		        converter: "String",
-		        defaultValue: "",
+		        default: null,
 		        readonly: false
 		    },
 		    class: {
 		        converter: "StringArray",
-		        defaultValue: "",
+		        default: null,
 		        readonly: false
 		    },
 		    enabled: {
 		        converter: "Boolean",
-		        defaultValue: true,
+		        default: true,
 		        readonly: false
 		    }
 		};
@@ -11751,15 +11697,15 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 		
-		var _Utility = __webpack_require__(7);
+		var _Utility = __webpack_require__(4);
 		
 		var _Utility2 = _interopRequireDefault(_Utility);
 		
-		var _Constants = __webpack_require__(1);
+		var _Constants = __webpack_require__(6);
 		
 		var _Constants2 = _interopRequireDefault(_Constants);
 		
-		var _NodeUtility = __webpack_require__(13);
+		var _NodeUtility = __webpack_require__(14);
 		
 		var _NodeUtility2 = _interopRequireDefault(_NodeUtility);
 		
@@ -11767,7 +11713,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _Attribute2 = _interopRequireDefault(_Attribute);
 		
-		var _IDObject2 = __webpack_require__(4);
+		var _IDObject2 = __webpack_require__(13);
 		
 		var _IDObject3 = _interopRequireDefault(_IDObject2);
 		
@@ -11814,12 +11760,14 @@ return /******/ (function(modules) { // webpackBootstrap
 		         * @return {any}         [description]
 		         */
 		        value: function getValue(name) {
-		            var attr = this.attributes.get(name);
-		            if (attr) {
-		                return attr.Value;
-		            } else {
-		                return undefined;
-		            }
+		            console.warn("Component#getValue is obsolete. please use getAttribute instead of.");
+		            return this.getAttribute(name);
+		        }
+		    }, {
+		        key: "setValue",
+		        value: function setValue(name, value) {
+		            console.warn("Component#setValue is obsolete. please use setAttribute instead of.");
+		            return this.setAttribute(name, value);
 		        }
 		        /**
 		         * Set value of attribute
@@ -11828,8 +11776,8 @@ return /******/ (function(modules) { // webpackBootstrap
 		         */
 		
 		    }, {
-		        key: "setValue",
-		        value: function setValue(name, value) {
+		        key: "setAttribute",
+		        value: function setAttribute(name, value) {
 		            var attr = this.attributes.get(name); // TODO:check readonly?
 		            if (attr) {
 		                attr.Value = value;
@@ -11838,6 +11786,16 @@ return /******/ (function(modules) { // webpackBootstrap
 		    }, {
 		        key: "getAttribute",
 		        value: function getAttribute(name) {
+		            var attr = this.getAttributeRaw(name);
+		            if (attr) {
+		                return attr.Value;
+		            } else {
+		                return undefined;
+		            }
+		        }
+		    }, {
+		        key: "getAttributeRaw",
+		        value: function getAttributeRaw(name) {
 		            return this.attributes.get(name);
 		        }
 		    }, {
@@ -11996,15 +11954,15 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 		
-		var _Ensure = __webpack_require__(5);
+		var _Ensure = __webpack_require__(2);
 		
 		var _Ensure2 = _interopRequireDefault(_Ensure);
 		
-		var _NSIdentity = __webpack_require__(15);
+		var _NSIdentity = __webpack_require__(16);
 		
 		var _NSIdentity2 = _interopRequireDefault(_NSIdentity);
 		
-		var _GrimoireInterface = __webpack_require__(6);
+		var _GrimoireInterface = __webpack_require__(3);
 		
 		var _GrimoireInterface2 = _interopRequireDefault(_GrimoireInterface);
 		
@@ -12024,26 +11982,21 @@ return /******/ (function(modules) { // webpackBootstrap
 		         */
 		        this._observers = [];
 		    }
-		    /**
-		     * Goml tree interface which contains the component this attribute bound to.
-		     * @return {IGomlInterface} [description]
-		     */
-		
 		
 		    _createClass(Attribute, [{
-		        key: "addObserver",
+		        key: "watch",
 		
 		        /**
 		         * Add event handler to observe changing this attribute.
 		         * @param  {(attr: Attribute) => void} handler handler the handler you want to add.
 		         * @param {boolean = false} callFirst whether that handler should be called first time.
 		         */
-		        value: function addObserver(handler) {
-		            var callFirst = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+		        value: function watch(watcher) {
+		            var immedateCalls = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
 		
-		            this._observers.push(handler);
-		            if (callFirst) {
-		                handler(this);
+		            this._observers.push(watcher);
+		            if (immedateCalls) {
+		                watcher(this.Value, undefined, this);
 		            }
 		        }
 		        /**
@@ -12054,14 +12007,10 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		    }, {
 		        key: "removeObserver",
-		        value: function removeObserver(handler) {
-		            var index = -1;
-		            for (var i = 0; i < this._observers.length; i++) {
-		                if (handler === this._observers[i]) {
-		                    index = i;
-		                    break;
-		                }
-		            }
+		        value: function removeObserver(target) {
+		            var index = this._observers.findIndex(function (f) {
+		                return f === target;
+		            });
 		            if (index < 0) {
 		                return;
 		            }
@@ -12079,10 +12028,9 @@ return /******/ (function(modules) { // webpackBootstrap
 		        value: function boundTo(variableName) {
 		            var targetObject = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.component;
 		
-		            this.addObserver(function (v) {
-		                targetObject[variableName] = v.Value;
-		            });
-		            targetObject[variableName] = this.Value;
+		            this.watch(function (v) {
+		                targetObject[variableName] = v;
+		            }, true);
 		        }
 		        /**
 		         * Apply default value to attribute from DOM values.
@@ -12105,19 +12053,36 @@ return /******/ (function(modules) { // webpackBootstrap
 		                this.Value = nodeDefaultValue; // Node指定値で解決
 		                return;
 		            }
-		            this.Value = this.declaration.defaultValue;
+		            this.Value = this.declaration.default;
+		        }
+		    }, {
+		        key: "_valuate",
+		        value: function _valuate(raw) {
+		            var v = this.converter.convert(raw);
+		            if (v === void 0) {
+		                throw new Error("attribute " + this.name.name + " value can not be convert from " + this._value);
+		            }
+		            this._lastValuete = v;
+		            return v;
 		        }
 		    }, {
 		        key: "_notifyChange",
-		        value: function _notifyChange() {
+		        value: function _notifyChange(newValue) {
 		            var _this = this;
 		
+		            var lastvalue = this._lastValuete;
+		            var c = this.converter;
 		            this._observers.forEach(function (handler) {
-		                handler(_this);
+		                handler(c.convert(newValue), lastvalue, _this);
 		            });
 		        }
 		    }, {
 		        key: "tree",
+		
+		        /**
+		         * Goml tree interface which contains the component this attribute bound to.
+		         * @return {IGomlInterface} [description]
+		         */
 		        get: function get() {
 		            return this.component.tree;
 		        }
@@ -12139,11 +12104,10 @@ return /******/ (function(modules) { // webpackBootstrap
 		    }, {
 		        key: "Value",
 		        get: function get() {
-		            try {
-		                return this.converter.convert(this._value);
-		            } catch (e) {
-		                console.error(e); // TODO should be more convenient error handling
+		            if (this._value === void 0) {
+		                throw new Error("attribute " + this.name.name + " value is undefined in " + this.component.node.name.name);
 		            }
+		            return this._valuate(this._value);
 		        }
 		        /**
 		         * Set a value with any type.
@@ -12151,8 +12115,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		         */
 		        ,
 		        set: function set(val) {
+		            if (this._value === val) {
+		                return;
+		            }
 		            this._value = val;
-		            this._notifyChange();
+		            this._notifyChange(val);
 		        }
 		        /**
 		         * Construct a new attribute with name of key and any value with specified type. If constant flag is true, This attribute will be immutable.
@@ -12164,6 +12131,16 @@ return /******/ (function(modules) { // webpackBootstrap
 		         */
 		
 		    }], [{
+		        key: "convert",
+		        value: function convert(converter, val) {
+		            var cname = _Ensure2.default.ensureTobeNSIdentity(converter);
+		            var conv = _GrimoireInterface2.default.converters.get(cname);
+		            if (!conv) {
+		                throw new Error("converter " + cname.name + " is not defined.");
+		            }
+		            return conv.convert(val);
+		        }
+		    }, {
 		        key: "generateAttributeForComponent",
 		        value: function generateAttributeForComponent(name, declaration, component) {
 		            var attr = new Attribute();
@@ -12206,7 +12183,6 @@ return /******/ (function(modules) { // webpackBootstrap
 		    if (typeof val === "string") {
 		        return val.split(" ");
 		    }
-		    throw new Error("value is not supported by StringArrayConverter.:" + val);
 		}
 		exports.default = StringArrayConverter;
 	
@@ -12227,7 +12203,6 @@ return /******/ (function(modules) { // webpackBootstrap
 		    } else if (typeof val.toString === "function") {
 		        return val.toString();
 		    }
-		    throw new Error("value is not supported by StringConverter.");
 		}
 		exports.default = StringConverter;
 	
@@ -12243,11 +12218,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 		
-		var _Constants = __webpack_require__(1);
+		var _Constants = __webpack_require__(6);
 		
 		var _Constants2 = _interopRequireDefault(_Constants);
 		
-		var _GrimoireInterface = __webpack_require__(6);
+		var _GrimoireInterface = __webpack_require__(3);
 		
 		var _GrimoireInterface2 = _interopRequireDefault(_GrimoireInterface);
 		
@@ -12255,7 +12230,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _Attribute2 = _interopRequireDefault(_Attribute);
 		
-		var _NSDictionary = __webpack_require__(14);
+		var _NSDictionary = __webpack_require__(15);
 		
 		var _NSDictionary2 = _interopRequireDefault(_NSDictionary);
 		
@@ -12275,7 +12250,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		        // }
 		        // this.attributes["enabled"] = {
 		        //   converter: "Boolean",
-		        //   defaultValue: true
+		        //   default true
 		        // };
 		    }
 		
@@ -12466,15 +12441,15 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 		
-		var _Ensure = __webpack_require__(5);
+		var _Ensure = __webpack_require__(2);
 		
 		var _Ensure2 = _interopRequireDefault(_Ensure);
 		
-		var _NSIdentity = __webpack_require__(15);
+		var _NSIdentity = __webpack_require__(16);
 		
 		var _NSIdentity2 = _interopRequireDefault(_NSIdentity);
 		
-		var _GrimoireInterface = __webpack_require__(6);
+		var _GrimoireInterface = __webpack_require__(3);
 		
 		var _GrimoireInterface2 = _interopRequireDefault(_GrimoireInterface);
 		
@@ -12491,8 +12466,8 @@ return /******/ (function(modules) { // webpackBootstrap
 		        this.defaultAttributes = defaultAttributes;
 		        this.superNode = superNode;
 		        this._treeConstraints = _treeConstraints;
-		        if (!this.superNode && this.name.name.toUpperCase() !== "GRIMOIRENODEBASE") {
-		            this.superNode = new _NSIdentity2.default("GrimoireNodeBase");
+		        if (!this.superNode && this.name.name !== "grimoire-node-base") {
+		            this.superNode = new _NSIdentity2.default("grimoire-node-base");
 		        }
 		    }
 		
@@ -12598,15 +12573,15 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 		
-		var _GrimoireInterface = __webpack_require__(6);
+		var _GrimoireInterface = __webpack_require__(3);
 		
 		var _GrimoireInterface2 = _interopRequireDefault(_GrimoireInterface);
 		
-		var _GomlParser = __webpack_require__(11);
+		var _GomlParser = __webpack_require__(9);
 		
 		var _GomlParser2 = _interopRequireDefault(_GomlParser);
 		
-		var _XMLReader = __webpack_require__(10);
+		var _XMLReader = __webpack_require__(8);
 		
 		var _XMLReader2 = _interopRequireDefault(_XMLReader);
 		
@@ -12771,7 +12746,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		    return window["gr"] = window["GrimoireJS"] = _GrimoireInterface2.default; // TODO gr should implements noConflict
 		};
 		
-		var _GrimoireInterface = __webpack_require__(6);
+		var _GrimoireInterface = __webpack_require__(3);
 		
 		var _GrimoireInterface2 = _interopRequireDefault(_GrimoireInterface);
 		
@@ -23328,7 +23303,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		    _createClass(AssetLoadingManagerComponent, [{
 		        key: "$treeInitialized",
 		        value: function $treeInitialized() {
-		            if (this.attributes.get("autoStart").Value) {
+		            if (this.getAttribute("autoStart")) {
 		                this._autoStart();
 		            }
 		            this._documentResolver();
@@ -23343,7 +23318,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		                _this2._documentResolver = resolve;
 		            }));
 		            var canvasContainer = this.companion.get("canvasContainer");
-		            if (!this.getValue("enableLoader")) {
+		            if (!this.getAttribute("enableLoader")) {
 		                return;
 		            }
 		            var loaderContainer = document.createElement("div");
@@ -23387,15 +23362,15 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		AssetLoadingManagerComponent.attributes = {
 		    loadingProgress: {
-		        defaultValue: 0,
+		        default: 0,
 		        converter: "Number"
 		    },
 		    autoStart: {
-		        defaultValue: true,
+		        default: true,
 		        converter: "Boolean"
 		    },
 		    anableLoader: {
-		        defaultValue: false,
+		        default: false,
 		        converter: "Boolean"
 		    }
 		};
@@ -23486,25 +23461,25 @@ return /******/ (function(modules) { // webpackBootstrap
 		            var c = this.camera = new _BasicCamera2.default();
 		            this.transform = this.node.getComponent(_TransformComponent2.default);
 		            this.$transformUpdated(this.transform);
-		            this.getAttribute("far").addObserver(function (v) {
-		                c.setFar(v.Value);
+		            this.getAttributeRaw("far").watch(function (v) {
+		                c.setFar(v);
 		            }, true);
-		            this.getAttribute("near").addObserver(function (v) {
-		                c.setNear(v.Value);
+		            this.getAttributeRaw("near").watch(function (v) {
+		                c.setNear(v);
 		            }, true);
-		            this.getAttribute("fovy").addObserver(function (v) {
-		                c.setFovy(v.Value);
+		            this.getAttributeRaw("fovy").watch(function (v) {
+		                c.setFovy(v);
 		            }, true);
-		            this.getAttribute("aspect").addObserver(function (v) {
-		                c.setAspect(v.Value);
+		            this.getAttributeRaw("aspect").watch(function (v) {
+		                c.setAspect(v);
 		            }, true);
-		            this.getAttribute("orthoSize").addObserver(function (v) {
-		                c.setOrthoSize(v.Value);
+		            this.getAttributeRaw("orthoSize").watch(function (v) {
+		                c.setOrthoSize(v);
 		            }, true);
-		            this.getAttribute("orthogonal").addObserver(function (v) {
-		                c.setOrthographicMode(v.Value);
+		            this.getAttributeRaw("orthogonal").watch(function (v) {
+		                c.setOrthographicMode(v);
 		            }, true);
-		            this.getAttribute("autoAspect").boundTo("_autoAspect");
+		            this.getAttributeRaw("autoAspect").boundTo("_autoAspect");
 		        }
 		    }, {
 		        key: "$mount",
@@ -23549,7 +23524,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		            if (this._autoAspect) {
 		                var asp = args.viewport.Width / args.viewport.Height;
 		                if (this._aspectCache !== asp) {
-		                    this.setValue("aspect", asp);
+		                    this.setAttribute("aspect", asp);
 		                    this._aspectCache = asp;
 		                }
 		            }
@@ -23577,31 +23552,31 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		CameraComponent.attributes = {
 		    fovy: {
-		        defaultValue: "45d",
+		        default: "45d",
 		        converter: "Angle2D"
 		    },
 		    near: {
-		        defaultValue: 0.01,
+		        default: 0.01,
 		        converter: "Number"
 		    },
 		    far: {
-		        defaultValue: 100,
+		        default: 100,
 		        converter: "Number"
 		    },
 		    aspect: {
-		        defaultValue: 1.6,
+		        default: 1.6,
 		        converter: "Number"
 		    },
 		    autoAspect: {
-		        defaultValue: true,
+		        default: true,
 		        converter: "Boolean"
 		    },
 		    orthoSize: {
-		        defaultValue: 100,
+		        default: 100,
 		        converter: "Number"
 		    },
 		    orthogonal: {
-		        defaultValue: false,
+		        default: false,
 		        converter: "Boolean"
 		    }
 		};
@@ -23785,35 +23760,37 @@ return /******/ (function(modules) { // webpackBootstrap
 		            var _this2 = this;
 		
 		            // register observers
-		            this.getAttribute("position").addObserver(function (v) {
-		                _this2._localPosition = v.Value;
+		            this.getAttributeRaw("position").watch(function (v) {
+		                _this2._localPosition = v;
 		                _this2._matrixTransformMode = false;
 		                _this2.updateTransform();
 		            });
-		            this.getAttribute("rotation").addObserver(function (v) {
-		                _this2._localRotation = v.Value;
+		            this.getAttributeRaw("rotation").watch(function (v) {
+		                _this2._localRotation = v;
 		                _this2._matrixTransformMode = false;
 		                _this2.updateTransform();
 		            });
-		            this.getAttribute("scale").addObserver(function (v) {
-		                _this2._localScale = v.Value;
+		            this.getAttributeRaw("scale").watch(function (v) {
+		                _this2._localScale = v;
 		                _this2._matrixTransformMode = false;
 		                _this2.updateTransform();
 		            });
-		            this.getAttribute("rawMatrix").addObserver(function (v) {
-		                var mat = v.Value;
-		                _this2._matrixTransformMode = true;
-		                // TODO should be addded?
-		                // mat4.getTranslation(this._localPosition.rawElements, mat.rawElements);
-		                // mat4.getScaling(this._localScale.rawElements, mat.rawElements);
-		                // mat4.getRotation(this._localRotation.rawElements, mat.rawElements);
-		                _this2.localTransform = mat;
-		                _this2.updateGlobalTransform();
+		            this.getAttributeRaw("rawMatrix").watch(function (v) {
+		                if (v !== null) {
+		                    var mat = v;
+		                    _this2._matrixTransformMode = true;
+		                    // TODO should be addded?
+		                    // mat4.getTranslation(this._localPosition.rawElements, mat.rawElements);
+		                    // mat4.getScaling(this._localScale.rawElements, mat.rawElements);
+		                    // mat4.getRotation(this._localRotation.rawElements, mat.rawElements);
+		                    _this2.localTransform = mat;
+		                    _this2.updateGlobalTransform();
+		                }
 		            });
 		            // assign attribute values to field
-		            this._localPosition = this.getValue("position");
-		            this._localRotation = this.getValue("rotation");
-		            this._localScale = this.getValue("scale");
+		            this._localPosition = this.getAttribute("position");
+		            this._localRotation = this.getAttribute("rotation");
+		            this._localScale = this.getAttribute("scale");
 		            this.updateTransform();
 		        }
 		    }, {
@@ -23895,7 +23872,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		        },
 		        set: function set(val) {
 		            this._localPosition = val;
-		            this.setValue("position", val);
+		            this.setAttribute("position", val);
 		        }
 		    }, {
 		        key: "localRotation",
@@ -23904,7 +23881,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		        },
 		        set: function set(val) {
 		            this._localRotation = val;
-		            this.setValue("rotation", val);
+		            this.setAttribute("rotation", val);
 		        }
 		    }, {
 		        key: "globalScale",
@@ -23918,7 +23895,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		        },
 		        set: function set(val) {
 		            this._localScale = val;
-		            this.setValue("scale", val);
+		            this.setAttribute("scale", val);
 		        }
 		    }, {
 		        key: "forward",
@@ -23945,19 +23922,19 @@ return /******/ (function(modules) { // webpackBootstrap
 		TransformComponent.attributes = {
 		    "position": {
 		        converter: "Vector3",
-		        defaultValue: _Vector2.default.Zero
+		        default: _Vector2.default.Zero
 		    },
 		    "rotation": {
 		        converter: "Rotation3",
-		        defaultValue: _Quaternion2.default.Identity
+		        default: _Quaternion2.default.Identity
 		    },
 		    "scale": {
 		        converter: "Vector3",
-		        defaultValue: _Vector2.default.One
+		        default: _Vector2.default.One
 		    },
 		    "rawMatrix": {
 		        converter: "Object",
-		        defaultValue: null
+		        default: null
 		    }
 		};
 		/**
@@ -24173,10 +24150,10 @@ return /******/ (function(modules) { // webpackBootstrap
 		                this._generateCanvas(this._scriptTag);
 		            } else {}
 		            // apply sizes on changed
-		            this.attributes.get("width").addObserver(function (v) {
+		            this.getAttributeRaw("width").watch(function (v) {
 		                _this2._resize();
 		            });
-		            this.attributes.get("height").addObserver(function (v) {
+		            this.getAttributeRaw("height").watch(function (v) {
 		                _this2._resize();
 		            });
 		        }
@@ -24209,8 +24186,8 @@ return /******/ (function(modules) { // webpackBootstrap
 		        key: "_resize",
 		        value: function _resize(supressBroadcast) {
 		            var canvas = this.companion.get("canvasElement");
-		            var widthRaw = this.getValue("width");
-		            var heightRaw = this.getValue("height");
+		            var widthRaw = this.getAttribute("width");
+		            var heightRaw = this.getAttribute("height");
 		            this._widthMode = this._asResizeMode(widthRaw);
 		            this._heightMode = this._asResizeMode(heightRaw);
 		            if (this._widthMode === this._heightMode && this._widthMode === ResizeMode.Aspect) {
@@ -24308,11 +24285,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		            this._canvasContainer.style.position = "relative";
 		            this._canvasContainer.style.overflow = "hidden";
 		            this._canvasContainer.appendChild(canvas);
-		            if (this.getValue("containerId")) {
-		                this._canvasContainer.id = this.getValue("containerId");
+		            if (this.getAttribute("containerId")) {
+		                this._canvasContainer.id = this.getAttribute("containerId");
 		            }
-		            if (this.getValue("containerClass")) {
-		                this._canvasContainer.className = this.getValue("containerClass");
+		            if (this.getAttribute("containerClass")) {
+		                this._canvasContainer.className = this.getAttribute("containerClass");
 		            }
 		            this.companion.set(ns("canvasContainer"), this._canvasContainer);
 		            scriptTag.parentElement.insertBefore(this._canvasContainer, scriptTag.nextSibling);
@@ -24351,19 +24328,19 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		CanvasInitializerComponent.attributes = {
 		    width: {
-		        defaultValue: "fit",
+		        default: "fit",
 		        converter: "CanvasSize"
 		    },
 		    height: {
-		        defaultValue: 480,
+		        default: 480,
 		        converter: "CanvasSize"
 		    },
 		    containerId: {
-		        defaultValue: "",
+		        default: "",
 		        converter: "String"
 		    },
 		    containerClass: {
-		        defaultValue: "gr-container",
+		        default: "gr-container",
 		        converter: "String"
 		    }
 		};
@@ -24848,11 +24825,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		        value: function $awake() {
 		            var _this2 = this;
 		
-		            this.getAttribute("fullscreen").addObserver(function (attr) {
-		                if (_this2._fullscreen === attr.Value) {
+		            this.getAttributeRaw("fullscreen").watch(function (attr) {
+		                if (_this2._fullscreen === attr) {
 		                    return;
 		                }
-		                _this2._fullscreen = attr.Value;
+		                _this2._fullscreen = attr;
 		                _this2._switchFullscreen();
 		            });
 		        }
@@ -24908,7 +24885,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		FullscreenComponent.attributes = {
 		    fullscreen: {
 		        converter: "Boolean",
-		        defaultValue: false
+		        default: false
 		    }
 		};
 	
@@ -24952,18 +24929,18 @@ return /******/ (function(modules) { // webpackBootstrap
 		    _createClass(GeometryComponent, [{
 		        key: "$mount",
 		        value: function $mount() {
-		            var type = this.getValue("type");
+		            var type = this.getAttribute("type");
 		            if (type) {
 		                var gf = this.companion.get("GeometryFactory");
 		                var attrs = _GeometryFactory2.default.factoryArgumentDeclarations[type];
 		                var geometryArgument = {};
 		                for (var key in attrs) {
 		                    this.__addAtribute(key, attrs[key]);
-		                    geometryArgument[key] = this.getValue(key);
+		                    geometryArgument[key] = this.getAttribute(key);
 		                }
 		                this.geometry = gf.instanciate(type, geometryArgument);
 		                var gr = this.companion.get("GeometryRegistory");
-		                var name = this.getValue("name");
+		                var name = this.getAttribute("name");
 		                if (!name) {
 		                    throw new Error("Name was not specified");
 		                }
@@ -24980,11 +24957,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		GeometryComponent.attributes = {
 		    type: {
 		        converter: "String",
-		        defaultValue: undefined
+		        default: null
 		    },
 		    name: {
 		        converter: "String",
-		        defaultValue: undefined
+		        default: null
 		    }
 		};
 	
@@ -25035,7 +25012,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		            var args = {};
 		            for (var attr in decl) {
 		                var attrDecl = decl[attr];
-		                args[attr] = attrDecl.defaultValue;
+		                args[attr] = attrDecl.default;
 		            }
 		            return this.instanciate(type, args);
 		        }
@@ -25116,7 +25093,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		            var _iteratorError = undefined;
 		
 		            try {
-		                for (var _iterator = this.getValue("defaultGeometry")[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+		                for (var _iterator = this.getAttribute("defaultGeometry")[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
 		                    var geometry = _step.value;
 		
 		                    this.addGeometry(geometry, this._factory.instanciateAsDefault(geometry));
@@ -25163,7 +25140,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		GeometryRegistoryComponent.attributes = {
 		    defaultGeometry: {
 		        converter: "StringArray",
-		        defaultValue: ["quad", "cube", "sphere"]
+		        default: ["quad", "cube", "sphere"]
 		    }
 		};
 	
@@ -25232,13 +25209,13 @@ return /******/ (function(modules) { // webpackBootstrap
 		        value: function $treeInitialized() {
 		            var _this2 = this;
 		
-		            this.getAttribute("targetRenderer").addObserver(function (v) {
-		                if (_this2._rendererQuery !== v.Value) {
+		            this.getAttributeRaw("targetRenderer").watch(function (v) {
+		                if (_this2._rendererQuery !== v) {
 		                    _this2._onRendererChanged();
 		                }
 		            }, true);
-		            this.getAttribute("htmlQuery").addObserver(function (v) {
-		                _this2._onQueryChanged(v.Value);
+		            this.getAttributeRaw("htmlQuery").watch(function (v) {
+		                _this2._onQueryChanged(v);
 		            }, true);
 		        }
 		    }, {
@@ -25298,7 +25275,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		            var _this3 = this;
 		
 		            var returned = false;
-		            this.tree(this.getValue("targetRenderer")).forEach(function (n) {
+		            this.tree(this.getAttribute("targetRenderer")).forEach(function (n) {
 		                if (returned) {
 		                    return true;
 		                } else {
@@ -25342,11 +25319,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		HTMLBinderComponent.attributes = {
 		    htmlQuery: {
-		        defaultValue: undefined,
+		        default: null,
 		        converter: "String"
 		    },
 		    targetRenderer: {
-		        defaultValue: "render-scene",
+		        default: "render-scene",
 		        converter: "String"
 		    }
 		};
@@ -25393,8 +25370,10 @@ return /******/ (function(modules) { // webpackBootstrap
 		        value: function $awake() {
 		            var _this2 = this;
 		
-		            this.attributes.get("loopEnabled").addObserver(function (attr) {
-		                _this2._begin();
+		            this.getAttributeRaw("loopEnabled").watch(function (attr) {
+		                if (attr) {
+		                    _this2._begin();
+		                }
 		            });
 		            this._registerNextLoop = window.requestAnimationFrame // if window.requestAnimationFrame is defined or undefined
 		            ? function () {
@@ -25437,7 +25416,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		LoopManagerComponent.attributes = {
 		    loopEnabled: {
-		        defaultValue: false,
+		        default: false,
 		        converter: "Boolean"
 		    }
 		};
@@ -25517,7 +25496,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		    _createClass(MaterialComponent, [{
 		        key: "$mount",
 		        value: function $mount() {
-		            var typeName = this.getValue("type");
+		            var typeName = this.getAttribute("type");
 		            if (typeName) {
 		                this.materialPromise = this.companion.get("MaterialFactory").instanciate(typeName);
 		                this._registerAttributes();
@@ -25548,10 +25527,10 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		                                            var _loop = function _loop(key) {
 		                                                _this2.__addAtribute(key, cp.sort.gomlAttributes[key]);
-		                                                _this2.attributes.get(key).addObserver(function (v) {
-		                                                    _this2.materialArgs[key] = v.Value;
+		                                                _this2.getAttributeRaw(key).watch(function (v) {
+		                                                    _this2.materialArgs[key] = v;
 		                                                });
-		                                                var value = _this2.materialArgs[key] = _this2.getValue(key);
+		                                                var value = _this2.materialArgs[key] = _this2.getAttribute(key);
 		                                                if (value instanceof _ResourceBase2.default) {
 		                                                    promises.push(value.validPromise);
 		                                                }
@@ -25572,10 +25551,10 @@ return /******/ (function(modules) { // webpackBootstrap
 		                                                        case "int":
 		                                                            _this2.__addAtribute(macro.attributeName, {
 		                                                                converter: "Number",
-		                                                                defaultValue: macro.default
+		                                                                default: macro.default
 		                                                            });
-		                                                            _this2.getAttribute(macro.attributeName).addObserver(function (v) {
-		                                                                cp.setMacro(macro.macroName, "" + Math.floor(v.Value));
+		                                                            _this2.getAttributeRaw(macro.attributeName).watch(function (v) {
+		                                                                cp.setMacro(macro.macroName, "" + Math.floor(v));
 		                                                            }, true);
 		                                                            return {
 		                                                                v: {
@@ -25585,10 +25564,10 @@ return /******/ (function(modules) { // webpackBootstrap
 		                                                        case "bool":
 		                                                            _this2.__addAtribute(macro.attributeName, {
 		                                                                converter: "Boolean",
-		                                                                defaultValue: macro.default
+		                                                                default: macro.default
 		                                                            });
-		                                                            _this2.getAttribute(macro.attributeName).addObserver(function (v) {
-		                                                                cp.setMacro(macro.macroName, v.Value);
+		                                                            _this2.getAttributeRaw(macro.attributeName).watch(function (v) {
+		                                                                cp.setMacro(macro.macroName, v);
 		                                                            }, true);
 		                                                            return {
 		                                                                v: {
@@ -25648,7 +25627,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		MaterialComponent.attributes = {
 		    type: {
 		        converter: "String",
-		        defaultValue: undefined
+		        default: null
 		    }
 		};
 	
@@ -26345,9 +26324,9 @@ return /******/ (function(modules) { // webpackBootstrap
 		    }, {
 		        key: "$mount",
 		        value: function $mount() {
-		            this.getAttribute("material").addObserver(this._onMaterialChanged);
+		            this.getAttributeRaw("material").watch(this._onMaterialChanged);
 		            this.companion.get("loader").register(this._onMaterialChanged());
-		            this.getAttribute("drawOrder").boundTo("_drawOrder");
+		            this.getAttributeRaw("drawOrder").boundTo("_drawOrder");
 		        }
 		        /**
 		         * When the material attribute is changed.
@@ -26362,7 +26341,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		                    while (1) {
 		                        switch (_context.prev = _context.next) {
 		                            case 0:
-		                                materialPromise = this.getValue("material");
+		                                materialPromise = this.getAttribute("material");
 		
 		                                if (!(materialPromise === void 0)) {
 		                                    _context.next = 4;
@@ -26462,10 +26441,10 @@ return /******/ (function(modules) { // webpackBootstrap
 		                                            var _loop = function _loop(key) {
 		                                                var val = cp.sort.gomlAttributes[key];
 		                                                _this2.__addAtribute(key, val);
-		                                                _this2.getAttribute(key).addObserver(function (v) {
-		                                                    _this2.materialArgs[key] = v.Value;
+		                                                _this2.getAttributeRaw(key).watch(function (v) {
+		                                                    _this2.materialArgs[key] = v;
 		                                                });
-		                                                var value = _this2.materialArgs[key] = _this2.getValue(key);
+		                                                var value = _this2.materialArgs[key] = _this2.getAttribute(key);
 		                                                if (value instanceof _ResourceBase2.default) {
 		                                                    promises.push(value.validPromise);
 		                                                }
@@ -26486,10 +26465,10 @@ return /******/ (function(modules) { // webpackBootstrap
 		                                                        case "int":
 		                                                            _this2.__addAtribute(macro.attributeName, {
 		                                                                converter: "Number",
-		                                                                defaultValue: macro.default
+		                                                                default: macro.default
 		                                                            });
-		                                                            _this2.getAttribute(macro.attributeName).addObserver(function (v) {
-		                                                                cp.setMacro(macro.macroName, "" + Math.floor(v.Value));
+		                                                            _this2.getAttributeRaw(macro.attributeName).watch(function (v) {
+		                                                                cp.setMacro(macro.macroName, "" + Math.floor(v));
 		                                                            }, true);
 		                                                            return {
 		                                                                v: {
@@ -26499,10 +26478,10 @@ return /******/ (function(modules) { // webpackBootstrap
 		                                                        case "bool":
 		                                                            _this2.__addAtribute(macro.attributeName, {
 		                                                                converter: "Boolean",
-		                                                                defaultValue: macro.default
+		                                                                default: macro.default
 		                                                            });
-		                                                            _this2.getAttribute(macro.attributeName).addObserver(function (v) {
-		                                                                cp.setMacro(macro.macroName, v.Value);
+		                                                            _this2.getAttributeRaw(macro.attributeName).watch(function (v) {
+		                                                                cp.setMacro(macro.macroName, v);
 		                                                            }, true);
 		                                                            return {
 		                                                                v: {
@@ -26553,7 +26532,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		        value: function rewriteDefaultMaterial(materialName) {
 		            if (materialName !== MaterialContainerComponent._defaultMaterial) {
 		                MaterialContainerComponent._defaultMaterial = materialName;
-		                _grimoirejs2.default.componentDeclarations.get("MaterialContainer").attributes["material"].defaultValue = "new(" + materialName + ")";
+		                _grimoirejs2.default.componentDeclarations.get("MaterialContainer").attributes["material"].default = "new(" + materialName + ")";
 		            }
 		        }
 		    }, {
@@ -26571,12 +26550,12 @@ return /******/ (function(modules) { // webpackBootstrap
 		MaterialContainerComponent.attributes = {
 		    material: {
 		        converter: "Material",
-		        defaultValue: "new(unlit)",
+		        default: "new(unlit)",
 		        componentBoundTo: "_materialComponent" // When the material was specified with the other material tag, this field would be assigned.
 		    },
 		    drawOrder: {
 		        converter: "String",
-		        defaultValue: null
+		        default: null
 		    }
 		};
 		MaterialContainerComponent._defaultMaterial = "unlit";
@@ -26638,10 +26617,10 @@ return /******/ (function(modules) { // webpackBootstrap
 		    _createClass(MaterialImporterComponent, [{
 		        key: "$awake",
 		        value: function $awake() {
-		            if (!this.getValue("typeName") || !this.getValue("src")) {
+		            if (!this.getAttribute("typeName") || !this.getAttribute("src")) {
 		                throw new Error("type or src cannot be null in material importer");
 		            } else {
-		                _MaterialFactory2.default.addSORTMaterialFromURL(this.getValue("typeName"), this.getValue("src"));
+		                _MaterialFactory2.default.addSORTMaterialFromURL(this.getAttribute("typeName"), this.getAttribute("src"));
 		            }
 		        }
 		    }]);
@@ -26653,11 +26632,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		MaterialImporterComponent.attributes = {
 		    typeName: {
-		        defaultValue: undefined,
+		        default: null,
 		        converter: "String"
 		    },
 		    src: {
-		        defaultValue: undefined,
+		        default: null,
 		        converter: "String"
 		    }
 		};
@@ -27291,7 +27270,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		function _getDecl(converter, defaultValue, register) {
 		    return {
 		        converter: converter,
-		        defaultValue: defaultValue,
+		        default: defaultValue,
 		        register: register
 		    };
 		}
@@ -27395,7 +27374,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		                                                        flagAssignTo = annotations["usedFlag"];
 		                                                    }
 		                                                }
-		                                                attributes[valName] = _getDecl("Texture", _resolveDefault(variableInfo, undefined), function (proxy, matArgs) {
+		                                                attributes[valName] = _getDecl("Texture", _resolveDefault(variableInfo, null), function (proxy, matArgs) {
 		                                                    var texture = void 0;
 		                                                    if (matArgs.attributeValues[valName] && (texture = matArgs.attributeValues[valName].get(matArgs.buffers))) {
 		                                                        proxy.uniformTexture2D(valName, texture);
@@ -29383,11 +29362,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		    }, {
 		        key: "$awake",
 		        value: function $awake() {
-		            this.getAttribute("targetBuffer").boundTo("_targetBuffer");
-		            this.getAttribute("layer").boundTo("_layer");
-		            this.getAttribute("drawOffset").boundTo("_drawOffset");
-		            this.getAttribute("drawCount").boundTo("_drawCount");
-		            this.getAttribute("geometry").boundTo("_geometry");
+		            this.getAttributeRaw("targetBuffer").boundTo("_targetBuffer");
+		            this.getAttributeRaw("layer").boundTo("_layer");
+		            this.getAttributeRaw("drawOffset").boundTo("_drawOffset");
+		            this.getAttributeRaw("drawCount").boundTo("_drawCount");
+		            this.getAttributeRaw("geometry").boundTo("_geometry");
 		        }
 		    }, {
 		        key: "$mount",
@@ -29432,6 +29411,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		                this._materialContainer.material.draw(renderArgs);
 		            }
 		            this.companion.get("gl").flush();
+		            this.node.sendMessage("render", args);
 		        }
 		    }], [{
 		        key: "_findContainedScene",
@@ -29463,23 +29443,23 @@ return /******/ (function(modules) { // webpackBootstrap
 		MeshRenderer.attributes = {
 		    geometry: {
 		        converter: "Geometry",
-		        defaultValue: "quad"
+		        default: "quad"
 		    },
 		    targetBuffer: {
 		        converter: "String",
-		        defaultValue: "default"
+		        default: "default"
 		    },
 		    layer: {
 		        converter: "String",
-		        defaultValue: "default"
+		        default: "default"
 		    },
 		    drawCount: {
 		        converter: "Number",
-		        defaultValue: Number.MAX_VALUE
+		        default: Number.MAX_VALUE
 		    },
 		    drawOffset: {
 		        converter: "Number",
-		        defaultValue: 0
+		        default: 0
 		    }
 		};
 	
@@ -29541,11 +29521,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		    _createClass(MouseCameraControlComponent, [{
 		        key: "$awake",
 		        value: function $awake() {
-		            this.getAttribute("center").boundTo("_center");
-		            this.getAttribute("rotateSpeed").boundTo("_rotateSpeed");
-		            this.getAttribute("zoomSpeed").boundTo("_zoomSpeed");
-		            this.getAttribute("moveSpeed").boundTo("_moveSpeed");
-		            this.getAttribute("origin").boundTo("_origin");
+		            this.getAttributeRaw("center").boundTo("_center");
+		            this.getAttributeRaw("rotateSpeed").boundTo("_rotateSpeed");
+		            this.getAttributeRaw("zoomSpeed").boundTo("_zoomSpeed");
+		            this.getAttributeRaw("moveSpeed").boundTo("_moveSpeed");
+		            this.getAttributeRaw("origin").boundTo("_origin");
 		            this._transform = this.node.getComponent(_TransformComponent2.default);
 		        }
 		    }, {
@@ -29628,23 +29608,23 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		MouseCameraControlComponent.attributes = {
 		    rotateSpeed: {
-		        defaultValue: 1,
+		        default: 1,
 		        converter: "Number"
 		    },
 		    zoomSpeed: {
-		        defaultValue: 1,
+		        default: 1,
 		        converter: "Number"
 		    },
 		    moveSpeed: {
-		        defaultValue: 1,
+		        default: 1,
 		        converter: "Number"
 		    },
 		    center: {
-		        defaultValue: 20,
+		        default: 20,
 		        converter: "Number"
 		    },
 		    origin: {
-		        defaultValue: "0,0,0",
+		        default: "0,0,0",
 		        converter: "Vector3"
 		    }
 		};
@@ -29704,7 +29684,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		    }, {
 		        key: "$resizeBuffer",
 		        value: function $resizeBuffer(arg) {
-		            var name = this.getValue("name");
+		            var name = this.getAttribute("name");
 		            if (!name) {
 		                throw new Error("Attribute 'name' must be specified.");
 		            }
@@ -29723,7 +29703,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		RenderBufferComponent.attributes = {
 		    name: {
 		        converter: "String",
-		        defaultValue: undefined
+		        default: null
 		    }
 		};
 	
@@ -29870,15 +29850,15 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		            this._gl = this.companion.get("gl");
 		            this._canvas = this.companion.get("canvasElement");
-		            this._camera = this.getValue("camera");
-		            this.getAttribute("camera").addObserver(function (v) {
-		                return _this2._camera = v.Value;
+		            this._camera = this.getAttribute("camera");
+		            this.getAttributeRaw("camera").watch(function (v) {
+		                return _this2._camera = v;
 		            });
-		            this.getAttribute("viewport").addObserver(function (v) {
-		                _this2._viewportSizeGenerator = v.Value;
+		            this.getAttributeRaw("viewport").watch(function (v) {
+		                _this2._viewportSizeGenerator = v;
 		                _this2.$resizeCanvas();
 		            });
-		            this._viewportSizeGenerator = this.getValue("viewport");
+		            this._viewportSizeGenerator = this.getAttribute("viewport");
 		        }
 		    }, {
 		        key: "$treeInitialized",
@@ -29925,12 +29905,12 @@ return /******/ (function(modules) { // webpackBootstrap
 		RendererComponent.attributes = {
 		    camera: {
 		        converter: "Component",
-		        defaultValue: "camera",
+		        default: "camera",
 		        target: "Camera"
 		    },
 		    viewport: {
 		        converter: "Viewport",
-		        defaultValue: "auto"
+		        default: "auto"
 		    }
 		};
 	
@@ -29974,8 +29954,8 @@ return /******/ (function(modules) { // webpackBootstrap
 		    _createClass(RendererManagerComponent, [{
 		        key: "$awake",
 		        value: function $awake() {
-		            this.getAttribute("bgColor").boundTo("_bgColor");
-		            this.getAttribute("clearDepth").boundTo("_clearDepth");
+		            this.getAttributeRaw("bgColor").boundTo("_bgColor");
+		            this.getAttributeRaw("clearDepth").boundTo("_clearDepth");
 		        }
 		    }, {
 		        key: "$mount",
@@ -29986,7 +29966,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		        key: "$treeInitialized",
 		        value: function $treeInitialized() {
 		            this.node.getComponent("LoopManager").register(this.onloop.bind(this), 1000);
-		            if (this.getValue("complementRenderer") && this.node.getChildrenByNodeName("renderer").length === 0) {
+		            if (this.getAttribute("complementRenderer") && this.node.getChildrenByNodeName("renderer").length === 0) {
 		                this.node.addChildByName("renderer", {});
 		            }
 		        }
@@ -30010,15 +29990,15 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		RendererManagerComponent.attributes = {
 		    bgColor: {
-		        defaultValue: new _Color2.default(0, 0, 0, 0),
+		        default: new _Color2.default(0, 0, 0, 0),
 		        converter: "Color4"
 		    },
 		    clearDepth: {
-		        defaultValue: 1.0,
+		        default: 1.0,
 		        converter: "Number"
 		    },
 		    complementRenderer: {
-		        defaultValue: true,
+		        default: true,
 		        converter: "Boolean"
 		    }
 		};
@@ -30071,11 +30051,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		    _createClass(RenderQuadComponent, [{
 		        key: "$awake",
 		        value: function $awake() {
-		            this.getAttribute("targetBuffer").boundTo("_targetBuffer");
-		            this.getAttribute("clearColor").boundTo("_clearColor");
-		            this.getAttribute("clearColorEnabled").boundTo("_clearColorEnabled");
-		            this.getAttribute("clearDepthEnabled").boundTo("_clearDepthEnabled");
-		            this.getAttribute("clearDepth").boundTo("_clearDepth");
+		            this.getAttributeRaw("targetBuffer").boundTo("_targetBuffer");
+		            this.getAttributeRaw("clearColor").boundTo("_clearColor");
+		            this.getAttributeRaw("clearColorEnabled").boundTo("_clearColorEnabled");
+		            this.getAttributeRaw("clearDepthEnabled").boundTo("_clearDepthEnabled");
+		            this.getAttributeRaw("clearDepth").boundTo("_clearDepth");
 		        }
 		    }, {
 		        key: "$mount",
@@ -30089,13 +30069,13 @@ return /******/ (function(modules) { // webpackBootstrap
 		    }, {
 		        key: "$bufferUpdated",
 		        value: function $bufferUpdated(args) {
-		            var out = this.getValue("out");
+		            var out = this.getAttribute("out");
 		            if (out !== "default") {
 		                this._fbo = new _FrameBuffer2.default(this.companion.get("gl"));
 		                this._fbo.update(args.buffers[out]);
 		                this._fboSize = args.bufferSizes[out];
 		            }
-		            var depthBuffer = this.getValue("depthBuffer");
+		            var depthBuffer = this.getAttribute("depthBuffer");
 		            if (depthBuffer && this._fbo) {
 		                this._fbo.update(args.buffers[depthBuffer]);
 		            }
@@ -30148,31 +30128,31 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		RenderQuadComponent.attributes = {
 		    out: {
-		        defaultValue: "default",
+		        default: "default",
 		        converter: "String"
 		    },
 		    depthBuffer: {
-		        defaultValue: undefined,
+		        default: null,
 		        converter: "String"
 		    },
 		    targetBuffer: {
-		        defaultValue: "default",
+		        default: "default",
 		        converter: "String"
 		    },
 		    clearColor: {
-		        defaultValue: "#0000",
+		        default: "#0000",
 		        converter: "Color4"
 		    },
 		    clearColorEnabled: {
-		        defaultValue: true,
+		        default: true,
 		        converter: "Boolean"
 		    },
 		    clearDepthEnabled: {
-		        defaultValue: true,
+		        default: true,
 		        converter: "Boolean"
 		    },
 		    clearDepth: {
-		        defaultValue: 1.0,
+		        default: 1.0,
 		        converter: "Number"
 		    }
 		};
@@ -30307,12 +30287,12 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		        // messages
 		        value: function $awake() {
-		            this.getAttribute("layer").boundTo("_layer");
-		            this.getAttribute("clearColor").boundTo("_clearColor");
-		            this.getAttribute("clearColorEnabled").boundTo("_clearColorEnabled");
-		            this.getAttribute("clearDepthEnabled").boundTo("_clearDepthEnabled");
-		            this.getAttribute("clearDepth").boundTo("_clearDepth");
-		            this.getAttribute("camera").boundTo("_camera");
+		            this.getAttributeRaw("layer").boundTo("_layer");
+		            this.getAttributeRaw("clearColor").boundTo("_clearColor");
+		            this.getAttributeRaw("clearColorEnabled").boundTo("_clearColorEnabled");
+		            this.getAttributeRaw("clearDepthEnabled").boundTo("_clearDepthEnabled");
+		            this.getAttributeRaw("clearDepth").boundTo("_clearDepth");
+		            this.getAttributeRaw("camera").boundTo("_camera");
 		        }
 		    }, {
 		        key: "$mount",
@@ -30324,13 +30304,13 @@ return /******/ (function(modules) { // webpackBootstrap
 		    }, {
 		        key: "$bufferUpdated",
 		        value: function $bufferUpdated(args) {
-		            var out = this.getValue("out");
+		            var out = this.getAttribute("out");
 		            if (out !== "default") {
 		                this._fbo = new _FrameBuffer2.default(this.companion.get("gl"));
 		                this._fbo.update(args.buffers[out]);
 		                this._fboSize = args.bufferSizes[out];
 		            }
-		            var depthBuffer = this.getValue("depthBuffer");
+		            var depthBuffer = this.getAttribute("depthBuffer");
 		            if (depthBuffer && this._fbo) {
 		                this._fbo.update(args.buffers[depthBuffer]);
 		            }
@@ -30381,34 +30361,34 @@ return /******/ (function(modules) { // webpackBootstrap
 		RenderSceneComponent.attributes = {
 		    layer: {
 		        converter: "String",
-		        defaultValue: "default"
+		        default: "default"
 		    },
 		    depthBuffer: {
-		        defaultValue: undefined,
+		        default: null,
 		        converter: "String"
 		    },
 		    out: {
 		        converter: "String",
-		        defaultValue: "default"
+		        default: "default"
 		    },
 		    clearColor: {
-		        defaultValue: "#0000",
+		        default: "#0000",
 		        converter: "Color4"
 		    },
 		    clearColorEnabled: {
-		        defaultValue: true,
+		        default: true,
 		        converter: "Boolean"
 		    },
 		    clearDepthEnabled: {
-		        defaultValue: true,
+		        default: true,
 		        converter: "Boolean"
 		    },
 		    clearDepth: {
-		        defaultValue: 1.0,
+		        default: 1.0,
 		        converter: "Number"
 		    },
 		    camera: {
-		        defaultValue: undefined,
+		        default: null,
 		        converter: "Component",
 		        target: "Camera"
 		    }
@@ -30469,11 +30449,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		    }, {
 		        key: "$resizeBuffer",
 		        value: function $resizeBuffer(arg) {
-		            var bufferName = this.getValue("name");
+		            var bufferName = this.getAttribute("name");
 		            if (!bufferName) {
 		                throw new Error("Attribute 'name' must be specified.");
 		            }
-		            var format = this.getValue("format");
+		            var format = this.getAttribute("format");
 		            var newSize = _TextureSizeCalculator2.default.getPow2Size(arg.width, arg.height);
 		            this.buffer.update(0, newSize.width, newSize.height, 0, format, WebGLRenderingContext.UNSIGNED_BYTE, null);
 		            arg.bufferSizes[bufferName] = { width: newSize.width, height: newSize.height };
@@ -30489,11 +30469,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		TextureBufferComponent.attributes = {
 		    name: {
 		        converter: "String",
-		        defaultValue: undefined
+		        default: null
 		    },
 		    format: {
 		        converter: "Enum",
-		        defaultValue: WebGLRenderingContext.RGBA,
+		        default: WebGLRenderingContext.RGBA,
 		        table: {
 		            RGBA: WebGLRenderingContext.RGBA,
 		            RGB: WebGLRenderingContext.RGB,
@@ -30579,23 +30559,23 @@ return /******/ (function(modules) { // webpackBootstrap
 		        value: function $mount() {
 		            var _this2 = this;
 		
-		            var src = this.getValue("src");
+		            var src = this.getAttribute("src");
 		            this.texture = new _Texture2D2.default(this.companion.get("gl"));
-		            this.texture.magFilter = this.getValue("magFilter");
-		            this.texture.minFilter = this.getValue("minFilter");
-		            this.texture.wrapT = this.getValue("wrapT");
-		            this.texture.wrapS = this.getValue("wrapS");
-		            this.attributes.get("magFilter").addObserver(function (v) {
-		                return _this2.texture.magFilter = v.Value;
+		            this.texture.magFilter = this.getAttribute("magFilter");
+		            this.texture.minFilter = this.getAttribute("minFilter");
+		            this.texture.wrapT = this.getAttribute("wrapT");
+		            this.texture.wrapS = this.getAttribute("wrapS");
+		            this.getAttributeRaw("magFilter").watch(function (v) {
+		                return _this2.texture.magFilter = v;
 		            });
-		            this.attributes.get("minFilter").addObserver(function (v) {
-		                return _this2.texture.minFilter = v.Value;
+		            this.getAttributeRaw("minFilter").watch(function (v) {
+		                return _this2.texture.minFilter = v;
 		            });
-		            this.attributes.get("wrapS").addObserver(function (v) {
-		                return _this2.texture.wrapS = v.Value;
+		            this.getAttributeRaw("wrapS").watch(function (v) {
+		                return _this2.texture.wrapS = v;
 		            });
-		            this.attributes.get("wrapT").addObserver(function (v) {
-		                return _this2.texture.wrapT = v.Value;
+		            this.getAttributeRaw("wrapT").watch(function (v) {
+		                return _this2.texture.wrapT = v;
 		            });
 		            if (src) {
 		                this._loadTask(src);
@@ -30636,11 +30616,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		TextureComponent.attributes = {
 		    src: {
 		        converter: "String",
-		        defaultValue: undefined
+		        default: null
 		    },
 		    minFilter: {
 		        converter: "Enum",
-		        defaultValue: "LINEAR",
+		        default: "LINEAR",
 		        table: {
 		            LINEAR: WebGLRenderingContext.LINEAR,
 		            NEAREST: WebGLRenderingContext.NEAREST,
@@ -30652,7 +30632,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		    },
 		    magFilter: {
 		        converter: "Enum",
-		        defaultValue: "LINEAR",
+		        default: "LINEAR",
 		        table: {
 		            LINEAR: WebGLRenderingContext.LINEAR,
 		            NEAREST: WebGLRenderingContext.NEAREST
@@ -30660,7 +30640,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		    },
 		    wrapS: {
 		        converter: "Enum",
-		        defaultValue: "REPEAT",
+		        default: "REPEAT",
 		        table: {
 		            REPEAT: WebGLRenderingContext.REPEAT,
 		            MIRRORED_REPEAT: WebGLRenderingContext.MIRRORED_REPEAT,
@@ -30669,7 +30649,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		    },
 		    wrapT: {
 		        converter: "Enum",
-		        defaultValue: "REPEAT",
+		        default: "REPEAT",
 		        table: {
 		            REPEAT: WebGLRenderingContext.REPEAT,
 		            MIRRORED_REPEAT: WebGLRenderingContext.MIRRORED_REPEAT,
@@ -31062,6 +31042,9 @@ return /******/ (function(modules) { // webpackBootstrap
 		    if (!this.declaration["target"]) {
 		        throw new Error("Component converter require to be specified target");
 		    }
+		    if (val === null) {
+		        return null;
+		    }
 		    if (val instanceof _GomlNode2.default) {
 		        return val.getComponent(this.declaration["target"]);
 		    } else if (val instanceof _Component2.default) {
@@ -31071,7 +31054,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		            throw new Error("Specified component must be " + this.declaration["target"]);
 		        }
 		    } else {
-		        return this.tree(val)(this.declaration["target"]).get(0, 0, 0);
+		        var n = this.tree(val).first();
+		        if (n) {
+		            return n.getComponent(this.declaration["target"]);
+		        }
+		        return null;
 		    }
 		}
 		exports.default = ComponentConverter;
@@ -31226,13 +31213,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	/***/ },
 	/* 93 */
-	/***/ function(module, exports) {
+	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
 		
 		Object.defineProperty(exports, "__esModule", {
 		    value: true
 		});
+		
+		var _MaterialComponent = __webpack_require__(35);
+		
+		var _MaterialComponent2 = _interopRequireDefault(_MaterialComponent);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
 		function MaterialConverter(val) {
 		    if (typeof val === "string") {
 		        var regex = /\s*new\s*\(\s*([a-zA-Z\d\-]+)\s*\)/;
@@ -31241,11 +31235,12 @@ return /******/ (function(modules) { // webpackBootstrap
 		            this.component[this.declaration["componentBoundTo"]] = null;
 		            return this.companion.get("MaterialFactory").instanciate(regexResult[1]);
 		        } else {
-		            var mc = this.tree(val)("Material").get();
+		            var mc = this.tree(val).single().getComponent(_MaterialComponent2.default);
 		            this.component[this.declaration["componentBoundTo"]] = mc;
 		            return mc.materialPromise;
 		        }
 		    }
+		    return null; // TODO ??
 		}
 		exports.default = MaterialConverter;
 	
@@ -31478,6 +31473,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		            return new _TextureReference2.default(fromVideoTexture(this.companion.get("gl"), val));
 		        }
 		    }
+		    return null;
 		}
 		exports.default = TextureConverter;
 	
@@ -32041,11 +32037,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		            _GeometryFactory2.default.addType("sphere", {
 		                divVertical: {
 		                    converter: "Number",
-		                    defaultValue: 100
+		                    default: 100
 		                },
 		                divHorizontal: {
 		                    converter: "Number",
-		                    defaultValue: 100
+		                    default: 100
 		                }
 		            }, function (gl, attrs) {
 		                var dH = attrs["divHorizontal"];
@@ -32153,7 +32149,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		            _GeometryFactory2.default.addType("circle", {
 		                divide: {
 		                    converter: "Number",
-		                    defaultValue: 50
+		                    default: 50
 		                }
 		            }, function (gl, attrs) {
 		                var div = attrs["divide"];
@@ -32259,7 +32255,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		            _GeometryFactory2.default.addType("cylinder", {
 		                divide: {
 		                    converter: "Number",
-		                    defaultValue: 50
+		                    default: 50
 		                }
 		            }, function (gl, attrs) {
 		                var div = attrs["divide"];
@@ -32366,7 +32362,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		            _GeometryFactory2.default.addType("cone", {
 		                divide: {
 		                    converter: "Number",
-		                    defaultValue: 50
+		                    default: 50
 		                }
 		            }, function (gl, attrs) {
 		                var div = attrs["divide"];
@@ -32473,7 +32469,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		            _GeometryFactory2.default.addType("plane", {
 		                divide: {
 		                    converter: "Number",
-		                    defaultValue: 10
+		                    default: 10
 		                }
 		            }, function (gl, attrs) {
 		                var div = attrs["divide"];

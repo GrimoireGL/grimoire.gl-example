@@ -2,6 +2,6 @@
   <scene>
     <camera position="0,0,10"></camera>
     <mesh geometry="sphere" color="red"/>
-    <mesh geometry="cube" position="-2.5,0,0" texture="logo.png"/>
+    <mesh geometry="cube" position="-2.5,0,0" texture="./demo2/logo.png"/>
   </scene>
 </goml>

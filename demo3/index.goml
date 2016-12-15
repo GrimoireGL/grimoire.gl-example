@@ -6,7 +6,7 @@
       </camera.components>
     </camera>
     <mesh geometry="sphere" color="red"/>
-    <mesh geometry="cube" position="-2.5,0,0" texture="logo.png"/>
+    <mesh geometry="cube" position="-2.5,0,0" texture="./demo3/logo.png"/>
     <mesh geometry="cube" position="2.5,0,0">
       <mesh.components>
         <Webcam target="texture"/>
