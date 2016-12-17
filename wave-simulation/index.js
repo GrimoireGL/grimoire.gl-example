@@ -171,10 +171,12 @@ gr.registerComponent("GeometryUpdator", {
   },
   $awake: function(){
     this.geometry = this.node.getAttribute("geometry");
+    var positions = positionsFrames.map((positions) => {
+      return new Float32Array(Array.prototype.concat.apply([], positions))
+    });
     this.getAttributeRaw("frame").watch((v)=>{
-      var val = Array.prototype.concat.apply([], positionsFrames[v]);
-      this.geometry.vertices.pos.update(new Float32Array(val));
-    },true); //trueは初回に動かす場合
+      this.geometry.vertices.pos.update(positions[v]);
+    }, true); //trueは初回に動かす場合
   }
 })
 
