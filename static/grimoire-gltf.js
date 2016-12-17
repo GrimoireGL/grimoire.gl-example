@@ -1057,7 +1057,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	        function rejected(value) {
 	            try {
-	                step(generator.throw(value));
+	                step(generator["throw"](value));
 	            } catch (e) {
 	                reject(e);
 	            }
@@ -1548,7 +1548,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	        function rejected(value) {
 	            try {
-	                step(generator.throw(value));
+	                step(generator["throw"](value));
 	            } catch (e) {
 	                reject(e);
 	            }
