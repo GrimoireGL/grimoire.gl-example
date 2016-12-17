@@ -170,8 +170,8 @@ gr.registerComponent("GeometryUpdator", {
     }
   },
   $awake: function(){
-    this.geometry = this.node.getAttribute("geometry");
-    this.getAttribute("frame").watch((v)=>{
+    this.geometry = this.node.getAttributeRaw("geometry");
+    this.getAttributeRaw("frame").watch((v)=>{
       var val = Array.prototype.concat.apply([], positionsFrames[v]);
       this.geometry.vertices.pos.update(new Float32Array(val));
     },true); //trueは初回に動かす場合
