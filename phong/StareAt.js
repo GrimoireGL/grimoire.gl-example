@@ -4,15 +4,15 @@ var Matrix = gr.lib.math.Matrix;
 gr.registerComponent('StareAt', {
   attributes: {
     center: {
-      defaultValue: '0, 0, 0',
+      default: '0, 0, 0',
       converter: 'Vector3',
     },
     axis: {
-      defaultValue: '0, 1, 0',
+      default: '0, 1, 0',
       converter: 'Vector3',
     },
     speed: {
-      defaultValue: 0.03,
+      default: 0.03,
       converter: 'Number',
     },
   },

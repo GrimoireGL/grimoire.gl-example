@@ -2,39 +2,39 @@ const FrameBuffer = gr.lib.fundamental.Resource.FrameBuffer;
 gr.registerComponent("RenderPingPong", {
     attributes: {
         out: {
-            defaultValue: "default",
+            default: "default",
             converter: "String"
         },
         pingpongBuffer1: {
-            defaultValue: null,
+            default: null,
             converter: "String"
         },
         pingpongBuffer2: {
-            defaultValue: null,
+            default: null,
             converter: "String"
         },
         targetBuffer: {
-            defaultValue: "default",
+            default: "default",
             converter: "String",
         },
         sourceBuffer: {
-            defaultValue: null,
+            default: null,
             converter: "String"
         },
         iteration: {
-            defaultValue: 2,
+            default: 2,
             converter: "Number"
         },
         sourceName: {
-            defaultValue: "source",
+            default: "source",
             converter: "String"
         },
         clearColor: {
-            defaultValue: "#0000",
+            default: "#0000",
             converter: "Color4",
         },
         clearColorEnabled: {
-            defaultValue: true,
+            default: true,
             converter: "Boolean",
         }
     },
