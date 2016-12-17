@@ -31142,16 +31142,16 @@ return /******/ (function(modules) { // webpackBootstrap
 		 * The geometry class for managing buffer resource
 		 */
 		var Geometry = function () {
-		    function Geometry(verticies, attribInfo, indices, aabb) {
+		    function Geometry(vertices, attribInfo, indices, aabb) {
 		        _classCallCheck(this, Geometry);
 		
-		        this.verticies = verticies;
+		        this.vertices = vertices;
 		        this.attribInfo = attribInfo;
 		        this.indices = indices;
 		        this.aabb = aabb;
-		        // check all buffers requested by attribute variables are all contained in verticies
+		        // check all buffers requested by attribute variables are all contained in vertices
 		        for (var attrKey in attribInfo) {
-		            if (typeof verticies[attribInfo[attrKey].bufferName] === "undefined") {
+		            if (typeof vertices[attribInfo[attrKey].bufferName] === "undefined") {
 		                throw new Error("The buffer request by " + attribInfo[attrKey].bufferName + " is not contained in geometry.");
 		            }
 		        }
@@ -31190,7 +31190,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		            if (!attribInfo) {
 		                throw new Error("Specified buffer \"" + bufferName + " was not found on this geometry while attempt to bind \"" + attributeName + "\" of attribute variables.\n\n\t  All of the vertex buffer available on this geometry is " + Object.keys(geometry.attribInfo) + "\"");
 		            }
-		            var buffer = geometry.verticies[attribInfo.bufferName];
+		            var buffer = geometry.vertices[attribInfo.bufferName];
 		            buffer.bind();
 		            program.gl.vertexAttribPointer(index, attribInfo.size, attribInfo.type, false, attribInfo.stride, attribInfo.offset);
 		            return true;
