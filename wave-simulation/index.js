@@ -101,7 +101,7 @@ const GeometryUtility = gr.lib.fundamental.Geometry.GeometryUtility;
 GeometryFactory.addType("wave-grid", { // geometry名
   frame: {
     converter: 'Number',
-    defaultValue: 4,
+    default: 4,
   }
 }, (gl, attrs) => {
   const positions = positionsFrames[attrs.frame];
@@ -166,7 +166,7 @@ gr.registerComponent("GeometryUpdator", {
   attributes: {
     frame: {
       converter: "Number",
-      defaultValue: 0
+      default: 0
     }
   },
   $awake: function(){
