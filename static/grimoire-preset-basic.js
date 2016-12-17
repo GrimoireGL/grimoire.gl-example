@@ -26213,7 +26213,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		            }
 		            this.program.use();
 		            this.__beforeDraw(arg);
-		            arg.geometry.draw(arg.targetBuffer, this.attributes, this.program, arg.drawCount, arg.drawOffset);
+		            arg.geometry.drawByDefault(arg.targetBuffer, this.attributes, this.program, arg.drawCount, arg.drawOffset);
 		        }
 		    }, {
 		        key: "__beforeDraw",
@@ -31149,7 +31149,6 @@ return /******/ (function(modules) { // webpackBootstrap
 		        this.attribInfo = attribInfo;
 		        this.indices = indices;
 		        this.aabb = aabb;
-		        this._validateGLContext();
 		        // check all buffers requested by attribute variables are all contained in verticies
 		        for (var attrKey in attribInfo) {
 		            if (typeof verticies[attribInfo[attrKey].bufferName] === "undefined") {
@@ -31159,50 +31158,55 @@ return /******/ (function(modules) { // webpackBootstrap
 		    }
 		
 		    _createClass(Geometry, [{
-		        key: "draw",
-		        value: function draw(indexName, attribNames, program) {
+		        key: "drawByDefault",
+		        value: function drawByDefault(indexName, attribNames, program) {
 		            var _this = this;
 		
 		            var count = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : Number.MAX_VALUE;
 		            var offset = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 0;
 		
-		            var targetIndex = this.indices[indexName];
 		            attribNames.forEach(function (name) {
-		                var index = program.findAttributeLocation(name);
-		                if (index < 0) {
-		                    return;
-		                }
-		                var attribInfo = _this.attribInfo[name];
-		                if (!attribInfo) {
-		                    throw new Error("There is no such vertex buffer");
-		                }
-		                var buffer = _this.verticies[attribInfo.bufferName];
-		                buffer.bind();
-		                _this._gl.vertexAttribPointer(index, attribInfo.size, attribInfo.type, false, attribInfo.stride, attribInfo.offset);
+		                Geometry.bindBufferToAttribute(_this, program, name, name);
 		            });
-		            targetIndex.index.bind();
-		            this._gl.drawElements(targetIndex.topology, Math.min(targetIndex.count, count), targetIndex.type, Math.min(offset * targetIndex.byteSize + targetIndex.byteOffset, (targetIndex.count - 1) * targetIndex.byteSize));
+		            Geometry.drawWithCurrentVertexBuffer(this, program, indexName, count, offset);
+		        }
+		        /**
+		         * bind a vertex buffer to specified attribute variable.
+		         * @param  {Geometry} geometry      [description]
+		         * @param  {Program}  program       [description]
+		         * @param  {string}   attributeName [description]
+		         * @param  {string}   bufferName    [description]
+		         * @return {boolean}                [description]
+		         */
+		
+		    }], [{
+		        key: "bindBufferToAttribute",
+		        value: function bindBufferToAttribute(geometry, program, attributeName, bufferName) {
+		            var index = program.findAttributeLocation(attributeName);
+		            if (index < 0) {
+		                return false;
+		            }
+		            var attribInfo = geometry.attribInfo[bufferName];
+		            if (!attribInfo) {
+		                throw new Error("Specified buffer \"" + bufferName + " was not found on this geometry while attempt to bind \"" + attributeName + "\" of attribute variables.\n\n\t  All of the vertex buffer available on this geometry is " + Object.keys(geometry.attribInfo) + "\"");
+		            }
+		            var buffer = geometry.verticies[attribInfo.bufferName];
+		            buffer.bind();
+		            program.gl.vertexAttribPointer(index, attribInfo.size, attribInfo.type, false, attribInfo.stride, attribInfo.offset);
+		            return true;
 		        }
 		    }, {
-		        key: "_validateGLContext",
-		        value: function _validateGLContext() {
-		            // Check for index buffers
-		            for (var indexName in this.indices) {
-		                var index = this.indices[indexName];
-		                if (!this._gl) {
-		                    this._gl = index.index.gl;
-		                }
-		                if (this._gl !== index.index.gl) {
-		                    throw new Error("All index buffers should be initialized with same context");
-		                }
+		        key: "drawWithCurrentVertexBuffer",
+		        value: function drawWithCurrentVertexBuffer(geometry, program, indexName) {
+		            var count = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : Number.MAX_VALUE;
+		            var offset = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 0;
+		
+		            var targetIndex = geometry.indices[indexName];
+		            if (targetIndex === void 0) {
+		                throw new Error("Specified index buffer \"" + indexName + "\" was not found on this geometry.All of the index buffer available on this geometry is \"" + Object.keys(geometry.indices) + "\"");
 		            }
-		            // Check for vertex buffers
-		            for (var vertexName in this.verticies) {
-		                var vertex = this.verticies[vertexName];
-		                if (this._gl !== vertex.gl) {
-		                    throw new Error("All vertex buffers should be initialized with same context");
-		                }
-		            }
+		            targetIndex.index.bind();
+		            program.gl.drawElements(targetIndex.topology, Math.min(targetIndex.count, count), targetIndex.type, Math.min(offset * targetIndex.byteSize + targetIndex.byteOffset, (targetIndex.count - 1) * targetIndex.byteSize));
 		        }
 		    }]);
 		
