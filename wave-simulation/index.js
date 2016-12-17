@@ -1,7 +1,7 @@
 gr(() => {
   var target = gr('#main')('.target').single().getComponent("GeometryUpdator");
   renderLoop((i) => {
-    target.setValue("frame", i/3|0);
+    target.setAttribute("frame", i/3|0);
   });
 });
 
@@ -171,9 +171,9 @@ gr.registerComponent("GeometryUpdator", {
   },
   $awake: function(){
     this.geometry = this.node.getAttribute("geometry");
-    this.getAttribute("frame").addObserver((v)=>{
-      var v = Array.prototype.concat.apply([], positionsFrames[v.Value]);
-      this.geometry.verticies.pos.update(new Float32Array(v));
+    this.getAttribute("frame").watch((v)=>{
+      var val = Array.prototype.concat.apply([], positionsFrames[v]);
+      this.geometry.verticies.pos.update(new Float32Array(val));
     },true); //trueは初回に動かす場合
   }
 })
