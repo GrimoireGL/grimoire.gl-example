@@ -109,7 +109,7 @@ GeometryFactory.addType("wave-grid", { // geometry名
   console.log(positionsFrames.length,positions, attrs.frame);
 
   return GeometryBuilder.build(gl, {
-    indicies: {
+    indices: {
       default: {
         generator: function*() {
           yield* faces;
@@ -123,7 +123,7 @@ GeometryFactory.addType("wave-grid", { // geometry名
         topology:WebGLRenderingContext.LINES
       }
     },
-    verticies: {
+    vertices: {
       pos:{
         size:{
           position:3
@@ -173,7 +173,7 @@ gr.registerComponent("GeometryUpdator", {
     this.geometry = this.node.getAttribute("geometry");
     this.getAttribute("frame").watch((v)=>{
       var val = Array.prototype.concat.apply([], positionsFrames[v]);
-      this.geometry.verticies.pos.update(new Float32Array(val));
+      this.geometry.vertices.pos.update(new Float32Array(val));
     },true); //trueは初回に動かす場合
   }
 })
