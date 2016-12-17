@@ -9,7 +9,6 @@ function renderLoop(cb) {
   let renderCount = 0;
   (function () {
     window.requestAnimationFrame(arguments.callee);
-    console.log(arguments.callee)
     cb(renderCount++);
   })();
 }
