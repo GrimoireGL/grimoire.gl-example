@@ -1,0 +1,15 @@
+<goml width="fit" height="fit">
+  <geometry type="wave-grid" name="wave" frame="3"></geometry>
+  <scene>
+    <camera rotation="-25d,0d,0d">
+      <camera.components>
+        <MouseCameraControl center="0,0,0" moveSpeed="10"/>
+      </camera.components>
+    </camera>
+    <mesh class="target" geometry="wave" color="black" targetBuffer="wireframe" position="0,-4,-10" scale="3">
+      <mesh.components>
+        <GeometryUpdator/>
+      </mesh.components>
+    </mesh>
+  </scene>
+</goml>
