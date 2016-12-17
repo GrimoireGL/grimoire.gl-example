@@ -29,18 +29,18 @@ gr.registerComponent('StareAt', {
   },
   $mount: function() {
     this.phi = 0;
-    var d = this.node.getAttribute('position').subtractWith(this.getValue('center'));
+    var d = this.node.getAttribute('position').subtractWith(this.getAttribute('center'));
     this.direction = d.normalized;
     this.distance = d.magnitude;
     this.baseRotation = this._transform.localRotation;
   },
   $update: function() {
-    this.phi += this.getValue('speed');
-    var rotateQuaternion = Quaternion.angleAxis(this.phi, this.getValue('axis'));
+    this.phi += this.getAttribute('speed');
+    var rotateQuaternion = Quaternion.angleAxis(this.phi, this.getAttribute('axis'));
     var rotateMatrix = Matrix.rotationQuaternion(rotateQuaternion);
     var rotatedDirection = Matrix.transformNormal(rotateMatrix, this.direction);
-    this._transform.localPosition = this.getValue('center')
-      .addWith(rotatedDirection.multiplyWith(this.distance - this.getValue('zoom') * Math.sin(this.phi * this.getValue('zoomPhase'))));
+    this._transform.localPosition = this.getAttribute('center')
+      .addWith(rotatedDirection.multiplyWith(this.distance - this.getAttribute('zoom') * Math.sin(this.phi * this.getAttribute('zoomPhase'))));
     this._transform.localRotation = Quaternion.multiply(rotateQuaternion, this.baseRotation);
   },
 });

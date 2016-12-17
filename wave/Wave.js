@@ -28,13 +28,13 @@ gr.registerComponent('Wave', {
   },
   $mount: function() {
     this.t = 0;
-    var d = this.node.getAttribute('position').subtractWith(this.getValue('center'));
+    var d = this.node.getAttribute('position').subtractWith(this.getAttribute('center'));
     this.distance = d.magnitude;
     this.basePosition = this._transform.localPosition;
   },
   $update: function() {
-    this.t += this.getValue('speed');
+    this.t += this.getAttribute('speed');
     this._transform.localPosition = this.basePosition
-      .addWith(new Vector3(0, this.getValue('amplitude') * Math.sin(this.t + this.distance * this.getValue('coefficient')), 0));
+      .addWith(new Vector3(0, this.getAttribute('amplitude') * Math.sin(this.t + this.distance * this.getAttribute('coefficient')), 0));
   },
 });
