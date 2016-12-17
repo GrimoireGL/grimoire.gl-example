@@ -3,23 +3,23 @@ var Vector3 = gr.lib.math.Vector3;
 gr.registerComponent('Wave', {
   attributes: {
     center: {
-      defaultValue: '0, 0, 0',
+      default: '0, 0, 0',
       converter: 'Vector3',
     },
     axis: {
-      defaultValue: '0, 1, 0',
+      default: '0, 1, 0',
       converter: 'Vector3',
     },
     speed: {
-      defaultValue: 0.03,
+      default: 0.03,
       converter: 'Number',
     },
     coefficient: {
-      defaultValue: 1,
+      default: 1,
       converter: 'Number',
     },
     amplitude: {
-      defaultValue: 1,
+      default: 1,
       converter: 'Number',
     },
   },
