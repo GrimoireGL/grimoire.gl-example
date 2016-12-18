@@ -1,5 +1,5 @@
 gr(() => {
-  var target = gr('#main')('.target').single().getComponent("GeometryUpdator");
+  let target = gr('#main')('.target').single().getComponent("GeometryUpdator");
   renderLoop((i) => {
     target.setAttribute("frame", i/3|0);
   });
@@ -19,7 +19,7 @@ const waveSimulation = (() => {
   const dt = 0.0005;
   const conductivity = 5;
   const mew = conductivity * dt / dx;
-  const lattice = 40;
+  const lattice = 41;
   const tMax = 1000;
 
   const p = (v) => v * v; //pow
@@ -50,20 +50,15 @@ const waveSimulation = (() => {
       u0 = u1.concat();
       u1 = u2.concat();
     }
-
     return mapLog;
   };
 
   function hitSpace(x, y) {
-    return p(x-lattice/2) + p(y-lattice/2) <= p(lattice/10);
+    return p(x-(lattice-1)/2) + p(y-(lattice-1)/2) <= p(lattice/10);
   }
 
-  function createMap(size) {
-    let map = [];
-    for (let i = 0; i < size; i++) map.push(
-      Array.apply(null, {length: size}).map(() => 0)
-    );
-    return map;
+  function createMap(size, fn) {
+    return Array.from({length:size}).map(_=> Array.from({length:size}).map(_=> 0));
   }
 })();
 
@@ -97,7 +92,7 @@ const GeometryFactory = gr.lib.fundamental.Geometry.GeometryFactory;
 const GeometryBuilder = gr.lib.fundamental.Geometry.GeometryBuilder;
 const GeometryUtility = gr.lib.fundamental.Geometry.GeometryUtility;
 
-GeometryFactory.addType("wave-grid", { // geometry名
+GeometryFactory.addType("wave-grid", {
   frame: {
     converter: 'Number',
     default: 4,
@@ -105,8 +100,6 @@ GeometryFactory.addType("wave-grid", { // geometry名
 }, (gl, attrs) => {
   const positions = positionsFrames[attrs.frame];
   const faces = facesFrames[attrs.frame];
-  console.log(positionsFrames.length,positions, attrs.frame);
-
   return GeometryBuilder.build(gl, {
     indices: {
       default: {
@@ -131,7 +124,7 @@ GeometryFactory.addType("wave-grid", { // geometry名
         getGenerators:()=>{
           return {
             position: function*() {
-              for (var i = 0; i < positions.length; i++) {
+              for (let i = 0; i < positions.length; i++) {
                 yield* positions[i];
               }
             }
@@ -170,12 +163,12 @@ gr.registerComponent("GeometryUpdator", {
   },
   $awake: function(){
     this.geometry = this.node.getAttribute("geometry");
-    var positions = positionsFrames.map((positions) => {
+    let positions = positionsFrames.map((positions) => {
       return new Float32Array(Array.prototype.concat.apply([], positions))
     });
     this.getAttributeRaw("frame").watch((v)=>{
       this.geometry.vertices.pos.update(positions[v]);
-    }, true); //trueは初回に動かす場合
+    });
   }
 })
 
