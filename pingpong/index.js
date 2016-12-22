@@ -40,11 +40,11 @@ gr.registerComponent("RenderPingPong", {
     },
     $awake: function() {
         // あらかじめ変数にattributeは結び付けておく
-        this.getAttribute("targetBuffer").boundTo("_targetBuffer");
-        this.getAttribute("sourceName").boundTo("_sourceName");
-        this.getAttribute("clearColor").boundTo("_clearColor");
-        this.getAttribute("clearColorEnabled").boundTo("_clearColorEnabled");
-        this.getAttribute("iteration").boundTo("_iteration");
+        this.getAttributeRaw("targetBuffer").boundTo("_targetBuffer");
+        this.getAttributeRaw("sourceName").boundTo("_sourceName");
+        this.getAttributeRaw("clearColor").boundTo("_clearColor");
+        this.getAttributeRaw("clearColorEnabled").boundTo("_clearColorEnabled");
+        this.getAttributeRaw("iteration").boundTo("_iteration");
     },
     $mount: function() {
         this._gl = this.companion.get("gl"); // companionは、gomlツリー全体でシェアするようなリソースを保存できる場所。
@@ -54,20 +54,20 @@ gr.registerComponent("RenderPingPong", {
         this._materialContainer = this.node.getComponent("MaterialContainer");
     },
     $bufferUpdated: function(args) {
-        const out = this.getValue("out");
+        const out = this.getAttribute("out");
         if (out !== "default") {
             this._outFBO = new FrameBuffer(this._gl);
             this._outFBO.update(args.buffers[out]);
             this._fboSize = args.bufferSizes[out];
         }
-        const pingpong1 = this.getValue("pingpongBuffer1");
+        const pingpong1 = this.getAttribute("pingpongBuffer1");
         if (!pingpong1) {
             throw new Error("ping pong buffer 1 must be specified")
         }
         this._pingpong1FBO = new FrameBuffer(this._gl);
         this._pingpong1FBO.update(args.buffers[pingpong1]);
         this._pfboSize1 = args.bufferSizes[pingpong1];
-        const pingpong2 = this.getValue("pingpongBuffer2");
+        const pingpong2 = this.getAttribute("pingpongBuffer2");
         if (!pingpong2) {
             throw new Error("ping pong buffer 2 must be specified");
         }
@@ -80,7 +80,7 @@ gr.registerComponent("RenderPingPong", {
         if (!this._materialContainer.ready) {
             return;
         }
-        let currentSource = args.buffers[this.getValue("sourceBuffer")];
+        let currentSource = args.buffers[this.getAttribute("sourceBuffer")];
         let nextSource;
         let currentFBO;
         for (let i = 0; i < this._iteration; i++) {
@@ -99,12 +99,12 @@ gr.registerComponent("RenderPingPong", {
                     this._pingpong1FBO.bind();
                     this._gl.viewport(0, 0, this._pfboSize1.width, this._pfboSize1.height);
                     currentFBO = this._pingpong1FBO;
-                    nextSource = args.buffers[this.getValue("pingpongBuffer1")];
+                    nextSource = args.buffers[this.getAttribute("pingpongBuffer1")];
                 } else {
                     this._pingpong2FBO.bind();
                     this._gl.viewport(0, 0, this._pfboSize2.width, this._pfboSize2.height);
                     currentFBO = this._pingpong2FBO;
-                    nextSource = args.buffers[this.getValue("pingpongBuffer2")];
+                    nextSource = args.buffers[this.getAttribute("pingpongBuffer2")];
                 }
             }
 
