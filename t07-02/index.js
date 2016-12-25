@@ -1,7 +1,7 @@
 gr.registerComponent("RotateSelf", {
     attributes: {
         test: {
-            defaultValue: "HELLO WORLD!",
+            default: "HELLO WORLD!",
             converter: "String"
         }
     },

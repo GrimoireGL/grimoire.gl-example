@@ -6,12 +6,12 @@
       </camera.components>
     </camera>
     <mesh geometry="sphere" color="red"/>
-    <mesh geometry="cube" position="-2.5,0,0" texture="logo.png"/>
+    <mesh geometry="cube" position="-2.5,0,0" texture="./webcam-cube/logo.png"/>
     <mesh geometry="cube" position="2.5,0,0">
       <mesh.components>
         <Webcam target="texture"/>
       </mesh.components>
     </mesh>
-    <model src="./demo/Duck/Duck.gltf" position="0,2,0"/>
+    <model src="./webcam-cube/Duck/Duck.gltf" position="0,2,0"/>
   </scene>
 </goml>

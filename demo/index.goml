@@ -1,6 +1,0 @@
-<goml width="fit" height="fit" bgColor="gray">
-  <scene>
-    <camera position="0,0,10"></camera>
-    <mesh geometry="sphere"/>
-  </scene>
-</goml>
