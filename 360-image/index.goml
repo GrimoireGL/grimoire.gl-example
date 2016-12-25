@@ -1,6 +1,6 @@
 <goml width="fit" height="fit" containerId="drop-zone">
     <import-material typeName="skybox" src="index.sort" />
-    <material id="skybox" type="skybox" texture="360-image/image.jpg" />
+    <material id="skybox" type="skybox" texture="/360-image/image.jpg" />
     <scene>
         <camera/>
         <mesh class="geo" scale="50" geometry="sphere" material="#skybox" />
