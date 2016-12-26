@@ -76,27 +76,59 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _Colors2 = _interopRequireDefault(_Colors);
 	
-	var _GLM = __webpack_require__(18);
+	var _Angle2DConverter = __webpack_require__(18);
+	
+	var _Angle2DConverter2 = _interopRequireDefault(_Angle2DConverter);
+	
+	var _Color3Converter = __webpack_require__(20);
+	
+	var _Color3Converter2 = _interopRequireDefault(_Color3Converter);
+	
+	var _Color4Converter = __webpack_require__(21);
+	
+	var _Color4Converter2 = _interopRequireDefault(_Color4Converter);
+	
+	var _Rotation3Converter = __webpack_require__(22);
+	
+	var _Rotation3Converter2 = _interopRequireDefault(_Rotation3Converter);
+	
+	var _Vector2Converter = __webpack_require__(26);
+	
+	var _Vector2Converter2 = _interopRequireDefault(_Vector2Converter);
+	
+	var _Vector3Converter = __webpack_require__(28);
+	
+	var _Vector3Converter2 = _interopRequireDefault(_Vector3Converter);
+	
+	var _Vector4Converter = __webpack_require__(29);
+	
+	var _Vector4Converter2 = _interopRequireDefault(_Vector4Converter);
+	
+	var _GLM = __webpack_require__(30);
 	
 	var _GLM2 = _interopRequireDefault(_GLM);
 	
-	var _Matrix = __webpack_require__(19);
+	var _Matrix = __webpack_require__(24);
 	
 	var _Matrix2 = _interopRequireDefault(_Matrix);
 	
-	var _MatrixBase = __webpack_require__(20);
+	var _MatrixBase = __webpack_require__(25);
 	
 	var _MatrixBase2 = _interopRequireDefault(_MatrixBase);
 	
-	var _Quaternion = __webpack_require__(21);
+	var _Quaternion = __webpack_require__(23);
 	
 	var _Quaternion2 = _interopRequireDefault(_Quaternion);
 	
-	var _Rectangle = __webpack_require__(22);
+	var _Rectangle = __webpack_require__(31);
 	
 	var _Rectangle2 = _interopRequireDefault(_Rectangle);
 	
-	var _Vector = __webpack_require__(23);
+	var _Angle2DParser = __webpack_require__(19);
+	
+	var _Angle2DParser2 = _interopRequireDefault(_Angle2DParser);
+	
+	var _Vector = __webpack_require__(27);
 	
 	var _Vector2 = _interopRequireDefault(_Vector);
 	
@@ -112,7 +144,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _VectorBase2 = _interopRequireDefault(_VectorBase);
 	
-	var _main = __webpack_require__(24);
+	var _main = __webpack_require__(32);
 	
 	var _main2 = _interopRequireDefault(_main);
 	
@@ -123,11 +155,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	    "Color3": _Color2.default,
 	    "Color4": _Color4.default,
 	    "Colors": _Colors2.default,
+	    "Converters": {
+	        "Angle2DConverter": _Angle2DConverter2.default,
+	        "Color3Converter": _Color3Converter2.default,
+	        "Color4Converter": _Color4Converter2.default,
+	        "Rotation3Converter": _Rotation3Converter2.default,
+	        "Vector2Converter": _Vector2Converter2.default,
+	        "Vector3Converter": _Vector3Converter2.default,
+	        "Vector4Converter": _Vector4Converter2.default
+	    },
 	    "GLM": _GLM2.default,
 	    "Matrix": _Matrix2.default,
 	    "MatrixBase": _MatrixBase2.default,
 	    "Quaternion": _Quaternion2.default,
 	    "Rectangle": _Rectangle2.default,
+	    "Util": {
+	        "Angle2DParser": _Angle2DParser2.default
+	    },
 	    "Vector2": _Vector2.default,
 	    "Vector3": _Vector4.default,
 	    "Vector4": _Vector6.default,
@@ -717,8 +761,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	glMatrix.ENABLE_SIMD = false;
 	
 	// Capability detection
-	const global = new Function('return this')();
-	glMatrix.SIMD_AVAILABLE = (glMatrix.ARRAY_TYPE === global.Float32Array) && ('SIMD' in global);
+	glMatrix.SIMD_AVAILABLE = (glMatrix.ARRAY_TYPE === Float32Array) && ('SIMD' in this);
 	glMatrix.USE_SIMD = glMatrix.ENABLE_SIMD && glMatrix.SIMD_AVAILABLE;
 	
 	/**
@@ -735,7 +778,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	* Convert Degree To Radian
 	*
-	* @param {Number} a Angle in Degrees
+	* @param {Number} Angle in Degrees
 	*/
 	glMatrix.toRadian = function(a){
 	     return a * degree;
@@ -1065,7 +1108,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * Returns a string representation of a mat2
 	 *
-	 * @param {mat2} a matrix to represent as a string
+	 * @param {mat2} mat matrix to represent as a string
 	 * @returns {String} string representation of the matrix
 	 */
 	mat2.str = function (a) {
@@ -1888,7 +1931,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        out[7] = a[5];
 	        out[8] = a[8];
 	    }
-	
+	    
 	    return out;
 	};
 	
@@ -1911,8 +1954,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        // Calculate the determinant
 	        det = a00 * b01 + a01 * b11 + a02 * b21;
 	
-	    if (!det) {
-	        return null;
+	    if (!det) { 
+	        return null; 
 	    }
 	    det = 1.0 / det;
 	
@@ -2255,8 +2298,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        // Calculate the determinant
 	        det = b00 * b11 - b01 * b10 + b02 * b09 + b03 * b08 - b04 * b07 + b05 * b06;
 	
-	    if (!det) {
-	        return null;
+	    if (!det) { 
+	        return null; 
 	    }
 	    det = 1.0 / det;
 	
@@ -2278,12 +2321,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * Returns a string representation of a mat3
 	 *
-	 * @param {mat3} a matrix to represent as a string
+	 * @param {mat3} mat matrix to represent as a string
 	 * @returns {String} string representation of the matrix
 	 */
 	mat3.str = function (a) {
-	    return 'mat3(' + a[0] + ', ' + a[1] + ', ' + a[2] + ', ' +
-	                    a[3] + ', ' + a[4] + ', ' + a[5] + ', ' +
+	    return 'mat3(' + a[0] + ', ' + a[1] + ', ' + a[2] + ', ' + 
+	                    a[3] + ', ' + a[4] + ', ' + a[5] + ', ' + 
 	                    a[6] + ', ' + a[7] + ', ' + a[8] + ')';
 	};
 	
@@ -2388,7 +2431,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return out;
 	};
 	
-	/**
+	/*
 	 * Returns whether or not the matrices have exactly the same elements in the same position (when compared with ===)
 	 *
 	 * @param {mat3} a The first matrix.
@@ -2396,7 +2439,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @returns {Boolean} True if the matrices are equal, false otherwise.
 	 */
 	mat3.exactEquals = function (a, b) {
-	    return a[0] === b[0] && a[1] === b[1] && a[2] === b[2] &&
+	    return a[0] === b[0] && a[1] === b[1] && a[2] === b[2] && 
 	           a[3] === b[3] && a[4] === b[4] && a[5] === b[5] &&
 	           a[6] === b[6] && a[7] === b[7] && a[8] === b[8];
 	};
@@ -2410,7 +2453,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	mat3.equals = function (a, b) {
 	    var a0 = a[0], a1 = a[1], a2 = a[2], a3 = a[3], a4 = a[4], a5 = a[5], a6 = a[6], a7 = a[7], a8 = a[8];
-	    var b0 = b[0], b1 = b[1], b2 = b[2], b3 = b[3], b4 = b[4], b5 = b[5], b6 = b[6], b7 = b[7], b8 = b[8];
+	    var b0 = b[0], b1 = b[1], b2 = b[2], b3 = b[3], b4 = b[4], b5 = b[5], b6 = a[6], b7 = b[7], b8 = b[8];
 	    return (Math.abs(a0 - b0) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a0), Math.abs(b0)) &&
 	            Math.abs(a1 - b1) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a1), Math.abs(b1)) &&
 	            Math.abs(a2 - b2) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a2), Math.abs(b2)) &&
@@ -2458,7 +2501,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	var mat4 = {
 	  scalar: {},
-	  SIMD: {}
+	  SIMD: {},
 	};
 	
 	/**
@@ -2951,10 +2994,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var tmp1;
 	  var minor0, minor1, minor2, minor3;
 	
-	  a0 = SIMD.Float32x4.load(a, 0);
-	  a1 = SIMD.Float32x4.load(a, 4);
-	  a2 = SIMD.Float32x4.load(a, 8);
-	  a3 = SIMD.Float32x4.load(a, 12);
+	  var a0 = SIMD.Float32x4.load(a, 0);
+	  var a1 = SIMD.Float32x4.load(a, 4);
+	  var a2 = SIMD.Float32x4.load(a, 8);
+	  var a3 = SIMD.Float32x4.load(a, 12);
 	
 	  // Transpose the source matrix.  Sort of.  Not a true transpose operation
 	  tmp1 = SIMD.Float32x4.shuffle(a0, a1, 0, 1, 4, 5);
@@ -3933,34 +3976,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 	
 	/**
-	 * Returns the scaling factor component of a transformation
-	 *  matrix. If a matrix is built with fromRotationTranslationScale
-	 *  with a normalized Quaternion paramter, the returned vector will be 
-	 *  the same as the scaling vector
-	 *  originally supplied.
-	 * @param  {vec3} out Vector to receive scaling factor component
-	 * @param  {mat4} mat Matrix to be decomposed (input)
-	 * @return {vec3} out
-	 */
-	mat4.getScaling = function (out, mat) {
-	  var m11 = mat[0],
-	      m12 = mat[1],
-	      m13 = mat[2],
-	      m21 = mat[4],
-	      m22 = mat[5],
-	      m23 = mat[6],
-	      m31 = mat[8],
-	      m32 = mat[9],
-	      m33 = mat[10];
-	
-	  out[0] = Math.sqrt(m11 * m11 + m12 * m12 + m13 * m13);
-	  out[1] = Math.sqrt(m21 * m21 + m22 * m22 + m23 * m23);
-	  out[2] = Math.sqrt(m31 * m31 + m32 * m32 + m33 * m33);
-	
-	  return out;
-	};
-	
-	/**
 	 * Returns a quaternion representing the rotational component
 	 *  of a transformation matrix. If a matrix is built with
 	 *  fromRotationTranslation, the returned quaternion will be the
@@ -4402,7 +4417,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * Returns a string representation of a mat4
 	 *
-	 * @param {mat4} a matrix to represent as a string
+	 * @param {mat4} mat matrix to represent as a string
 	 * @returns {String} string representation of the matrix
 	 */
 	mat4.str = function (a) {
@@ -5174,7 +5189,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * Returns a string representation of a quatenion
 	 *
-	 * @param {quat} a vector to represent as a string
+	 * @param {quat} vec vector to represent as a string
 	 * @returns {String} string representation of the vector
 	 */
 	quat.str = function (a) {
@@ -5939,11 +5954,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 
 	    var cosine = vec3.dot(tempA, tempB);
 	
-	    if(cosine > 1.0) {
+	    if(cosine > 1.0){
 	        return 0;
-	    }
-	    else if(cosine < -1.0) {
-	        return Math.PI;
 	    } else {
 	        return Math.acos(cosine);
 	    }     
@@ -5952,7 +5964,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * Returns a string representation of a vector
 	 *
-	 * @param {vec3} a vector to represent as a string
+	 * @param {vec3} vec vector to represent as a string
 	 * @returns {String} string representation of the vector
 	 */
 	vec3.str = function (a) {
@@ -6566,7 +6578,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * Returns a string representation of a vector
 	 *
-	 * @param {vec4} a vector to represent as a string
+	 * @param {vec4} vec vector to represent as a string
 	 * @returns {String} string representation of the vector
 	 */
 	vec4.str = function (a) {
@@ -7161,7 +7173,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * Returns a string representation of a vector
 	 *
-	 * @param {vec2} a vector to represent as a string
+	 * @param {vec2} vec vector to represent as a string
 	 * @returns {String} string representation of the vector
 	 */
 	vec2.str = function (a) {
@@ -7962,21 +7974,555 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	
-	var _glMatrix = __webpack_require__(4);
+	var _Angle2DParser = __webpack_require__(19);
 	
-	exports.default = {
-	    vec2: _glMatrix.vec2,
-	    vec3: _glMatrix.vec3,
-	    vec4: _glMatrix.vec4,
-	    glMatrix: _glMatrix.glMatrix,
-	    mat2d: _glMatrix.mat2d,
-	    mat3: _glMatrix.mat3,
-	    mat4: _glMatrix.mat4,
-	    quat: _glMatrix.quat
-	};
+	var _Angle2DParser2 = _interopRequireDefault(_Angle2DParser);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function Angle2DConverter(val) {
+	    if (typeof val === "number") {
+	        return val;
+	    }
+	    if (typeof val === "string") {
+	        return _Angle2DParser2.default.parseAngle(val);
+	    }
+	    throw new Error("Passed argument \"" + val + "\" can't be parsed as angle.");
+	}
+	exports.default = Angle2DConverter;
 
 /***/ },
 /* 19 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	/**
+	 * Utility class to parse the arguments of attributes.
+	 */
+	/**
+	 * Utility class to parse the arguments of attributes.
+	 */var Angle2DParser = function () {
+	    function Angle2DParser() {
+	        _classCallCheck(this, Angle2DParser);
+	    }
+	
+	    _createClass(Angle2DParser, null, [{
+	        key: "parseAngle",
+	
+	        /**
+	         * Parse angle strings.
+	         * "p" means Pi. Ex) 3/4 p
+	         * "d" means degree. if this unit was specified, the argument will be parsed as degree. Ex) 90d
+	         * @param input the string to parse.
+	         * @returns {number} parsed angle in radians.
+	         */
+	        value: function parseAngle(input) {
+	            var regex = /^ *(-?[\de+-.]*) *(?:\/ *([\de+-.]*))? *(p|prad|deg|d|r|rad)? *$/gm;
+	            var result = regex.exec(input);
+	            if (result == null) {
+	                throw new Error("faild parse Angle string:'" + input + "'");
+	            }
+	            var numerator = parseFloat(result[1]);
+	            if (result[2]) {
+	                numerator /= parseFloat(result[2]);
+	            }
+	            var unit = result[3];
+	            if (unit == null) {
+	                unit = "d";
+	            }
+	            if (unit === "r" || unit === "rad") {
+	                return numerator;
+	            }
+	            if (unit === "p" || unit === "prad") {
+	                return numerator * Math.PI;
+	            }
+	            return numerator / 180 * Math.PI;
+	        }
+	    }]);
+	
+	    return Angle2DParser;
+	}();
+	
+	exports.default = Angle2DParser;
+
+/***/ },
+/* 20 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _Color = __webpack_require__(14);
+	
+	var _Color2 = _interopRequireDefault(_Color);
+	
+	var _Color3 = __webpack_require__(15);
+	
+	var _Color4 = _interopRequireDefault(_Color3);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function Color3Converter(val) {
+	    if (val instanceof _Color2.default) {
+	        return val;
+	    } else if (val instanceof _Color4.default) {
+	        return new _Color2.default(val.R, val.G, val.B);
+	    } else if (typeof val === "string") {
+	        return _Color2.default.parse(val);
+	    } else if (Array.isArray(val)) {
+	        return new _Color2.default(val[0], val[1], val[2]);
+	    } else {
+	        throw new Error(val + " can not be parsed as Color4.");
+	    }
+	}
+	exports.default = Color3Converter;
+
+/***/ },
+/* 21 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _Color = __webpack_require__(14);
+	
+	var _Color2 = _interopRequireDefault(_Color);
+	
+	var _Color3 = __webpack_require__(15);
+	
+	var _Color4 = _interopRequireDefault(_Color3);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function Color4Converter(val) {
+	    if (val instanceof _Color4.default) {
+	        return val;
+	    } else if (val instanceof _Color2.default) {
+	        return new _Color4.default(val.R, val.G, val.B, 1.0);
+	    } else if (typeof val === "string") {
+	        return _Color4.default.parse(val);
+	    } else if (Array.isArray(val)) {
+	        return new _Color4.default(val[0], val[1], val[2], val[3]);
+	    } else {
+	        throw new Error(val + " can not be parsed as Color4.");
+	    }
+	}
+	exports.default = Color4Converter;
+
+/***/ },
+/* 22 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _Quaternion = __webpack_require__(23);
+	
+	var _Quaternion2 = _interopRequireDefault(_Quaternion);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function Rotation3Converter(val) {
+	    if (val instanceof _Quaternion2.default) {
+	        return val;
+	    } else if (Array.isArray(val)) {
+	        return new _Quaternion2.default([val[0], val[1], val[2], val[3]]);
+	    } else if (typeof val === "string") {
+	        return _Quaternion2.default.parse(val);
+	    }
+	}
+	exports.default = Rotation3Converter;
+
+/***/ },
+/* 23 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); ///<reference path="./gl-matrix.d.ts"/>
+	
+	
+	var _Vector = __webpack_require__(2);
+	
+	var _Vector2 = _interopRequireDefault(_Vector);
+	
+	var _glMatrix = __webpack_require__(4);
+	
+	var _Matrix = __webpack_require__(24);
+	
+	var _Matrix2 = _interopRequireDefault(_Matrix);
+	
+	var _Angle2DParser = __webpack_require__(19);
+	
+	var _Angle2DParser2 = _interopRequireDefault(_Angle2DParser);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	/**
+	* The class to maniplate quaternion.
+	* Basically,you don't need to operate raw element.
+	* You consider to use some of useful methods without editing raw element forcelly.
+	* Each element will be represented as (w;x,y,z)
+	* (1,i,j,k) is base axis for quaternion. (i,j,k is pure imaginary number)
+	* (w;x,y,z) means w*1+x*i+y*j+z*k
+	*
+	*/
+	var Quaternion = function () {
+	    _createClass(Quaternion, null, [{
+	        key: "equals",
+	        value: function equals(q1, q2) {
+	            for (var i = 0; i < 4; i++) {
+	                if (q1.rawElements[i] !== q2.rawElements[i]) {
+	                    return false;
+	                }
+	            }
+	            return true;
+	        }
+	        /**
+	         * Parse angle string in 3D.
+	         * "p" means Pi. Ex) 3/4 p
+	         * "d" means degree. if this unit was specified, the argument will be parsed as degree. Ex) 90d
+	         * "eular(x,y,z)" means rotation in eular. This means Z-X-Y rotation like Unity.
+	         * "axis(angle,x,y,z)" means rotation around specified axis. This means angle radians will be rotated around the axis (x,y,z).
+	         * This angle can be specified with the character "p" or "d".
+	         * "x(angle)","y(angle)" or "z(angle)" means rotation around unit axis.
+	         * This angle can be specified with the character "p" or "d".
+	         * @param input the string to be parsed as angle in 3D.
+	         * @returns {Quaternion} parsed rotation in Quaternion.
+	         */
+	
+	    }, {
+	        key: "parse",
+	        value: function parse(input) {
+	            var reg1 = /^ *(x|y|z) *\(([^\(\)]+)\) *$/gm;
+	            var reg2 = /^ *axis *\(([^\(\),]+),([^\(\),]+),([^\(\),]+),([^\(\),]+)\) *$/gm;
+	            var reg3 = /^ *([^\(\),]+),([^\(\),]+),([^\(\),]+) *$/gm;
+	            var result = reg1.exec(input);
+	            if (result) {
+	                if (result[1] === "x") {
+	                    return Quaternion.angleAxis(_Angle2DParser2.default.parseAngle(result[2]), _Vector2.default.XUnit);
+	                }
+	                if (result[1] === "y") {
+	                    return Quaternion.angleAxis(_Angle2DParser2.default.parseAngle(result[2]), _Vector2.default.YUnit);
+	                }
+	                if (result[1] === "z") {
+	                    return Quaternion.angleAxis(_Angle2DParser2.default.parseAngle(result[2]), _Vector2.default.ZUnit);
+	                }
+	            }
+	            var res2 = reg2.exec(input);
+	            if (res2) {
+	                var rotation = _Angle2DParser2.default.parseAngle(res2[1]);
+	                var x = parseFloat(res2[2]);
+	                var y = parseFloat(res2[3]);
+	                var z = parseFloat(res2[4]);
+	                return Quaternion.angleAxis(rotation, new _Vector2.default(x, y, z));
+	            }
+	            var res3 = reg3.exec(input);
+	            if (res3) {
+	                return Quaternion.euler(_Angle2DParser2.default.parseAngle(res3[1]), _Angle2DParser2.default.parseAngle(res3[2]), _Angle2DParser2.default.parseAngle(res3[3]));
+	            }
+	            throw new Error("Unknown format for rotation3D:'" + input + "'");
+	        }
+	        /**
+	        * Calculate add result of two quaternion
+	        */
+	
+	    }, {
+	        key: "add",
+	        value: function add(q1, q2) {
+	            var newQuat = _glMatrix.quat.create();
+	            return new Quaternion(_glMatrix.quat.add(newQuat, q1.rawElements, q2.rawElements));
+	        }
+	        /**
+	        * Calculate multiply result of two quaternion
+	        */
+	
+	    }, {
+	        key: "multiply",
+	        value: function multiply(q1, q2) {
+	            var newQuat = _glMatrix.quat.create();
+	            return new Quaternion(_glMatrix.quat.mul(newQuat, q1.rawElements, q2.rawElements));
+	        }
+	        /**
+	        * Calculate the rotation quaternion represented as pair of angle and axis.
+	        */
+	
+	    }, {
+	        key: "angleAxis",
+	        value: function angleAxis(angle, axis) {
+	            var axisVec = _glMatrix.vec3.create();
+	            axisVec[0] = axis.X;
+	            axisVec[1] = axis.Y;
+	            axisVec[2] = axis.Z;
+	            var newQuat = _glMatrix.quat.create();
+	            return new Quaternion(_glMatrix.quat.setAxisAngle(newQuat, axisVec, +angle));
+	        }
+	    }, {
+	        key: "euler",
+	        value: function euler(x, y, z) {
+	            return Quaternion.multiply(Quaternion.angleAxis(z, _Vector2.default.ZUnit), Quaternion.multiply(Quaternion.angleAxis(x, _Vector2.default.XUnit), Quaternion.angleAxis(y, _Vector2.default.YUnit)));
+	        }
+	    }, {
+	        key: "eulerXYZ",
+	        value: function eulerXYZ(x, y, z) {
+	            return Quaternion.multiply(Quaternion.angleAxis(z, _Vector2.default.ZUnit), Quaternion.multiply(Quaternion.angleAxis(y, _Vector2.default.YUnit), Quaternion.angleAxis(x, _Vector2.default.XUnit)));
+	        }
+	    }, {
+	        key: "slerp",
+	        value: function slerp(q1, q2, t) {
+	            var newQuat = _glMatrix.quat.create();
+	            return new Quaternion(_glMatrix.quat.slerp(newQuat, q1.rawElements, q2.rawElements, +t));
+	        }
+	        /**
+	         * Returns the angle in degrees between two rotations q1 and q2.
+	         * @param q1 the quaternion represents begin angle.
+	         * @param q2 the quaternion represents end angle.
+	         * @returns {number} angle represented in radians.
+	         */
+	
+	    }, {
+	        key: "angle",
+	        value: function angle(q1, q2) {
+	            var delta = Quaternion.multiply(q2, q1.inverse());
+	            delta = delta.normalize();
+	            return 2 * Math.acos(delta.W);
+	        }
+	    }, {
+	        key: "fromToRotation",
+	        value: function fromToRotation(from, to) {
+	            var crossed = _Vector2.default.cross(from.normalized, to.normalized);
+	            var angle = _Vector2.default.dot(from.normalized, to.normalized);
+	            return Quaternion.angleAxis(angle, crossed);
+	        }
+	    }, {
+	        key: "lookRotation",
+	        value: function lookRotation(forward, upVec) {
+	            upVec = upVec || _Vector2.default.YUnit;
+	            var normalizedForward = forward.normalized;
+	            var upForwardCross = _Vector2.default.cross(upVec, normalizedForward).normalized;
+	            var thirdAxis = _Vector2.default.cross(normalizedForward, upForwardCross);
+	            var m00 = upForwardCross.X;
+	            var m01 = upForwardCross.Y;
+	            var m02 = upForwardCross.Z;
+	            var m10 = thirdAxis.X;
+	            var m11 = thirdAxis.Y;
+	            var m12 = thirdAxis.Z;
+	            var m20 = normalizedForward.X;
+	            var m21 = normalizedForward.Y;
+	            var m22 = normalizedForward.Z;
+	            var num8 = m00 + m11 + m22;
+	            if (num8 > 0) {
+	                var num = Math.sqrt(1 + num8);
+	                return new Quaternion([(m12 - m21) * 0.5 / num, (m20 - m02) * 0.5 / num, (m01 - m10) * 0.5 / num, num / 2]);
+	            }
+	            if (m00 >= m11 && m00 >= m22) {
+	                var num7 = Math.sqrt(1 + m00 - m11 - m22);
+	                return new Quaternion([(m01 + m10) * 0.5 / num7, (m02 + m20) * 0.5 / num7, (m12 - m21) * 0.5 / num7, num7 / 2]);
+	            }
+	            if (m11 > m22) {
+	                var num6 = Math.sqrt(1 + m11 - m00 - m22);
+	                return new Quaternion([(m10 + m01) * 0, 5 / num6, 0.5 * num6, (m21 + m12) * 0.5 / num6, (m20 - m02) * 0.5 / num6]);
+	            }
+	            var num5 = Math.sqrt(1 + m22 - m00 - m11);
+	            return new Quaternion([(m20 + m02) * 0.5 / num5, (m21 + m12) * 0.5 / num5, 0.5 * num5, (m01 - m10) * 0.5 / num5]);
+	        }
+	    }, {
+	        key: "Identity",
+	        get: function get() {
+	            return new Quaternion(_glMatrix.quat.create());
+	        }
+	        /**
+	        * Constructor by specifing each elements.
+	        */
+	
+	    }]);
+	
+	    function Quaternion(rawElements) {
+	        _classCallCheck(this, Quaternion);
+	
+	        this.rawElements = rawElements;
+	    }
+	
+	    _createClass(Quaternion, [{
+	        key: "equalWith",
+	        value: function equalWith(q) {
+	            return Quaternion.equals(this, q);
+	        }
+	        /**
+	        * Get normalized quaternion
+	        */
+	
+	    }, {
+	        key: "normalize",
+	        value: function normalize() {
+	            var newQuat = _glMatrix.quat.create();
+	            return new Quaternion(_glMatrix.quat.normalize(newQuat, this.rawElements));
+	        }
+	    }, {
+	        key: "inverse",
+	        value: function inverse() {
+	            var newQuat = _glMatrix.quat.create();
+	            return new Quaternion(_glMatrix.quat.invert(newQuat, this.rawElements));
+	        }
+	    }, {
+	        key: "toAngleAxisString",
+	        value: function toAngleAxisString() {
+	            var angle = 2 * Math.acos(this.W);
+	            var imm = Math.sqrt(1 - this.W * this.W);
+	            if (angle !== 180 && angle !== 0) {
+	                return "axis(" + angle + "," + this.X / imm + "," + this.Y / imm + "," + this.Z / imm + ")";
+	            } else if (angle === 0) {
+	                return "axis(" + angle + ",0,1,0)";
+	            } else {
+	                return "axis(180d," + this.X + "," + this.Y + "," + this.Z + ")";
+	            }
+	        }
+	    }, {
+	        key: "toString",
+	        value: function toString() {
+	            return this.toAngleAxisString();
+	        }
+	    }, {
+	        key: "factoringQuaternionZXY",
+	        value: function factoringQuaternionZXY() {
+	            var result = { x: 0, y: 0, z: 0 };
+	            var mat = _Matrix2.default.rotationQuaternion(this);
+	            var sx = mat.rawElements[6];
+	            if (Math.abs(sx) < 1 - 1.0E-4) {
+	                result.x = Math.asin(sx);
+	                result.z = Math.atan2(-mat.rawElements[4], mat.rawElements[5]);
+	                result.y = Math.atan2(-mat.rawElements[2], mat.rawElements[10]);
+	            } else {
+	                result.y = 0;
+	                result.x = Math.PI / 2 * sx;
+	                result.z = Math.atan2(mat.rawElements[1], mat.rawElements[0]);
+	            }
+	            return result;
+	        }
+	    }, {
+	        key: "factoringQuaternionXYZ",
+	        value: function factoringQuaternionXYZ() {
+	            var result = { x: 0, y: 0, z: 0 };
+	            var mat = _Matrix2.default.rotationQuaternion(this);
+	            var sy = -mat.rawElements[2];
+	            if (Math.abs(sy) < 1 - 1.0E-4) {
+	                result.x = Math.atan2(mat.rawElements[6], mat.rawElements[10]);
+	                result.y = Math.asin(sy);
+	                result.z = Math.atan2(mat.rawElements[1], mat.rawElements[0]);
+	            } else {
+	                result.x = 0;
+	                result.y = Math.PI / 2 * sy;
+	                result.z = Math.atan2(-mat.rawElements[4], mat.rawElements[5]);
+	            }
+	            return result;
+	        }
+	    }, {
+	        key: "eularAngles",
+	        get: function get() {
+	            var eular = this.factoringQuaternionZXY();
+	            return new _Vector2.default(eular.x, eular.y, eular.z);
+	        },
+	        set: function set(v) {
+	            this.rawElements = Quaternion.euler(v.X, v.Y, v.Z).rawElements;
+	        }
+	        /**
+	        * Getter for X.
+	        */
+	
+	    }, {
+	        key: "X",
+	        get: function get() {
+	            return this.rawElements[0];
+	        }
+	        /**
+	        * Getter for Y.
+	        */
+	
+	    }, {
+	        key: "Y",
+	        get: function get() {
+	            return this.rawElements[1];
+	        }
+	        /**
+	        * Getter for Z.
+	        */
+	
+	    }, {
+	        key: "Z",
+	        get: function get() {
+	            return this.rawElements[2];
+	        }
+	        /**
+	        * Getter for W.
+	        */
+	
+	    }, {
+	        key: "W",
+	        get: function get() {
+	            return this.rawElements[3];
+	        }
+	        /**
+	        * Getter for imaginary part vector.
+	        * It returns the vector (x,y,z)
+	        */
+	
+	    }, {
+	        key: "ImaginaryPart",
+	        get: function get() {
+	            return new _Vector2.default(this.X, this.Y, this.Z);
+	        }
+	        /**
+	        * Get the conjugate of this quaternion
+	        */
+	
+	    }, {
+	        key: "Conjugate",
+	        get: function get() {
+	            var newQuat = _glMatrix.quat.create();
+	            return new Quaternion(_glMatrix.quat.conjugate(newQuat, this.rawElements));
+	        }
+	        /**
+	        * Get the length
+	        */
+	
+	    }, {
+	        key: "Length",
+	        get: function get() {
+	            return _glMatrix.quat.len(this.rawElements);
+	        }
+	    }]);
+	
+	    return Quaternion;
+	}();
+	
+	exports.default = Quaternion;
+
+/***/ },
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -7987,7 +8533,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _MatrixBase2 = __webpack_require__(20);
+	var _MatrixBase2 = __webpack_require__(25);
 	
 	var _MatrixBase3 = _interopRequireDefault(_MatrixBase2);
 	
@@ -7999,7 +8545,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _Vector4 = _interopRequireDefault(_Vector3);
 	
-	var _Quaternion = __webpack_require__(21);
+	var _Quaternion = __webpack_require__(23);
 	
 	var _Quaternion2 = _interopRequireDefault(_Quaternion);
 	
@@ -8323,7 +8869,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = Matrix;
 
 /***/ },
-/* 20 */
+/* 25 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -8384,7 +8930,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = MatrixBase;
 
 /***/ },
-/* 21 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -8393,429 +8939,27 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); ///<reference path="./gl-matrix.d.ts"/>
-	
-	
-	var _Vector = __webpack_require__(2);
-	
-	var _Vector2 = _interopRequireDefault(_Vector);
-	
-	var _glMatrix = __webpack_require__(4);
-	
-	var _Matrix = __webpack_require__(19);
-	
-	var _Matrix2 = _interopRequireDefault(_Matrix);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	/**
-	* The class to maniplate quaternion.
-	* Basically,you don't need to operate raw element.
-	* You consider to use some of useful methods without editing raw element forcelly.
-	* Each element will be represented as (w;x,y,z)
-	* (1,i,j,k) is base axis for quaternion. (i,j,k is pure imaginary number)
-	* (w;x,y,z) means w*1+x*i+y*j+z*k
-	*
-	*/
-	var Quaternion = function () {
-	    _createClass(Quaternion, null, [{
-	        key: "equals",
-	        value: function equals(q1, q2) {
-	            for (var i = 0; i < 4; i++) {
-	                if (q1.rawElements[i] !== q2.rawElements[i]) {
-	                    return false;
-	                }
-	            }
-	            return true;
-	        }
-	        /**
-	        * Calculate add result of two quaternion
-	        */
-	
-	    }, {
-	        key: "add",
-	        value: function add(q1, q2) {
-	            var newQuat = _glMatrix.quat.create();
-	            return new Quaternion(_glMatrix.quat.add(newQuat, q1.rawElements, q2.rawElements));
-	        }
-	        /**
-	        * Calculate multiply result of two quaternion
-	        */
-	
-	    }, {
-	        key: "multiply",
-	        value: function multiply(q1, q2) {
-	            var newQuat = _glMatrix.quat.create();
-	            return new Quaternion(_glMatrix.quat.mul(newQuat, q1.rawElements, q2.rawElements));
-	        }
-	        /**
-	        * Calculate the rotation quaternion represented as pair of angle and axis.
-	        */
-	
-	    }, {
-	        key: "angleAxis",
-	        value: function angleAxis(angle, axis) {
-	            var axisVec = _glMatrix.vec3.create();
-	            axisVec[0] = axis.X;
-	            axisVec[1] = axis.Y;
-	            axisVec[2] = axis.Z;
-	            var newQuat = _glMatrix.quat.create();
-	            return new Quaternion(_glMatrix.quat.setAxisAngle(newQuat, axisVec, +angle));
-	        }
-	    }, {
-	        key: "euler",
-	        value: function euler(x, y, z) {
-	            return Quaternion.multiply(Quaternion.angleAxis(z, _Vector2.default.ZUnit), Quaternion.multiply(Quaternion.angleAxis(x, _Vector2.default.XUnit), Quaternion.angleAxis(y, _Vector2.default.YUnit)));
-	        }
-	    }, {
-	        key: "eulerXYZ",
-	        value: function eulerXYZ(x, y, z) {
-	            return Quaternion.multiply(Quaternion.angleAxis(z, _Vector2.default.ZUnit), Quaternion.multiply(Quaternion.angleAxis(y, _Vector2.default.YUnit), Quaternion.angleAxis(x, _Vector2.default.XUnit)));
-	        }
-	    }, {
-	        key: "slerp",
-	        value: function slerp(q1, q2, t) {
-	            var newQuat = _glMatrix.quat.create();
-	            return new Quaternion(_glMatrix.quat.slerp(newQuat, q1.rawElements, q2.rawElements, +t));
-	        }
-	        /**
-	         * Returns the angle in degrees between two rotations q1 and q2.
-	         * @param q1 the quaternion represents begin angle.
-	         * @param q2 the quaternion represents end angle.
-	         * @returns {number} angle represented in radians.
-	         */
-	
-	    }, {
-	        key: "angle",
-	        value: function angle(q1, q2) {
-	            var delta = Quaternion.multiply(q2, q1.inverse());
-	            delta = delta.normalize();
-	            return 2 * Math.acos(delta.W);
-	        }
-	    }, {
-	        key: "fromToRotation",
-	        value: function fromToRotation(from, to) {
-	            var crossed = _Vector2.default.cross(from.normalized, to.normalized);
-	            var angle = _Vector2.default.dot(from.normalized, to.normalized);
-	            return Quaternion.angleAxis(angle, crossed);
-	        }
-	    }, {
-	        key: "lookRotation",
-	        value: function lookRotation(forward, upVec) {
-	            upVec = upVec || _Vector2.default.YUnit;
-	            var normalizedForward = forward.normalized;
-	            var upForwardCross = _Vector2.default.cross(upVec, normalizedForward).normalized;
-	            var thirdAxis = _Vector2.default.cross(normalizedForward, upForwardCross);
-	            var m00 = upForwardCross.X;
-	            var m01 = upForwardCross.Y;
-	            var m02 = upForwardCross.Z;
-	            var m10 = thirdAxis.X;
-	            var m11 = thirdAxis.Y;
-	            var m12 = thirdAxis.Z;
-	            var m20 = normalizedForward.X;
-	            var m21 = normalizedForward.Y;
-	            var m22 = normalizedForward.Z;
-	            var num8 = m00 + m11 + m22;
-	            if (num8 > 0) {
-	                var num = Math.sqrt(1 + num8);
-	                return new Quaternion([(m12 - m21) * 0.5 / num, (m20 - m02) * 0.5 / num, (m01 - m10) * 0.5 / num, num / 2]);
-	            }
-	            if (m00 >= m11 && m00 >= m22) {
-	                var num7 = Math.sqrt(1 + m00 - m11 - m22);
-	                return new Quaternion([(m01 + m10) * 0.5 / num7, (m02 + m20) * 0.5 / num7, (m12 - m21) * 0.5 / num7, num7 / 2]);
-	            }
-	            if (m11 > m22) {
-	                var num6 = Math.sqrt(1 + m11 - m00 - m22);
-	                return new Quaternion([(m10 + m01) * 0, 5 / num6, 0.5 * num6, (m21 + m12) * 0.5 / num6, (m20 - m02) * 0.5 / num6]);
-	            }
-	            var num5 = Math.sqrt(1 + m22 - m00 - m11);
-	            return new Quaternion([(m20 + m02) * 0.5 / num5, (m21 + m12) * 0.5 / num5, 0.5 * num5, (m01 - m10) * 0.5 / num5]);
-	        }
-	    }, {
-	        key: "Identity",
-	        get: function get() {
-	            return new Quaternion(_glMatrix.quat.create());
-	        }
-	        /**
-	        * Constructor by specifing each elements.
-	        */
-	
-	    }]);
-	
-	    function Quaternion(rawElements) {
-	        _classCallCheck(this, Quaternion);
-	
-	        this.rawElements = rawElements;
-	    }
-	
-	    _createClass(Quaternion, [{
-	        key: "equalWith",
-	        value: function equalWith(q) {
-	            return Quaternion.equals(this, q);
-	        }
-	        /**
-	        * Get normalized quaternion
-	        */
-	
-	    }, {
-	        key: "normalize",
-	        value: function normalize() {
-	            var newQuat = _glMatrix.quat.create();
-	            return new Quaternion(_glMatrix.quat.normalize(newQuat, this.rawElements));
-	        }
-	    }, {
-	        key: "inverse",
-	        value: function inverse() {
-	            var newQuat = _glMatrix.quat.create();
-	            return new Quaternion(_glMatrix.quat.invert(newQuat, this.rawElements));
-	        }
-	    }, {
-	        key: "toAngleAxisString",
-	        value: function toAngleAxisString() {
-	            var angle = 2 * Math.acos(this.W);
-	            var imm = Math.sqrt(1 - this.W * this.W);
-	            if (angle !== 180 && angle !== 0) {
-	                return "axis(" + angle + "," + this.X / imm + "," + this.Y / imm + "," + this.Z / imm + ")";
-	            } else if (angle === 0) {
-	                return "axis(" + angle + ",0,1,0)";
-	            } else {
-	                return "axis(180d," + this.X + "," + this.Y + "," + this.Z + ")";
-	            }
-	        }
-	    }, {
-	        key: "toString",
-	        value: function toString() {
-	            return this.toAngleAxisString();
-	        }
-	    }, {
-	        key: "factoringQuaternionZXY",
-	        value: function factoringQuaternionZXY() {
-	            var result = { x: 0, y: 0, z: 0 };
-	            var mat = _Matrix2.default.rotationQuaternion(this);
-	            var sx = mat.rawElements[6];
-	            if (Math.abs(sx) < 1 - 1.0E-4) {
-	                result.x = Math.asin(sx);
-	                result.z = Math.atan2(-mat.rawElements[4], mat.rawElements[5]);
-	                result.y = Math.atan2(-mat.rawElements[2], mat.rawElements[10]);
-	            } else {
-	                result.y = 0;
-	                result.x = Math.PI / 2 * sx;
-	                result.z = Math.atan2(mat.rawElements[1], mat.rawElements[0]);
-	            }
-	            return result;
-	        }
-	    }, {
-	        key: "factoringQuaternionXYZ",
-	        value: function factoringQuaternionXYZ() {
-	            var result = { x: 0, y: 0, z: 0 };
-	            var mat = _Matrix2.default.rotationQuaternion(this);
-	            var sy = -mat.rawElements[2];
-	            if (Math.abs(sy) < 1 - 1.0E-4) {
-	                result.x = Math.atan2(mat.rawElements[6], mat.rawElements[10]);
-	                result.y = Math.asin(sy);
-	                result.z = Math.atan2(mat.rawElements[1], mat.rawElements[0]);
-	            } else {
-	                result.x = 0;
-	                result.y = Math.PI / 2 * sy;
-	                result.z = Math.atan2(-mat.rawElements[4], mat.rawElements[5]);
-	            }
-	            return result;
-	        }
-	    }, {
-	        key: "eularAngles",
-	        get: function get() {
-	            var eular = this.factoringQuaternionZXY();
-	            return new _Vector2.default(eular.x, eular.y, eular.z);
-	        },
-	        set: function set(v) {
-	            this.rawElements = Quaternion.euler(v.X, v.Y, v.Z).rawElements;
-	        }
-	        /**
-	        * Getter for X.
-	        */
-	
-	    }, {
-	        key: "X",
-	        get: function get() {
-	            return this.rawElements[0];
-	        }
-	        /**
-	        * Getter for Y.
-	        */
-	
-	    }, {
-	        key: "Y",
-	        get: function get() {
-	            return this.rawElements[1];
-	        }
-	        /**
-	        * Getter for Z.
-	        */
-	
-	    }, {
-	        key: "Z",
-	        get: function get() {
-	            return this.rawElements[2];
-	        }
-	        /**
-	        * Getter for W.
-	        */
-	
-	    }, {
-	        key: "W",
-	        get: function get() {
-	            return this.rawElements[3];
-	        }
-	        /**
-	        * Getter for imaginary part vector.
-	        * It returns the vector (x,y,z)
-	        */
-	
-	    }, {
-	        key: "ImaginaryPart",
-	        get: function get() {
-	            return new _Vector2.default(this.X, this.Y, this.Z);
-	        }
-	        /**
-	        * Get the conjugate of this quaternion
-	        */
-	
-	    }, {
-	        key: "Conjugate",
-	        get: function get() {
-	            var newQuat = _glMatrix.quat.create();
-	            return new Quaternion(_glMatrix.quat.conjugate(newQuat, this.rawElements));
-	        }
-	        /**
-	        * Get the length
-	        */
-	
-	    }, {
-	        key: "Length",
-	        get: function get() {
-	            return _glMatrix.quat.len(this.rawElements);
-	        }
-	    }]);
-	
-	    return Quaternion;
-	}();
-	
-	exports.default = Quaternion;
-
-/***/ },
-/* 22 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _Vector = __webpack_require__(23);
+	var _Vector = __webpack_require__(27);
 	
 	var _Vector2 = _interopRequireDefault(_Vector);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	var Rectangle = function () {
-	    _createClass(Rectangle, null, [{
-	        key: "equals",
-	        value: function equals(r1, r2) {
-	            return r1.Left === r2.Left && r1.Right === r2.Right && r1.Top === r2.Top && r1.Bottom === r2.Bottom;
-	        }
-	    }, {
-	        key: "edgeSizeEquals",
-	        value: function edgeSizeEquals(r1, r2) {
-	            return r1.Width === r2.Width && r1.Height === r2.Height;
-	        }
-	    }]);
-	
-	    function Rectangle(left, top, width, height) {
-	        _classCallCheck(this, Rectangle);
-	
-	        this._left = left;
-	        this._top = top;
-	        this._width = width;
-	        this._height = height;
+	function Vector2Converter(val) {
+	    if (val instanceof _Vector2.default) {
+	        return val;
+	    } else if (typeof val === "string") {
+	        return _Vector2.default.parse(val);
+	    } else if (typeof val === "number") {
+	        return new _Vector2.default(val, val);
+	    } else if (Array.isArray(val)) {
+	        return new _Vector2.default(val[0], val[1]);
 	    }
-	
-	    _createClass(Rectangle, [{
-	        key: "contains",
-	        value: function contains(xOrPoint, y) {
-	            var x = void 0;
-	            if (xOrPoint instanceof _Vector2.default) {
-	                x = xOrPoint.X;
-	                y = xOrPoint.Y;
-	            } else {
-	                x = xOrPoint;
-	            }
-	            return this.Left <= x && this.Right >= x && this.Top <= y && this.Bottom >= y;
-	        }
-	    }, {
-	        key: "toLocal",
-	        value: function toLocal(xOrPoint, y) {
-	            var x = void 0;
-	            if (xOrPoint instanceof _Vector2.default) {
-	                x = xOrPoint.X;
-	                y = xOrPoint.Y;
-	            } else {
-	                x = xOrPoint;
-	            }
-	            x -= this.Left;
-	            y -= this.Top;
-	            return xOrPoint instanceof _Vector2.default ? new _Vector2.default(x, y) : [x, y];
-	        }
-	    }, {
-	        key: "toString",
-	        value: function toString() {
-	            return "Rectangle(" + this.Left + "," + this.Top + "-" + this.Right + "," + this.Bottom + ")";
-	        }
-	    }, {
-	        key: "Left",
-	        get: function get() {
-	            return this._left;
-	        }
-	    }, {
-	        key: "Right",
-	        get: function get() {
-	            return this.Left + this.Width;
-	        }
-	    }, {
-	        key: "Top",
-	        get: function get() {
-	            return this._top;
-	        }
-	    }, {
-	        key: "Bottom",
-	        get: function get() {
-	            return this._top + this._height;
-	        }
-	    }, {
-	        key: "Width",
-	        get: function get() {
-	            return this._width;
-	        }
-	    }, {
-	        key: "Height",
-	        get: function get() {
-	            return this._height;
-	        }
-	    }]);
-	
-	    return Rectangle;
-	}();
-	
-	exports.default = Rectangle;
+	}
+	exports.default = Vector2Converter;
 
 /***/ },
-/* 23 */
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9056,16 +9200,295 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = Vector2;
 
 /***/ },
-/* 24 */
-/***/ function(module, exports) {
+/* 28 */
+/***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	    value: true
 	});
 	
-	exports.default = function () {};
+	var _Vector = __webpack_require__(2);
+	
+	var _Vector2 = _interopRequireDefault(_Vector);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function Vector3Converter(val) {
+	    if (val instanceof _Vector2.default) {
+	        return val;
+	    } else if (typeof val === "string") {
+	        return _Vector2.default.parse(val);
+	    } else if (typeof val == "number") {
+	        return new _Vector2.default(val, val, val);
+	    } else if (Array.isArray(val)) {
+	        return new _Vector2.default(val[0], val[1], val[2]);
+	    }
+	}
+	exports.default = Vector3Converter;
+
+/***/ },
+/* 29 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _Vector = __webpack_require__(16);
+	
+	var _Vector2 = _interopRequireDefault(_Vector);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function Vector4Converter(val) {
+	    if (val instanceof _Vector2.default) {
+	        return val;
+	    } else if (typeof val === "string") {
+	        return _Vector2.default.parse(val);
+	    } else if (typeof val === "number") {
+	        return new _Vector2.default(val, val, val, val);
+	    } else if (Array.isArray(val)) {
+	        return new _Vector2.default(val[0], val[1], val[2], val[3]);
+	    }
+	}
+	exports.default = Vector4Converter;
+
+/***/ },
+/* 30 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _glMatrix = __webpack_require__(4);
+	
+	exports.default = {
+	    vec2: _glMatrix.vec2,
+	    vec3: _glMatrix.vec3,
+	    vec4: _glMatrix.vec4,
+	    glMatrix: _glMatrix.glMatrix,
+	    mat2d: _glMatrix.mat2d,
+	    mat3: _glMatrix.mat3,
+	    mat4: _glMatrix.mat4,
+	    quat: _glMatrix.quat
+	};
+
+/***/ },
+/* 31 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _Vector = __webpack_require__(27);
+	
+	var _Vector2 = _interopRequireDefault(_Vector);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	var Rectangle = function () {
+	    _createClass(Rectangle, null, [{
+	        key: "equals",
+	        value: function equals(r1, r2) {
+	            return r1.Left === r2.Left && r1.Right === r2.Right && r1.Top === r2.Top && r1.Bottom === r2.Bottom;
+	        }
+	    }, {
+	        key: "edgeSizeEquals",
+	        value: function edgeSizeEquals(r1, r2) {
+	            return r1.Width === r2.Width && r1.Height === r2.Height;
+	        }
+	    }]);
+	
+	    function Rectangle(left, top, width, height) {
+	        _classCallCheck(this, Rectangle);
+	
+	        this._left = left;
+	        this._top = top;
+	        this._width = width;
+	        this._height = height;
+	    }
+	
+	    _createClass(Rectangle, [{
+	        key: "contains",
+	        value: function contains(xOrPoint, y) {
+	            var x = void 0;
+	            if (xOrPoint instanceof _Vector2.default) {
+	                x = xOrPoint.X;
+	                y = xOrPoint.Y;
+	            } else {
+	                x = xOrPoint;
+	            }
+	            return this.Left <= x && this.Right >= x && this.Top <= y && this.Bottom >= y;
+	        }
+	    }, {
+	        key: "toLocal",
+	        value: function toLocal(xOrPoint, y) {
+	            var x = void 0;
+	            if (xOrPoint instanceof _Vector2.default) {
+	                x = xOrPoint.X;
+	                y = xOrPoint.Y;
+	            } else {
+	                x = xOrPoint;
+	            }
+	            x -= this.Left;
+	            y -= this.Top;
+	            return xOrPoint instanceof _Vector2.default ? new _Vector2.default(x, y) : [x, y];
+	        }
+	    }, {
+	        key: "toString",
+	        value: function toString() {
+	            return "Rectangle(" + this.Left + "," + this.Top + "-" + this.Right + "," + this.Bottom + ")";
+	        }
+	    }, {
+	        key: "Left",
+	        get: function get() {
+	            return this._left;
+	        }
+	    }, {
+	        key: "Right",
+	        get: function get() {
+	            return this.Left + this.Width;
+	        }
+	    }, {
+	        key: "Top",
+	        get: function get() {
+	            return this._top;
+	        }
+	    }, {
+	        key: "Bottom",
+	        get: function get() {
+	            return this._top + this._height;
+	        }
+	    }, {
+	        key: "Width",
+	        get: function get() {
+	            return this._width;
+	        }
+	    }, {
+	        key: "Height",
+	        get: function get() {
+	            return this._height;
+	        }
+	    }]);
+	
+	    return Rectangle;
+	}();
+	
+	exports.default = Rectangle;
+
+/***/ },
+/* 32 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _grimoirejs = __webpack_require__(33);
+	
+	var _grimoirejs2 = _interopRequireDefault(_grimoirejs);
+	
+	var _Vector2Converter = __webpack_require__(26);
+	
+	var _Vector2Converter2 = _interopRequireDefault(_Vector2Converter);
+	
+	var _Vector3Converter = __webpack_require__(28);
+	
+	var _Vector3Converter2 = _interopRequireDefault(_Vector3Converter);
+	
+	var _Vector4Converter = __webpack_require__(29);
+	
+	var _Vector4Converter2 = _interopRequireDefault(_Vector4Converter);
+	
+	var _Rotation3Converter = __webpack_require__(22);
+	
+	var _Rotation3Converter2 = _interopRequireDefault(_Rotation3Converter);
+	
+	var _Angle2DConverter = __webpack_require__(18);
+	
+	var _Angle2DConverter2 = _interopRequireDefault(_Angle2DConverter);
+	
+	var _Color3Converter = __webpack_require__(20);
+	
+	var _Color3Converter2 = _interopRequireDefault(_Color3Converter);
+	
+	var _Color4Converter = __webpack_require__(21);
+	
+	var _Color4Converter2 = _interopRequireDefault(_Color4Converter);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
+	    return new (P || (P = Promise))(function (resolve, reject) {
+	        function fulfilled(value) {
+	            try {
+	                step(generator.next(value));
+	            } catch (e) {
+	                reject(e);
+	            }
+	        }
+	        function rejected(value) {
+	            try {
+	                step(generator["throw"](value));
+	            } catch (e) {
+	                reject(e);
+	            }
+	        }
+	        function step(result) {
+	            result.done ? resolve(result.value) : new P(function (resolve) {
+	                resolve(result.value);
+	            }).then(fulfilled, rejected);
+	        }
+	        step((generator = generator.apply(thisArg, _arguments)).next());
+	    });
+	};
+	
+	exports.default = function () {
+	    _grimoirejs2.default.registerConverter("Vector2", _Vector2Converter2.default);
+	    _grimoirejs2.default.registerConverter("Vector3", _Vector3Converter2.default);
+	    _grimoirejs2.default.registerConverter("Vector4", _Vector4Converter2.default);
+	    _grimoirejs2.default.registerConverter("Color3", _Color3Converter2.default);
+	    _grimoirejs2.default.registerConverter("Color4", _Color4Converter2.default);
+	    _grimoirejs2.default.registerConverter("Rotation3", _Rotation3Converter2.default);
+	    _grimoirejs2.default.registerConverter("Angle2D", _Angle2DConverter2.default);
+	    _grimoirejs2.default.register(function () {
+	        return __awaiter(undefined, void 0, void 0, regeneratorRuntime.mark(function _callee() {
+	            return regeneratorRuntime.wrap(function _callee$(_context) {
+	                while (1) {
+	                    switch (_context.prev = _context.next) {
+	                        case 0:
+	                        case "end":
+	                            return _context.stop();
+	                    }
+	                }
+	            }, _callee, this);
+	        }));
+	    });
+	};
+
+/***/ },
+/* 33 */
+/***/ function(module, exports) {
+
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});exports.default=window.GrimoireJS;
 
 /***/ }
 /******/ ])

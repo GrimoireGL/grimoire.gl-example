@@ -8407,6 +8407,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if (watchBuf) {
 	                attr.watch(watchBuf, true);
 	            }
+	            return attr;
 	        }
 	    }, {
 	        key: "watch",
@@ -8540,7 +8541,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                if (name.indexOf("|") !== -1) {
 	                    return _NSIdentity2.default.fromFQN(name);
 	                }
-	                return new _NSIdentity2.default(name);
+	                return _NSIdentity2.default.from(name);
 	            } else {
 	                return name;
 	            }
@@ -8559,7 +8560,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    }, {
 	        key: "ensureTobeNSDictionary",
-	        value: function ensureTobeNSDictionary(dict, defaultNamespace) {
+	        value: function ensureTobeNSDictionary(dict) {
 	            if (!dict) {
 	                return new _NSDictionary2.default();
 	            }
@@ -8568,7 +8569,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            } else {
 	                var newDict = new _NSDictionary2.default();
 	                for (var key in dict) {
-	                    newDict.set(new _NSIdentity2.default(defaultNamespace, key), dict[key]);
+	                    newDict.set(_NSIdentity2.default.from(key), dict[key]);
 	                }
 	                return newDict;
 	            }
@@ -8689,7 +8690,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	        function rejected(value) {
 	            try {
-	                step(generator.throw(value));
+	                step(generator["throw"](value));
 	            } catch (e) {
 	                reject(e);
 	            }
@@ -8730,7 +8731,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: "ns",
 	        value: function ns(_ns) {
 	            return function (name) {
-	                return new _NSIdentity2.default(_ns, name);
+	                return _NSIdentity2.default.from(_ns, name);
 	            };
 	        }
 	    }, {
@@ -8817,7 +8818,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    }, {
 	        key: "registerNode",
-	        value: function registerNode(name, requiredComponents, defaults, superNode) {
+	        value: function registerNode(name, requiredComponents, defaults, superNode, freezeAttributes) {
 	            name = _Ensure2.default.ensureTobeNSIdentity(name);
 	            if (this.nodeDeclarations.get(name)) {
 	                throw new Error("gomlnode " + name.fqn + " is already registerd.");
@@ -8826,15 +8827,38 @@ return /******/ (function(modules) { // webpackBootstrap
 	                console.warn("node " + name.name + " is registerd. but,it should be 'snake-case'.");
 	            }
 	            requiredComponents = _Ensure2.default.ensureTobeNSIdentityArray(requiredComponents);
-	            defaults = _Ensure2.default.ensureTobeNSDictionary(defaults, name.ns);
+	            defaults = _Ensure2.default.ensureTobeNSDictionary(defaults);
 	            superNode = _Ensure2.default.ensureTobeNSIdentity(superNode);
-	            this.nodeDeclarations.set(name, new _NodeDeclaration2.default(name, _NSSet2.default.fromArray(requiredComponents), defaults, superNode));
+	            this.nodeDeclarations.set(name, new _NodeDeclaration2.default(name, _NSSet2.default.fromArray(requiredComponents), defaults, superNode, freezeAttributes));
 	        }
 	    }, {
 	        key: "registerConverter",
 	        value: function registerConverter(name, converter) {
 	            name = _Ensure2.default.ensureTobeNSIdentity(name);
 	            this.converters.set(name, { name: name, convert: converter });
+	        }
+	    }, {
+	        key: "overrideDeclaration",
+	        value: function overrideDeclaration(targetDeclaration, arg2, defaults) {
+	            var dec = this.nodeDeclarations.get(targetDeclaration);
+	            if (!dec) {
+	                throw new Error("attempt not-exist node declaration : " + _Ensure2.default.ensureTobeNSIdentity(targetDeclaration).name);
+	            }
+	            if (defaults) {
+	                var additionalC = arg2;
+	                for (var i = 0; i < additionalC.length; i++) {
+	                    dec.addDefaultComponent(additionalC[i]);
+	                }
+	                dec.defaultAttributes.pushDictionary(_Ensure2.default.ensureTobeNSDictionary(defaults));
+	            } else if (Array.isArray(arg2)) {
+	                var _additionalC = arg2;
+	                for (var _i = 0; _i < _additionalC.length; _i++) {
+	                    dec.addDefaultComponent(_additionalC[_i]);
+	                }
+	            } else {
+	                dec.defaultAttributes.pushDictionary(_Ensure2.default.ensureTobeNSDictionary(arg2));
+	            }
+	            return dec;
 	        }
 	    }, {
 	        key: "addRootNode",
@@ -8844,20 +8868,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 	            this.rootNodes[rootNode.id] = rootNode;
 	            rootNode.companion.set(this.ns(_Constants2.default.defaultNamespace)("scriptElement"), tag);
-	            // check tree constraint.
-	            var errorMessages = rootNode.callRecursively(function (n) {
-	                return n.checkTreeConstraints();
-	            }).reduce(function (list, current) {
-	                return list.concat(current);
-	            }).filter(function (error) {
-	                return error;
-	            });
-	            if (errorMessages.length !== 0) {
-	                var message = errorMessages.reduce(function (m, current) {
-	                    return m + "\n" + current;
-	                });
-	                throw new Error("tree constraint is not satisfied.\n" + message);
-	            }
 	            // awake and mount tree.
 	            rootNode.setMounted(true);
 	            rootNode.broadcastMessage("treeInitialized", {
@@ -9058,6 +9068,58 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return (/^[a-z0-9\-]+$/.test(str)
 	            );
 	        }
+	    }, {
+	        key: "flat",
+	        value: function flat(array) {
+	            var count = 0;
+	            for (var i = 0; i < array.length; i++) {
+	                count += array[i].length;
+	            }
+	            var ret = new Array(count);
+	            count = 0;
+	            for (var _i = 0; _i < array.length; _i++) {
+	                var ar = array[_i];
+	                for (var j = 0; j < ar.length; j++) {
+	                    ret[count] = ar[j];
+	                    count++;
+	                }
+	            }
+	            return ret;
+	        }
+	    }, {
+	        key: "flatMap",
+	        value: function flatMap(source, map) {
+	            var c = new Array(source.length);
+	            for (var i = 0; i < source.length; i++) {
+	                c[i] = map(source[i]);
+	            }
+	            return Utility.flat(c);
+	        }
+	    }, {
+	        key: "sum",
+	        value: function sum(array) {
+	            var total = 0;
+	            for (var i = 0; i < array.length; i++) {
+	                total += array[i];
+	            }
+	            return total;
+	        }
+	    }, {
+	        key: "remove",
+	        value: function remove(array, target) {
+	            var index = -1;
+	            for (var i = 0; i < array.length; i++) {
+	                if (target === array[i]) {
+	                    index = i;
+	                    break;
+	                }
+	            }
+	            if (index < 0) {
+	                return false;
+	            }
+	            array.splice(index, 1);
+	            return true;
+	        }
 	    }]);
 	
 	    return Utility;
@@ -9110,10 +9172,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _createClass(GomlInterface, [{
 	        key: "getNodeById",
 	        value: function getNodeById(id) {
-	            var _this = this;
-	
-	            return new Array(this.rootNodes.length).map(function (v, i) {
-	                return _GomlNode2.default.fromElement(_this.rootNodes[i].element.ownerDocument.getElementById(id));
+	            return this.rootNodes.map(function (root) {
+	                return _GomlNode2.default.fromElement(root.element.ownerDocument.getElementById(id));
 	            });
 	        }
 	    }, {
@@ -9193,13 +9253,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _Constants = __webpack_require__(304);
+	var _Utility = __webpack_require__(302);
 	
-	var _Constants2 = _interopRequireDefault(_Constants);
-	
-	var _GrimoireInterface = __webpack_require__(301);
-	
-	var _GrimoireInterface2 = _interopRequireDefault(_GrimoireInterface);
+	var _Utility2 = _interopRequireDefault(_Utility);
 	
 	var _XMLReader = __webpack_require__(306);
 	
@@ -9227,24 +9283,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	
 	    _createClass(NodeInterface, [{
-	        key: "_queryComponents",
-	        value: function _queryComponents(query) {
-	            return this.nodes.map(function (nodes) {
-	                return nodes.map(function (node) {
-	                    var componentElements = node.componentsElement.querySelectorAll(query);
-	                    var components = [];
-	                    for (var i = 0; i < componentElements.length; i++) {
-	                        var elem = componentElements[i];
-	                        var component = _GrimoireInterface2.default.componentDictionary[elem.getAttribute(_Constants2.default.x_gr_id)];
-	                        if (component) {
-	                            components.push(component);
-	                        }
-	                    }
-	                    return components;
-	                });
-	            });
-	        }
-	    }, {
 	        key: "isEmpty",
 	        value: function isEmpty() {
 	            return this.count() === 0;
@@ -9302,7 +9340,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: "setAttribute",
 	        value: function setAttribute(attrName, value) {
 	            this.forEach(function (node) {
-	                node.setAttribute(attrName, value);
+	                node.setAttribute(attrName, value, false);
 	            });
 	        }
 	        /**
@@ -9361,7 +9399,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: "remove",
 	        value: function remove() {
 	            this.forEach(function (node) {
-	                node.delete();
+	                node.remove();
 	            });
 	            return this;
 	        }
@@ -9428,10 +9466,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: "children",
 	        value: function children() {
 	            var children = this.nodes.map(function (nodes) {
-	                return nodes.map(function (node) {
+	                return _Utility2.default.flatMap(nodes, function (node) {
 	                    return node.children;
-	                }).reduce(function (pre, cur) {
-	                    return pre.concat(cur);
 	                });
 	            });
 	            return new NodeInterface(children);
@@ -9495,26 +9531,55 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var counts = this.nodes.map(function (nodes) {
 	                return nodes.length;
 	            });
-	            return counts.reduce(function (total, current) {
-	                return total + current;
-	            }, 0);
+	            return _Utility2.default.sum(counts);
 	        }
 	    }, {
 	        key: "filter",
 	        value: function filter(predicate) {
-	            var newNodes = this.nodes.map(function (nodes, gomlIndex) {
-	                return nodes.filter(function (node, nodeIndex) {
-	                    return predicate(node, gomlIndex, nodeIndex);
-	                });
-	            });
+	            var newNodes = [];
+	            for (var i = 0; i < this.nodes.length; i++) {
+	                var goml = this.nodes[i];
+	                newNodes.push([]);
+	                for (var j = 0; j < goml.length; j++) {
+	                    var node = goml[j];
+	                    if (predicate(node, i, j)) {
+	                        newNodes[i].push(node);
+	                    }
+	                }
+	            }
 	            return new NodeInterface(newNodes);
 	        }
 	    }, {
 	        key: "toArray",
 	        value: function toArray() {
-	            return this.nodes.reduce(function (pre, current) {
-	                return pre.concat(current);
-	            }, []);
+	            return _Utility2.default.flat(this.nodes);
+	        }
+	    }, {
+	        key: "addChildByName",
+	        value: function addChildByName(nodeName, attributes) {
+	            this.forEach(function (node) {
+	                node.addChildByName(nodeName, attributes);
+	            });
+	        }
+	    }, {
+	        key: "sendMessage",
+	        value: function sendMessage(message, args) {
+	            this.forEach(function (node) {
+	                node.sendMessage(message, args);
+	            });
+	        }
+	    }, {
+	        key: "broadcastMessage",
+	        value: function broadcastMessage(arg1, arg2, arg3) {
+	            if (typeof arg1 === "number") {
+	                this.forEach(function (node) {
+	                    node.broadcastMessage(arg1, arg2, arg3);
+	                });
+	            } else {
+	                this.forEach(function (node) {
+	                    node.broadcastMessage(arg2, arg3);
+	                });
+	            }
 	        }
 	    }]);
 	
@@ -9885,12 +9950,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	        _this._parent = null;
 	        _this._root = null;
 	        _this._mounted = false;
-	        _this._messageBuffer = [];
+	        _this._enabled = true;
+	        // private _messageBuffer: { message: string, target: Component }[] = [];
 	        _this._tree = null;
 	        _this._companion = new _NSDictionary2.default();
 	        _this._deleted = false;
 	        _this._attrBuffer = {};
 	        _this._defaultValueResolved = false;
+	        _this._isActive = false;
+	        _this._messageCache = {};
 	        if (!recipe) {
 	            throw new Error("recipe must not be null");
 	        }
@@ -9904,7 +9972,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        _this.element.setAttribute(_Constants2.default.x_gr_id, _this.id);
 	        var defaultComponentNames = recipe.defaultComponentsActual;
 	        // instanciate default components
-	        defaultComponentNames.toArray().map(function (id) {
+	        defaultComponentNames.forEach(function (id) {
 	            _this.addComponent(id, null, true);
 	        });
 	        // register to GrimoireInterface.
@@ -9952,17 +10020,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 	            return array;
 	        }
-	        /**
-	         * detach and delete this node and children.
-	         * call when this node will never use.
-	         */
-	
-	    }, {
-	        key: "delete",
-	        value: function _delete() {
-	            console.warn("delete is obsolate. please use remove() instead of");
-	            this.remove();
-	        }
 	    }, {
 	        key: "remove",
 	        value: function remove() {
@@ -9994,8 +10051,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if (!this.isActive) {
 	                return false;
 	            }
+	            message = _Ensure2.default.ensureTobeMessage(message);
 	            this._sendMessage(message, args);
 	            return true;
+	        }
+	    }, {
+	        key: "_sendMessage",
+	        value: function _sendMessage(message, args) {
+	            if (this._messageCache[message] === void 0) {
+	                this._messageCache[message] = this._components.filter(function (c) {
+	                    return typeof c[message] === "function";
+	                });
+	            }
+	            var targetList = this._messageCache[message];
+	            for (var i = 0; i < targetList.length; i++) {
+	                this._sendMessageToComponent(targetList[i], message, args);
+	            }
 	        }
 	    }, {
 	        key: "broadcastMessage",
@@ -10005,21 +10076,29 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 	            if (typeof arg1 === "number") {
 	                var range = arg1;
-	                var message = arg2;
+	                var message = _Ensure2.default.ensureTobeMessage(arg2);
 	                var args = arg3;
-	                this.sendMessage(message, args);
-	                if (range > 0) {
-	                    for (var i = 0; i < this.children.length; i++) {
-	                        this.children[i].broadcastMessage(range - 1, message, args);
-	                    }
-	                }
+	                this._broadcastMessage(message, args, range);
 	            } else {
-	                var _message = arg1;
+	                var _message = _Ensure2.default.ensureTobeMessage(arg1);
 	                var _args = arg2;
-	                this.sendMessage(_message, _args);
-	                for (var _i = 0; _i < this.children.length; _i++) {
-	                    this.children[_i].broadcastMessage(_message, _args);
-	                }
+	                this._broadcastMessage(_message, _args, -1);
+	            }
+	        }
+	    }, {
+	        key: "_broadcastMessage",
+	        value: function _broadcastMessage(message, args, range) {
+	            //message is already ensured.-1 to unlimited range.
+	            if (!this.isActive) {
+	                return;
+	            }
+	            this._sendMessage(message, args);
+	            if (range === 0) {
+	                return;
+	            }
+	            var nextRange = range - 1;
+	            for (var i = 0; i < this.children.length; i++) {
+	                this.children[i]._broadcastMessage(message, args, nextRange);
 	            }
 	        }
 	    }, {
@@ -10046,7 +10125,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: "addChildByName",
 	        value: function addChildByName(nodeName, attributes) {
 	            if (typeof nodeName === "string") {
-	                return this.addChildByName(new _NSIdentity2.default(nodeName), attributes);
+	                return this.addChildByName(_NSIdentity2.default.from(nodeName), attributes);
 	            } else {
 	                var nodeDec = _GrimoireInterface2.default.nodeDeclarations.get(nodeName);
 	                var node = new GomlNode(nodeDec, null);
@@ -10081,23 +10160,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	            child._parent = this;
 	            var insertIndex = index == null ? this.children.length : index;
 	            this.children.splice(insertIndex, 0, child);
-	            var checkChildConstraints = child.checkTreeConstraints();
-	            var checkAncestorConstraint = this._callRecursively(function (n) {
-	                return n.checkTreeConstraints();
-	            }, function (n) {
-	                return n._parent ? [n._parent] : [];
-	            }).reduce(function (list, current) {
-	                return list.concat(current);
-	            });
-	            var errors = checkChildConstraints.concat(checkAncestorConstraint).filter(function (m) {
-	                return m;
-	            });
-	            if (errors.length !== 0) {
-	                var message = errors.reduce(function (m, current) {
-	                    return m + "\n" + current;
-	                });
-	                throw new Error("tree constraint is not satisfied.\n" + message);
-	            }
 	            // handling html
 	            if (elementSync) {
 	                var referenceElement = this.element[_NodeUtility2.default.getNodeListIndexByElementIndex(this.element, insertIndex)];
@@ -10150,22 +10212,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this.children.splice(index, 1);
 	            // html sync
 	            this.element.removeChild(target.element);
-	            // check ancestor constraint.
-	            var errors = this._callRecursively(function (n) {
-	                return n.checkTreeConstraints();
-	            }, function (n) {
-	                return n._parent ? [n._parent] : [];
-	            }).reduce(function (list, current) {
-	                return list.concat(current);
-	            }).filter(function (m) {
-	                return m;
-	            });
-	            if (errors.length !== 0) {
-	                var message = errors.reduce(function (m, current) {
-	                    return m + "\n" + current;
-	                });
-	                throw new Error("tree constraint is not satisfied.\n" + message);
-	            }
 	            return target;
 	        }
 	        /**
@@ -10198,21 +10244,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function getAttribute(attrName) {
 	            return this._attributeManager.getAttribute(attrName);
 	        }
-	        /**
-	         * set value to selected attribute.
-	         * @param {string |     NSIdentity}  attrName [description]
-	         * @param {any}       value [description]
-	         */
-	
 	    }, {
-	        key: "setValue",
-	        value: function setValue(attrName, value) {
-	            console.warn("setValue is obsolate. please use setAttribute instead of");
-	            this.setAttribute(attrName, value);
+	        key: "getAttributeRaw",
+	        value: function getAttributeRaw(attrName) {
+	            return this._attributeManager.attributes.get(attrName);
 	        }
 	    }, {
 	        key: "setAttribute",
 	        value: function setAttribute(attrName, value) {
+	            var ignoireFreeze = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+	
+	            if (!ignoireFreeze && this.isFreezeAttribute(_Ensure2.default.ensureTobeNSIdentity(attrName).name)) {
+	                throw new Error("attribute " + _Ensure2.default.ensureTobeNSIdentity(attrName).name + " can not set. Attribute is frozen. ");
+	            }
 	            return this._attributeManager.setAttribute(attrName, value);
 	        }
 	        /**
@@ -10238,19 +10282,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 	            if (mounted) {
 	                this._mounted = mounted;
-	                this._clearMessageBuffer("unmount");
 	                this._sendMessageForced("awake");
-	                this._sendMessageBuffer("mount");
+	                this._isActive = this._parent ? this._parent.isActive && this.enabled : this.enabled;
+	                this._sendMessageForced("mount");
 	                this.children.forEach(function (child) {
 	                    child.setMounted(mounted);
 	                });
 	            } else {
-	                this._clearMessageBuffer("mount");
 	                this.children.forEach(function (child) {
 	                    child.setMounted(mounted);
 	                });
-	                this._sendMessageBuffer("unmount");
+	                this._sendMessageForced("unmount");
 	                this._sendMessageForced("dispose");
+	                this._isActive = false;
 	                this._tree = null;
 	                this._companion = null;
 	                this._mounted = mounted;
@@ -10311,9 +10355,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function _addComponentDirectly(component, isDefaultComponent) {
 	            var _this3 = this;
 	
-	            if (component.node) {
+	            if (component.node || component.disposed) {
 	                throw new Error("component never change attached node");
 	            }
+	            this._messageCache = {}; //TODO:optimize.
 	            component.isDefaultComponent = !!isDefaultComponent;
 	            component.node = this;
 	            var referenceElement = this.componentsElement[_NodeUtility2.default.getNodeListIndexByElementIndex(this.componentsElement, this._components.length)];
@@ -10330,12 +10375,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	                component["$" + method] = component[method].bind(component);
 	            });
 	            this._components.push(component);
-	            component.addEnabledObserver(function (c) {
-	                if (c.enabled) {
-	                    _this3._resolveBufferdMessageTo(c, "mount");
-	                    _this3._resolveBufferdMessageTo(c, "unmount");
-	                }
-	            });
 	            if (isDefaultComponent) {
 	                // attributes should be exposed on node
 	                component.attributes.forEach(function (p) {
@@ -10350,8 +10389,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if (this._mounted) {
 	                component.resolveDefaultAttributes(null); // here must be optional component.should not use node element attributes.
 	                this._sendMessageForcedTo(component, "awake");
-	                this._sendMessageBufferTo(component, "mount");
+	                this._sendMessageForcedTo(component, "mount");
 	            }
+	        }
+	    }, {
+	        key: "removeComponent",
+	        value: function removeComponent(component) {
+	            if (_Utility2.default.remove(this._components, component)) {
+	                this._messageCache = {}; //TODO:optimize.
+	                component.node = null;
+	                component.disposed = true;
+	                return true;
+	            }
+	            return false;
 	        }
 	    }, {
 	        key: "getComponents",
@@ -10373,6 +10423,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	                if ((typeof _ret === "undefined" ? "undefined" : _typeof(_ret)) === "object") return _ret.v;
 	            }
 	        }
+	        /**
+	         * search component by name from this node.
+	         * @param  {string | NSIdentity}  name [description]
+	         * @return {Component}   component found first.
+	         */
+	
 	    }, {
 	        key: "getComponent",
 	        value: function getComponent(name) {
@@ -10406,6 +10462,26 @@ return /******/ (function(modules) { // webpackBootstrap
 	                });
 	            }
 	        }
+	    }, {
+	        key: "getComponentInAncesotor",
+	        value: function getComponentInAncesotor(name) {
+	            if (this.parent) {
+	                return this.parent._getComponentInAncesotor(name);
+	            }
+	            return null;
+	        }
+	    }, {
+	        key: "_getComponentInAncesotor",
+	        value: function _getComponentInAncesotor(name) {
+	            var ret = this.getComponent(name);
+	            if (ret) {
+	                return ret;
+	            }
+	            if (this.parent) {
+	                return this.parent._getComponentInAncesotor(name);
+	            }
+	            return null;
+	        }
 	        /**
 	         * resolve default attribute value for all component.
 	         * すべてのコンポーネントの属性をエレメントかデフォルト値で初期化
@@ -10417,6 +10493,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this._defaultValueResolved = true;
 	            var attrs = _NodeUtility2.default.getAttributes(this.element);
 	            for (var key in attrs) {
+	                if (this.isFreezeAttribute(key)) {
+	                    throw new Error("attribute " + key + " can not change from GOML. Attribute is frozen. ");
+	                }
 	                if (!this.attributes.get(key)) {
 	                    _Utility2.default.w("attribute '" + key + "' is not exist in this node '" + this.name.fqn + "'");
 	                }
@@ -10425,41 +10504,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	                component.resolveDefaultAttributes(attrs);
 	            });
 	        }
-	        /**
-	         * check tree constraint for this node.
-	         * @return {string[]} [description]
-	         */
-	
 	    }, {
-	        key: "checkTreeConstraints",
-	        value: function checkTreeConstraints() {
-	            var _this5 = this;
-	
-	            var constraints = this.nodeDeclaration.treeConstraints;
-	            if (!constraints) {
-	                return [];
-	            }
-	            var errorMesasges = constraints.map(function (constraint) {
-	                return constraint(_this5);
-	            }).filter(function (message) {
-	                return message !== null;
+	        key: "isFreezeAttribute",
+	        value: function isFreezeAttribute(attributeName) {
+	            return !!this.nodeDeclaration.freezeAttributes.find(function (name) {
+	                return attributeName === name;
 	            });
-	            if (errorMesasges.length === 0) {
-	                return null;
-	            }
-	            return errorMesasges;
 	        }
-	        /**
-	         * バッファしていたmount,unmountが送信されるかもしれない.アクティブなら
-	         */
-	
 	    }, {
 	        key: "notifyActivenessUpdate",
-	        value: function notifyActivenessUpdate() {
-	            if (this.isActive) {
-	                this._resolveBufferdMessage(this.mounted ? "mount" : "unmount");
+	        value: function notifyActivenessUpdate(activeness) {
+	            if (this.isActive !== activeness) {
+	                this._isActive = activeness;
 	                this.children.forEach(function (child) {
-	                    child.notifyActivenessUpdate();
+	                    child.notifyActivenessUpdate(activeness && child.enabled);
 	                });
 	            }
 	        }
@@ -10483,100 +10541,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: "_sendMessageToComponent",
 	        value: function _sendMessageToComponent(targetComponent, message, args) {
-	            message = _Ensure2.default.ensureTobeMessage(message);
-	            if (!targetComponent.enabled || !this.isActive) {
+	            if (!targetComponent.enabled) {
 	                return false;
 	            }
 	            var method = targetComponent[message];
 	            if (typeof method === "function") {
 	                method(args);
-	            }
-	            return true;
-	        }
-	        /**
-	         * バッファにあればメッセージを送信。成功したらバッファから削除
-	         * @param  {Component} target  [description]
-	         * @param  {string}    message [description]
-	         * @param  {boolean}   forced  [description]
-	         * @param  {any}       args    [description]
-	         * @return {boolean}           成功したか
-	         */
-	
-	    }, {
-	        key: "_resolveBufferdMessageTo",
-	        value: function _resolveBufferdMessageTo(target, message) {
-	            if (!target.enabled || !this.isActive) {
-	                return false;
-	            }
-	            message = _Ensure2.default.ensureTobeMessage(message);
-	            var bufferdIndex = this._messageBuffer.findIndex(function (obj) {
-	                return obj.message === message && obj.target === target;
-	            });
-	            if (bufferdIndex >= 0) {
-	                var method = target[message];
-	                if (typeof method === "function") {
-	                    method();
-	                }
-	                this._messageBuffer.splice(bufferdIndex, 1);
 	                return true;
 	            }
 	            return false;
 	        }
 	    }, {
-	        key: "_sendMessage",
-	        value: function _sendMessage(message, args) {
-	            var _this6 = this;
-	
-	            this._components.forEach(function (component) {
-	                _this6._sendMessageToComponent(component, message, args);
-	            });
-	        }
-	    }, {
 	        key: "_sendMessageForced",
 	        value: function _sendMessageForced(message) {
-	            var _this7 = this;
-	
-	            this._components.forEach(function (c) {
-	                _this7._sendMessageForcedTo(c, message);
-	            });
-	        }
-	    }, {
-	        key: "_sendMessageBuffer",
-	        value: function _sendMessageBuffer(message) {
-	            var _this8 = this;
-	
-	            this._components.forEach(function (c) {
-	                _this8._sendMessageBufferTo(c, message);
-	            });
-	        }
-	        /**
-	         * for $mount
-	         * @param  {Component} target  [description]
-	         * @param  {string}    message [description]
-	         * @return {boolean}           [description]
-	         */
-	
-	    }, {
-	        key: "_sendMessageBufferTo",
-	        value: function _sendMessageBufferTo(target, message) {
-	            message = _Ensure2.default.ensureTobeMessage(message);
-	            var bufferdIndex = this._messageBuffer.findIndex(function (obj) {
-	                return obj.message === message && obj.target === target;
-	            });
-	            if (!target.enabled || !this.isActive) {
-	                if (bufferdIndex < 0) {
-	                    this._messageBuffer.push({ message: message, target: target });
-	                }
-	                return false;
+	            for (var i = 0; i < this._components.length; i++) {
+	                this._sendMessageForcedTo(this._components[i], message);
 	            }
-	            var method = target[message];
-	            if (typeof method === "function") {
-	                method();
-	            }
-	            if (bufferdIndex >= 0) {
-	                this._messageBuffer.splice(bufferdIndex, 1);
-	            }
-	            return true;
 	        }
 	        /**
 	         * for $awake
@@ -10593,31 +10573,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	                method();
 	            }
 	        }
-	        /**
-	         * バッファのメッセージを送信可能なら送信してバッファから削除
-	         */
-	
-	    }, {
-	        key: "_resolveBufferdMessage",
-	        value: function _resolveBufferdMessage(message) {
-	            var _this9 = this;
-	
-	            message = _Ensure2.default.ensureTobeMessage(message);
-	            var copy = this._messageBuffer.filter(function (obj) {
-	                return obj.message === message;
-	            });
-	            copy.forEach(function (obj) {
-	                _this9._resolveBufferdMessageTo(obj.target, message);
-	            });
-	        }
-	    }, {
-	        key: "_clearMessageBuffer",
-	        value: function _clearMessageBuffer(message) {
-	            message = _Ensure2.default.ensureTobeMessage(message);
-	            this._messageBuffer = this._messageBuffer.filter(function (obj) {
-	                return obj.message !== message;
-	            });
-	        }
 	    }, {
 	        key: "_callRecursively",
 	        value: function _callRecursively(func, nextGenerator) {
@@ -10626,9 +10581,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var nextVals = nexts.map(function (c) {
 	                return c.callRecursively(func);
 	            });
-	            var list = nextVals.reduce(function (clist, current) {
-	                return clist.concat(current);
-	            }, []);
+	            var list = _Utility2.default.flat(nextVals);
 	            list.unshift(val);
 	            return list;
 	        }
@@ -10680,11 +10633,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: "isActive",
 	        get: function get() {
-	            if (this._parent) {
-	                return this._parent.isActive && this.enabled;
-	            } else {
-	                return this.enabled;
-	            }
+	            return this._isActive;
 	        }
 	        /**
 	         * indicate this node is enabled.
@@ -10695,7 +10644,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: "enabled",
 	        get: function get() {
-	            return this.getAttribute("enabled");
+	            return this._enabled;
 	        },
 	        set: function set(value) {
 	            this.setAttribute("enabled", value);
@@ -11131,26 +11080,33 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @type {[type]}
 	 */
 	var IDObject = function () {
+	    _createClass(IDObject, null, [{
+	        key: "getUniqueRandom",
+	
+	        /**
+	         * Generate random string
+	         * @param  {number} length length of random string
+	         * @return {string}        generated string
+	         */
+	        value: function getUniqueRandom(length) {
+	            return Math.random().toString(36).slice(-length);
+	        }
+	    }]);
+	
 	    function IDObject() {
 	        _classCallCheck(this, IDObject);
 	
 	        this.id = IDObject.getUniqueRandom(10);
 	    }
 	    /**
-	     * Generate random string
-	     * @param  {number} length length of random string
-	     * @return {string}        generated string
+	     * Obtain stringfied object.
+	     * If this method was not overridden, this method return class name.
+	     * @return {string} stringfied object
 	     */
 	
 	
 	    _createClass(IDObject, [{
 	        key: "toString",
-	
-	        /**
-	         * Obtain stringfied object.
-	         * If this method was not overridden, this method return class name.
-	         * @return {string} stringfied object
-	         */
 	        value: function toString() {
 	            return this.getTypeName();
 	        }
@@ -11165,11 +11121,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var funcNameRegex = /function (.{1,})\(/;
 	            var result = funcNameRegex.exec(this.constructor.toString());
 	            return result && result.length > 1 ? result[1] : "";
-	        }
-	    }], [{
-	        key: "getUniqueRandom",
-	        value: function getUniqueRandom(length) {
-	            return Math.random().toString(36).slice(-length);
 	        }
 	    }]);
 	
@@ -11258,34 +11209,44 @@ return /******/ (function(modules) { // webpackBootstrap
 	    function NSDictionary() {
 	        _classCallCheck(this, NSDictionary);
 	
-	        this._nameObjectMap = new Map();
-	        this._fqnObjectMap = new Map();
+	        this._nameObjectMap = {};
+	        this._fqnObjectMap = {};
 	    }
 	
 	    _createClass(NSDictionary, [{
 	        key: "set",
 	        value: function set(key, value) {
-	            var namedChildMap = void 0;
-	            if (this._nameObjectMap.has(key.name)) {
-	                namedChildMap = this._nameObjectMap.get(key.name);
+	            if (!this._fqnObjectMap[key.fqn]) {
+	                this._fqnObjectMap[key.fqn] = value;
+	                var c = this._nameObjectMap[key.name];
+	                if (c !== void 0) {
+	                    c.push({ id: key, value: value });
+	                } else {
+	                    this._nameObjectMap[key.name] = [{ id: key, value: value }];
+	                }
 	            } else {
-	                namedChildMap = new Map();
-	                this._nameObjectMap.set(key.name, namedChildMap);
+	                this._fqnObjectMap[key.fqn] = value;
+	                var _c = this._nameObjectMap[key.name];
+	                for (var i = 0; i < _c.length; i++) {
+	                    if (_c[i].id.fqn === key.fqn) {
+	                        _c[i] = { id: key, value: value };
+	                        break;
+	                    }
+	                }
 	            }
-	            namedChildMap.set(key.fqn, value);
-	            this._fqnObjectMap.set(key.fqn, value);
 	        }
 	    }, {
 	        key: "delete",
 	        value: function _delete(key) {
-	            if (this._fqnObjectMap.has(key.fqn)) {
-	                var theMap = this._nameObjectMap.get(key.name);
-	                if (theMap.size === 1) {
-	                    this._nameObjectMap.delete(key.name);
-	                } else {
-	                    theMap.delete(key.fqn);
+	            if (this._fqnObjectMap[key.fqn] !== void 0) {
+	                delete this._fqnObjectMap[key.fqn];
+	                var theMap = this._nameObjectMap[key.name];
+	                for (var i = 0; i < theMap.length; i++) {
+	                    if (theMap[i].id.fqn === key.fqn) {
+	                        theMap.splice(i, 1);
+	                        break;
+	                    }
 	                }
-	                this._fqnObjectMap.delete(key.fqn);
 	                return true;
 	            }
 	            return false;
@@ -11298,15 +11259,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 	            if (typeof arg1 === "string") {
 	                if (name) {
-	                    return this.get(new _NSIdentity2.default(arg1, name));
+	                    return this.fromFQN(name + "|" + arg1.toUpperCase());
 	                } else {
-	                    var namedMap = this._nameObjectMap.get(arg1);
+	                    var namedMap = this._nameObjectMap[arg1];
 	                    if (!namedMap) {
 	                        return null;
 	                    }
-	                    if (namedMap.size === 1) {
-	                        var itr = namedMap.values();
-	                        return itr.next().value;
+	                    if (namedMap.length === 1) {
+	                        return namedMap[0].value;
 	                    } else {
 	                        throw new Error("Specified tag name " + arg1 + " is ambigious to identify.");
 	                    }
@@ -11316,13 +11276,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    return this.fromFQN(arg1.fqn);
 	                } else {
 	                    if (arg1.prefix) {
-	                        return this.get(new _NSIdentity2.default(arg1.namespaceURI, arg1.localName));
+	                        return this.get(_NSIdentity2.default.from(arg1.namespaceURI, arg1.localName));
 	                    } else {
-	                        if (arg1.namespaceURI && this._fqnObjectMap.has(arg1.localName + "|" + arg1.namespaceURI)) {
-	                            return this.get(new _NSIdentity2.default(arg1.namespaceURI, arg1.localName));
+	                        if (arg1.namespaceURI && this._fqnObjectMap[arg1.localName + "|" + arg1.namespaceURI] !== void 0) {
+	                            return this.get(_NSIdentity2.default.from(arg1.namespaceURI, arg1.localName));
 	                        }
-	                        if (arg1 && arg1.ownerElement && arg1.ownerElement.namespaceURI && this._fqnObjectMap.has(arg1.localName + "|" + arg1.ownerElement.namespaceURI)) {
-	                            return this.get(new _NSIdentity2.default(arg1.ownerElement.namespaceURI, arg1.localName));
+	                        if (arg1 && arg1.ownerElement && arg1.ownerElement.namespaceURI && this._fqnObjectMap[arg1.localName + "|" + arg1.ownerElement.namespaceURI] !== void 0) {
+	                            return this.get(_NSIdentity2.default.from(arg1.ownerElement.namespaceURI, arg1.localName));
 	                        }
 	                        return this.get(arg1.localName);
 	                    }
@@ -11332,24 +11292,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: "fromFQN",
 	        value: function fromFQN(fqn) {
-	            return this._fqnObjectMap.get(fqn);
+	            return this._fqnObjectMap[fqn];
 	        }
 	    }, {
 	        key: "isAmbigious",
 	        value: function isAmbigious(name) {
-	            return this._nameObjectMap.get(name).size > 1;
+	            return this._nameObjectMap[name].length > 1;
 	        }
 	    }, {
 	        key: "has",
 	        value: function has(name) {
-	            return this._nameObjectMap.has(name);
+	            return this._nameObjectMap[name] !== void 0;
 	        }
 	    }, {
 	        key: "pushDictionary",
 	        value: function pushDictionary(dict) {
 	            var _this = this;
 	
-	            dict._fqnObjectMap.forEach(function (value, keyFQN) {
+	            dict.forEach(function (value, keyFQN) {
 	                var id = _NSIdentity2.default.fromFQN(keyFQN);
 	                _this.set(id, value);
 	            });
@@ -11358,9 +11318,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: "toArray",
 	        value: function toArray() {
+	            var _this2 = this;
+	
 	            var ret = [];
-	            this._fqnObjectMap.forEach(function (value) {
-	                ret.push(value);
+	            Object.keys(this._fqnObjectMap).forEach(function (key) {
+	                ret.push(_this2._fqnObjectMap[key]);
 	            });
 	            return ret;
 	        }
@@ -11373,8 +11335,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: "forEach",
 	        value: function forEach(callback) {
-	            this._fqnObjectMap.forEach(function (val, key) {
-	                callback(val, key);
+	            var _this3 = this;
+	
+	            Object.keys(this._fqnObjectMap).forEach(function (key) {
+	                callback(_this3._fqnObjectMap[key], key);
 	            });
 	            return this;
 	        }
@@ -11382,7 +11346,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: "map",
 	        value: function map(callback) {
 	            var ret = new NSDictionary();
-	            this._fqnObjectMap.forEach(function (val, fqn) {
+	            this.forEach(function (val, fqn) {
 	                var id = _NSIdentity2.default.fromFQN(fqn);
 	                ret.set(id, callback(val, fqn));
 	            });
@@ -11391,8 +11355,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: "clear",
 	        value: function clear() {
-	            this._nameObjectMap.clear();
-	            this._fqnObjectMap.clear();
+	            this._nameObjectMap = {};
+	            this._fqnObjectMap = {};
 	        }
 	    }]);
 	
@@ -11428,33 +11392,106 @@ return /******/ (function(modules) { // webpackBootstrap
 	    function NSIdentity(ns, name) {
 	        _classCallCheck(this, NSIdentity);
 	
-	        if (name) {
-	            this.ns = ns.toUpperCase();
-	            this.name = name;
-	        } else {
-	            this.ns = _Constants2.default.defaultNamespace;
-	            this.name = ns;
-	        }
+	        this._ns = ns.toUpperCase();
+	        this._name = name;
 	        // Ensure all of the characters are uppercase
-	        this.name = NSIdentity._ensureValidIdentity(this.name, true);
-	        this.ns = NSIdentity._ensureValidIdentity(this.ns);
-	        this.fqn = this.name + "|" + this.ns;
+	        this._name = NSIdentity._ensureValidIdentity(this.name, true);
+	        this._ns = NSIdentity._ensureValidIdentity(this.ns);
+	        this._fqn = this.name + "|" + this.ns;
+	        NSIdentity._instances[this._fqn] = this;
+	        if (!NSIdentity._map[this.name]) {
+	            NSIdentity._map[this.name] = [this];
+	        } else {
+	            NSIdentity._map[this.name].push(this);
+	        }
 	    }
 	    /**
-	     * Generate an instance from Full qualified name.
-	     * @param  {string}             fqn [description]
-	     * @return {NSIdentity}     [description]
+	     * Namespace of this identity
+	     * @type {string}
 	     */
 	
 	
-	    _createClass(NSIdentity, null, [{
+	    _createClass(NSIdentity, [{
+	        key: "ns",
+	        get: function get() {
+	            return this._ns;
+	        }
+	        /**
+	         * Short name for this identity
+	         * @type {string}
+	         */
+	
+	    }, {
+	        key: "name",
+	        get: function get() {
+	            return this._name;
+	        }
+	        /**
+	         * Full qualified name of this identity
+	         * @type {string}
+	         */
+	
+	    }, {
+	        key: "fqn",
+	        get: function get() {
+	            return this._fqn;
+	        }
+	        /**
+	         * Generate an instance from Full qualified name.
+	         * @param  {string}             fqn [description]
+	         * @return {NSIdentity}     [description]
+	         */
+	
+	    }], [{
 	        key: "fromFQN",
 	        value: function fromFQN(fqn) {
+	            var inst = NSIdentity._instances[fqn];
+	            if (inst) {
+	                return inst;
+	            }
 	            var splitted = fqn.split("|");
 	            if (splitted.length !== 2) {
 	                throw new Error("Invalid fqn was given");
 	            }
 	            return new NSIdentity(splitted[1], splitted[0]);
+	        }
+	        /**
+	         * デフォルト名前空間でID作成
+	         * @param  {string}     name [description]
+	         * @return {NSIdentity}      [description]
+	         */
+	
+	    }, {
+	        key: "createOnDefaultNS",
+	        value: function createOnDefaultNS(name) {
+	            return NSIdentity.from(_Constants2.default.defaultNamespace, name);
+	        }
+	    }, {
+	        key: "from",
+	        value: function from(arg1, name) {
+	            if (name) {
+	                var fqn = name + "|" + arg1.toUpperCase();
+	                var inst = NSIdentity._instances[fqn];
+	                if (inst) {
+	                    return inst;
+	                }
+	                return new NSIdentity(arg1, name);
+	            } else {
+	                var list = NSIdentity._map[arg1];
+	                if (!list) {
+	                    return new NSIdentity(_Constants2.default.defaultNamespace, arg1);
+	                }
+	                if (list.length == 1) {
+	                    return list[0];
+	                }
+	                throw new Error("name " + arg1 + " is ambiguous in NSIdentity." + list + " exists.");
+	            }
+	        }
+	    }, {
+	        key: "clear",
+	        value: function clear() {
+	            NSIdentity._instances = {};
+	            NSIdentity._map = {};
 	        }
 	        /**
 	         * Make sure given name is valid for using in identity.
@@ -11471,14 +11508,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function _ensureValidIdentity(name) {
 	            var noDot = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
 	
+	            if (name == null) {
+	                throw new Error("Specified name was null or undefined");
+	            }
 	            if (name.indexOf("|") > -1) {
 	                throw new Error("Namespace and identity cannnot contain | ");
 	            }
 	            if (noDot && name.indexOf(".") > -1) {
 	                throw new Error("identity cannnot contain .");
-	            }
-	            if (name == null) {
-	                throw new Error("Specified name was null or undefined");
 	            }
 	            return name;
 	        }
@@ -11487,6 +11524,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return NSIdentity;
 	}();
 	
+	NSIdentity._instances = {};
+	NSIdentity._map = {};
 	exports.default = NSIdentity;
 
 /***/ },
@@ -11560,10 +11599,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	                _this2.node.element.className = Array.isArray(attr) ? attr.join(" ") : "";
 	            }, true);
 	            this.getAttributeRaw("enabled").watch(function (attr) {
-	                if (_this2.node.isActive) {
-	                    _this2.node.notifyActivenessUpdate();
-	                }
+	                _this2.node["_enabled"] = attr;
+	                var p = _this2.node.parent;
+	                _this2.node.notifyActivenessUpdate(p ? p.isActive && _this2.node.enabled : _this2.node.enabled);
 	            });
+	            this.node["_enabled"] = this.getAttribute("enabled");
+	            this.node["_isActive"] = this.node.parent ? this.node.parent.isActive && this.enabled : this.enabled;
 	        }
 	    }]);
 	
@@ -11645,6 +11686,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var _this = _possibleConstructorReturn(this, (Component.__proto__ || Object.getPrototypeOf(Component)).apply(this, arguments));
 	
 	        _this.isDefaultComponent = false;
+	        _this.disposed = false;
 	        /**
 	         * Flag that this component is activated or not.
 	         * @type {boolean}
@@ -11656,31 +11698,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	
 	    _createClass(Component, [{
-	        key: "getValue",
+	        key: "setAttribute",
 	
-	        /**
-	         * Obtain value of attribute. When the attribute is not existing, this method would return undefined.
-	         * @param  {string} name [description]
-	         * @return {any}         [description]
-	         */
-	        value: function getValue(name) {
-	            console.warn("Component#getValue is obsolete. please use getAttribute instead of.");
-	            return this.getAttribute(name);
-	        }
-	    }, {
-	        key: "setValue",
-	        value: function setValue(name, value) {
-	            console.warn("Component#setValue is obsolete. please use setAttribute instead of.");
-	            return this.setAttribute(name, value);
-	        }
 	        /**
 	         * Set value of attribute
 	         * @param {string} name  [description]
 	         * @param {any}    value [description]
 	         */
-	
-	    }, {
-	        key: "setAttribute",
 	        value: function setAttribute(name, value) {
 	            var attr = this.attributes.get(name); // TODO:check readonly?
 	            if (attr) {
@@ -11694,7 +11718,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if (attr) {
 	                return attr.Value;
 	            } else {
-	                return undefined;
+	                throw new Error("attribute " + name + " is not defined in " + this.name.fqn);
 	            }
 	        }
 	    }, {
@@ -11710,17 +11734,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: "removeEnabledObserver",
 	        value: function removeEnabledObserver(observer) {
-	            var index = -1;
-	            for (var i = 0; i < this._handlers.length; i++) {
-	                if (observer === this._handlers[i]) {
-	                    index = i;
-	                    break;
-	                }
-	            }
-	            if (index < 0) {
-	                return;
-	            }
-	            this._handlers.splice(index, 1);
+	            return _Utility2.default.remove(this._handlers, observer);
 	        }
 	    }, {
 	        key: "resolveDefaultAttributes",
@@ -11746,6 +11760,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    });
 	                })();
 	            }
+	        }
+	    }, {
+	        key: "dispose",
+	        value: function dispose() {
+	            this.node.removeComponent(this);
 	        }
 	        /**
 	         * Add attribute
@@ -12048,7 +12067,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: "generateAttributeForComponent",
 	        value: function generateAttributeForComponent(name, declaration, component) {
 	            var attr = new Attribute();
-	            attr.name = new _NSIdentity2.default(component.name.ns, name);
+	            attr.name = _NSIdentity2.default.from(component.name.ns, name);
 	            attr.component = component;
 	            attr.declaration = declaration;
 	            var converterName = _Ensure2.default.ensureTobeNSIdentity(declaration.converter);
@@ -12149,13 +12168,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.name = name;
 	        this.attributes = attributes;
 	        this.ctor = ctor;
-	        // if (this.attributes["enabled"]) {//TODO implements enabled
-	        //   throw new Error("attribute 'enabled' is already defined by default.");
-	        // }
-	        // this.attributes["enabled"] = {
-	        //   converter: "Boolean",
-	        //   default true
-	        // };
 	    }
 	
 	    _createClass(ComponentDeclaration, [{
@@ -12231,15 +12243,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: "toArray",
 	        value: function toArray() {
 	            var ret = [];
+	            for (var key in this._contentArray) {
+	                ret.push(this._contentArray[key]);
+	            }
+	            return ret;
+	        }
+	    }, {
+	        key: "clone",
+	        value: function clone() {
+	            var newSet = new NSSet();
 	            var _iteratorNormalCompletion = true;
 	            var _didIteratorError = false;
 	            var _iteratorError = undefined;
 	
 	            try {
 	                for (var _iterator = this._contentArray[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	                    var item = _step.value;
+	                    var i = _step.value;
 	
-	                    ret.push(item);
+	                    newSet.push(i);
 	                }
 	            } catch (err) {
 	                _didIteratorError = true;
@@ -12256,21 +12277,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	                }
 	            }
 	
-	            return ret;
+	            return newSet;
 	        }
 	    }, {
-	        key: "clone",
-	        value: function clone() {
-	            var newSet = new NSSet();
+	        key: "merge",
+	        value: function merge(other) {
 	            var _iteratorNormalCompletion2 = true;
 	            var _didIteratorError2 = false;
 	            var _iteratorError2 = undefined;
 	
 	            try {
-	                for (var _iterator2 = this._contentArray[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-	                    var i = _step2.value;
+	                for (var _iterator2 = other._contentArray[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+	                    var elem = _step2.value;
 	
-	                    newSet.push(i);
+	                    this.push(elem);
 	                }
 	            } catch (err) {
 	                _didIteratorError2 = true;
@@ -12287,37 +12307,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	                }
 	            }
 	
-	            return newSet;
+	            return this;
 	        }
 	    }, {
-	        key: "merge",
-	        value: function merge(other) {
-	            var _iteratorNormalCompletion3 = true;
-	            var _didIteratorError3 = false;
-	            var _iteratorError3 = undefined;
-	
-	            try {
-	                for (var _iterator3 = other._contentArray[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-	                    var elem = _step3.value;
-	
-	                    this.push(elem);
-	                }
-	            } catch (err) {
-	                _didIteratorError3 = true;
-	                _iteratorError3 = err;
-	            } finally {
-	                try {
-	                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
-	                        _iterator3.return();
-	                    }
-	                } finally {
-	                    if (_didIteratorError3) {
-	                        throw _iteratorError3;
-	                    }
-	                }
-	            }
-	
-	            return this;
+	        key: "forEach",
+	        value: function forEach(func) {
+	            this._contentArray.forEach(func);
 	        }
 	    }], [{
 	        key: "fromArray",
@@ -12362,16 +12357,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
 	var NodeDeclaration = function () {
-	    function NodeDeclaration(name, defaultComponents, defaultAttributes, superNode, _treeConstraints) {
+	    function NodeDeclaration(name, defaultComponents, defaultAttributes, superNode, freezeAttributes) {
 	        _classCallCheck(this, NodeDeclaration);
 	
 	        this.name = name;
 	        this.defaultComponents = defaultComponents;
 	        this.defaultAttributes = defaultAttributes;
 	        this.superNode = superNode;
-	        this._treeConstraints = _treeConstraints;
+	        this.freezeAttributes = freezeAttributes;
+	        this.freezeAttributes = this.freezeAttributes ? this.freezeAttributes : [];
 	        if (!this.superNode && this.name.name !== "grimoire-node-base") {
-	            this.superNode = new _NSIdentity2.default("grimoire-node-base");
+	            this.superNode = _NSIdentity2.default.createOnDefaultNS("grimoire-node-base");
 	        }
 	    }
 	
@@ -12413,11 +12409,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	                this._resolveInherites();
 	            }
 	            return this._defaultAttributesActual;
-	        }
-	    }, {
-	        key: "treeConstraints",
-	        get: function get() {
-	            return this._treeConstraints;
 	        }
 	    }]);
 	
@@ -12508,7 +12499,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	        function rejected(value) {
 	            try {
-	                step(generator.throw(value));
+	                step(generator["throw"](value));
 	            } catch (e) {
 	                reject(e);
 	            }
@@ -12673,7 +12664,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	        function rejected(value) {
 	            try {
-	                step(generator.throw(value));
+	                step(generator["throw"](value));
 	            } catch (e) {
 	                reject(e);
 	            }

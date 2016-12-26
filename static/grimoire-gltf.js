@@ -317,24 +317,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	                };
 	            }
 	        }
-	    }, {
-	        key: "asGrAttribName",
-	        value: function asGrAttribName(bufferName) {
-	            switch (bufferName) {
-	                case "POSITION":
-	                    return "position";
-	                case "NORMAL":
-	                    return "normal";
-	                case "TEXCOORD_0":
-	                    return "texCoord";
-	                case "JOINT":
-	                    return "joint";
-	                case "WEIGHT":
-	                    return "weight";
-	                default:
-	                    throw new Error("Unknown semantic" + bufferName);
-	            }
-	        }
 	    }]);
 	
 	    return GLTFConstantConvert;
@@ -1273,7 +1255,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    var uvBuf = new _Buffer2.default(gl, WebGLRenderingContext.ARRAY_BUFFER, WebGLRenderingContext.STATIC_DRAW);
 	                    uvBuf.update(new Float32Array(new ArrayBuffer(8 * posAttr.count)));
 	                    usedBuffers["@@UV"] = uvBuf;
-	                    attribInfo["texCoord"] = {
+	                    attribInfo["TEXCOORD_0"] = {
 	                        bufferName: "@@UV",
 	                        size: 2,
 	                        offset: 0,
@@ -1282,7 +1264,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    };
 	                }
 	                for (var attrib in primitive.attributes) {
-	                    var grAttrib = _ConstantConverter2.default.asGrAttribName(attrib);
 	                    var accessor = tf.accessors[primitive.attributes[attrib]];
 	                    usedBuffers[accessor.bufferView] = buffers[accessor.bufferView];
 	                    if (attrib === "POSITION") {
@@ -1292,7 +1273,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                            aabb = GLTFParser._genAABB(arrayBuffers[accessor.bufferView], accessor.byteStride, accessor.byteOffset, accessor.count);
 	                        }
 	                    }
-	                    attribInfo[grAttrib] = {
+	                    attribInfo[attrib] = {
 	                        bufferName: accessor.bufferView,
 	                        size: _ConstantConverter2.default.asVectorSize(accessor.type),
 	                        type: accessor.componentType,
@@ -1611,7 +1592,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 26 */
 /***/ function(module, exports) {
 
-	module.exports = "@Pass\n@NoCull()\n@ExposeMacro(int,boneCount,BONE_COUNT,0)\nFS_PREC(mediump,float)\n varying vec3 vNormal;\nvarying vec2 vUV;\n\n#ifdef VS\n#if BONE_COUNT > 0\n  uniform mat4 boneMatrices[BONE_COUNT];\n#endif\n  attribute vec3 normal;\n  attribute vec3 position;\n  attribute vec2 texCoord;\n#if BONE_COUNT > 0\n  attribute vec4 joint;\n  attribute vec4 weight;\n#endif\n  uniform mat4 _matPVM;\n  uniform mat4 _matM;\n  void main(){\n    #if BONE_COUNT > 0\n      mat4 skinMat = weight.x * boneMatrices[int(joint.x)] + weight.y * boneMatrices[int(joint.y)] + weight.z * boneMatrices[int(joint.z)] + weight.w * boneMatrices[int(joint.w)];\n      gl_Position = _matPVM * skinMat * vec4(position,1);\n      vNormal = normalize((_matM * skinMat  * vec4(normal,0)).xyz);\n    #else\n      gl_Position = _matPVM  * vec4(position,1);\n      vNormal = normalize((_matM  * vec4(normal,0)).xyz);\n    #endif\n    vUV = texCoord;\n  }\n\n\n#endif\n\n\n#ifdef FS\n  @{usedFlag:\"_textureUsed\"}\n  uniform sampler2D texture;\n\n  uniform bool _textureUsed;\n\n  @{type:\"color\"}\n  uniform vec4 diffuse;\n\n  @{default:\"n(1,1,-1)\"}\n  uniform vec3 sunDir;\n\n  void main(){\n    vec4 dColor;\n    if(_textureUsed){\n      dColor = texture2D(texture,vUV);\n    }else{\n      dColor = diffuse;\n    }\n    gl_FragColor.xyz = dot(sunDir,vNormal) * dColor.xyz;\n    gl_FragColor.w = dColor.w;\n  }\n#endif\n"
+	module.exports = "@Pass{\n@Disable(CULL_FACE)\n@ExposeMacro(int,boneCount,BONE_COUNT,0)\nFS_PREC(mediump,float)\n\nvarying vec3 vNormal;\nvarying vec2 vUV;\n\n#ifdef VS\n#if BONE_COUNT > 0\n  uniform mat4 boneMatrices[BONE_COUNT];\n#endif\n  @NORMAL\n  attribute vec3 normal;\n  @POSITION\n  attribute vec3 position;\n  @TEXCOORD_0\n  attribute vec2 texCoord;\n#if BONE_COUNT > 0\n  @JOINT\n  attribute vec4 joint;\n  @WEIGHT\n  attribute vec4 weight;\n#endif\n  uniform mat4 _matPVM;\n  uniform mat4 _matM;\n  void main(){\n    #if BONE_COUNT > 0\n      mat4 skinMat = weight.x * boneMatrices[int(joint.x)] + weight.y * boneMatrices[int(joint.y)] + weight.z * boneMatrices[int(joint.z)] + weight.w * boneMatrices[int(joint.w)];\n      gl_Position = _matPVM * skinMat * vec4(position,1);\n      vNormal = normalize((_matM * skinMat  * vec4(normal,0)).xyz);\n    #else\n      gl_Position = _matPVM  * vec4(position,1);\n      vNormal = normalize((_matM  * vec4(normal,0)).xyz);\n    #endif\n    vUV = texCoord;\n  }\n\n\n#endif\n\n\n#ifdef FS\n  uniform sampler2D texture;\n\n  @HAS_TEXTURE{sampler:\"texture\"}\n  uniform bool _textureUsed;\n\n  @{type:\"color\"}\n  uniform vec4 diffuse;\n\n  @{default:\"n(1,1,-1)\"}\n  uniform vec3 sunDir;\n\n  void main(){\n    vec4 dColor;\n    if(_textureUsed){\n      dColor = texture2D(texture,vUV);\n    }else{\n      dColor = diffuse;\n    }\n    gl_FragColor.xyz = dot(sunDir,vNormal) * dColor.xyz;\n    gl_FragColor.w = dColor.w;\n  }\n#endif\n}\n"
 
 /***/ }
 /******/ ])
