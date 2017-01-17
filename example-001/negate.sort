@@ -1,6 +1,6 @@
-@Pass
-@NoBlend()
-@NoDepth()
+@Pass{
+@Disable(BLEND)
+@Disable(DEPTH_TEST)
 FS_PREC(mediump,float)
 varying vec2 vTexCoord;
 
@@ -42,3 +42,4 @@ const vec3  sepiaScale = vec3(sRedScale, sGreenScale, sBlueScale);
     gl_FragColor = sCol;
   }
 #endif
+}

@@ -1,4 +1,4 @@
-@Pass
+@Pass{
 
 FS_PREC(mediump, float)
 varying vec3 vNormal;
@@ -19,3 +19,4 @@ attribute vec3 normal;
     gl_FragColor = vec4(vNormal,1);
   }
 #endif
+}

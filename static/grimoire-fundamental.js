@@ -124,35 +124,35 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _MaterialImporterComponent2 = _interopRequireDefault(_MaterialImporterComponent);
 	
-	var _MaterialManagerComponent = __webpack_require__(56);
+	var _MaterialManagerComponent = __webpack_require__(58);
 	
 	var _MaterialManagerComponent2 = _interopRequireDefault(_MaterialManagerComponent);
 	
-	var _MeshRendererComponent = __webpack_require__(57);
+	var _MeshRendererComponent = __webpack_require__(59);
 	
 	var _MeshRendererComponent2 = _interopRequireDefault(_MeshRendererComponent);
 	
-	var _MouseCameraControlComponent = __webpack_require__(58);
+	var _MouseCameraControlComponent = __webpack_require__(60);
 	
 	var _MouseCameraControlComponent2 = _interopRequireDefault(_MouseCameraControlComponent);
 	
-	var _RenderBufferComponent = __webpack_require__(59);
+	var _RenderBufferComponent = __webpack_require__(61);
 	
 	var _RenderBufferComponent2 = _interopRequireDefault(_RenderBufferComponent);
 	
-	var _RendererComponent = __webpack_require__(62);
+	var _RendererComponent = __webpack_require__(64);
 	
 	var _RendererComponent2 = _interopRequireDefault(_RendererComponent);
 	
-	var _RendererManagerComponent = __webpack_require__(63);
+	var _RendererManagerComponent = __webpack_require__(65);
 	
 	var _RendererManagerComponent2 = _interopRequireDefault(_RendererManagerComponent);
 	
-	var _RenderQuadComponent = __webpack_require__(65);
+	var _RenderQuadComponent = __webpack_require__(67);
 	
 	var _RenderQuadComponent2 = _interopRequireDefault(_RenderQuadComponent);
 	
-	var _RenderSceneComponent = __webpack_require__(67);
+	var _RenderSceneComponent = __webpack_require__(69);
 	
 	var _RenderSceneComponent2 = _interopRequireDefault(_RenderSceneComponent);
 	
@@ -160,11 +160,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _SceneComponent2 = _interopRequireDefault(_SceneComponent);
 	
-	var _TextureBufferComponent = __webpack_require__(68);
+	var _TextureBufferComponent = __webpack_require__(70);
 	
 	var _TextureBufferComponent2 = _interopRequireDefault(_TextureBufferComponent);
 	
-	var _TextureComponent = __webpack_require__(69);
+	var _TextureComponent = __webpack_require__(71);
 	
 	var _TextureComponent2 = _interopRequireDefault(_TextureComponent);
 	
@@ -172,47 +172,47 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _TransformComponent2 = _interopRequireDefault(_TransformComponent);
 	
-	var _CanvasSizeConverter = __webpack_require__(70);
+	var _CanvasSizeConverter = __webpack_require__(72);
 	
 	var _CanvasSizeConverter2 = _interopRequireDefault(_CanvasSizeConverter);
 	
-	var _ComponentConverter = __webpack_require__(71);
+	var _ComponentConverter = __webpack_require__(73);
 	
 	var _ComponentConverter2 = _interopRequireDefault(_ComponentConverter);
 	
-	var _EnumConverter = __webpack_require__(73);
+	var _EnumConverter = __webpack_require__(75);
 	
 	var _EnumConverter2 = _interopRequireDefault(_EnumConverter);
 	
-	var _GeometryConverter = __webpack_require__(74);
+	var _GeometryConverter = __webpack_require__(76);
 	
 	var _GeometryConverter2 = _interopRequireDefault(_GeometryConverter);
 	
-	var _MaterialConverter = __webpack_require__(75);
+	var _MaterialConverter = __webpack_require__(77);
 	
 	var _MaterialConverter2 = _interopRequireDefault(_MaterialConverter);
 	
-	var _NumberArrayConverter = __webpack_require__(76);
+	var _NumberArrayConverter = __webpack_require__(78);
 	
 	var _NumberArrayConverter2 = _interopRequireDefault(_NumberArrayConverter);
 	
-	var _NumberConverter = __webpack_require__(77);
+	var _NumberConverter = __webpack_require__(79);
 	
 	var _NumberConverter2 = _interopRequireDefault(_NumberConverter);
 	
-	var _ObjectConverter = __webpack_require__(78);
+	var _ObjectConverter = __webpack_require__(80);
 	
 	var _ObjectConverter2 = _interopRequireDefault(_ObjectConverter);
 	
-	var _TextureConverter = __webpack_require__(79);
+	var _TextureConverter = __webpack_require__(81);
 	
 	var _TextureConverter2 = _interopRequireDefault(_TextureConverter);
 	
-	var _ViewportConverter = __webpack_require__(81);
+	var _ViewportConverter = __webpack_require__(83);
 	
 	var _ViewportConverter2 = _interopRequireDefault(_ViewportConverter);
 	
-	var _DefaultPrimitives = __webpack_require__(83);
+	var _DefaultPrimitives = __webpack_require__(85);
 	
 	var _DefaultPrimitives2 = _interopRequireDefault(_DefaultPrimitives);
 	
@@ -220,15 +220,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _Geometry2 = _interopRequireDefault(_Geometry);
 	
-	var _GeometryBuilder = __webpack_require__(86);
-	
-	var _GeometryBuilder2 = _interopRequireDefault(_GeometryBuilder);
-	
 	var _GeometryFactory = __webpack_require__(29);
 	
 	var _GeometryFactory2 = _interopRequireDefault(_GeometryFactory);
 	
-	var _GeometryUtility = __webpack_require__(85);
+	var _GeometryUtility = __webpack_require__(86);
 	
 	var _GeometryUtility2 = _interopRequireDefault(_GeometryUtility);
 	
@@ -236,7 +232,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _DefaultMacro2 = _interopRequireDefault(_DefaultMacro);
 	
-	var _DefaultMaterial = __webpack_require__(88);
+	var _DefaultMaterial = __webpack_require__(87);
 	
 	var _DefaultMaterial2 = _interopRequireDefault(_DefaultMaterial);
 	
@@ -260,31 +256,31 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _Technique2 = _interopRequireDefault(_Technique);
 	
-	var _TextureReference = __webpack_require__(80);
+	var _TextureReference = __webpack_require__(82);
 	
 	var _TextureReference2 = _interopRequireDefault(_TextureReference);
 	
-	var _UniformResolverRegistry = __webpack_require__(51);
+	var _UniformResolverRegistry = __webpack_require__(53);
 	
 	var _UniformResolverRegistry2 = _interopRequireDefault(_UniformResolverRegistry);
 	
-	var _MatricesRegister = __webpack_require__(92);
+	var _MatricesRegister = __webpack_require__(89);
 	
 	var _MatricesRegister2 = _interopRequireDefault(_MatricesRegister);
 	
-	var _MiscRegister = __webpack_require__(93);
+	var _MiscRegister = __webpack_require__(90);
 	
 	var _MiscRegister2 = _interopRequireDefault(_MiscRegister);
 	
-	var _UserValueRegister = __webpack_require__(94);
+	var _UserValueRegister = __webpack_require__(92);
 	
 	var _UserValueRegister2 = _interopRequireDefault(_UserValueRegister);
 	
-	var _Buffer = __webpack_require__(87);
+	var _Buffer = __webpack_require__(52);
 	
 	var _Buffer2 = _interopRequireDefault(_Buffer);
 	
-	var _FrameBuffer = __webpack_require__(66);
+	var _FrameBuffer = __webpack_require__(68);
 	
 	var _FrameBuffer2 = _interopRequireDefault(_FrameBuffer);
 	
@@ -292,11 +288,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _GLExtRequestor2 = _interopRequireDefault(_GLExtRequestor);
 	
-	var _Program = __webpack_require__(52);
+	var _Program = __webpack_require__(54);
 	
 	var _Program2 = _interopRequireDefault(_Program);
 	
-	var _RenderBuffer = __webpack_require__(60);
+	var _RenderBuffer = __webpack_require__(62);
 	
 	var _RenderBuffer2 = _interopRequireDefault(_RenderBuffer);
 	
@@ -304,7 +300,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _ResourceBase2 = _interopRequireDefault(_ResourceBase);
 	
-	var _ResourceCache = __webpack_require__(53);
+	var _ResourceCache = __webpack_require__(55);
 	
 	var _ResourceCache2 = _interopRequireDefault(_ResourceCache);
 	
@@ -316,7 +312,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _Texture2D2 = _interopRequireDefault(_Texture2D);
 	
-	var _UniformProxy = __webpack_require__(54);
+	var _UniformProxy = __webpack_require__(56);
 	
 	var _UniformProxy2 = _interopRequireDefault(_UniformProxy);
 	
@@ -356,15 +352,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _TypeToConstant2 = _interopRequireDefault(_TypeToConstant);
 	
-	var _TextureSizeCalculator = __webpack_require__(61);
+	var _TextureSizeCalculator = __webpack_require__(63);
 	
 	var _TextureSizeCalculator2 = _interopRequireDefault(_TextureSizeCalculator);
 	
-	var _main = __webpack_require__(95);
+	var _main = __webpack_require__(93);
 	
 	var _main2 = _interopRequireDefault(_main);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var __VERSION__ = "0.10.10";
+	var __NAME__ = "grimoirejs-fundamental";
 	
 	var __EXPOSE__ = {
 	    "Asset": {
@@ -414,7 +413,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    "Geometry": {
 	        "DefaultPrimitives": _DefaultPrimitives2.default,
 	        "Geometry": _Geometry2.default,
-	        "GeometryBuilder": _GeometryBuilder2.default,
 	        "GeometryFactory": _GeometryFactory2.default,
 	        "GeometryUtility": _GeometryUtility2.default
 	    },
@@ -464,6 +462,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	};
 	var __BASE__ = (0, _main2.default)();
+	Object.assign(__EXPOSE__, {
+	    __VERSION__: __VERSION__,
+	    __NAME__: __NAME__
+	});
 	Object.assign(__BASE__ || {}, __EXPOSE__);
 	window["GrimoireJS"].lib.fundamental = __EXPOSE__;
 	exports.default = __BASE__;
@@ -576,34 +578,35 @@ return /******/ (function(modules) { // webpackBootstrap
 	                                switch (_context.prev = _context.next) {
 	                                    case 0:
 	                                        _context.prev = 0;
-	                                        _context.next = 3;
+	                                        _context.t0 = resolve;
+	                                        _context.next = 4;
 	                                        return promise;
 	
-	                                    case 3:
-	                                        _context.t0 = _context.sent;
-	                                        resolve(_context.t0);
+	                                    case 4:
+	                                        _context.t1 = _context.sent;
+	                                        (0, _context.t0)(_context.t1);
 	
 	                                        this.loadCount++;
-	                                        _context.next = 12;
+	                                        _context.next = 13;
 	                                        break;
 	
-	                                    case 8:
-	                                        _context.prev = 8;
-	                                        _context.t1 = _context["catch"](0);
+	                                    case 9:
+	                                        _context.prev = 9;
+	                                        _context.t2 = _context["catch"](0);
 	
-	                                        reject(_context.t1);
+	                                        reject(_context.t2);
 	                                        this.errorCount++;
 	
-	                                    case 12:
+	                                    case 13:
 	                                        this.completeCount++;
 	                                        this._checkLoadCompleted();
 	
-	                                    case 14:
+	                                    case 15:
 	                                    case "end":
 	                                        return _context.stop();
 	                                }
 	                            }
-	                        }, _callee, this, [[0, 8]]);
+	                        }, _callee, this, [[0, 9]]);
 	                    }));
 	                }).bind(_this2)();
 	            });
@@ -2871,7 +2874,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if (!factoryDelegate) {
 	                throw new Error("Can not instanciate unknown geometry type " + type);
 	            }
-	            return factoryDelegate(this.gl, args);
+	            var geometry = factoryDelegate(this.gl, args);
+	            if (GeometryFactory.factoryExtentions[type] !== void 0) {
+	                GeometryFactory.factoryExtentions[type].forEach(function (v) {
+	                    return v(geometry, args);
+	                });
+	            }
+	            return geometry;
 	        }
 	    }, {
 	        key: "instanciateAsDefault",
@@ -2890,6 +2899,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	            GeometryFactory.factoryDelegates[typeName] = factoryDelegate;
 	            GeometryFactory.factoryArgumentDeclarations[typeName] = argumentDeclarations;
 	        }
+	    }, {
+	        key: "extend",
+	        value: function extend(typeName, extender) {
+	            if (GeometryFactory.factoryExtentions[typeName] === void 0) {
+	                GeometryFactory.factoryExtentions[typeName] = [];
+	            }
+	            GeometryFactory.factoryExtentions[typeName].push(extender);
+	        }
 	    }]);
 	
 	    return GeometryFactory;
@@ -2905,6 +2922,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Argument inputs to be used for construction of geometry.
 	 */
 	GeometryFactory.factoryArgumentDeclarations = {};
+	GeometryFactory.factoryExtentions = {};
 
 /***/ },
 /* 30 */
@@ -3788,7 +3806,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _Material2 = _interopRequireDefault(_Material);
 	
-	var _header = __webpack_require__(55);
+	var _header = __webpack_require__(57);
 	
 	var _header2 = _interopRequireDefault(_header);
 	
@@ -4002,17 +4020,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _createClass(SortParser, null, [{
 	        key: "parse",
 	        value: function parse(source) {
-	            var sourceHash = SortParser._getHash(source);
-	            if (SortParser._parsedCache[sourceHash] !== void 0) {
-	                return new Promise(function (resolve, reject) {
-	                    resolve(SortParser._parsedCache[sourceHash]);
-	                });
-	            } else {
-	                return SortParser._parse(source).then(function (v) {
-	                    SortParser._parsedCache[sourceHash] = v;
-	                    return v;
-	                });
-	            }
+	            // const sourceHash = SortParser._getHash(source);
+	            // if (SortParser._parsedCache[sourceHash] !== void 0) { // When specified source was loaded already
+	            //   return new Promise((resolve, reject) => {
+	            //     resolve(SortParser._parsedCache[sourceHash]);
+	            //   });
+	            // } else {
+	            //
+	            // }
+	            return SortParser._parse(source).then(function (v) {
+	                SortParser._parsedCache[source] = v;
+	                return v;
+	            });
 	        }
 	    }, {
 	        key: "_parse",
@@ -5081,15 +5100,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _Geometry2 = _interopRequireDefault(_Geometry);
 	
-	var _UniformResolverRegistry = __webpack_require__(51);
+	var _UniformResolverRegistry = __webpack_require__(53);
 	
 	var _UniformResolverRegistry2 = _interopRequireDefault(_UniformResolverRegistry);
 	
-	var _Program = __webpack_require__(52);
+	var _Program = __webpack_require__(54);
 	
 	var _Program2 = _interopRequireDefault(_Program);
 	
-	var _header = __webpack_require__(55);
+	var _header = __webpack_require__(57);
 	
 	var _header2 = _interopRequireDefault(_header);
 	
@@ -5312,7 +5331,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 50 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
@@ -5322,28 +5341,95 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
+	var _Vector = __webpack_require__(14);
+	
+	var _Vector2 = _interopRequireDefault(_Vector);
+	
+	var _AABB = __webpack_require__(51);
+	
+	var _AABB2 = _interopRequireDefault(_AABB);
+	
+	var _Buffer = __webpack_require__(52);
+	
+	var _Buffer2 = _interopRequireDefault(_Buffer);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
 	/**
 	 * The geometry class for managing buffer resource
 	 */
 	var Geometry = function () {
-	    function Geometry(vertices, attribInfo, indices, aabb) {
+	    function Geometry(gl) {
 	        _classCallCheck(this, Geometry);
 	
-	        this.vertices = vertices;
-	        this.attribInfo = attribInfo;
-	        this.indices = indices;
-	        this.aabb = aabb;
-	        // check all buffers requested by attribute variables are all contained in vertices
-	        for (var attrKey in attribInfo) {
-	            if (vertices[attribInfo[attrKey].bufferName] === void 0) {
-	                throw new Error("The buffer request by " + attribInfo[attrKey].bufferName + " is not contained in geometry.");
-	            }
-	        }
+	        this.gl = gl;
+	        /**
+	         * Vertex buffer
+	         * @type {Buffer[]}
+	         */
+	        this.buffers = [];
+	        this.indices = {};
+	        this.accessors = {};
+	        this.aabb = new _AABB2.default([_Vector2.default.Zero]);
 	    }
 	
 	    _createClass(Geometry, [{
+	        key: "addAttributes",
+	        value: function addAttributes(buffer, accessors) {
+	            var usage = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : WebGLRenderingContext.STATIC_DRAW;
+	
+	            buffer = this._ensureToBeVertexBuffer(buffer, usage);
+	            var index = this.buffers.length;
+	            this.buffers.push(buffer);
+	            for (var semantic in accessors) {
+	                var accessor = accessors[semantic];
+	                accessor.bufferIndex = index;
+	                if (accessor.size === void 0) {
+	                    throw new Error("Accessor specified with the semantics \"" + semantic + "\" is not containing size as paranmeter.");
+	                }
+	                if (accessor.type === void 0) {
+	                    accessor.type = WebGLRenderingContext.FLOAT;
+	                }
+	                if (accessor.stride === void 0) {
+	                    accessor.stride = accessor.size * this._attribTypeToByteSize(accessor.type);
+	                }
+	                if (accessor.offset === void 0) {
+	                    accessor.offset = 0;
+	                }
+	                this.accessors[semantic] = accessor;
+	            }
+	        }
+	    }, {
+	        key: "addIndex",
+	        value: function addIndex(indexName, buffer) {
+	            var topology = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : WebGLRenderingContext.TRIANGLES;
+	            var offset = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0;
+	            var count = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
+	            var type = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : 0;
+	
+	            if (!count) {
+	                if (buffer instanceof _Buffer2.default || buffer instanceof ArrayBuffer || buffer instanceof DataView) {
+	                    throw new Error("The argument 'count' is necessary if you specified buffer with an instance of Buffer or ArrayBuffer");
+	                } else {
+	                    count = buffer["length"];
+	                }
+	            }
+	            if (type === 0) {
+	                type = this._indexTypeFromCount(count);
+	            }
+	            buffer = this._ensureToBeIndexBuffer(buffer, type);
+	            this.indices[indexName] = {
+	                byteOffset: offset,
+	                byteSize: this._indexTypeToByteSize(type),
+	                type: type,
+	                topology: topology,
+	                count: count,
+	                index: buffer
+	            };
+	        }
+	    }, {
 	        key: "drawByDefault",
 	        value: function drawByDefault(indexName, attribNames, program) {
 	            var _this = this;
@@ -5361,24 +5447,117 @@ return /******/ (function(modules) { // webpackBootstrap
 	         * @param  {Geometry} geometry      [description]
 	         * @param  {Program}  program       [description]
 	         * @param  {string}   attributeName [description]
-	         * @param  {string}   bufferName    [description]
+	         * @param  {string}   semantics    [description]
 	         * @return {boolean}                [description]
 	         */
 	
+	    }, {
+	        key: "_ensureToBeVertexBuffer",
+	
+	        /**
+	         * Make sure buffer sources converted into Buffer
+	         * @param  {Buffer|BufferSource|number[]} buffer [description]
+	         * @return {Buffer}                              [description]
+	         */
+	        value: function _ensureToBeVertexBuffer(buffer, usage) {
+	            if (!(buffer instanceof _Buffer2.default)) {
+	                var bufferSource = buffer;
+	                if (Array.isArray(bufferSource)) {
+	                    bufferSource = new Float32Array(bufferSource);
+	                }
+	                buffer = new _Buffer2.default(this.gl, WebGLRenderingContext.ARRAY_BUFFER, usage);
+	                buffer.update(bufferSource);
+	            }
+	            return buffer;
+	        }
+	        /**
+	         * Make sure buffer sources converted into Buffer
+	         * @param  {Buffer|BufferSource|number[]} buffer [description]
+	         * @return {Buffer}                              [description]
+	         */
+	
+	    }, {
+	        key: "_ensureToBeIndexBuffer",
+	        value: function _ensureToBeIndexBuffer(buffer, type) {
+	            if (!(buffer instanceof _Buffer2.default)) {
+	                var bufferSource = buffer;
+	                if (Array.isArray(bufferSource)) {
+	                    bufferSource = new (this._indexTypeToArrayConstructor(type))(bufferSource);
+	                }
+	                buffer = new _Buffer2.default(this.gl, WebGLRenderingContext.ELEMENT_ARRAY_BUFFER, WebGLRenderingContext.STATIC_DRAW);
+	                buffer.update(bufferSource);
+	            } else {
+	                if (buffer.target !== WebGLRenderingContext.ELEMENT_ARRAY_BUFFER) {
+	                    throw new Error("The usage of buffer specified as index buffer is not ELEMENT_ARRAY_BUFFER");
+	                }
+	            }
+	            return buffer;
+	        }
+	    }, {
+	        key: "_indexTypeFromCount",
+	        value: function _indexTypeFromCount(count) {
+	            if (count < 256) {
+	                return WebGLRenderingContext.UNSIGNED_BYTE;
+	            } else if (count < 65536) {
+	                return WebGLRenderingContext.UNSIGNED_SHORT;
+	            } else if (count < 4294967296) {
+	                return WebGLRenderingContext.UNSIGNED_INT;
+	            } else {
+	                throw new Error("Index count exceeds 4,294,967,296. WebGL can not handle such a big index buffer");
+	            }
+	        }
+	    }, {
+	        key: "_indexTypeToArrayConstructor",
+	        value: function _indexTypeToArrayConstructor(type) {
+	            switch (type) {
+	                case WebGLRenderingContext.UNSIGNED_BYTE:
+	                    return Uint8Array;
+	                case WebGLRenderingContext.UNSIGNED_SHORT:
+	                    return Uint16Array;
+	                case WebGLRenderingContext.UNSIGNED_INT:
+	                    return Uint32Array;
+	                default:
+	                    throw new Error("Unsupported index type");
+	            }
+	        }
+	    }, {
+	        key: "_indexTypeToByteSize",
+	        value: function _indexTypeToByteSize(type) {
+	            switch (type) {
+	                case WebGLRenderingContext.UNSIGNED_BYTE:
+	                    return 1;
+	                case WebGLRenderingContext.UNSIGNED_SHORT:
+	                    return 2;
+	                case WebGLRenderingContext.UNSIGNED_INT:
+	                    return 4;
+	                default:
+	                    throw new Error("Unsupported index type");
+	            }
+	        }
+	    }, {
+	        key: "_attribTypeToByteSize",
+	        value: function _attribTypeToByteSize(type) {
+	            switch (type) {
+	                case WebGLRenderingContext.FLOAT:
+	                    return 4;
+	                default:
+	                    throw new Error("Unsupported attribute variable type \"" + type + "\"");
+	            }
+	        }
 	    }], [{
 	        key: "bindBufferToAttribute",
-	        value: function bindBufferToAttribute(geometry, program, attributeName, bufferName) {
+	        value: function bindBufferToAttribute(geometry, program, attributeName, semantics) {
 	            var index = program.findAttributeLocation(attributeName);
 	            if (index < 0) {
 	                return false;
 	            }
-	            var attribInfo = geometry.attribInfo[bufferName];
-	            if (!attribInfo) {
-	                throw new Error("Specified buffer \"" + bufferName + " was not found on this geometry while attempt to bind \"" + attributeName + "\" of attribute variables.\n\n\t  All of the vertex buffer available on this geometry is " + Object.keys(geometry.attribInfo) + "\"");
+	            var accessors = geometry.accessors[semantics];
+	            if (!accessors) {
+	                throw new Error("Specified buffer \"" + semantics + " was not found on this geometry while attempt to bind \"" + attributeName + "\" of attribute variables.\n\n\t  All of the vertex buffer available on this geometry is " + Object.keys(geometry.accessors) + "\"");
 	            }
-	            var buffer = geometry.vertices[attribInfo.bufferName];
+	            var buffer = geometry.buffers[accessors.bufferIndex];
 	            buffer.bind();
-	            program.gl.vertexAttribPointer(index, attribInfo.size, attribInfo.type, false, attribInfo.stride, attribInfo.offset);
+	            program.gl.vertexAttribPointer(index, accessors.size, accessors.type, false, accessors.stride, accessors.offset);
 	            return true;
 	        }
 	    }, {
@@ -5405,6 +5584,93 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 51 */
+/***/ function(module, exports) {
+
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});exports.default=window.GrimoireJS.lib.math.AABB;
+
+/***/ },
+/* 52 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+	
+	var _ResourceBase2 = __webpack_require__(24);
+	
+	var _ResourceBase3 = _interopRequireDefault(_ResourceBase2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Buffer = function (_ResourceBase) {
+	    _inherits(Buffer, _ResourceBase);
+	
+	    function Buffer(gl) {
+	        var target = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : WebGLRenderingContext.ARRAY_BUFFER;
+	        var usage = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : WebGLRenderingContext.STATIC_DRAW;
+	
+	        _classCallCheck(this, Buffer);
+	
+	        var _this = _possibleConstructorReturn(this, (Buffer.__proto__ || Object.getPrototypeOf(Buffer)).call(this, gl));
+	
+	        _this.target = target;
+	        _this.usage = usage;
+	        _this.buffer = gl.createBuffer();
+	        return _this;
+	    }
+	
+	    _createClass(Buffer, [{
+	        key: "update",
+	        value: function update(length, subBuffer) {
+	            this.bind();
+	            if (subBuffer) {
+	                if (!this.valid) {
+	                    this.gl.bufferData(this.target, length + subBuffer.byteLength, this.usage);
+	                }
+	                this.gl.bufferSubData(this.target, length, subBuffer);
+	            } else {
+	                if (typeof length === "number") {
+	                    this.gl.bufferData(this.target, length, this.usage);
+	                } else {
+	                    this.gl.bufferData(this.target, length, this.usage);
+	                }
+	            }
+	            this.valid = true;
+	        }
+	    }, {
+	        key: "bind",
+	        value: function bind() {
+	            this.gl.bindBuffer(this.target, this.buffer);
+	        }
+	    }, {
+	        key: "destroy",
+	        value: function destroy() {
+	            _get(Buffer.prototype.__proto__ || Object.getPrototypeOf(Buffer.prototype), "destroy", this).call(this);
+	            this.gl.deleteBuffer(this.buffer);
+	        }
+	    }]);
+	
+	    return Buffer;
+	}(_ResourceBase3.default);
+	
+	exports.default = Buffer;
+
+/***/ },
+/* 53 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -5467,7 +5733,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = new UniformResolverRegistry();
 
 /***/ },
-/* 52 */
+/* 54 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -5480,11 +5746,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 	
-	var _ResourceCache = __webpack_require__(53);
+	var _ResourceCache = __webpack_require__(55);
 	
 	var _ResourceCache2 = _interopRequireDefault(_ResourceCache);
 	
-	var _UniformProxy = __webpack_require__(54);
+	var _UniformProxy = __webpack_require__(56);
 	
 	var _UniformProxy2 = _interopRequireDefault(_UniformProxy);
 	
@@ -5630,7 +5896,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = Program;
 
 /***/ },
-/* 53 */
+/* 55 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -5672,7 +5938,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = new ResourceCache();
 
 /***/ },
-/* 54 */
+/* 56 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -5895,13 +6161,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = UniformProxy;
 
 /***/ },
-/* 55 */
+/* 57 */
 /***/ function(module, exports) {
 
 	module.exports = "/*Header start*/\n// helper macros\n#ifdef FS\n  #define FS_PREC(prec,type) precision prec type;\n  #define VS_PREC(prec,type)\n#endif\n#ifdef VS\n#define VS_PREC(prec,type) precision prec type;\n#define FS_PREC(prec,type)\n#endif\n// constants\n#define PI 3.141592653589793\n#define E 2.718281828459045\n#define LN2 0.6931471805599453\n#define LN10 2.302585092994046\n#define LOG2E 1.4426950408889634\n#define LOG10E 0.4342944819032518\n#define SQRT2 1.4142135623730951\n#define SQRT1_2 0.7071067811865476\n/*Header end*/\n"
 
 /***/ },
-/* 56 */
+/* 58 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -5957,7 +6223,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	MaterialManagerComponent.attributes = {};
 
 /***/ },
-/* 57 */
+/* 59 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -6122,7 +6388,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 58 */
+/* 60 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -6172,28 +6438,39 @@ return /******/ (function(modules) { // webpackBootstrap
 	        _this._lastScreenPos = null;
 	        _this._xsum = 0;
 	        _this._ysum = 0;
-	        _this._center = 0;
 	        return _this;
 	    }
 	
 	    _createClass(MouseCameraControlComponent, [{
 	        key: "$awake",
 	        value: function $awake() {
-	            this.getAttributeRaw("center").boundTo("_center");
 	            this.getAttributeRaw("rotateSpeed").boundTo("_rotateSpeed");
 	            this.getAttributeRaw("zoomSpeed").boundTo("_zoomSpeed");
 	            this.getAttributeRaw("moveSpeed").boundTo("_moveSpeed");
 	            this.getAttributeRaw("origin").boundTo("_origin");
-	            this._transform = this.node.getComponent(_TransformComponent2.default);
 	        }
 	    }, {
 	        key: "$mount",
 	        value: function $mount() {
+	            var center = this.getAttribute("center");
+	            var distance = null;
+	            if (center !== null) {
+	                console.warn("The attribute 'center' is deprecated now. This attribute would be removed on next version. Use 'distance' instead.");
+	                distance = center;
+	            } else {
+	                distance = this.getAttribute("distance");
+	            }
+	            this._transform = this.node.getComponent(_TransformComponent2.default);
 	            this._initialRight = _Vector2.default.copy(this._transform.right);
 	            this._initialUp = _Vector2.default.copy(this._transform.up);
-	            this._initialDirection = this._transform.localPosition.subtractWith(this._origin);
+	            this._initialDirection = _Vector2.default.copy(this._transform.forward.negateThis());
 	            this._initialRotation = this._transform.localRotation;
-	            this._origin = this._transform.localPosition.addWith(this._transform.forward.multiplyWith(this._center));
+	            var origin = this.getAttribute("origin");
+	            if (distance !== null) {
+	                this._origin = this._transform.localPosition.addWith(this._transform.forward.multiplyWith(distance));
+	            } else {
+	                this._origin = origin;
+	            }
 	            var scriptTag = this.companion.get("canvasElement");
 	            scriptTag.addEventListener("mousemove", this._mouseMove.bind(this));
 	            scriptTag.addEventListener("contextmenu", this._contextMenu.bind(this));
@@ -6278,7 +6555,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        converter: "Number"
 	    },
 	    center: {
-	        default: 20,
+	        default: null,
+	        converter: "Number"
+	    },
+	    distance: {
+	        default: null,
 	        converter: "Number"
 	    },
 	    origin: {
@@ -6288,7 +6569,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 59 */
+/* 61 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -6299,7 +6580,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _RenderBuffer = __webpack_require__(60);
+	var _RenderBuffer = __webpack_require__(62);
 	
 	var _RenderBuffer2 = _interopRequireDefault(_RenderBuffer);
 	
@@ -6307,7 +6588,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _Component3 = _interopRequireDefault(_Component2);
 	
-	var _TextureSizeCalculator = __webpack_require__(61);
+	var _TextureSizeCalculator = __webpack_require__(63);
 	
 	var _TextureSizeCalculator2 = _interopRequireDefault(_TextureSizeCalculator);
 	
@@ -6366,7 +6647,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 60 */
+/* 62 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -6429,7 +6710,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = RenderBuffer;
 
 /***/ },
-/* 61 */
+/* 63 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -6465,7 +6746,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = TextureSizeCalculator;
 
 /***/ },
-/* 62 */
+/* 64 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -6573,7 +6854,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 63 */
+/* 65 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -6584,7 +6865,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _Color = __webpack_require__(64);
+	var _Color = __webpack_require__(66);
 	
 	var _Color2 = _interopRequireDefault(_Color);
 	
@@ -6666,7 +6947,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 64 */
+/* 66 */
 /***/ function(module, exports) {
 
 		Object.defineProperty(exports, "__esModule", {
@@ -6674,7 +6955,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		});exports.default=window.GrimoireJS.lib.math.Color4;
 
 /***/ },
-/* 65 */
+/* 67 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -6689,7 +6970,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _MaterialContainerComponent2 = _interopRequireDefault(_MaterialContainerComponent);
 	
-	var _FrameBuffer = __webpack_require__(66);
+	var _FrameBuffer = __webpack_require__(68);
 	
 	var _FrameBuffer2 = _interopRequireDefault(_FrameBuffer);
 	
@@ -6830,7 +7111,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 66 */
+/* 68 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -6843,7 +7124,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 	
-	var _RenderBuffer = __webpack_require__(60);
+	var _RenderBuffer = __webpack_require__(62);
 	
 	var _RenderBuffer2 = _interopRequireDefault(_RenderBuffer);
 	
@@ -6918,7 +7199,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = FrameBuffer;
 
 /***/ },
-/* 67 */
+/* 69 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -6933,7 +7214,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _Component3 = _interopRequireDefault(_Component2);
 	
-	var _FrameBuffer = __webpack_require__(66);
+	var _FrameBuffer = __webpack_require__(68);
 	
 	var _FrameBuffer2 = _interopRequireDefault(_FrameBuffer);
 	
@@ -7077,7 +7358,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 68 */
+/* 70 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -7096,7 +7377,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _Component3 = _interopRequireDefault(_Component2);
 	
-	var _TextureSizeCalculator = __webpack_require__(61);
+	var _TextureSizeCalculator = __webpack_require__(63);
 	
 	var _TextureSizeCalculator2 = _interopRequireDefault(_TextureSizeCalculator);
 	
@@ -7185,7 +7466,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 69 */
+/* 71 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -7355,7 +7636,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 70 */
+/* 72 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -7386,7 +7667,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = CanvasSizeConverter;
 
 /***/ },
-/* 71 */
+/* 73 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -7399,7 +7680,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _Component2 = _interopRequireDefault(_Component);
 	
-	var _GomlNode = __webpack_require__(72);
+	var _GomlNode = __webpack_require__(74);
 	
 	var _GomlNode2 = _interopRequireDefault(_GomlNode);
 	
@@ -7431,7 +7712,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = ComponentConverter;
 
 /***/ },
-/* 72 */
+/* 74 */
 /***/ function(module, exports) {
 
 		Object.defineProperty(exports, "__esModule", {
@@ -7439,7 +7720,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		});exports.default=window.GrimoireJS.Node.GomlNode;
 
 /***/ },
-/* 73 */
+/* 75 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -7467,7 +7748,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = EnumConverter;
 
 /***/ },
-/* 74 */
+/* 76 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -7493,7 +7774,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = GeometryConverter;
 
 /***/ },
-/* 75 */
+/* 77 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -7526,7 +7807,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = MaterialConverter;
 
 /***/ },
-/* 76 */
+/* 78 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -7548,7 +7829,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = NumberArrayConverter;
 
 /***/ },
-/* 77 */
+/* 79 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -7561,13 +7842,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return val;
 	    } else if (typeof val === "string") {
 	        return Number.parseFloat(val);
+	    } else if (val === null) {
+	        return null;
 	    }
-	    throw new Error("Unsupported input to convert into number!");
 	}
 	exports.default = NumberConverter;
 
 /***/ },
-/* 78 */
+/* 80 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -7581,7 +7863,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = ObjectConverter;
 
 /***/ },
-/* 79 */
+/* 81 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -7592,11 +7874,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 	
-	var _TextureComponent = __webpack_require__(69);
+	var _TextureComponent = __webpack_require__(71);
 	
 	var _TextureComponent2 = _interopRequireDefault(_TextureComponent);
 	
-	var _TextureReference = __webpack_require__(80);
+	var _TextureReference = __webpack_require__(82);
 	
 	var _TextureReference2 = _interopRequireDefault(_TextureReference);
 	
@@ -7717,9 +7999,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	            if ((typeof _ret4 === "undefined" ? "undefined" : _typeof(_ret4)) === "object") return _ret4.v;
 	        } else if (val instanceof HTMLCanvasElement) {
-	            var _tex = new _Texture2D2.default(this.companion.get("gl"));
-	            _tex.update(val);
-	            return new _TextureReference2.default(_tex);
+	            var tex = new _Texture2D2.default(this.companion.get("gl"));
+	            tex.update(val);
+	            return new _TextureReference2.default(tex);
 	        } else if (val instanceof HTMLVideoElement) {
 	            return new _TextureReference2.default(fromVideoTexture(this.companion.get("gl"), val));
 	        }
@@ -7729,7 +8011,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = TextureConverter;
 
 /***/ },
-/* 80 */
+/* 82 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -7770,7 +8052,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = TextureReference;
 
 /***/ },
-/* 81 */
+/* 83 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -7781,7 +8063,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 	
-	var _Rectangle = __webpack_require__(82);
+	var _Rectangle = __webpack_require__(84);
 	
 	var _Rectangle2 = _interopRequireDefault(_Rectangle);
 	
@@ -7830,7 +8112,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = ViewportConverter;
 
 /***/ },
-/* 82 */
+/* 84 */
 /***/ function(module, exports) {
 
 		Object.defineProperty(exports, "__esModule", {
@@ -7838,7 +8120,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		});exports.default=window.GrimoireJS.lib.math.Rectangle;
 
 /***/ },
-/* 83 */
+/* 85 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -7849,7 +8131,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _AABB = __webpack_require__(84);
+	var _Geometry = __webpack_require__(50);
+	
+	var _Geometry2 = _interopRequireDefault(_Geometry);
+	
+	var _AABB = __webpack_require__(51);
 	
 	var _AABB2 = _interopRequireDefault(_AABB);
 	
@@ -7857,17 +8143,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _Vector2 = _interopRequireDefault(_Vector);
 	
-	var _GeometryUtility = __webpack_require__(85);
+	var _GeometryUtility = __webpack_require__(86);
 	
 	var _GeometryUtility2 = _interopRequireDefault(_GeometryUtility);
 	
 	var _GeometryFactory = __webpack_require__(29);
 	
 	var _GeometryFactory2 = _interopRequireDefault(_GeometryFactory);
-	
-	var _GeometryBuilder = __webpack_require__(86);
-	
-	var _GeometryBuilder2 = _interopRequireDefault(_GeometryBuilder);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -7876,6 +8158,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	var unitBox = new _AABB2.default();
 	unitBox.expand(new _Vector2.default(-1, -1, -1));
 	unitBox.expand(new _Vector2.default(1, 1, 1));
+	var primitiveLayout = {
+	    POSITION: {
+	        size: 3,
+	        stride: 32
+	    },
+	    NORMAL: {
+	        size: 3,
+	        stride: 32,
+	        offset: 12
+	    },
+	    TEXCOORD: {
+	        size: 2,
+	        stride: 32,
+	        offset: 24
+	    }
+	};
 	
 	var DefaultPrimitives = function () {
 	    function DefaultPrimitives() {
@@ -7885,314 +8183,46 @@ return /******/ (function(modules) { // webpackBootstrap
 	    _createClass(DefaultPrimitives, null, [{
 	        key: "register",
 	        value: function register() {
-	            DefaultPrimitives._registerTriangle();
 	            DefaultPrimitives._registerQuad();
 	            DefaultPrimitives._registerCube();
 	            DefaultPrimitives._registerSphere();
 	            DefaultPrimitives._registerCircle();
-	            DefaultPrimitives._registerCylinder();
-	            DefaultPrimitives._registerCone();
-	            DefaultPrimitives._registerPlane();
-	        }
-	    }, {
-	        key: "_registerTriangle",
-	        value: function _registerTriangle() {
-	            _GeometryFactory2.default.addType("triangle", {}, function (gl, attrs) {
-	                return _GeometryBuilder2.default.build(gl, {
-	                    indices: {
-	                        default: {
-	                            generator: regeneratorRuntime.mark(function generator() {
-	                                return regeneratorRuntime.wrap(function generator$(_context) {
-	                                    while (1) {
-	                                        switch (_context.prev = _context.next) {
-	                                            case 0:
-	                                                return _context.delegateYield(_GeometryUtility2.default.triangleIndex(0), "t0", 1);
-	
-	                                            case 1:
-	                                            case "end":
-	                                                return _context.stop();
-	                                        }
-	                                    }
-	                                }, generator, this);
-	                            }),
-	                            topology: WebGLRenderingContext.TRIANGLES
-	                        },
-	                        wireframe: {
-	                            generator: regeneratorRuntime.mark(function generator() {
-	                                return regeneratorRuntime.wrap(function generator$(_context2) {
-	                                    while (1) {
-	                                        switch (_context2.prev = _context2.next) {
-	                                            case 0:
-	                                                return _context2.delegateYield(_GeometryUtility2.default.linesFromTriangles(_GeometryUtility2.default.triangleIndex(0)), "t0", 1);
-	
-	                                            case 1:
-	                                            case "end":
-	                                                return _context2.stop();
-	                                        }
-	                                    }
-	                                }, generator, this);
-	                            }),
-	                            topology: WebGLRenderingContext.LINES
-	                        }
-	                    },
-	                    vertices: {
-	                        main: {
-	                            size: {
-	                                POSITION: 3,
-	                                NORMAL: 3,
-	                                TEXCOORD: 2
-	                            },
-	                            count: _GeometryUtility2.default.triangleSize(),
-	                            getGenerators: function getGenerators() {
-	                                return {
-	                                    POSITION: regeneratorRuntime.mark(function POSITION() {
-	                                        return regeneratorRuntime.wrap(function POSITION$(_context3) {
-	                                            while (1) {
-	                                                switch (_context3.prev = _context3.next) {
-	                                                    case 0:
-	                                                        return _context3.delegateYield(_GeometryUtility2.default.trianglePosition(_Vector2.default.Zero, _Vector2.default.YUnit, _Vector2.default.XUnit), "t0", 1);
-	
-	                                                    case 1:
-	                                                    case "end":
-	                                                        return _context3.stop();
-	                                                }
-	                                            }
-	                                        }, POSITION, this);
-	                                    }),
-	                                    NORMAL: regeneratorRuntime.mark(function NORMAL() {
-	                                        return regeneratorRuntime.wrap(function NORMAL$(_context4) {
-	                                            while (1) {
-	                                                switch (_context4.prev = _context4.next) {
-	                                                    case 0:
-	                                                        return _context4.delegateYield(_GeometryUtility2.default.triangleNormal(_Vector2.default.ZUnit), "t0", 1);
-	
-	                                                    case 1:
-	                                                    case "end":
-	                                                        return _context4.stop();
-	                                                }
-	                                            }
-	                                        }, NORMAL, this);
-	                                    }),
-	                                    TEXCOORD: regeneratorRuntime.mark(function TEXCOORD() {
-	                                        return regeneratorRuntime.wrap(function TEXCOORD$(_context5) {
-	                                            while (1) {
-	                                                switch (_context5.prev = _context5.next) {
-	                                                    case 0:
-	                                                        return _context5.delegateYield(_GeometryUtility2.default.triangleTexCoord(), "t0", 1);
-	
-	                                                    case 1:
-	                                                    case "end":
-	                                                        return _context5.stop();
-	                                                }
-	                                            }
-	                                        }, TEXCOORD, this);
-	                                    })
-	                                };
-	                            }
-	                        }
-	                    }
-	                });
-	            });
+	            // DefaultPrimitives._registerCylinder();
+	            // DefaultPrimitives._registerCone();
+	            // DefaultPrimitives._registerPlane();
 	        }
 	    }, {
 	        key: "_registerQuad",
 	        value: function _registerQuad() {
 	            _GeometryFactory2.default.addType("quad", {}, function (gl, attrs) {
-	                return _GeometryBuilder2.default.build(gl, {
-	                    indices: {
-	                        default: {
-	                            generator: regeneratorRuntime.mark(function generator() {
-	                                return regeneratorRuntime.wrap(function generator$(_context6) {
-	                                    while (1) {
-	                                        switch (_context6.prev = _context6.next) {
-	                                            case 0:
-	                                                return _context6.delegateYield(_GeometryUtility2.default.quadIndex(0), "t0", 1);
-	
-	                                            case 1:
-	                                            case "end":
-	                                                return _context6.stop();
-	                                        }
-	                                    }
-	                                }, generator, this);
-	                            }),
-	                            topology: WebGLRenderingContext.TRIANGLES
-	                        },
-	                        wireframe: {
-	                            generator: regeneratorRuntime.mark(function generator() {
-	                                return regeneratorRuntime.wrap(function generator$(_context7) {
-	                                    while (1) {
-	                                        switch (_context7.prev = _context7.next) {
-	                                            case 0:
-	                                                return _context7.delegateYield(_GeometryUtility2.default.linesFromTriangles(_GeometryUtility2.default.quadIndex(0)), "t0", 1);
-	
-	                                            case 1:
-	                                            case "end":
-	                                                return _context7.stop();
-	                                        }
-	                                    }
-	                                }, generator, this);
-	                            }),
-	                            topology: WebGLRenderingContext.LINES
-	                        }
-	                    },
-	                    vertices: {
-	                        main: {
-	                            size: {
-	                                POSITION: 3,
-	                                NORMAL: 3,
-	                                TEXCOORD: 2
-	                            },
-	                            count: _GeometryUtility2.default.quadSize(),
-	                            getGenerators: function getGenerators() {
-	                                return {
-	                                    POSITION: regeneratorRuntime.mark(function POSITION() {
-	                                        return regeneratorRuntime.wrap(function POSITION$(_context8) {
-	                                            while (1) {
-	                                                switch (_context8.prev = _context8.next) {
-	                                                    case 0:
-	                                                        return _context8.delegateYield(_GeometryUtility2.default.quadPosition(_Vector2.default.Zero, _Vector2.default.YUnit, _Vector2.default.XUnit), "t0", 1);
-	
-	                                                    case 1:
-	                                                    case "end":
-	                                                        return _context8.stop();
-	                                                }
-	                                            }
-	                                        }, POSITION, this);
-	                                    }),
-	                                    NORMAL: regeneratorRuntime.mark(function NORMAL() {
-	                                        return regeneratorRuntime.wrap(function NORMAL$(_context9) {
-	                                            while (1) {
-	                                                switch (_context9.prev = _context9.next) {
-	                                                    case 0:
-	                                                        return _context9.delegateYield(_GeometryUtility2.default.quadNormal(_Vector2.default.ZUnit), "t0", 1);
-	
-	                                                    case 1:
-	                                                    case "end":
-	                                                        return _context9.stop();
-	                                                }
-	                                            }
-	                                        }, NORMAL, this);
-	                                    }),
-	                                    TEXCOORD: regeneratorRuntime.mark(function TEXCOORD() {
-	                                        return regeneratorRuntime.wrap(function TEXCOORD$(_context10) {
-	                                            while (1) {
-	                                                switch (_context10.prev = _context10.next) {
-	                                                    case 0:
-	                                                        return _context10.delegateYield(_GeometryUtility2.default.quadTexCoord(), "t0", 1);
-	
-	                                                    case 1:
-	                                                    case "end":
-	                                                        return _context10.stop();
-	                                                }
-	                                            }
-	                                        }, TEXCOORD, this);
-	                                    })
-	                                };
-	                            }
-	                        }
-	                    }
-	                });
+	                var geometry = new _Geometry2.default(gl);
+	                geometry.addAttributes(_GeometryUtility2.default.plane([0, 0, 0], [0, 0, 1], [0, 1, 0], [1, 0, 0], 1, 1), primitiveLayout);
+	                geometry.addIndex("default", _GeometryUtility2.default.planeIndex(0, 1, 1));
+	                return geometry;
 	            });
 	        }
 	    }, {
 	        key: "_registerCube",
 	        value: function _registerCube() {
-	            _GeometryFactory2.default.addType("cube", {}, function (gl, attrs) {
-	                return _GeometryBuilder2.default.build(gl, {
-	                    indices: {
-	                        default: {
-	                            generator: regeneratorRuntime.mark(function generator() {
-	                                return regeneratorRuntime.wrap(function generator$(_context11) {
-	                                    while (1) {
-	                                        switch (_context11.prev = _context11.next) {
-	                                            case 0:
-	                                                return _context11.delegateYield(_GeometryUtility2.default.cubeIndex(0), "t0", 1);
-	
-	                                            case 1:
-	                                            case "end":
-	                                                return _context11.stop();
-	                                        }
-	                                    }
-	                                }, generator, this);
-	                            }),
-	                            topology: WebGLRenderingContext.TRIANGLES
-	                        },
-	                        wireframe: {
-	                            generator: regeneratorRuntime.mark(function generator() {
-	                                return regeneratorRuntime.wrap(function generator$(_context12) {
-	                                    while (1) {
-	                                        switch (_context12.prev = _context12.next) {
-	                                            case 0:
-	                                                return _context12.delegateYield(_GeometryUtility2.default.linesFromTriangles(_GeometryUtility2.default.cubeIndex(0)), "t0", 1);
-	
-	                                            case 1:
-	                                            case "end":
-	                                                return _context12.stop();
-	                                        }
-	                                    }
-	                                }, generator, this);
-	                            }),
-	                            topology: WebGLRenderingContext.LINES
-	                        }
-	                    },
-	                    vertices: {
-	                        main: {
-	                            size: {
-	                                POSITION: 3,
-	                                NORMAL: 3,
-	                                TEXCOORD: 2
-	                            },
-	                            count: _GeometryUtility2.default.cubeSize(),
-	                            getGenerators: function getGenerators() {
-	                                return {
-	                                    POSITION: regeneratorRuntime.mark(function POSITION() {
-	                                        return regeneratorRuntime.wrap(function POSITION$(_context13) {
-	                                            while (1) {
-	                                                switch (_context13.prev = _context13.next) {
-	                                                    case 0:
-	                                                        return _context13.delegateYield(_GeometryUtility2.default.cubePosition(_Vector2.default.Zero, _Vector2.default.YUnit, _Vector2.default.XUnit, _Vector2.default.ZUnit.negateThis()), "t0", 1);
-	
-	                                                    case 1:
-	                                                    case "end":
-	                                                        return _context13.stop();
-	                                                }
-	                                            }
-	                                        }, POSITION, this);
-	                                    }),
-	                                    NORMAL: regeneratorRuntime.mark(function NORMAL() {
-	                                        return regeneratorRuntime.wrap(function NORMAL$(_context14) {
-	                                            while (1) {
-	                                                switch (_context14.prev = _context14.next) {
-	                                                    case 0:
-	                                                        return _context14.delegateYield(_GeometryUtility2.default.cubeNormal(_Vector2.default.Zero, _Vector2.default.YUnit, _Vector2.default.XUnit, _Vector2.default.ZUnit.negateThis()), "t0", 1);
-	
-	                                                    case 1:
-	                                                    case "end":
-	                                                        return _context14.stop();
-	                                                }
-	                                            }
-	                                        }, NORMAL, this);
-	                                    }),
-	                                    TEXCOORD: regeneratorRuntime.mark(function TEXCOORD() {
-	                                        return regeneratorRuntime.wrap(function TEXCOORD$(_context15) {
-	                                            while (1) {
-	                                                switch (_context15.prev = _context15.next) {
-	                                                    case 0:
-	                                                        return _context15.delegateYield(_GeometryUtility2.default.cubeTexCoord(), "t0", 1);
-	
-	                                                    case 1:
-	                                                    case "end":
-	                                                        return _context15.stop();
-	                                                }
-	                                            }
-	                                        }, TEXCOORD, this);
-	                                    })
-	                                };
-	                            }
-	                        }
-	                    },
-	                    aabb: unitBox
-	                });
+	            _GeometryFactory2.default.addType("cube", {
+	                divHorizontal: {
+	                    converter: "Number",
+	                    default: 1
+	                },
+	                divVertical: {
+	                    converter: "Number",
+	                    default: 1
+	                }
+	            }, function (gl, attrs) {
+	                var hdiv = attrs["divHorizontal"];
+	                var vdiv = attrs["divVertical"];
+	                var geometry = new _Geometry2.default(gl);
+	                var vertices = [].concat.apply([], [_GeometryUtility2.default.plane([0, 0, 1], [0, 0, 1], [0, 1, 0], [1, 0, 0], hdiv, vdiv), _GeometryUtility2.default.plane([0, 0, -1], [0, 0, -1], [0, 1, 0], [-1, 0, 0], hdiv, vdiv), _GeometryUtility2.default.plane([0, 1, 0], [0, 1, 0], [0, 0, -1], [1, 0, 0], hdiv, vdiv), _GeometryUtility2.default.plane([0, -1, 0], [0, -1, 0], [0, 0, -1], [-1, 0, 0], hdiv, vdiv), _GeometryUtility2.default.plane([1, 0, 0], [1, 0, 0], [0, 1, 0], [0, 0, -1], hdiv, vdiv), _GeometryUtility2.default.plane([-1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, 0, 1], hdiv, vdiv)]);
+	                geometry.addAttributes(vertices, primitiveLayout);
+	                var os = (hdiv + 1) * (vdiv + 1);
+	                var indices = [].concat.apply([], [_GeometryUtility2.default.planeIndex(0, hdiv, vdiv), _GeometryUtility2.default.planeIndex(os, hdiv, vdiv), _GeometryUtility2.default.planeIndex(2 * os, hdiv, vdiv), _GeometryUtility2.default.planeIndex(3 * os, hdiv, vdiv), _GeometryUtility2.default.planeIndex(4 * os, hdiv, vdiv), _GeometryUtility2.default.planeIndex(5 * os, hdiv, vdiv)]);
+	                geometry.addIndex("default", indices);
+	                return geometry;
 	            });
 	        }
 	    }, {
@@ -8210,101 +8240,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }, function (gl, attrs) {
 	                var dH = attrs["divHorizontal"];
 	                var dV = attrs["divVertical"];
-	                return _GeometryBuilder2.default.build(gl, {
-	                    indices: {
-	                        default: {
-	                            generator: regeneratorRuntime.mark(function generator() {
-	                                return regeneratorRuntime.wrap(function generator$(_context16) {
-	                                    while (1) {
-	                                        switch (_context16.prev = _context16.next) {
-	                                            case 0:
-	                                                return _context16.delegateYield(_GeometryUtility2.default.sphereIndex(0, dH, dV), "t0", 1);
-	
-	                                            case 1:
-	                                            case "end":
-	                                                return _context16.stop();
-	                                        }
-	                                    }
-	                                }, generator, this);
-	                            }),
-	                            topology: WebGLRenderingContext.TRIANGLES
-	                        },
-	                        wireframe: {
-	                            generator: regeneratorRuntime.mark(function generator() {
-	                                return regeneratorRuntime.wrap(function generator$(_context17) {
-	                                    while (1) {
-	                                        switch (_context17.prev = _context17.next) {
-	                                            case 0:
-	                                                return _context17.delegateYield(_GeometryUtility2.default.linesFromTriangles(_GeometryUtility2.default.sphereIndex(0, dH, dV)), "t0", 1);
-	
-	                                            case 1:
-	                                            case "end":
-	                                                return _context17.stop();
-	                                        }
-	                                    }
-	                                }, generator, this);
-	                            }),
-	                            topology: WebGLRenderingContext.LINES
-	                        }
-	                    },
-	                    vertices: {
-	                        main: {
-	                            size: {
-	                                POSITION: 3,
-	                                NORMAL: 3,
-	                                TEXCOORD: 2
-	                            },
-	                            count: _GeometryUtility2.default.sphereSize(dH, dV),
-	                            getGenerators: function getGenerators() {
-	                                return {
-	                                    POSITION: regeneratorRuntime.mark(function POSITION() {
-	                                        return regeneratorRuntime.wrap(function POSITION$(_context18) {
-	                                            while (1) {
-	                                                switch (_context18.prev = _context18.next) {
-	                                                    case 0:
-	                                                        return _context18.delegateYield(_GeometryUtility2.default.spherePosition(_Vector2.default.Zero, _Vector2.default.YUnit, _Vector2.default.XUnit, _Vector2.default.ZUnit.negateThis(), dH, dV), "t0", 1);
-	
-	                                                    case 1:
-	                                                    case "end":
-	                                                        return _context18.stop();
-	                                                }
-	                                            }
-	                                        }, POSITION, this);
-	                                    }),
-	                                    NORMAL: regeneratorRuntime.mark(function NORMAL() {
-	                                        return regeneratorRuntime.wrap(function NORMAL$(_context19) {
-	                                            while (1) {
-	                                                switch (_context19.prev = _context19.next) {
-	                                                    case 0:
-	                                                        return _context19.delegateYield(_GeometryUtility2.default.sphereNormal(_Vector2.default.YUnit, _Vector2.default.XUnit, _Vector2.default.ZUnit.negateThis(), dH, dV), "t0", 1);
-	
-	                                                    case 1:
-	                                                    case "end":
-	                                                        return _context19.stop();
-	                                                }
-	                                            }
-	                                        }, NORMAL, this);
-	                                    }),
-	                                    TEXCOORD: regeneratorRuntime.mark(function TEXCOORD() {
-	                                        return regeneratorRuntime.wrap(function TEXCOORD$(_context20) {
-	                                            while (1) {
-	                                                switch (_context20.prev = _context20.next) {
-	                                                    case 0:
-	                                                        return _context20.delegateYield(_GeometryUtility2.default.sphereTexCoord(dH, dV), "t0", 1);
-	
-	                                                    case 1:
-	                                                    case "end":
-	                                                        return _context20.stop();
-	                                                }
-	                                            }
-	                                        }, TEXCOORD, this);
-	                                    })
-	                                };
-	                            }
-	                        }
-	                    },
-	                    aabb: unitBox
-	                });
+	                var geometry = new _Geometry2.default(gl);
+	                geometry.addAttributes(_GeometryUtility2.default.sphere([0, 0, 0], [0, 1, 0], [1, 0, 0], [0, 0, -1], dV, dH), primitiveLayout);
+	                geometry.addIndex("default", _GeometryUtility2.default.sphereIndex(0, dV, dH));
+	                return geometry;
 	            });
 	        }
 	    }, {
@@ -8313,424 +8252,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	            _GeometryFactory2.default.addType("circle", {
 	                divide: {
 	                    converter: "Number",
-	                    default: 50
-	                }
-	            }, function (gl, attrs) {
-	                var div = attrs["divide"];
-	                return _GeometryBuilder2.default.build(gl, {
-	                    indices: {
-	                        default: {
-	                            generator: regeneratorRuntime.mark(function generator() {
-	                                return regeneratorRuntime.wrap(function generator$(_context21) {
-	                                    while (1) {
-	                                        switch (_context21.prev = _context21.next) {
-	                                            case 0:
-	                                                return _context21.delegateYield(_GeometryUtility2.default.ellipseIndex(0, div), "t0", 1);
-	
-	                                            case 1:
-	                                            case "end":
-	                                                return _context21.stop();
-	                                        }
-	                                    }
-	                                }, generator, this);
-	                            }),
-	                            topology: WebGLRenderingContext.TRIANGLES
-	                        },
-	                        wireframe: {
-	                            generator: regeneratorRuntime.mark(function generator() {
-	                                return regeneratorRuntime.wrap(function generator$(_context22) {
-	                                    while (1) {
-	                                        switch (_context22.prev = _context22.next) {
-	                                            case 0:
-	                                                return _context22.delegateYield(_GeometryUtility2.default.linesFromTriangles(_GeometryUtility2.default.ellipseIndex(0, div)), "t0", 1);
-	
-	                                            case 1:
-	                                            case "end":
-	                                                return _context22.stop();
-	                                        }
-	                                    }
-	                                }, generator, this);
-	                            }),
-	                            topology: WebGLRenderingContext.LINES
-	                        }
-	                    },
-	                    vertices: {
-	                        main: {
-	                            size: {
-	                                POSITION: 3,
-	                                NORMAL: 3,
-	                                TEXCOORD: 2
-	                            },
-	                            count: _GeometryUtility2.default.ellipseSize(div),
-	                            getGenerators: function getGenerators() {
-	                                return {
-	                                    POSITION: regeneratorRuntime.mark(function POSITION() {
-	                                        return regeneratorRuntime.wrap(function POSITION$(_context23) {
-	                                            while (1) {
-	                                                switch (_context23.prev = _context23.next) {
-	                                                    case 0:
-	                                                        return _context23.delegateYield(_GeometryUtility2.default.ellipsePosition(_Vector2.default.Zero, _Vector2.default.YUnit, _Vector2.default.XUnit, div), "t0", 1);
-	
-	                                                    case 1:
-	                                                    case "end":
-	                                                        return _context23.stop();
-	                                                }
-	                                            }
-	                                        }, POSITION, this);
-	                                    }),
-	                                    NORMAL: regeneratorRuntime.mark(function NORMAL() {
-	                                        return regeneratorRuntime.wrap(function NORMAL$(_context24) {
-	                                            while (1) {
-	                                                switch (_context24.prev = _context24.next) {
-	                                                    case 0:
-	                                                        return _context24.delegateYield(_GeometryUtility2.default.ellipseNormal(_Vector2.default.ZUnit, div), "t0", 1);
-	
-	                                                    case 1:
-	                                                    case "end":
-	                                                        return _context24.stop();
-	                                                }
-	                                            }
-	                                        }, NORMAL, this);
-	                                    }),
-	                                    TEXCOORD: regeneratorRuntime.mark(function TEXCOORD() {
-	                                        return regeneratorRuntime.wrap(function TEXCOORD$(_context25) {
-	                                            while (1) {
-	                                                switch (_context25.prev = _context25.next) {
-	                                                    case 0:
-	                                                        return _context25.delegateYield(_GeometryUtility2.default.ellipseTexCoord(div), "t0", 1);
-	
-	                                                    case 1:
-	                                                    case "end":
-	                                                        return _context25.stop();
-	                                                }
-	                                            }
-	                                        }, TEXCOORD, this);
-	                                    })
-	                                };
-	                            }
-	                        }
-	                    }
-	                });
-	            });
-	        }
-	    }, {
-	        key: "_registerCylinder",
-	        value: function _registerCylinder() {
-	            _GeometryFactory2.default.addType("cylinder", {
-	                divide: {
-	                    converter: "Number",
-	                    default: 50
-	                }
-	            }, function (gl, attrs) {
-	                var div = attrs["divide"];
-	                return _GeometryBuilder2.default.build(gl, {
-	                    indices: {
-	                        default: {
-	                            generator: regeneratorRuntime.mark(function generator() {
-	                                return regeneratorRuntime.wrap(function generator$(_context26) {
-	                                    while (1) {
-	                                        switch (_context26.prev = _context26.next) {
-	                                            case 0:
-	                                                return _context26.delegateYield(_GeometryUtility2.default.cylinderIndex(0, div), "t0", 1);
-	
-	                                            case 1:
-	                                            case "end":
-	                                                return _context26.stop();
-	                                        }
-	                                    }
-	                                }, generator, this);
-	                            }),
-	                            topology: WebGLRenderingContext.TRIANGLES
-	                        },
-	                        wireframe: {
-	                            generator: regeneratorRuntime.mark(function generator() {
-	                                return regeneratorRuntime.wrap(function generator$(_context27) {
-	                                    while (1) {
-	                                        switch (_context27.prev = _context27.next) {
-	                                            case 0:
-	                                                return _context27.delegateYield(_GeometryUtility2.default.linesFromTriangles(_GeometryUtility2.default.cylinderIndex(0, div)), "t0", 1);
-	
-	                                            case 1:
-	                                            case "end":
-	                                                return _context27.stop();
-	                                        }
-	                                    }
-	                                }, generator, this);
-	                            }),
-	                            topology: WebGLRenderingContext.LINES
-	                        }
-	                    },
-	                    vertices: {
-	                        main: {
-	                            size: {
-	                                POSITION: 3,
-	                                NORMAL: 3,
-	                                TEXCOORD: 2
-	                            },
-	                            count: _GeometryUtility2.default.cylinderSize(div),
-	                            getGenerators: function getGenerators() {
-	                                return {
-	                                    POSITION: regeneratorRuntime.mark(function POSITION() {
-	                                        return regeneratorRuntime.wrap(function POSITION$(_context28) {
-	                                            while (1) {
-	                                                switch (_context28.prev = _context28.next) {
-	                                                    case 0:
-	                                                        return _context28.delegateYield(_GeometryUtility2.default.cylinderPosition(_Vector2.default.Zero, _Vector2.default.YUnit, _Vector2.default.XUnit, _Vector2.default.ZUnit.negateThis(), div), "t0", 1);
-	
-	                                                    case 1:
-	                                                    case "end":
-	                                                        return _context28.stop();
-	                                                }
-	                                            }
-	                                        }, POSITION, this);
-	                                    }),
-	                                    NORMAL: regeneratorRuntime.mark(function NORMAL() {
-	                                        return regeneratorRuntime.wrap(function NORMAL$(_context29) {
-	                                            while (1) {
-	                                                switch (_context29.prev = _context29.next) {
-	                                                    case 0:
-	                                                        return _context29.delegateYield(_GeometryUtility2.default.cylinderNormal(_Vector2.default.Zero, _Vector2.default.YUnit, _Vector2.default.XUnit, _Vector2.default.ZUnit.negateThis(), div), "t0", 1);
-	
-	                                                    case 1:
-	                                                    case "end":
-	                                                        return _context29.stop();
-	                                                }
-	                                            }
-	                                        }, NORMAL, this);
-	                                    }),
-	                                    TEXCOORD: regeneratorRuntime.mark(function TEXCOORD() {
-	                                        return regeneratorRuntime.wrap(function TEXCOORD$(_context30) {
-	                                            while (1) {
-	                                                switch (_context30.prev = _context30.next) {
-	                                                    case 0:
-	                                                        return _context30.delegateYield(_GeometryUtility2.default.cylinderTexCoord(div), "t0", 1);
-	
-	                                                    case 1:
-	                                                    case "end":
-	                                                        return _context30.stop();
-	                                                }
-	                                            }
-	                                        }, TEXCOORD, this);
-	                                    })
-	                                };
-	                            }
-	                        }
-	                    },
-	                    aabb: unitBox
-	                });
-	            });
-	        }
-	    }, {
-	        key: "_registerCone",
-	        value: function _registerCone() {
-	            _GeometryFactory2.default.addType("cone", {
-	                divide: {
-	                    converter: "Number",
-	                    default: 50
-	                }
-	            }, function (gl, attrs) {
-	                var div = attrs["divide"];
-	                return _GeometryBuilder2.default.build(gl, {
-	                    indices: {
-	                        default: {
-	                            generator: regeneratorRuntime.mark(function generator() {
-	                                return regeneratorRuntime.wrap(function generator$(_context31) {
-	                                    while (1) {
-	                                        switch (_context31.prev = _context31.next) {
-	                                            case 0:
-	                                                return _context31.delegateYield(_GeometryUtility2.default.coneIndex(0, div), "t0", 1);
-	
-	                                            case 1:
-	                                            case "end":
-	                                                return _context31.stop();
-	                                        }
-	                                    }
-	                                }, generator, this);
-	                            }),
-	                            topology: WebGLRenderingContext.TRIANGLES
-	                        },
-	                        wireframe: {
-	                            generator: regeneratorRuntime.mark(function generator() {
-	                                return regeneratorRuntime.wrap(function generator$(_context32) {
-	                                    while (1) {
-	                                        switch (_context32.prev = _context32.next) {
-	                                            case 0:
-	                                                return _context32.delegateYield(_GeometryUtility2.default.linesFromTriangles(_GeometryUtility2.default.coneIndex(0, div)), "t0", 1);
-	
-	                                            case 1:
-	                                            case "end":
-	                                                return _context32.stop();
-	                                        }
-	                                    }
-	                                }, generator, this);
-	                            }),
-	                            topology: WebGLRenderingContext.LINES
-	                        }
-	                    },
-	                    vertices: {
-	                        main: {
-	                            size: {
-	                                POSITION: 3,
-	                                NORMAL: 3,
-	                                TEXCOORD: 2
-	                            },
-	                            count: _GeometryUtility2.default.coneSize(div),
-	                            getGenerators: function getGenerators() {
-	                                return {
-	                                    POSITION: regeneratorRuntime.mark(function POSITION() {
-	                                        return regeneratorRuntime.wrap(function POSITION$(_context33) {
-	                                            while (1) {
-	                                                switch (_context33.prev = _context33.next) {
-	                                                    case 0:
-	                                                        return _context33.delegateYield(_GeometryUtility2.default.conePosition(_Vector2.default.Zero, _Vector2.default.YUnit, _Vector2.default.XUnit, _Vector2.default.ZUnit.negateThis(), div), "t0", 1);
-	
-	                                                    case 1:
-	                                                    case "end":
-	                                                        return _context33.stop();
-	                                                }
-	                                            }
-	                                        }, POSITION, this);
-	                                    }),
-	                                    NORMAL: regeneratorRuntime.mark(function NORMAL() {
-	                                        return regeneratorRuntime.wrap(function NORMAL$(_context34) {
-	                                            while (1) {
-	                                                switch (_context34.prev = _context34.next) {
-	                                                    case 0:
-	                                                        return _context34.delegateYield(_GeometryUtility2.default.coneNormal(_Vector2.default.Zero, _Vector2.default.YUnit, _Vector2.default.XUnit, _Vector2.default.ZUnit.negateThis(), div), "t0", 1);
-	
-	                                                    case 1:
-	                                                    case "end":
-	                                                        return _context34.stop();
-	                                                }
-	                                            }
-	                                        }, NORMAL, this);
-	                                    }),
-	                                    TEXCOORD: regeneratorRuntime.mark(function TEXCOORD() {
-	                                        return regeneratorRuntime.wrap(function TEXCOORD$(_context35) {
-	                                            while (1) {
-	                                                switch (_context35.prev = _context35.next) {
-	                                                    case 0:
-	                                                        return _context35.delegateYield(_GeometryUtility2.default.coneTexCoord(div), "t0", 1);
-	
-	                                                    case 1:
-	                                                    case "end":
-	                                                        return _context35.stop();
-	                                                }
-	                                            }
-	                                        }, TEXCOORD, this);
-	                                    })
-	                                };
-	                            }
-	                        }
-	                    },
-	                    aabb: unitBox
-	                });
-	            });
-	        }
-	    }, {
-	        key: "_registerPlane",
-	        value: function _registerPlane() {
-	            _GeometryFactory2.default.addType("plane", {
-	                divide: {
-	                    converter: "Number",
 	                    default: 10
 	                }
 	            }, function (gl, attrs) {
 	                var div = attrs["divide"];
-	                return _GeometryBuilder2.default.build(gl, {
-	                    indices: {
-	                        default: {
-	                            generator: regeneratorRuntime.mark(function generator() {
-	                                return regeneratorRuntime.wrap(function generator$(_context36) {
-	                                    while (1) {
-	                                        switch (_context36.prev = _context36.next) {
-	                                            case 0:
-	                                                return _context36.delegateYield(_GeometryUtility2.default.planeIndex(0, div), "t0", 1);
-	
-	                                            case 1:
-	                                            case "end":
-	                                                return _context36.stop();
-	                                        }
-	                                    }
-	                                }, generator, this);
-	                            }),
-	                            topology: WebGLRenderingContext.TRIANGLES
-	                        },
-	                        wireframe: {
-	                            generator: regeneratorRuntime.mark(function generator() {
-	                                return regeneratorRuntime.wrap(function generator$(_context37) {
-	                                    while (1) {
-	                                        switch (_context37.prev = _context37.next) {
-	                                            case 0:
-	                                                return _context37.delegateYield(_GeometryUtility2.default.linesFromTriangles(_GeometryUtility2.default.planeIndex(0, div)), "t0", 1);
-	
-	                                            case 1:
-	                                            case "end":
-	                                                return _context37.stop();
-	                                        }
-	                                    }
-	                                }, generator, this);
-	                            }),
-	                            topology: WebGLRenderingContext.LINES
-	                        }
-	                    },
-	                    vertices: {
-	                        main: {
-	                            size: {
-	                                POSITION: 3,
-	                                NORMAL: 3,
-	                                TEXCOORD: 2
-	                            },
-	                            count: _GeometryUtility2.default.planeSize(div),
-	                            getGenerators: function getGenerators() {
-	                                return {
-	                                    POSITION: regeneratorRuntime.mark(function POSITION() {
-	                                        return regeneratorRuntime.wrap(function POSITION$(_context38) {
-	                                            while (1) {
-	                                                switch (_context38.prev = _context38.next) {
-	                                                    case 0:
-	                                                        return _context38.delegateYield(_GeometryUtility2.default.planePosition(_Vector2.default.Zero, _Vector2.default.YUnit, _Vector2.default.XUnit, div), "t0", 1);
-	
-	                                                    case 1:
-	                                                    case "end":
-	                                                        return _context38.stop();
-	                                                }
-	                                            }
-	                                        }, POSITION, this);
-	                                    }),
-	                                    NORMAL: regeneratorRuntime.mark(function NORMAL() {
-	                                        return regeneratorRuntime.wrap(function NORMAL$(_context39) {
-	                                            while (1) {
-	                                                switch (_context39.prev = _context39.next) {
-	                                                    case 0:
-	                                                        return _context39.delegateYield(_GeometryUtility2.default.planeNormal(_Vector2.default.ZUnit, div), "t0", 1);
-	
-	                                                    case 1:
-	                                                    case "end":
-	                                                        return _context39.stop();
-	                                                }
-	                                            }
-	                                        }, NORMAL, this);
-	                                    }),
-	                                    TEXCOORD: regeneratorRuntime.mark(function TEXCOORD() {
-	                                        return regeneratorRuntime.wrap(function TEXCOORD$(_context40) {
-	                                            while (1) {
-	                                                switch (_context40.prev = _context40.next) {
-	                                                    case 0:
-	                                                        return _context40.delegateYield(_GeometryUtility2.default.planeTexCoord(div), "t0", 1);
-	
-	                                                    case 1:
-	                                                    case "end":
-	                                                        return _context40.stop();
-	                                                }
-	                                            }
-	                                        }, TEXCOORD, this);
-	                                    })
-	                                };
-	                            }
-	                        }
-	                    }
-	                });
+	                var geometry = new _Geometry2.default(gl);
+	                geometry.addAttributes(_GeometryUtility2.default.circle([0, 0, 0], [0, 0, 1], [0, 1, 0], [1, 0, 0], div), primitiveLayout);
+	                geometry.addIndex("default", _GeometryUtility2.default.circleIndex(0, div));
+	                return geometry;
 	            });
 	        }
 	    }]);
@@ -8741,16 +8270,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = DefaultPrimitives;
 
 /***/ },
-/* 84 */
+/* 86 */
 /***/ function(module, exports) {
-
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});exports.default=window.GrimoireJS.lib.math.AABB;
-
-/***/ },
-/* 85 */
-/***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
@@ -8759,12 +8280,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _Vector = __webpack_require__(14);
-	
-	var _Vector2 = _interopRequireDefault(_Vector);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
@@ -8774,1485 +8289,155 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	
 	    _createClass(GeometryUtility, null, [{
-	        key: "linesFromTriangles",
+	        key: "plane",
+	        value: function plane(center, normal, up, right) {
+	            var hdiv = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 1;
+	            var vdiv = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : 1;
 	
-	        /**
-	         * Convert triangles topology to lines. Basically uses for making wireframes.
-	         * @param  {IterableIterator<number>} indices [description]
-	         * @return {IterableIterator<number>}          [description]
-	         */
-	        value: regeneratorRuntime.mark(function linesFromTriangles(indices) {
-	            var ic, i, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, index, a, b, c;
-	
-	            return regeneratorRuntime.wrap(function linesFromTriangles$(_context) {
-	                while (1) {
-	                    switch (_context.prev = _context.next) {
-	                        case 0:
-	                            ic = new Array(3);
-	                            i = 0;
-	                            _iteratorNormalCompletion = true;
-	                            _didIteratorError = false;
-	                            _iteratorError = undefined;
-	                            _context.prev = 5;
-	                            _iterator = indices[Symbol.iterator]();
-	
-	                        case 7:
-	                            if (_iteratorNormalCompletion = (_step = _iterator.next()).done) {
-	                                _context.next = 17;
-	                                break;
-	                            }
-	
-	                            index = _step.value;
-	
-	                            ic[i % 3] = index;
-	
-	                            if (!(i % 3 === 2)) {
-	                                _context.next = 13;
-	                                break;
-	                            }
-	
-	                            a = ic[0], b = ic[1], c = ic[2];
-	                            return _context.delegateYield([a, b, b, c, c, a], "t0", 13);
-	
-	                        case 13:
-	                            i++;
-	
-	                        case 14:
-	                            _iteratorNormalCompletion = true;
-	                            _context.next = 7;
-	                            break;
-	
-	                        case 17:
-	                            _context.next = 23;
-	                            break;
-	
-	                        case 19:
-	                            _context.prev = 19;
-	                            _context.t1 = _context["catch"](5);
-	                            _didIteratorError = true;
-	                            _iteratorError = _context.t1;
-	
-	                        case 23:
-	                            _context.prev = 23;
-	                            _context.prev = 24;
-	
-	                            if (!_iteratorNormalCompletion && _iterator.return) {
-	                                _iterator.return();
-	                            }
-	
-	                        case 26:
-	                            _context.prev = 26;
-	
-	                            if (!_didIteratorError) {
-	                                _context.next = 29;
-	                                break;
-	                            }
-	
-	                            throw _iteratorError;
-	
-	                        case 29:
-	                            return _context.finish(26);
-	
-	                        case 30:
-	                            return _context.finish(23);
-	
-	                        case 31:
-	                        case "end":
-	                            return _context.stop();
-	                    }
+	            var ret = new Array(8 * (hdiv + 1) * (vdiv + 1));
+	            var sp = [center[0] - up[0] - right[0], center[1] - up[1] - right[1], center[2] - up[2] - right[2]];
+	            var sr = [right[0] / hdiv * 2, right[1] / hdiv * 2, right[2] / hdiv * 2];
+	            var su = [up[0] / vdiv * 2, up[1] / vdiv * 2, up[2] / vdiv * 2];
+	            for (var v = 0; v < vdiv + 1; v++) {
+	                for (var h = 0; h < hdiv + 1; h++) {
+	                    var fi = ((hdiv + 1) * v + h) * 8;
+	                    ret[fi + 0] = sp[0] + sr[0] * h + su[0] * v;
+	                    ret[fi + 1] = sp[1] + sr[1] * h + su[1] * v;
+	                    ret[fi + 2] = sp[2] + sr[2] * h + su[2] * v;
+	                    ret[fi + 3] = normal[0];
+	                    ret[fi + 4] = normal[1];
+	                    ret[fi + 5] = normal[2];
+	                    ret[fi + 6] = 1 / hdiv * h;
+	                    ret[fi + 7] = 1 - 1 / vdiv * v;
 	                }
-	            }, linesFromTriangles, this, [[5, 19, 23, 31], [24,, 26, 30]]);
-	        })
-	        /**
-	         * Generator for ellipse positions
-	         * @param  {Vector3}                  center [the center position of ellipse]
-	         * @param  {Vector3}                  up     [up vector for ellipse]
-	         * @param  {Vector3}                  right  [right vector for ellipse]
-	         * @param  {number}                   divide [how many triangles should consists in the ellipse]
-	         * @return {IterableIterator<number>}        [Generated iterator for position]
-	         */
-	
-	    }, {
-	        key: "ellipsePosition",
-	        value: regeneratorRuntime.mark(function ellipsePosition(center, up, right, divide) {
-	            var step, i, theta, sin, cos;
-	            return regeneratorRuntime.wrap(function ellipsePosition$(_context2) {
-	                while (1) {
-	                    switch (_context2.prev = _context2.next) {
-	                        case 0:
-	                            _context2.next = 2;
-	                            return center.X;
-	
-	                        case 2:
-	                            _context2.next = 4;
-	                            return center.Y;
-	
-	                        case 4:
-	                            _context2.next = 6;
-	                            return center.Z;
-	
-	                        case 6:
-	                            step = 2 * Math.PI / divide;
-	                            i = 0;
-	
-	                        case 8:
-	                            if (!(i < divide)) {
-	                                _context2.next = 21;
-	                                break;
-	                            }
-	
-	                            theta = step * i;
-	                            sin = Math.sin(Math.PI * 2 - theta);
-	                            cos = Math.cos(Math.PI * 2 - theta);
-	                            _context2.next = 14;
-	                            return center.X + cos * up.X + sin * right.X;
-	
-	                        case 14:
-	                            _context2.next = 16;
-	                            return center.Y + cos * up.Y + sin * right.Y;
-	
-	                        case 16:
-	                            _context2.next = 18;
-	                            return center.Z + cos * up.Z + sin * right.Z;
-	
-	                        case 18:
-	                            i++;
-	                            _context2.next = 8;
-	                            break;
-	
-	                        case 21:
-	                        case "end":
-	                            return _context2.stop();
-	                    }
-	                }
-	            }, ellipsePosition, this);
-	        })
-	    }, {
-	        key: "trianglePosition",
-	        value: regeneratorRuntime.mark(function trianglePosition(center, up, right) {
-	            var p0, p1, p2;
-	            return regeneratorRuntime.wrap(function trianglePosition$(_context3) {
-	                while (1) {
-	                    switch (_context3.prev = _context3.next) {
-	                        case 0:
-	                            p0 = center.addWith(up);
-	                            p1 = center.subtractWith(up).addWith(right);
-	                            p2 = center.subtractWith(up).subtractWith(right);
-	                            return _context3.delegateYield(p0.rawElements, "t0", 4);
-	
-	                        case 4:
-	                            return _context3.delegateYield(p1.rawElements, "t1", 5);
-	
-	                        case 5:
-	                            return _context3.delegateYield(p2.rawElements, "t2", 6);
-	
-	                        case 6:
-	                        case "end":
-	                            return _context3.stop();
-	                    }
-	                }
-	            }, trianglePosition, this);
-	        })
-	    }, {
-	        key: "cubePosition",
-	        value: regeneratorRuntime.mark(function cubePosition(center, up, right, forward) {
-	            return regeneratorRuntime.wrap(function cubePosition$(_context4) {
-	                while (1) {
-	                    switch (_context4.prev = _context4.next) {
-	                        case 0:
-	                            return _context4.delegateYield(GeometryUtility.quadPosition(center.subtractWith(forward), up, right), "t0", 1);
-	
-	                        case 1:
-	                            return _context4.delegateYield(GeometryUtility.quadPosition(center.addWith(forward), up, right.negateThis()), "t1", 2);
-	
-	                        case 2:
-	                            return _context4.delegateYield(GeometryUtility.quadPosition(center.addWith(up), forward, right), "t2", 3);
-	
-	                        case 3:
-	                            return _context4.delegateYield(GeometryUtility.quadPosition(center.addWith(right), forward, up.negateThis()), "t3", 4);
-	
-	                        case 4:
-	                            return _context4.delegateYield(GeometryUtility.quadPosition(center.subtractWith(up), forward, right.negateThis()), "t4", 5);
-	
-	                        case 5:
-	                            return _context4.delegateYield(GeometryUtility.quadPosition(center.subtractWith(right), forward, up), "t5", 6);
-	
-	                        case 6:
-	                        case "end":
-	                            return _context4.stop();
-	                    }
-	                }
-	            }, cubePosition, this);
-	        })
-	    }, {
-	        key: "quadPosition",
-	        value: regeneratorRuntime.mark(function quadPosition(center, up, right) {
-	            var p0, p1, p2, p3;
-	            return regeneratorRuntime.wrap(function quadPosition$(_context5) {
-	                while (1) {
-	                    switch (_context5.prev = _context5.next) {
-	                        case 0:
-	                            p0 = center.subtractWith(right).addWith(up);
-	                            p1 = center.addWith(right).addWith(up);
-	                            p2 = center.addWith(right).subtractWith(up);
-	                            p3 = center.subtractWith(right).subtractWith(up);
-	                            return _context5.delegateYield(p0.rawElements, "t0", 5);
-	
-	                        case 5:
-	                            return _context5.delegateYield(p1.rawElements, "t1", 6);
-	
-	                        case 6:
-	                            return _context5.delegateYield(p2.rawElements, "t2", 7);
-	
-	                        case 7:
-	                            return _context5.delegateYield(p3.rawElements, "t3", 8);
-	
-	                        case 8:
-	                        case "end":
-	                            return _context5.stop();
-	                    }
-	                }
-	            }, quadPosition, this);
-	        })
-	    }, {
-	        key: "planePosition",
-	        value: regeneratorRuntime.mark(function planePosition(center, up, right, divide) {
-	            var x, y, i, j, _i, _j;
-	
-	            return regeneratorRuntime.wrap(function planePosition$(_context6) {
-	                while (1) {
-	                    switch (_context6.prev = _context6.next) {
-	                        case 0:
-	                            x = center.addWith(right).multiplyWith(2);
-	                            y = center.subtractWith(up).multiplyWith(2);
-	                            i = -divide / 2;
-	
-	                        case 3:
-	                            if (!(i < divide / 2 + 1)) {
-	                                _context6.next = 13;
-	                                break;
-	                            }
-	
-	                            j = -divide / 2;
-	
-	                        case 5:
-	                            if (!(j < divide / 2 + 1)) {
-	                                _context6.next = 10;
-	                                break;
-	                            }
-	
-	                            return _context6.delegateYield(x.multiplyWith(j / divide).addWith(y.multiplyWith(i / divide)).rawElements, "t0", 7);
-	
-	                        case 7:
-	                            j++;
-	                            _context6.next = 5;
-	                            break;
-	
-	                        case 10:
-	                            i++;
-	                            _context6.next = 3;
-	                            break;
-	
-	                        case 13:
-	                            _i = -divide / 2;
-	
-	                        case 14:
-	                            if (!(_i < divide / 2 + 1)) {
-	                                _context6.next = 24;
-	                                break;
-	                            }
-	
-	                            _j = -divide / 2;
-	
-	                        case 16:
-	                            if (!(_j < divide / 2 + 1)) {
-	                                _context6.next = 21;
-	                                break;
-	                            }
-	
-	                            return _context6.delegateYield(x.multiplyWith(_j / divide).addWith(y.multiplyWith(_i / divide)).rawElements, "t1", 18);
-	
-	                        case 18:
-	                            _j++;
-	                            _context6.next = 16;
-	                            break;
-	
-	                        case 21:
-	                            _i++;
-	                            _context6.next = 14;
-	                            break;
-	
-	                        case 24:
-	                        case "end":
-	                            return _context6.stop();
-	                    }
-	                }
-	            }, planePosition, this);
-	        })
-	    }, {
-	        key: "cylinderPosition",
-	        value: regeneratorRuntime.mark(function cylinderPosition(center, up, right, forward, divide) {
-	            var step, d, d2, temp, i, theta, sin, cos, currentCenter, currentRight;
-	            return regeneratorRuntime.wrap(function cylinderPosition$(_context7) {
-	                while (1) {
-	                    switch (_context7.prev = _context7.next) {
-	                        case 0:
-	                            return _context7.delegateYield(GeometryUtility.ellipsePosition(center.addWith(up), forward, right, divide), "t0", 1);
-	
-	                        case 1:
-	                            return _context7.delegateYield(GeometryUtility.ellipsePosition(center.subtractWith(up), forward, _Vector2.default.negate(right), divide), "t1", 2);
-	
-	                        case 2:
-	                            step = 2 * Math.PI / divide;
-	                            d = Math.cos(step / 2);
-	                            d2 = Math.sin(step / 2);
-	                            temp = divide % 2 == 0 ? step / 2 : 0;
-	                            i = 0;
-	
-	                        case 7:
-	                            if (!(i < divide)) {
-	                                _context7.next = 17;
-	                                break;
-	                            }
-	
-	                            theta = step / 2 + step * i;
-	                            sin = Math.sin((Math.PI - step) / 2 - theta - temp);
-	                            cos = Math.cos((Math.PI - step) / 2 - theta - temp);
-	                            currentCenter = new _Vector2.default(d * cos, center.Y, d * sin);
-	                            currentRight = new _Vector2.default(Math.cos(-step / 2 - theta - temp), center.Y, Math.sin(-step / 2 - theta - temp));
-	                            return _context7.delegateYield(GeometryUtility.quadPosition(currentCenter, up, _Vector2.default.multiply(d2, currentRight)), "t2", 14);
-	
-	                        case 14:
-	                            i++;
-	                            _context7.next = 7;
-	                            break;
-	
-	                        case 17:
-	                        case "end":
-	                            return _context7.stop();
-	                    }
-	                }
-	            }, cylinderPosition, this);
-	        })
-	    }, {
-	        key: "conePosition",
-	        value: regeneratorRuntime.mark(function conePosition(center, up, right, forward, divide) {
-	            var step, d, d2, temp, i, theta, sin, cos, currentCenter, currentRight;
-	            return regeneratorRuntime.wrap(function conePosition$(_context8) {
-	                while (1) {
-	                    switch (_context8.prev = _context8.next) {
-	                        case 0:
-	                            return _context8.delegateYield(GeometryUtility.ellipsePosition(center.subtractWith(up), forward, _Vector2.default.negate(right), divide), "t0", 1);
-	
-	                        case 1:
-	                            step = 2 * Math.PI / divide;
-	                            d = Math.cos(step / 2) / 2;
-	                            d2 = Math.sin(step / 2);
-	                            temp = divide % 2 == 1 ? step / 2 : 0;
-	                            i = 0;
-	
-	                        case 6:
-	                            if (!(i < divide)) {
-	                                _context8.next = 16;
-	                                break;
-	                            }
-	
-	                            theta = step * i;
-	                            sin = Math.sin((Math.PI - step) / 2 - theta - temp);
-	                            cos = Math.cos((Math.PI - step) / 2 - theta - temp);
-	                            currentCenter = new _Vector2.default(d * cos, center.Y, d * sin);
-	                            currentRight = new _Vector2.default(Math.cos(-step / 2 - theta - temp), center.Y, Math.sin(-step / 2 - theta - temp));
-	                            return _context8.delegateYield(GeometryUtility.trianglePosition(currentCenter, up.subtractWith(currentCenter), _Vector2.default.multiply(d2, currentRight)), "t1", 13);
-	
-	                        case 13:
-	                            i++;
-	                            _context8.next = 6;
-	                            break;
-	
-	                        case 16:
-	                        case "end":
-	                            return _context8.stop();
-	                    }
-	                }
-	            }, conePosition, this);
-	        })
-	    }, {
-	        key: "spherePosition",
-	        value: regeneratorRuntime.mark(function spherePosition(center, up, right, forward, rowDiv, circleDiv) {
-	            var ia, ja, j, phi, sinPhi, upVector, i, theta;
-	            return regeneratorRuntime.wrap(function spherePosition$(_context9) {
-	                while (1) {
-	                    switch (_context9.prev = _context9.next) {
-	                        case 0:
-	                            return _context9.delegateYield(center.addWith(up).rawElements, "t0", 1);
-	
-	                        case 1:
-	                            return _context9.delegateYield(center.subtractWith(up).rawElements, "t1", 2);
-	
-	                        case 2:
-	                            ia = 2 * Math.PI / circleDiv;
-	                            ja = Math.PI / (rowDiv + 1);
-	                            j = 1;
-	
-	                        case 5:
-	                            if (!(j <= rowDiv)) {
-	                                _context9.next = 19;
-	                                break;
-	                            }
-	
-	                            phi = ja * j;
-	                            sinPhi = Math.sin(phi);
-	                            upVector = up.multiplyWith(Math.cos(phi));
-	                            i = 0;
-	
-	                        case 10:
-	                            if (!(i <= circleDiv)) {
-	                                _context9.next = 16;
-	                                break;
-	                            }
-	
-	                            theta = ia * i;
-	                            return _context9.delegateYield(right.multiplyWith(Math.cos(theta)).addWith(forward.multiplyWith(Math.sin(theta))).multiplyWith(sinPhi).addWith(upVector).rawElements, "t2", 13);
-	
-	                        case 13:
-	                            i++;
-	                            _context9.next = 10;
-	                            break;
-	
-	                        case 16:
-	                            j++;
-	                            _context9.next = 5;
-	                            break;
-	
-	                        case 19:
-	                        case "end":
-	                            return _context9.stop();
-	                    }
-	                }
-	            }, spherePosition, this);
-	        })
-	    }, {
-	        key: "quadNormal",
-	        value: regeneratorRuntime.mark(function quadNormal(normal) {
-	            return regeneratorRuntime.wrap(function quadNormal$(_context10) {
-	                while (1) {
-	                    switch (_context10.prev = _context10.next) {
-	                        case 0:
-	                            return _context10.delegateYield(normal.rawElements, "t0", 1);
-	
-	                        case 1:
-	                            return _context10.delegateYield(normal.rawElements, "t1", 2);
-	
-	                        case 2:
-	                            return _context10.delegateYield(normal.rawElements, "t2", 3);
-	
-	                        case 3:
-	                            return _context10.delegateYield(normal.rawElements, "t3", 4);
-	
-	                        case 4:
-	                        case "end":
-	                            return _context10.stop();
-	                    }
-	                }
-	            }, quadNormal, this);
-	        })
-	    }, {
-	        key: "ellipseNormal",
-	        value: regeneratorRuntime.mark(function ellipseNormal(normal, divide) {
-	            var i;
-	            return regeneratorRuntime.wrap(function ellipseNormal$(_context11) {
-	                while (1) {
-	                    switch (_context11.prev = _context11.next) {
-	                        case 0:
-	                            i = 0;
-	
-	                        case 1:
-	                            if (!(i < divide + 1)) {
-	                                _context11.next = 6;
-	                                break;
-	                            }
-	
-	                            return _context11.delegateYield(normal.rawElements, "t0", 3);
-	
-	                        case 3:
-	                            i++;
-	                            _context11.next = 1;
-	                            break;
-	
-	                        case 6:
-	                        case "end":
-	                            return _context11.stop();
-	                    }
-	                }
-	            }, ellipseNormal, this);
-	        })
-	    }, {
-	        key: "triangleNormal",
-	        value: regeneratorRuntime.mark(function triangleNormal(normal) {
-	            return regeneratorRuntime.wrap(function triangleNormal$(_context12) {
-	                while (1) {
-	                    switch (_context12.prev = _context12.next) {
-	                        case 0:
-	                            return _context12.delegateYield(normal.rawElements, "t0", 1);
-	
-	                        case 1:
-	                            return _context12.delegateYield(normal.rawElements, "t1", 2);
-	
-	                        case 2:
-	                            return _context12.delegateYield(normal.rawElements, "t2", 3);
-	
-	                        case 3:
-	                        case "end":
-	                            return _context12.stop();
-	                    }
-	                }
-	            }, triangleNormal, this);
-	        })
-	    }, {
-	        key: "cubeNormal",
-	        value: regeneratorRuntime.mark(function cubeNormal(center, up, right, forward) {
-	            return regeneratorRuntime.wrap(function cubeNormal$(_context13) {
-	                while (1) {
-	                    switch (_context13.prev = _context13.next) {
-	                        case 0:
-	                            return _context13.delegateYield(GeometryUtility.quadNormal(forward.negateThis()), "t0", 1);
-	
-	                        case 1:
-	                            return _context13.delegateYield(GeometryUtility.quadNormal(forward), "t1", 2);
-	
-	                        case 2:
-	                            return _context13.delegateYield(GeometryUtility.quadNormal(up), "t2", 3);
-	
-	                        case 3:
-	                            return _context13.delegateYield(GeometryUtility.quadNormal(right), "t3", 4);
-	
-	                        case 4:
-	                            return _context13.delegateYield(GeometryUtility.quadNormal(up.negateThis()), "t4", 5);
-	
-	                        case 5:
-	                            return _context13.delegateYield(GeometryUtility.quadNormal(right.negateThis()), "t5", 6);
-	
-	                        case 6:
-	                        case "end":
-	                            return _context13.stop();
-	                    }
-	                }
-	            }, cubeNormal, this);
-	        })
-	    }, {
-	        key: "cylinderNormal",
-	        value: regeneratorRuntime.mark(function cylinderNormal(center, up, right, forward, divide) {
-	            var step, lastRight, i, theta, sin, cos, currentRight;
-	            return regeneratorRuntime.wrap(function cylinderNormal$(_context14) {
-	                while (1) {
-	                    switch (_context14.prev = _context14.next) {
-	                        case 0:
-	                            return _context14.delegateYield(GeometryUtility.ellipseNormal(up, divide), "t0", 1);
-	
-	                        case 1:
-	                            return _context14.delegateYield(GeometryUtility.ellipseNormal(up.negateThis(), divide), "t1", 2);
-	
-	                        case 2:
-	                            step = 2 * Math.PI / divide;
-	                            lastRight = new _Vector2.default(Math.cos(-step / 2), center.Y, Math.sin(-step / 2));
-	                            i = 0;
-	
-	                        case 5:
-	                            if (!(i < divide)) {
-	                                _context14.next = 18;
-	                                break;
-	                            }
-	
-	                            theta = step * (i + 1);
-	                            sin = Math.sin(Math.PI / 2 - theta);
-	                            cos = Math.cos(Math.PI / 2 - theta);
-	                            currentRight = new _Vector2.default(Math.cos(-step / 2 - theta), center.Y, Math.sin(-step / 2 - theta));
-	                            return _context14.delegateYield(_Vector2.default.cross(lastRight, up).rawElements, "t2", 11);
-	
-	                        case 11:
-	                            return _context14.delegateYield(_Vector2.default.cross(currentRight, up).rawElements, "t3", 12);
-	
-	                        case 12:
-	                            return _context14.delegateYield(_Vector2.default.cross(currentRight, up).rawElements, "t4", 13);
-	
-	                        case 13:
-	                            return _context14.delegateYield(_Vector2.default.cross(lastRight, up).rawElements, "t5", 14);
-	
-	                        case 14:
-	                            lastRight = currentRight;
-	
-	                        case 15:
-	                            i++;
-	                            _context14.next = 5;
-	                            break;
-	
-	                        case 18:
-	                        case "end":
-	                            return _context14.stop();
-	                    }
-	                }
-	            }, cylinderNormal, this);
-	        })
-	    }, {
-	        key: "coneNormal",
-	        value: regeneratorRuntime.mark(function coneNormal(center, up, right, forward, divide) {
-	            var step, d, lastNormal, i, theta, sin, cos, currentCenter, currentRight;
-	            return regeneratorRuntime.wrap(function coneNormal$(_context15) {
-	                while (1) {
-	                    switch (_context15.prev = _context15.next) {
-	                        case 0:
-	                            return _context15.delegateYield(GeometryUtility.ellipseNormal(up.negateThis(), divide), "t0", 1);
-	
-	                        case 1:
-	                            step = Math.PI / divide;
-	                            d = Math.cos(step / 2) / 2;
-	                            lastNormal = _Vector2.default.cross(new _Vector2.default(Math.cos(step / 2), center.Y, Math.sin(step / 2)), up.subtractWith(new _Vector2.default(d * Math.cos((Math.PI + step) / 2), center.Y, d * Math.sin((Math.PI + step) / 2))));
-	                            i = 0;
-	
-	                        case 5:
-	                            if (!(i < divide * 2)) {
-	                                _context15.next = 18;
-	                                break;
-	                            }
-	
-	                            theta = step * i;
-	                            sin = Math.sin((Math.PI - step) / 2 - theta);
-	                            cos = Math.cos((Math.PI - step) / 2 - theta);
-	                            currentCenter = new _Vector2.default(d * cos, center.Y, d * sin);
-	                            currentRight = new _Vector2.default(Math.cos(-step / 2 - theta), center.Y, Math.sin(-step / 2 - theta));
-	                            return _context15.delegateYield(_Vector2.default.cross(currentRight, up.subtractWith(currentCenter)).rawElements, "t1", 12);
-	
-	                        case 12:
-	                            if (!(i % 2 == 1)) {
-	                                _context15.next = 15;
-	                                break;
-	                            }
-	
-	                            return _context15.delegateYield(lastNormal.rawElements, "t2", 14);
-	
-	                        case 14:
-	                            lastNormal = _Vector2.default.cross(currentRight, up.subtractWith(currentCenter));
-	
-	                        case 15:
-	                            i++;
-	                            _context15.next = 5;
-	                            break;
-	
-	                        case 18:
-	                            return _context15.delegateYield(_Vector2.default.cross(new _Vector2.default(Math.cos(step / 2), center.Y, Math.sin(step / 2)), up.subtractWith(new _Vector2.default(d * Math.cos((Math.PI + step) / 2), center.Y, d * Math.sin((Math.PI + step) / 2)))).rawElements, "t3", 19);
-	
-	                        case 19:
-	                        case "end":
-	                            return _context15.stop();
-	                    }
-	                }
-	            }, coneNormal, this);
-	        })
-	    }, {
-	        key: "planeNormal",
-	        value: regeneratorRuntime.mark(function planeNormal(normal, divide) {
-	            var s, i, _i2;
-	
-	            return regeneratorRuntime.wrap(function planeNormal$(_context16) {
-	                while (1) {
-	                    switch (_context16.prev = _context16.next) {
-	                        case 0:
-	                            s = GeometryUtility.planeSize(divide) / 2;
-	                            i = 0;
-	
-	                        case 2:
-	                            if (!(i < s)) {
-	                                _context16.next = 7;
-	                                break;
-	                            }
-	
-	                            return _context16.delegateYield(normal.rawElements, "t0", 4);
-	
-	                        case 4:
-	                            i++;
-	                            _context16.next = 2;
-	                            break;
-	
-	                        case 7:
-	                            _i2 = 0;
-	
-	                        case 8:
-	                            if (!(_i2 < s)) {
-	                                _context16.next = 13;
-	                                break;
-	                            }
-	
-	                            return _context16.delegateYield(normal.negateThis().rawElements, "t1", 10);
-	
-	                        case 10:
-	                            _i2++;
-	                            _context16.next = 8;
-	                            break;
-	
-	                        case 13:
-	                        case "end":
-	                            return _context16.stop();
-	                    }
-	                }
-	            }, planeNormal, this);
-	        })
-	    }, {
-	        key: "sphereNormal",
-	        value: regeneratorRuntime.mark(function sphereNormal(up, right, forward, rowDiv, circleDiv) {
-	            return regeneratorRuntime.wrap(function sphereNormal$(_context17) {
-	                while (1) {
-	                    switch (_context17.prev = _context17.next) {
-	                        case 0:
-	                            return _context17.delegateYield(GeometryUtility.spherePosition(_Vector2.default.Zero, up, right, forward, rowDiv, circleDiv), "t0", 1);
-	
-	                        case 1:
-	                        case "end":
-	                            return _context17.stop();
-	                    }
-	                }
-	            }, sphereNormal, this);
-	        })
-	    }, {
-	        key: "sphereTexCoord",
-	        value: regeneratorRuntime.mark(function sphereTexCoord(rowDiv, circleDiv) {
-	            var ia, ja, j, phi, sinPhi, i, theta;
-	            return regeneratorRuntime.wrap(function sphereTexCoord$(_context18) {
-	                while (1) {
-	                    switch (_context18.prev = _context18.next) {
-	                        case 0:
-	                            return _context18.delegateYield([0, 0, 0, 1], "t0", 1);
-	
-	                        case 1:
-	                            ia = 2 * Math.PI / circleDiv;
-	                            ja = Math.PI / (rowDiv + 1);
-	                            j = 1;
-	
-	                        case 4:
-	                            if (!(j <= rowDiv)) {
-	                                _context18.next = 17;
-	                                break;
-	                            }
-	
-	                            phi = ja * j;
-	                            sinPhi = Math.sin(phi);
-	                            i = 0;
-	
-	                        case 8:
-	                            if (!(i <= circleDiv)) {
-	                                _context18.next = 14;
-	                                break;
-	                            }
-	
-	                            theta = ia * i;
-	                            return _context18.delegateYield([theta / Math.PI / 2, phi / Math.PI], "t1", 11);
-	
-	                        case 11:
-	                            i++;
-	                            _context18.next = 8;
-	                            break;
-	
-	                        case 14:
-	                            j++;
-	                            _context18.next = 4;
-	                            break;
-	
-	                        case 17:
-	                        case "end":
-	                            return _context18.stop();
-	                    }
-	                }
-	            }, sphereTexCoord, this);
-	        })
-	    }, {
-	        key: "quadTexCoord",
-	        value: regeneratorRuntime.mark(function quadTexCoord() {
-	            return regeneratorRuntime.wrap(function quadTexCoord$(_context19) {
-	                while (1) {
-	                    switch (_context19.prev = _context19.next) {
-	                        case 0:
-	                            return _context19.delegateYield([0, 0], "t0", 1);
-	
-	                        case 1:
-	                            return _context19.delegateYield([1, 0], "t1", 2);
-	
-	                        case 2:
-	                            return _context19.delegateYield([1, 1], "t2", 3);
-	
-	                        case 3:
-	                            return _context19.delegateYield([0, 1], "t3", 4);
-	
-	                        case 4:
-	                        case "end":
-	                            return _context19.stop();
-	                    }
-	                }
-	            }, quadTexCoord, this);
-	        })
-	    }, {
-	        key: "cubeTexCoord",
-	        value: regeneratorRuntime.mark(function cubeTexCoord() {
-	            var i;
-	            return regeneratorRuntime.wrap(function cubeTexCoord$(_context20) {
-	                while (1) {
-	                    switch (_context20.prev = _context20.next) {
-	                        case 0:
-	                            i = 0;
-	
-	                        case 1:
-	                            if (!(i < 6)) {
-	                                _context20.next = 6;
-	                                break;
-	                            }
-	
-	                            return _context20.delegateYield(GeometryUtility.quadTexCoord(), "t0", 3);
-	
-	                        case 3:
-	                            i++;
-	                            _context20.next = 1;
-	                            break;
-	
-	                        case 6:
-	                        case "end":
-	                            return _context20.stop();
-	                    }
-	                }
-	            }, cubeTexCoord, this);
-	        })
-	    }, {
-	        key: "triangleTexCoord",
-	        value: regeneratorRuntime.mark(function triangleTexCoord() {
-	            return regeneratorRuntime.wrap(function triangleTexCoord$(_context21) {
-	                while (1) {
-	                    switch (_context21.prev = _context21.next) {
-	                        case 0:
-	                            return _context21.delegateYield([0, 0], "t0", 1);
-	
-	                        case 1:
-	                            return _context21.delegateYield([1, 0], "t1", 2);
-	
-	                        case 2:
-	                            return _context21.delegateYield([0, 1], "t2", 3);
-	
-	                        case 3:
-	                        case "end":
-	                            return _context21.stop();
-	                    }
-	                }
-	            }, triangleTexCoord, this);
-	        })
-	    }, {
-	        key: "ellipseTexCoord",
-	        value: regeneratorRuntime.mark(function ellipseTexCoord(divide) {
-	            var step, i, theta;
-	            return regeneratorRuntime.wrap(function ellipseTexCoord$(_context22) {
-	                while (1) {
-	                    switch (_context22.prev = _context22.next) {
-	                        case 0:
-	                            return _context22.delegateYield([0.5, 0.5], "t0", 1);
-	
-	                        case 1:
-	                            step = 2 * Math.PI / divide;
-	                            i = 0;
-	
-	                        case 3:
-	                            if (!(i < divide)) {
-	                                _context22.next = 9;
-	                                break;
-	                            }
-	
-	                            theta = step * i;
-	                            return _context22.delegateYield([0.5 + Math.cos(theta + Math.PI) / 2, 0.5 + Math.sin(theta + Math.PI) / 2], "t1", 6);
-	
-	                        case 6:
-	                            i++;
-	                            _context22.next = 3;
-	                            break;
-	
-	                        case 9:
-	                        case "end":
-	                            return _context22.stop();
-	                    }
-	                }
-	            }, ellipseTexCoord, this);
-	        })
-	    }, {
-	        key: "planeTexCoord",
-	        value: regeneratorRuntime.mark(function planeTexCoord(divide) {
-	            var i, j, _i3, _j2;
-	
-	            return regeneratorRuntime.wrap(function planeTexCoord$(_context23) {
-	                while (1) {
-	                    switch (_context23.prev = _context23.next) {
-	                        case 0:
-	                            i = 0;
-	
-	                        case 1:
-	                            if (!(i < divide + 1)) {
-	                                _context23.next = 11;
-	                                break;
-	                            }
-	
-	                            j = 0;
-	
-	                        case 3:
-	                            if (!(j < divide + 1)) {
-	                                _context23.next = 8;
-	                                break;
-	                            }
-	
-	                            return _context23.delegateYield([j / divide, i / divide], "t0", 5);
-	
-	                        case 5:
-	                            j++;
-	                            _context23.next = 3;
-	                            break;
-	
-	                        case 8:
-	                            i++;
-	                            _context23.next = 1;
-	                            break;
-	
-	                        case 11:
-	                            _i3 = 0;
-	
-	                        case 12:
-	                            if (!(_i3 < divide + 1)) {
-	                                _context23.next = 22;
-	                                break;
-	                            }
-	
-	                            _j2 = 0;
-	
-	                        case 14:
-	                            if (!(_j2 < divide + 1)) {
-	                                _context23.next = 19;
-	                                break;
-	                            }
-	
-	                            return _context23.delegateYield([_j2 / divide, _i3 / divide], "t1", 16);
-	
-	                        case 16:
-	                            _j2++;
-	                            _context23.next = 14;
-	                            break;
-	
-	                        case 19:
-	                            _i3++;
-	                            _context23.next = 12;
-	                            break;
-	
-	                        case 22:
-	                        case "end":
-	                            return _context23.stop();
-	                    }
-	                }
-	            }, planeTexCoord, this);
-	        })
-	    }, {
-	        key: "cylinderTexCoord",
-	        value: regeneratorRuntime.mark(function cylinderTexCoord(divide) {
-	            var p, j;
-	            return regeneratorRuntime.wrap(function cylinderTexCoord$(_context24) {
-	                while (1) {
-	                    switch (_context24.prev = _context24.next) {
-	                        case 0:
-	                            return _context24.delegateYield(GeometryUtility.ellipseTexCoord(divide), "t0", 1);
-	
-	                        case 1:
-	                            return _context24.delegateYield(GeometryUtility.ellipseTexCoord(divide), "t1", 2);
-	
-	                        case 2:
-	                            p = 1 / divide;
-	                            j = 0;
-	
-	                        case 4:
-	                            if (!(j < divide)) {
-	                                _context24.next = 12;
-	                                break;
-	                            }
-	
-	                            return _context24.delegateYield([p * j, 0], "t2", 6);
-	
-	                        case 6:
-	                            return _context24.delegateYield([p * (j + 1), 0], "t3", 7);
-	
-	                        case 7:
-	                            return _context24.delegateYield([p * (j + 1), 1], "t4", 8);
-	
-	                        case 8:
-	                            return _context24.delegateYield([p * j, 1], "t5", 9);
-	
-	                        case 9:
-	                            j++;
-	                            _context24.next = 4;
-	                            break;
-	
-	                        case 12:
-	                        case "end":
-	                            return _context24.stop();
-	                    }
-	                }
-	            }, cylinderTexCoord, this);
-	        })
-	    }, {
-	        key: "coneTexCoord",
-	        value: regeneratorRuntime.mark(function coneTexCoord(divide) {
-	            var step, i, theta;
-	            return regeneratorRuntime.wrap(function coneTexCoord$(_context25) {
-	                while (1) {
-	                    switch (_context25.prev = _context25.next) {
-	                        case 0:
-	                            return _context25.delegateYield(GeometryUtility.ellipseTexCoord(divide), "t0", 1);
-	
-	                        case 1:
-	                            step = Math.PI / 2 / divide;
-	                            i = 0;
-	
-	                        case 3:
-	                            if (!(i < divide)) {
-	                                _context25.next = 11;
-	                                break;
-	                            }
-	
-	                            theta = -step * i;
-	                            return _context25.delegateYield([0, 0], "t1", 6);
-	
-	                        case 6:
-	                            return _context25.delegateYield([Math.cos(theta - step), Math.sin(theta - step)], "t2", 7);
-	
-	                        case 7:
-	                            return _context25.delegateYield([Math.cos(theta), Math.sin(theta)], "t3", 8);
-	
-	                        case 8:
-	                            i++;
-	                            _context25.next = 3;
-	                            break;
-	
-	                        case 11:
-	                        case "end":
-	                            return _context25.stop();
-	                    }
-	                }
-	            }, coneTexCoord, this);
-	        })
-	    }, {
-	        key: "triangleIndex",
-	        value: regeneratorRuntime.mark(function triangleIndex(offset) {
-	            var o;
-	            return regeneratorRuntime.wrap(function triangleIndex$(_context26) {
-	                while (1) {
-	                    switch (_context26.prev = _context26.next) {
-	                        case 0:
-	                            o = offset;
-	                            return _context26.delegateYield([o, o + 2, o + 1], "t0", 2);
-	
-	                        case 2:
-	                        case "end":
-	                            return _context26.stop();
-	                    }
-	                }
-	            }, triangleIndex, this);
-	        })
-	    }, {
-	        key: "quadIndex",
-	        value: regeneratorRuntime.mark(function quadIndex(offset) {
-	            var o;
-	            return regeneratorRuntime.wrap(function quadIndex$(_context27) {
-	                while (1) {
-	                    switch (_context27.prev = _context27.next) {
-	                        case 0:
-	                            o = offset;
-	                            return _context27.delegateYield([o, o + 2, o + 1, o, o + 3, o + 2], "t0", 2);
-	
-	                        case 2:
-	                        case "end":
-	                            return _context27.stop();
-	                    }
-	                }
-	            }, quadIndex, this);
-	        })
-	    }, {
-	        key: "cubeIndex",
-	        value: regeneratorRuntime.mark(function cubeIndex(offset) {
-	            var s, i;
-	            return regeneratorRuntime.wrap(function cubeIndex$(_context28) {
-	                while (1) {
-	                    switch (_context28.prev = _context28.next) {
-	                        case 0:
-	                            s = GeometryUtility.quadSize();
-	                            i = 0;
-	
-	                        case 2:
-	                            if (!(i < 6)) {
-	                                _context28.next = 7;
-	                                break;
-	                            }
-	
-	                            return _context28.delegateYield(GeometryUtility.quadIndex(offset + s * i), "t0", 4);
-	
-	                        case 4:
-	                            i++;
-	                            _context28.next = 2;
-	                            break;
-	
-	                        case 7:
-	                        case "end":
-	                            return _context28.stop();
-	                    }
-	                }
-	            }, cubeIndex, this);
-	        })
-	    }, {
-	        key: "sphereIndex",
-	        value: regeneratorRuntime.mark(function sphereIndex(offset, rowDiv, circleDiv) {
-	            var getIndex, top, bottom, i, j, _i4, _i5;
-	
-	            return regeneratorRuntime.wrap(function sphereIndex$(_context29) {
-	                while (1) {
-	                    switch (_context29.prev = _context29.next) {
-	                        case 0:
-	                            getIndex = function getIndex(i, j) {
-	                                return offset + (circleDiv + 1) * j + 2 + i;
-	                            };
-	
-	                            top = offset;
-	                            bottom = offset + 1;
-	                            // upper side
-	
-	                            i = 0;
-	
-	                        case 4:
-	                            if (!(i < circleDiv)) {
-	                                _context29.next = 14;
-	                                break;
-	                            }
-	
-	                            _context29.next = 7;
-	                            return top;
-	
-	                        case 7:
-	                            _context29.next = 9;
-	                            return getIndex(i, 0);
-	
-	                        case 9:
-	                            _context29.next = 11;
-	                            return getIndex(i + 1, 0);
-	
-	                        case 11:
-	                            i++;
-	                            _context29.next = 4;
-	                            break;
-	
-	                        case 14:
-	                            j = 0;
-	
-	                        case 15:
-	                            if (!(j < rowDiv - 1)) {
-	                                _context29.next = 36;
-	                                break;
-	                            }
-	
-	                            _i4 = 0;
-	
-	                        case 17:
-	                            if (!(_i4 < circleDiv)) {
-	                                _context29.next = 33;
-	                                break;
-	                            }
-	
-	                            _context29.next = 20;
-	                            return getIndex(_i4, j);
-	
-	                        case 20:
-	                            _context29.next = 22;
-	                            return getIndex(_i4, j + 1);
-	
-	                        case 22:
-	                            _context29.next = 24;
-	                            return getIndex(_i4 + 1, j);
-	
-	                        case 24:
-	                            _context29.next = 26;
-	                            return getIndex(_i4, j + 1);
-	
-	                        case 26:
-	                            _context29.next = 28;
-	                            return getIndex(_i4 + 1, j + 1);
-	
-	                        case 28:
-	                            _context29.next = 30;
-	                            return getIndex(_i4 + 1, j);
-	
-	                        case 30:
-	                            _i4++;
-	                            _context29.next = 17;
-	                            break;
-	
-	                        case 33:
-	                            j++;
-	                            _context29.next = 15;
-	                            break;
-	
-	                        case 36:
-	                            _i5 = 0;
-	
-	                        case 37:
-	                            if (!(_i5 < circleDiv)) {
-	                                _context29.next = 47;
-	                                break;
-	                            }
-	
-	                            _context29.next = 40;
-	                            return bottom;
-	
-	                        case 40:
-	                            _context29.next = 42;
-	                            return getIndex(_i5 + 1, rowDiv - 1);
-	
-	                        case 42:
-	                            _context29.next = 44;
-	                            return getIndex(_i5, rowDiv - 1);
-	
-	                        case 44:
-	                            _i5++;
-	                            _context29.next = 37;
-	                            break;
-	
-	                        case 47:
-	                        case "end":
-	                            return _context29.stop();
-	                    }
-	                }
-	            }, sphereIndex, this);
-	        })
-	    }, {
-	        key: "cylinderIndex",
-	        value: regeneratorRuntime.mark(function cylinderIndex(offset, divide) {
-	            var s, t, i;
-	            return regeneratorRuntime.wrap(function cylinderIndex$(_context30) {
-	                while (1) {
-	                    switch (_context30.prev = _context30.next) {
-	                        case 0:
-	                            s = GeometryUtility.ellipseSize(divide);
-	                            t = GeometryUtility.quadSize();
-	                            return _context30.delegateYield(GeometryUtility.ellipseIndex(offset, divide), "t0", 3);
-	
-	                        case 3:
-	                            return _context30.delegateYield(GeometryUtility.ellipseIndex(offset + s, divide), "t1", 4);
-	
-	                        case 4:
-	                            i = 0;
-	
-	                        case 5:
-	                            if (!(i < divide)) {
-	                                _context30.next = 10;
-	                                break;
-	                            }
-	
-	                            return _context30.delegateYield(GeometryUtility.quadIndex(offset + s * 2 + t * i), "t2", 7);
-	
-	                        case 7:
-	                            i++;
-	                            _context30.next = 5;
-	                            break;
-	
-	                        case 10:
-	                        case "end":
-	                            return _context30.stop();
-	                    }
-	                }
-	            }, cylinderIndex, this);
-	        })
-	    }, {
-	        key: "coneIndex",
-	        value: regeneratorRuntime.mark(function coneIndex(offset, divide) {
-	            var s, t, i;
-	            return regeneratorRuntime.wrap(function coneIndex$(_context31) {
-	                while (1) {
-	                    switch (_context31.prev = _context31.next) {
-	                        case 0:
-	                            s = GeometryUtility.ellipseSize(divide);
-	                            t = GeometryUtility.triangleSize();
-	                            return _context31.delegateYield(GeometryUtility.ellipseIndex(offset, divide), "t0", 3);
-	
-	                        case 3:
-	                            i = 0;
-	
-	                        case 4:
-	                            if (!(i < divide)) {
-	                                _context31.next = 9;
-	                                break;
-	                            }
-	
-	                            return _context31.delegateYield(GeometryUtility.triangleIndex(offset + s + i * t), "t1", 6);
-	
-	                        case 6:
-	                            i++;
-	                            _context31.next = 4;
-	                            break;
-	
-	                        case 9:
-	                        case "end":
-	                            return _context31.stop();
-	                    }
-	                }
-	            }, coneIndex, this);
-	        })
+	            }
+	            return ret;
+	        }
 	    }, {
 	        key: "planeIndex",
-	        value: regeneratorRuntime.mark(function planeIndex(offset, divide) {
-	            var o, s, j, i, _j3, _i6;
+	        value: function planeIndex() {
+	            var offset = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+	            var hdiv = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+	            var vdiv = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
 	
-	            return regeneratorRuntime.wrap(function planeIndex$(_context32) {
-	                while (1) {
-	                    switch (_context32.prev = _context32.next) {
-	                        case 0:
-	                            o = offset;
-	                            s = GeometryUtility.planeSize(divide) / 2;
-	                            j = 0;
-	
-	                        case 3:
-	                            if (!(j < divide)) {
-	                                _context32.next = 15;
-	                                break;
-	                            }
-	
-	                            i = 0;
-	
-	                        case 5:
-	                            if (!(i < divide)) {
-	                                _context32.next = 12;
-	                                break;
-	                            }
-	
-	                            o = offset + i + j * (divide + 1);
-	                            return _context32.delegateYield([o, o + divide + 2, o + 1], "t0", 8);
-	
-	                        case 8:
-	                            return _context32.delegateYield([o, o + divide + 1, o + divide + 2], "t1", 9);
-	
-	                        case 9:
-	                            i++;
-	                            _context32.next = 5;
-	                            break;
-	
-	                        case 12:
-	                            j++;
-	                            _context32.next = 3;
-	                            break;
-	
-	                        case 15:
-	                            _j3 = 0;
-	
-	                        case 16:
-	                            if (!(_j3 < divide)) {
-	                                _context32.next = 28;
-	                                break;
-	                            }
-	
-	                            _i6 = 0;
-	
-	                        case 18:
-	                            if (!(_i6 < divide)) {
-	                                _context32.next = 25;
-	                                break;
-	                            }
-	
-	                            o = offset + _i6 + _j3 * (divide + 1) + s;
-	                            return _context32.delegateYield([o, o + 1, o + divide + 2], "t2", 21);
-	
-	                        case 21:
-	                            return _context32.delegateYield([o, o + divide + 2, o + divide + 1], "t3", 22);
-	
-	                        case 22:
-	                            _i6++;
-	                            _context32.next = 18;
-	                            break;
-	
-	                        case 25:
-	                            _j3++;
-	                            _context32.next = 16;
-	                            break;
-	
-	                        case 28:
-	                        case "end":
-	                            return _context32.stop();
-	                    }
+	            var ret = new Array(6 * hdiv * vdiv);
+	            for (var v = 0; v < vdiv; v++) {
+	                for (var h = 0; h < hdiv; h++) {
+	                    var fi = (hdiv * v + h) * 6;
+	                    var ld = offset + (hdiv + 1) * v + h;
+	                    var lu = offset + (hdiv + 1) * (v + 1) + h;
+	                    ret[fi + 0] = ld;
+	                    ret[fi + 1] = ld + 1;
+	                    ret[fi + 2] = lu;
+	                    ret[fi + 3] = lu;
+	                    ret[fi + 4] = ld + 1;
+	                    ret[fi + 5] = lu + 1;
 	                }
-	            }, planeIndex, this);
-	        })
+	            }
+	            return ret;
+	        }
 	    }, {
-	        key: "ellipseIndex",
-	        value: regeneratorRuntime.mark(function ellipseIndex(offset, divide) {
-	            var i;
-	            return regeneratorRuntime.wrap(function ellipseIndex$(_context33) {
-	                while (1) {
-	                    switch (_context33.prev = _context33.next) {
-	                        case 0:
-	                            i = 0;
+	        key: "circle",
+	        value: function circle(center, normal, up, right) {
+	            var divide = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 5;
 	
-	                        case 1:
-	                            if (!(i < divide - 1)) {
-	                                _context33.next = 6;
-	                                break;
-	                            }
+	            var ret = new Array((3 + divide) * 6);
+	            // center
+	            ret[0] = center[0];
+	            ret[1] = center[1];
+	            ret[2] = center[2];
+	            ret[3] = normal[0];
+	            ret[4] = normal[1];
+	            ret[5] = normal[2];
+	            ret[6] = 0.5;
+	            ret[7] = 0.5;
+	            var delta = 2 * Math.PI / divide;
+	            for (var v = 0; v < divide + 1; v++) {
+	                var fi = 8 + v * 8;
+	                var s = Math.sin(delta * v);
+	                var c = Math.cos(delta * v);
+	                ret[fi + 0] = center[0] + c * up[0] + s * right[0];
+	                ret[fi + 1] = center[1] + c * up[1] + s * right[1];
+	                ret[fi + 2] = center[2] + c * up[2] + s * right[2];
+	                ret[fi + 3] = normal[0];
+	                ret[fi + 4] = normal[1];
+	                ret[fi + 5] = normal[2];
+	                ret[fi + 6] = 0.5 + 0.5 * s;
+	                ret[fi + 7] = 0.5 - 0.5 * c;
+	            }
+	            return ret;
+	        }
+	    }, {
+	        key: "circleIndex",
+	        value: function circleIndex(offset, divide) {
+	            var ret = new Array(3 * (divide + 1));
+	            for (var i = 0; i < divide; i++) {
+	                ret[3 * i + 0] = offset;
+	                ret[3 * i + 1] = offset + (i + 2);
+	                ret[3 * i + 2] = offset + (i + 1);
+	            }
+	            return ret;
+	        }
+	    }, {
+	        key: "sphere",
+	        value: function sphere(center, up, right, forward) {
+	            var vdiv = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 3;
+	            var hdiv = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : 3;
 	
-	                            return _context33.delegateYield([offset, offset + 1 + i, offset + 2 + i], "t0", 3);
-	
-	                        case 3:
-	                            i++;
-	                            _context33.next = 1;
-	                            break;
-	
-	                        case 6:
-	                            return _context33.delegateYield([offset, offset + divide, offset + 1], "t1", 7);
-	
-	                        case 7:
-	                        case "end":
-	                            return _context33.stop();
-	                    }
+	            var ret = new Array((vdiv * hdiv + 2) * 8);
+	            //top(0)
+	            ret[0] = center[0] + up[0];
+	            ret[1] = center[1] + up[1];
+	            ret[2] = center[2] + up[2];
+	            ret[3] = up[0];
+	            ret[4] = up[1];
+	            ret[5] = up[2];
+	            ret[6] = 0.5;
+	            ret[7] = 0.5;
+	            // bottom(1)
+	            ret[8] = center[0] - up[0];
+	            ret[9] = center[1] - up[1];
+	            ret[10] = center[2] - up[2];
+	            ret[11] = -up[0];
+	            ret[12] = -up[1];
+	            ret[13] = -up[2];
+	            ret[14] = 0.5;
+	            ret[15] = -0.5;
+	            var vDelta = Math.PI / (vdiv + 1);
+	            var hDelta = Math.PI * 2 / hdiv;
+	            for (var v = 0; v < vdiv; v++) {
+	                var vc = Math.cos((v + 1) * vDelta);
+	                var vs = Math.sin((v + 1) * vDelta);
+	                for (var h = 0; h < hdiv + 1; h++) {
+	                    var hc = Math.cos(h * hDelta);
+	                    var hs = Math.sin(h * hDelta);
+	                    var fi = 16 + (v * (hdiv + 1) + h) * 8;
+	                    ret[fi + 0] = center[0] + vc * up[0] + vs * (forward[0] * hc + right[0] * hs);
+	                    ret[fi + 1] = center[1] + vc * up[1] + vs * (forward[1] * hc + right[1] * hs);
+	                    ret[fi + 2] = center[2] + vc * up[2] + vs * (forward[2] * hc + right[2] * hs);
+	                    ret[fi + 3] = 1; // TODO 法線。。。
+	                    ret[fi + 4] = 1;
+	                    ret[fi + 5] = 1;
+	                    ret[fi + 6] = 1;
+	                    ret[fi + 7] = 1;
 	                }
-	            }, ellipseIndex, this);
-	        })
-	    }, {
-	        key: "quadSize",
-	        value: function quadSize() {
-	            return 4;
+	            }
+	            return ret;
 	        }
 	    }, {
-	        key: "triangleSize",
-	        value: function triangleSize() {
-	            return 3;
-	        }
-	    }, {
-	        key: "cubeSize",
-	        value: function cubeSize() {
-	            return 6 * GeometryUtility.quadSize();
-	        }
-	    }, {
-	        key: "sphereSize",
-	        value: function sphereSize(rowDiv, circleDiv) {
-	            return 2 + rowDiv * (circleDiv + 1);
-	        }
-	    }, {
-	        key: "cylinderSize",
-	        value: function cylinderSize(divide) {
-	            return GeometryUtility.ellipseSize(divide) * 2 + divide * GeometryUtility.quadSize();
-	        }
-	    }, {
-	        key: "coneSize",
-	        value: function coneSize(divide) {
-	            return GeometryUtility.ellipseSize(divide) + divide * GeometryUtility.triangleSize();
-	        }
-	    }, {
-	        key: "planeSize",
-	        value: function planeSize(divide) {
-	            return (divide + 1) * (divide + 1) * 2;
-	        }
-	    }, {
-	        key: "ellipseSize",
-	        value: function ellipseSize(divide) {
-	            return divide + 1;
+	        key: "sphereIndex",
+	        value: function sphereIndex(offset) {
+	            var vdiv = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 3;
+	            var hdiv = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 3;
+	
+	            var ret = new Array((hdiv + 1) * vdiv * 6);
+	            for (var i = 0; i < hdiv + 1; i++) {
+	                ret[3 * i] = 0;
+	                ret[3 * i + 1] = i + 3;
+	                ret[3 * i + 2] = i + 2;
+	            }
+	            // TODO もうむりぽ
+	            return ret;
 	        }
 	    }]);
 	
@@ -10262,286 +8447,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = GeometryUtility;
 
 /***/ },
-/* 86 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _Vector = __webpack_require__(14);
-	
-	var _Vector2 = _interopRequireDefault(_Vector);
-	
-	var _AABB = __webpack_require__(84);
-	
-	var _AABB2 = _interopRequireDefault(_AABB);
-	
-	var _Buffer = __webpack_require__(87);
-	
-	var _Buffer2 = _interopRequireDefault(_Buffer);
-	
-	var _Geometry = __webpack_require__(50);
-	
-	var _Geometry2 = _interopRequireDefault(_Geometry);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	/**
-	 * Helper class to instanciate Geometry easily.
-	 */
-	var GeometryBuilder = function () {
-	    function GeometryBuilder() {
-	        _classCallCheck(this, GeometryBuilder);
-	    }
-	
-	    _createClass(GeometryBuilder, null, [{
-	        key: "build",
-	        value: function build(gl, info) {
-	            if (info["verticies"] | info["indicies"]) {
-	                throw new Error("Misspelled API was fixed already. use vertices and indices");
-	            }
-	            var buffers = {};
-	            var attribs = {};
-	            var aabb = info.aabb;
-	            var needConstructAABB = !aabb;
-	            if (needConstructAABB) {
-	                aabb = new _AABB2.default();
-	            }
-	            for (var bufferKey in info.vertices) {
-	                var byteWidth = 4;
-	                var buffer = info.vertices[bufferKey];
-	                var sizeSum = 0;
-	                for (var attribKey in buffer.size) {
-	                    if (attribs[attribKey]) {
-	                        throw new Error("Attribute variable name was dupelicated");
-	                    }
-	                    var size = buffer.size[attribKey];
-	                    attribs[attribKey] = {
-	                        size: size,
-	                        offset: sizeSum * byteWidth,
-	                        bufferName: bufferKey,
-	                        type: buffer.type ? buffer.type : WebGLRenderingContext.FLOAT,
-	                        stride: 0
-	                    };
-	                    sizeSum += size;
-	                }
-	                for (var _attribKey in buffer.size) {
-	                    attribs[_attribKey].stride = sizeSum * byteWidth;
-	                }
-	                // generate source array of vertex buffer
-	                var bufferSource = new Array(sizeSum * buffer.count);
-	                var bufferGenerator = buffer.getGenerators();
-	                var generators = [];
-	                var positionGeneratorIndex = 0;
-	                var sizes = [];
-	                var beforeEach = bufferGenerator.beforeEach ? bufferGenerator.beforeEach() : undefined;
-	                for (var _attribKey2 in buffer.size) {
-	                    if (_attribKey2 === "beforeEach") {
-	                        continue;
-	                    }
-	                    var generator = bufferGenerator[_attribKey2];
-	                    generators.push(generator());
-	                    sizes.push(buffer.size[_attribKey2]);
-	                    if (_attribKey2 === "POSITION") {
-	                        positionGeneratorIndex = generators.length - 1;
-	                    }
-	                }
-	                var i = 0;
-	                for (var vertCount = 0; vertCount < buffer.count; vertCount++) {
-	                    if (beforeEach && beforeEach.next().done) {
-	                        throw new Error("before each was ended before reaching count.");
-	                    }
-	                    for (var genIndex = 0; genIndex < generators.length; genIndex++) {
-	                        var _generator = generators[genIndex];
-	                        for (var sizeIndex = 0; sizeIndex < sizes[genIndex]; sizeIndex++) {
-	                            var genResult = _generator.next();
-	                            if (genResult.done) {
-	                                throw new Error("Generator function finished before reaching specified count");
-	                            }
-	                            bufferSource[i] = genResult.value;
-	                            i++;
-	                        }
-	                        if (needConstructAABB && genIndex === positionGeneratorIndex) {
-	                            aabb.expand(new _Vector2.default(bufferSource[i - 3], bufferSource[i - 2], bufferSource[i - 1]));
-	                        }
-	                    }
-	                }
-	                // instanciate buffers
-	                buffers[bufferKey] = new _Buffer2.default(gl, WebGLRenderingContext.ARRAY_BUFFER, buffer.usage ? buffer.usage : WebGLRenderingContext.STATIC_DRAW);
-	                buffers[bufferKey].update(new Float32Array(bufferSource));
-	            }
-	            return new _Geometry2.default(buffers, attribs, this._generateIndices(gl, info.indices), aabb);
-	        }
-	    }, {
-	        key: "_generateIndices",
-	        value: function _generateIndices(gl, indexGenerator) {
-	            var indexMap = {};
-	            for (var indexName in indexGenerator) {
-	                var indices = [];
-	                var generatorInfo = indexGenerator[indexName];
-	                var _iteratorNormalCompletion = true;
-	                var _didIteratorError = false;
-	                var _iteratorError = undefined;
-	
-	                try {
-	                    for (var _iterator = generatorInfo.generator()[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	                        var variable = _step.value;
-	
-	                        indices.push(variable);
-	                    }
-	                } catch (err) {
-	                    _didIteratorError = true;
-	                    _iteratorError = err;
-	                } finally {
-	                    try {
-	                        if (!_iteratorNormalCompletion && _iterator.return) {
-	                            _iterator.return();
-	                        }
-	                    } finally {
-	                        if (_didIteratorError) {
-	                            throw _iteratorError;
-	                        }
-	                    }
-	                }
-	
-	                var bufferType = this._getIndexType(indices.length);
-	                var buffer = new _Buffer2.default(gl, WebGLRenderingContext.ELEMENT_ARRAY_BUFFER, WebGLRenderingContext.STATIC_DRAW);
-	                buffer.update(new bufferType.ctor(indices));
-	                indexMap[indexName] = {
-	                    count: indices.length,
-	                    index: buffer,
-	                    type: bufferType.format,
-	                    byteSize: bufferType.byteSize,
-	                    byteOffset: 0,
-	                    topology: generatorInfo.topology ? generatorInfo.topology : WebGLRenderingContext.TRIANGLES
-	                };
-	            }
-	            return indexMap;
-	        }
-	        /**
-	         * Determine which index type should be used
-	         * @param  {number} length [description]
-	         * @return {[type]}        [description]
-	         */
-	
-	    }, {
-	        key: "_getIndexType",
-	        value: function _getIndexType(length) {
-	            var format = WebGLRenderingContext.UNSIGNED_INT;
-	            var arrayConstructor = Uint32Array;
-	            var byteSize = 4;
-	            if (length < 256) {
-	                format = WebGLRenderingContext.UNSIGNED_BYTE;
-	                arrayConstructor = Uint8Array;
-	                byteSize = 1;
-	            } else if (length < 65535) {
-	                format = WebGLRenderingContext.UNSIGNED_SHORT;
-	                arrayConstructor = Uint16Array;
-	                byteSize = 2;
-	            } else if (length >= 4294967296) {
-	                throw new Error("Too many index of geometry!");
-	            }
-	            return {
-	                format: format,
-	                ctor: arrayConstructor,
-	                byteSize: byteSize
-	            };
-	        }
-	    }]);
-	
-	    return GeometryBuilder;
-	}();
-	
-	exports.default = GeometryBuilder;
-
-/***/ },
 /* 87 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-	
-	var _ResourceBase2 = __webpack_require__(24);
-	
-	var _ResourceBase3 = _interopRequireDefault(_ResourceBase2);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var Buffer = function (_ResourceBase) {
-	    _inherits(Buffer, _ResourceBase);
-	
-	    function Buffer(gl) {
-	        var target = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : WebGLRenderingContext.ARRAY_BUFFER;
-	        var usage = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : WebGLRenderingContext.ELEMENT_ARRAY_BUFFER;
-	
-	        _classCallCheck(this, Buffer);
-	
-	        var _this = _possibleConstructorReturn(this, (Buffer.__proto__ || Object.getPrototypeOf(Buffer)).call(this, gl));
-	
-	        _this.target = target;
-	        _this.usage = usage;
-	        _this.buffer = gl.createBuffer();
-	        return _this;
-	    }
-	
-	    _createClass(Buffer, [{
-	        key: "update",
-	        value: function update(length, subBuffer) {
-	            this.bind();
-	            if (subBuffer) {
-	                if (!this.valid) {
-	                    this.gl.bufferData(this.target, length + subBuffer.byteLength, this.usage);
-	                }
-	                this.gl.bufferSubData(this.target, length, subBuffer);
-	            } else {
-	                if (typeof length === "number") {
-	                    this.gl.bufferData(this.target, length, this.usage);
-	                } else {
-	                    this.gl.bufferData(this.target, length, this.usage);
-	                }
-	            }
-	            this.valid = true;
-	        }
-	    }, {
-	        key: "bind",
-	        value: function bind() {
-	            this.gl.bindBuffer(this.target, this.buffer);
-	        }
-	    }, {
-	        key: "destroy",
-	        value: function destroy() {
-	            _get(Buffer.prototype.__proto__ || Object.getPrototypeOf(Buffer.prototype), "destroy", this).call(this);
-	            this.gl.deleteBuffer(this.buffer);
-	        }
-	    }]);
-	
-	    return Buffer;
-	}(_ResourceBase3.default);
-	
-	exports.default = Buffer;
-
-/***/ },
-/* 88 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -10556,17 +8462,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _MaterialFactory2 = _interopRequireDefault(_MaterialFactory);
 	
-	var _Unlit = __webpack_require__(89);
+	var _Unlit = __webpack_require__(88);
 	
 	var _Unlit2 = _interopRequireDefault(_Unlit);
-	
-	var _UnlitColor = __webpack_require__(90);
-	
-	var _UnlitColor2 = _interopRequireDefault(_UnlitColor);
-	
-	var _UnlitTextured = __webpack_require__(91);
-	
-	var _UnlitTextured2 = _interopRequireDefault(_UnlitTextured);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -10581,8 +8479,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: "register",
 	        value: function register() {
 	            _MaterialFactory2.default.addSORTMaterial("unlit", _Unlit2.default);
-	            _MaterialFactory2.default.addSORTMaterial("unlit-texture", _UnlitTextured2.default);
-	            _MaterialFactory2.default.addSORTMaterial("unlit-color", _UnlitColor2.default);
 	        }
 	    }]);
 	
@@ -10592,25 +8488,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = DefaultMaterial;
 
 /***/ },
+/* 88 */
+/***/ function(module, exports) {
+
+	module.exports = "@Technique default{\n@Pass{\n  @BlendFunc(SRC_ALPHA,ONE_MINUS_SRC_ALPHA)\n  @ExposeMacro(bool,test,TEST,true)\n  @ExposeMacro(int,test2,TEST2,3)\n  FS_PREC(mediump,float)\n  varying vec2 vTexCoord;\n  #ifdef VS\n\n  attribute vec3 position;\n  attribute vec2 texCoord;\n  @MODELVIEWPROJECTION\n  uniform mat4 _matPVM;\n  void main()\n  {\n    gl_Position = _matPVM * vec4(position,1.0);\n    vTexCoord = texCoord;\n  }\n  #endif\n  #ifdef FS\n  @{type:\"color\",default:\"white\"}\n  uniform vec4 color;\n\n  uniform sampler2D texture;\n  @HAS_TEXTURE{sampler:\"texture\"}\n  uniform bool _textureUsed;\n\n  uniform float _time;\n  void main(void)\n  {\n    if(_textureUsed){\n      gl_FragColor = color * texture2D(texture,vTexCoord);\n    }else{\n      gl_FragColor = color;\n   }\n  }\n  #endif\n}\n}\n"
+
+/***/ },
 /* 89 */
-/***/ function(module, exports) {
-
-	module.exports = "@Technique default{\n@DrawOrder(NoAlpha)\n@Pass{\n  @BlendFunc(SRC_ALPHA,ONE_MINUS_SRC_ALPHA)\n  @ExposeMacro(bool,test,TEST,true)\n  @ExposeMacro(int,test2,TEST2,3)\n  FS_PREC(mediump,float)\n  varying vec2 vTexCoord;\n  #ifdef VS\n\n  attribute vec3 position;\n  attribute vec2 texCoord;\n  @MODELVIEWPROJECTION\n  uniform mat4 _matPVM;\n  void main()\n  {\n    gl_Position = _matPVM * vec4(position,1.0);\n    vTexCoord = texCoord;\n  }\n  #endif\n  #ifdef FS\n  @{type:\"color\",default:\"white\"}\n  uniform vec4 color;\n  @USER_VALUE{usedFlag:\"_textureUsed\"}\n  uniform sampler2D texture;\n  uniform bool _textureUsed;\n\n  uniform float _time;\n  void main(void)\n  {\n    gl_FragColor = color;\n    return;\n    if(_textureUsed){\n      gl_FragColor = color * texture2D(texture,vTexCoord);\n    }else{\n      gl_FragColor = color;\n   }\n  }\n  #endif\n}\n}"
-
-/***/ },
-/* 90 */
-/***/ function(module, exports) {
-
-	module.exports = "@Pass\nFS_PREC(mediump,float)\nvarying vec2 vTexCoord;\n#ifdef VS\nattribute vec3 position;\nattribute vec2 texCoord;\nuniform mat4 _matPVM;\nvoid main()\n{\n  gl_Position = _matPVM * vec4(position,1.0);\n  vTexCoord = texCoord;\n}\n#endif\n#ifdef FS\n@{type:\"color\",default:\"white\"}\nuniform vec4 color;\nvoid main(void)\n{\n    gl_FragColor = color;\n}\n#endif\n"
-
-/***/ },
-/* 91 */
-/***/ function(module, exports) {
-
-	module.exports = "@Pass\nFS_PREC(mediump,float)\nvarying vec2 vTexCoord;\n#ifdef VS\nattribute vec3 position;\nattribute vec2 texCoord;\nuniform mat4 _matPVM;\nvoid main()\n{\n  gl_Position = _matPVM * vec4(position,1.0);\n  vTexCoord = texCoord;\n}\n#endif\n#ifdef FS\nuniform sampler2D texture;\nvoid main(void)\n{\n  gl_FragColor = texture2D(texture,vTexCoord);\n}\n#endif\n"
-
-/***/ },
-/* 92 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -10623,7 +8507,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _Matrix2 = _interopRequireDefault(_Matrix);
 	
-	var _UniformResolverRegistry = __webpack_require__(51);
+	var _UniformResolverRegistry = __webpack_require__(53);
 	
 	var _UniformResolverRegistry2 = _interopRequireDefault(_UniformResolverRegistry);
 	
@@ -10692,7 +8576,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = null;
 
 /***/ },
-/* 93 */
+/* 90 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -10701,11 +8585,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	
-	var _Vector = __webpack_require__(13);
+	var _Vector = __webpack_require__(91);
 	
 	var _Vector2 = _interopRequireDefault(_Vector);
 	
-	var _UniformResolverRegistry = __webpack_require__(51);
+	var _Vector3 = __webpack_require__(13);
+	
+	var _Vector4 = _interopRequireDefault(_Vector3);
+	
+	var _UniformResolverRegistry = __webpack_require__(53);
 	
 	var _UniformResolverRegistry2 = _interopRequireDefault(_UniformResolverRegistry);
 	
@@ -10714,29 +8602,52 @@ return /******/ (function(modules) { // webpackBootstrap
 	_UniformResolverRegistry2.default.add("VIEWPORT", function (valInfo) {
 	    return function (proxy, args) {
 	        var vp = args.viewport;
-	        proxy.uniformVector4(valInfo.name, new _Vector2.default(vp.Left, vp.Top, vp.Width, vp.Height));
+	        proxy.uniformVector4(valInfo.name, new _Vector4.default(vp.Left, vp.Top, vp.Width, vp.Height));
+	    };
+	});
+	_UniformResolverRegistry2.default.add("VIEWPORT_SIZE", function (valInfo) {
+	    return function (proxy, args) {
+	        var vp = args.viewport;
+	        proxy.uniformVector2(valInfo.name, new _Vector2.default(vp.Width, vp.Height));
 	    };
 	});
 	_UniformResolverRegistry2.default.add("TIME", function (valInfo) {
 	    return function (proxy, args) {
-	        var vp = args.viewport;
 	        proxy.uniformFloat(valInfo.name, Date.now() % 1.0e7);
 	    };
 	});
 	_UniformResolverRegistry2.default.add("HAS_TEXTURE", function (valInfo, material) {
 	    var sampler = valInfo.attributes["sampler"];
 	    if (!sampler) {
-	        throw new Error("The variable have HAS_TEXTURE as semantics must have sampler attribute");
+	        throw new Error("The variable having HAS_TEXTURE as semantics must have sampler attribute");
 	    }
 	    return function (proxy, args) {
-	        var hasTexture = !!material.arguments[valInfo.name] && !!material.arguments[valInfo.name].get(args.buffers);
+	        var hasTexture = !!material.arguments[sampler] && !!material.arguments[sampler].get(args.buffers);
 	        proxy.uniformBool(valInfo.name, hasTexture);
+	    };
+	});
+	_UniformResolverRegistry2.default.add("CAMERA_POSITION", function (valInfo) {
+	    return function (proxy, args) {
+	        proxy.uniformVector3(valInfo.name, args.camera.transform.globalPosition);
+	    };
+	});
+	_UniformResolverRegistry2.default.add("CAMERA_DIRECTION", function (valInfo) {
+	    return function (proxy, args) {
+	        proxy.uniformVector3(valInfo.name, args.camera.transform.forward);
 	    };
 	});
 	exports.default = null;
 
 /***/ },
-/* 94 */
+/* 91 */
+/***/ function(module, exports) {
+
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});exports.default=window.GrimoireJS.lib.math.Vector2;
+
+/***/ },
+/* 92 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -10745,7 +8656,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	
-	var _UniformResolverRegistry = __webpack_require__(51);
+	var _UniformResolverRegistry = __webpack_require__(53);
 	
 	var _UniformResolverRegistry2 = _interopRequireDefault(_UniformResolverRegistry);
 	
@@ -10814,7 +8725,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	basicRegister(gl.FLOAT_VEC2, false, "Vector2", [0, 0], function (proxy, name, value) {
 	    return proxy.uniformVector2(name, value);
 	});
-	basicRegister(gl.FLOAT_MAT4, true, "Object", [0, 0], function (proxy, name, value) {
+	basicRegister(gl.FLOAT_MAT4, true, "Object", [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], function (proxy, name, value) {
 	    return proxy.uniformMatrixArray(name, value);
 	});
 	basicRegister(gl.SAMPLER_2D, false, "Texture", null, function (proxy, name, value, args) {
@@ -10866,7 +8777,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = null;
 
 /***/ },
-/* 95 */
+/* 93 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -10875,11 +8786,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	
-	var _DefaultMaterial = __webpack_require__(88);
+	var _DefaultMaterial = __webpack_require__(87);
 	
 	var _DefaultMaterial2 = _interopRequireDefault(_DefaultMaterial);
 	
-	var _DefaultPrimitives = __webpack_require__(83);
+	var _DefaultPrimitives = __webpack_require__(85);
 	
 	var _DefaultPrimitives2 = _interopRequireDefault(_DefaultPrimitives);
 	
@@ -10931,35 +8842,35 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _MaterialImporterComponent2 = _interopRequireDefault(_MaterialImporterComponent);
 	
-	var _MaterialManagerComponent = __webpack_require__(56);
+	var _MaterialManagerComponent = __webpack_require__(58);
 	
 	var _MaterialManagerComponent2 = _interopRequireDefault(_MaterialManagerComponent);
 	
-	var _MeshRendererComponent = __webpack_require__(57);
+	var _MeshRendererComponent = __webpack_require__(59);
 	
 	var _MeshRendererComponent2 = _interopRequireDefault(_MeshRendererComponent);
 	
-	var _MouseCameraControlComponent = __webpack_require__(58);
+	var _MouseCameraControlComponent = __webpack_require__(60);
 	
 	var _MouseCameraControlComponent2 = _interopRequireDefault(_MouseCameraControlComponent);
 	
-	var _RenderBufferComponent = __webpack_require__(59);
+	var _RenderBufferComponent = __webpack_require__(61);
 	
 	var _RenderBufferComponent2 = _interopRequireDefault(_RenderBufferComponent);
 	
-	var _RendererComponent = __webpack_require__(62);
+	var _RendererComponent = __webpack_require__(64);
 	
 	var _RendererComponent2 = _interopRequireDefault(_RendererComponent);
 	
-	var _RendererManagerComponent = __webpack_require__(63);
+	var _RendererManagerComponent = __webpack_require__(65);
 	
 	var _RendererManagerComponent2 = _interopRequireDefault(_RendererManagerComponent);
 	
-	var _RenderQuadComponent = __webpack_require__(65);
+	var _RenderQuadComponent = __webpack_require__(67);
 	
 	var _RenderQuadComponent2 = _interopRequireDefault(_RenderQuadComponent);
 	
-	var _RenderSceneComponent = __webpack_require__(67);
+	var _RenderSceneComponent = __webpack_require__(69);
 	
 	var _RenderSceneComponent2 = _interopRequireDefault(_RenderSceneComponent);
 	
@@ -10967,11 +8878,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _SceneComponent2 = _interopRequireDefault(_SceneComponent);
 	
-	var _TextureBufferComponent = __webpack_require__(68);
+	var _TextureBufferComponent = __webpack_require__(70);
 	
 	var _TextureBufferComponent2 = _interopRequireDefault(_TextureBufferComponent);
 	
-	var _TextureComponent = __webpack_require__(69);
+	var _TextureComponent = __webpack_require__(71);
 	
 	var _TextureComponent2 = _interopRequireDefault(_TextureComponent);
 	
@@ -10979,43 +8890,43 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _TransformComponent2 = _interopRequireDefault(_TransformComponent);
 	
-	var _CanvasSizeConverter = __webpack_require__(70);
+	var _CanvasSizeConverter = __webpack_require__(72);
 	
 	var _CanvasSizeConverter2 = _interopRequireDefault(_CanvasSizeConverter);
 	
-	var _ComponentConverter = __webpack_require__(71);
+	var _ComponentConverter = __webpack_require__(73);
 	
 	var _ComponentConverter2 = _interopRequireDefault(_ComponentConverter);
 	
-	var _EnumConverter = __webpack_require__(73);
+	var _EnumConverter = __webpack_require__(75);
 	
 	var _EnumConverter2 = _interopRequireDefault(_EnumConverter);
 	
-	var _GeometryConverter = __webpack_require__(74);
+	var _GeometryConverter = __webpack_require__(76);
 	
 	var _GeometryConverter2 = _interopRequireDefault(_GeometryConverter);
 	
-	var _MaterialConverter = __webpack_require__(75);
+	var _MaterialConverter = __webpack_require__(77);
 	
 	var _MaterialConverter2 = _interopRequireDefault(_MaterialConverter);
 	
-	var _TextureConverter = __webpack_require__(79);
+	var _TextureConverter = __webpack_require__(81);
 	
 	var _TextureConverter2 = _interopRequireDefault(_TextureConverter);
 	
-	var _NumberArrayConverter = __webpack_require__(76);
+	var _NumberArrayConverter = __webpack_require__(78);
 	
 	var _NumberArrayConverter2 = _interopRequireDefault(_NumberArrayConverter);
 	
-	var _NumberConverter = __webpack_require__(77);
+	var _NumberConverter = __webpack_require__(79);
 	
 	var _NumberConverter2 = _interopRequireDefault(_NumberConverter);
 	
-	var _ObjectConverter = __webpack_require__(78);
+	var _ObjectConverter = __webpack_require__(80);
 	
 	var _ObjectConverter2 = _interopRequireDefault(_ObjectConverter);
 	
-	var _ViewportConverter = __webpack_require__(81);
+	var _ViewportConverter = __webpack_require__(83);
 	
 	var _ViewportConverter2 = _interopRequireDefault(_ViewportConverter);
 	

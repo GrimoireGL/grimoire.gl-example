@@ -8205,7 +8205,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	    value: true
 	});
 	
 	var _main = __webpack_require__(299);
@@ -8214,10 +8214,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	var __VERSION__ = "1.7.0-beta2";
+	var __NAME__ = "grimoirejs-preset-basic";
+	
 	var __EXPOSE__ = {};
 	var __BASE__ = (0, _main2.default)();
+	Object.assign(__EXPOSE__, {
+	    __VERSION__: __VERSION__,
+	    __NAME__: __NAME__
+	});
 	Object.assign(__BASE__ || {}, __EXPOSE__);
-	window["GrimoireJS"].lib.preset_basic = __EXPOSE__;
+	window["GrimoireJS"].lib.ts_boilerplate = __EXPOSE__;
 	exports.default = __BASE__;
 
 /***/ },
@@ -8308,11 +8315,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _AttributeManager2 = _interopRequireDefault(_AttributeManager);
 		
-		var _Constants = __webpack_require__(6);
+		var _Constants = __webpack_require__(9);
 		
 		var _Constants2 = _interopRequireDefault(_Constants);
 		
-		var _EEObject = __webpack_require__(11);
+		var _EEObject = __webpack_require__(15);
 		
 		var _EEObject2 = _interopRequireDefault(_EEObject);
 		
@@ -8320,47 +8327,71 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _Ensure2 = _interopRequireDefault(_Ensure);
 		
-		var _IDObject = __webpack_require__(13);
+		var _IDObject = __webpack_require__(17);
 		
 		var _IDObject2 = _interopRequireDefault(_IDObject);
 		
-		var _NSDictionary = __webpack_require__(15);
+		var _NSDictionary = __webpack_require__(12);
 		
 		var _NSDictionary2 = _interopRequireDefault(_NSDictionary);
 		
-		var _NSIdentity = __webpack_require__(16);
+		var _NSIdentity = __webpack_require__(11);
 		
 		var _NSIdentity2 = _interopRequireDefault(_NSIdentity);
 		
-		var _NSSet = __webpack_require__(24);
+		var _NSSet = __webpack_require__(33);
 		
 		var _NSSet2 = _interopRequireDefault(_NSSet);
 		
-		var _Utility = __webpack_require__(4);
+		var _Utility = __webpack_require__(13);
 		
 		var _Utility2 = _interopRequireDefault(_Utility);
 		
-		var _XMLHttpRequestAsync = __webpack_require__(26);
+		var _XMLHttpRequestAsync = __webpack_require__(19);
 		
 		var _XMLHttpRequestAsync2 = _interopRequireDefault(_XMLHttpRequestAsync);
 		
-		var _XMLReader = __webpack_require__(8);
+		var _XMLReader = __webpack_require__(14);
 		
 		var _XMLReader2 = _interopRequireDefault(_XMLReader);
 		
-		var _GrimoireComponent = __webpack_require__(18);
+		var _GrimoireComponent = __webpack_require__(30);
 		
 		var _GrimoireComponent2 = _interopRequireDefault(_GrimoireComponent);
 		
-		var _BooleanConverter = __webpack_require__(17);
+		var _ArrayConverter = __webpack_require__(26);
+		
+		var _ArrayConverter2 = _interopRequireDefault(_ArrayConverter);
+		
+		var _BooleanConverter = __webpack_require__(29);
 		
 		var _BooleanConverter2 = _interopRequireDefault(_BooleanConverter);
 		
-		var _StringArrayConverter = __webpack_require__(21);
+		var _ComponentConverter = __webpack_require__(22);
+		
+		var _ComponentConverter2 = _interopRequireDefault(_ComponentConverter);
+		
+		var _EnumConverter = __webpack_require__(20);
+		
+		var _EnumConverter2 = _interopRequireDefault(_EnumConverter);
+		
+		var _NumberArrayConverter = __webpack_require__(21);
+		
+		var _NumberArrayConverter2 = _interopRequireDefault(_NumberArrayConverter);
+		
+		var _NumberConverter = __webpack_require__(24);
+		
+		var _NumberConverter2 = _interopRequireDefault(_NumberConverter);
+		
+		var _ObjectConverter = __webpack_require__(25);
+		
+		var _ObjectConverter2 = _interopRequireDefault(_ObjectConverter);
+		
+		var _StringArrayConverter = __webpack_require__(31);
 		
 		var _StringArrayConverter2 = _interopRequireDefault(_StringArrayConverter);
 		
-		var _StringConverter = __webpack_require__(22);
+		var _StringConverter = __webpack_require__(32);
 		
 		var _StringConverter2 = _interopRequireDefault(_StringConverter);
 		
@@ -8368,51 +8399,58 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _GrimoireInterface2 = _interopRequireDefault(_GrimoireInterface);
 		
-		var _GomlInterface = __webpack_require__(5);
+		var _GrimoireInterfaceImpl = __webpack_require__(4);
+		
+		var _GrimoireInterfaceImpl2 = _interopRequireDefault(_GrimoireInterfaceImpl);
+		
+		var _GomlInterface = __webpack_require__(28);
 		
 		var _GomlInterface2 = _interopRequireDefault(_GomlInterface);
 		
-		var _NodeInterface = __webpack_require__(7);
+		var _NodeInterface = __webpack_require__(27);
 		
 		var _NodeInterface2 = _interopRequireDefault(_NodeInterface);
 		
-		var _Attribute = __webpack_require__(20);
+		var _Attribute = __webpack_require__(10);
 		
 		var _Attribute2 = _interopRequireDefault(_Attribute);
 		
-		var _Component = __webpack_require__(19);
+		var _Component = __webpack_require__(23);
 		
 		var _Component2 = _interopRequireDefault(_Component);
 		
-		var _ComponentDeclaration = __webpack_require__(23);
+		var _ComponentDeclaration = __webpack_require__(8);
 		
 		var _ComponentDeclaration2 = _interopRequireDefault(_ComponentDeclaration);
 		
-		var _GomlLoader = __webpack_require__(27);
+		var _GomlLoader = __webpack_require__(5);
 		
 		var _GomlLoader2 = _interopRequireDefault(_GomlLoader);
 		
-		var _GomlNode = __webpack_require__(10);
+		var _GomlNode = __webpack_require__(7);
 		
 		var _GomlNode2 = _interopRequireDefault(_GomlNode);
 		
-		var _GomlParser = __webpack_require__(9);
+		var _GomlParser = __webpack_require__(6);
 		
 		var _GomlParser2 = _interopRequireDefault(_GomlParser);
 		
-		var _NodeDeclaration = __webpack_require__(25);
+		var _NodeDeclaration = __webpack_require__(34);
 		
 		var _NodeDeclaration2 = _interopRequireDefault(_NodeDeclaration);
 		
-		var _NodeUtility = __webpack_require__(14);
+		var _NodeUtility = __webpack_require__(18);
 		
 		var _NodeUtility2 = _interopRequireDefault(_NodeUtility);
 		
-		var _main = __webpack_require__(28);
+		var _main = __webpack_require__(35);
 		
 		var _main2 = _interopRequireDefault(_main);
 		
 		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		var __VERSION__ = "0.13.5-beta5";
+		var __NAME__ = "grimoirejs";
 		
 		var __EXPOSE__ = {
 		    "Base": {
@@ -8432,11 +8470,18 @@ return /******/ (function(modules) { // webpackBootstrap
 		        "GrimoireComponent": _GrimoireComponent2.default
 		    },
 		    "Converters": {
+		        "ArrayConverter": _ArrayConverter2.default,
 		        "BooleanConverter": _BooleanConverter2.default,
+		        "ComponentConverter": _ComponentConverter2.default,
+		        "EnumConverter": _EnumConverter2.default,
+		        "NumberArrayConverter": _NumberArrayConverter2.default,
+		        "NumberConverter": _NumberConverter2.default,
+		        "ObjectConverter": _ObjectConverter2.default,
 		        "StringArrayConverter": _StringArrayConverter2.default,
 		        "StringConverter": _StringConverter2.default
 		    },
 		    "GrimoireInterface": _GrimoireInterface2.default,
+		    "GrimoireInterfaceImpl": _GrimoireInterfaceImpl2.default,
 		    "Interface": {
 		        "GomlInterface": _GomlInterface2.default,
 		        "NodeInterface": _NodeInterface2.default
@@ -8453,7 +8498,12 @@ return /******/ (function(modules) { // webpackBootstrap
 		    }
 		};
 		var __BASE__ = (0, _main2.default)();
+		Object.assign(__EXPOSE__, {
+		    __VERSION__: __VERSION__,
+		    __NAME__: __NAME__
+		});
 		Object.assign(__BASE__ || {}, __EXPOSE__);
+		window["GrimoireJS"]["__VERSION__"] = __VERSION__;
 		exports.default = __BASE__;
 	
 	/***/ },
@@ -8503,6 +8553,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		            if (watchBuf) {
 		                attr.watch(watchBuf, true);
 		            }
+		            return attr;
 		        }
 		    }, {
 		        key: "watch",
@@ -8572,11 +8623,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _GrimoireInterface2 = _interopRequireDefault(_GrimoireInterface);
 		
-		var _NSIdentity = __webpack_require__(16);
+		var _NSIdentity = __webpack_require__(11);
 		
 		var _NSIdentity2 = _interopRequireDefault(_NSIdentity);
 		
-		var _NSDictionary = __webpack_require__(15);
+		var _NSDictionary = __webpack_require__(12);
 		
 		var _NSDictionary2 = _interopRequireDefault(_NSDictionary);
 		
@@ -8636,7 +8687,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		                if (name.indexOf("|") !== -1) {
 		                    return _NSIdentity2.default.fromFQN(name);
 		                }
-		                return new _NSIdentity2.default(name);
+		                return _NSIdentity2.default.from(name);
 		            } else {
 		                return name;
 		            }
@@ -8655,7 +8706,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		        }
 		    }, {
 		        key: "ensureTobeNSDictionary",
-		        value: function ensureTobeNSDictionary(dict, defaultNamespace) {
+		        value: function ensureTobeNSDictionary(dict) {
 		            if (!dict) {
 		                return new _NSDictionary2.default();
 		            }
@@ -8664,7 +8715,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		            } else {
 		                var newDict = new _NSDictionary2.default();
 		                for (var key in dict) {
-		                    newDict.set(new _NSIdentity2.default(defaultNamespace, key), dict[key]);
+		                    newDict.set(_NSIdentity2.default.from(key), dict[key]);
 		                }
 		                return newDict;
 		            }
@@ -8710,59 +8761,132 @@ return /******/ (function(modules) { // webpackBootstrap
 		    value: true
 		});
 		
+		var _GrimoireInterfaceImpl = __webpack_require__(4);
+		
+		var _GrimoireInterfaceImpl2 = _interopRequireDefault(_GrimoireInterfaceImpl);
+		
+		var _GomlInterface = __webpack_require__(28);
+		
+		var _GomlInterface2 = _interopRequireDefault(_GomlInterface);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		var context = new _GrimoireInterfaceImpl2.default();
+		var obtainGomlInterface = function obtainGomlInterface(query) {
+		    if (typeof query === "string") {
+		        // return GomlInterfaceGenerator(context.queryRootNodes(query));
+		        var gomlContext = new _GomlInterface2.default(context.queryRootNodes(query));
+		        var queryFunc = gomlContext.queryFunc.bind(gomlContext);
+		        Object.setPrototypeOf(queryFunc, gomlContext);
+		        return queryFunc;
+		    } else if (typeof query === "function") {
+		        context.initializedEventHandler.push(query);
+		    } else {
+		        var _gomlContext = new _GomlInterface2.default(query);
+		        var _queryFunc = _gomlContext.queryFunc.bind(_gomlContext);
+		        Object.setPrototypeOf(_queryFunc, _gomlContext);
+		        return _queryFunc;
+		    }
+		};
+		// const bindedFunction = obtainGomlInterface.bind(context);
+		Object.setPrototypeOf(obtainGomlInterface, context);
+		exports.default = obtainGomlInterface;
+	
+	/***/ },
+	/* 4 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
 		var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 		
 		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 		
-		var _Utility = __webpack_require__(4);
+		var _GomlLoader = __webpack_require__(5);
+		
+		var _GomlLoader2 = _interopRequireDefault(_GomlLoader);
+		
+		var _EnumConverter = __webpack_require__(20);
+		
+		var _EnumConverter2 = _interopRequireDefault(_EnumConverter);
+		
+		var _NumberArrayConverter = __webpack_require__(21);
+		
+		var _NumberArrayConverter2 = _interopRequireDefault(_NumberArrayConverter);
+		
+		var _ComponentConverter = __webpack_require__(22);
+		
+		var _ComponentConverter2 = _interopRequireDefault(_ComponentConverter);
+		
+		var _NumberConverter = __webpack_require__(24);
+		
+		var _NumberConverter2 = _interopRequireDefault(_NumberConverter);
+		
+		var _ObjectConverter = __webpack_require__(25);
+		
+		var _ObjectConverter2 = _interopRequireDefault(_ObjectConverter);
+		
+		var _ArrayConverter = __webpack_require__(26);
+		
+		var _ArrayConverter2 = _interopRequireDefault(_ArrayConverter);
+		
+		var _NodeInterface = __webpack_require__(27);
+		
+		var _NodeInterface2 = _interopRequireDefault(_NodeInterface);
+		
+		var _Utility = __webpack_require__(13);
 		
 		var _Utility2 = _interopRequireDefault(_Utility);
 		
-		var _GomlInterface = __webpack_require__(5);
+		var _GomlInterface = __webpack_require__(28);
 		
 		var _GomlInterface2 = _interopRequireDefault(_GomlInterface);
 		
-		var _BooleanConverter = __webpack_require__(17);
+		var _BooleanConverter = __webpack_require__(29);
 		
 		var _BooleanConverter2 = _interopRequireDefault(_BooleanConverter);
 		
-		var _GrimoireComponent = __webpack_require__(18);
+		var _GrimoireComponent = __webpack_require__(30);
 		
 		var _GrimoireComponent2 = _interopRequireDefault(_GrimoireComponent);
 		
-		var _StringArrayConverter = __webpack_require__(21);
+		var _StringArrayConverter = __webpack_require__(31);
 		
 		var _StringArrayConverter2 = _interopRequireDefault(_StringArrayConverter);
 		
-		var _StringConverter = __webpack_require__(22);
+		var _StringConverter = __webpack_require__(32);
 		
 		var _StringConverter2 = _interopRequireDefault(_StringConverter);
 		
-		var _Constants = __webpack_require__(6);
+		var _Constants = __webpack_require__(9);
 		
 		var _Constants2 = _interopRequireDefault(_Constants);
 		
-		var _ComponentDeclaration = __webpack_require__(23);
+		var _ComponentDeclaration = __webpack_require__(8);
 		
 		var _ComponentDeclaration2 = _interopRequireDefault(_ComponentDeclaration);
 		
-		var _Component = __webpack_require__(19);
+		var _Component = __webpack_require__(23);
 		
 		var _Component2 = _interopRequireDefault(_Component);
 		
-		var _NSSet = __webpack_require__(24);
+		var _NSSet = __webpack_require__(33);
 		
 		var _NSSet2 = _interopRequireDefault(_NSSet);
 		
-		var _NodeDeclaration = __webpack_require__(25);
+		var _NodeDeclaration = __webpack_require__(34);
 		
 		var _NodeDeclaration2 = _interopRequireDefault(_NodeDeclaration);
 		
-		var _NSIdentity = __webpack_require__(16);
+		var _NSIdentity = __webpack_require__(11);
 		
 		var _NSIdentity2 = _interopRequireDefault(_NSIdentity);
 		
-		var _NSDictionary = __webpack_require__(15);
+		var _NSDictionary = __webpack_require__(12);
 		
 		var _NSDictionary2 = _interopRequireDefault(_NSDictionary);
 		
@@ -8785,7 +8909,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		        }
 		        function rejected(value) {
 		            try {
-		                step(generator.throw(value));
+		                step(generator["throw"](value));
 		            } catch (e) {
 		                reject(e);
 		            }
@@ -8811,22 +8935,20 @@ return /******/ (function(modules) { // webpackBootstrap
 		        this.lib = {};
 		        this.nodeDictionary = {};
 		        this.componentDictionary = {};
-		        this.companion = new _NSDictionary2.default();
-		        this.initializedEventHandler = [];
-		        this.debug = false;
+		        this.debug = true;
 		    }
-		    /**
-		     * Generate namespace helper function
-		     * @param  {string} ns namespace URI to be used
-		     * @return {[type]}    the namespaced identity
-		     */
-		
 		
 		    _createClass(GrimoireInterfaceImpl, [{
 		        key: "ns",
+		
+		        /**
+		         * Generate namespace helper function
+		         * @param  {string} ns namespace URI to be used
+		         * @return {[type]}    the namespaced identity
+		         */
 		        value: function ns(_ns) {
 		            return function (name) {
-		                return new _NSIdentity2.default(_ns, name);
+		                return _NSIdentity2.default.from(_ns, name);
 		            };
 		        }
 		    }, {
@@ -8835,6 +8957,12 @@ return /******/ (function(modules) { // webpackBootstrap
 		            this.registerConverter("String", _StringConverter2.default);
 		            this.registerConverter("StringArray", _StringArrayConverter2.default);
 		            this.registerConverter("Boolean", _BooleanConverter2.default);
+		            this.registerConverter("Array", _ArrayConverter2.default);
+		            this.registerConverter("Object", _ObjectConverter2.default);
+		            this.registerConverter("Enum", _EnumConverter2.default);
+		            this.registerConverter("Number", _NumberConverter2.default);
+		            this.registerConverter("Component", _ComponentConverter2.default);
+		            this.registerConverter("NumberArray", _NumberArrayConverter2.default);
 		            this.registerComponent("GrimoireComponent", _GrimoireComponent2.default);
 		            this.registerNode("grimoire-node-base", ["GrimoireComponent"]);
 		        }
@@ -8900,20 +9028,28 @@ return /******/ (function(modules) { // webpackBootstrap
 		            if (this.debug && !_Utility2.default.isCamelCase(name.name)) {
 		                console.warn("component " + name.name + " is registerd. but,it should be 'CamelCase'.");
 		            }
-		            obj = this._ensureTobeComponentConstructor(obj, this._ensureNameTobeConstructor(superComponent));
-		            var attrs = obj["attributes"] || {};
+		            var superCtor = void 0;
+		            if (superComponent) {
+		                superCtor = this._ensureNameTobeConstructor(superComponent);
+		                if (!superCtor) {
+		                    throw new Error(superComponent + " is not exist.");
+		                }
+		            }
+		            obj = this._ensureTobeComponentConstructor(obj, superCtor);
+		            var ctor = this._ensureTobeComponentConstructor(obj, superCtor);
+		            var attrs = ctor["attributes"] || {};
 		            for (var key in attrs) {
 		                if (attrs[key].default === void 0) {
 		                    throw new Error("default value of attribute " + key + " in " + name.fqn + " must be not 'undefined'.");
 		                }
 		            }
-		            var dec = new _ComponentDeclaration2.default(name, attrs, obj);
+		            var dec = new _ComponentDeclaration2.default(name, attrs, ctor);
 		            this.componentDeclarations.set(name, dec);
 		            return dec;
 		        }
 		    }, {
 		        key: "registerNode",
-		        value: function registerNode(name, requiredComponents, defaults, superNode) {
+		        value: function registerNode(name, requiredComponents, defaults, superNode, freezeAttributes) {
 		            name = _Ensure2.default.ensureTobeNSIdentity(name);
 		            if (this.nodeDeclarations.get(name)) {
 		                throw new Error("gomlnode " + name.fqn + " is already registerd.");
@@ -8922,15 +9058,19 @@ return /******/ (function(modules) { // webpackBootstrap
 		                console.warn("node " + name.name + " is registerd. but,it should be 'snake-case'.");
 		            }
 		            requiredComponents = _Ensure2.default.ensureTobeNSIdentityArray(requiredComponents);
-		            defaults = _Ensure2.default.ensureTobeNSDictionary(defaults, name.ns);
+		            defaults = _Ensure2.default.ensureTobeNSDictionary(defaults);
 		            superNode = _Ensure2.default.ensureTobeNSIdentity(superNode);
-		            this.nodeDeclarations.set(name, new _NodeDeclaration2.default(name, _NSSet2.default.fromArray(requiredComponents), defaults, superNode));
+		            this.nodeDeclarations.set(name, new _NodeDeclaration2.default(name, _NSSet2.default.fromArray(requiredComponents), defaults, superNode, freezeAttributes));
 		        }
 		    }, {
-		        key: "registerConverter",
-		        value: function registerConverter(name, converter) {
-		            name = _Ensure2.default.ensureTobeNSIdentity(name);
-		            this.converters.set(name, { name: name, convert: converter });
+		        key: "getCompanion",
+		        value: function getCompanion(scriptTag) {
+		            var root = this.getRootNode(scriptTag);
+		            if (root) {
+		                return root.companion;
+		            } else {
+		                throw new Error("scriptTag is not goml");
+		            }
 		        }
 		    }, {
 		        key: "addRootNode",
@@ -8938,30 +9078,19 @@ return /******/ (function(modules) { // webpackBootstrap
 		            if (!rootNode) {
 		                throw new Error("can not register null to rootNodes.");
 		            }
+		            tag.setAttribute("x-rootNodeId", rootNode.id);
 		            this.rootNodes[rootNode.id] = rootNode;
 		            rootNode.companion.set(this.ns(_Constants2.default.defaultNamespace)("scriptElement"), tag);
-		            // check tree constraint.
-		            var errorMessages = rootNode.callRecursively(function (n) {
-		                return n.checkTreeConstraints();
-		            }).reduce(function (list, current) {
-		                return list.concat(current);
-		            }).filter(function (error) {
-		                return error;
-		            });
-		            if (errorMessages.length !== 0) {
-		                var message = errorMessages.reduce(function (m, current) {
-		                    return m + "\n" + current;
-		                });
-		                throw new Error("tree constraint is not satisfied.\n" + message);
-		            }
 		            // awake and mount tree.
 		            rootNode.setMounted(true);
 		            rootNode.broadcastMessage("treeInitialized", {
 		                ownerScriptTag: tag,
 		                id: rootNode.id
 		            });
-		            tag.setAttribute("x-rootNodeId", rootNode.id);
-		            this._onTreeInitialized(tag);
+		            rootNode.sendInitializedMessage({
+		                ownerScriptTag: tag,
+		                id: rootNode.id
+		            });
 		            return rootNode.id;
 		        }
 		    }, {
@@ -8988,6 +9117,35 @@ return /******/ (function(modules) { // webpackBootstrap
 		            }
 		            return nodes;
 		        }
+		    }, {
+		        key: "registerConverter",
+		        value: function registerConverter(name, converter) {
+		            var n = _Ensure2.default.ensureTobeNSIdentity(name);
+		            this.converters.set(n, { name: n, convert: converter });
+		        }
+		    }, {
+		        key: "overrideDeclaration",
+		        value: function overrideDeclaration(targetDeclaration, arg2, defaults) {
+		            var dec = this.nodeDeclarations.get(targetDeclaration);
+		            if (!dec) {
+		                throw new Error("attempt not-exist node declaration : " + _Ensure2.default.ensureTobeNSIdentity(targetDeclaration).name);
+		            }
+		            if (defaults) {
+		                var additionalC = arg2;
+		                for (var i = 0; i < additionalC.length; i++) {
+		                    dec.addDefaultComponent(additionalC[i]);
+		                }
+		                dec.defaultAttributes.pushDictionary(_Ensure2.default.ensureTobeNSDictionary(defaults));
+		            } else if (Array.isArray(arg2)) {
+		                var _additionalC = arg2;
+		                for (var _i = 0; _i < _additionalC.length; _i++) {
+		                    dec.addDefaultComponent(_additionalC[_i]);
+		                }
+		            } else {
+		                dec.defaultAttributes.pushDictionary(_Ensure2.default.ensureTobeNSDictionary(arg2));
+		            }
+		            return dec;
+		        }
 		        /**
 		         * This method is not for users.
 		         * Just for unit testing.
@@ -9006,6 +9164,30 @@ return /******/ (function(modules) { // webpackBootstrap
 		            }
 		            this.loadTasks.splice(0, this.loadTasks.length);
 		            this.initialize();
+		        }
+		    }, {
+		        key: "extendGrimoireInterface",
+		        value: function extendGrimoireInterface(name, func) {
+		            if (this[name]) {
+		                throw new Error("gr." + name + " can not extend.it is already exist.");
+		            }
+		            this[name] = func.bind(this);
+		        }
+		    }, {
+		        key: "extendGomlInterface",
+		        value: function extendGomlInterface(name, func) {
+		            if (_GomlInterface2.default[name]) {
+		                throw new Error("gr." + name + " can not extend.it is already exist.");
+		            }
+		            _GomlInterface2.default[name] = func.bind(this);
+		        }
+		    }, {
+		        key: "extendNodeInterface",
+		        value: function extendNodeInterface(name, func) {
+		            if (_NodeInterface2.default[name]) {
+		                throw new Error("gr." + name + " can not extend.it is already exist.");
+		            }
+		            _NodeInterface2.default[name] = func.bind(this);
 		        }
 		        /**
 		         * Ensure the given object or constructor to be an constructor inherits Component;
@@ -9069,7 +9251,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		            } else if (typeof component === "string") {
 		                return this._ensureNameTobeConstructor(_Ensure2.default.ensureTobeNSIdentity(component));
 		            } else {
-		                //here NSIdentity.
+		                // here NSIdentity.
 		                var c = this.componentDeclarations.get(component);
 		                if (!c) {
 		                    return null;
@@ -9078,40 +9260,1941 @@ return /******/ (function(modules) { // webpackBootstrap
 		            }
 		        }
 		    }, {
-		        key: "_onTreeInitialized",
-		        value: function _onTreeInitialized(tag) {
-		            this.initializedEventHandler.forEach(function (h) {
-		                h(tag.id, tag.className, tag);
-		            });
+		        key: "initializedEventHandler",
+		        get: function get() {
+		            return _GomlLoader2.default.initializedEventHandlers;
 		        }
 		    }]);
 		
 		    return GrimoireInterfaceImpl;
 		}();
 		
-		var context = new GrimoireInterfaceImpl();
-		var obtainGomlInterface = function obtainGomlInterface(query) {
-		    if (typeof query === "string") {
-		        // return GomlInterfaceGenerator(context.queryRootNodes(query));
-		        var gomlContext = new _GomlInterface2.default(context.queryRootNodes(query));
-		        var queryFunc = gomlContext.queryFunc.bind(gomlContext);
-		        Object.setPrototypeOf(queryFunc, gomlContext);
-		        return queryFunc;
-		    } else if (typeof query === "function") {
-		        context.initializedEventHandler.push(query);
-		    } else {
-		        var _gomlContext = new _GomlInterface2.default(query);
-		        var _queryFunc = _gomlContext.queryFunc.bind(_gomlContext);
-		        Object.setPrototypeOf(_queryFunc, _gomlContext);
-		        return _queryFunc;
-		    }
-		};
-		// const bindedFunction = obtainGomlInterface.bind(context);
-		Object.setPrototypeOf(obtainGomlInterface, context);
-		exports.default = obtainGomlInterface;
+		exports.default = GrimoireInterfaceImpl;
 	
 	/***/ },
-	/* 4 */
+	/* 5 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+		
+		var _GrimoireInterface = __webpack_require__(3);
+		
+		var _GrimoireInterface2 = _interopRequireDefault(_GrimoireInterface);
+		
+		var _GomlParser = __webpack_require__(6);
+		
+		var _GomlParser2 = _interopRequireDefault(_GomlParser);
+		
+		var _XMLReader = __webpack_require__(14);
+		
+		var _XMLReader2 = _interopRequireDefault(_XMLReader);
+		
+		var _XMLHttpRequestAsync = __webpack_require__(19);
+		
+		var _XMLHttpRequestAsync2 = _interopRequireDefault(_XMLHttpRequestAsync);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+		
+		var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
+		    return new (P || (P = Promise))(function (resolve, reject) {
+		        function fulfilled(value) {
+		            try {
+		                step(generator.next(value));
+		            } catch (e) {
+		                reject(e);
+		            }
+		        }
+		        function rejected(value) {
+		            try {
+		                step(generator["throw"](value));
+		            } catch (e) {
+		                reject(e);
+		            }
+		        }
+		        function step(result) {
+		            result.done ? resolve(result.value) : new P(function (resolve) {
+		                resolve(result.value);
+		            }).then(fulfilled, rejected);
+		        }
+		        step((generator = generator.apply(thisArg, _arguments)).next());
+		    });
+		};
+		
+		/**
+		 * Provides the features to fetch Goml source.
+		 */
+		var GomlLoader = function () {
+		    function GomlLoader() {
+		        _classCallCheck(this, GomlLoader);
+		    }
+		
+		    _createClass(GomlLoader, null, [{
+		        key: "loadFromScriptTag",
+		
+		        /**
+		         * Obtain the Goml source from specified tag.
+		         * @param  {HTMLScriptElement} scriptTag [the script tag to load]
+		         * @return {Promise<void>}               [the promise to wait for loading]
+		         */
+		        value: function loadFromScriptTag(scriptTag) {
+		            return __awaiter(this, void 0, void 0, regeneratorRuntime.mark(function _callee() {
+		                var srcAttr, source, req, doc, rootNode;
+		                return regeneratorRuntime.wrap(function _callee$(_context) {
+		                    while (1) {
+		                        switch (_context.prev = _context.next) {
+		                            case 0:
+		                                srcAttr = scriptTag.getAttribute("src");
+		                                source = void 0;
+		
+		                                if (!srcAttr) {
+		                                    _context.next = 10;
+		                                    break;
+		                                }
+		
+		                                // ignore text element
+		                                req = new XMLHttpRequest();
+		
+		                                req.open("GET", srcAttr);
+		                                _context.next = 7;
+		                                return _XMLHttpRequestAsync2.default.send(req);
+		
+		                            case 7:
+		                                source = req.responseText;
+		                                _context.next = 11;
+		                                break;
+		
+		                            case 10:
+		                                source = scriptTag.text;
+		
+		                            case 11:
+		                                doc = _XMLReader2.default.parseXML(source, "GOML");
+		                                rootNode = _GomlParser2.default.parse(doc[0], null, scriptTag);
+		
+		                                _GrimoireInterface2.default.addRootNode(scriptTag, rootNode);
+		
+		                            case 14:
+		                            case "end":
+		                                return _context.stop();
+		                        }
+		                    }
+		                }, _callee, this);
+		            }));
+		        }
+		        /**
+		         * Load from the script tags which will be found with specified query.
+		         * @param  {string}          query [the query to find script tag]
+		         * @return {Promise<void[]>}       [the promise to wait for all goml loading]
+		         */
+		
+		    }, {
+		        key: "loadFromQuery",
+		        value: function loadFromQuery(query) {
+		            return __awaiter(this, void 0, void 0, regeneratorRuntime.mark(function _callee2() {
+		                var tags, pArray, elements, i, element;
+		                return regeneratorRuntime.wrap(function _callee2$(_context2) {
+		                    while (1) {
+		                        switch (_context2.prev = _context2.next) {
+		                            case 0:
+		                                tags = document.querySelectorAll(query);
+		                                pArray = [];
+		                                elements = [];
+		
+		                                for (i = 0; i < tags.length; i++) {
+		                                    element = tags.item(i);
+		
+		                                    elements.push(element);
+		                                    pArray[i] = GomlLoader.loadFromScriptTag(element);
+		                                }
+		                                if (pArray.length === 0 && _GrimoireInterface2.default.debug) {
+		                                    console.warn("There was no goml file detected. Have you specified `type='text/goml'` to the script tag?");
+		                                }
+		                                _context2.next = 7;
+		                                return Promise.all(pArray);
+		
+		                            case 7:
+		                                GomlLoader.initializedEventHandlers.forEach(function (handler) {
+		                                    handler(elements);
+		                                });
+		
+		                            case 8:
+		                            case "end":
+		                                return _context2.stop();
+		                        }
+		                    }
+		                }, _callee2, this);
+		            }));
+		        }
+		        /**
+		         * Load all Goml sources contained in HTML.
+		         * @return {Promise<void>} [the promise to wait for all goml loading]
+		         */
+		
+		    }, {
+		        key: "loadForPage",
+		        value: function loadForPage() {
+		            return __awaiter(this, void 0, void 0, regeneratorRuntime.mark(function _callee3() {
+		                return regeneratorRuntime.wrap(function _callee3$(_context3) {
+		                    while (1) {
+		                        switch (_context3.prev = _context3.next) {
+		                            case 0:
+		                                _context3.next = 2;
+		                                return GomlLoader.loadFromQuery('script[type="text/goml"]');
+		
+		                            case 2:
+		                            case "end":
+		                                return _context3.stop();
+		                        }
+		                    }
+		                }, _callee3, this);
+		            }));
+		        }
+		    }]);
+		
+		    return GomlLoader;
+		}();
+		
+		GomlLoader.initializedEventHandlers = [];
+		exports.default = GomlLoader;
+	
+	/***/ },
+	/* 6 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+		
+		var _GomlNode = __webpack_require__(7);
+		
+		var _GomlNode2 = _interopRequireDefault(_GomlNode);
+		
+		var _GrimoireInterface = __webpack_require__(3);
+		
+		var _GrimoireInterface2 = _interopRequireDefault(_GrimoireInterface);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+		
+		/**
+		 * Parser of Goml to Node utilities.
+		 * This class do not store any nodes and goml properties.
+		 */
+		var GomlParser = function () {
+		    function GomlParser() {
+		        _classCallCheck(this, GomlParser);
+		    }
+		
+		    _createClass(GomlParser, null, [{
+		        key: "parse",
+		
+		        /**
+		         * Domをパースする
+		         * @param  {Element}           source    [description]
+		         * @param  {GomlNode}          parent    あればこのノードにaddChildされる
+		         * @return {GomlNode}                    ルートノード
+		         */
+		        value: function parse(source, parent, scriptTag) {
+		            var newNode = GomlParser._createNode(source);
+		            if (!newNode) {
+		                // when specified node could not be found
+		                console.warn("\"" + source.tagName + "\" was not parsed.");
+		                return null;
+		            }
+		            // Parse children recursively
+		            var children = source.childNodes;
+		            var childNodeElements = []; // for parse after .Components has resolved.
+		            if (children && children.length !== 0) {
+		                var removeTarget = [];
+		                for (var i = 0; i < children.length; i++) {
+		                    var child = children.item(i);
+		                    if (!GomlParser._isElement(child)) {
+		                        removeTarget.push(child);
+		                        continue;
+		                    }
+		                    if (this._isComponentsTag(child)) {
+		                        // parse as components
+		                        GomlParser._parseComponents(newNode, child);
+		                        removeTarget.push(child);
+		                    } else {
+		                        // parse as child node.
+		                        childNodeElements.push(child);
+		                    }
+		                }
+		                // remove unused elements
+		                for (var _i = 0; _i < removeTarget.length; _i++) {
+		                    source.removeChild(removeTarget[_i]);
+		                }
+		            }
+		            // generate tree
+		            if (parent) {
+		                parent.addChild(newNode, null, false);
+		            }
+		            childNodeElements.forEach(function (child) {
+		                GomlParser.parse(child, newNode, null);
+		            });
+		            return newNode;
+		        }
+		        /**
+		         * GomlNodeのインスタンス化。GrimoireInterfaceへの登録
+		         * @param  {HTMLElement}      elem         [description]
+		         * @param  {GomlConfigurator} configurator [description]
+		         * @return {GomlTreeNodeBase}              [description]
+		         */
+		
+		    }, {
+		        key: "_createNode",
+		        value: function _createNode(elem) {
+		            var tagName = elem.localName;
+		            var recipe = _GrimoireInterface2.default.nodeDeclarations.get(elem);
+		            if (!recipe) {
+		                throw new Error("Tag \"" + tagName + "\" is not found.");
+		            }
+		            return new _GomlNode2.default(recipe, elem);
+		        }
+		        /**
+		         * .COMPONENTSのパース。
+		         * @param {GomlNode} node          アタッチされるコンポーネント
+		         * @param {Element}  componentsTag .COMPONENTSタグ
+		         */
+		
+		    }, {
+		        key: "_parseComponents",
+		        value: function _parseComponents(node, componentsTag) {
+		            var componentNodes = componentsTag.childNodes;
+		            if (!componentNodes) {
+		                return;
+		            }
+		            for (var i = 0; i < componentNodes.length; i++) {
+		                var componentNode = componentNodes.item(i);
+		                if (!GomlParser._isElement(componentNode)) {
+		                    continue; // Skip if the node was not element
+		                }
+		                var componentDecl = _GrimoireInterface2.default.componentDeclarations.get(componentNode);
+		                if (!componentDecl) {
+		                    throw new Error("Component " + componentNode.tagName + " is not found.");
+		                }
+		                var component = componentDecl.generateInstance(componentNode);
+		                node._addComponentDirectly(component, false);
+		            }
+		        }
+		    }, {
+		        key: "_isElement",
+		        value: function _isElement(node) {
+		            return node.nodeType === Node.ELEMENT_NODE;
+		        }
+		    }, {
+		        key: "_isComponentsTag",
+		        value: function _isComponentsTag(element) {
+		            var regexToFindComponent = /\.COMPONENTS$/mi; // TODO might needs to fix
+		            return regexToFindComponent.test(element.nodeName);
+		        }
+		    }]);
+		
+		    return GomlParser;
+		}();
+		
+		exports.default = GomlParser;
+	
+	/***/ },
+	/* 7 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+		
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+		
+		var _ComponentDeclaration = __webpack_require__(8);
+		
+		var _ComponentDeclaration2 = _interopRequireDefault(_ComponentDeclaration);
+		
+		var _AttributeManager = __webpack_require__(1);
+		
+		var _AttributeManager2 = _interopRequireDefault(_AttributeManager);
+		
+		var _Utility = __webpack_require__(13);
+		
+		var _Utility2 = _interopRequireDefault(_Utility);
+		
+		var _Constants = __webpack_require__(9);
+		
+		var _Constants2 = _interopRequireDefault(_Constants);
+		
+		var _GomlParser = __webpack_require__(6);
+		
+		var _GomlParser2 = _interopRequireDefault(_GomlParser);
+		
+		var _XMLReader = __webpack_require__(14);
+		
+		var _XMLReader2 = _interopRequireDefault(_XMLReader);
+		
+		var _GrimoireInterface = __webpack_require__(3);
+		
+		var _GrimoireInterface2 = _interopRequireDefault(_GrimoireInterface);
+		
+		var _EEObject2 = __webpack_require__(15);
+		
+		var _EEObject3 = _interopRequireDefault(_EEObject2);
+		
+		var _NodeUtility = __webpack_require__(18);
+		
+		var _NodeUtility2 = _interopRequireDefault(_NodeUtility);
+		
+		var _NSDictionary = __webpack_require__(12);
+		
+		var _NSDictionary2 = _interopRequireDefault(_NSDictionary);
+		
+		var _NSIdentity = __webpack_require__(11);
+		
+		var _NSIdentity2 = _interopRequireDefault(_NSIdentity);
+		
+		var _Ensure = __webpack_require__(2);
+		
+		var _Ensure2 = _interopRequireDefault(_Ensure);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+		
+		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+		
+		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+		
+		var GomlNode = function (_EEObject) {
+		    _inherits(GomlNode, _EEObject);
+		
+		    /**
+		     * create new instance.
+		     * @param  {NodeDeclaration} recipe  作成するノードのDeclaration
+		     * @param  {Element}         element 対応するDomElement
+		     * @return {[type]}                  [description]
+		     */
+		    function GomlNode(recipe, element) {
+		        _classCallCheck(this, GomlNode);
+		
+		        var _this = _possibleConstructorReturn(this, (GomlNode.__proto__ || Object.getPrototypeOf(GomlNode)).call(this));
+		
+		        _this.children = [];
+		        _this._parent = null;
+		        _this._root = null;
+		        _this._tree = null;
+		        _this._companion = new _NSDictionary2.default();
+		        _this._isActive = false;
+		        _this._messageCache = {};
+		        _this._deleted = false;
+		        _this._mounted = false;
+		        _this._enabled = true;
+		        _this._defaultValueResolved = false;
+		        _this._initializedInfo = null;
+		        if (!recipe) {
+		            throw new Error("recipe must not be null");
+		        }
+		        _this.nodeDeclaration = recipe;
+		        _this.element = element ? element : document.createElementNS(recipe.name.ns, recipe.name.name); // TODO Could be undefined or null?
+		        _this.componentsElement = document.createElement("COMPONENTS");
+		        _this._root = _this;
+		        _this._tree = (0, _GrimoireInterface2.default)([_this]);
+		        _this._components = [];
+		        _this._attributeManager = new _AttributeManager2.default(recipe.name.name, new _NSDictionary2.default());
+		        _this.element.setAttribute(_Constants2.default.x_gr_id, _this.id);
+		        var defaultComponentNames = recipe.defaultComponentsActual;
+		        // instanciate default components
+		        defaultComponentNames.forEach(function (id) {
+		            _this.addComponent(id, null, true);
+		        });
+		        // register to GrimoireInterface.
+		        _GrimoireInterface2.default.nodeDictionary[_this.id] = _this;
+		        return _this;
+		    }
+		    /**
+		     * Get actual goml node from element of xml tree.
+		     * @param  {Element}  elem [description]
+		     * @return {GomlNode}      [description]
+		     */
+		
+		
+		    _createClass(GomlNode, [{
+		        key: "getChildrenByClass",
+		
+		        /**
+		         * search from children node by class property.
+		         * return all nodes has same class as given.
+		         * @param  {string}     className [description]
+		         * @return {GomlNode[]}           [description]
+		         */
+		        value: function getChildrenByClass(className) {
+		            var nodes = this.element.getElementsByClassName(className);
+		            var array = new Array(nodes.length);
+		            for (var i = 0; i < nodes.length; i++) {
+		                array[i] = GomlNode.fromElement(nodes.item(i));
+		            }
+		            return array;
+		        }
+		        /**
+		         * search from children node by name property.
+		         * return all nodes has same name as given.
+		         * @param  {string}     nodeName [description]
+		         * @return {GomlNode[]}          [description]
+		         */
+		
+		    }, {
+		        key: "getChildrenByNodeName",
+		        value: function getChildrenByNodeName(nodeName) {
+		            var nodes = this.element.getElementsByTagName(nodeName);
+		            var array = new Array(nodes.length);
+		            for (var i = 0; i < nodes.length; i++) {
+		                array[i] = GomlNode.fromElement(nodes.item(i));
+		            }
+		            return array;
+		        }
+		    }, {
+		        key: "remove",
+		        value: function remove() {
+		            this.children.forEach(function (c) {
+		                c.remove();
+		            });
+		            _GrimoireInterface2.default.nodeDictionary[this.id] = null;
+		            if (this._parent) {
+		                this._parent.detachChild(this);
+		            } else {
+		                this.setMounted(false);
+		                if (this.element.parentNode) {
+		                    this.element.parentNode.removeChild(this.element);
+		                }
+		            }
+		            this._sendMessageForced("$$dispose");
+		            this._deleted = true;
+		        }
+		        /**
+		         * send message to this node.
+		         * invoke component method has same name as message if this node isActive.
+		         * @param  {string}  message [description]
+		         * @param  {any}     args    [description]
+		         * @return {boolean}         is this node active.
+		         */
+		
+		    }, {
+		        key: "sendMessage",
+		        value: function sendMessage(message, args) {
+		            if (!this.isActive) {
+		                return false;
+		            }
+		            message = _Ensure2.default.ensureTobeMessage(message);
+		            this._sendMessage(message, args);
+		            return true;
+		        }
+		    }, {
+		        key: "broadcastMessage",
+		        value: function broadcastMessage(arg1, arg2, arg3) {
+		            if (!this.enabled || !this.mounted) {
+		                return;
+		            }
+		            if (typeof arg1 === "number") {
+		                var range = arg1;
+		                var message = _Ensure2.default.ensureTobeMessage(arg2);
+		                var args = arg3;
+		                this._broadcastMessage(message, args, range);
+		            } else {
+		                var _message = _Ensure2.default.ensureTobeMessage(arg1);
+		                var _args = arg2;
+		                this._broadcastMessage(_message, _args, -1);
+		            }
+		        }
+		    }, {
+		        key: "append",
+		        value: function append(tag) {
+		            var _this2 = this;
+		
+		            var elems = _XMLReader2.default.parseXML(tag);
+		            var ret = [];
+		            elems.forEach(function (elem) {
+		                var child = _GomlParser2.default.parse(elem, null, null);
+		                _this2.addChild(child);
+		                ret.push(child);
+		            });
+		            return ret;
+		        }
+		        /**
+		         * add new instance created by given name and attributes for this node as child.
+		         * @param {string |   NSIdentity} nodeName      [description]
+		         * @param {any    }} attributes   [description]
+		         */
+		
+		    }, {
+		        key: "addChildByName",
+		        value: function addChildByName(nodeName, attributes) {
+		            if (typeof nodeName === "string") {
+		                return this.addChildByName(_NSIdentity2.default.from(nodeName), attributes);
+		            } else {
+		                var nodeDec = _GrimoireInterface2.default.nodeDeclarations.get(nodeName);
+		                var node = new GomlNode(nodeDec, null);
+		                if (attributes) {
+		                    for (var key in attributes) {
+		                        var id = _Ensure2.default.ensureTobeNSIdentity(key);
+		                        node.setAttribute(id, attributes[key]);
+		                    }
+		                }
+		                this.addChild(node);
+		                return node;
+		            }
+		        }
+		        /**
+		         * Add child for this node.
+		         * @param {GomlNode} child            child node to add.
+		         * @param {number}   index            index for insert.なければ末尾に追加
+		         * @param {[type]}   elementSync=true trueのときはElementのツリーを同期させる。（Elementからパースするときはfalseにする）
+		         */
+		
+		    }, {
+		        key: "addChild",
+		        value: function addChild(child, index) {
+		            var elementSync = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+		
+		            if (child._deleted) {
+		                throw new Error("deleted node never use.");
+		            }
+		            if (index != null && typeof index !== "number") {
+		                throw new Error("insert index should be number or null or undefined.");
+		            }
+		            // add process.
+		            var insertIndex = index == null ? this.children.length : index;
+		            this.children.splice(insertIndex, 0, child);
+		            child._parent = this;
+		            child._tree = this._tree;
+		            child._companion = this._companion;
+		            // sync html
+		            if (elementSync) {
+		                var referenceElement = this.element[_NodeUtility2.default.getNodeListIndexByElementIndex(this.element, insertIndex)];
+		                this.element.insertBefore(child.element, referenceElement);
+		            }
+		            // mounting
+		            if (this.mounted) {
+		                child.setMounted(true);
+		            }
+		            // send initializedInfo if needed
+		            if (this._initializedInfo) {
+		                child.sendInitializedMessage(this._initializedInfo);
+		            }
+		        }
+		    }, {
+		        key: "callRecursively",
+		        value: function callRecursively(func) {
+		            return this._callRecursively(func, function (n) {
+		                return n.children;
+		            });
+		        }
+		        /**
+		         * delete child node.
+		         * @param {GomlNode} child Target node to be inserted.
+		         */
+		
+		    }, {
+		        key: "removeChild",
+		        value: function removeChild(child) {
+		            var node = this.detachChild(child);
+		            if (node) {
+		                node.remove();
+		            }
+		        }
+		        /**
+		         * detach given node from this node if target is child of this node.
+		         * return null if target is not child of this node.
+		         * @param  {GomlNode} child [description]
+		         * @return {GomlNode}       detached node.
+		         */
+		
+		    }, {
+		        key: "detachChild",
+		        value: function detachChild(target) {
+		            // search child.
+		            var index = this.children.indexOf(target);
+		            if (index === -1) {
+		                return null;
+		            }
+		            target.setMounted(false);
+		            target._parent = null;
+		            this.children.splice(index, 1);
+		            // html sync
+		            this.element.removeChild(target.element);
+		            return target;
+		        }
+		        /**
+		         * detach this node from parent.
+		         */
+		
+		    }, {
+		        key: "detach",
+		        value: function detach() {
+		            if (this.parent) {
+		                this.parent.detachChild(this);
+		            } else {
+		                throw new Error("root Node cannot be detached.");
+		            }
+		        }
+		        /**
+		         * [[[OBSOLETE!]]]get value of attribute.
+		         * @param  {string | NSIdentity}  attrName [description]
+		         * @return {any}         [description]
+		         */
+		
+		    }, {
+		        key: "getValue",
+		        value: function getValue(attrName) {
+		            console.warn("getValue is obsolate. please use getAttribute instead of");
+		            return this.getAttribute(attrName);
+		        }
+		    }, {
+		        key: "getAttribute",
+		        value: function getAttribute(attrName) {
+		            return this._attributeManager.getAttribute(attrName);
+		        }
+		    }, {
+		        key: "getAttributeRaw",
+		        value: function getAttributeRaw(attrName) {
+		            return this._attributeManager.attributes.get(attrName);
+		        }
+		    }, {
+		        key: "setAttribute",
+		        value: function setAttribute(attrName, value) {
+		            var ignoireFreeze = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+		
+		            if (!ignoireFreeze && this.isFreezeAttribute(_Ensure2.default.ensureTobeNSIdentity(attrName).name)) {
+		                throw new Error("attribute " + _Ensure2.default.ensureTobeNSIdentity(attrName).name + " can not set. Attribute is frozen. ");
+		            }
+		            return this._attributeManager.setAttribute(attrName, value);
+		        }
+		        /**
+		         *  Add new attribute. In most of case, users no need to call this method.
+		         *  Use __addAttribute in Component should be used instead.
+		         */
+		
+		    }, {
+		        key: "addAttribute",
+		        value: function addAttribute(attr) {
+		            return this._attributeManager.addAttribute(attr);
+		        }
+		        /**
+		         * Update mounted status and emit events
+		         * @param {boolean} mounted Mounted status.
+		         */
+		
+		    }, {
+		        key: "setMounted",
+		        value: function setMounted(mounted) {
+		            if (this._mounted === mounted) {
+		                return;
+		            }
+		            if (mounted) {
+		                this._mount();
+		                for (var i = 0; i < this.children.length; i++) {
+		                    this.children[i].setMounted(mounted);
+		                }
+		            } else {
+		                for (var _i = 0; _i < this.children.length; _i++) {
+		                    this.children[_i].setMounted(mounted);
+		                }
+		                this._sendMessageForced("unmount");
+		                this._isActive = false;
+		                this._tree = null;
+		                this._companion = null;
+		                this._mounted = mounted;
+		            }
+		        }
+		        /**
+		         * Get index of this node from parent.
+		         * @return {number} number of index.
+		         */
+		
+		    }, {
+		        key: "removeAttribute",
+		
+		        /**
+		         * remove attribute from this node.
+		         * @param {Attribute} attr [description]
+		         */
+		        value: function removeAttribute(attr) {
+		            return this._attributeManager.removeAttribute(attr);
+		        }
+		        /**
+		         * attach component to this node.
+		         * @param {Component} component [description]
+		         */
+		
+		    }, {
+		        key: "addComponent",
+		        value: function addComponent(component) {
+		            var attributes = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+		            var isDefaultComponent = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+		
+		            if (typeof component === "function") {
+		                var obj = _ComponentDeclaration2.default.ctorMap.find(function (obj) {
+		                    return obj.ctor === component;
+		                });
+		                component = obj.name;
+		            }
+		            var declaration = _GrimoireInterface2.default.componentDeclarations.get(component);
+		            var instance = declaration.generateInstance();
+		            attributes = attributes || {};
+		            for (var key in attributes) {
+		                instance.setAttribute(key, attributes[key]);
+		            }
+		            this._addComponentDirectly(instance, isDefaultComponent);
+		            return instance;
+		        }
+		        /**
+		         * Internal use!
+		         * Should not operate by users or plugin developpers
+		         * @param {Component} component          [description]
+		         * @param {boolean}   isDefaultComponent [description]
+		         */
+		
+		    }, {
+		        key: "_addComponentDirectly",
+		        value: function _addComponentDirectly(component, isDefaultComponent) {
+		            var _this3 = this;
+		
+		            if (component.node || component.disposed) {
+		                throw new Error("component never change attached node");
+		            }
+		            this._messageCache = {}; // TODO: optimize.
+		            component.isDefaultComponent = !!isDefaultComponent;
+		            component.node = this;
+		            var referenceElement = this.componentsElement[_NodeUtility2.default.getNodeListIndexByElementIndex(this.componentsElement, this._components.length)];
+		            this.componentsElement.insertBefore(component.element, referenceElement);
+		            var propNames = [];
+		            var o = component;
+		            while (o) {
+		                propNames = propNames.concat(Object.getOwnPropertyNames(o));
+		                o = Object.getPrototypeOf(o);
+		            }
+		            propNames.filter(function (name) {
+		                return name.startsWith("$") && typeof component[name] === "function";
+		            }).forEach(function (method) {
+		                component["$" + method] = component[method].bind(component);
+		            });
+		            this._components.push(component);
+		            if (isDefaultComponent) {
+		                // attributes should be exposed on node
+		                component.attributes.forEach(function (p) {
+		                    return _this3.addAttribute(p);
+		                });
+		                if (this._defaultValueResolved) {
+		                    component.attributes.forEach(function (p) {
+		                        return p.resolveDefaultValue(_NodeUtility2.default.getAttributes(_this3.element));
+		                    });
+		                }
+		            }
+		            if (this._mounted) {
+		                component.resolveDefaultAttributes(null); // here must be optional component.should not use node element attributes.
+		                this._sendMessageForcedTo(component, "awake");
+		                this._sendMessageForcedTo(component, "mount");
+		            }
+		            // sending `initialized` message if needed.
+		            if (this._initializedInfo) {
+		                component.initialized(this._initializedInfo);
+		            }
+		        }
+		    }, {
+		        key: "removeComponent",
+		        value: function removeComponent(component) {
+		            var index = this._components.indexOf(component);
+		            if (index !== -1) {
+		                this._sendMessageForcedTo(component, "unmount");
+		                this._sendMessageForcedTo(component, "dispose");
+		                this.componentsElement.removeChild(component.element);
+		                this._components.splice(index, 1);
+		                this._messageCache = {}; // TODO:optimize.
+		                component.node = null;
+		                component.disposed = true;
+		                return true;
+		            }
+		            return false;
+		        }
+		    }, {
+		        key: "getComponents",
+		        value: function getComponents(filter) {
+		            var _this4 = this;
+		
+		            if (!filter) {
+		                return this._components;
+		            } else {
+		                var _ret = function () {
+		                    var ctor = _Ensure2.default.ensureTobeComponentConstructor(filter);
+		                    return {
+		                        v: _this4._components.filter(function (c) {
+		                            return c instanceof ctor;
+		                        })
+		                    };
+		                }();
+		
+		                if ((typeof _ret === "undefined" ? "undefined" : _typeof(_ret)) === "object") return _ret.v;
+		            }
+		        }
+		        /**
+		         * search component by name from this node.
+		         * @param  {string | NSIdentity}  name [description]
+		         * @return {Component}   component found first.
+		         */
+		
+		    }, {
+		        key: "getComponent",
+		        value: function getComponent(name) {
+		            // 事情により<T extends Component>とはできない。
+		            // これはref/Node/Componentによって参照されるのが外部ライブラリにおけるコンポーネントであるが、
+		            // src/Node/Componentがこのプロジェクトにおけるコンポーネントのため、別のコンポーネントとみなされ、型の制約をみたさなくなるからである。
+		            if (!name) {
+		                throw new Error("name must be not null or undefined");
+		            } else if (typeof name === "function") {
+		                return this._components.find(function (c) {
+		                    return c instanceof name;
+		                }) || null;
+		            } else {
+		                var ctor = _Ensure2.default.ensureTobeComponentConstructor(name);
+		                if (!ctor) {
+		                    throw new Error("component " + name + " is not exist");
+		                }
+		                return this.getComponent(ctor);
+		            }
+		        }
+		    }, {
+		        key: "getComponentsInChildren",
+		        value: function getComponentsInChildren(name) {
+		            return this.callRecursively(function (node) {
+		                return node.getComponent(name);
+		            }).filter(function (c) {
+		                return !!c;
+		            });
+		        }
+		    }, {
+		        key: "getComponentInAncesotor",
+		        value: function getComponentInAncesotor(name) {
+		            if (this.parent) {
+		                return this.parent._getComponentInAncesotor(name);
+		            }
+		            return null;
+		        }
+		    }, {
+		        key: "sendInitializedMessage",
+		        value: function sendInitializedMessage(info) {
+		            if (this._initializedInfo === info) {
+		                return;
+		            }
+		            var components = this._components.concat();
+		            for (var i = 0; i < components.length; i++) {
+		                components[i].initialized(info);
+		            }
+		            this._initializedInfo = info;
+		            var children = this.children.concat();
+		            children.forEach(function (child) {
+		                child.sendInitializedMessage(info);
+		            });
+		        }
+		        /**
+		         * resolve default attribute value for all component.
+		         * すべてのコンポーネントの属性をエレメントかデフォルト値で初期化
+		         */
+		
+		    }, {
+		        key: "resolveAttributesValue",
+		        value: function resolveAttributesValue() {
+		            this._defaultValueResolved = true;
+		            var attrs = _NodeUtility2.default.getAttributes(this.element);
+		            for (var key in attrs) {
+		                if (key === _Constants2.default.x_gr_id) {
+		                    continue;
+		                }
+		                if (this.isFreezeAttribute(key)) {
+		                    throw new Error("attribute " + key + " can not change from GOML. Attribute is frozen. ");
+		                }
+		                if (!this.attributes.get(key)) {
+		                    _Utility2.default.w("attribute '" + key + "' is not exist in this node '" + this.name.fqn + "'");
+		                }
+		            }
+		            this._components.forEach(function (component) {
+		                component.resolveDefaultAttributes(attrs);
+		            });
+		        }
+		    }, {
+		        key: "isFreezeAttribute",
+		        value: function isFreezeAttribute(attributeName) {
+		            return !!this.nodeDeclaration.freezeAttributes.find(function (name) {
+		                return attributeName === name;
+		            });
+		        }
+		    }, {
+		        key: "notifyActivenessUpdate",
+		        value: function notifyActivenessUpdate(activeness) {
+		            if (this.isActive !== activeness) {
+		                this._isActive = activeness;
+		                this.children.forEach(function (child) {
+		                    child.notifyActivenessUpdate(activeness && child.enabled);
+		                });
+		            }
+		        }
+		    }, {
+		        key: "watch",
+		        value: function watch(attrName, watcher) {
+		            var immediate = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+		
+		            this._attributeManager.watch(attrName, watcher, immediate);
+		        }
+		    }, {
+		        key: "_sendMessage",
+		        value: function _sendMessage(message, args) {
+		            if (this._messageCache[message] === void 0) {
+		                this._messageCache[message] = this._components.filter(function (c) {
+		                    return typeof c[message] === "function";
+		                });
+		            }
+		            var targetList = this._messageCache[message];
+		            for (var i = 0; i < targetList.length; i++) {
+		                if (targetList[i].disposed) {
+		                    continue;
+		                }
+		                this._sendMessageToComponent(targetList[i], message, args);
+		            }
+		        }
+		    }, {
+		        key: "_broadcastMessage",
+		        value: function _broadcastMessage(message, args, range) {
+		            // message is already ensured.-1 to unlimited range.
+		            if (!this.isActive) {
+		                return;
+		            }
+		            this._sendMessage(message, args);
+		            if (range === 0) {
+		                return;
+		            }
+		            var nextRange = range - 1;
+		            for (var i = 0; i < this.children.length; i++) {
+		                this.children[i]._broadcastMessage(message, args, nextRange);
+		            }
+		        }
+		    }, {
+		        key: "_getComponentInAncesotor",
+		        value: function _getComponentInAncesotor(name) {
+		            var ret = this.getComponent(name);
+		            if (ret) {
+		                return ret;
+		            }
+		            if (this.parent) {
+		                return this.parent._getComponentInAncesotor(name);
+		            }
+		            return null;
+		        }
+		        /**
+		         * コンポーネントにメッセージを送る。送信したらバッファからは削除される.
+		         * @param  {Component} targetComponent 対象コンポーネント
+		         * @param  {string}    message         メッセージ
+		         * @param  {boolean}   forced          trueでコンポーネントのenableを無視して送信
+		         * @param  {boolean}   toBuffer        trueで送信失敗したらバッファに追加
+		         * @param  {any}       args            [description]
+		         * @return {boolean}                   送信したか
+		         */
+		
+		    }, {
+		        key: "_sendMessageToComponent",
+		        value: function _sendMessageToComponent(targetComponent, message, args) {
+		            if (!targetComponent.enabled) {
+		                return false;
+		            }
+		            var method = targetComponent[message];
+		            if (typeof method === "function") {
+		                method(args);
+		                return true;
+		            }
+		            return false;
+		        }
+		    }, {
+		        key: "_sendMessageForced",
+		        value: function _sendMessageForced(message) {
+		            var componentsBuffer = this._components.concat();
+		            for (var i = 0; i < componentsBuffer.length; i++) {
+		                var target = componentsBuffer[i];
+		                if (target.disposed) {
+		                    continue;
+		                }
+		                this._sendMessageForcedTo(target, message);
+		            }
+		        }
+		        /**
+		         * for system messages.
+		         * @param {Component} target  [description]
+		         * @param {string}    message [description]
+		         */
+		
+		    }, {
+		        key: "_sendMessageForcedTo",
+		        value: function _sendMessageForcedTo(target, message) {
+		            message = _Ensure2.default.ensureTobeMessage(message);
+		            var method = target[message];
+		            if (typeof method === "function") {
+		                method();
+		            }
+		        }
+		        /**
+		         * sending mount and awake message if needed to all components.
+		         */
+		
+		    }, {
+		        key: "_mount",
+		        value: function _mount() {
+		            this._mounted = true;
+		            var componentsBuffer = this._components.concat();
+		            for (var i = 0; i < componentsBuffer.length; i++) {
+		                var target = componentsBuffer[i];
+		                if (target.disposed) {
+		                    continue;
+		                }
+		                target.awake();
+		                this._sendMessageForcedTo(target, "$$mount");
+		            }
+		        }
+		    }, {
+		        key: "_callRecursively",
+		        value: function _callRecursively(func, nextGenerator) {
+		            var val = func(this);
+		            var nexts = nextGenerator(this);
+		            var nextVals = nexts.map(function (c) {
+		                return c.callRecursively(func);
+		            });
+		            var list = _Utility2.default.flat(nextVals);
+		            list.unshift(val);
+		            return list;
+		        }
+		    }, {
+		        key: "name",
+		
+		        /**
+		         * Tag name.
+		         */
+		        get: function get() {
+		            return this.nodeDeclaration.name;
+		        }
+		    }, {
+		        key: "attributes",
+		        get: function get() {
+		            return this._attributeManager.attributes;
+		        }
+		        /**
+		         * GomlInterface that this node is bound to.
+		         * throw exception if this node is not mounted.
+		         * @return {IGomlInterface} [description]
+		         */
+		
+		    }, {
+		        key: "tree",
+		        get: function get() {
+		            if (!this.mounted) {
+		                throw new Error("this node is not mounted");
+		            }
+		            return this._tree;
+		        }
+		        /**
+		         * indicate this node is already deleted.
+		         * if this node is deleted once, this node will not be mounted.
+		         * @return {boolean} [description]
+		         */
+		
+		    }, {
+		        key: "deleted",
+		        get: function get() {
+		            return this._deleted;
+		        }
+		        /**
+		         * indicate this node is enabled in tree.
+		         * This value must be false when ancestor of this node is disabled.
+		         * @return {boolean} [description]
+		         */
+		
+		    }, {
+		        key: "isActive",
+		        get: function get() {
+		            return this._isActive;
+		        }
+		        /**
+		         * indicate this node is enabled.
+		         * this node never recieve any message if this node is not enabled.
+		         * @return {boolean} [description]
+		         */
+		
+		    }, {
+		        key: "enabled",
+		        get: function get() {
+		            return this._enabled;
+		        },
+		        set: function set(value) {
+		            this.setAttribute("enabled", value);
+		        }
+		        /**
+		         * the shared object by all nodes in tree.
+		         * @return {NSDictionary<any>} [description]
+		         */
+		
+		    }, {
+		        key: "companion",
+		        get: function get() {
+		            return this._companion;
+		        }
+		        /**
+		         * parent node of this node.
+		         * if this node is root, return null.
+		         * @return {GomlNode} [description]
+		         */
+		
+		    }, {
+		        key: "parent",
+		        get: function get() {
+		            return this._parent;
+		        }
+		        /**
+		         * return true if this node has some child nodes.
+		         * @return {boolean} [description]
+		         */
+		
+		    }, {
+		        key: "hasChildren",
+		        get: function get() {
+		            return this.children.length > 0;
+		        }
+		        /**
+		         * indicate mounted status.
+		         * this property to be true when treeroot registered to GrimoireInterface.
+		         * to be false when this node detachd from the tree.
+		         * @return {boolean} Whether this node is mounted or not.
+		         */
+		
+		    }, {
+		        key: "mounted",
+		        get: function get() {
+		            return this._mounted;
+		        }
+		    }, {
+		        key: "index",
+		        get: function get() {
+		            if (!this._parent) {
+		                return -1;
+		            }
+		            return this._parent.children.indexOf(this);
+		        }
+		    }], [{
+		        key: "fromElement",
+		        value: function fromElement(elem) {
+		            return _GrimoireInterface2.default.nodeDictionary[elem.getAttribute(_Constants2.default.x_gr_id)];
+		        }
+		    }]);
+		
+		    return GomlNode;
+		}(_EEObject3.default);
+		
+		exports.default = GomlNode;
+	
+	/***/ },
+	/* 8 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+		
+		var _Constants = __webpack_require__(9);
+		
+		var _Constants2 = _interopRequireDefault(_Constants);
+		
+		var _GrimoireInterface = __webpack_require__(3);
+		
+		var _GrimoireInterface2 = _interopRequireDefault(_GrimoireInterface);
+		
+		var _Attribute = __webpack_require__(10);
+		
+		var _Attribute2 = _interopRequireDefault(_Attribute);
+		
+		var _NSDictionary = __webpack_require__(12);
+		
+		var _NSDictionary2 = _interopRequireDefault(_NSDictionary);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+		
+		var ComponentDeclaration = function () {
+		    function ComponentDeclaration(name, attributes, ctor) {
+		        _classCallCheck(this, ComponentDeclaration);
+		
+		        this.name = name;
+		        this.attributes = attributes;
+		        this.ctor = ctor;
+		        ComponentDeclaration.ctorMap.push({ ctor: ctor, name: name });
+		    }
+		
+		    _createClass(ComponentDeclaration, [{
+		        key: "generateInstance",
+		        value: function generateInstance(componentElement) {
+		            componentElement = componentElement ? componentElement : document.createElementNS(this.name.ns, this.name.name);
+		            var component = new this.ctor();
+		            componentElement.setAttribute(_Constants2.default.x_gr_id, component.id);
+		            _GrimoireInterface2.default.componentDictionary[component.id] = component;
+		            component.name = this.name;
+		            component.element = componentElement;
+		            component.attributes = new _NSDictionary2.default();
+		            for (var key in this.attributes) {
+		                _Attribute2.default.generateAttributeForComponent(key, this.attributes[key], component);
+		            }
+		            return component;
+		        }
+		    }]);
+		
+		    return ComponentDeclaration;
+		}();
+		
+		ComponentDeclaration.ctorMap = [];
+		exports.default = ComponentDeclaration;
+	
+	/***/ },
+	/* 9 */
+	/***/ function(module, exports) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+		
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+		
+		var Constants = function () {
+		    function Constants() {
+		        _classCallCheck(this, Constants);
+		    }
+		
+		    _createClass(Constants, null, [{
+		        key: "defaultNamespace",
+		        get: function get() {
+		            return "HTTP://GRIMOIRE.GL/NS/DEFAULT";
+		        }
+		    }, {
+		        key: "x_gr_id",
+		        get: function get() {
+		            return "x-gr-id";
+		        }
+		    }]);
+		
+		    return Constants;
+		}();
+		
+		exports.default = Constants;
+	
+	/***/ },
+	/* 10 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+		
+		var _Ensure = __webpack_require__(2);
+		
+		var _Ensure2 = _interopRequireDefault(_Ensure);
+		
+		var _NSIdentity = __webpack_require__(11);
+		
+		var _NSIdentity2 = _interopRequireDefault(_NSIdentity);
+		
+		var _GrimoireInterface = __webpack_require__(3);
+		
+		var _GrimoireInterface2 = _interopRequireDefault(_GrimoireInterface);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+		
+		/**
+		 * Manage a attribute attached to components.
+		 */
+		var Attribute = function () {
+		    function Attribute() {
+		        _classCallCheck(this, Attribute);
+		
+		        /**
+		         * List of functions that is listening changing values.
+		         */
+		        this._observers = [];
+		    }
+		    /**
+		     * Goml tree interface which contains the component this attribute bound to.
+		     * @return {IGomlInterface} [description]
+		     */
+		
+		
+		    _createClass(Attribute, [{
+		        key: "watch",
+		
+		        /**
+		         * Add event handler to observe changing this attribute.
+		         * @param  {(attr: Attribute) => void} handler handler the handler you want to add.
+		         * @param {boolean = false} callFirst whether that handler should be called first time.
+		         */
+		        value: function watch(watcher) {
+		            var immedateCalls = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+		
+		            this._observers.push(watcher);
+		            if (immedateCalls) {
+		                watcher(this.Value, undefined, this);
+		            }
+		        }
+		        /**
+		         * Remove event handler you added.
+		         * @param  {Attribute} handler [description]
+		         * @return {[type]}            [description]
+		         */
+		
+		    }, {
+		        key: "removeObserver",
+		        value: function removeObserver(target) {
+		            var index = this._observers.findIndex(function (f) {
+		                return f === target;
+		            });
+		            if (index < 0) {
+		                return;
+		            }
+		            this._observers.splice(index, 1);
+		        }
+		        /**
+		         * Bind converted value to specified field.
+		         * When target object was not specified, field of owner component would be assigned.
+		         * @param {string} variableName [description]
+		         * @param {any} targetObject [description]
+		         */
+		
+		    }, {
+		        key: "boundTo",
+		        value: function boundTo(variableName) {
+		            var _this = this;
+		
+		            var targetObject = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.component;
+		
+		            if (this.declaration.lazy) {
+		                targetObject.__defineGetter__(variableName, function () {
+		                    return _this.Value;
+		                });
+		            } else {
+		                (function () {
+		                    var backing = void 0;
+		                    _this.watch(function (v) {
+		                        backing = v;
+		                    }, true);
+		                    targetObject.__defineGetter__(variableName, function () {
+		                        return backing;
+		                    });
+		                })();
+		            }
+		            targetObject.__defineSetter__(variableName, function (val) {
+		                _this.Value = val;
+		            });
+		        }
+		        /**
+		         * Apply default value to attribute from DOM values.
+		         * @param {string }} domValues [description]
+		         */
+		
+		    }, {
+		        key: "resolveDefaultValue",
+		        value: function resolveDefaultValue(domValues) {
+		            if (this._value !== void 0) {
+		                return;
+		            }
+		            var tagAttrValue = domValues[this.name.name];
+		            if (tagAttrValue !== void 0) {
+		                this.Value = tagAttrValue; // Dom指定値で解決
+		                return;
+		            }
+		            var nodeDefaultValue = this.component.node.nodeDeclaration.defaultAttributesActual.get(this.name);
+		            if (nodeDefaultValue !== void 0) {
+		                this.Value = nodeDefaultValue; // Node指定値で解決
+		                return;
+		            }
+		            this.Value = this.declaration.default;
+		        }
+		    }, {
+		        key: "_valuate",
+		        value: function _valuate(raw) {
+		            var v = this.converter.convert(raw);
+		            if (v === void 0) {
+		                throw new Error("attribute " + this.name.name + " value can not be convert from " + this._value);
+		            }
+		            this._lastValuete = v;
+		            return v;
+		        }
+		    }, {
+		        key: "_notifyChange",
+		        value: function _notifyChange(newValue) {
+		            var _this2 = this;
+		
+		            var lastvalue = this._lastValuete;
+		            var c = this.converter;
+		            this._observers.forEach(function (handler) {
+		                handler(c.convert(newValue), lastvalue, _this2);
+		            });
+		        }
+		    }, {
+		        key: "tree",
+		        get: function get() {
+		            return this.component.tree;
+		        }
+		        /**
+		         * Companion map which is bounding to the component this attribute bound to.
+		         * @return {NSDictionary<any>} [description]
+		         */
+		
+		    }, {
+		        key: "companion",
+		        get: function get() {
+		            return this.component.companion;
+		        }
+		        /**
+		         * Get a value with specified type.
+		         * @return {any} value with specified type.
+		         */
+		
+		    }, {
+		        key: "Value",
+		        get: function get() {
+		            if (this._value === void 0) {
+		                throw new Error("attribute " + this.name.name + " value is undefined in " + this.component.node.name.name);
+		            }
+		            return this._valuate(this._value);
+		        }
+		        /**
+		         * Set a value with any type.
+		         * @param {any} val Value with string or specified type.
+		         */
+		        ,
+		        set: function set(val) {
+		            if (this._value === val) {
+		                return;
+		            }
+		            this._value = val;
+		            this._notifyChange(val);
+		        }
+		    }], [{
+		        key: "convert",
+		        value: function convert(converter, self, val) {
+		            var cname = _Ensure2.default.ensureTobeNSIdentity(converter);
+		            var conv = _GrimoireInterface2.default.converters.get(cname);
+		            if (!conv) {
+		                throw new Error("converter " + cname.name + " is not defined.");
+		            }
+		            return conv.convert.bind(self)(val); // TODO: performance problem?
+		        }
+		        /**
+		         * Construct a new attribute with name of key and any value with specified type. If constant flag is true, This attribute will be immutable.
+		         * If converter is not served, string converter will be set as default.
+		         * @param {string}        key       Key of this attribute.
+		         * @param {any}           value     Value of this attribute.
+		         * @param {ConverterBase} converter Converter of this attribute.
+		         * @param {boolean}       constant  Whether this attribute is immutable or not. False as default.
+		         */
+		
+		    }, {
+		        key: "generateAttributeForComponent",
+		        value: function generateAttributeForComponent(name, declaration, component) {
+		            var attr = new Attribute();
+		            attr.name = _NSIdentity2.default.from(component.name.ns, name);
+		            attr.component = component;
+		            attr.declaration = declaration;
+		            var converterName = _Ensure2.default.ensureTobeNSIdentity(declaration.converter);
+		            attr.converter = _GrimoireInterface2.default.converters.get(converterName);
+		            if (attr.converter === void 0) {
+		                // When the specified converter was not found
+		                throw new Error("Specified converter " + converterName.name + " was not found from registered converters.\n Component: " + attr.component.name.fqn + "\n Attribute: " + attr.name.name);
+		            }
+		            attr.converter = {
+		                convert: attr.converter.convert.bind(attr),
+		                name: attr.converter.name
+		            };
+		            attr.component.attributes.set(attr.name, attr);
+		            return attr;
+		        }
+		    }]);
+		
+		    return Attribute;
+		}();
+		
+		exports.default = Attribute;
+	
+	/***/ },
+	/* 11 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+		
+		var _Constants = __webpack_require__(9);
+		
+		var _Constants2 = _interopRequireDefault(_Constants);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+		
+		/**
+		 * The class to identity with XML namespace feature.
+		 */
+		var NSIdentity = function () {
+		    function NSIdentity(ns, name) {
+		        _classCallCheck(this, NSIdentity);
+		
+		        this._ns = ns.toUpperCase();
+		        this._name = name;
+		        // Ensure all of the characters are uppercase
+		        this._name = NSIdentity._ensureValidIdentity(this.name, true);
+		        this._ns = NSIdentity._ensureValidIdentity(this.ns);
+		        this._fqn = this.name + "|" + this.ns;
+		        NSIdentity._instances[this._fqn] = this;
+		        if (!NSIdentity._map[this.name]) {
+		            NSIdentity._map[this.name] = [this];
+		        } else {
+		            NSIdentity._map[this.name].push(this);
+		        }
+		    }
+		    /**
+		     * Namespace of this identity
+		     * @type {string}
+		     */
+		
+		
+		    _createClass(NSIdentity, [{
+		        key: "ns",
+		        get: function get() {
+		            return this._ns;
+		        }
+		        /**
+		         * Short name for this identity
+		         * @type {string}
+		         */
+		
+		    }, {
+		        key: "name",
+		        get: function get() {
+		            return this._name;
+		        }
+		        /**
+		         * Full qualified name of this identity
+		         * @type {string}
+		         */
+		
+		    }, {
+		        key: "fqn",
+		        get: function get() {
+		            return this._fqn;
+		        }
+		        /**
+		         * Generate an instance from Full qualified name.
+		         * @param  {string}             fqn [description]
+		         * @return {NSIdentity}     [description]
+		         */
+		
+		    }], [{
+		        key: "fromFQN",
+		        value: function fromFQN(fqn) {
+		            var inst = NSIdentity._instances[fqn];
+		            if (inst) {
+		                return inst;
+		            }
+		            var splitted = fqn.split("|");
+		            if (splitted.length !== 2) {
+		                throw new Error("Invalid fqn was given");
+		            }
+		            return new NSIdentity(splitted[1], splitted[0]);
+		        }
+		        /**
+		         * デフォルト名前空間でID作成
+		         * @param  {string}     name [description]
+		         * @return {NSIdentity}      [description]
+		         */
+		
+		    }, {
+		        key: "createOnDefaultNS",
+		        value: function createOnDefaultNS(name) {
+		            return NSIdentity.from(_Constants2.default.defaultNamespace, name);
+		        }
+		    }, {
+		        key: "from",
+		        value: function from(arg1, name) {
+		            if (name) {
+		                var fqn = name + "|" + arg1.toUpperCase();
+		                var inst = NSIdentity._instances[fqn];
+		                if (inst) {
+		                    return inst;
+		                }
+		                return new NSIdentity(arg1, name);
+		            } else {
+		                var list = NSIdentity._map[arg1];
+		                if (!list) {
+		                    return new NSIdentity(_Constants2.default.defaultNamespace, arg1);
+		                }
+		                if (list.length === 1) {
+		                    return list[0];
+		                }
+		                throw new Error("name " + arg1 + " is ambiguous in NSIdentity." + list + " exists.");
+		            }
+		        }
+		    }, {
+		        key: "clear",
+		        value: function clear() {
+		            NSIdentity._instances = {};
+		            NSIdentity._map = {};
+		        }
+		        /**
+		         * Make sure given name is valid for using in identity.
+		         * | is prohibited for using in name or namespace.
+		         * . is prohibited for using in name.
+		         * All lowercase alphabet will be transformed into uppercase.
+		         * @param  {string} name        [A name to verify]
+		         * @param  {[type]} noDot=false [Ensure not using dot or not]
+		         * @return {string}             [Valid name]
+		         */
+		
+		    }, {
+		        key: "_ensureValidIdentity",
+		        value: function _ensureValidIdentity(name) {
+		            var noDot = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+		
+		            if (name == null) {
+		                throw new Error("Specified name was null or undefined");
+		            }
+		            if (name.indexOf("|") > -1) {
+		                throw new Error("Namespace and identity cannnot contain | ");
+		            }
+		            if (noDot && name.indexOf(".") > -1) {
+		                throw new Error("identity cannnot contain .");
+		            }
+		            return name;
+		        }
+		    }]);
+		
+		    return NSIdentity;
+		}();
+		
+		NSIdentity._instances = {};
+		NSIdentity._map = {};
+		exports.default = NSIdentity;
+	
+	/***/ },
+	/* 12 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+		
+		var _NSIdentity = __webpack_require__(11);
+		
+		var _NSIdentity2 = _interopRequireDefault(_NSIdentity);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+		
+		var NSDictionary = function () {
+		    function NSDictionary() {
+		        _classCallCheck(this, NSDictionary);
+		
+		        this._nameObjectMap = {};
+		        this._fqnObjectMap = {};
+		    }
+		
+		    _createClass(NSDictionary, [{
+		        key: "set",
+		        value: function set(key, value) {
+		            if (!this._fqnObjectMap[key.fqn]) {
+		                this._fqnObjectMap[key.fqn] = value;
+		                var c = this._nameObjectMap[key.name];
+		                if (c !== void 0) {
+		                    c.push({ id: key, value: value });
+		                } else {
+		                    this._nameObjectMap[key.name] = [{ id: key, value: value }];
+		                }
+		            } else {
+		                this._fqnObjectMap[key.fqn] = value;
+		                var _c = this._nameObjectMap[key.name];
+		                for (var i = 0; i < _c.length; i++) {
+		                    if (_c[i].id.fqn === key.fqn) {
+		                        _c[i] = { id: key, value: value };
+		                        break;
+		                    }
+		                }
+		            }
+		        }
+		    }, {
+		        key: "delete",
+		        value: function _delete(key) {
+		            if (this._fqnObjectMap[key.fqn] !== void 0) {
+		                delete this._fqnObjectMap[key.fqn];
+		                var theMap = this._nameObjectMap[key.name];
+		                for (var i = 0; i < theMap.length; i++) {
+		                    if (theMap[i].id.fqn === key.fqn) {
+		                        theMap.splice(i, 1);
+		                        break;
+		                    }
+		                }
+		                return true;
+		            }
+		            return false;
+		        }
+		    }, {
+		        key: "get",
+		        value: function get(arg1, name) {
+		            if (!arg1) {
+		                throw new Error("NSDictionary.get() can not recieve args null or undefined.");
+		            }
+		            if (typeof arg1 === "string") {
+		                if (name) {
+		                    return this.fromFQN(name + "|" + arg1.toUpperCase());
+		                } else {
+		                    var namedMap = this._nameObjectMap[arg1];
+		                    if (!namedMap) {
+		                        return null;
+		                    }
+		                    if (namedMap.length === 1) {
+		                        return namedMap[0].value;
+		                    } else {
+		                        throw new Error("Specified tag name " + arg1 + " is ambigious to identify.");
+		                    }
+		                }
+		            } else {
+		                if (arg1 instanceof _NSIdentity2.default) {
+		                    return this.fromFQN(arg1.fqn);
+		                } else {
+		                    if (arg1.prefix) {
+		                        return this.get(_NSIdentity2.default.from(arg1.namespaceURI, arg1.localName));
+		                    } else {
+		                        if (arg1.namespaceURI && this._fqnObjectMap[arg1.localName + "|" + arg1.namespaceURI] !== void 0) {
+		                            return this.get(_NSIdentity2.default.from(arg1.namespaceURI, arg1.localName));
+		                        }
+		                        if (arg1 && arg1.ownerElement && arg1.ownerElement.namespaceURI && this._fqnObjectMap[arg1.localName + "|" + arg1.ownerElement.namespaceURI] !== void 0) {
+		                            return this.get(_NSIdentity2.default.from(arg1.ownerElement.namespaceURI, arg1.localName));
+		                        }
+		                        return this.get(arg1.localName);
+		                    }
+		                }
+		            }
+		        }
+		    }, {
+		        key: "fromFQN",
+		        value: function fromFQN(fqn) {
+		            return this._fqnObjectMap[fqn];
+		        }
+		    }, {
+		        key: "isAmbigious",
+		        value: function isAmbigious(name) {
+		            return this._nameObjectMap[name].length > 1;
+		        }
+		    }, {
+		        key: "has",
+		        value: function has(name) {
+		            return this._nameObjectMap[name] !== void 0;
+		        }
+		    }, {
+		        key: "pushDictionary",
+		        value: function pushDictionary(dict) {
+		            var _this = this;
+		
+		            dict.forEach(function (value, keyFQN) {
+		                var id = _NSIdentity2.default.fromFQN(keyFQN);
+		                _this.set(id, value);
+		            });
+		            return this;
+		        }
+		    }, {
+		        key: "toArray",
+		        value: function toArray() {
+		            var _this2 = this;
+		
+		            var ret = [];
+		            Object.keys(this._fqnObjectMap).forEach(function (key) {
+		                ret.push(_this2._fqnObjectMap[key]);
+		            });
+		            return ret;
+		        }
+		    }, {
+		        key: "clone",
+		        value: function clone() {
+		            var dict = new NSDictionary();
+		            return dict.pushDictionary(this);
+		        }
+		    }, {
+		        key: "forEach",
+		        value: function forEach(callback) {
+		            var _this3 = this;
+		
+		            Object.keys(this._fqnObjectMap).forEach(function (key) {
+		                callback(_this3._fqnObjectMap[key], key);
+		            });
+		            return this;
+		        }
+		    }, {
+		        key: "map",
+		        value: function map(callback) {
+		            var ret = new NSDictionary();
+		            this.forEach(function (val, fqn) {
+		                var id = _NSIdentity2.default.fromFQN(fqn);
+		                ret.set(id, callback(val, fqn));
+		            });
+		            return ret;
+		        }
+		    }, {
+		        key: "clear",
+		        value: function clear() {
+		            this._nameObjectMap = {};
+		            this._fqnObjectMap = {};
+		        }
+		    }]);
+		
+		    return NSDictionary;
+		}();
+		
+		exports.default = NSDictionary;
+	
+	/***/ },
+	/* 13 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -9154,6 +11237,58 @@ return /******/ (function(modules) { // webpackBootstrap
 		            return (/^[a-z0-9\-]+$/.test(str)
 		            );
 		        }
+		    }, {
+		        key: "flat",
+		        value: function flat(array) {
+		            var count = 0;
+		            for (var i = 0; i < array.length; i++) {
+		                count += array[i].length;
+		            }
+		            var ret = new Array(count);
+		            count = 0;
+		            for (var _i = 0; _i < array.length; _i++) {
+		                var ar = array[_i];
+		                for (var j = 0; j < ar.length; j++) {
+		                    ret[count] = ar[j];
+		                    count++;
+		                }
+		            }
+		            return ret;
+		        }
+		    }, {
+		        key: "flatMap",
+		        value: function flatMap(source, map) {
+		            var c = new Array(source.length);
+		            for (var i = 0; i < source.length; i++) {
+		                c[i] = map(source[i]);
+		            }
+		            return Utility.flat(c);
+		        }
+		    }, {
+		        key: "sum",
+		        value: function sum(array) {
+		            var total = 0;
+		            for (var i = 0; i < array.length; i++) {
+		                total += array[i];
+		            }
+		            return total;
+		        }
+		    }, {
+		        key: "remove",
+		        value: function remove(array, target) {
+		            var index = -1;
+		            for (var i = 0; i < array.length; i++) {
+		                if (target === array[i]) {
+		                    index = i;
+		                    break;
+		                }
+		            }
+		            if (index < 0) {
+		                return false;
+		            }
+		            array.splice(index, 1);
+		            return true;
+		        }
 		    }]);
 		
 		    return Utility;
@@ -9162,465 +11297,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = Utility;
 	
 	/***/ },
-	/* 5 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-		
-		var _Constants = __webpack_require__(6);
-		
-		var _Constants2 = _interopRequireDefault(_Constants);
-		
-		var _GrimoireInterface = __webpack_require__(3);
-		
-		var _GrimoireInterface2 = _interopRequireDefault(_GrimoireInterface);
-		
-		var _NodeInterface = __webpack_require__(7);
-		
-		var _NodeInterface2 = _interopRequireDefault(_NodeInterface);
-		
-		var _GomlNode = __webpack_require__(10);
-		
-		var _GomlNode2 = _interopRequireDefault(_GomlNode);
-		
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-		
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-		
-		/**
-		 * Provides interfaces to treat whole goml tree for each.
-		 */
-		var GomlInterface = function () {
-		    function GomlInterface(rootNodes) {
-		        _classCallCheck(this, GomlInterface);
-		
-		        this.rootNodes = rootNodes;
-		    }
-		
-		    _createClass(GomlInterface, [{
-		        key: "getNodeById",
-		        value: function getNodeById(id) {
-		            var _this = this;
-		
-		            return new Array(this.rootNodes.length).map(function (v, i) {
-		                return _GomlNode2.default.fromElement(_this.rootNodes[i].element.ownerDocument.getElementById(id));
-		            });
-		        }
-		    }, {
-		        key: "queryFunc",
-		        value: function queryFunc(query) {
-		            return new _NodeInterface2.default(this.queryNodes(query));
-		        }
-		    }, {
-		        key: "queryNodes",
-		        value: function queryNodes(query) {
-		            return this.rootNodes.map(function (root) {
-		                var nodelist = root.element.ownerDocument.querySelectorAll(query);
-		                var nodes = [];
-		                for (var i = 0; i < nodelist.length; i++) {
-		                    var node = _GrimoireInterface2.default.nodeDictionary[nodelist.item(i).getAttribute(_Constants2.default.x_gr_id)];
-		                    if (node) {
-		                        nodes.push(node);
-		                    }
-		                }
-		                return nodes;
-		            });
-		        }
-		    }]);
-		
-		    return GomlInterface;
-		}();
-		
-		exports.default = GomlInterface;
-	
-	/***/ },
-	/* 6 */
-	/***/ function(module, exports) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-		
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-		
-		var Constants = function () {
-		    function Constants() {
-		        _classCallCheck(this, Constants);
-		    }
-		
-		    _createClass(Constants, null, [{
-		        key: "defaultNamespace",
-		        get: function get() {
-		            return "HTTP://GRIMOIRE.GL/NS/DEFAULT";
-		        }
-		    }, {
-		        key: "x_gr_id",
-		        get: function get() {
-		            return "x-gr-id";
-		        }
-		    }]);
-		
-		    return Constants;
-		}();
-		
-		exports.default = Constants;
-	
-	/***/ },
-	/* 7 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-		
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-		
-		var _Constants = __webpack_require__(6);
-		
-		var _Constants2 = _interopRequireDefault(_Constants);
-		
-		var _GrimoireInterface = __webpack_require__(3);
-		
-		var _GrimoireInterface2 = _interopRequireDefault(_GrimoireInterface);
-		
-		var _XMLReader = __webpack_require__(8);
-		
-		var _XMLReader2 = _interopRequireDefault(_XMLReader);
-		
-		var _GomlParser = __webpack_require__(9);
-		
-		var _GomlParser2 = _interopRequireDefault(_GomlParser);
-		
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-		
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-		
-		/**
-		 * 複数のノードを対象とした操作を提供するインタフェース
-		 */
-		var NodeInterface = function () {
-		    function NodeInterface(nodes) {
-		        _classCallCheck(this, NodeInterface);
-		
-		        this.nodes = nodes;
-		        if (!nodes) {
-		            throw new Error("nodes is null");
-		        }
-		    }
-		
-		    _createClass(NodeInterface, [{
-		        key: "_queryComponents",
-		        value: function _queryComponents(query) {
-		            return this.nodes.map(function (nodes) {
-		                return nodes.map(function (node) {
-		                    var componentElements = node.componentsElement.querySelectorAll(query);
-		                    var components = [];
-		                    for (var i = 0; i < componentElements.length; i++) {
-		                        var elem = componentElements[i];
-		                        var component = _GrimoireInterface2.default.componentDictionary[elem.getAttribute(_Constants2.default.x_gr_id)];
-		                        if (component) {
-		                            components.push(component);
-		                        }
-		                    }
-		                    return components;
-		                });
-		            });
-		        }
-		    }, {
-		        key: "isEmpty",
-		        value: function isEmpty() {
-		            return this.count() === 0;
-		        }
-		    }, {
-		        key: "get",
-		        value: function get(i1, i2) {
-		            var _this = this;
-		
-		            if (i1 === void 0) {
-		                var first = this.first();
-		                if (!first) {
-		                    throw new Error("this NodeInterface is empty.");
-		                } else {
-		                    return first;
-		                }
-		            } else if (i2 === void 0) {
-		                if (this.count() <= i1) {
-		                    throw new Error("index out of range.");
-		                } else {
-		                    var _ret = function () {
-		                        var c = i1;
-		                        var returnNode = null;
-		                        _this.forEach(function (node) {
-		                            if (c === 0) {
-		                                returnNode = node;
-		                            }
-		                            c--;
-		                        });
-		                        return {
-		                            v: returnNode
-		                        };
-		                    }();
-		
-		                    if ((typeof _ret === "undefined" ? "undefined" : _typeof(_ret)) === "object") return _ret.v;
-		                }
-		            } else {
-		                if (this.nodes.length <= i1 || this.nodes[i1].length <= i2) {
-		                    throw new Error("index out of range.");
-		                } else {
-		                    return this.nodes[i1][i2];
-		                }
-		            }
-		        }
-		    }, {
-		        key: "getAttribute",
-		        value: function getAttribute(attrName) {
-		            var first = this.first();
-		            if (!first) {
-		                throw new Error("this NodeInterface is empty.");
-		            }
-		            return first.getAttribute(attrName);
-		        }
-		    }, {
-		        key: "setAttribute",
-		        value: function setAttribute(attrName, value) {
-		            this.forEach(function (node) {
-		                node.setAttribute(attrName, value);
-		            });
-		        }
-		        /**
-		         * 対象ノードにイベントリスナを追加します。
-		         * @param {string}   eventName [description]
-		         * @param {Function} listener  [description]
-		         */
-		
-		    }, {
-		        key: "on",
-		        value: function on(eventName, listener) {
-		            this.forEach(function (node) {
-		                node.on(eventName, listener);
-		            });
-		            return this;
-		        }
-		        /**
-		         * 対象ノードに指定したイベントリスナが登録されていれば削除します
-		         * @param {string}   eventName [description]
-		         * @param {Function} listener  [description]
-		         */
-		
-		    }, {
-		        key: "off",
-		        value: function off(eventName, listener) {
-		            this.forEach(function (node) {
-		                node.removeListener(eventName, listener);
-		            });
-		            return this;
-		        }
-		        /**
-		         * このノードインタフェースが対象とするノードそれぞれに、
-		         * タグで指定したノードを子要素として追加します。
-		         * @param {string} tag [description]
-		         */
-		
-		    }, {
-		        key: "append",
-		        value: function append(tag) {
-		            this.forEach(function (node) {
-		                var elems = _XMLReader2.default.parseXML(tag);
-		                elems.forEach(function (elem) {
-		                    var child = _GomlParser2.default.parse(elem, null, null);
-		                    node.addChild(child);
-		                });
-		            });
-		            return this;
-		        }
-		        /**
-		         * このノードインタフェースが対象とするノードの子に、
-		         * 指定されたノードが存在すれば削除します。
-		         * @param {GomlNode} child [description]
-		         */
-		
-		    }, {
-		        key: "remove",
-		        value: function remove() {
-		            this.forEach(function (node) {
-		                node.delete();
-		            });
-		            return this;
-		        }
-		        /**
-		         * このノードインタフェースが対象とするノードに対して反復処理を行います
-		         * @param  {GomlNode} callback [description]
-		         * @return {[type]}            [description]
-		         */
-		
-		    }, {
-		        key: "forEach",
-		        value: function forEach(callback) {
-		            this.nodes.forEach(function (array, gomlIndex) {
-		                array.forEach(function (node, nodeIndex) {
-		                    callback(node, gomlIndex, nodeIndex);
-		                });
-		            });
-		            return this;
-		        }
-		    }, {
-		        key: "find",
-		        value: function find(predicate) {
-		            var nodes = this.nodes;
-		            for (var i = 0; i < nodes.length; i++) {
-		                var array = nodes[i];
-		                for (var j = 0; j < array.length; j++) {
-		                    var node = array[j];
-		                    if (predicate(node, i, j)) {
-		                        return node;
-		                    }
-		                }
-		            }
-		            return null;
-		        }
-		    }, {
-		        key: "watch",
-		        value: function watch(attrName, watcher) {
-		            var immediate = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-		
-		            this.forEach(function (node) {
-		                node.watch(attrName, watcher, immediate);
-		            });
-		        }
-		        /**
-		         * このノードインタフェースが対象とするノードを有効、または無効にします。
-		         * @param {boolean} enable [description]
-		         */
-		
-		    }, {
-		        key: "setEnable",
-		        value: function setEnable(enable) {
-		            this.forEach(function (node) {
-		                node.enabled = !!enable;
-		            });
-		            return this;
-		        }
-		        /**
-		         * このノードインタフェースが対象とするノードのそれぞれの子ノードを対象とする、
-		         * 新しいノードインタフェースを取得します。
-		         * @return {NodeInterface} [description]
-		         */
-		
-		    }, {
-		        key: "children",
-		        value: function children() {
-		            var children = this.nodes.map(function (nodes) {
-		                return nodes.map(function (node) {
-		                    return node.children;
-		                }).reduce(function (pre, cur) {
-		                    return pre.concat(cur);
-		                });
-		            });
-		            return new NodeInterface(children);
-		        }
-		        /**
-		         * 対象ノードにコンポーネントをアタッチします。
-		         * @param {Component} component [description]
-		         */
-		
-		    }, {
-		        key: "addComponent",
-		        value: function addComponent(componentId) {
-		            var attributes = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-		
-		            this.forEach(function (node) {
-		                node.addComponent(componentId, attributes);
-		            });
-		            return this;
-		        }
-		        /**
-		         * 最初の対象ノードを取得する
-		         * @return {GomlNode} [description]
-		         */
-		
-		    }, {
-		        key: "first",
-		        value: function first() {
-		            return this.find(function () {
-		                return true;
-		            });
-		        }
-		        /**
-		         * 対象となる唯一のノードを取得する。
-		         * 対象が存在しない、あるいは複数存在するときは例外を投げる。
-		         * @return {GomlNode} [description]
-		         */
-		
-		    }, {
-		        key: "single",
-		        value: function single() {
-		            if (this.count() !== 1) {
-		                throw new Error("this nodeInterface is not single.");
-		            }
-		            var first = this.first();
-		            if (!first) {
-		                throw new Error("this nodeInterface is not single,but is empty.");
-		            }
-		            return first;
-		        }
-		        /**
-		         * 対象となるノードの個数を取得する
-		         * @return {number} [description]
-		         */
-		
-		    }, {
-		        key: "count",
-		        value: function count() {
-		            if (this.nodes.length === 0) {
-		                return 0;
-		            }
-		            var counts = this.nodes.map(function (nodes) {
-		                return nodes.length;
-		            });
-		            return counts.reduce(function (total, current) {
-		                return total + current;
-		            }, 0);
-		        }
-		    }, {
-		        key: "filter",
-		        value: function filter(predicate) {
-		            var newNodes = this.nodes.map(function (nodes, gomlIndex) {
-		                return nodes.filter(function (node, nodeIndex) {
-		                    return predicate(node, gomlIndex, nodeIndex);
-		                });
-		            });
-		            return new NodeInterface(newNodes);
-		        }
-		    }, {
-		        key: "toArray",
-		        value: function toArray() {
-		            return this.nodes.reduce(function (pre, current) {
-		                return pre.concat(current);
-		            }, []);
-		        }
-		    }]);
-		
-		    return NodeInterface;
-		}();
-		
-		exports.default = NodeInterface;
-	
-	/***/ },
-	/* 8 */
+	/* 14 */
 	/***/ function(module, exports) {
 	
 		'use strict';
@@ -9754,7 +11431,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = XMLReader;
 	
 	/***/ },
-	/* 9 */
+	/* 15 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -9763,1104 +11440,9 @@ return /******/ (function(modules) { // webpackBootstrap
 		    value: true
 		});
 		
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+		var _events = __webpack_require__(16);
 		
-		var _GomlNode = __webpack_require__(10);
-		
-		var _GomlNode2 = _interopRequireDefault(_GomlNode);
-		
-		var _GrimoireInterface = __webpack_require__(3);
-		
-		var _GrimoireInterface2 = _interopRequireDefault(_GrimoireInterface);
-		
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-		
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-		
-		/**
-		 * Parser of Goml to Node utilities.
-		 * This class do not store any nodes and goml properties.
-		 */
-		var GomlParser = function () {
-		    function GomlParser() {
-		        _classCallCheck(this, GomlParser);
-		    }
-		
-		    _createClass(GomlParser, null, [{
-		        key: "parse",
-		
-		        /**
-		         * Domをパースする
-		         * @param  {Element}           source    [description]
-		         * @param  {GomlNode}          parent    あればこのノードにaddChildされる
-		         * @return {GomlNode}                    ルートノード
-		         */
-		        value: function parse(source, parent, scriptTag) {
-		            var newNode = GomlParser._createNode(source);
-		            if (!newNode) {
-		                // when specified node could not be found
-		                console.warn("\"" + source.tagName + "\" was not parsed.");
-		                return null;
-		            }
-		            // Parse children recursively
-		            var children = source.childNodes;
-		            var childNodeElements = []; // for parse after .Components has resolved.
-		            if (children && children.length !== 0) {
-		                var removeTarget = [];
-		                for (var i = 0; i < children.length; i++) {
-		                    var child = children.item(i);
-		                    if (!GomlParser._isElement(child)) {
-		                        removeTarget.push(child);
-		                        continue;
-		                    }
-		                    if (this._isComponentsTag(child)) {
-		                        // parse as components
-		                        GomlParser._parseComponents(newNode, child);
-		                        removeTarget.push(child);
-		                    } else {
-		                        // parse as child node.
-		                        childNodeElements.push(child);
-		                    }
-		                }
-		                // remove unused elements
-		                for (var _i = 0; _i < removeTarget.length; _i++) {
-		                    source.removeChild(removeTarget[_i]);
-		                }
-		            }
-		            // generate tree
-		            if (parent) {
-		                parent.addChild(newNode, null, false);
-		            }
-		            childNodeElements.forEach(function (child) {
-		                GomlParser.parse(child, newNode, null);
-		            });
-		            return newNode;
-		        }
-		        /**
-		         * GomlNodeのインスタンス化。GrimoireInterfaceへの登録
-		         * @param  {HTMLElement}      elem         [description]
-		         * @param  {GomlConfigurator} configurator [description]
-		         * @return {GomlTreeNodeBase}              [description]
-		         */
-		
-		    }, {
-		        key: "_createNode",
-		        value: function _createNode(elem) {
-		            var tagName = elem.localName;
-		            var recipe = _GrimoireInterface2.default.nodeDeclarations.get(elem);
-		            if (!recipe) {
-		                throw new Error("Tag \"" + tagName + "\" is not found.");
-		            }
-		            return new _GomlNode2.default(recipe, elem);
-		        }
-		        /**
-		         * .COMPONENTSのパース。
-		         * @param {GomlNode} node          アタッチされるコンポーネント
-		         * @param {Element}  componentsTag .COMPONENTSタグ
-		         */
-		
-		    }, {
-		        key: "_parseComponents",
-		        value: function _parseComponents(node, componentsTag) {
-		            var componentNodes = componentsTag.childNodes;
-		            if (!componentNodes) {
-		                return;
-		            }
-		            for (var i = 0; i < componentNodes.length; i++) {
-		                var componentNode = componentNodes.item(i);
-		                if (!GomlParser._isElement(componentNode)) {
-		                    continue; // Skip if the node was not element
-		                }
-		                var componentDecl = _GrimoireInterface2.default.componentDeclarations.get(componentNode);
-		                if (!componentDecl) {
-		                    throw new Error("Component " + componentNode.tagName + " is not found.");
-		                }
-		                var component = componentDecl.generateInstance(componentNode);
-		                node._addComponentDirectly(component, false);
-		            }
-		        }
-		    }, {
-		        key: "_isElement",
-		        value: function _isElement(node) {
-		            return node.nodeType === Node.ELEMENT_NODE;
-		        }
-		    }, {
-		        key: "_isComponentsTag",
-		        value: function _isComponentsTag(element) {
-		            var regexToFindComponent = /\.COMPONENTS$/mi; // TODO might needs to fix
-		            return regexToFindComponent.test(element.nodeName);
-		        }
-		    }]);
-		
-		    return GomlParser;
-		}();
-		
-		exports.default = GomlParser;
-	
-	/***/ },
-	/* 10 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-		
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-		
-		var _AttributeManager = __webpack_require__(1);
-		
-		var _AttributeManager2 = _interopRequireDefault(_AttributeManager);
-		
-		var _Utility = __webpack_require__(4);
-		
-		var _Utility2 = _interopRequireDefault(_Utility);
-		
-		var _Constants = __webpack_require__(6);
-		
-		var _Constants2 = _interopRequireDefault(_Constants);
-		
-		var _GomlParser = __webpack_require__(9);
-		
-		var _GomlParser2 = _interopRequireDefault(_GomlParser);
-		
-		var _XMLReader = __webpack_require__(8);
-		
-		var _XMLReader2 = _interopRequireDefault(_XMLReader);
-		
-		var _GrimoireInterface = __webpack_require__(3);
-		
-		var _GrimoireInterface2 = _interopRequireDefault(_GrimoireInterface);
-		
-		var _EEObject2 = __webpack_require__(11);
-		
-		var _EEObject3 = _interopRequireDefault(_EEObject2);
-		
-		var _NodeUtility = __webpack_require__(14);
-		
-		var _NodeUtility2 = _interopRequireDefault(_NodeUtility);
-		
-		var _NSDictionary = __webpack_require__(15);
-		
-		var _NSDictionary2 = _interopRequireDefault(_NSDictionary);
-		
-		var _NSIdentity = __webpack_require__(16);
-		
-		var _NSIdentity2 = _interopRequireDefault(_NSIdentity);
-		
-		var _Ensure = __webpack_require__(2);
-		
-		var _Ensure2 = _interopRequireDefault(_Ensure);
-		
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-		
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-		
-		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-		
-		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-		
-		var GomlNode = function (_EEObject) {
-		    _inherits(GomlNode, _EEObject);
-		
-		    /**
-		     * create new instance.
-		     * @param  {NodeDeclaration} recipe  作成するノードのDeclaration
-		     * @param  {Element}         element 対応するDomElement
-		     * @return {[type]}                  [description]
-		     */
-		    function GomlNode(recipe, element) {
-		        _classCallCheck(this, GomlNode);
-		
-		        var _this = _possibleConstructorReturn(this, (GomlNode.__proto__ || Object.getPrototypeOf(GomlNode)).call(this));
-		
-		        _this.children = [];
-		        _this._parent = null;
-		        _this._root = null;
-		        _this._mounted = false;
-		        _this._enabled = true;
-		        _this._messageBuffer = [];
-		        _this._tree = null;
-		        _this._companion = new _NSDictionary2.default();
-		        _this._deleted = false;
-		        _this._attrBuffer = {};
-		        _this._defaultValueResolved = false;
-		        if (!recipe) {
-		            throw new Error("recipe must not be null");
-		        }
-		        _this.nodeDeclaration = recipe;
-		        _this.element = element ? element : document.createElementNS(recipe.name.ns, recipe.name.name); // TODO Could be undefined or null?
-		        _this.componentsElement = document.createElement("COMPONENTS");
-		        _this._root = _this;
-		        _this._tree = (0, _GrimoireInterface2.default)([_this]);
-		        _this._components = [];
-		        _this._attributeManager = new _AttributeManager2.default(recipe.name.name, new _NSDictionary2.default());
-		        _this.element.setAttribute(_Constants2.default.x_gr_id, _this.id);
-		        var defaultComponentNames = recipe.defaultComponentsActual;
-		        // instanciate default components
-		        defaultComponentNames.toArray().map(function (id) {
-		            _this.addComponent(id, null, true);
-		        });
-		        // register to GrimoireInterface.
-		        _GrimoireInterface2.default.nodeDictionary[_this.id] = _this;
-		        return _this;
-		    }
-		    /**
-		     * Get actual goml node from element of xml tree.
-		     * @param  {Element}  elem [description]
-		     * @return {GomlNode}      [description]
-		     */
-		
-		
-		    _createClass(GomlNode, [{
-		        key: "getChildrenByClass",
-		
-		        /**
-		         * search from children node by class property.
-		         * return all nodes has same class as given.
-		         * @param  {string}     className [description]
-		         * @return {GomlNode[]}           [description]
-		         */
-		        value: function getChildrenByClass(className) {
-		            var nodes = this.element.getElementsByClassName(className);
-		            var array = new Array(nodes.length);
-		            for (var i = 0; i < nodes.length; i++) {
-		                array[i] = GomlNode.fromElement(nodes.item(i));
-		            }
-		            return array;
-		        }
-		        /**
-		         * search from children node by name property.
-		         * return all nodes has same name as given.
-		         * @param  {string}     nodeName [description]
-		         * @return {GomlNode[]}          [description]
-		         */
-		
-		    }, {
-		        key: "getChildrenByNodeName",
-		        value: function getChildrenByNodeName(nodeName) {
-		            var nodes = this.element.getElementsByTagName(nodeName);
-		            var array = new Array(nodes.length);
-		            for (var i = 0; i < nodes.length; i++) {
-		                array[i] = GomlNode.fromElement(nodes.item(i));
-		            }
-		            return array;
-		        }
-		        /**
-		         * detach and delete this node and children.
-		         * call when this node will never use.
-		         */
-		
-		    }, {
-		        key: "delete",
-		        value: function _delete() {
-		            console.warn("delete is obsolate. please use remove() instead of");
-		            this.remove();
-		        }
-		    }, {
-		        key: "remove",
-		        value: function remove() {
-		            this.children.forEach(function (c) {
-		                c.remove();
-		            });
-		            _GrimoireInterface2.default.nodeDictionary[this.id] = null;
-		            if (this._parent) {
-		                this._parent.detachChild(this);
-		            } else {
-		                this.setMounted(false);
-		                if (this.element.parentNode) {
-		                    this.element.parentNode.removeChild(this.element);
-		                }
-		            }
-		            this._deleted = true;
-		        }
-		        /**
-		         * send message to this node.
-		         * invoke component method has same name as message if this node isActive.
-		         * @param  {string}  message [description]
-		         * @param  {any}     args    [description]
-		         * @return {boolean}         is this node active.
-		         */
-		
-		    }, {
-		        key: "sendMessage",
-		        value: function sendMessage(message, args) {
-		            if (!this.isActive) {
-		                return false;
-		            }
-		            this._sendMessage(message, args);
-		            return true;
-		        }
-		    }, {
-		        key: "broadcastMessage",
-		        value: function broadcastMessage(arg1, arg2, arg3) {
-		            if (!this.enabled || !this.mounted) {
-		                return;
-		            }
-		            if (typeof arg1 === "number") {
-		                var range = arg1;
-		                var message = arg2;
-		                var args = arg3;
-		                this.sendMessage(message, args);
-		                if (range > 0) {
-		                    for (var i = 0; i < this.children.length; i++) {
-		                        this.children[i].broadcastMessage(range - 1, message, args);
-		                    }
-		                }
-		            } else {
-		                var _message = arg1;
-		                var _args = arg2;
-		                this.sendMessage(_message, _args);
-		                for (var _i = 0; _i < this.children.length; _i++) {
-		                    this.children[_i].broadcastMessage(_message, _args);
-		                }
-		            }
-		        }
-		    }, {
-		        key: "append",
-		        value: function append(tag) {
-		            var _this2 = this;
-		
-		            var elems = _XMLReader2.default.parseXML(tag);
-		            var ret = [];
-		            elems.forEach(function (elem) {
-		                var child = _GomlParser2.default.parse(elem, null, null);
-		                _this2.addChild(child);
-		                ret.push(child);
-		            });
-		            return ret;
-		        }
-		        /**
-		         * add new instance created by given name and attributes for this node as child.
-		         * @param {string |   NSIdentity} nodeName      [description]
-		         * @param {any    }} attributes   [description]
-		         */
-		
-		    }, {
-		        key: "addChildByName",
-		        value: function addChildByName(nodeName, attributes) {
-		            if (typeof nodeName === "string") {
-		                return this.addChildByName(new _NSIdentity2.default(nodeName), attributes);
-		            } else {
-		                var nodeDec = _GrimoireInterface2.default.nodeDeclarations.get(nodeName);
-		                var node = new GomlNode(nodeDec, null);
-		                if (attributes) {
-		                    for (var key in attributes) {
-		                        var id = _Ensure2.default.ensureTobeNSIdentity(key);
-		                        node.setAttribute(id, attributes[key]);
-		                    }
-		                }
-		                this.addChild(node);
-		                return node;
-		            }
-		        }
-		        /**
-		         * Add child for this node.
-		         * @param {GomlNode} child            child node to add.
-		         * @param {number}   index            index for insert.なければ末尾に追加
-		         * @param {[type]}   elementSync=true trueのときはElementのツリーを同期させる。（Elementからパースするときはfalseにする）
-		         */
-		
-		    }, {
-		        key: "addChild",
-		        value: function addChild(child, index) {
-		            var elementSync = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
-		
-		            if (child._deleted) {
-		                throw new Error("deleted node never use.");
-		            }
-		            if (index != null && typeof index !== "number") {
-		                throw new Error("insert index should be number or null or undefined.");
-		            }
-		            child._parent = this;
-		            var insertIndex = index == null ? this.children.length : index;
-		            this.children.splice(insertIndex, 0, child);
-		            // const checkChildConstraints = child.checkTreeConstraints();
-		            // const checkAncestorConstraint = this._callRecursively(n => n.checkTreeConstraints(), n => n._parent ? [n._parent] : [])
-		            //   .reduce((list, current) => list.concat(current));
-		            // const errors = checkChildConstraints.concat(checkAncestorConstraint).filter(m => m);
-		            // if (errors.length !== 0) {
-		            //   const message = errors.reduce((m, current) => m + "\n" + current);
-		            //   throw new Error("tree constraint is not satisfied.\n" + message);
-		            // }
-		            // handling html
-		            if (elementSync) {
-		                var referenceElement = this.element[_NodeUtility2.default.getNodeListIndexByElementIndex(this.element, insertIndex)];
-		                this.element.insertBefore(child.element, referenceElement);
-		            }
-		            child._tree = this._tree;
-		            child._companion = this._companion;
-		            // mounting
-		            if (this.mounted) {
-		                child.setMounted(true);
-		            }
-		        }
-		    }, {
-		        key: "callRecursively",
-		        value: function callRecursively(func) {
-		            return this._callRecursively(func, function (n) {
-		                return n.children;
-		            });
-		        }
-		        /**
-		         * delete child node.
-		         * @param {GomlNode} child Target node to be inserted.
-		         */
-		
-		    }, {
-		        key: "removeChild",
-		        value: function removeChild(child) {
-		            var node = this.detachChild(child);
-		            if (node) {
-		                node.remove();
-		            }
-		        }
-		        /**
-		         * detach given node from this node if target is child of this node.
-		         * return null if target is not child of this node.
-		         * @param  {GomlNode} child [description]
-		         * @return {GomlNode}       detached node.
-		         */
-		
-		    }, {
-		        key: "detachChild",
-		        value: function detachChild(target) {
-		            // search child.
-		            var index = this.children.indexOf(target);
-		            if (index === -1) {
-		                return null;
-		            }
-		            target.setMounted(false);
-		            target._parent = null;
-		            this.children.splice(index, 1);
-		            // html sync
-		            this.element.removeChild(target.element);
-		            // check ancestor constraint.
-		            var errors = this._callRecursively(function (n) {
-		                return n.checkTreeConstraints();
-		            }, function (n) {
-		                return n._parent ? [n._parent] : [];
-		            }).reduce(function (list, current) {
-		                return list.concat(current);
-		            }).filter(function (m) {
-		                return m;
-		            });
-		            if (errors.length !== 0) {
-		                var message = errors.reduce(function (m, current) {
-		                    return m + "\n" + current;
-		                });
-		                throw new Error("tree constraint is not satisfied.\n" + message);
-		            }
-		            return target;
-		        }
-		        /**
-		         * detach this node from parent.
-		         */
-		
-		    }, {
-		        key: "detach",
-		        value: function detach() {
-		            if (this.parent) {
-		                this.parent.detachChild(this);
-		            } else {
-		                throw new Error("root Node cannot be detached.");
-		            }
-		        }
-		        /**
-		         * [[[OBSOLETE!]]]get value of attribute.
-		         * @param  {string | NSIdentity}  attrName [description]
-		         * @return {any}         [description]
-		         */
-		
-		    }, {
-		        key: "getValue",
-		        value: function getValue(attrName) {
-		            console.warn("getValue is obsolate. please use getAttribute instead of");
-		            return this.getAttribute(attrName);
-		        }
-		    }, {
-		        key: "getAttribute",
-		        value: function getAttribute(attrName) {
-		            return this._attributeManager.getAttribute(attrName);
-		        }
-		    }, {
-		        key: "getAttributeRaw",
-		        value: function getAttributeRaw(attrName) {
-		            return this._attributeManager.attributes.get(attrName);
-		        }
-		        /**
-		         * set value to selected attribute.
-		         * @param {string |     NSIdentity}  attrName [description]
-		         * @param {any}       value [description]
-		         */
-		
-		    }, {
-		        key: "setValue",
-		        value: function setValue(attrName, value) {
-		            console.warn("setValue is obsolate. please use setAttribute instead of");
-		            this.setAttribute(attrName, value);
-		        }
-		    }, {
-		        key: "setAttribute",
-		        value: function setAttribute(attrName, value) {
-		            return this._attributeManager.setAttribute(attrName, value);
-		        }
-		        /**
-		         *  Add new attribute. In most of case, users no need to call this method.
-		         *  Use __addAttribute in Component should be used instead.
-		         */
-		
-		    }, {
-		        key: "addAttribute",
-		        value: function addAttribute(attr) {
-		            return this._attributeManager.addAttribute(attr);
-		        }
-		        /**
-		         * Update mounted status and emit events
-		         * @param {boolean} mounted Mounted status.
-		         */
-		
-		    }, {
-		        key: "setMounted",
-		        value: function setMounted(mounted) {
-		            if (this._mounted === mounted) {
-		                return;
-		            }
-		            if (mounted) {
-		                this._mounted = mounted;
-		                this._clearMessageBuffer("unmount");
-		                this._sendMessageForced("awake");
-		                this._sendMessageBuffer("mount");
-		                this.children.forEach(function (child) {
-		                    child.setMounted(mounted);
-		                });
-		            } else {
-		                this._clearMessageBuffer("mount");
-		                this.children.forEach(function (child) {
-		                    child.setMounted(mounted);
-		                });
-		                this._sendMessageBuffer("unmount");
-		                this._sendMessageForced("dispose");
-		                this._tree = null;
-		                this._companion = null;
-		                this._mounted = mounted;
-		            }
-		        }
-		        /**
-		         * Get index of this node from parent.
-		         * @return {number} number of index.
-		         */
-		
-		    }, {
-		        key: "index",
-		        value: function index() {
-		            if (!this._parent) {
-		                return -1;
-		            }
-		            return this._parent.children.indexOf(this);
-		        }
-		        /**
-		         * remove attribute from this node.
-		         * @param {Attribute} attr [description]
-		         */
-		
-		    }, {
-		        key: "removeAttribute",
-		        value: function removeAttribute(attr) {
-		            return this._attributeManager.removeAttribute(attr);
-		        }
-		        /**
-		         * attach component to this node.
-		         * @param {Component} component [description]
-		         */
-		
-		    }, {
-		        key: "addComponent",
-		        value: function addComponent(component) {
-		            var attributes = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-		            var isDefaultComponent = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-		
-		            var declaration = _GrimoireInterface2.default.componentDeclarations.get(component);
-		            var instance = declaration.generateInstance();
-		            attributes = attributes || {};
-		            for (var key in attributes) {
-		                instance.setAttribute(key, attributes[key]);
-		            }
-		            this._addComponentDirectly(instance, isDefaultComponent);
-		            return instance;
-		        }
-		        /**
-		         * Internal use!
-		         * Should not operate by users or plugin developpers
-		         * @param {Component} component          [description]
-		         * @param {boolean}   isDefaultComponent [description]
-		         */
-		
-		    }, {
-		        key: "_addComponentDirectly",
-		        value: function _addComponentDirectly(component, isDefaultComponent) {
-		            var _this3 = this;
-		
-		            if (component.node) {
-		                throw new Error("component never change attached node");
-		            }
-		            component.isDefaultComponent = !!isDefaultComponent;
-		            component.node = this;
-		            var referenceElement = this.componentsElement[_NodeUtility2.default.getNodeListIndexByElementIndex(this.componentsElement, this._components.length)];
-		            this.componentsElement.insertBefore(component.element, referenceElement);
-		            var propNames = [];
-		            var o = component;
-		            while (o) {
-		                propNames = propNames.concat(Object.getOwnPropertyNames(o));
-		                o = Object.getPrototypeOf(o);
-		            }
-		            propNames.filter(function (name) {
-		                return name.startsWith("$") && typeof component[name] === "function";
-		            }).forEach(function (method) {
-		                component["$" + method] = component[method].bind(component);
-		            });
-		            this._components.push(component);
-		            component.addEnabledObserver(function (c) {
-		                if (c.enabled) {
-		                    _this3._resolveBufferdMessageTo(c, "mount");
-		                    _this3._resolveBufferdMessageTo(c, "unmount");
-		                }
-		            });
-		            if (isDefaultComponent) {
-		                // attributes should be exposed on node
-		                component.attributes.forEach(function (p) {
-		                    return _this3.addAttribute(p);
-		                });
-		                if (this._defaultValueResolved) {
-		                    component.attributes.forEach(function (p) {
-		                        return p.resolveDefaultValue(_NodeUtility2.default.getAttributes(_this3.element));
-		                    });
-		                }
-		            }
-		            if (this._mounted) {
-		                component.resolveDefaultAttributes(null); // here must be optional component.should not use node element attributes.
-		                this._sendMessageForcedTo(component, "awake");
-		                this._sendMessageBufferTo(component, "mount");
-		            }
-		        }
-		    }, {
-		        key: "getComponents",
-		        value: function getComponents(filter) {
-		            var _this4 = this;
-		
-		            if (!filter) {
-		                return this._components;
-		            } else {
-		                var _ret = function () {
-		                    var ctor = _Ensure2.default.ensureTobeComponentConstructor(filter);
-		                    return {
-		                        v: _this4._components.filter(function (c) {
-		                            return c instanceof ctor;
-		                        })
-		                    };
-		                }();
-		
-		                if ((typeof _ret === "undefined" ? "undefined" : _typeof(_ret)) === "object") return _ret.v;
-		            }
-		        }
-		    }, {
-		        key: "getComponent",
-		        value: function getComponent(name) {
-		            // 事情により<T extends Component>とはできない。
-		            // これはref/Node/Componentによって参照されるのが外部ライブラリにおけるコンポーネントであるが、
-		            // src/Node/Componentがこのプロジェクトにおけるコンポーネントのため、別のコンポーネントとみなされ、型の制約をみたさなくなるからである。
-		            if (!name) {
-		                throw new Error("name must be not null or undefined");
-		            } else if (typeof name === "function") {
-		                return this._components.find(function (c) {
-		                    return c instanceof name;
-		                }) || null;
-		            } else {
-		                var ctor = _Ensure2.default.ensureTobeComponentConstructor(name);
-		                if (!ctor) {
-		                    throw new Error("component " + name + " is not exist");
-		                }
-		                return this.getComponent(ctor);
-		            }
-		        }
-		    }, {
-		        key: "getComponentsInChildren",
-		        value: function getComponentsInChildren(name) {
-		            if (typeof name === "function") {
-		                return this.callRecursively(function (node) {
-		                    return node.getComponent(name);
-		                });
-		            } else {
-		                return this.callRecursively(function (node) {
-		                    return node.getComponent(name);
-		                });
-		            }
-		        }
-		        /**
-		         * resolve default attribute value for all component.
-		         * すべてのコンポーネントの属性をエレメントかデフォルト値で初期化
-		         */
-		
-		    }, {
-		        key: "resolveAttributesValue",
-		        value: function resolveAttributesValue() {
-		            this._defaultValueResolved = true;
-		            var attrs = _NodeUtility2.default.getAttributes(this.element);
-		            for (var key in attrs) {
-		                if (!this.attributes.get(key)) {
-		                    _Utility2.default.w("attribute '" + key + "' is not exist in this node '" + this.name.fqn + "'");
-		                }
-		            }
-		            this._components.forEach(function (component) {
-		                component.resolveDefaultAttributes(attrs);
-		            });
-		        }
-		        /**
-		         * check tree constraint for this node.
-		         * @return {string[]} [description]
-		         */
-		
-		    }, {
-		        key: "checkTreeConstraints",
-		        value: function checkTreeConstraints() {
-		            var _this5 = this;
-		
-		            var constraints = this.nodeDeclaration.treeConstraints;
-		            if (!constraints) {
-		                return [];
-		            }
-		            var errorMesasges = constraints.map(function (constraint) {
-		                return constraint(_this5);
-		            }).filter(function (message) {
-		                return message !== null;
-		            });
-		            if (errorMesasges.length === 0) {
-		                return null;
-		            }
-		            return errorMesasges;
-		        }
-		        /**
-		         * バッファしていたmount,unmountが送信されるかもしれない.アクティブなら
-		         */
-		
-		    }, {
-		        key: "notifyActivenessUpdate",
-		        value: function notifyActivenessUpdate() {
-		            if (this.isActive) {
-		                this._resolveBufferdMessage(this.mounted ? "mount" : "unmount");
-		                this.children.forEach(function (child) {
-		                    child.notifyActivenessUpdate();
-		                });
-		            }
-		        }
-		    }, {
-		        key: "watch",
-		        value: function watch(attrName, watcher) {
-		            var immediate = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-		
-		            this._attributeManager.watch(attrName, watcher, immediate);
-		        }
-		        /**
-		         * コンポーネントにメッセージを送る。送信したらバッファからは削除される.
-		         * @param  {Component} targetComponent 対象コンポーネント
-		         * @param  {string}    message         メッセージ
-		         * @param  {boolean}   forced          trueでコンポーネントのenableを無視して送信
-		         * @param  {boolean}   toBuffer        trueで送信失敗したらバッファに追加
-		         * @param  {any}       args            [description]
-		         * @return {boolean}                   送信したか
-		         */
-		
-		    }, {
-		        key: "_sendMessageToComponent",
-		        value: function _sendMessageToComponent(targetComponent, message, args) {
-		            message = _Ensure2.default.ensureTobeMessage(message);
-		            if (!targetComponent.enabled || !this.isActive) {
-		                return false;
-		            }
-		            var method = targetComponent[message];
-		            if (typeof method === "function") {
-		                method(args);
-		            }
-		            return true;
-		        }
-		        /**
-		         * バッファにあればメッセージを送信。成功したらバッファから削除
-		         * @param  {Component} target  [description]
-		         * @param  {string}    message [description]
-		         * @param  {boolean}   forced  [description]
-		         * @param  {any}       args    [description]
-		         * @return {boolean}           成功したか
-		         */
-		
-		    }, {
-		        key: "_resolveBufferdMessageTo",
-		        value: function _resolveBufferdMessageTo(target, message) {
-		            if (!target.enabled || !this.isActive) {
-		                return false;
-		            }
-		            message = _Ensure2.default.ensureTobeMessage(message);
-		            var bufferdIndex = this._messageBuffer.findIndex(function (obj) {
-		                return obj.message === message && obj.target === target;
-		            });
-		            if (bufferdIndex >= 0) {
-		                var method = target[message];
-		                if (typeof method === "function") {
-		                    method();
-		                }
-		                this._messageBuffer.splice(bufferdIndex, 1);
-		                return true;
-		            }
-		            return false;
-		        }
-		    }, {
-		        key: "_sendMessage",
-		        value: function _sendMessage(message, args) {
-		            var _this6 = this;
-		
-		            this._components.forEach(function (component) {
-		                _this6._sendMessageToComponent(component, message, args);
-		            });
-		        }
-		    }, {
-		        key: "_sendMessageForced",
-		        value: function _sendMessageForced(message) {
-		            var _this7 = this;
-		
-		            this._components.forEach(function (c) {
-		                _this7._sendMessageForcedTo(c, message);
-		            });
-		        }
-		    }, {
-		        key: "_sendMessageBuffer",
-		        value: function _sendMessageBuffer(message) {
-		            var _this8 = this;
-		
-		            this._components.forEach(function (c) {
-		                _this8._sendMessageBufferTo(c, message);
-		            });
-		        }
-		        /**
-		         * for $mount
-		         * @param  {Component} target  [description]
-		         * @param  {string}    message [description]
-		         * @return {boolean}           [description]
-		         */
-		
-		    }, {
-		        key: "_sendMessageBufferTo",
-		        value: function _sendMessageBufferTo(target, message) {
-		            message = _Ensure2.default.ensureTobeMessage(message);
-		            var bufferdIndex = this._messageBuffer.findIndex(function (obj) {
-		                return obj.message === message && obj.target === target;
-		            });
-		            if (!target.enabled || !this.isActive) {
-		                if (bufferdIndex < 0) {
-		                    this._messageBuffer.push({ message: message, target: target });
-		                }
-		                return false;
-		            }
-		            var method = target[message];
-		            if (typeof method === "function") {
-		                method();
-		            }
-		            if (bufferdIndex >= 0) {
-		                this._messageBuffer.splice(bufferdIndex, 1);
-		            }
-		            return true;
-		        }
-		        /**
-		         * for $awake
-		         * @param {Component} target  [description]
-		         * @param {string}    message [description]
-		         */
-		
-		    }, {
-		        key: "_sendMessageForcedTo",
-		        value: function _sendMessageForcedTo(target, message) {
-		            message = _Ensure2.default.ensureTobeMessage(message);
-		            var method = target[message];
-		            if (typeof method === "function") {
-		                method();
-		            }
-		        }
-		        /**
-		         * バッファのメッセージを送信可能なら送信してバッファから削除
-		         */
-		
-		    }, {
-		        key: "_resolveBufferdMessage",
-		        value: function _resolveBufferdMessage(message) {
-		            var _this9 = this;
-		
-		            message = _Ensure2.default.ensureTobeMessage(message);
-		            var copy = this._messageBuffer.filter(function (obj) {
-		                return obj.message === message;
-		            });
-		            copy.forEach(function (obj) {
-		                _this9._resolveBufferdMessageTo(obj.target, message);
-		            });
-		        }
-		    }, {
-		        key: "_clearMessageBuffer",
-		        value: function _clearMessageBuffer(message) {
-		            message = _Ensure2.default.ensureTobeMessage(message);
-		            this._messageBuffer = this._messageBuffer.filter(function (obj) {
-		                return obj.message !== message;
-		            });
-		        }
-		    }, {
-		        key: "_callRecursively",
-		        value: function _callRecursively(func, nextGenerator) {
-		            var val = func(this);
-		            var nexts = nextGenerator(this);
-		            var nextVals = nexts.map(function (c) {
-		                return c.callRecursively(func);
-		            });
-		            var list = nextVals.reduce(function (clist, current) {
-		                return clist.concat(current);
-		            }, []);
-		            list.unshift(val);
-		            return list;
-		        }
-		    }, {
-		        key: "name",
-		
-		        /**
-		         * Tag name.
-		         */
-		        get: function get() {
-		            return this.nodeDeclaration.name;
-		        }
-		    }, {
-		        key: "attributes",
-		        get: function get() {
-		            return this._attributeManager.attributes;
-		        }
-		        /**
-		         * GomlInterface that this node is bound to.
-		         * throw exception if this node is not mounted.
-		         * @return {IGomlInterface} [description]
-		         */
-		
-		    }, {
-		        key: "tree",
-		        get: function get() {
-		            if (!this.mounted) {
-		                throw new Error("this node is not mounted");
-		            }
-		            return this._tree;
-		        }
-		        /**
-		         * indicate this node is already deleted.
-		         * if this node is deleted once, this node will not be mounted.
-		         * @return {boolean} [description]
-		         */
-		
-		    }, {
-		        key: "deleted",
-		        get: function get() {
-		            return this._deleted;
-		        }
-		        /**
-		         * indicate this node is enabled in tree.
-		         * This value must be false when ancestor of this node is disabled.
-		         * @return {boolean} [description]
-		         */
-		
-		    }, {
-		        key: "isActive",
-		        get: function get() {
-		            if (this._parent) {
-		                return this._parent.isActive && this.enabled;
-		            } else {
-		                return this.enabled;
-		            }
-		        }
-		        /**
-		         * indicate this node is enabled.
-		         * this node never recieve any message if this node is not enabled.
-		         * @return {boolean} [description]
-		         */
-		
-		    }, {
-		        key: "enabled",
-		        get: function get() {
-		            return this._enabled;
-		        },
-		        set: function set(value) {
-		            this.setAttribute("enabled", value);
-		        }
-		        /**
-		         * the shared object by all nodes in tree.
-		         * @return {NSDictionary<any>} [description]
-		         */
-		
-		    }, {
-		        key: "companion",
-		        get: function get() {
-		            return this._companion;
-		        }
-		        /**
-		         * parent node of this node.
-		         * if this node is root, return null.
-		         * @return {GomlNode} [description]
-		         */
-		
-		    }, {
-		        key: "parent",
-		        get: function get() {
-		            return this._parent;
-		        }
-		        /**
-		         * return true if this node has some child nodes.
-		         * @return {boolean} [description]
-		         */
-		
-		    }, {
-		        key: "hasChildren",
-		        get: function get() {
-		            return this.children.length > 0;
-		        }
-		        /**
-		         * indicate mounted status.
-		         * this property to be true when treeroot registered to GrimoireInterface.
-		         * to be false when this node detachd from the tree.
-		         * @return {boolean} Whether this node is mounted or not.
-		         */
-		
-		    }, {
-		        key: "mounted",
-		        get: function get() {
-		            return this._mounted;
-		        }
-		    }], [{
-		        key: "fromElement",
-		        value: function fromElement(elem) {
-		            return _GrimoireInterface2.default.nodeDictionary[elem.getAttribute(_Constants2.default.x_gr_id)];
-		        }
-		    }]);
-		
-		    return GomlNode;
-		}(_EEObject3.default);
-		
-		exports.default = GomlNode;
-	
-	/***/ },
-	/* 11 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		var _events = __webpack_require__(12);
-		
-		var _IDObject2 = __webpack_require__(13);
+		var _IDObject2 = __webpack_require__(17);
 		
 		var _IDObject3 = _interopRequireDefault(_IDObject2);
 		
@@ -10898,7 +11480,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = EEObject;
 	
 	/***/ },
-	/* 12 */
+	/* 16 */
 	/***/ function(module, exports) {
 	
 		// Copyright Joyent, Inc. and other Node contributors.
@@ -11206,7 +11788,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	
 	/***/ },
-	/* 13 */
+	/* 17 */
 	/***/ function(module, exports) {
 	
 		"use strict";
@@ -11224,26 +11806,33 @@ return /******/ (function(modules) { // webpackBootstrap
 		 * @type {[type]}
 		 */
 		var IDObject = function () {
+		    _createClass(IDObject, null, [{
+		        key: "getUniqueRandom",
+		
+		        /**
+		         * Generate random string
+		         * @param  {number} length length of random string
+		         * @return {string}        generated string
+		         */
+		        value: function getUniqueRandom(length) {
+		            return Math.random().toString(36).slice(-length);
+		        }
+		    }]);
+		
 		    function IDObject() {
 		        _classCallCheck(this, IDObject);
 		
 		        this.id = IDObject.getUniqueRandom(10);
 		    }
 		    /**
-		     * Generate random string
-		     * @param  {number} length length of random string
-		     * @return {string}        generated string
+		     * Obtain stringfied object.
+		     * If this method was not overridden, this method return class name.
+		     * @return {string} stringfied object
 		     */
 		
 		
 		    _createClass(IDObject, [{
 		        key: "toString",
-		
-		        /**
-		         * Obtain stringfied object.
-		         * If this method was not overridden, this method return class name.
-		         * @return {string} stringfied object
-		         */
 		        value: function toString() {
 		            return this.getTypeName();
 		        }
@@ -11259,11 +11848,6 @@ return /******/ (function(modules) { // webpackBootstrap
 		            var result = funcNameRegex.exec(this.constructor.toString());
 		            return result && result.length > 1 ? result[1] : "";
 		        }
-		    }], [{
-		        key: "getUniqueRandom",
-		        value: function getUniqueRandom(length) {
-		            return Math.random().toString(36).slice(-length);
-		        }
 		    }]);
 		
 		    return IDObject;
@@ -11272,7 +11856,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = IDObject;
 	
 	/***/ },
-	/* 14 */
+	/* 18 */
 	/***/ function(module, exports) {
 	
 		"use strict";
@@ -11316,6 +11900,9 @@ return /******/ (function(modules) { // webpackBootstrap
 		            for (var i = 0; i < domAttr.length; i++) {
 		                var attrNode = domAttr.item(i);
 		                var name = attrNode.name;
+		                if (name.startsWith("xmlns")) {
+		                    continue;
+		                }
 		                attributes[name] = attrNode.value;
 		            }
 		            return attributes;
@@ -11328,262 +11915,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = NodeUtility;
 	
 	/***/ },
-	/* 15 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-		
-		var _NSIdentity = __webpack_require__(16);
-		
-		var _NSIdentity2 = _interopRequireDefault(_NSIdentity);
-		
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-		
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-		
-		var NSDictionary = function () {
-		    function NSDictionary() {
-		        _classCallCheck(this, NSDictionary);
-		
-		        this._nameObjectMap = {};
-		        this._fqnObjectMap = {};
-		    }
-		
-		    _createClass(NSDictionary, [{
-		        key: "set",
-		        value: function set(key, value) {
-		            var namedChildMap = void 0;
-		            if (this._nameObjectMap[key.name] !== void 0) {
-		                namedChildMap = this._nameObjectMap[key.name];
-		            } else {
-		                namedChildMap = {};
-		                this._nameObjectMap[key.name] = namedChildMap;
-		            }
-		            namedChildMap[key.fqn] = value;
-		            this._fqnObjectMap[key.fqn] = value;
-		        }
-		    }, {
-		        key: "delete",
-		        value: function _delete(key) {
-		            if (this._fqnObjectMap[key.fqn] !== void 0) {
-		                var theMap = this._nameObjectMap[key.name];
-		                delete theMap[key.fqn];
-		                delete this._fqnObjectMap[key.fqn];
-		                return true;
-		            }
-		            return false;
-		        }
-		    }, {
-		        key: "get",
-		        value: function get(arg1, name) {
-		            if (!arg1) {
-		                throw new Error("NSDictionary.get() can not recieve args null or undefined.");
-		            }
-		            if (typeof arg1 === "string") {
-		                if (name) {
-		                    return this.get(new _NSIdentity2.default(arg1, name));
-		                } else {
-		                    var namedMap = this._nameObjectMap[arg1];
-		                    if (!namedMap) {
-		                        return null;
-		                    }
-		                    var keys = Object.keys(namedMap);
-		                    if (keys.length === 1) {
-		                        return namedMap[keys[0]];
-		                    } else {
-		                        throw new Error("Specified tag name " + arg1 + " is ambigious to identify.");
-		                    }
-		                }
-		            } else {
-		                if (arg1 instanceof _NSIdentity2.default) {
-		                    return this.fromFQN(arg1.fqn);
-		                } else {
-		                    if (arg1.prefix) {
-		                        return this.get(new _NSIdentity2.default(arg1.namespaceURI, arg1.localName));
-		                    } else {
-		                        if (arg1.namespaceURI && this._fqnObjectMap[arg1.localName + "|" + arg1.namespaceURI] !== void 0) {
-		                            return this.get(new _NSIdentity2.default(arg1.namespaceURI, arg1.localName));
-		                        }
-		                        if (arg1 && arg1.ownerElement && arg1.ownerElement.namespaceURI && this._fqnObjectMap[arg1.localName + "|" + arg1.ownerElement.namespaceURI] !== void 0) {
-		                            return this.get(new _NSIdentity2.default(arg1.ownerElement.namespaceURI, arg1.localName));
-		                        }
-		                        return this.get(arg1.localName);
-		                    }
-		                }
-		            }
-		        }
-		    }, {
-		        key: "fromFQN",
-		        value: function fromFQN(fqn) {
-		            return this._fqnObjectMap[fqn];
-		        }
-		    }, {
-		        key: "isAmbigious",
-		        value: function isAmbigious(name) {
-		            return Object.keys(this._nameObjectMap[name]).length > 1;
-		        }
-		    }, {
-		        key: "has",
-		        value: function has(name) {
-		            return this._nameObjectMap[name] !== void 0;
-		        }
-		    }, {
-		        key: "pushDictionary",
-		        value: function pushDictionary(dict) {
-		            var _this = this;
-		
-		            dict.forEach(function (value, keyFQN) {
-		                var id = _NSIdentity2.default.fromFQN(keyFQN);
-		                _this.set(id, value);
-		            });
-		            return this;
-		        }
-		    }, {
-		        key: "toArray",
-		        value: function toArray() {
-		            var _this2 = this;
-		
-		            var ret = [];
-		            Object.keys(this._fqnObjectMap).forEach(function (key) {
-		                ret.push(_this2._fqnObjectMap[key]);
-		            });
-		            return ret;
-		        }
-		    }, {
-		        key: "clone",
-		        value: function clone() {
-		            var dict = new NSDictionary();
-		            return dict.pushDictionary(this);
-		        }
-		    }, {
-		        key: "forEach",
-		        value: function forEach(callback) {
-		            var _this3 = this;
-		
-		            Object.keys(this._fqnObjectMap).forEach(function (key) {
-		                callback(_this3._fqnObjectMap[key], key);
-		            });
-		            return this;
-		        }
-		    }, {
-		        key: "map",
-		        value: function map(callback) {
-		            var ret = new NSDictionary();
-		            this.forEach(function (val, fqn) {
-		                var id = _NSIdentity2.default.fromFQN(fqn);
-		                ret.set(id, callback(val, fqn));
-		            });
-		            return ret;
-		        }
-		    }, {
-		        key: "clear",
-		        value: function clear() {
-		            this._nameObjectMap = {};
-		            this._fqnObjectMap = {};
-		        }
-		    }]);
-		
-		    return NSDictionary;
-		}();
-		
-		exports.default = NSDictionary;
-	
-	/***/ },
-	/* 16 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-		
-		var _Constants = __webpack_require__(6);
-		
-		var _Constants2 = _interopRequireDefault(_Constants);
-		
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-		
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-		
-		/**
-		 * The class to identity with XML namespace feature.
-		 */
-		var NSIdentity = function () {
-		    function NSIdentity(ns, name) {
-		        _classCallCheck(this, NSIdentity);
-		
-		        if (name) {
-		            this.ns = ns.toUpperCase();
-		            this.name = name;
-		        } else {
-		            this.ns = _Constants2.default.defaultNamespace;
-		            this.name = ns;
-		        }
-		        // Ensure all of the characters are uppercase
-		        this.name = NSIdentity._ensureValidIdentity(this.name, true);
-		        this.ns = NSIdentity._ensureValidIdentity(this.ns);
-		        this.fqn = this.name + "|" + this.ns;
-		    }
-		    /**
-		     * Generate an instance from Full qualified name.
-		     * @param  {string}             fqn [description]
-		     * @return {NSIdentity}     [description]
-		     */
-		
-		
-		    _createClass(NSIdentity, null, [{
-		        key: "fromFQN",
-		        value: function fromFQN(fqn) {
-		            var splitted = fqn.split("|");
-		            if (splitted.length !== 2) {
-		                throw new Error("Invalid fqn was given");
-		            }
-		            return new NSIdentity(splitted[1], splitted[0]);
-		        }
-		        /**
-		         * Make sure given name is valid for using in identity.
-		         * | is prohibited for using in name or namespace.
-		         * . is prohibited for using in name.
-		         * All lowercase alphabet will be transformed into uppercase.
-		         * @param  {string} name        [A name to verify]
-		         * @param  {[type]} noDot=false [Ensure not using dot or not]
-		         * @return {string}             [Valid name]
-		         */
-		
-		    }, {
-		        key: "_ensureValidIdentity",
-		        value: function _ensureValidIdentity(name) {
-		            var noDot = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-		
-		            if (name.indexOf("|") > -1) {
-		                throw new Error("Namespace and identity cannnot contain | ");
-		            }
-		            if (noDot && name.indexOf(".") > -1) {
-		                throw new Error("identity cannnot contain .");
-		            }
-		            if (name == null) {
-		                throw new Error("Specified name was null or undefined");
-		            }
-		            return name;
-		        }
-		    }]);
-		
-		    return NSIdentity;
-		}();
-		
-		exports.default = NSIdentity;
-	
-	/***/ },
-	/* 17 */
+	/* 19 */
 	/***/ function(module, exports) {
 	
 		"use strict";
@@ -11591,101 +11923,133 @@ return /******/ (function(modules) { // webpackBootstrap
 		Object.defineProperty(exports, "__esModule", {
 		    value: true
 		});
-		function BooleanConverter(val) {
-		    if (typeof val === "boolean") {
-		        return val;
-		    } else if (typeof val === "string") {
-		        switch (val) {
-		            case "true":
-		                return true;
-		            case "false":
-		                return false;
-		            default:
-		                return undefined;
-		        }
-		    }
-		}
-		exports.default = BooleanConverter;
-	
-	/***/ },
-	/* 18 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
 		
 		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-		
-		var _Component2 = __webpack_require__(19);
-		
-		var _Component3 = _interopRequireDefault(_Component2);
-		
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 		
 		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 		
-		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-		
-		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-		
-		var GrimoireComponent = function (_Component) {
-		    _inherits(GrimoireComponent, _Component);
-		
-		    function GrimoireComponent() {
-		        _classCallCheck(this, GrimoireComponent);
-		
-		        return _possibleConstructorReturn(this, (GrimoireComponent.__proto__ || Object.getPrototypeOf(GrimoireComponent)).apply(this, arguments));
+		var XMLHttpRequestAsync = function () {
+		    function XMLHttpRequestAsync() {
+		        _classCallCheck(this, XMLHttpRequestAsync);
 		    }
 		
-		    _createClass(GrimoireComponent, [{
-		        key: "$awake",
-		        value: function $awake() {
-		            var _this2 = this;
-		
-		            this.node.resolveAttributesValue();
-		            this.getAttributeRaw("id").watch(function (attr) {
-		                _this2.node.element.id = attr ? attr : "";
-		            }, true);
-		            this.getAttributeRaw("class").watch(function (attr) {
-		                _this2.node.element.className = Array.isArray(attr) ? attr.join(" ") : "";
-		            }, true);
-		            this.getAttributeRaw("enabled").watch(function (attr) {
-		                _this2.node["_enabled"] = attr;
-		                if (_this2.node.isActive) {
-		                    _this2.node.notifyActivenessUpdate();
-		                }
+		    _createClass(XMLHttpRequestAsync, null, [{
+		        key: "send",
+		        value: function send(xhr, data) {
+		            return new Promise(function (resolve, reject) {
+		                xhr.onload = function (e) {
+		                    resolve(e);
+		                };
+		                xhr.onerror = function (e) {
+		                    reject(e);
+		                };
+		                xhr.send(data);
 		            });
-		            this.node["_enabled"] = this.getAttribute("enabled");
 		        }
 		    }]);
 		
-		    return GrimoireComponent;
-		}(_Component3.default);
+		    return XMLHttpRequestAsync;
+		}();
 		
-		GrimoireComponent.attributes = {
-		    id: {
-		        converter: "String",
-		        default: null,
-		        readonly: false
-		    },
-		    class: {
-		        converter: "StringArray",
-		        default: null,
-		        readonly: false
-		    },
-		    enabled: {
-		        converter: "Boolean",
-		        default: true,
-		        readonly: false
-		    }
-		};
-		exports.default = GrimoireComponent;
+		exports.default = XMLHttpRequestAsync;
 	
 	/***/ },
-	/* 19 */
+	/* 20 */
+	/***/ function(module, exports) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		function EnumConverter(val) {
+		    if (!this.declaration["table"]) {
+		        throw new Error("Enum converter needs to be specified table in attribute dictionary");
+		    }
+		    if (typeof val === "number") {
+		        return val;
+		    }
+		    if (typeof val === "string") {
+		        var result = this.declaration["table"][val];
+		        if (!result) {
+		            throw new Error("Specified value is not exisiting in the relation table");
+		        } else {
+		            return result;
+		        }
+		    }
+		    return null;
+		}
+		exports.default = EnumConverter;
+	
+	/***/ },
+	/* 21 */
+	/***/ function(module, exports) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		function NumberArrayConverter(val) {
+		    if (val instanceof Array) {
+		        return val;
+		    }
+		    if (typeof val === "string") {
+		        var splitted = val.split(",");
+		        return splitted.map(function (s) {
+		            return Number.parseFloat(s);
+		        });
+		    }
+		}
+		exports.default = NumberArrayConverter;
+	
+	/***/ },
+	/* 22 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _Component = __webpack_require__(23);
+		
+		var _Component2 = _interopRequireDefault(_Component);
+		
+		var _GomlNode = __webpack_require__(7);
+		
+		var _GomlNode2 = _interopRequireDefault(_GomlNode);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		function ComponentConverter(val) {
+		    if (!this.declaration["target"]) {
+		        throw new Error("Component converter require to be specified target");
+		    }
+		    if (val === null) {
+		        return null;
+		    }
+		    if (val instanceof _GomlNode2.default) {
+		        return val.getComponent(this.declaration["target"]);
+		    } else if (val instanceof _Component2.default) {
+		        if (val.name === this.declaration["target"]) {
+		            return val; // check component type?
+		        } else {
+		            throw new Error("Specified component must be " + this.declaration["target"]);
+		        }
+		    } else {
+		        var n = this.tree(val).first();
+		        if (n) {
+		            return n.getComponent(this.declaration["target"]);
+		        }
+		        return null;
+		    }
+		}
+		exports.default = ComponentConverter;
+	
+	/***/ },
+	/* 23 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -11696,23 +12060,23 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 		
-		var _Utility = __webpack_require__(4);
+		var _Utility = __webpack_require__(13);
 		
 		var _Utility2 = _interopRequireDefault(_Utility);
 		
-		var _Constants = __webpack_require__(6);
+		var _Constants = __webpack_require__(9);
 		
 		var _Constants2 = _interopRequireDefault(_Constants);
 		
-		var _NodeUtility = __webpack_require__(14);
+		var _NodeUtility = __webpack_require__(18);
 		
 		var _NodeUtility2 = _interopRequireDefault(_NodeUtility);
 		
-		var _Attribute = __webpack_require__(20);
+		var _Attribute = __webpack_require__(10);
 		
 		var _Attribute2 = _interopRequireDefault(_Attribute);
 		
-		var _IDObject2 = __webpack_require__(13);
+		var _IDObject2 = __webpack_require__(17);
 		
 		var _IDObject3 = _interopRequireDefault(_IDObject2);
 		
@@ -11740,42 +12104,27 @@ return /******/ (function(modules) { // webpackBootstrap
 		        var _this = _possibleConstructorReturn(this, (Component.__proto__ || Object.getPrototypeOf(Component)).apply(this, arguments));
 		
 		        _this.isDefaultComponent = false;
+		        _this.disposed = false;
 		        /**
 		         * Flag that this component is activated or not.
 		         * @type {boolean}
 		         */
 		        _this._enabled = true;
+		        _this._awaked = false;
 		        _this._handlers = [];
 		        _this._additionalAttributesNames = [];
+		        _this._initializedInfo = null;
 		        return _this;
 		    }
 		
 		    _createClass(Component, [{
-		        key: "getValue",
+		        key: "setAttribute",
 		
-		        /**
-		         * Obtain value of attribute. When the attribute is not existing, this method would return undefined.
-		         * @param  {string} name [description]
-		         * @return {any}         [description]
-		         */
-		        value: function getValue(name) {
-		            console.warn("Component#getValue is obsolete. please use getAttribute instead of.");
-		            return this.getAttribute(name);
-		        }
-		    }, {
-		        key: "setValue",
-		        value: function setValue(name, value) {
-		            console.warn("Component#setValue is obsolete. please use setAttribute instead of.");
-		            return this.setAttribute(name, value);
-		        }
 		        /**
 		         * Set value of attribute
 		         * @param {string} name  [description]
 		         * @param {any}    value [description]
 		         */
-		
-		    }, {
-		        key: "setAttribute",
 		        value: function setAttribute(name, value) {
 		            var attr = this.attributes.get(name); // TODO:check readonly?
 		            if (attr) {
@@ -11789,7 +12138,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		            if (attr) {
 		                return attr.Value;
 		            } else {
-		                return undefined;
+		                throw new Error("attribute " + name + " is not defined in " + this.name.fqn);
 		            }
 		        }
 		    }, {
@@ -11805,17 +12154,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		    }, {
 		        key: "removeEnabledObserver",
 		        value: function removeEnabledObserver(observer) {
-		            var index = -1;
-		            for (var i = 0; i < this._handlers.length; i++) {
-		                if (observer === this._handlers[i]) {
-		                    index = i;
-		                    break;
-		                }
-		            }
-		            if (index < 0) {
-		                return;
-		            }
-		            this._handlers.splice(index, 1);
+		            return _Utility2.default.remove(this._handlers, observer);
 		        }
 		    }, {
 		        key: "resolveDefaultAttributes",
@@ -11831,7 +12170,9 @@ return /******/ (function(modules) { // webpackBootstrap
 		                (function () {
 		                    var attrs = _NodeUtility2.default.getAttributes(_this2.element);
 		                    for (var key in attrs) {
-		                        if (key === _Constants2.default.x_gr_id) continue;
+		                        if (key === _Constants2.default.x_gr_id) {
+		                            continue;
+		                        }
 		                        if (!_this2.attributes.get(key)) {
 		                            _Utility2.default.w("attribute '" + key + "' is not exist in this component '" + _this2.name.fqn + "'");
 		                        }
@@ -11840,6 +12181,36 @@ return /******/ (function(modules) { // webpackBootstrap
 		                        return attr.resolveDefaultValue(attrs);
 		                    });
 		                })();
+		            }
+		        }
+		    }, {
+		        key: "dispose",
+		        value: function dispose() {
+		            this.node.removeComponent(this);
+		        }
+		    }, {
+		        key: "awake",
+		        value: function awake() {
+		            if (this._awaked) {
+		                return false;
+		            }
+		            this._awaked = true;
+		            var method = this["$$awake"];
+		            if (typeof method === "function") {
+		                method();
+		            }
+		            return true;
+		        }
+		    }, {
+		        key: "initialized",
+		        value: function initialized(info) {
+		            if (this._initializedInfo === info) {
+		                return;
+		            }
+		            this._initializedInfo = info;
+		            var method = this["$$initialized"];
+		            if (typeof method === "function") {
+		                method(info);
 		            }
 		        }
 		        /**
@@ -11934,6 +12305,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		        get: function get() {
 		            return this.node ? this.node.tree : null;
 		        }
+		    }, {
+		        key: "isActive",
+		        get: function get() {
+		            return this.enabled && this.node.isActive;
+		        }
 		    }]);
 		
 		    return Component;
@@ -11942,7 +12318,443 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = Component;
 	
 	/***/ },
-	/* 20 */
+	/* 24 */
+	/***/ function(module, exports) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		function NumberConverter(val) {
+		    if (typeof val === "number") {
+		        return val;
+		    } else if (typeof val === "string") {
+		        return Number.parseFloat(val);
+		    } else if (val === null) {
+		        return null;
+		    }
+		}
+		exports.default = NumberConverter;
+	
+	/***/ },
+	/* 25 */
+	/***/ function(module, exports) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		function ObjectConverter(val) {
+		    return val;
+		}
+		exports.default = ObjectConverter;
+	
+	/***/ },
+	/* 26 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _GrimoireInterface = __webpack_require__(3);
+		
+		var _GrimoireInterface2 = _interopRequireDefault(_GrimoireInterface);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		var splitter = " ";
+		var escape = "\\";
+		function ArrayConverter(val) {
+		    if (!this.declaration["type"]) {
+		        throw new Error("Array converter needs to be specified type in attribute declaration.");
+		    }
+		    var converter = _GrimoireInterface2.default.converters.get(this.declaration["type"]);
+		    if (!converter) {
+		        throw new Error("converter " + this.declaration["type"] + " is not registerd.");
+		    }
+		    var c = converter.convert.bind(this);
+		    if (Array.isArray(val)) {
+		        return val.map(function (v) {
+		            return c(v);
+		        });
+		    }
+		    if (typeof val === "string") {
+		        var ar = val.split(splitter);
+		        for (var i = 0; i < ar.length; i++) {
+		            var s = ar[i];
+		            if (s[s.length - 1] === escape) {
+		                if (i === ar.length - 1) {
+		                    ar[i] = s.substring(0, s.length - escape.length) + splitter;
+		                } else {
+		                    ar[i] = s.substring(0, s.length - escape.length) + splitter + ar[i + 1];
+		                    ar.splice(i + 1, 1);
+		                }
+		            }
+		        }
+		        return ar.map(function (v) {
+		            return c(v);
+		        });
+		    }
+		    return null;
+		}
+		exports.default = ArrayConverter;
+	
+	/***/ },
+	/* 27 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+		
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+		
+		var _Utility = __webpack_require__(13);
+		
+		var _Utility2 = _interopRequireDefault(_Utility);
+		
+		var _XMLReader = __webpack_require__(14);
+		
+		var _XMLReader2 = _interopRequireDefault(_XMLReader);
+		
+		var _GomlParser = __webpack_require__(6);
+		
+		var _GomlParser2 = _interopRequireDefault(_GomlParser);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+		
+		/**
+		 * 複数のノードを対象とした操作を提供するインタフェース
+		 */
+		var NodeInterface = function () {
+		    function NodeInterface(nodes) {
+		        _classCallCheck(this, NodeInterface);
+		
+		        this.nodes = nodes;
+		        if (!nodes) {
+		            throw new Error("nodes is null");
+		        }
+		    }
+		    /**
+		     * 対象となるノードの個数を取得する
+		     * @return {number} [description]
+		     */
+		
+		
+		    _createClass(NodeInterface, [{
+		        key: "get",
+		        value: function get(i1, i2) {
+		            var _this = this;
+		
+		            if (i1 === void 0) {
+		                var first = this.first();
+		                if (!first) {
+		                    throw new Error("this NodeInterface is empty.");
+		                } else {
+		                    return first;
+		                }
+		            } else if (i2 === void 0) {
+		                if (this.count <= i1) {
+		                    throw new Error("index out of range.");
+		                } else {
+		                    var _ret = function () {
+		                        var c = i1;
+		                        var returnNode = null;
+		                        _this.forEach(function (node) {
+		                            if (c === 0) {
+		                                returnNode = node;
+		                            }
+		                            c--;
+		                        });
+		                        return {
+		                            v: returnNode
+		                        };
+		                    }();
+		
+		                    if ((typeof _ret === "undefined" ? "undefined" : _typeof(_ret)) === "object") return _ret.v;
+		                }
+		            } else {
+		                if (this.nodes.length <= i1 || this.nodes[i1].length <= i2) {
+		                    throw new Error("index out of range.");
+		                } else {
+		                    return this.nodes[i1][i2];
+		                }
+		            }
+		        }
+		    }, {
+		        key: "getAttribute",
+		        value: function getAttribute(attrName) {
+		            var first = this.first();
+		            if (!first) {
+		                throw new Error("this NodeInterface is empty.");
+		            }
+		            return first.getAttribute(attrName);
+		        }
+		    }, {
+		        key: "setAttribute",
+		        value: function setAttribute(attrName, value) {
+		            this.forEach(function (node) {
+		                node.setAttribute(attrName, value, false);
+		            });
+		        }
+		        /**
+		         * 対象ノードにイベントリスナを追加します。
+		         * @param {string}   eventName [description]
+		         * @param {Function} listener  [description]
+		         */
+		
+		    }, {
+		        key: "on",
+		        value: function on(eventName, listener) {
+		            this.forEach(function (node) {
+		                node.on(eventName, listener);
+		            });
+		            return this;
+		        }
+		        /**
+		         * 対象ノードに指定したイベントリスナが登録されていれば削除します
+		         * @param {string}   eventName [description]
+		         * @param {Function} listener  [description]
+		         */
+		
+		    }, {
+		        key: "off",
+		        value: function off(eventName, listener) {
+		            this.forEach(function (node) {
+		                node.removeListener(eventName, listener);
+		            });
+		            return this;
+		        }
+		        /**
+		         * このノードインタフェースが対象とするノードそれぞれに、
+		         * タグで指定したノードを子要素として追加します。
+		         * @param {string} tag [description]
+		         */
+		
+		    }, {
+		        key: "append",
+		        value: function append(tag) {
+		            this.forEach(function (node) {
+		                var elems = _XMLReader2.default.parseXML(tag);
+		                elems.forEach(function (elem) {
+		                    var child = _GomlParser2.default.parse(elem, null, null);
+		                    node.addChild(child);
+		                });
+		            });
+		            return this;
+		        }
+		        /**
+		         * このノードインタフェースが対象とするノードの子に、
+		         * 指定されたノードが存在すれば削除します。
+		         * @param {GomlNode} child [description]
+		         */
+		
+		    }, {
+		        key: "remove",
+		        value: function remove() {
+		            this.forEach(function (node) {
+		                node.remove();
+		            });
+		            return this;
+		        }
+		        /**
+		         * このノードインタフェースが対象とするノードに対して反復処理を行います
+		         * @param  {GomlNode} callback [description]
+		         * @return {[type]}            [description]
+		         */
+		
+		    }, {
+		        key: "forEach",
+		        value: function forEach(callback) {
+		            this.nodes.forEach(function (array, gomlIndex) {
+		                array.forEach(function (node, nodeIndex) {
+		                    callback(node, gomlIndex, nodeIndex);
+		                });
+		            });
+		            return this;
+		        }
+		    }, {
+		        key: "find",
+		        value: function find(predicate) {
+		            var nodes = this.nodes;
+		            for (var i = 0; i < nodes.length; i++) {
+		                var array = nodes[i];
+		                for (var j = 0; j < array.length; j++) {
+		                    var node = array[j];
+		                    if (predicate(node, i, j)) {
+		                        return node;
+		                    }
+		                }
+		            }
+		            return null;
+		        }
+		    }, {
+		        key: "watch",
+		        value: function watch(attrName, watcher) {
+		            var immediate = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+		
+		            this.forEach(function (node) {
+		                node.watch(attrName, watcher, immediate);
+		            });
+		        }
+		        /**
+		         * このノードインタフェースが対象とするノードを有効、または無効にします。
+		         * @param {boolean} enable [description]
+		         */
+		
+		    }, {
+		        key: "setEnable",
+		        value: function setEnable(enable) {
+		            this.forEach(function (node) {
+		                node.enabled = !!enable;
+		            });
+		            return this;
+		        }
+		        /**
+		         * このノードインタフェースが対象とするノードのそれぞれの子ノードを対象とする、
+		         * 新しいノードインタフェースを取得します。
+		         * @return {NodeInterface} [description]
+		         */
+		
+		    }, {
+		        key: "children",
+		        value: function children() {
+		            var children = this.nodes.map(function (nodes) {
+		                return _Utility2.default.flatMap(nodes, function (node) {
+		                    return node.children;
+		                });
+		            });
+		            return new NodeInterface(children);
+		        }
+		        /**
+		         * 対象ノードにコンポーネントをアタッチします。
+		         * @param {Component} component [description]
+		         */
+		
+		    }, {
+		        key: "addComponent",
+		        value: function addComponent(componentId) {
+		            var attributes = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+		
+		            this.forEach(function (node) {
+		                node.addComponent(componentId, attributes);
+		            });
+		            return this;
+		        }
+		        /**
+		         * 最初の対象ノードを取得する
+		         * @return {GomlNode} [description]
+		         */
+		
+		    }, {
+		        key: "first",
+		        value: function first() {
+		            return this.find(function () {
+		                return true;
+		            });
+		        }
+		        /**
+		         * 対象となる唯一のノードを取得する。
+		         * 対象が存在しない、あるいは複数存在するときは例外を投げる。
+		         * @return {GomlNode} [description]
+		         */
+		
+		    }, {
+		        key: "single",
+		        value: function single() {
+		            if (this.count !== 1) {
+		                throw new Error("this nodeInterface is not single.");
+		            }
+		            var first = this.first();
+		            if (!first) {
+		                throw new Error("this nodeInterface is not single,but is empty.");
+		            }
+		            return first;
+		        }
+		    }, {
+		        key: "filter",
+		        value: function filter(predicate) {
+		            var newNodes = [];
+		            for (var i = 0; i < this.nodes.length; i++) {
+		                var goml = this.nodes[i];
+		                newNodes.push([]);
+		                for (var j = 0; j < goml.length; j++) {
+		                    var node = goml[j];
+		                    if (predicate(node, i, j)) {
+		                        newNodes[i].push(node);
+		                    }
+		                }
+		            }
+		            return new NodeInterface(newNodes);
+		        }
+		    }, {
+		        key: "toArray",
+		        value: function toArray() {
+		            return _Utility2.default.flat(this.nodes);
+		        }
+		    }, {
+		        key: "addChildByName",
+		        value: function addChildByName(nodeName, attributes) {
+		            this.forEach(function (node) {
+		                node.addChildByName(nodeName, attributes);
+		            });
+		        }
+		    }, {
+		        key: "sendMessage",
+		        value: function sendMessage(message, args) {
+		            this.forEach(function (node) {
+		                node.sendMessage(message, args);
+		            });
+		        }
+		    }, {
+		        key: "broadcastMessage",
+		        value: function broadcastMessage(arg1, arg2, arg3) {
+		            if (typeof arg1 === "number") {
+		                this.forEach(function (node) {
+		                    node.broadcastMessage(arg1, arg2, arg3);
+		                });
+		            } else {
+		                this.forEach(function (node) {
+		                    node.broadcastMessage(arg2, arg3);
+		                });
+		            }
+		        }
+		    }, {
+		        key: "count",
+		        get: function get() {
+		            if (this.nodes.length === 0) {
+		                return 0;
+		            }
+		            var counts = this.nodes.map(function (nodes) {
+		                return nodes.length;
+		            });
+		            return _Utility2.default.sum(counts);
+		        }
+		    }, {
+		        key: "isEmpty",
+		        get: function get() {
+		            return this.count === 0;
+		        }
+		    }]);
+		
+		    return NodeInterface;
+		}();
+		
+		exports.default = NodeInterface;
+	
+	/***/ },
+	/* 28 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -11953,221 +12765,174 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 		
-		var _Ensure = __webpack_require__(2);
+		var _Constants = __webpack_require__(9);
 		
-		var _Ensure2 = _interopRequireDefault(_Ensure);
-		
-		var _NSIdentity = __webpack_require__(16);
-		
-		var _NSIdentity2 = _interopRequireDefault(_NSIdentity);
+		var _Constants2 = _interopRequireDefault(_Constants);
 		
 		var _GrimoireInterface = __webpack_require__(3);
 		
 		var _GrimoireInterface2 = _interopRequireDefault(_GrimoireInterface);
+		
+		var _NodeInterface = __webpack_require__(27);
+		
+		var _NodeInterface2 = _interopRequireDefault(_NodeInterface);
+		
+		var _GomlNode = __webpack_require__(7);
+		
+		var _GomlNode2 = _interopRequireDefault(_GomlNode);
 		
 		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 		
 		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 		
 		/**
-		 * Manage a attribute attached to components.
+		 * Provides interfaces to treat whole goml tree for each.
 		 */
-		var Attribute = function () {
-		    function Attribute() {
-		        _classCallCheck(this, Attribute);
+		var GomlInterface = function () {
+		    function GomlInterface(rootNodes) {
+		        _classCallCheck(this, GomlInterface);
 		
-		        /**
-		         * List of functions that is listening changing values.
-		         */
-		        this._observers = [];
+		        this.rootNodes = rootNodes;
 		    }
 		
-		    _createClass(Attribute, [{
-		        key: "watch",
-		
-		        /**
-		         * Add event handler to observe changing this attribute.
-		         * @param  {(attr: Attribute) => void} handler handler the handler you want to add.
-		         * @param {boolean = false} callFirst whether that handler should be called first time.
-		         */
-		        value: function watch(watcher) {
-		            var immedateCalls = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-		
-		            this._observers.push(watcher);
-		            if (immedateCalls) {
-		                watcher(this.Value, undefined, this);
-		            }
-		        }
-		        /**
-		         * Remove event handler you added.
-		         * @param  {Attribute} handler [description]
-		         * @return {[type]}            [description]
-		         */
-		
-		    }, {
-		        key: "removeObserver",
-		        value: function removeObserver(target) {
-		            var index = this._observers.findIndex(function (f) {
-		                return f === target;
-		            });
-		            if (index < 0) {
-		                return;
-		            }
-		            this._observers.splice(index, 1);
-		        }
-		        /**
-		         * Bind converted value to specified field.
-		         * When target object was not specified, field of owner component would be assigned.
-		         * @param {string} variableName [description]
-		         * @param {any} targetObject [description]
-		         */
-		
-		    }, {
-		        key: "boundTo",
-		        value: function boundTo(variableName) {
-		            var targetObject = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.component;
-		
-		            this.watch(function (v) {
-		                targetObject[variableName] = v;
-		            }, true);
-		        }
-		        /**
-		         * Apply default value to attribute from DOM values.
-		         * @param {string }} domValues [description]
-		         */
-		
-		    }, {
-		        key: "resolveDefaultValue",
-		        value: function resolveDefaultValue(domValues) {
-		            if (this._value !== void 0) {
-		                return;
-		            }
-		            var tagAttrValue = domValues[this.name.name];
-		            if (tagAttrValue !== void 0) {
-		                this.Value = tagAttrValue; // Dom指定値で解決
-		                return;
-		            }
-		            var nodeDefaultValue = this.component.node.nodeDeclaration.defaultAttributesActual.get(this.name);
-		            if (nodeDefaultValue !== void 0) {
-		                this.Value = nodeDefaultValue; // Node指定値で解決
-		                return;
-		            }
-		            this.Value = this.declaration.default;
-		        }
-		    }, {
-		        key: "_valuate",
-		        value: function _valuate(raw) {
-		            var v = this.converter.convert(raw);
-		            if (v === void 0) {
-		                throw new Error("attribute " + this.name.name + " value can not be convert from " + this._value);
-		            }
-		            this._lastValuete = v;
-		            return v;
-		        }
-		    }, {
-		        key: "_notifyChange",
-		        value: function _notifyChange(newValue) {
-		            var _this = this;
-		
-		            var lastvalue = this._lastValuete;
-		            var c = this.converter;
-		            this._observers.forEach(function (handler) {
-		                handler(c.convert(newValue), lastvalue, _this);
+		    _createClass(GomlInterface, [{
+		        key: "getNodeById",
+		        value: function getNodeById(id) {
+		            return this.rootNodes.map(function (root) {
+		                return _GomlNode2.default.fromElement(root.element.ownerDocument.getElementById(id));
 		            });
 		        }
 		    }, {
-		        key: "tree",
-		
-		        /**
-		         * Goml tree interface which contains the component this attribute bound to.
-		         * @return {IGomlInterface} [description]
-		         */
-		        get: function get() {
-		            return this.component.tree;
-		        }
-		        /**
-		         * Companion map which is bounding to the component this attribute bound to.
-		         * @return {NSDictionary<any>} [description]
-		         */
-		
-		    }, {
-		        key: "companion",
-		        get: function get() {
-		            return this.component.companion;
-		        }
-		        /**
-		         * Get a value with specified type.
-		         * @return {any} value with specified type.
-		         */
-		
-		    }, {
-		        key: "Value",
-		        get: function get() {
-		            if (this._value === void 0) {
-		                throw new Error("attribute " + this.name.name + " value is undefined in " + this.component.node.name.name);
-		            }
-		            return this._valuate(this._value);
-		        }
-		        /**
-		         * Set a value with any type.
-		         * @param {any} val Value with string or specified type.
-		         */
-		        ,
-		        set: function set(val) {
-		            if (this._value === val) {
-		                return;
-		            }
-		            this._value = val;
-		            this._notifyChange(val);
-		        }
-		        /**
-		         * Construct a new attribute with name of key and any value with specified type. If constant flag is true, This attribute will be immutable.
-		         * If converter is not served, string converter will be set as default.
-		         * @param {string}        key       Key of this attribute.
-		         * @param {any}           value     Value of this attribute.
-		         * @param {ConverterBase} converter Converter of this attribute.
-		         * @param {boolean}       constant  Whether this attribute is immutable or not. False as default.
-		         */
-		
-		    }], [{
-		        key: "convert",
-		        value: function convert(converter, val) {
-		            var cname = _Ensure2.default.ensureTobeNSIdentity(converter);
-		            var conv = _GrimoireInterface2.default.converters.get(cname);
-		            if (!conv) {
-		                throw new Error("converter " + cname.name + " is not defined.");
-		            }
-		            return conv.convert(val);
+		        key: "queryFunc",
+		        value: function queryFunc(query) {
+		            return new _NodeInterface2.default(this._queryNodes(query));
 		        }
 		    }, {
-		        key: "generateAttributeForComponent",
-		        value: function generateAttributeForComponent(name, declaration, component) {
-		            var attr = new Attribute();
-		            attr.name = new _NSIdentity2.default(component.name.ns, name);
-		            attr.component = component;
-		            attr.declaration = declaration;
-		            var converterName = _Ensure2.default.ensureTobeNSIdentity(declaration.converter);
-		            attr.converter = _GrimoireInterface2.default.converters.get(converterName);
-		            if (attr.converter === void 0) {
-		                // When the specified converter was not found
-		                throw new Error("Specified converter " + converterName.name + " was not found from registered converters.\n Component: " + attr.component.name.fqn + "\n Attribute: " + attr.name.name);
-		            }
-		            attr.converter = {
-		                convert: attr.converter.convert.bind(attr),
-		                name: attr.converter.name
-		            };
-		            attr.component.attributes.set(attr.name, attr);
-		            return attr;
+		        key: "_queryNodes",
+		        value: function _queryNodes(query) {
+		            return this.rootNodes.map(function (root) {
+		                var nodelist = root.element.ownerDocument.querySelectorAll(query);
+		                var nodes = [];
+		                for (var i = 0; i < nodelist.length; i++) {
+		                    var node = _GrimoireInterface2.default.nodeDictionary[nodelist.item(i).getAttribute(_Constants2.default.x_gr_id)];
+		                    if (node) {
+		                        nodes.push(node);
+		                    }
+		                }
+		                return nodes;
+		            });
 		        }
 		    }]);
 		
-		    return Attribute;
+		    return GomlInterface;
 		}();
 		
-		exports.default = Attribute;
+		exports.default = GomlInterface;
 	
 	/***/ },
-	/* 21 */
+	/* 29 */
+	/***/ function(module, exports) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		function BooleanConverter(val) {
+		    if (typeof val === "boolean") {
+		        return val;
+		    } else if (typeof val === "string") {
+		        switch (val) {
+		            case "true":
+		                return true;
+		            case "false":
+		                return false;
+		            default:
+		                return undefined;
+		        }
+		    }
+		}
+		exports.default = BooleanConverter;
+	
+	/***/ },
+	/* 30 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+		
+		var _Component2 = __webpack_require__(23);
+		
+		var _Component3 = _interopRequireDefault(_Component2);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+		
+		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+		
+		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+		
+		var GrimoireComponent = function (_Component) {
+		    _inherits(GrimoireComponent, _Component);
+		
+		    function GrimoireComponent() {
+		        _classCallCheck(this, GrimoireComponent);
+		
+		        return _possibleConstructorReturn(this, (GrimoireComponent.__proto__ || Object.getPrototypeOf(GrimoireComponent)).apply(this, arguments));
+		    }
+		
+		    _createClass(GrimoireComponent, [{
+		        key: "$awake",
+		        value: function $awake() {
+		            var _this2 = this;
+		
+		            this.node.resolveAttributesValue();
+		            this.getAttributeRaw("id").watch(function (attr) {
+		                _this2.node.element.id = attr ? attr : "";
+		            }, true);
+		            this.getAttributeRaw("class").watch(function (attr) {
+		                _this2.node.element.className = Array.isArray(attr) ? attr.join(" ") : "";
+		            }, true);
+		            this.getAttributeRaw("enabled").watch(function (attr) {
+		                _this2.node["_enabled"] = attr;
+		                var p = _this2.node.parent;
+		                _this2.node.notifyActivenessUpdate(p ? p.isActive && _this2.node.enabled : _this2.node.enabled);
+		            });
+		            this.node["_enabled"] = this.getAttribute("enabled");
+		            this.node["_isActive"] = this.node.parent ? this.node.parent.isActive && this.enabled : this.enabled;
+		        }
+		    }]);
+		
+		    return GrimoireComponent;
+		}(_Component3.default);
+		
+		GrimoireComponent.attributes = {
+		    id: {
+		        converter: "String",
+		        default: null,
+		        readonly: false
+		    },
+		    class: {
+		        converter: "StringArray",
+		        default: null,
+		        readonly: false
+		    },
+		    enabled: {
+		        converter: "Boolean",
+		        default: true,
+		        readonly: false
+		    }
+		};
+		exports.default = GrimoireComponent;
+	
+	/***/ },
+	/* 31 */
 	/***/ function(module, exports) {
 	
 		"use strict";
@@ -12186,7 +12951,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = StringArrayConverter;
 	
 	/***/ },
-	/* 22 */
+	/* 32 */
 	/***/ function(module, exports) {
 	
 		"use strict";
@@ -12206,77 +12971,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = StringConverter;
 	
 	/***/ },
-	/* 23 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-		
-		var _Constants = __webpack_require__(6);
-		
-		var _Constants2 = _interopRequireDefault(_Constants);
-		
-		var _GrimoireInterface = __webpack_require__(3);
-		
-		var _GrimoireInterface2 = _interopRequireDefault(_GrimoireInterface);
-		
-		var _Attribute = __webpack_require__(20);
-		
-		var _Attribute2 = _interopRequireDefault(_Attribute);
-		
-		var _NSDictionary = __webpack_require__(15);
-		
-		var _NSDictionary2 = _interopRequireDefault(_NSDictionary);
-		
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-		
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-		
-		var ComponentDeclaration = function () {
-		    function ComponentDeclaration(name, attributes, ctor) {
-		        _classCallCheck(this, ComponentDeclaration);
-		
-		        this.name = name;
-		        this.attributes = attributes;
-		        this.ctor = ctor;
-		        // if (this.attributes["enabled"]) {//TODO implements enabled
-		        //   throw new Error("attribute 'enabled' is already defined by default.");
-		        // }
-		        // this.attributes["enabled"] = {
-		        //   converter: "Boolean",
-		        //   default true
-		        // };
-		    }
-		
-		    _createClass(ComponentDeclaration, [{
-		        key: "generateInstance",
-		        value: function generateInstance(componentElement) {
-		            componentElement = componentElement ? componentElement : document.createElementNS(this.name.ns, this.name.name);
-		            var component = new this.ctor();
-		            componentElement.setAttribute(_Constants2.default.x_gr_id, component.id);
-		            _GrimoireInterface2.default.componentDictionary[component.id] = component;
-		            component.name = this.name;
-		            component.element = componentElement;
-		            component.attributes = new _NSDictionary2.default();
-		            for (var key in this.attributes) {
-		                _Attribute2.default.generateAttributeForComponent(key, this.attributes[key], component);
-		            }
-		            return component;
-		        }
-		    }]);
-		
-		    return ComponentDeclaration;
-		}();
-		
-		exports.default = ComponentDeclaration;
-	
-	/***/ },
-	/* 24 */
+	/* 33 */
 	/***/ function(module, exports) {
 	
 		"use strict";
@@ -12392,6 +13087,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		            return this;
 		        }
+		    }, {
+		        key: "forEach",
+		        value: function forEach(func) {
+		            this._contentArray.forEach(func);
+		        }
 		    }], [{
 		        key: "fromArray",
 		        value: function fromArray(array) {
@@ -12407,7 +13107,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = NSSet;
 	
 	/***/ },
-	/* 25 */
+	/* 34 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -12422,7 +13122,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _Ensure2 = _interopRequireDefault(_Ensure);
 		
-		var _NSIdentity = __webpack_require__(16);
+		var _NSIdentity = __webpack_require__(11);
 		
 		var _NSIdentity2 = _interopRequireDefault(_NSIdentity);
 		
@@ -12435,16 +13135,17 @@ return /******/ (function(modules) { // webpackBootstrap
 		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 		
 		var NodeDeclaration = function () {
-		    function NodeDeclaration(name, defaultComponents, defaultAttributes, superNode, _treeConstraints) {
+		    function NodeDeclaration(name, defaultComponents, defaultAttributes, superNode, freezeAttributes) {
 		        _classCallCheck(this, NodeDeclaration);
 		
 		        this.name = name;
 		        this.defaultComponents = defaultComponents;
 		        this.defaultAttributes = defaultAttributes;
 		        this.superNode = superNode;
-		        this._treeConstraints = _treeConstraints;
+		        this.freezeAttributes = freezeAttributes;
+		        this.freezeAttributes = this.freezeAttributes ? this.freezeAttributes : [];
 		        if (!this.superNode && this.name.name !== "grimoire-node-base") {
-		            this.superNode = new _NSIdentity2.default("grimoire-node-base");
+		            this.superNode = _NSIdentity2.default.createOnDefaultNS("grimoire-node-base");
 		        }
 		    }
 		
@@ -12487,11 +13188,6 @@ return /******/ (function(modules) { // webpackBootstrap
 		            }
 		            return this._defaultAttributesActual;
 		        }
-		    }, {
-		        key: "treeConstraints",
-		        get: function get() {
-		            return this._treeConstraints;
-		        }
 		    }]);
 		
 		    return NodeDeclaration;
@@ -12500,213 +13196,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = NodeDeclaration;
 	
 	/***/ },
-	/* 26 */
-	/***/ function(module, exports) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-		
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-		
-		var XMLHttpRequestAsync = function () {
-		    function XMLHttpRequestAsync() {
-		        _classCallCheck(this, XMLHttpRequestAsync);
-		    }
-		
-		    _createClass(XMLHttpRequestAsync, null, [{
-		        key: "send",
-		        value: function send(xhr, data) {
-		            return new Promise(function (resolve, reject) {
-		                xhr.onload = function (e) {
-		                    resolve(e);
-		                };
-		                xhr.onerror = function (e) {
-		                    reject(e);
-		                };
-		                xhr.send(data);
-		            });
-		        }
-		    }]);
-		
-		    return XMLHttpRequestAsync;
-		}();
-		
-		exports.default = XMLHttpRequestAsync;
-	
-	/***/ },
-	/* 27 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-		
-		var _GrimoireInterface = __webpack_require__(3);
-		
-		var _GrimoireInterface2 = _interopRequireDefault(_GrimoireInterface);
-		
-		var _GomlParser = __webpack_require__(9);
-		
-		var _GomlParser2 = _interopRequireDefault(_GomlParser);
-		
-		var _XMLReader = __webpack_require__(8);
-		
-		var _XMLReader2 = _interopRequireDefault(_XMLReader);
-		
-		var _XMLHttpRequestAsync = __webpack_require__(26);
-		
-		var _XMLHttpRequestAsync2 = _interopRequireDefault(_XMLHttpRequestAsync);
-		
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-		
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-		
-		var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
-		    return new (P || (P = Promise))(function (resolve, reject) {
-		        function fulfilled(value) {
-		            try {
-		                step(generator.next(value));
-		            } catch (e) {
-		                reject(e);
-		            }
-		        }
-		        function rejected(value) {
-		            try {
-		                step(generator.throw(value));
-		            } catch (e) {
-		                reject(e);
-		            }
-		        }
-		        function step(result) {
-		            result.done ? resolve(result.value) : new P(function (resolve) {
-		                resolve(result.value);
-		            }).then(fulfilled, rejected);
-		        }
-		        step((generator = generator.apply(thisArg, _arguments)).next());
-		    });
-		};
-		
-		/**
-		 * Provides the features to fetch Goml source.
-		 */
-		var GomlLoader = function () {
-		    function GomlLoader() {
-		        _classCallCheck(this, GomlLoader);
-		    }
-		
-		    _createClass(GomlLoader, null, [{
-		        key: "loadFromScriptTag",
-		
-		        /**
-		         * Obtain the Goml source from specified tag.
-		         * @param  {HTMLScriptElement} scriptTag [the script tag to load]
-		         * @return {Promise<void>}               [the promise to wait for loading]
-		         */
-		        value: function loadFromScriptTag(scriptTag) {
-		            return __awaiter(this, void 0, void 0, regeneratorRuntime.mark(function _callee() {
-		                var srcAttr, source, req, doc, rootNode;
-		                return regeneratorRuntime.wrap(function _callee$(_context) {
-		                    while (1) {
-		                        switch (_context.prev = _context.next) {
-		                            case 0:
-		                                srcAttr = scriptTag.getAttribute("src");
-		                                source = void 0;
-		
-		                                if (!srcAttr) {
-		                                    _context.next = 10;
-		                                    break;
-		                                }
-		
-		                                // ignore text element
-		                                req = new XMLHttpRequest();
-		
-		                                req.open("GET", srcAttr);
-		                                _context.next = 7;
-		                                return _XMLHttpRequestAsync2.default.send(req);
-		
-		                            case 7:
-		                                source = req.responseText;
-		                                _context.next = 11;
-		                                break;
-		
-		                            case 10:
-		                                source = scriptTag.text;
-		
-		                            case 11:
-		                                doc = _XMLReader2.default.parseXML(source, "GOML");
-		                                rootNode = _GomlParser2.default.parse(doc[0], null, scriptTag);
-		
-		                                _GrimoireInterface2.default.addRootNode(scriptTag, rootNode);
-		
-		                            case 14:
-		                            case "end":
-		                                return _context.stop();
-		                        }
-		                    }
-		                }, _callee, this);
-		            }));
-		        }
-		        /**
-		         * Load from the script tags which will be found with specified query.
-		         * @param  {string}          query [the query to find script tag]
-		         * @return {Promise<void[]>}       [the promise to wait for all goml loading]
-		         */
-		
-		    }, {
-		        key: "loadFromQuery",
-		        value: function loadFromQuery(query) {
-		            var tags = document.querySelectorAll(query);
-		            var pArray = [];
-		            for (var i = 0; i < tags.length; i++) {
-		                pArray[i] = GomlLoader.loadFromScriptTag(tags.item(i));
-		            }
-		            if (pArray.length === 0 && _GrimoireInterface2.default.debug) {
-		                console.warn("There was no goml file detected. Have you specified `type='text/goml'` to the script tag?");
-		            }
-		            return Promise.all(pArray);
-		        }
-		        /**
-		         * Load all Goml sources contained in HTML.
-		         * @return {Promise<void>} [the promise to wait for all goml loading]
-		         */
-		
-		    }, {
-		        key: "loadForPage",
-		        value: function loadForPage() {
-		            return __awaiter(this, void 0, void 0, regeneratorRuntime.mark(function _callee2() {
-		                return regeneratorRuntime.wrap(function _callee2$(_context2) {
-		                    while (1) {
-		                        switch (_context2.prev = _context2.next) {
-		                            case 0:
-		                                _context2.next = 2;
-		                                return GomlLoader.loadFromQuery('script[type="text/goml"]');
-		
-		                            case 2:
-		                            case "end":
-		                                return _context2.stop();
-		                        }
-		                    }
-		                }, _callee2, this);
-		            }));
-		        }
-		    }]);
-		
-		    return GomlLoader;
-		}();
-		
-		exports.default = GomlLoader;
-	
-	/***/ },
-	/* 28 */
+	/* 35 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -12727,7 +13217,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _GrimoireInterface2 = _interopRequireDefault(_GrimoireInterface);
 		
-		var _GomlLoader = __webpack_require__(27);
+		var _GomlLoader = __webpack_require__(5);
 		
 		var _GomlLoader2 = _interopRequireDefault(_GomlLoader);
 		
@@ -12746,7 +13236,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		        }
 		        function rejected(value) {
 		            try {
-		                step(generator.throw(value));
+		                step(generator["throw"](value));
 		            } catch (e) {
 		                reject(e);
 		            }
@@ -12789,29 +13279,30 @@ return /******/ (function(modules) { // webpackBootstrap
 		                                return GrimoireInitializer._waitForDOMLoading();
 		
 		                            case 5:
-		                                _context.next = 7;
+		                                GrimoireInitializer._logVersions();
+		                                _context.next = 8;
 		                                return _GrimoireInterface2.default.resolvePlugins();
 		
-		                            case 7:
-		                                _context.next = 9;
+		                            case 8:
+		                                _context.next = 10;
 		                                return _GomlLoader2.default.loadForPage();
 		
-		                            case 9:
-		                                _context.next = 14;
+		                            case 10:
+		                                _context.next = 15;
 		                                break;
 		
-		                            case 11:
-		                                _context.prev = 11;
+		                            case 12:
+		                                _context.prev = 12;
 		                                _context.t0 = _context["catch"](0);
 		
 		                                console.error(_context.t0);
 		
-		                            case 14:
+		                            case 15:
 		                            case "end":
 		                                return _context.stop();
 		                        }
 		                    }
-		                }, _callee, this, [[0, 11]]);
+		                }, _callee, this, [[0, 12]]);
 		            }));
 		        }
 		        /**
@@ -12848,6 +13339,23 @@ return /******/ (function(modules) { // webpackBootstrap
 		                    resolve();
 		                });
 		            });
+		        }
+		    }, {
+		        key: "_logVersions",
+		        value: function _logVersions() {
+		            var gr = _GrimoireInterface2.default;
+		            if (!gr.debug) {
+		                return;
+		            }
+		            var log = "%cGrimoire.js v" + gr["__VERSION__"] + "\nplugins:\n\n";
+		            var i = 1;
+		            for (var key in gr.lib) {
+		                var plugin = gr.lib[key];
+		                log += "  " + i + " : " + (plugin.__NAME__ || key) + "@" + plugin.__VERSION__ + "\n";
+		                i++;
+		            }
+		            log += "\nTo suppress this message,please inject a line \"gr.debug = false;\" on the initializing timing.";
+		            console.log(log, "color:#44F;font-weight:bold;");
 		        }
 		    }]);
 		
@@ -12948,27 +13456,59 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _Colors2 = _interopRequireDefault(_Colors);
 		
-		var _GLM = __webpack_require__(18);
+		var _Angle2DConverter = __webpack_require__(18);
+		
+		var _Angle2DConverter2 = _interopRequireDefault(_Angle2DConverter);
+		
+		var _Color3Converter = __webpack_require__(20);
+		
+		var _Color3Converter2 = _interopRequireDefault(_Color3Converter);
+		
+		var _Color4Converter = __webpack_require__(21);
+		
+		var _Color4Converter2 = _interopRequireDefault(_Color4Converter);
+		
+		var _Rotation3Converter = __webpack_require__(22);
+		
+		var _Rotation3Converter2 = _interopRequireDefault(_Rotation3Converter);
+		
+		var _Vector2Converter = __webpack_require__(26);
+		
+		var _Vector2Converter2 = _interopRequireDefault(_Vector2Converter);
+		
+		var _Vector3Converter = __webpack_require__(28);
+		
+		var _Vector3Converter2 = _interopRequireDefault(_Vector3Converter);
+		
+		var _Vector4Converter = __webpack_require__(29);
+		
+		var _Vector4Converter2 = _interopRequireDefault(_Vector4Converter);
+		
+		var _GLM = __webpack_require__(30);
 		
 		var _GLM2 = _interopRequireDefault(_GLM);
 		
-		var _Matrix = __webpack_require__(19);
+		var _Matrix = __webpack_require__(24);
 		
 		var _Matrix2 = _interopRequireDefault(_Matrix);
 		
-		var _MatrixBase = __webpack_require__(20);
+		var _MatrixBase = __webpack_require__(25);
 		
 		var _MatrixBase2 = _interopRequireDefault(_MatrixBase);
 		
-		var _Quaternion = __webpack_require__(21);
+		var _Quaternion = __webpack_require__(23);
 		
 		var _Quaternion2 = _interopRequireDefault(_Quaternion);
 		
-		var _Rectangle = __webpack_require__(22);
+		var _Rectangle = __webpack_require__(31);
 		
 		var _Rectangle2 = _interopRequireDefault(_Rectangle);
 		
-		var _Vector = __webpack_require__(23);
+		var _Angle2DParser = __webpack_require__(19);
+		
+		var _Angle2DParser2 = _interopRequireDefault(_Angle2DParser);
+		
+		var _Vector = __webpack_require__(27);
 		
 		var _Vector2 = _interopRequireDefault(_Vector);
 		
@@ -12984,28 +13524,47 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _VectorBase2 = _interopRequireDefault(_VectorBase);
 		
-		var _main = __webpack_require__(24);
+		var _main = __webpack_require__(32);
 		
 		var _main2 = _interopRequireDefault(_main);
 		
 		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		var __VERSION__ = "1.8.0";
+		var __NAME__ = "grimoirejs-math";
 		
 		var __EXPOSE__ = {
 		    "AABB": _AABB2.default,
 		    "Color3": _Color2.default,
 		    "Color4": _Color4.default,
 		    "Colors": _Colors2.default,
+		    "Converters": {
+		        "Angle2DConverter": _Angle2DConverter2.default,
+		        "Color3Converter": _Color3Converter2.default,
+		        "Color4Converter": _Color4Converter2.default,
+		        "Rotation3Converter": _Rotation3Converter2.default,
+		        "Vector2Converter": _Vector2Converter2.default,
+		        "Vector3Converter": _Vector3Converter2.default,
+		        "Vector4Converter": _Vector4Converter2.default
+		    },
 		    "GLM": _GLM2.default,
 		    "Matrix": _Matrix2.default,
 		    "MatrixBase": _MatrixBase2.default,
 		    "Quaternion": _Quaternion2.default,
 		    "Rectangle": _Rectangle2.default,
+		    "Util": {
+		        "Angle2DParser": _Angle2DParser2.default
+		    },
 		    "Vector2": _Vector2.default,
 		    "Vector3": _Vector4.default,
 		    "Vector4": _Vector6.default,
 		    "VectorBase": _VectorBase2.default
 		};
 		var __BASE__ = (0, _main2.default)();
+		Object.assign(__EXPOSE__, {
+		    __VERSION__: __VERSION__,
+		    __NAME__: __NAME__
+		});
 		Object.assign(__BASE__ || {}, __EXPOSE__);
 		window["GrimoireJS"].lib.math = __EXPOSE__;
 		exports.default = __BASE__;
@@ -20834,21 +21393,555 @@ return /******/ (function(modules) { // webpackBootstrap
 		    value: true
 		});
 		
-		var _glMatrix = __webpack_require__(4);
+		var _Angle2DParser = __webpack_require__(19);
 		
-		exports.default = {
-		    vec2: _glMatrix.vec2,
-		    vec3: _glMatrix.vec3,
-		    vec4: _glMatrix.vec4,
-		    glMatrix: _glMatrix.glMatrix,
-		    mat2d: _glMatrix.mat2d,
-		    mat3: _glMatrix.mat3,
-		    mat4: _glMatrix.mat4,
-		    quat: _glMatrix.quat
-		};
+		var _Angle2DParser2 = _interopRequireDefault(_Angle2DParser);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		function Angle2DConverter(val) {
+		    if (typeof val === "number") {
+		        return val;
+		    }
+		    if (typeof val === "string") {
+		        return _Angle2DParser2.default.parseAngle(val);
+		    }
+		    throw new Error("Passed argument \"" + val + "\" can't be parsed as angle.");
+		}
+		exports.default = Angle2DConverter;
 	
 	/***/ },
 	/* 19 */
+	/***/ function(module, exports) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+		
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+		
+		/**
+		 * Utility class to parse the arguments of attributes.
+		 */
+		/**
+		 * Utility class to parse the arguments of attributes.
+		 */var Angle2DParser = function () {
+		    function Angle2DParser() {
+		        _classCallCheck(this, Angle2DParser);
+		    }
+		
+		    _createClass(Angle2DParser, null, [{
+		        key: "parseAngle",
+		
+		        /**
+		         * Parse angle strings.
+		         * "p" means Pi. Ex) 3/4 p
+		         * "d" means degree. if this unit was specified, the argument will be parsed as degree. Ex) 90d
+		         * @param input the string to parse.
+		         * @returns {number} parsed angle in radians.
+		         */
+		        value: function parseAngle(input) {
+		            var regex = /^ *(-?[\de+-.]*) *(?:\/ *([\de+-.]*))? *(p|prad|deg|d|r|rad)? *$/gm;
+		            var result = regex.exec(input);
+		            if (result == null) {
+		                throw new Error("faild parse Angle string:'" + input + "'");
+		            }
+		            var numerator = parseFloat(result[1]);
+		            if (result[2]) {
+		                numerator /= parseFloat(result[2]);
+		            }
+		            var unit = result[3];
+		            if (unit == null) {
+		                unit = "d";
+		            }
+		            if (unit === "r" || unit === "rad") {
+		                return numerator;
+		            }
+		            if (unit === "p" || unit === "prad") {
+		                return numerator * Math.PI;
+		            }
+		            return numerator / 180 * Math.PI;
+		        }
+		    }]);
+		
+		    return Angle2DParser;
+		}();
+		
+		exports.default = Angle2DParser;
+	
+	/***/ },
+	/* 20 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _Color = __webpack_require__(14);
+		
+		var _Color2 = _interopRequireDefault(_Color);
+		
+		var _Color3 = __webpack_require__(15);
+		
+		var _Color4 = _interopRequireDefault(_Color3);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		function Color3Converter(val) {
+		    if (val instanceof _Color2.default) {
+		        return val;
+		    } else if (val instanceof _Color4.default) {
+		        return new _Color2.default(val.R, val.G, val.B);
+		    } else if (typeof val === "string") {
+		        return _Color2.default.parse(val);
+		    } else if (Array.isArray(val)) {
+		        return new _Color2.default(val[0], val[1], val[2]);
+		    } else {
+		        throw new Error(val + " can not be parsed as Color4.");
+		    }
+		}
+		exports.default = Color3Converter;
+	
+	/***/ },
+	/* 21 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _Color = __webpack_require__(14);
+		
+		var _Color2 = _interopRequireDefault(_Color);
+		
+		var _Color3 = __webpack_require__(15);
+		
+		var _Color4 = _interopRequireDefault(_Color3);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		function Color4Converter(val) {
+		    if (val instanceof _Color4.default) {
+		        return val;
+		    } else if (val instanceof _Color2.default) {
+		        return new _Color4.default(val.R, val.G, val.B, 1.0);
+		    } else if (typeof val === "string") {
+		        return _Color4.default.parse(val);
+		    } else if (Array.isArray(val)) {
+		        return new _Color4.default(val[0], val[1], val[2], val[3]);
+		    } else {
+		        throw new Error(val + " can not be parsed as Color4.");
+		    }
+		}
+		exports.default = Color4Converter;
+	
+	/***/ },
+	/* 22 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _Quaternion = __webpack_require__(23);
+		
+		var _Quaternion2 = _interopRequireDefault(_Quaternion);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		function Rotation3Converter(val) {
+		    if (val instanceof _Quaternion2.default) {
+		        return val;
+		    } else if (Array.isArray(val)) {
+		        return new _Quaternion2.default([val[0], val[1], val[2], val[3]]);
+		    } else if (typeof val === "string") {
+		        return _Quaternion2.default.parse(val);
+		    }
+		}
+		exports.default = Rotation3Converter;
+	
+	/***/ },
+	/* 23 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); ///<reference path="./gl-matrix.d.ts"/>
+		
+		
+		var _Vector = __webpack_require__(2);
+		
+		var _Vector2 = _interopRequireDefault(_Vector);
+		
+		var _glMatrix = __webpack_require__(4);
+		
+		var _Matrix = __webpack_require__(24);
+		
+		var _Matrix2 = _interopRequireDefault(_Matrix);
+		
+		var _Angle2DParser = __webpack_require__(19);
+		
+		var _Angle2DParser2 = _interopRequireDefault(_Angle2DParser);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+		
+		/**
+		* The class to maniplate quaternion.
+		* Basically,you don't need to operate raw element.
+		* You consider to use some of useful methods without editing raw element forcelly.
+		* Each element will be represented as (w;x,y,z)
+		* (1,i,j,k) is base axis for quaternion. (i,j,k is pure imaginary number)
+		* (w;x,y,z) means w*1+x*i+y*j+z*k
+		*
+		*/
+		var Quaternion = function () {
+		    _createClass(Quaternion, null, [{
+		        key: "equals",
+		        value: function equals(q1, q2) {
+		            for (var i = 0; i < 4; i++) {
+		                if (q1.rawElements[i] !== q2.rawElements[i]) {
+		                    return false;
+		                }
+		            }
+		            return true;
+		        }
+		        /**
+		         * Parse angle string in 3D.
+		         * "p" means Pi. Ex) 3/4 p
+		         * "d" means degree. if this unit was specified, the argument will be parsed as degree. Ex) 90d
+		         * "eular(x,y,z)" means rotation in eular. This means Z-X-Y rotation like Unity.
+		         * "axis(angle,x,y,z)" means rotation around specified axis. This means angle radians will be rotated around the axis (x,y,z).
+		         * This angle can be specified with the character "p" or "d".
+		         * "x(angle)","y(angle)" or "z(angle)" means rotation around unit axis.
+		         * This angle can be specified with the character "p" or "d".
+		         * @param input the string to be parsed as angle in 3D.
+		         * @returns {Quaternion} parsed rotation in Quaternion.
+		         */
+		
+		    }, {
+		        key: "parse",
+		        value: function parse(input) {
+		            var reg1 = /^ *(x|y|z) *\(([^\(\)]+)\) *$/gm;
+		            var reg2 = /^ *axis *\(([^\(\),]+),([^\(\),]+),([^\(\),]+),([^\(\),]+)\) *$/gm;
+		            var reg3 = /^ *([^\(\),]+),([^\(\),]+),([^\(\),]+) *$/gm;
+		            var result = reg1.exec(input);
+		            if (result) {
+		                if (result[1] === "x") {
+		                    return Quaternion.angleAxis(_Angle2DParser2.default.parseAngle(result[2]), _Vector2.default.XUnit);
+		                }
+		                if (result[1] === "y") {
+		                    return Quaternion.angleAxis(_Angle2DParser2.default.parseAngle(result[2]), _Vector2.default.YUnit);
+		                }
+		                if (result[1] === "z") {
+		                    return Quaternion.angleAxis(_Angle2DParser2.default.parseAngle(result[2]), _Vector2.default.ZUnit);
+		                }
+		            }
+		            var res2 = reg2.exec(input);
+		            if (res2) {
+		                var rotation = _Angle2DParser2.default.parseAngle(res2[1]);
+		                var x = parseFloat(res2[2]);
+		                var y = parseFloat(res2[3]);
+		                var z = parseFloat(res2[4]);
+		                return Quaternion.angleAxis(rotation, new _Vector2.default(x, y, z));
+		            }
+		            var res3 = reg3.exec(input);
+		            if (res3) {
+		                return Quaternion.euler(_Angle2DParser2.default.parseAngle(res3[1]), _Angle2DParser2.default.parseAngle(res3[2]), _Angle2DParser2.default.parseAngle(res3[3]));
+		            }
+		            throw new Error("Unknown format for rotation3D:'" + input + "'");
+		        }
+		        /**
+		        * Calculate add result of two quaternion
+		        */
+		
+		    }, {
+		        key: "add",
+		        value: function add(q1, q2) {
+		            var newQuat = _glMatrix.quat.create();
+		            return new Quaternion(_glMatrix.quat.add(newQuat, q1.rawElements, q2.rawElements));
+		        }
+		        /**
+		        * Calculate multiply result of two quaternion
+		        */
+		
+		    }, {
+		        key: "multiply",
+		        value: function multiply(q1, q2) {
+		            var newQuat = _glMatrix.quat.create();
+		            return new Quaternion(_glMatrix.quat.mul(newQuat, q1.rawElements, q2.rawElements));
+		        }
+		        /**
+		        * Calculate the rotation quaternion represented as pair of angle and axis.
+		        */
+		
+		    }, {
+		        key: "angleAxis",
+		        value: function angleAxis(angle, axis) {
+		            var axisVec = _glMatrix.vec3.create();
+		            axisVec[0] = axis.X;
+		            axisVec[1] = axis.Y;
+		            axisVec[2] = axis.Z;
+		            var newQuat = _glMatrix.quat.create();
+		            return new Quaternion(_glMatrix.quat.setAxisAngle(newQuat, axisVec, +angle));
+		        }
+		    }, {
+		        key: "euler",
+		        value: function euler(x, y, z) {
+		            return Quaternion.multiply(Quaternion.angleAxis(z, _Vector2.default.ZUnit), Quaternion.multiply(Quaternion.angleAxis(x, _Vector2.default.XUnit), Quaternion.angleAxis(y, _Vector2.default.YUnit)));
+		        }
+		    }, {
+		        key: "eulerXYZ",
+		        value: function eulerXYZ(x, y, z) {
+		            return Quaternion.multiply(Quaternion.angleAxis(z, _Vector2.default.ZUnit), Quaternion.multiply(Quaternion.angleAxis(y, _Vector2.default.YUnit), Quaternion.angleAxis(x, _Vector2.default.XUnit)));
+		        }
+		    }, {
+		        key: "slerp",
+		        value: function slerp(q1, q2, t) {
+		            var newQuat = _glMatrix.quat.create();
+		            return new Quaternion(_glMatrix.quat.slerp(newQuat, q1.rawElements, q2.rawElements, +t));
+		        }
+		        /**
+		         * Returns the angle in degrees between two rotations q1 and q2.
+		         * @param q1 the quaternion represents begin angle.
+		         * @param q2 the quaternion represents end angle.
+		         * @returns {number} angle represented in radians.
+		         */
+		
+		    }, {
+		        key: "angle",
+		        value: function angle(q1, q2) {
+		            var delta = Quaternion.multiply(q2, q1.inverse());
+		            delta = delta.normalize();
+		            return 2 * Math.acos(delta.W);
+		        }
+		    }, {
+		        key: "fromToRotation",
+		        value: function fromToRotation(from, to) {
+		            var crossed = _Vector2.default.cross(from.normalized, to.normalized);
+		            var angle = _Vector2.default.dot(from.normalized, to.normalized);
+		            return Quaternion.angleAxis(angle, crossed);
+		        }
+		    }, {
+		        key: "lookRotation",
+		        value: function lookRotation(forward, upVec) {
+		            upVec = upVec || _Vector2.default.YUnit;
+		            var normalizedForward = forward.normalized;
+		            var upForwardCross = _Vector2.default.cross(upVec, normalizedForward).normalized;
+		            var thirdAxis = _Vector2.default.cross(normalizedForward, upForwardCross);
+		            var m00 = upForwardCross.X;
+		            var m01 = upForwardCross.Y;
+		            var m02 = upForwardCross.Z;
+		            var m10 = thirdAxis.X;
+		            var m11 = thirdAxis.Y;
+		            var m12 = thirdAxis.Z;
+		            var m20 = normalizedForward.X;
+		            var m21 = normalizedForward.Y;
+		            var m22 = normalizedForward.Z;
+		            var num8 = m00 + m11 + m22;
+		            if (num8 > 0) {
+		                var num = Math.sqrt(1 + num8);
+		                return new Quaternion([(m12 - m21) * 0.5 / num, (m20 - m02) * 0.5 / num, (m01 - m10) * 0.5 / num, num / 2]);
+		            }
+		            if (m00 >= m11 && m00 >= m22) {
+		                var num7 = Math.sqrt(1 + m00 - m11 - m22);
+		                return new Quaternion([(m01 + m10) * 0.5 / num7, (m02 + m20) * 0.5 / num7, (m12 - m21) * 0.5 / num7, num7 / 2]);
+		            }
+		            if (m11 > m22) {
+		                var num6 = Math.sqrt(1 + m11 - m00 - m22);
+		                return new Quaternion([(m10 + m01) * 0, 5 / num6, 0.5 * num6, (m21 + m12) * 0.5 / num6, (m20 - m02) * 0.5 / num6]);
+		            }
+		            var num5 = Math.sqrt(1 + m22 - m00 - m11);
+		            return new Quaternion([(m20 + m02) * 0.5 / num5, (m21 + m12) * 0.5 / num5, 0.5 * num5, (m01 - m10) * 0.5 / num5]);
+		        }
+		    }, {
+		        key: "Identity",
+		        get: function get() {
+		            return new Quaternion(_glMatrix.quat.create());
+		        }
+		        /**
+		        * Constructor by specifing each elements.
+		        */
+		
+		    }]);
+		
+		    function Quaternion(rawElements) {
+		        _classCallCheck(this, Quaternion);
+		
+		        this.rawElements = rawElements;
+		    }
+		
+		    _createClass(Quaternion, [{
+		        key: "equalWith",
+		        value: function equalWith(q) {
+		            return Quaternion.equals(this, q);
+		        }
+		        /**
+		        * Get normalized quaternion
+		        */
+		
+		    }, {
+		        key: "normalize",
+		        value: function normalize() {
+		            var newQuat = _glMatrix.quat.create();
+		            return new Quaternion(_glMatrix.quat.normalize(newQuat, this.rawElements));
+		        }
+		    }, {
+		        key: "inverse",
+		        value: function inverse() {
+		            var newQuat = _glMatrix.quat.create();
+		            return new Quaternion(_glMatrix.quat.invert(newQuat, this.rawElements));
+		        }
+		    }, {
+		        key: "toAngleAxisString",
+		        value: function toAngleAxisString() {
+		            var angle = 2 * Math.acos(this.W);
+		            var imm = Math.sqrt(1 - this.W * this.W);
+		            if (angle !== 180 && angle !== 0) {
+		                return "axis(" + angle + "," + this.X / imm + "," + this.Y / imm + "," + this.Z / imm + ")";
+		            } else if (angle === 0) {
+		                return "axis(" + angle + ",0,1,0)";
+		            } else {
+		                return "axis(180d," + this.X + "," + this.Y + "," + this.Z + ")";
+		            }
+		        }
+		    }, {
+		        key: "toString",
+		        value: function toString() {
+		            return this.toAngleAxisString();
+		        }
+		    }, {
+		        key: "factoringQuaternionZXY",
+		        value: function factoringQuaternionZXY() {
+		            var result = { x: 0, y: 0, z: 0 };
+		            var mat = _Matrix2.default.rotationQuaternion(this);
+		            var sx = mat.rawElements[6];
+		            if (Math.abs(sx) < 1 - 1.0E-4) {
+		                result.x = Math.asin(sx);
+		                result.z = Math.atan2(-mat.rawElements[4], mat.rawElements[5]);
+		                result.y = Math.atan2(-mat.rawElements[2], mat.rawElements[10]);
+		            } else {
+		                result.y = 0;
+		                result.x = Math.PI / 2 * sx;
+		                result.z = Math.atan2(mat.rawElements[1], mat.rawElements[0]);
+		            }
+		            return result;
+		        }
+		    }, {
+		        key: "factoringQuaternionXYZ",
+		        value: function factoringQuaternionXYZ() {
+		            var result = { x: 0, y: 0, z: 0 };
+		            var mat = _Matrix2.default.rotationQuaternion(this);
+		            var sy = -mat.rawElements[2];
+		            if (Math.abs(sy) < 1 - 1.0E-4) {
+		                result.x = Math.atan2(mat.rawElements[6], mat.rawElements[10]);
+		                result.y = Math.asin(sy);
+		                result.z = Math.atan2(mat.rawElements[1], mat.rawElements[0]);
+		            } else {
+		                result.x = 0;
+		                result.y = Math.PI / 2 * sy;
+		                result.z = Math.atan2(-mat.rawElements[4], mat.rawElements[5]);
+		            }
+		            return result;
+		        }
+		    }, {
+		        key: "eularAngles",
+		        get: function get() {
+		            var eular = this.factoringQuaternionZXY();
+		            return new _Vector2.default(eular.x, eular.y, eular.z);
+		        },
+		        set: function set(v) {
+		            this.rawElements = Quaternion.euler(v.X, v.Y, v.Z).rawElements;
+		        }
+		        /**
+		        * Getter for X.
+		        */
+		
+		    }, {
+		        key: "X",
+		        get: function get() {
+		            return this.rawElements[0];
+		        }
+		        /**
+		        * Getter for Y.
+		        */
+		
+		    }, {
+		        key: "Y",
+		        get: function get() {
+		            return this.rawElements[1];
+		        }
+		        /**
+		        * Getter for Z.
+		        */
+		
+		    }, {
+		        key: "Z",
+		        get: function get() {
+		            return this.rawElements[2];
+		        }
+		        /**
+		        * Getter for W.
+		        */
+		
+		    }, {
+		        key: "W",
+		        get: function get() {
+		            return this.rawElements[3];
+		        }
+		        /**
+		        * Getter for imaginary part vector.
+		        * It returns the vector (x,y,z)
+		        */
+		
+		    }, {
+		        key: "ImaginaryPart",
+		        get: function get() {
+		            return new _Vector2.default(this.X, this.Y, this.Z);
+		        }
+		        /**
+		        * Get the conjugate of this quaternion
+		        */
+		
+		    }, {
+		        key: "Conjugate",
+		        get: function get() {
+		            var newQuat = _glMatrix.quat.create();
+		            return new Quaternion(_glMatrix.quat.conjugate(newQuat, this.rawElements));
+		        }
+		        /**
+		        * Get the length
+		        */
+		
+		    }, {
+		        key: "Length",
+		        get: function get() {
+		            return _glMatrix.quat.len(this.rawElements);
+		        }
+		    }]);
+		
+		    return Quaternion;
+		}();
+		
+		exports.default = Quaternion;
+	
+	/***/ },
+	/* 24 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -20859,7 +21952,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 		
-		var _MatrixBase2 = __webpack_require__(20);
+		var _MatrixBase2 = __webpack_require__(25);
 		
 		var _MatrixBase3 = _interopRequireDefault(_MatrixBase2);
 		
@@ -20871,7 +21964,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _Vector4 = _interopRequireDefault(_Vector3);
 		
-		var _Quaternion = __webpack_require__(21);
+		var _Quaternion = __webpack_require__(23);
 		
 		var _Quaternion2 = _interopRequireDefault(_Quaternion);
 		
@@ -21195,7 +22288,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = Matrix;
 	
 	/***/ },
-	/* 20 */
+	/* 25 */
 	/***/ function(module, exports) {
 	
 		"use strict";
@@ -21256,7 +22349,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = MatrixBase;
 	
 	/***/ },
-	/* 21 */
+	/* 26 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -21265,429 +22358,27 @@ return /******/ (function(modules) { // webpackBootstrap
 		    value: true
 		});
 		
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }(); ///<reference path="./gl-matrix.d.ts"/>
-		
-		
-		var _Vector = __webpack_require__(2);
-		
-		var _Vector2 = _interopRequireDefault(_Vector);
-		
-		var _glMatrix = __webpack_require__(4);
-		
-		var _Matrix = __webpack_require__(19);
-		
-		var _Matrix2 = _interopRequireDefault(_Matrix);
-		
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-		
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-		
-		/**
-		* The class to maniplate quaternion.
-		* Basically,you don't need to operate raw element.
-		* You consider to use some of useful methods without editing raw element forcelly.
-		* Each element will be represented as (w;x,y,z)
-		* (1,i,j,k) is base axis for quaternion. (i,j,k is pure imaginary number)
-		* (w;x,y,z) means w*1+x*i+y*j+z*k
-		*
-		*/
-		var Quaternion = function () {
-		    _createClass(Quaternion, null, [{
-		        key: "equals",
-		        value: function equals(q1, q2) {
-		            for (var i = 0; i < 4; i++) {
-		                if (q1.rawElements[i] !== q2.rawElements[i]) {
-		                    return false;
-		                }
-		            }
-		            return true;
-		        }
-		        /**
-		        * Calculate add result of two quaternion
-		        */
-		
-		    }, {
-		        key: "add",
-		        value: function add(q1, q2) {
-		            var newQuat = _glMatrix.quat.create();
-		            return new Quaternion(_glMatrix.quat.add(newQuat, q1.rawElements, q2.rawElements));
-		        }
-		        /**
-		        * Calculate multiply result of two quaternion
-		        */
-		
-		    }, {
-		        key: "multiply",
-		        value: function multiply(q1, q2) {
-		            var newQuat = _glMatrix.quat.create();
-		            return new Quaternion(_glMatrix.quat.mul(newQuat, q1.rawElements, q2.rawElements));
-		        }
-		        /**
-		        * Calculate the rotation quaternion represented as pair of angle and axis.
-		        */
-		
-		    }, {
-		        key: "angleAxis",
-		        value: function angleAxis(angle, axis) {
-		            var axisVec = _glMatrix.vec3.create();
-		            axisVec[0] = axis.X;
-		            axisVec[1] = axis.Y;
-		            axisVec[2] = axis.Z;
-		            var newQuat = _glMatrix.quat.create();
-		            return new Quaternion(_glMatrix.quat.setAxisAngle(newQuat, axisVec, +angle));
-		        }
-		    }, {
-		        key: "euler",
-		        value: function euler(x, y, z) {
-		            return Quaternion.multiply(Quaternion.angleAxis(z, _Vector2.default.ZUnit), Quaternion.multiply(Quaternion.angleAxis(x, _Vector2.default.XUnit), Quaternion.angleAxis(y, _Vector2.default.YUnit)));
-		        }
-		    }, {
-		        key: "eulerXYZ",
-		        value: function eulerXYZ(x, y, z) {
-		            return Quaternion.multiply(Quaternion.angleAxis(z, _Vector2.default.ZUnit), Quaternion.multiply(Quaternion.angleAxis(y, _Vector2.default.YUnit), Quaternion.angleAxis(x, _Vector2.default.XUnit)));
-		        }
-		    }, {
-		        key: "slerp",
-		        value: function slerp(q1, q2, t) {
-		            var newQuat = _glMatrix.quat.create();
-		            return new Quaternion(_glMatrix.quat.slerp(newQuat, q1.rawElements, q2.rawElements, +t));
-		        }
-		        /**
-		         * Returns the angle in degrees between two rotations q1 and q2.
-		         * @param q1 the quaternion represents begin angle.
-		         * @param q2 the quaternion represents end angle.
-		         * @returns {number} angle represented in radians.
-		         */
-		
-		    }, {
-		        key: "angle",
-		        value: function angle(q1, q2) {
-		            var delta = Quaternion.multiply(q2, q1.inverse());
-		            delta = delta.normalize();
-		            return 2 * Math.acos(delta.W);
-		        }
-		    }, {
-		        key: "fromToRotation",
-		        value: function fromToRotation(from, to) {
-		            var crossed = _Vector2.default.cross(from.normalized, to.normalized);
-		            var angle = _Vector2.default.dot(from.normalized, to.normalized);
-		            return Quaternion.angleAxis(angle, crossed);
-		        }
-		    }, {
-		        key: "lookRotation",
-		        value: function lookRotation(forward, upVec) {
-		            upVec = upVec || _Vector2.default.YUnit;
-		            var normalizedForward = forward.normalized;
-		            var upForwardCross = _Vector2.default.cross(upVec, normalizedForward).normalized;
-		            var thirdAxis = _Vector2.default.cross(normalizedForward, upForwardCross);
-		            var m00 = upForwardCross.X;
-		            var m01 = upForwardCross.Y;
-		            var m02 = upForwardCross.Z;
-		            var m10 = thirdAxis.X;
-		            var m11 = thirdAxis.Y;
-		            var m12 = thirdAxis.Z;
-		            var m20 = normalizedForward.X;
-		            var m21 = normalizedForward.Y;
-		            var m22 = normalizedForward.Z;
-		            var num8 = m00 + m11 + m22;
-		            if (num8 > 0) {
-		                var num = Math.sqrt(1 + num8);
-		                return new Quaternion([(m12 - m21) * 0.5 / num, (m20 - m02) * 0.5 / num, (m01 - m10) * 0.5 / num, num / 2]);
-		            }
-		            if (m00 >= m11 && m00 >= m22) {
-		                var num7 = Math.sqrt(1 + m00 - m11 - m22);
-		                return new Quaternion([(m01 + m10) * 0.5 / num7, (m02 + m20) * 0.5 / num7, (m12 - m21) * 0.5 / num7, num7 / 2]);
-		            }
-		            if (m11 > m22) {
-		                var num6 = Math.sqrt(1 + m11 - m00 - m22);
-		                return new Quaternion([(m10 + m01) * 0, 5 / num6, 0.5 * num6, (m21 + m12) * 0.5 / num6, (m20 - m02) * 0.5 / num6]);
-		            }
-		            var num5 = Math.sqrt(1 + m22 - m00 - m11);
-		            return new Quaternion([(m20 + m02) * 0.5 / num5, (m21 + m12) * 0.5 / num5, 0.5 * num5, (m01 - m10) * 0.5 / num5]);
-		        }
-		    }, {
-		        key: "Identity",
-		        get: function get() {
-		            return new Quaternion(_glMatrix.quat.create());
-		        }
-		        /**
-		        * Constructor by specifing each elements.
-		        */
-		
-		    }]);
-		
-		    function Quaternion(rawElements) {
-		        _classCallCheck(this, Quaternion);
-		
-		        this.rawElements = rawElements;
-		    }
-		
-		    _createClass(Quaternion, [{
-		        key: "equalWith",
-		        value: function equalWith(q) {
-		            return Quaternion.equals(this, q);
-		        }
-		        /**
-		        * Get normalized quaternion
-		        */
-		
-		    }, {
-		        key: "normalize",
-		        value: function normalize() {
-		            var newQuat = _glMatrix.quat.create();
-		            return new Quaternion(_glMatrix.quat.normalize(newQuat, this.rawElements));
-		        }
-		    }, {
-		        key: "inverse",
-		        value: function inverse() {
-		            var newQuat = _glMatrix.quat.create();
-		            return new Quaternion(_glMatrix.quat.invert(newQuat, this.rawElements));
-		        }
-		    }, {
-		        key: "toAngleAxisString",
-		        value: function toAngleAxisString() {
-		            var angle = 2 * Math.acos(this.W);
-		            var imm = Math.sqrt(1 - this.W * this.W);
-		            if (angle !== 180 && angle !== 0) {
-		                return "axis(" + angle + "," + this.X / imm + "," + this.Y / imm + "," + this.Z / imm + ")";
-		            } else if (angle === 0) {
-		                return "axis(" + angle + ",0,1,0)";
-		            } else {
-		                return "axis(180d," + this.X + "," + this.Y + "," + this.Z + ")";
-		            }
-		        }
-		    }, {
-		        key: "toString",
-		        value: function toString() {
-		            return this.toAngleAxisString();
-		        }
-		    }, {
-		        key: "factoringQuaternionZXY",
-		        value: function factoringQuaternionZXY() {
-		            var result = { x: 0, y: 0, z: 0 };
-		            var mat = _Matrix2.default.rotationQuaternion(this);
-		            var sx = mat.rawElements[6];
-		            if (Math.abs(sx) < 1 - 1.0E-4) {
-		                result.x = Math.asin(sx);
-		                result.z = Math.atan2(-mat.rawElements[4], mat.rawElements[5]);
-		                result.y = Math.atan2(-mat.rawElements[2], mat.rawElements[10]);
-		            } else {
-		                result.y = 0;
-		                result.x = Math.PI / 2 * sx;
-		                result.z = Math.atan2(mat.rawElements[1], mat.rawElements[0]);
-		            }
-		            return result;
-		        }
-		    }, {
-		        key: "factoringQuaternionXYZ",
-		        value: function factoringQuaternionXYZ() {
-		            var result = { x: 0, y: 0, z: 0 };
-		            var mat = _Matrix2.default.rotationQuaternion(this);
-		            var sy = -mat.rawElements[2];
-		            if (Math.abs(sy) < 1 - 1.0E-4) {
-		                result.x = Math.atan2(mat.rawElements[6], mat.rawElements[10]);
-		                result.y = Math.asin(sy);
-		                result.z = Math.atan2(mat.rawElements[1], mat.rawElements[0]);
-		            } else {
-		                result.x = 0;
-		                result.y = Math.PI / 2 * sy;
-		                result.z = Math.atan2(-mat.rawElements[4], mat.rawElements[5]);
-		            }
-		            return result;
-		        }
-		    }, {
-		        key: "eularAngles",
-		        get: function get() {
-		            var eular = this.factoringQuaternionZXY();
-		            return new _Vector2.default(eular.x, eular.y, eular.z);
-		        },
-		        set: function set(v) {
-		            this.rawElements = Quaternion.euler(v.X, v.Y, v.Z).rawElements;
-		        }
-		        /**
-		        * Getter for X.
-		        */
-		
-		    }, {
-		        key: "X",
-		        get: function get() {
-		            return this.rawElements[0];
-		        }
-		        /**
-		        * Getter for Y.
-		        */
-		
-		    }, {
-		        key: "Y",
-		        get: function get() {
-		            return this.rawElements[1];
-		        }
-		        /**
-		        * Getter for Z.
-		        */
-		
-		    }, {
-		        key: "Z",
-		        get: function get() {
-		            return this.rawElements[2];
-		        }
-		        /**
-		        * Getter for W.
-		        */
-		
-		    }, {
-		        key: "W",
-		        get: function get() {
-		            return this.rawElements[3];
-		        }
-		        /**
-		        * Getter for imaginary part vector.
-		        * It returns the vector (x,y,z)
-		        */
-		
-		    }, {
-		        key: "ImaginaryPart",
-		        get: function get() {
-		            return new _Vector2.default(this.X, this.Y, this.Z);
-		        }
-		        /**
-		        * Get the conjugate of this quaternion
-		        */
-		
-		    }, {
-		        key: "Conjugate",
-		        get: function get() {
-		            var newQuat = _glMatrix.quat.create();
-		            return new Quaternion(_glMatrix.quat.conjugate(newQuat, this.rawElements));
-		        }
-		        /**
-		        * Get the length
-		        */
-		
-		    }, {
-		        key: "Length",
-		        get: function get() {
-		            return _glMatrix.quat.len(this.rawElements);
-		        }
-		    }]);
-		
-		    return Quaternion;
-		}();
-		
-		exports.default = Quaternion;
-	
-	/***/ },
-	/* 22 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-		
-		var _Vector = __webpack_require__(23);
+		var _Vector = __webpack_require__(27);
 		
 		var _Vector2 = _interopRequireDefault(_Vector);
 		
 		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 		
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-		
-		var Rectangle = function () {
-		    _createClass(Rectangle, null, [{
-		        key: "equals",
-		        value: function equals(r1, r2) {
-		            return r1.Left === r2.Left && r1.Right === r2.Right && r1.Top === r2.Top && r1.Bottom === r2.Bottom;
-		        }
-		    }, {
-		        key: "edgeSizeEquals",
-		        value: function edgeSizeEquals(r1, r2) {
-		            return r1.Width === r2.Width && r1.Height === r2.Height;
-		        }
-		    }]);
-		
-		    function Rectangle(left, top, width, height) {
-		        _classCallCheck(this, Rectangle);
-		
-		        this._left = left;
-		        this._top = top;
-		        this._width = width;
-		        this._height = height;
+		function Vector2Converter(val) {
+		    if (val instanceof _Vector2.default) {
+		        return val;
+		    } else if (typeof val === "string") {
+		        return _Vector2.default.parse(val);
+		    } else if (typeof val === "number") {
+		        return new _Vector2.default(val, val);
+		    } else if (Array.isArray(val)) {
+		        return new _Vector2.default(val[0], val[1]);
 		    }
-		
-		    _createClass(Rectangle, [{
-		        key: "contains",
-		        value: function contains(xOrPoint, y) {
-		            var x = void 0;
-		            if (xOrPoint instanceof _Vector2.default) {
-		                x = xOrPoint.X;
-		                y = xOrPoint.Y;
-		            } else {
-		                x = xOrPoint;
-		            }
-		            return this.Left <= x && this.Right >= x && this.Top <= y && this.Bottom >= y;
-		        }
-		    }, {
-		        key: "toLocal",
-		        value: function toLocal(xOrPoint, y) {
-		            var x = void 0;
-		            if (xOrPoint instanceof _Vector2.default) {
-		                x = xOrPoint.X;
-		                y = xOrPoint.Y;
-		            } else {
-		                x = xOrPoint;
-		            }
-		            x -= this.Left;
-		            y -= this.Top;
-		            return xOrPoint instanceof _Vector2.default ? new _Vector2.default(x, y) : [x, y];
-		        }
-		    }, {
-		        key: "toString",
-		        value: function toString() {
-		            return "Rectangle(" + this.Left + "," + this.Top + "-" + this.Right + "," + this.Bottom + ")";
-		        }
-		    }, {
-		        key: "Left",
-		        get: function get() {
-		            return this._left;
-		        }
-		    }, {
-		        key: "Right",
-		        get: function get() {
-		            return this.Left + this.Width;
-		        }
-		    }, {
-		        key: "Top",
-		        get: function get() {
-		            return this._top;
-		        }
-		    }, {
-		        key: "Bottom",
-		        get: function get() {
-		            return this._top + this._height;
-		        }
-		    }, {
-		        key: "Width",
-		        get: function get() {
-		            return this._width;
-		        }
-		    }, {
-		        key: "Height",
-		        get: function get() {
-		            return this._height;
-		        }
-		    }]);
-		
-		    return Rectangle;
-		}();
-		
-		exports.default = Rectangle;
+		}
+		exports.default = Vector2Converter;
 	
 	/***/ },
-	/* 23 */
+	/* 27 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -21928,16 +22619,295 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = Vector2;
 	
 	/***/ },
-	/* 24 */
-	/***/ function(module, exports) {
+	/* 28 */
+	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
 		
 		Object.defineProperty(exports, "__esModule", {
-		  value: true
+		    value: true
 		});
 		
-		exports.default = function () {};
+		var _Vector = __webpack_require__(2);
+		
+		var _Vector2 = _interopRequireDefault(_Vector);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		function Vector3Converter(val) {
+		    if (val instanceof _Vector2.default) {
+		        return val;
+		    } else if (typeof val === "string") {
+		        return _Vector2.default.parse(val); // TODO: to do not throws execptions.
+		    } else if (typeof val == "number") {
+		        return new _Vector2.default(val, val, val);
+		    } else if (Array.isArray(val)) {
+		        return new _Vector2.default(val[0], val[1], val[2]);
+		    }
+		}
+		exports.default = Vector3Converter;
+	
+	/***/ },
+	/* 29 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _Vector = __webpack_require__(16);
+		
+		var _Vector2 = _interopRequireDefault(_Vector);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		function Vector4Converter(val) {
+		    if (val instanceof _Vector2.default) {
+		        return val;
+		    } else if (typeof val === "string") {
+		        return _Vector2.default.parse(val);
+		    } else if (typeof val === "number") {
+		        return new _Vector2.default(val, val, val, val);
+		    } else if (Array.isArray(val)) {
+		        return new _Vector2.default(val[0], val[1], val[2], val[3]);
+		    }
+		}
+		exports.default = Vector4Converter;
+	
+	/***/ },
+	/* 30 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _glMatrix = __webpack_require__(4);
+		
+		exports.default = {
+		    vec2: _glMatrix.vec2,
+		    vec3: _glMatrix.vec3,
+		    vec4: _glMatrix.vec4,
+		    glMatrix: _glMatrix.glMatrix,
+		    mat2d: _glMatrix.mat2d,
+		    mat3: _glMatrix.mat3,
+		    mat4: _glMatrix.mat4,
+		    quat: _glMatrix.quat
+		};
+	
+	/***/ },
+	/* 31 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+		
+		var _Vector = __webpack_require__(27);
+		
+		var _Vector2 = _interopRequireDefault(_Vector);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+		
+		var Rectangle = function () {
+		    _createClass(Rectangle, null, [{
+		        key: "equals",
+		        value: function equals(r1, r2) {
+		            return r1.Left === r2.Left && r1.Right === r2.Right && r1.Top === r2.Top && r1.Bottom === r2.Bottom;
+		        }
+		    }, {
+		        key: "edgeSizeEquals",
+		        value: function edgeSizeEquals(r1, r2) {
+		            return r1.Width === r2.Width && r1.Height === r2.Height;
+		        }
+		    }]);
+		
+		    function Rectangle(left, top, width, height) {
+		        _classCallCheck(this, Rectangle);
+		
+		        this._left = left;
+		        this._top = top;
+		        this._width = width;
+		        this._height = height;
+		    }
+		
+		    _createClass(Rectangle, [{
+		        key: "contains",
+		        value: function contains(xOrPoint, y) {
+		            var x = void 0;
+		            if (xOrPoint instanceof _Vector2.default) {
+		                x = xOrPoint.X;
+		                y = xOrPoint.Y;
+		            } else {
+		                x = xOrPoint;
+		            }
+		            return this.Left <= x && this.Right >= x && this.Top <= y && this.Bottom >= y;
+		        }
+		    }, {
+		        key: "toLocal",
+		        value: function toLocal(xOrPoint, y) {
+		            var x = void 0;
+		            if (xOrPoint instanceof _Vector2.default) {
+		                x = xOrPoint.X;
+		                y = xOrPoint.Y;
+		            } else {
+		                x = xOrPoint;
+		            }
+		            x -= this.Left;
+		            y -= this.Top;
+		            return xOrPoint instanceof _Vector2.default ? new _Vector2.default(x, y) : [x, y];
+		        }
+		    }, {
+		        key: "toString",
+		        value: function toString() {
+		            return "Rectangle(" + this.Left + "," + this.Top + "-" + this.Right + "," + this.Bottom + ")";
+		        }
+		    }, {
+		        key: "Left",
+		        get: function get() {
+		            return this._left;
+		        }
+		    }, {
+		        key: "Right",
+		        get: function get() {
+		            return this.Left + this.Width;
+		        }
+		    }, {
+		        key: "Top",
+		        get: function get() {
+		            return this._top;
+		        }
+		    }, {
+		        key: "Bottom",
+		        get: function get() {
+		            return this._top + this._height;
+		        }
+		    }, {
+		        key: "Width",
+		        get: function get() {
+		            return this._width;
+		        }
+		    }, {
+		        key: "Height",
+		        get: function get() {
+		            return this._height;
+		        }
+		    }]);
+		
+		    return Rectangle;
+		}();
+		
+		exports.default = Rectangle;
+	
+	/***/ },
+	/* 32 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _grimoirejs = __webpack_require__(33);
+		
+		var _grimoirejs2 = _interopRequireDefault(_grimoirejs);
+		
+		var _Vector2Converter = __webpack_require__(26);
+		
+		var _Vector2Converter2 = _interopRequireDefault(_Vector2Converter);
+		
+		var _Vector3Converter = __webpack_require__(28);
+		
+		var _Vector3Converter2 = _interopRequireDefault(_Vector3Converter);
+		
+		var _Vector4Converter = __webpack_require__(29);
+		
+		var _Vector4Converter2 = _interopRequireDefault(_Vector4Converter);
+		
+		var _Rotation3Converter = __webpack_require__(22);
+		
+		var _Rotation3Converter2 = _interopRequireDefault(_Rotation3Converter);
+		
+		var _Angle2DConverter = __webpack_require__(18);
+		
+		var _Angle2DConverter2 = _interopRequireDefault(_Angle2DConverter);
+		
+		var _Color3Converter = __webpack_require__(20);
+		
+		var _Color3Converter2 = _interopRequireDefault(_Color3Converter);
+		
+		var _Color4Converter = __webpack_require__(21);
+		
+		var _Color4Converter2 = _interopRequireDefault(_Color4Converter);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
+		    return new (P || (P = Promise))(function (resolve, reject) {
+		        function fulfilled(value) {
+		            try {
+		                step(generator.next(value));
+		            } catch (e) {
+		                reject(e);
+		            }
+		        }
+		        function rejected(value) {
+		            try {
+		                step(generator["throw"](value));
+		            } catch (e) {
+		                reject(e);
+		            }
+		        }
+		        function step(result) {
+		            result.done ? resolve(result.value) : new P(function (resolve) {
+		                resolve(result.value);
+		            }).then(fulfilled, rejected);
+		        }
+		        step((generator = generator.apply(thisArg, _arguments)).next());
+		    });
+		};
+		
+		exports.default = function () {
+		    _grimoirejs2.default.registerConverter("Vector2", _Vector2Converter2.default);
+		    _grimoirejs2.default.registerConverter("Vector3", _Vector3Converter2.default);
+		    _grimoirejs2.default.registerConverter("Vector4", _Vector4Converter2.default);
+		    _grimoirejs2.default.registerConverter("Color3", _Color3Converter2.default);
+		    _grimoirejs2.default.registerConverter("Color4", _Color4Converter2.default);
+		    _grimoirejs2.default.registerConverter("Rotation3", _Rotation3Converter2.default);
+		    _grimoirejs2.default.registerConverter("Angle2D", _Angle2DConverter2.default);
+		    _grimoirejs2.default.register(function () {
+		        return __awaiter(undefined, void 0, void 0, regeneratorRuntime.mark(function _callee() {
+		            return regeneratorRuntime.wrap(function _callee$(_context) {
+		                while (1) {
+		                    switch (_context.prev = _context.next) {
+		                        case 0:
+		                        case "end":
+		                            return _context.stop();
+		                    }
+		                }
+		            }, _callee, this);
+		        }));
+		    });
+		};
+	
+	/***/ },
+	/* 33 */
+	/***/ function(module, exports) {
+	
+			Object.defineProperty(exports, "__esModule", {
+			    value: true
+			});exports.default=window.GrimoireJS;
 	
 	/***/ }
 	/******/ ])
@@ -22031,339 +23001,290 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _TextFileResolver2 = _interopRequireDefault(_TextFileResolver);
 		
-		var _BasicCamera = __webpack_require__(7);
-		
-		var _BasicCamera2 = _interopRequireDefault(_BasicCamera);
-		
-		var _ViewCameraBase = __webpack_require__(8);
-		
-		var _ViewCameraBase2 = _interopRequireDefault(_ViewCameraBase);
-		
-		var _AssetLoadingManagerComponent = __webpack_require__(13);
+		var _AssetLoadingManagerComponent = __webpack_require__(7);
 		
 		var _AssetLoadingManagerComponent2 = _interopRequireDefault(_AssetLoadingManagerComponent);
 		
-		var _CameraComponent = __webpack_require__(17);
+		var _CameraComponent = __webpack_require__(11);
 		
 		var _CameraComponent2 = _interopRequireDefault(_CameraComponent);
 		
-		var _CanvasInitializerComponent = __webpack_require__(23);
+		var _CanvasInitializerComponent = __webpack_require__(20);
 		
 		var _CanvasInitializerComponent2 = _interopRequireDefault(_CanvasInitializerComponent);
 		
-		var _FullscreenComponent = __webpack_require__(29);
+		var _FullscreenComponent = __webpack_require__(49);
 		
 		var _FullscreenComponent2 = _interopRequireDefault(_FullscreenComponent);
 		
-		var _GeometryComponent = __webpack_require__(30);
+		var _GeometryComponent = __webpack_require__(50);
 		
 		var _GeometryComponent2 = _interopRequireDefault(_GeometryComponent);
 		
-		var _GeometryRegistoryComponent = __webpack_require__(32);
+		var _GeometryRegistoryComponent = __webpack_require__(52);
 		
 		var _GeometryRegistoryComponent2 = _interopRequireDefault(_GeometryRegistoryComponent);
 		
-		var _HTMLBinderComponent = __webpack_require__(33);
+		var _HTMLBinderComponent = __webpack_require__(53);
 		
 		var _HTMLBinderComponent2 = _interopRequireDefault(_HTMLBinderComponent);
 		
-		var _LoopManagerComponent = __webpack_require__(34);
+		var _LoopManagerComponent = __webpack_require__(54);
 		
 		var _LoopManagerComponent2 = _interopRequireDefault(_LoopManagerComponent);
 		
-		var _MaterialComponent = __webpack_require__(35);
+		var _MaterialComponent = __webpack_require__(55);
 		
 		var _MaterialComponent2 = _interopRequireDefault(_MaterialComponent);
 		
-		var _MaterialContainerComponent = __webpack_require__(42);
+		var _MaterialContainerComponent = __webpack_require__(56);
 		
 		var _MaterialContainerComponent2 = _interopRequireDefault(_MaterialContainerComponent);
 		
-		var _MaterialImporterComponent = __webpack_require__(44);
+		var _MaterialImporterComponent = __webpack_require__(58);
 		
 		var _MaterialImporterComponent2 = _interopRequireDefault(_MaterialImporterComponent);
 		
-		var _MaterialManagerComponent = __webpack_require__(64);
-		
-		var _MaterialManagerComponent2 = _interopRequireDefault(_MaterialManagerComponent);
-		
-		var _MeshRendererComponent = __webpack_require__(65);
+		var _MeshRendererComponent = __webpack_require__(59);
 		
 		var _MeshRendererComponent2 = _interopRequireDefault(_MeshRendererComponent);
 		
-		var _MouseCameraControlComponent = __webpack_require__(66);
+		var _MouseCameraControlComponent = __webpack_require__(60);
 		
 		var _MouseCameraControlComponent2 = _interopRequireDefault(_MouseCameraControlComponent);
 		
-		var _RenderBufferComponent = __webpack_require__(67);
+		var _RenderBufferComponent = __webpack_require__(62);
 		
 		var _RenderBufferComponent2 = _interopRequireDefault(_RenderBufferComponent);
 		
-		var _RendererComponent = __webpack_require__(70);
+		var _RendererComponent = __webpack_require__(65);
 		
 		var _RendererComponent2 = _interopRequireDefault(_RendererComponent);
 		
-		var _RendererManagerComponent = __webpack_require__(71);
+		var _RendererManagerComponent = __webpack_require__(66);
 		
 		var _RendererManagerComponent2 = _interopRequireDefault(_RendererManagerComponent);
 		
-		var _RenderQuadComponent = __webpack_require__(73);
+		var _RenderQuadComponent = __webpack_require__(68);
 		
 		var _RenderQuadComponent2 = _interopRequireDefault(_RenderQuadComponent);
 		
-		var _RenderSceneComponent = __webpack_require__(75);
+		var _RenderSceneComponent = __webpack_require__(70);
 		
 		var _RenderSceneComponent2 = _interopRequireDefault(_RenderSceneComponent);
 		
-		var _SceneComponent = __webpack_require__(21);
+		var _SceneComponent = __webpack_require__(18);
 		
 		var _SceneComponent2 = _interopRequireDefault(_SceneComponent);
 		
-		var _TextureBufferComponent = __webpack_require__(76);
+		var _TextureBufferComponent = __webpack_require__(71);
 		
 		var _TextureBufferComponent2 = _interopRequireDefault(_TextureBufferComponent);
 		
-		var _TextureComponent = __webpack_require__(77);
+		var _TextureComponent = __webpack_require__(72);
 		
 		var _TextureComponent2 = _interopRequireDefault(_TextureComponent);
 		
-		var _TransformComponent = __webpack_require__(19);
+		var _TransformComponent = __webpack_require__(17);
 		
 		var _TransformComponent2 = _interopRequireDefault(_TransformComponent);
 		
-		var _Angle2DConverter = __webpack_require__(78);
-		
-		var _Angle2DConverter2 = _interopRequireDefault(_Angle2DConverter);
-		
-		var _BooleanConverter = __webpack_require__(80);
-		
-		var _BooleanConverter2 = _interopRequireDefault(_BooleanConverter);
-		
-		var _CanvasSizeConverter = __webpack_require__(81);
+		var _CanvasSizeConverter = __webpack_require__(73);
 		
 		var _CanvasSizeConverter2 = _interopRequireDefault(_CanvasSizeConverter);
 		
-		var _Color3Converter = __webpack_require__(82);
-		
-		var _Color3Converter2 = _interopRequireDefault(_Color3Converter);
-		
-		var _Color4Converter = __webpack_require__(84);
-		
-		var _Color4Converter2 = _interopRequireDefault(_Color4Converter);
-		
-		var _ComponentConverter = __webpack_require__(85);
-		
-		var _ComponentConverter2 = _interopRequireDefault(_ComponentConverter);
-		
-		var _EnumConverter = __webpack_require__(87);
-		
-		var _EnumConverter2 = _interopRequireDefault(_EnumConverter);
-		
-		var _GeometryConverter = __webpack_require__(88);
+		var _GeometryConverter = __webpack_require__(74);
 		
 		var _GeometryConverter2 = _interopRequireDefault(_GeometryConverter);
 		
-		var _MaterialConverter = __webpack_require__(90);
+		var _MaterialConverter = __webpack_require__(75);
 		
 		var _MaterialConverter2 = _interopRequireDefault(_MaterialConverter);
 		
-		var _NumberArrayConverter = __webpack_require__(91);
+		var _NodeConverter = __webpack_require__(76);
 		
-		var _NumberArrayConverter2 = _interopRequireDefault(_NumberArrayConverter);
+		var _NodeConverter2 = _interopRequireDefault(_NodeConverter);
 		
-		var _NumberConverter = __webpack_require__(92);
+		var _PositionConverter = __webpack_require__(78);
 		
-		var _NumberConverter2 = _interopRequireDefault(_NumberConverter);
+		var _PositionConverter2 = _interopRequireDefault(_PositionConverter);
 		
-		var _ObjectConverter = __webpack_require__(93);
-		
-		var _ObjectConverter2 = _interopRequireDefault(_ObjectConverter);
-		
-		var _Rotation3Converter = __webpack_require__(94);
-		
-		var _Rotation3Converter2 = _interopRequireDefault(_Rotation3Converter);
-		
-		var _TextureConverter = __webpack_require__(95);
+		var _TextureConverter = __webpack_require__(80);
 		
 		var _TextureConverter2 = _interopRequireDefault(_TextureConverter);
 		
-		var _Vector2Converter = __webpack_require__(97);
-		
-		var _Vector2Converter2 = _interopRequireDefault(_Vector2Converter);
-		
-		var _Vector3Converter = __webpack_require__(98);
-		
-		var _Vector3Converter2 = _interopRequireDefault(_Vector3Converter);
-		
-		var _Vector4Converter = __webpack_require__(99);
-		
-		var _Vector4Converter2 = _interopRequireDefault(_Vector4Converter);
-		
-		var _ViewportConverter = __webpack_require__(100);
+		var _ViewportConverter = __webpack_require__(82);
 		
 		var _ViewportConverter2 = _interopRequireDefault(_ViewportConverter);
 		
-		var _DefaultPrimitives = __webpack_require__(102);
+		var _DefaultPrimitives = __webpack_require__(84);
 		
 		var _DefaultPrimitives2 = _interopRequireDefault(_DefaultPrimitives);
 		
-		var _Geometry = __webpack_require__(89);
+		var _Geometry = __webpack_require__(41);
 		
 		var _Geometry2 = _interopRequireDefault(_Geometry);
 		
-		var _GeometryBuilder = __webpack_require__(105);
-		
-		var _GeometryBuilder2 = _interopRequireDefault(_GeometryBuilder);
-		
-		var _GeometryFactory = __webpack_require__(31);
+		var _GeometryFactory = __webpack_require__(51);
 		
 		var _GeometryFactory2 = _interopRequireDefault(_GeometryFactory);
 		
-		var _GeometryUtility = __webpack_require__(104);
+		var _GeometryUtility = __webpack_require__(85);
 		
 		var _GeometryUtility2 = _interopRequireDefault(_GeometryUtility);
 		
-		var _DefaultMacro = __webpack_require__(47);
+		var _DefaultMacro = __webpack_require__(30);
 		
 		var _DefaultMacro2 = _interopRequireDefault(_DefaultMacro);
 		
-		var _DefaultMaterial = __webpack_require__(107);
+		var _DefaultMaterial = __webpack_require__(86);
 		
 		var _DefaultMaterial2 = _interopRequireDefault(_DefaultMaterial);
 		
-		var _EnvUniformValueResolver = __webpack_require__(52);
-		
-		var _EnvUniformValueResolver2 = _interopRequireDefault(_EnvUniformValueResolver);
-		
-		var _ImportResolver = __webpack_require__(56);
-		
-		var _ImportResolver2 = _interopRequireDefault(_ImportResolver);
-		
-		var _MacroRegistory = __webpack_require__(46);
+		var _MacroRegistory = __webpack_require__(29);
 		
 		var _MacroRegistory2 = _interopRequireDefault(_MacroRegistory);
 		
-		var _Material = __webpack_require__(62);
+		var _Material = __webpack_require__(31);
 		
 		var _Material2 = _interopRequireDefault(_Material);
 		
-		var _MaterialFactory = __webpack_require__(45);
+		var _MaterialFactory = __webpack_require__(21);
 		
 		var _MaterialFactory2 = _interopRequireDefault(_MaterialFactory);
 		
-		var _Pass = __webpack_require__(41);
+		var _Pass = __webpack_require__(33);
 		
 		var _Pass2 = _interopRequireDefault(_Pass);
 		
-		var _PassFactory = __webpack_require__(48);
+		var _Technique = __webpack_require__(32);
 		
-		var _PassFactory2 = _interopRequireDefault(_PassFactory);
+		var _Technique2 = _interopRequireDefault(_Technique);
 		
-		var _SORTPass = __webpack_require__(36);
-		
-		var _SORTPass2 = _interopRequireDefault(_SORTPass);
-		
-		var _TextureReference = __webpack_require__(96);
+		var _TextureReference = __webpack_require__(81);
 		
 		var _TextureReference2 = _interopRequireDefault(_TextureReference);
 		
-		var _AnnotationRemover = __webpack_require__(61);
+		var _UniformResolverRegistry = __webpack_require__(44);
 		
-		var _AnnotationRemover2 = _interopRequireDefault(_AnnotationRemover);
+		var _UniformResolverRegistry2 = _interopRequireDefault(_UniformResolverRegistry);
 		
-		var _CommentRemover = __webpack_require__(54);
+		var _MatricesRegister = __webpack_require__(88);
 		
-		var _CommentRemover2 = _interopRequireDefault(_CommentRemover);
+		var _MatricesRegister2 = _interopRequireDefault(_MatricesRegister);
 		
-		var _GLSLUtil = __webpack_require__(51);
+		var _MiscRegister = __webpack_require__(89);
 		
-		var _GLSLUtil2 = _interopRequireDefault(_GLSLUtil);
+		var _MiscRegister2 = _interopRequireDefault(_MiscRegister);
 		
-		var _ImportTransformer = __webpack_require__(55);
+		var _UserValueRegister = __webpack_require__(91);
 		
-		var _ImportTransformer2 = _interopRequireDefault(_ImportTransformer);
+		var _UserValueRegister2 = _interopRequireDefault(_UserValueRegister);
 		
-		var _SORTPassParser = __webpack_require__(49);
+		var _nodes = __webpack_require__(92);
 		
-		var _SORTPassParser2 = _interopRequireDefault(_SORTPassParser);
+		var _nodes2 = _interopRequireDefault(_nodes);
 		
-		var _UniformRegisterer = __webpack_require__(50);
-		
-		var _UniformRegisterer2 = _interopRequireDefault(_UniformRegisterer);
-		
-		var _VariableAnnotationRemover = __webpack_require__(59);
-		
-		var _VariableAnnotationRemover2 = _interopRequireDefault(_VariableAnnotationRemover);
-		
-		var _VariableParser = __webpack_require__(57);
-		
-		var _VariableParser2 = _interopRequireDefault(_VariableParser);
-		
-		var _Buffer = __webpack_require__(106);
+		var _Buffer = __webpack_require__(43);
 		
 		var _Buffer2 = _interopRequireDefault(_Buffer);
 		
-		var _FrameBuffer = __webpack_require__(74);
+		var _FrameBuffer = __webpack_require__(69);
 		
 		var _FrameBuffer2 = _interopRequireDefault(_FrameBuffer);
 		
-		var _GLExtRequestor = __webpack_require__(28);
+		var _GLExtRequestor = __webpack_require__(48);
 		
 		var _GLExtRequestor2 = _interopRequireDefault(_GLExtRequestor);
 		
-		var _Program = __webpack_require__(38);
+		var _ManagedProgram = __webpack_require__(34);
+		
+		var _ManagedProgram2 = _interopRequireDefault(_ManagedProgram);
+		
+		var _ManagedShader = __webpack_require__(39);
+		
+		var _ManagedShader2 = _interopRequireDefault(_ManagedShader);
+		
+		var _Program = __webpack_require__(35);
 		
 		var _Program2 = _interopRequireDefault(_Program);
 		
-		var _RenderBuffer = __webpack_require__(68);
+		var _RenderBuffer = __webpack_require__(63);
 		
 		var _RenderBuffer2 = _interopRequireDefault(_RenderBuffer);
 		
-		var _ResourceBase = __webpack_require__(26);
+		var _ResourceBase = __webpack_require__(38);
 		
 		var _ResourceBase2 = _interopRequireDefault(_ResourceBase);
 		
-		var _ResourceCache = __webpack_require__(39);
+		var _ResourceCache = __webpack_require__(36);
 		
 		var _ResourceCache2 = _interopRequireDefault(_ResourceCache);
 		
-		var _Shader = __webpack_require__(37);
+		var _Shader = __webpack_require__(40);
 		
 		var _Shader2 = _interopRequireDefault(_Shader);
 		
-		var _Texture2D = __webpack_require__(25);
+		var _Texture2D = __webpack_require__(47);
 		
 		var _Texture2D2 = _interopRequireDefault(_Texture2D);
 		
-		var _UniformProxy = __webpack_require__(40);
+		var _UniformProxy = __webpack_require__(37);
 		
 		var _UniformProxy2 = _interopRequireDefault(_UniformProxy);
 		
-		var _DrawPriorty = __webpack_require__(43);
+		var _DrawPriorty = __webpack_require__(57);
 		
 		var _DrawPriorty2 = _interopRequireDefault(_DrawPriorty);
 		
-		var _RenderQueue = __webpack_require__(18);
+		var _RenderQueue = __webpack_require__(16);
 		
 		var _RenderQueue2 = _interopRequireDefault(_RenderQueue);
 		
-		var _RenderQueueRegistry = __webpack_require__(22);
+		var _RenderQueueRegistry = __webpack_require__(19);
 		
 		var _RenderQueueRegistry2 = _interopRequireDefault(_RenderQueueRegistry);
 		
-		var _RotationParser = __webpack_require__(79);
+		var _ImportResolver = __webpack_require__(28);
 		
-		var _RotationParser2 = _interopRequireDefault(_RotationParser);
+		var _ImportResolver2 = _interopRequireDefault(_ImportResolver);
 		
-		var _TextureSizeCalculator = __webpack_require__(69);
+		var _NameSemanticsPair = __webpack_require__(27);
+		
+		var _NameSemanticsPair2 = _interopRequireDefault(_NameSemanticsPair);
+		
+		var _Parser = __webpack_require__(22);
+		
+		var _Parser2 = _interopRequireDefault(_Parser);
+		
+		var _Preferences = __webpack_require__(25);
+		
+		var _Preferences2 = _interopRequireDefault(_Preferences);
+		
+		var _SortTransformUtility = __webpack_require__(24);
+		
+		var _SortTransformUtility2 = _interopRequireDefault(_SortTransformUtility);
+		
+		var _TypeToConstant = __webpack_require__(26);
+		
+		var _TypeToConstant2 = _interopRequireDefault(_TypeToConstant);
+		
+		var _HashCalculator = __webpack_require__(23);
+		
+		var _HashCalculator2 = _interopRequireDefault(_HashCalculator);
+		
+		var _TextureSizeCalculator = __webpack_require__(64);
 		
 		var _TextureSizeCalculator2 = _interopRequireDefault(_TextureSizeCalculator);
 		
-		var _main = __webpack_require__(111);
+		var _main = __webpack_require__(93);
 		
 		var _main2 = _interopRequireDefault(_main);
 		
 		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		var __VERSION__ = "0.11.1-beta16";
+		var __NAME__ = "grimoirejs-fundamental";
 		
 		var __EXPOSE__ = {
 		    "Asset": {
@@ -22372,10 +23293,6 @@ return /******/ (function(modules) { // webpackBootstrap
 		        "ExternalResourceResolver": _ExternalResourceResolver2.default,
 		        "ImageResolver": _ImageResolver2.default,
 		        "TextFileResolver": _TextFileResolver2.default
-		    },
-		    "Camera": {
-		        "BasicCamera": _BasicCamera2.default,
-		        "ViewCameraBase": _ViewCameraBase2.default
 		    },
 		    "Components": {
 		        "AssetLoadingManagerComponent": _AssetLoadingManagerComponent2.default,
@@ -22389,7 +23306,6 @@ return /******/ (function(modules) { // webpackBootstrap
 		        "MaterialComponent": _MaterialComponent2.default,
 		        "MaterialContainerComponent": _MaterialContainerComponent2.default,
 		        "MaterialImporterComponent": _MaterialImporterComponent2.default,
-		        "MaterialManagerComponent": _MaterialManagerComponent2.default,
 		        "MeshRendererComponent": _MeshRendererComponent2.default,
 		        "MouseCameraControlComponent": _MouseCameraControlComponent2.default,
 		        "RenderBufferComponent": _RenderBufferComponent2.default,
@@ -22403,59 +23319,43 @@ return /******/ (function(modules) { // webpackBootstrap
 		        "TransformComponent": _TransformComponent2.default
 		    },
 		    "Converters": {
-		        "Angle2DConverter": _Angle2DConverter2.default,
-		        "BooleanConverter": _BooleanConverter2.default,
 		        "CanvasSizeConverter": _CanvasSizeConverter2.default,
-		        "Color3Converter": _Color3Converter2.default,
-		        "Color4Converter": _Color4Converter2.default,
-		        "ComponentConverter": _ComponentConverter2.default,
-		        "EnumConverter": _EnumConverter2.default,
 		        "GeometryConverter": _GeometryConverter2.default,
 		        "MaterialConverter": _MaterialConverter2.default,
-		        "NumberArrayConverter": _NumberArrayConverter2.default,
-		        "NumberConverter": _NumberConverter2.default,
-		        "ObjectConverter": _ObjectConverter2.default,
-		        "Rotation3Converter": _Rotation3Converter2.default,
+		        "NodeConverter": _NodeConverter2.default,
+		        "PositionConverter": _PositionConverter2.default,
 		        "TextureConverter": _TextureConverter2.default,
-		        "Vector2Converter": _Vector2Converter2.default,
-		        "Vector3Converter": _Vector3Converter2.default,
-		        "Vector4Converter": _Vector4Converter2.default,
 		        "ViewportConverter": _ViewportConverter2.default
 		    },
 		    "Geometry": {
 		        "DefaultPrimitives": _DefaultPrimitives2.default,
 		        "Geometry": _Geometry2.default,
-		        "GeometryBuilder": _GeometryBuilder2.default,
 		        "GeometryFactory": _GeometryFactory2.default,
 		        "GeometryUtility": _GeometryUtility2.default
 		    },
 		    "Material": {
 		        "DefaultMacro": _DefaultMacro2.default,
 		        "DefaultMaterial": _DefaultMaterial2.default,
-		        "EnvUniformValueResolver": _EnvUniformValueResolver2.default,
-		        "ImportResolver": _ImportResolver2.default,
 		        "MacroRegistory": _MacroRegistory2.default,
 		        "Material": _Material2.default,
 		        "MaterialFactory": _MaterialFactory2.default,
 		        "Pass": _Pass2.default,
-		        "PassFactory": _PassFactory2.default,
-		        "SORTPass": _SORTPass2.default,
+		        "Technique": _Technique2.default,
 		        "TextureReference": _TextureReference2.default,
-		        "Transformers": {
-		            "AnnotationRemover": _AnnotationRemover2.default,
-		            "CommentRemover": _CommentRemover2.default,
-		            "GLSLUtil": _GLSLUtil2.default,
-		            "ImportTransformer": _ImportTransformer2.default,
-		            "SORTPassParser": _SORTPassParser2.default,
-		            "UniformRegisterer": _UniformRegisterer2.default,
-		            "VariableAnnotationRemover": _VariableAnnotationRemover2.default,
-		            "VariableParser": _VariableParser2.default
+		        "UniformResolverRegistry": _UniformResolverRegistry2.default,
+		        "Uniforms": {
+		            "MatricesRegister": _MatricesRegister2.default,
+		            "MiscRegister": _MiscRegister2.default,
+		            "UserValueRegister": _UserValueRegister2.default
 		        }
 		    },
+		    "nodes": _nodes2.default,
 		    "Resource": {
 		        "Buffer": _Buffer2.default,
 		        "FrameBuffer": _FrameBuffer2.default,
 		        "GLExtRequestor": _GLExtRequestor2.default,
+		        "ManagedProgram": _ManagedProgram2.default,
+		        "ManagedShader": _ManagedShader2.default,
 		        "Program": _Program2.default,
 		        "RenderBuffer": _RenderBuffer2.default,
 		        "ResourceBase": _ResourceBase2.default,
@@ -22469,12 +23369,24 @@ return /******/ (function(modules) { // webpackBootstrap
 		        "RenderQueue": _RenderQueue2.default,
 		        "RenderQueueRegistry": _RenderQueueRegistry2.default
 		    },
+		    "Sort": {
+		        "ImportResolver": _ImportResolver2.default,
+		        "NameSemanticsPair": _NameSemanticsPair2.default,
+		        "Parser": _Parser2.default,
+		        "Preferences": _Preferences2.default,
+		        "SortTransformUtility": _SortTransformUtility2.default,
+		        "TypeToConstant": _TypeToConstant2.default
+		    },
 		    "Util": {
-		        "RotationParser": _RotationParser2.default,
+		        "HashCalculator": _HashCalculator2.default,
 		        "TextureSizeCalculator": _TextureSizeCalculator2.default
 		    }
 		};
 		var __BASE__ = (0, _main2.default)();
+		Object.assign(__EXPOSE__, {
+		    __VERSION__: __VERSION__,
+		    __NAME__: __NAME__
+		});
 		Object.assign(__BASE__ || {}, __EXPOSE__);
 		window["GrimoireJS"].lib.fundamental = __EXPOSE__;
 		exports.default = __BASE__;
@@ -22587,34 +23499,35 @@ return /******/ (function(modules) { // webpackBootstrap
 		                                switch (_context.prev = _context.next) {
 		                                    case 0:
 		                                        _context.prev = 0;
-		                                        _context.next = 3;
+		                                        _context.t0 = resolve;
+		                                        _context.next = 4;
 		                                        return promise;
 		
-		                                    case 3:
-		                                        _context.t0 = _context.sent;
-		                                        resolve(_context.t0);
+		                                    case 4:
+		                                        _context.t1 = _context.sent;
+		                                        (0, _context.t0)(_context.t1);
 		
 		                                        this.loadCount++;
-		                                        _context.next = 12;
+		                                        _context.next = 13;
 		                                        break;
 		
-		                                    case 8:
-		                                        _context.prev = 8;
-		                                        _context.t1 = _context["catch"](0);
+		                                    case 9:
+		                                        _context.prev = 9;
+		                                        _context.t2 = _context["catch"](0);
 		
-		                                        reject(_context.t1);
+		                                        reject(_context.t2);
 		                                        this.errorCount++;
 		
-		                                    case 12:
+		                                    case 13:
 		                                        this.completeCount++;
 		                                        this._checkLoadCompleted();
 		
-		                                    case 14:
+		                                    case 15:
 		                                    case "end":
 		                                        return _context.stop();
 		                                }
 		                            }
-		                        }, _callee, this, [[0, 8]]);
+		                        }, _callee, this, [[0, 9]]);
 		                    }));
 		                }).bind(_this2)();
 		            });
@@ -22949,257 +23862,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 		
-		var _ViewCameraBase2 = __webpack_require__(8);
-		
-		var _ViewCameraBase3 = _interopRequireDefault(_ViewCameraBase2);
-		
-		var _GLM = __webpack_require__(12);
-		
-		var _GLM2 = _interopRequireDefault(_GLM);
-		
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-		
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-		
-		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-		
-		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-		
-		var mat4 = _GLM2.default.mat4,
-		    vec3 = _GLM2.default.vec3,
-		    vec4 = _GLM2.default.vec4;
-		/**
-		 * Provides perspective camera as implementation of ICamera.
-		 */
-		
-		var BasicCamera = function (_ViewCameraBase) {
-		    _inherits(BasicCamera, _ViewCameraBase);
-		
-		    function BasicCamera() {
-		        _classCallCheck(this, BasicCamera);
-		
-		        var _this = _possibleConstructorReturn(this, (BasicCamera.__proto__ || Object.getPrototypeOf(BasicCamera)).apply(this, arguments));
-		
-		        _this._orthographic = false;
-		        return _this;
-		    }
-		
-		    _createClass(BasicCamera, [{
-		        key: "getViewMatrix",
-		        value: function getViewMatrix() {
-		            return this.__viewMatrix;
-		        }
-		    }, {
-		        key: "getProjectionMatrix",
-		        value: function getProjectionMatrix() {
-		            return this.__projectionMatrix;
-		        }
-		    }, {
-		        key: "getInvProjectionMatrix",
-		        value: function getInvProjectionMatrix() {
-		            return this.__invProjectionMatrix;
-		        }
-		    }, {
-		        key: "getProjectionViewMatrix",
-		        value: function getProjectionViewMatrix() {
-		            return this.__projectionViewMatrix;
-		        }
-		    }, {
-		        key: "getFar",
-		        value: function getFar() {
-		            return this._far;
-		        }
-		    }, {
-		        key: "setFar",
-		        value: function setFar(far) {
-		            this._far = far;
-		            this._recalculateProjection();
-		        }
-		    }, {
-		        key: "getNear",
-		        value: function getNear() {
-		            return this._near;
-		        }
-		    }, {
-		        key: "setNear",
-		        value: function setNear(near) {
-		            this._near = near;
-		            this._recalculateProjection();
-		        }
-		    }, {
-		        key: "getAspect",
-		        value: function getAspect() {
-		            return this._aspect;
-		        }
-		    }, {
-		        key: "setAspect",
-		        value: function setAspect(aspect) {
-		            this._aspect = aspect;
-		            this._recalculateProjection();
-		        }
-		    }, {
-		        key: "getFovy",
-		        value: function getFovy() {
-		            return this._fovy;
-		        }
-		    }, {
-		        key: "setFovy",
-		        value: function setFovy(fov) {
-		            this._fovy = fov;
-		            this._recalculateProjection();
-		        }
-		    }, {
-		        key: "getOrthoSize",
-		        value: function getOrthoSize() {
-		            return this._orthoSize;
-		        }
-		    }, {
-		        key: "setOrthoSize",
-		        value: function setOrthoSize(size) {
-		            this._orthoSize = size;
-		        }
-		    }, {
-		        key: "setOrthographicMode",
-		        value: function setOrthographicMode(isOrtho) {
-		            this._orthographic = isOrtho;
-		            this._recalculateProjection();
-		        }
-		    }, {
-		        key: "getOrthographicMode",
-		        value: function getOrthographicMode() {
-		            return this._orthographic;
-		        }
-		    }, {
-		        key: "_recalculateProjection",
-		        value: function _recalculateProjection() {
-		            if (!this._orthographic) {
-		                mat4.perspective(this.__projectionMatrix.rawElements, this._fovy, this._aspect, this._near, this._far);
-		            } else {
-		                mat4.ortho(this.__projectionMatrix.rawElements, -this._orthoSize * this._aspect, this._orthoSize * this._aspect, -this._orthoSize, this._orthoSize, this._near, this._far);
-		            }
-		            mat4.mul(this.__projectionViewMatrix.rawElements, this.__projectionMatrix.rawElements, this.__viewMatrix.rawElements);
-		            mat4.invert(this.__invProjectionMatrix.rawElements, this.__projectionMatrix.rawElements);
-		        }
-		    }]);
-		
-		    return BasicCamera;
-		}(_ViewCameraBase3.default);
-		
-		exports.default = BasicCamera;
-	
-	/***/ },
-	/* 8 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-		
-		var _Vector = __webpack_require__(9);
-		
-		var _Vector2 = _interopRequireDefault(_Vector);
-		
-		var _Matrix = __webpack_require__(10);
-		
-		var _Matrix2 = _interopRequireDefault(_Matrix);
-		
-		var _Vector3 = __webpack_require__(11);
-		
-		var _Vector4 = _interopRequireDefault(_Vector3);
-		
-		var _GLM = __webpack_require__(12);
-		
-		var _GLM2 = _interopRequireDefault(_GLM);
-		
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-		
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-		
-		var mat4 = _GLM2.default.mat4,
-		    vec3 = _GLM2.default.vec3,
-		    vec4 = _GLM2.default.vec4;
-		
-		var ViewCameraBase = function () {
-		    function ViewCameraBase() {
-		        _classCallCheck(this, ViewCameraBase);
-		
-		        this._eyeCache = _Vector2.default.Zero;
-		        this._lookAtCache = _Vector2.default.Zero;
-		        this._upCache = _Vector2.default.Zero;
-		        this.__viewMatrix = new _Matrix2.default();
-		        this.__projectionMatrix = new _Matrix2.default();
-		        this.__invProjectionMatrix = new _Matrix2.default();
-		        this.__projectionViewMatrix = new _Matrix2.default();
-		    }
-		
-		    _createClass(ViewCameraBase, [{
-		        key: "updateTransform",
-		        value: function updateTransform(transform) {
-		            vec3.transformMat4(this._eyeCache.rawElements, _Vector2.default.Zero.rawElements, transform.globalTransform.rawElements);
-		            vec4.transformMat4(this._lookAtCache.rawElements, ViewCameraBase._frontOrigin.rawElements, transform.globalTransform.rawElements);
-		            vec3.add(this._lookAtCache.rawElements, this._lookAtCache.rawElements, this._eyeCache.rawElements);
-		            vec4.transformMat4(this._upCache.rawElements, ViewCameraBase._upOrigin.rawElements, transform.globalTransform.rawElements);
-		            mat4.lookAt(this.__viewMatrix.rawElements, this._eyeCache.rawElements, this._lookAtCache.rawElements, this._upCache.rawElements);
-		            mat4.mul(this.__projectionViewMatrix.rawElements, this.__projectionMatrix.rawElements, this.__viewMatrix.rawElements);
-		        }
-		    }]);
-		
-		    return ViewCameraBase;
-		}();
-		
-		ViewCameraBase._frontOrigin = new _Vector4.default(0, 0, -1, 0);
-		ViewCameraBase._upOrigin = new _Vector4.default(0, 1, 0, 0);
-		exports.default = ViewCameraBase;
-	
-	/***/ },
-	/* 9 */
-	/***/ function(module, exports) {
-	
-			Object.defineProperty(exports, "__esModule", {
-			    value: true
-			});exports.default=window.GrimoireJS.lib.math.Vector3;
-	
-	/***/ },
-	/* 10 */
-	/***/ function(module, exports) {
-	
-			Object.defineProperty(exports, "__esModule", {
-			    value: true
-			});exports.default=window.GrimoireJS.lib.math.Matrix;
-	
-	/***/ },
-	/* 11 */
-	/***/ function(module, exports) {
-	
-			Object.defineProperty(exports, "__esModule", {
-			    value: true
-			});exports.default=window.GrimoireJS.lib.math.Vector4;
-	
-	/***/ },
-	/* 12 */
-	/***/ function(module, exports) {
-	
-			Object.defineProperty(exports, "__esModule", {
-			    value: true
-			});exports.default=window.GrimoireJS.lib.math.GLM;
-	
-	/***/ },
-	/* 13 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-		
-		var _grimoirejs = __webpack_require__(14);
+		var _grimoirejs = __webpack_require__(8);
 		
 		var _grimoirejs2 = _interopRequireDefault(_grimoirejs);
 		
@@ -23207,11 +23870,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _AssetLoader2 = _interopRequireDefault(_AssetLoader);
 		
-		var _Component2 = __webpack_require__(15);
+		var _Component2 = __webpack_require__(9);
 		
 		var _Component3 = _interopRequireDefault(_Component2);
 		
-		var _defaultLoader = __webpack_require__(16);
+		var _defaultLoader = __webpack_require__(10);
 		
 		var _defaultLoader2 = _interopRequireDefault(_defaultLoader);
 		
@@ -23248,6 +23911,9 @@ return /******/ (function(modules) { // webpackBootstrap
 		    });
 		};
 		
+		/**
+		 * アセットの読み込みを司るコンポーネント。ローダーの表示などを司る。
+		 */
 		var AssetLoadingManagerComponent = function (_Component) {
 		    _inherits(AssetLoadingManagerComponent, _Component);
 		
@@ -23321,14 +23987,25 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = AssetLoadingManagerComponent;
 		
 		AssetLoadingManagerComponent.attributes = {
+		    /**
+		     * ローディング状況(読み取り専用)
+		     *
+		     * 現在の読み込み状況を0-1で表す。
+		     */
 		    loadingProgress: {
 		        default: 0,
 		        converter: "Number"
 		    },
+		    /**
+		     * リソースの読み込み完了後に、自動的にレンダリングループを開始するかどうか
+		     */
 		    autoStart: {
 		        default: true,
 		        converter: "Boolean"
 		    },
+		    /**
+		     * リソースのロード時にローディング画面を表示するかどうか
+		     */
 		    enableLoader: {
 		        default: true,
 		        converter: "Boolean"
@@ -23336,7 +24013,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		};
 	
 	/***/ },
-	/* 14 */
+	/* 8 */
 	/***/ function(module, exports) {
 	
 			Object.defineProperty(exports, "__esModule", {
@@ -23344,7 +24021,7 @@ return /******/ (function(modules) { // webpackBootstrap
 			});exports.default=window.GrimoireJS;
 	
 	/***/ },
-	/* 15 */
+	/* 9 */
 	/***/ function(module, exports) {
 	
 			Object.defineProperty(exports, "__esModule", {
@@ -23352,13 +24029,13 @@ return /******/ (function(modules) { // webpackBootstrap
 			});exports.default=window.GrimoireJS.Node.Component;
 	
 	/***/ },
-	/* 16 */
+	/* 10 */
 	/***/ function(module, exports) {
 	
 		module.exports = "<div style=\"width:100%;height:100%;position: relative;\">\n    <div style=\"width: 55px;height: 55px;border-radius: 100%;border: 5px solid #381794;border-right-color: #FC659D;animation: rotate 1s linear infinite;position: absolute;top: 0;left: 0;right: 0;bottom: 0;margin: auto;\"></div>\n</div>\n<style type=\"text/css\">\n    @keyframes rotate {\n        from {\n            transform: rotate(0deg);\n        }\n        to {\n            transform: rotate(360deg);\n        }\n    }\n</style>\n"
 	
 	/***/ },
-	/* 17 */
+	/* 11 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -23369,23 +24046,35 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 		
-		var _RenderQueue = __webpack_require__(18);
+		var _GLM = __webpack_require__(12);
+		
+		var _GLM2 = _interopRequireDefault(_GLM);
+		
+		var _Vector = __webpack_require__(13);
+		
+		var _Vector2 = _interopRequireDefault(_Vector);
+		
+		var _Vector3 = __webpack_require__(14);
+		
+		var _Vector4 = _interopRequireDefault(_Vector3);
+		
+		var _Matrix = __webpack_require__(15);
+		
+		var _Matrix2 = _interopRequireDefault(_Matrix);
+		
+		var _RenderQueue = __webpack_require__(16);
 		
 		var _RenderQueue2 = _interopRequireDefault(_RenderQueue);
 		
-		var _TransformComponent = __webpack_require__(19);
+		var _TransformComponent = __webpack_require__(17);
 		
 		var _TransformComponent2 = _interopRequireDefault(_TransformComponent);
 		
-		var _BasicCamera = __webpack_require__(7);
-		
-		var _BasicCamera2 = _interopRequireDefault(_BasicCamera);
-		
-		var _SceneComponent = __webpack_require__(21);
+		var _SceneComponent = __webpack_require__(18);
 		
 		var _SceneComponent2 = _interopRequireDefault(_SceneComponent);
 		
-		var _Component2 = __webpack_require__(15);
+		var _Component2 = __webpack_require__(9);
 		
 		var _Component3 = _interopRequireDefault(_Component2);
 		
@@ -23397,6 +24086,16 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 		
+		var vec3 = _GLM2.default.vec3,
+		    vec4 = _GLM2.default.vec4,
+		    mat4 = _GLM2.default.mat4;
+		
+		/**
+		 * シーンを描画するカメラのコンポーネント
+		 *
+		 * このコンポーネントによって、透視射影や正方射影などの歪みを調整します。
+		 * また、このコンポーネントの付属するノードに属する`Transoform`によって、カメラの位置や向きが確定されます。
+		 */
 		var CameraComponent = function (_Component) {
 		    _inherits(CameraComponent, _Component);
 		
@@ -23406,47 +24105,50 @@ return /******/ (function(modules) { // webpackBootstrap
 		        var _this = _possibleConstructorReturn(this, (CameraComponent.__proto__ || Object.getPrototypeOf(CameraComponent)).apply(this, arguments));
 		
 		        _this._renderQueue = new _RenderQueue2.default();
+		        _this._eyeCache = _Vector4.default.Zero;
+		        _this._lookAtCache = _Vector4.default.Zero;
+		        _this._upCache = _Vector4.default.Zero;
+		        _this.__viewMatrix = new _Matrix2.default();
+		        _this.__projectionMatrix = new _Matrix2.default();
+		        _this.__invProjectionMatrix = new _Matrix2.default();
+		        _this.__projectionViewMatrix = new _Matrix2.default();
+		        _this._orthographic = false;
 		        return _this;
 		    }
-		    /**
-		    * Find scene tag recursively.
-		    * @param  {GomlNode}       node [the node to searching currently]
-		    * @return {SceneComponent}      [the scene component found]
-		    */
-		
 		
 		    _createClass(CameraComponent, [{
 		        key: "$awake",
 		        value: function $awake() {
-		            var c = this.camera = new _BasicCamera2.default();
-		            this.transform = this.node.getComponent(_TransformComponent2.default);
-		            this._onTransformUpdate(this.transform);
+		            var _this2 = this;
+		
 		            this.getAttributeRaw("far").watch(function (v) {
-		                c.setFar(v);
+		                _this2.Far = v;
 		            }, true);
 		            this.getAttributeRaw("near").watch(function (v) {
-		                c.setNear(v);
+		                _this2.Near = v;
 		            }, true);
 		            this.getAttributeRaw("fovy").watch(function (v) {
-		                c.setFovy(v);
+		                _this2.Fovy = v;
 		            }, true);
 		            this.getAttributeRaw("aspect").watch(function (v) {
-		                c.setAspect(v);
+		                _this2.Aspect = v;
 		            }, true);
 		            this.getAttributeRaw("orthoSize").watch(function (v) {
-		                c.setOrthoSize(v);
+		                _this2.OrthoSize = v;
 		            }, true);
 		            this.getAttributeRaw("orthogonal").watch(function (v) {
-		                c.setOrthographicMode(v);
+		                _this2.OrthographicMode = v;
 		            }, true);
 		            this.getAttributeRaw("autoAspect").boundTo("_autoAspect");
 		        }
 		    }, {
 		        key: "$mount",
 		        value: function $mount() {
+		            this.transform = this.node.getComponent(_TransformComponent2.default);
 		            this.containedScene = CameraComponent._findContainedScene(this.node);
 		            this.containedScene.queueRegistory.registerQueue(this._renderQueue);
-		            this.node.on("transformUpdated", this._onTransformUpdate.bind(this));
+		            this.node.on("transformUpdated", this.updateTransform.bind(this));
+		            this.updateTransform();
 		        }
 		    }, {
 		        key: "$unmount",
@@ -23464,18 +24166,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		    }, {
 		        key: "renderScene",
 		        value: function renderScene(args) {
+		            args = args;
 		            if (this.containedScene) {
 		                this._justifyAspect(args);
 		                args.sceneDescription = this.containedScene.sceneDescription;
-		                args.defaultTexture = this.companion.get("defaultTexture");
 		                this._renderQueue.renderAll(args, true, args.loopIndex);
-		            }
-		        }
-		    }, {
-		        key: "_onTransformUpdate",
-		        value: function _onTransformUpdate(t) {
-		            if (this.camera) {
-		                this.camera.updateTransform(t);
 		            }
 		        }
 		    }, {
@@ -23489,6 +24184,118 @@ return /******/ (function(modules) { // webpackBootstrap
 		                }
 		            }
 		        }
+		    }, {
+		        key: "updateTransform",
+		        value: function updateTransform() {
+		            var transform = this.transform;
+		            vec3.transformMat4(this._eyeCache.rawElements, _Vector4.default.Zero.rawElements, transform.globalTransform.rawElements);
+		            vec4.transformMat4(this._lookAtCache.rawElements, CameraComponent._frontOrigin.rawElements, transform.globalTransform.rawElements);
+		            vec3.add(this._lookAtCache.rawElements, this._lookAtCache.rawElements, this._eyeCache.rawElements);
+		            vec4.transformMat4(this._upCache.rawElements, CameraComponent._upOrigin.rawElements, transform.globalTransform.rawElements);
+		            mat4.lookAt(this.__viewMatrix.rawElements, this._eyeCache.rawElements, this._lookAtCache.rawElements, this._upCache.rawElements);
+		            mat4.mul(this.__projectionViewMatrix.rawElements, this.__projectionMatrix.rawElements, this.__viewMatrix.rawElements);
+		        }
+		    }, {
+		        key: "_recalculateProjection",
+		        value: function _recalculateProjection() {
+		            if (!this._orthographic) {
+		                mat4.perspective(this.__projectionMatrix.rawElements, this._fovy, this._aspect, this._near, this._far);
+		            } else {
+		                mat4.ortho(this.__projectionMatrix.rawElements, -this._orthoSize * this._aspect, this._orthoSize * this._aspect, -this._orthoSize, this._orthoSize, this._near, this._far);
+		            }
+		            mat4.mul(this.__projectionViewMatrix.rawElements, this.__projectionMatrix.rawElements, this.__viewMatrix.rawElements);
+		            mat4.invert(this.__invProjectionMatrix.rawElements, this.__projectionMatrix.rawElements);
+		        }
+		    }, {
+		        key: "ViewMatrix",
+		        get: function get() {
+		            return this.__viewMatrix;
+		        }
+		    }, {
+		        key: "ProjectionMatrix",
+		        get: function get() {
+		            return this.__projectionMatrix;
+		        }
+		    }, {
+		        key: "InvProjectionMatrix",
+		        get: function get() {
+		            return this.__invProjectionMatrix;
+		        }
+		    }, {
+		        key: "ProjectionViewMatrix",
+		        get: function get() {
+		            return this.__projectionViewMatrix;
+		        }
+		    }, {
+		        key: "Far",
+		        get: function get() {
+		            return this._far;
+		        },
+		        set: function set(far) {
+		            this._far = far;
+		            this._recalculateProjection();
+		        }
+		    }, {
+		        key: "Near",
+		        get: function get() {
+		            return this._near;
+		        },
+		        set: function set(near) {
+		            this._near = near;
+		            this._recalculateProjection();
+		        }
+		    }, {
+		        key: "Aspect",
+		        get: function get() {
+		            return this._aspect;
+		        },
+		        set: function set(aspect) {
+		            this._aspect = aspect;
+		            this._recalculateProjection();
+		        }
+		    }, {
+		        key: "Fovy",
+		        get: function get() {
+		            return this._fovy;
+		        },
+		        set: function set(fov) {
+		            this._fovy = fov;
+		            this._recalculateProjection();
+		        }
+		    }, {
+		        key: "OrthoSize",
+		        get: function get() {
+		            return this._orthoSize;
+		        },
+		        set: function set(size) {
+		            this._orthoSize = size;
+		        }
+		    }, {
+		        key: "OrthographicMode",
+		        set: function set(isOrtho) {
+		            this._orthographic = isOrtho;
+		            this._recalculateProjection();
+		        },
+		        get: function get() {
+		            return this._orthographic;
+		        }
+		    }, {
+		        key: "AutoAspect",
+		        set: function set(autoMode) {
+		            if (this._autoAspect !== autoMode) {
+		                this._autoAspect = autoMode;
+		                this._recalculateProjection();
+		            }
+		        },
+		        get: function get() {
+		            return this._autoAspect;
+		        }
+		        /**
+		        * Find scene tag recursively.
+		        * @param  {GomlNode}       node [the node to searching currently]
+		        * @return {SceneComponent}      [the scene component found]
+		        */
+		
 		    }], [{
 		        key: "_findContainedScene",
 		        value: function _findContainedScene(node) {
@@ -23510,31 +24317,69 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		exports.default = CameraComponent;
 		
+		CameraComponent._frontOrigin = new _Vector2.default(0, 0, -1, 0);
+		CameraComponent._upOrigin = new _Vector2.default(0, 1, 0, 0);
 		CameraComponent.attributes = {
+		    /**
+		     * カメラの視野角。
+		     * orthogonal属性がtrueである場合この属性は無視されます。
+		     */
 		    fovy: {
 		        default: "45d",
 		        converter: "Angle2D"
 		    },
+		    /**
+		     * カメラに映るもっとも近い距離です。
+		     * 0よりも大きく、far属性よりも小さい必要があります。
+		     */
 		    near: {
 		        default: 0.01,
 		        converter: "Number"
 		    },
+		    /**
+		     * カメラに映る最も遠い距離です。
+		     * near属性よりも大きい必要があります。
+		     *
+		     * far - nearの値があまりにも大きいと、Z-fighting(手前の物体が奥に表示されたように見えたりする)現象が起きる可能性があります。
+		     * この差があまりに大きい時、カメラに映る物体の座標の小さいz座標の値の差は0に近似されます。
+		     * 逆にこの値が小さい時は、カメラに映る物体はある程度小さいz座標の差でも問題なく表示されます。
+		     * **大切なのは、写したい空間よりも無駄に大きくしないこと。常に適切な値を設定するべきです**
+		     */
 		    far: {
 		        default: 100,
 		        converter: "Number"
 		    },
+		    /**
+		     * カメラのアスペクト比
+		     * カメラの横の大きさと縦の大きさの比率を指定します。autoAspect属性がtrueである時、毎回のレンダリング時にこの値を自動調整します。
+		     */
 		    aspect: {
 		        default: 1.6,
 		        converter: "Number"
 		    },
+		    /**
+		     * アスペクト比の自動調整が有効か否か
+		     * レンダリング時にそのビューポートの大きさに応じて比率を自動調整するかどうかを示します。
+		     */
 		    autoAspect: {
 		        default: true,
 		        converter: "Boolean"
 		    },
+		    /**
+		     * 正射影時の横の基準サイズ
+		     * 正射影時はfovy属性を用いて自動的に写す領域を決定できません。
+		     * そのため、横の一片のサイズをこの属性で指定します。**アスペクト比は計算に用いられることに注意してください。**
+		     */
 		    orthoSize: {
 		        default: 100,
 		        converter: "Number"
 		    },
+		    /**
+		     * このカメラが正射影かどうか
+		     *
+		     * この属性がfalseである場合、カメラは透視射影としてシーンをレンダリングします。この場合、レンダリング結果にパース(奥行き感)が出ます。
+		     * 一方、この属性がtrueである場合、カメラは正射影としてシーンをレンダリングします。この場合、レンダリング結果には奥行き感は出ません。
+		     */
 		    orthogonal: {
 		        default: false,
 		        converter: "Boolean"
@@ -23542,7 +24387,39 @@ return /******/ (function(modules) { // webpackBootstrap
 		};
 	
 	/***/ },
-	/* 18 */
+	/* 12 */
+	/***/ function(module, exports) {
+	
+			Object.defineProperty(exports, "__esModule", {
+			    value: true
+			});exports.default=window.GrimoireJS.lib.math.GLM;
+	
+	/***/ },
+	/* 13 */
+	/***/ function(module, exports) {
+	
+			Object.defineProperty(exports, "__esModule", {
+			    value: true
+			});exports.default=window.GrimoireJS.lib.math.Vector4;
+	
+	/***/ },
+	/* 14 */
+	/***/ function(module, exports) {
+	
+			Object.defineProperty(exports, "__esModule", {
+			    value: true
+			});exports.default=window.GrimoireJS.lib.math.Vector3;
+	
+	/***/ },
+	/* 15 */
+	/***/ function(module, exports) {
+	
+			Object.defineProperty(exports, "__esModule", {
+			    value: true
+			});exports.default=window.GrimoireJS.lib.math.Matrix;
+	
+	/***/ },
+	/* 16 */
 	/***/ function(module, exports) {
 	
 		"use strict";
@@ -23605,7 +24482,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = RenderQueue;
 	
 	/***/ },
-	/* 19 */
+	/* 17 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -23616,27 +24493,23 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 		
-		var _Matrix = __webpack_require__(10);
+		var _Matrix = __webpack_require__(15);
 		
 		var _Matrix2 = _interopRequireDefault(_Matrix);
 		
-		var _Vector = __webpack_require__(9);
+		var _Vector = __webpack_require__(14);
 		
 		var _Vector2 = _interopRequireDefault(_Vector);
 		
-		var _Vector3 = __webpack_require__(11);
+		var _Vector3 = __webpack_require__(13);
 		
 		var _Vector4 = _interopRequireDefault(_Vector3);
-		
-		var _Quaternion = __webpack_require__(20);
-		
-		var _Quaternion2 = _interopRequireDefault(_Quaternion);
 		
 		var _GLM = __webpack_require__(12);
 		
 		var _GLM2 = _interopRequireDefault(_GLM);
 		
-		var _Component2 = __webpack_require__(15);
+		var _Component2 = __webpack_require__(9);
 		
 		var _Component3 = _interopRequireDefault(_Component2);
 		
@@ -23652,7 +24525,10 @@ return /******/ (function(modules) { // webpackBootstrap
 		    vec3 = _GLM2.default.vec3,
 		    vec4 = _GLM2.default.vec4;
 		/**
-		 * Provides object transformation like translation,rotation,scaling.
+		 * シーン中に存在する物体の変形を司るコンポーネント
+		 *
+		 * このコンポーネントによって物体の座標や回転量、拡大料などが定義されます。
+		 * シーン中の全ての物体は必ずこのコンポーネントを含まなければなりません。
 		 */
 		
 		var TransformComponent = function (_Component) {
@@ -23705,13 +24581,13 @@ return /******/ (function(modules) { // webpackBootstrap
 		    _createClass(TransformComponent, [{
 		        key: "calcPVM",
 		        value: function calcPVM(camera) {
-		            mat4.mul(this._cachePVM.rawElements, camera.getProjectionViewMatrix().rawElements, this.globalTransform.rawElements);
+		            mat4.mul(this._cachePVM.rawElements, camera.ProjectionViewMatrix.rawElements, this.globalTransform.rawElements);
 		            return this._cachePVM;
 		        }
 		    }, {
 		        key: "calcVM",
 		        value: function calcVM(camera) {
-		            mat4.mul(this._cacheVM.rawElements, camera.getViewMatrix().rawElements, this.globalTransform.rawElements);
+		            mat4.mul(this._cacheVM.rawElements, camera.ViewMatrix.rawElements, this.globalTransform.rawElements);
 		            return this._cacheVM;
 		        }
 		    }, {
@@ -23751,7 +24627,6 @@ return /******/ (function(modules) { // webpackBootstrap
 		            this._localPosition = this.getAttribute("position");
 		            this._localRotation = this.getAttribute("rotation");
 		            this._localScale = this.getAttribute("scale");
-		            this.updateTransform();
 		        }
 		    }, {
 		        key: "$mount",
@@ -23795,7 +24670,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		            } else {
 		                mat4.mul(this.globalTransform.rawElements, this._parentTransform.globalTransform.rawElements, this.localTransform.rawElements);
 		            }
-		            if (noDirectionalUpdate) {
+		            if (!noDirectionalUpdate) {
 		                this._updateDirections();
 		            }
 		            this._updateGlobalProperty();
@@ -23882,19 +24757,31 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = TransformComponent;
 		
 		TransformComponent.attributes = {
-		    "position": {
+		    /**
+		     * この物体の座標
+		     */
+		    position: {
 		        converter: "Vector3",
-		        default: _Vector2.default.Zero
+		        default: [0, 0, 0]
 		    },
-		    "rotation": {
+		    /**
+		     * この物体の回転量
+		     */
+		    rotation: {
 		        converter: "Rotation3",
-		        default: _Quaternion2.default.Identity
+		        default: [0, 0, 0, 1]
 		    },
-		    "scale": {
+		    /**
+		     * この物体の拡大率
+		     */
+		    scale: {
 		        converter: "Vector3",
-		        default: _Vector2.default.One
+		        default: [1, 1, 1]
 		    },
-		    "rawMatrix": {
+		    /**
+		     * 利用されません
+		     */
+		    rawMatrix: {
 		        converter: "Object",
 		        default: null
 		    }
@@ -23913,15 +24800,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		TransformComponent._rightBase = new _Vector4.default(1, 0, 0, 0);
 	
 	/***/ },
-	/* 20 */
-	/***/ function(module, exports) {
-	
-			Object.defineProperty(exports, "__esModule", {
-			    value: true
-			});exports.default=window.GrimoireJS.lib.math.Quaternion;
-	
-	/***/ },
-	/* 21 */
+	/* 18 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -23932,11 +24811,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 		
-		var _RenderQueueRegistry = __webpack_require__(22);
+		var _RenderQueueRegistry = __webpack_require__(19);
 		
 		var _RenderQueueRegistry2 = _interopRequireDefault(_RenderQueueRegistry);
 		
-		var _Component2 = __webpack_require__(15);
+		var _Component2 = __webpack_require__(9);
 		
 		var _Component3 = _interopRequireDefault(_Component2);
 		
@@ -23948,6 +24827,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 		
+		/**
+		 * 特定のシーン内に関連する処理を行うためのコンポーネント
+		 *
+		 * このコンポーネントには属性が存在しません。
+		 */
 		var SceneComponent = function (_Component) {
 		    _inherits(SceneComponent, _Component);
 		
@@ -23956,23 +24840,37 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		        var _this = _possibleConstructorReturn(this, (SceneComponent.__proto__ || Object.getPrototypeOf(SceneComponent)).apply(this, arguments));
 		
-		        _this.sceneDescription = {};
 		        _this.queueRegistory = new _RenderQueueRegistry2.default();
 		        return _this;
 		    }
-		    /**
-		     * Notify update scene only when send update message is needed.
-		     * @param {number} loopIndex [description]
-		     */
-		
 		
 		    _createClass(SceneComponent, [{
+		        key: "$mount",
+		        value: function $mount() {
+		            var _this2 = this;
+		
+		            this.sceneDescription = {};
+		            SceneComponent._sceneDescriptionCreationHandlers.forEach(function (v) {
+		                return v(_this2.sceneDescription, _this2);
+		            });
+		        }
+		        /**
+		         * Notify update scene only when send update message is needed.
+		         * @param {number} loopIndex [description]
+		         */
+		
+		    }, {
 		        key: "updateScene",
 		        value: function updateScene(loopIndex) {
 		            if (this._lastUpdateIndex !== loopIndex) {
 		                this.node.broadcastMessage("update", this.sceneDescription);
 		                this._lastUpdateIndex = loopIndex;
 		            }
+		        }
+		    }], [{
+		        key: "onSceneDescriptionCreation",
+		        value: function onSceneDescriptionCreation(handler) {
+		            SceneComponent._sceneDescriptionCreationHandlers.push(handler);
 		        }
 		    }]);
 		
@@ -23982,9 +24880,10 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = SceneComponent;
 		
 		SceneComponent.attributes = {};
+		SceneComponent._sceneDescriptionCreationHandlers = [];
 	
 	/***/ },
-	/* 22 */
+	/* 19 */
 	/***/ function(module, exports) {
 	
 		"use strict";
@@ -24049,7 +24948,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = RenderQueueRegistry;
 	
 	/***/ },
-	/* 23 */
+	/* 20 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -24060,19 +24959,23 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 		
-		var _GrimoireInterface = __webpack_require__(24);
+		var _MaterialFactory = __webpack_require__(21);
+		
+		var _MaterialFactory2 = _interopRequireDefault(_MaterialFactory);
+		
+		var _GrimoireInterface = __webpack_require__(46);
 		
 		var _GrimoireInterface2 = _interopRequireDefault(_GrimoireInterface);
 		
-		var _Texture2D = __webpack_require__(25);
+		var _Texture2D = __webpack_require__(47);
 		
 		var _Texture2D2 = _interopRequireDefault(_Texture2D);
 		
-		var _GLExtRequestor = __webpack_require__(28);
+		var _GLExtRequestor = __webpack_require__(48);
 		
 		var _GLExtRequestor2 = _interopRequireDefault(_GLExtRequestor);
 		
-		var _Component2 = __webpack_require__(15);
+		var _Component2 = __webpack_require__(9);
 		
 		var _Component3 = _interopRequireDefault(_Component2);
 		
@@ -24091,6 +24994,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		    ResizeMode[ResizeMode["Fit"] = 1] = "Fit";
 		    ResizeMode[ResizeMode["Manual"] = 2] = "Manual";
 		})(ResizeMode || (ResizeMode = {}));
+		/**
+		 * キャンバスの初期化及び設定を司るコンポーネント
+		 *
+		 * このコンポーネントによって、適切な位置に`<canvas>`を初期化してWebGLコンテキストを初期化します。
+		 */
 		
 		var CanvasInitializerComponent = function (_Component) {
 		    _inherits(CanvasInitializerComponent, _Component);
@@ -24110,13 +25018,21 @@ return /******/ (function(modules) { // webpackBootstrap
 		            if (this._isContainedInBody(this._scriptTag)) {
 		                // canvas should be placed siblings of the script tag
 		                this._generateCanvas(this._scriptTag);
-		            } else {}
+		            } else {
+		                throw new Error("goml script should have body as ancesotor to instanciate canvas element in the location");
+		            }
 		            // apply sizes on changed
 		            this.getAttributeRaw("width").watch(function (v) {
 		                _this2._resize();
 		            });
 		            this.getAttributeRaw("height").watch(function (v) {
 		                _this2._resize();
+		            });
+		            this.getAttributeRaw("antialias").watch(function (v) {
+		                console.warn("Changing antialias attribute is not supported. This is only works when the canvas element created.");
+		            });
+		            this.getAttributeRaw("preserveDrawingBuffer").watch(function (v) {
+		                console.warn("Changing preserveDrawingBuffer attribute is not supported. This is only works when the canvas element created.");
 		            });
 		        }
 		        /**
@@ -24137,12 +25053,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		            });
 		            this._configureCanvas(this.canvas, scriptTag);
 		            var gl = this._getContext(this.canvas);
-		            this._defaultTexture = new _Texture2D2.default(gl);
-		            this._defaultTexture.update(0, 1, 1, 0, WebGLRenderingContext.RGBA, WebGLRenderingContext.UNSIGNED_BYTE, new Uint8Array([0, 0, 0, 0]));
 		            this.companion.set(ns("gl"), gl);
 		            this.companion.set(ns("canvasElement"), this.canvas);
+		            this.companion.set(ns("MaterialFactory"), new _MaterialFactory2.default(gl));
 		            this.companion.set(ns("GLExtRequestor"), new _GLExtRequestor2.default(gl));
-		            this.companion.set(ns("defaultTexture"), this._defaultTexture);
+		            _Texture2D2.default.generateDefaultTexture(gl);
 		            return this.canvas;
 		        }
 		    }, {
@@ -24261,9 +25176,13 @@ return /******/ (function(modules) { // webpackBootstrap
 		    }, {
 		        key: "_getContext",
 		        value: function _getContext(canvas) {
-		            var context = canvas.getContext("webgl");
+		            var contextConfig = {
+		                antialias: this.getAttribute("antialias"),
+		                preserveDrawingBuffer: this.getAttribute("preserveDrawingBuffer")
+		            };
+		            var context = canvas.getContext("webgl", contextConfig);
 		            if (!context) {
-		                context = canvas.getContext("webgl-experimental");
+		                context = canvas.getContext("webgl-experimental", contextConfig);
 		            }
 		            return context;
 		        }
@@ -24301,35 +25220,1703 @@ return /******/ (function(modules) { // webpackBootstrap
 		}(_Component3.default);
 		
 		CanvasInitializerComponent.attributes = {
+		    /**
+		     * キャンバスタグの横幅を指定します。
+		     */
 		    width: {
 		        default: "fit",
 		        converter: "CanvasSize"
 		    },
+		    /**
+		     * キャンバスタグの縦幅を指定します。
+		     */
 		    height: {
 		        default: "fit",
 		        converter: "CanvasSize"
 		    },
+		    /**
+		     * キャンバス要素の直接の親要素のコンテナに割り当てるidを指定します。
+		     */
 		    containerId: {
 		        default: "",
 		        converter: "String"
 		    },
+		    /**
+		     * キャンバス要素の直接の親要素のコンテナに割り当てるクラス名を指定します。
+		     */
 		    containerClass: {
 		        default: "gr-container",
 		        converter: "String"
+		    },
+		    /**
+		     * GLコンテキストの初期化時に、preserveDrawingBufferフラグを有効にするか指定します。
+		     *
+		     * 描画結果をdataURLに変換する際などはこの属性がtrueでないと正常にレンダリング結果を取得できません。
+		     */
+		    preserveDrawingBuffer: {
+		        default: true,
+		        converter: "Boolean"
+		    },
+		    /**
+		     * GLコンテキストの初期化時に、MSAAによるアンチエイリアスを有効にするか指定します。
+		     *
+		     * この属性は、途中で動的に変更することができません。
+		     */
+		    antialias: {
+		        default: true,
+		        converter: "Boolean"
 		    }
 		};
 		exports.default = CanvasInitializerComponent;
 	
 	/***/ },
-	/* 24 */
+	/* 21 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+		
+		var _Parser = __webpack_require__(22);
+		
+		var _Parser2 = _interopRequireDefault(_Parser);
+		
+		var _MacroRegistory = __webpack_require__(29);
+		
+		var _MacroRegistory2 = _interopRequireDefault(_MacroRegistory);
+		
+		var _TextFileResolver = __webpack_require__(6);
+		
+		var _TextFileResolver2 = _interopRequireDefault(_TextFileResolver);
+		
+		var _Material = __webpack_require__(31);
+		
+		var _Material2 = _interopRequireDefault(_Material);
+		
+		var _header = __webpack_require__(45);
+		
+		var _header2 = _interopRequireDefault(_header);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+		
+		var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
+		    return new (P || (P = Promise))(function (resolve, reject) {
+		        function fulfilled(value) {
+		            try {
+		                step(generator.next(value));
+		            } catch (e) {
+		                reject(e);
+		            }
+		        }
+		        function rejected(value) {
+		            try {
+		                step(generator["throw"](value));
+		            } catch (e) {
+		                reject(e);
+		            }
+		        }
+		        function step(result) {
+		            result.done ? resolve(result.value) : new P(function (resolve) {
+		                resolve(result.value);
+		            }).then(fulfilled, rejected);
+		        }
+		        step((generator = generator.apply(thisArg, _arguments)).next());
+		    });
+		};
+		
+		/**
+		 * Manage materialGenerators for materials.
+		 * Materials can be instanciated with this instance.
+		 * Every gl reference can contain 1 of MaterialFactory at most.
+		 */
+		var MaterialFactory = function () {
+		    function MaterialFactory(gl) {
+		        _classCallCheck(this, MaterialFactory);
+		
+		        this.gl = gl;
+		        this.shaderHeader = MaterialFactory.defaultShaderHeader;
+		        this.macro = new _MacroRegistory2.default();
+		        if (MaterialFactory.factories.has(gl)) {
+		            throw new Error("MaterialFactory can not be instanciated dupelicately for a WebGLRenderingContext.");
+		        }
+		        MaterialFactory.factories.set(gl, this);
+		    }
+		    /**
+		     * Obtain an instance of MaterialFactory from WebGLRenderingContext
+		     * @param  {WebGLRenderingContext} gl [description]
+		     * @return {MaterialFactory}          [description]
+		     */
+		
+		
+		    _createClass(MaterialFactory, [{
+		        key: "instanciate",
+		        value: function instanciate(typeName) {
+		            return __awaiter(this, void 0, void 0, regeneratorRuntime.mark(function _callee() {
+		                return regeneratorRuntime.wrap(function _callee$(_context) {
+		                    while (1) {
+		                        switch (_context.prev = _context.next) {
+		                            case 0:
+		                                if (!MaterialFactory.materialGenerators[typeName]) {
+		                                    _context.next = 4;
+		                                    break;
+		                                }
+		
+		                                return _context.abrupt("return", MaterialFactory.materialGenerators[typeName](this));
+		
+		                            case 4:
+		                                _context.next = 6;
+		                                return this._waitForRegistered(typeName);
+		
+		                            case 6:
+		                                return _context.abrupt("return", _context.sent);
+		
+		                            case 7:
+		                            case "end":
+		                                return _context.stop();
+		                        }
+		                    }
+		                }, _callee, this);
+		            }));
+		        }
+		    }, {
+		        key: "_waitForRegistered",
+		        value: function _waitForRegistered(typeName) {
+		            var _this = this;
+		
+		            return new Promise(function (resolve) {
+		                MaterialFactory._onRegister(typeName, function () {
+		                    resolve(MaterialFactory.materialGenerators[typeName](_this));
+		                });
+		            });
+		        }
+		    }], [{
+		        key: "get",
+		        value: function get(gl) {
+		            var factory = this.factories.get(gl);
+		            if (!factory) {
+		                throw new Error("There was no associated MaterialFactory with specified WebGLRenderingContext");
+		            }
+		            return factory;
+		        }
+		    }, {
+		        key: "addMaterialType",
+		        value: function addMaterialType(typeName, materialGenerator) {
+		            MaterialFactory.materialGenerators[typeName] = materialGenerator;
+		            if (MaterialFactory.registerdHandlers[typeName]) {
+		                MaterialFactory.registerdHandlers[typeName].forEach(function (t) {
+		                    return t();
+		                });
+		            }
+		        }
+		        /**
+		         * Add source of .sort material as specified typename.
+		         * @param  {string}        typeName [description]
+		         * @param  {string}        source   [description]
+		         * @return {Promise<void>}          [description]
+		         */
+		
+		    }, {
+		        key: "addSORTMaterial",
+		        value: function addSORTMaterial(typeName, source) {
+		            return __awaiter(this, void 0, void 0, regeneratorRuntime.mark(function _callee2() {
+		                var techniques;
+		                return regeneratorRuntime.wrap(function _callee2$(_context2) {
+		                    while (1) {
+		                        switch (_context2.prev = _context2.next) {
+		                            case 0:
+		                                _context2.next = 2;
+		                                return _Parser2.default.parse(source);
+		
+		                            case 2:
+		                                techniques = _context2.sent;
+		
+		                                MaterialFactory.addMaterialType(typeName, function (factory) {
+		                                    return new _Material2.default(factory.gl, techniques);
+		                                });
+		
+		                            case 4:
+		                            case "end":
+		                                return _context2.stop();
+		                        }
+		                    }
+		                }, _callee2, this);
+		            }));
+		        }
+		        /**
+		         * Add source of .sort material from external url as specified typeName.
+		         * @param  {string}        typeName [description]
+		         * @param  {string}        url      [description]
+		         * @return {Promise<void>}          [description]
+		         */
+		
+		    }, {
+		        key: "addSORTMaterialFromURL",
+		        value: function addSORTMaterialFromURL(typeName, url) {
+		            return __awaiter(this, void 0, void 0, regeneratorRuntime.mark(function _callee3() {
+		                var source;
+		                return regeneratorRuntime.wrap(function _callee3$(_context3) {
+		                    while (1) {
+		                        switch (_context3.prev = _context3.next) {
+		                            case 0:
+		                                _context3.next = 2;
+		                                return _TextFileResolver2.default.resolve(url);
+		
+		                            case 2:
+		                                source = _context3.sent;
+		                                _context3.next = 5;
+		                                return MaterialFactory.addSORTMaterial(typeName, source);
+		
+		                            case 5:
+		                            case "end":
+		                                return _context3.stop();
+		                        }
+		                    }
+		                }, _callee3, this);
+		            }));
+		        }
+		    }, {
+		        key: "_onRegister",
+		        value: function _onRegister(factoryName, handler) {
+		            if (MaterialFactory.registerdHandlers[factoryName]) {
+		                MaterialFactory.registerdHandlers[factoryName].push(handler);
+		            } else {
+		                MaterialFactory.registerdHandlers[factoryName] = [handler];
+		            }
+		        }
+		    }]);
+		
+		    return MaterialFactory;
+		}();
+		/**
+		 * Map for gl reference and MaterialFactory.
+		 * @type {Map<WebGLRenderingContext,MaterialFactory>}
+		 */
+		
+		
+		exports.default = MaterialFactory;
+		MaterialFactory.factories = new Map();
+		MaterialFactory.defaultShaderHeader = _header2.default;
+		/**
+		 * Actual material generator.
+		 */
+		MaterialFactory.materialGenerators = {};
+		MaterialFactory.registerdHandlers = {};
+	
+	/***/ },
+	/* 22 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+		
+		var _HashCalculator = __webpack_require__(23);
+		
+		var _HashCalculator2 = _interopRequireDefault(_HashCalculator);
+		
+		var _SortTransformUtility = __webpack_require__(24);
+		
+		var _SortTransformUtility2 = _interopRequireDefault(_SortTransformUtility);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+		
+		var SortParser = function () {
+		    function SortParser() {
+		        _classCallCheck(this, SortParser);
+		    }
+		
+		    _createClass(SortParser, null, [{
+		        key: "parse",
+		        value: function parse(source) {
+		            var sourceHash = _HashCalculator2.default.calcHash(source);
+		            if (SortParser._parsedCache[sourceHash] !== void 0) {
+		                return new Promise(function (resolve, reject) {
+		                    resolve(SortParser._parsedCache[sourceHash]);
+		                });
+		            } else {
+		                return SortParser._parse(source).then(function (v) {
+		                    SortParser._parsedCache[source] = v;
+		                    return v;
+		                });
+		            }
+		        }
+		    }, {
+		        key: "_parse",
+		        value: function _parse(source) {
+		            return new Promise(function (resolve, reject) {
+		                var result = {};
+		                _SortTransformUtility2.default.resolveImports(_SortTransformUtility2.default.removeComment(source)).then(function (uncommented) {
+		                    try {
+		                        var techniqueSources = _SortTransformUtility2.default.separateTechniqueSource(uncommented);
+		                        for (var key in techniqueSources) {
+		                            result[key] = SortParser._parseTechnique(techniqueSources[key]);
+		                        }
+		                        resolve(result);
+		                    } catch (e) {
+		                        reject(e);
+		                    }
+		                });
+		            });
+		        }
+		    }, {
+		        key: "_parseTechnique",
+		        value: function _parseTechnique(techniqueSource) {
+		            var drawOrder = _SortTransformUtility2.default.fetchDrawOrder(techniqueSource) || "Auto";
+		            var passSources = _SortTransformUtility2.default.separatePassSource(techniqueSource);
+		            var passes = new Array(passSources.length);
+		            for (var i = 0; i < passSources.length; i++) {
+		                passes[i] = SortParser._parsePassSource(passSources[i]);
+		            }
+		            return {
+		                drawOrder: drawOrder,
+		                passes: passes
+		            };
+		        }
+		    }, {
+		        key: "_parsePassSource",
+		        value: function _parsePassSource(passSource) {
+		            var shaderSource = _SortTransformUtility2.default.removePreferences(passSource);
+		            var attributes = _SortTransformUtility2.default.parseVariables(passSource, "attribute");
+		            var uniforms = _SortTransformUtility2.default.parseVariables(passSource, "uniform");
+		            var macros = _SortTransformUtility2.default.parseMacros(passSource);
+		            var states = _SortTransformUtility2.default.parsePreferences(passSource);
+		            return {
+		                fragment: shaderSource,
+		                vertex: shaderSource,
+		                attributes: attributes,
+		                uniforms: uniforms,
+		                macros: macros,
+		                states: states
+		            };
+		        }
+		    }]);
+		
+		    return SortParser;
+		}();
+		/**
+		 * Cache to prevent double loading
+		 */
+		
+		
+		SortParser._parsedCache = {};
+		exports.default = SortParser;
+	
+	/***/ },
+	/* 23 */
 	/***/ function(module, exports) {
 	
-			Object.defineProperty(exports, "__esModule", {
-			    value: true
-			});exports.default=window.GrimoireJS.GrimoireInterface;
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+		
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+		
+		var HashCalculator = function () {
+		    function HashCalculator() {
+		        _classCallCheck(this, HashCalculator);
+		    }
+		
+		    _createClass(HashCalculator, null, [{
+		        key: "calcHash",
+		        value: function calcHash(source) {
+		            var hash = 0;
+		            if (source.length === 0) return hash;
+		            for (var i = 0; i < source.length; i++) {
+		                var char = source.charCodeAt(i);
+		                hash = (hash << 5) - hash + char;
+		                hash = hash & hash; // Convert to 32bit integer
+		            }
+		            return hash;
+		        }
+		    }]);
+		
+		    return HashCalculator;
+		}();
+		
+		exports.default = HashCalculator;
+	
+	/***/ },
+	/* 24 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+		
+		var _Preferences = __webpack_require__(25);
+		
+		var _Preferences2 = _interopRequireDefault(_Preferences);
+		
+		var _TypeToConstant = __webpack_require__(26);
+		
+		var _TypeToConstant2 = _interopRequireDefault(_TypeToConstant);
+		
+		var _NameSemanticsPair = __webpack_require__(27);
+		
+		var _NameSemanticsPair2 = _interopRequireDefault(_NameSemanticsPair);
+		
+		var _ImportResolver = __webpack_require__(28);
+		
+		var _ImportResolver2 = _interopRequireDefault(_ImportResolver);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+		
+		var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
+		    return new (P || (P = Promise))(function (resolve, reject) {
+		        function fulfilled(value) {
+		            try {
+		                step(generator.next(value));
+		            } catch (e) {
+		                reject(e);
+		            }
+		        }
+		        function rejected(value) {
+		            try {
+		                step(generator["throw"](value));
+		            } catch (e) {
+		                reject(e);
+		            }
+		        }
+		        function step(result) {
+		            result.done ? resolve(result.value) : new P(function (resolve) {
+		                resolve(result.value);
+		            }).then(fulfilled, rejected);
+		        }
+		        step((generator = generator.apply(thisArg, _arguments)).next());
+		    });
+		};
+		
+		var SortTransformUtility = function () {
+		    function SortTransformUtility() {
+		        _classCallCheck(this, SortTransformUtility);
+		    }
+		
+		    _createClass(SortTransformUtility, null, [{
+		        key: "separateTechniqueSource",
+		
+		        /**
+		         * Separate .sort shader text with @Technique statements.
+		         * @param  {string} uncommentedSource [description]
+		         * @return {[type]}                   [description]
+		         */
+		        value: function separateTechniqueSource(uncommentedSource) {
+		            if (uncommentedSource.indexOf("@Technique") === -1) {
+		                return { default: uncommentedSource };
+		            } else {
+		                var result = {};
+		                var regex = /@Technique\s+([a-zA-Z0-9_]+)/g;
+		                var regexResult = void 0;
+		                while (regexResult = regex.exec(uncommentedSource)) {
+		                    var techniqueName = regexResult[1];
+		                    if (result[techniqueName] !== void 0) {
+		                        throw new Error("Technique name " + techniqueName + " is dupelicated");
+		                    } else {
+		                        result[techniqueName] = SortTransformUtility.obtainNextSection(uncommentedSource, "{", "}", regexResult.index + regexResult.length);
+		                    }
+		                }
+		                return result;
+		            }
+		        }
+		        /**
+		         * Separate technique source with @Pass statement.
+		         * @param  {string}   uncommentedSource [description]
+		         * @return {string[]}                   [description]
+		         */
+		
+		    }, {
+		        key: "separatePassSource",
+		        value: function separatePassSource(uncommentedSource) {
+		            if (uncommentedSource.indexOf("@Pass") === -1) {
+		                return [uncommentedSource];
+		            } else {
+		                var result = [];
+		                var regex = /@Pass/g;
+		                var regexResult = void 0;
+		                while (regexResult = regex.exec(uncommentedSource)) {
+		                    result.push(SortTransformUtility.obtainNextSection(uncommentedSource, "{", "}", regexResult.index + regexResult.length));
+		                }
+		                return result;
+		            }
+		        }
+		        /**
+		         * Fetch draw order preference from technique source.
+		         * @param  {string} uncommentedTechniqueSource [description]
+		         * @return {string}                            [description]
+		         */
+		
+		    }, {
+		        key: "fetchDrawOrder",
+		        value: function fetchDrawOrder(uncommentedTechniqueSource) {
+		            var regexResult = /@DrawOrder\s*\((\w+)\)/g.exec(uncommentedTechniqueSource);
+		            if (regexResult) {
+		                var firstPassIndex = uncommentedTechniqueSource.indexOf("@Pass");
+		                if (firstPassIndex !== -1 && firstPassIndex < regexResult.index) {
+		                    throw new Error("DrawOrder preference should be just under @Technique section");
+		                }
+		                return regexResult[1];
+		            }
+		            return null;
+		        }
+		    }, {
+		        key: "removePreferences",
+		        value: function removePreferences(source) {
+		            var regex = /@.+$/gm;
+		            return source.replace(regex, "");
+		        }
+		    }, {
+		        key: "resolveImports",
+		        value: function resolveImports(uncommentedSource) {
+		            return __awaiter(this, void 0, void 0, regeneratorRuntime.mark(function _callee() {
+		                var regexResult, importContent;
+		                return regeneratorRuntime.wrap(function _callee$(_context) {
+		                    while (1) {
+		                        switch (_context.prev = _context.next) {
+		                            case 0:
+		                                if (false) {
+		                                    _context.next = 17;
+		                                    break;
+		                                }
+		
+		                                regexResult = /\s*@import\s+"([^"]+)"/.exec(uncommentedSource);
+		
+		                                if (regexResult) {
+		                                    _context.next = 4;
+		                                    break;
+		                                }
+		
+		                                return _context.abrupt("break", 17);
+		
+		                            case 4:
+		                                importContent = void 0;
+		                                _context.t0 = SortTransformUtility;
+		                                _context.next = 8;
+		                                return _ImportResolver2.default.resolve(regexResult[1]);
+		
+		                            case 8:
+		                                _context.t1 = _context.sent;
+		                                _context.next = 11;
+		                                return _context.t0.resolveImports.call(_context.t0, _context.t1);
+		
+		                            case 11:
+		                                importContent = _context.sent;
+		
+		                                if (importContent) {
+		                                    _context.next = 14;
+		                                    break;
+		                                }
+		
+		                                throw new Error("Required shader chunk '" + regexResult[1] + "' was not found!!");
+		
+		                            case 14:
+		                                uncommentedSource = uncommentedSource.replace(regexResult[0], "\n" + importContent + "\n");
+		                                _context.next = 0;
+		                                break;
+		
+		                            case 17:
+		                                return _context.abrupt("return", uncommentedSource);
+		
+		                            case 18:
+		                            case "end":
+		                                return _context.stop();
+		                        }
+		                    }
+		                }, _callee, this);
+		            }));
+		        }
+		    }, {
+		        key: "parseMacros",
+		        value: function parseMacros(source) {
+		            var result = {};
+		            var regex = /@ExposeMacro\s*\(\s*([a-zA-Z0-9_]+)\s*,\s*([a-zA-Z0-9_]+)\s*,\s*([a-zA-Z0-9_]+)\s*,\s*([a-zA-Z0-9_]+)\s*\)/g;
+		            var regexResult = void 0;
+		            while (regexResult = regex.exec(source)) {
+		                if (!regexResult[1] || !regexResult[2] || !regexResult[3] || !regexResult[4]) {
+		                    throw new Error("Invalid parameter was passed on @ExposeMacro preference on '" + regexResult[0] + "'");
+		                }
+		                if (regexResult[1] !== "bool" && regexResult[1] !== "int") {
+		                    throw new Error("Invalid macro type \"" + regexResult[1] + "\". regexResult type must be int or bool");
+		                }
+		                var value = void 0;
+		                if (regexResult[1] === "bool") {
+		                    if (regexResult[4] !== "true" && regexResult[4] !== "false") {
+		                        throw new Error("Default macro value \"" + regexResult[4] + "\" is invalid for bool type macro. Must be true or false");
+		                    }
+		                    value = regexResult[4] === "true";
+		                } else {
+		                    value = parseFloat(regexResult[4]);
+		                    if (isNaN(value)) {
+		                        throw new Error("Default macro value \"" + regexResult[4] + "\" is invalid for int type macro. Must be a number.");
+		                    }
+		                }
+		                result[regexResult[2]] = {
+		                    name: regexResult[2],
+		                    macroName: regexResult[3],
+		                    type: regexResult[1],
+		                    value: value,
+		                    target: "expose"
+		                };
+		            }
+		            regex = /@ReferMacro\s*\(\s*([a-zA-Z0-9_]+)\s*,\s*(.+)\s*\)/g;
+		            while (regexResult = regex.exec(source)) {
+		                if (!regexResult[1] || !regexResult[2]) {
+		                    throw new Error("Invalid parameter was passed on @ReferMacro preference on '" + regexResult[0] + "'");
+		                }
+		                result[regexResult[1]] = {
+		                    name: regexResult[1],
+		                    macroName: regexResult[1],
+		                    value: regexResult[2],
+		                    target: "refer"
+		                };
+		            }
+		            return result;
+		        }
+		    }, {
+		        key: "parsePreferences",
+		        value: function parsePreferences(source) {
+		            var result = {
+		                enable: [WebGLRenderingContext.CULL_FACE, WebGLRenderingContext.BLEND, WebGLRenderingContext.DEPTH_TEST],
+		                functions: {
+		                    blendColor: [0, 0, 0, 0],
+		                    cullFace: [WebGLRenderingContext.BACK],
+		                    blendFuncSeparate: [WebGLRenderingContext.ONE, WebGLRenderingContext.ZERO, WebGLRenderingContext.ONE, WebGLRenderingContext.ZERO],
+		                    blendEquationSeparate: [WebGLRenderingContext.FUNC_ADD, WebGLRenderingContext.FUNC_ADD],
+		                    lineWidth: [1],
+		                    frontFace: [WebGLRenderingContext.CCW],
+		                    depthRange: [0, 1],
+		                    depthFunc: [WebGLRenderingContext.LESS]
+		                }
+		            };
+		            var regex = /@([A-Za-z]+)\(([a-zA-Z_0-9,\.\-]*)\)/g;
+		            var regexResult = void 0;
+		            while (regexResult = regex.exec(source)) {
+		                var prefParser = _Preferences2.default[regexResult[1]];
+		                if (!prefParser) {
+		                    throw new Error("Unknown pass preference " + regexResult[1] + " was specified.");
+		                }
+		                prefParser(result, regexResult[2].split(","));
+		            }
+		            return result;
+		        }
+		    }, {
+		        key: "asValidJSON",
+		        value: function asValidJSON(json) {
+		            var regex = /([\{,]\s*)([a-zA-Z0-9_]+)(\s*\:)/gm;
+		            var result = json.replace(regex, '$1"$2"$3');
+		            return result;
+		        }
+		    }, {
+		        key: "removeComment",
+		        value: function removeComment(source) {
+		            var text = "";
+		            var isLineComment = false;
+		            var isMultiLineComment = false;
+		            for (var i = 0; i < source.length; i++) {
+		                var c = source.charAt(i);
+		                if (c === "/") {
+		                    if (i + 1 < source.length) {
+		                        if (source.charAt(i + 1) === "/" && !isMultiLineComment) {
+		                            isLineComment = true;
+		                            i++;
+		                            continue;
+		                        } else if (source.charAt(i + 1) === "*" && !isLineComment) {
+		                            isMultiLineComment = true;
+		                            i++;
+		                            continue;
+		                        }
+		                    }
+		                }
+		                if (c === "*" && isMultiLineComment && i + 1 < source.length && source.charAt(i + 1) === "/") {
+		                    isMultiLineComment = false;
+		                    i++;
+		                    continue;
+		                }
+		                if (c === "\n") {
+		                    if (isLineComment) {
+		                        text += "\n";
+		                        isLineComment = false;
+		                        continue;
+		                    } else if (isMultiLineComment) {
+		                        text += "\n"; // for keeping line break
+		                    }
+		                }
+		                if (!isLineComment && !isMultiLineComment) {
+		                    text += c;
+		                }
+		            }
+		            return text;
+		        }
+		    }, {
+		        key: "obtainNextSection",
+		        value: function obtainNextSection(source, begin, end, offset) {
+		            var beginningPosition = source.indexOf(begin, offset);
+		            if (beginningPosition === -1) {
+		                throw new Error("Begining section charactor '" + begin + "' was not found.");
+		            }
+		            if (begin.length > 1 || end.length > 1) {
+		                throw new Error("Invalid parameter");
+		            }
+		            var matchingCount = 1;
+		            var beginCode = begin.charCodeAt(0);
+		            var endCode = end.charCodeAt(0);
+		            for (var i = beginningPosition + 1; i < source.length; i++) {
+		                var current = source.charCodeAt(i);
+		                if (current === beginCode) {
+		                    matchingCount++;
+		                } else if (current === endCode) {
+		                    matchingCount--;
+		                }
+		                if (matchingCount === 0) {
+		                    return source.substring(beginningPosition + 1, i);
+		                }
+		            }
+		            throw new Error("Invalid bracket matching");
+		        }
+		    }, {
+		        key: "generateVariableFetchRegex",
+		        value: function generateVariableFetchRegex(variableType) {
+		            return new RegExp("(?:@([a-zA-Z0-9_]+)?(\\{.+\\})?)?\\s*" + variableType + "\\s+(?:(lowp|mediump|highp)\\s+)?([a-z0-9A-Z]+)\\s+([a-zA-Z0-9_]+)(?:\\s*\\[\\s*([a-zA-Z0-9_]+)\\s*\\]\\s*)?\\s*;", "g");
+		        }
+		    }, {
+		        key: "parseVariables",
+		        value: function parseVariables(source, variableType) {
+		            var result = {};
+		            var regex = SortTransformUtility.generateVariableFetchRegex(variableType);
+		            var regexResult = void 0;
+		            while (regexResult = regex.exec(source)) {
+		                var name = regexResult[5];
+		                var type = _TypeToConstant2.default[regexResult[4]];
+		                var precision = regexResult[3];
+		                var rawAnnotations = regexResult[2];
+		                var isArray = regexResult[6] !== void 0;
+		                var arrayCount = undefined;
+		                var semantic = regexResult[1];
+		                if (!semantic) {
+		                    semantic = _NameSemanticsPair2.default[variableType][name];
+		                    if (!semantic) {
+		                        semantic = variableType === "uniform" ? "USER_VALUE" : name.toUpperCase();
+		                    }
+		                }
+		                if (isArray) {
+		                    arrayCount = parseInt(regexResult[6], 10);
+		                    if (isNaN(arrayCount)) {
+		                        arrayCount = regexResult[6];
+		                    }
+		                }
+		                result[name] = {
+		                    semantic: semantic,
+		                    name: name,
+		                    type: type,
+		                    precision: precision,
+		                    attributes: rawAnnotations ? JSON.parse(SortTransformUtility.asValidJSON(rawAnnotations)) : {},
+		                    isArray: isArray,
+		                    count: arrayCount
+		                };
+		            }
+		            return result;
+		        }
+		    }]);
+		
+		    return SortTransformUtility;
+		}();
+		
+		exports.default = SortTransformUtility;
 	
 	/***/ },
 	/* 25 */
+	/***/ function(module, exports) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		function asGLConstantArgs(args, length) {
+		    if (args.length !== length) {
+		        throw new Error("Unmatching argument count on preference parse");
+		    }
+		    return args.map(function (arg) {
+		        var argNum = WebGLRenderingContext[arg];
+		        if (typeof argNum !== "number") {
+		            throw new Error("Unknown WebGL constant " + arg + " was specified");
+		        }
+		        return argNum;
+		    });
+		}
+		function asNumberArgs(args, length) {
+		    if (args.length !== length) {
+		        throw new Error("Unmatching argument count on preference parse");
+		    }
+		    return args.map(function (arg) {
+		        var argNum = Number.parseFloat(arg);
+		        if (isNaN(argNum)) {
+		            throw new Error("Failed to parse number on preference parsing");
+		        }
+		        return argNum;
+		    });
+		}
+		function asBooleanArgs(args, length) {
+		    if (args.length !== length) {
+		        throw new Error("Unmatching argument count on preference parse");
+		    }
+		    return args.map(function (arg) {
+		        if (arg !== "true" && arg !== "false") {
+		            throw new Error(arg + " is not boolean");
+		        }
+		        return arg === "true";
+		    });
+		}
+		exports.default = {
+		    Enable: function Enable(state, args) {
+		        var enableTarget = WebGLRenderingContext[args[0]];
+		        if (typeof enableTarget !== "number") {
+		            throw new Error("Unknown WebGL constant \"" + args[0] + "\" was specified on @Enable");
+		        }
+		        state.enable.push(enableTarget);
+		    },
+		    Disable: function Disable(state, args) {
+		        var disableTarget = WebGLRenderingContext[args[0]];
+		        if (typeof disableTarget !== "number") {
+		            throw new Error("Unknown WebGL constant \"" + args[0] + "\" was specified on @Disable");
+		        }
+		        var index = state.enable.indexOf(disableTarget);
+		        if (index !== index) {
+		            state.enable.splice(index, 1);
+		        }
+		    },
+		    BlendFunc: function BlendFunc(state, args) {
+		        var config = asGLConstantArgs(args, 2);
+		        state.functions.blendFuncSeparate = [config[0], config[1], config[0], config[1]];
+		    },
+		    BlendFuncSeparate: function BlendFuncSeparate(state, args) {
+		        state.functions.blendFuncSeparate = asGLConstantArgs(args, 4);
+		    },
+		    BlendEquation: function BlendEquation(state, args) {
+		        var config = asGLConstantArgs(args, 1);
+		        state.functions.blendEquationSeparate = [config[0], config[0]];
+		    },
+		    BlendEquationSeparate: function BlendEquationSeparate(state, args) {
+		        state.functions.blendEquationSeparate = asGLConstantArgs(args, 4);
+		    },
+		    BlendColor: function BlendColor(state, args) {
+		        state.functions.blendColor = asNumberArgs(args, 4);
+		    },
+		    ColorMask: function ColorMask(state, args) {
+		        state.functions.colorMask = asBooleanArgs(args, 4);
+		        state.enable.push(WebGLRenderingContext.COLOR_WRITEMASK);
+		    },
+		    CullFace: function CullFace(state, args) {
+		        state.functions.cullFace = asGLConstantArgs(args, 1);
+		    },
+		    DepthFunc: function DepthFunc(state, args) {
+		        state.functions.depthFunc = asGLConstantArgs(args, 1);
+		    },
+		    DepthRange: function DepthRange(state, args) {
+		        state.functions.depthRange = asNumberArgs(args, 2);
+		    },
+		    FrontFace: function FrontFace(state, args) {
+		        state.functions.frontFace = asGLConstantArgs(args, 1);
+		    },
+		    LineWidth: function LineWidth(state, args) {
+		        state.functions.lineWidth = asNumberArgs(args, 1);
+		    },
+		    PolygonOffset: function PolygonOffset(state, args) {
+		        state.functions.polygonOffset = asNumberArgs(args, 2);
+		        state.enable.push(WebGLRenderingContext.POLYGON_OFFSET_FILL);
+		    },
+		    Scissor: function Scissor(state, args) {
+		        state.functions.scissor = asNumberArgs(args, 4);
+		        state.enable.push(WebGLRenderingContext.SCISSOR_TEST);
+		    },
+		    ExposeMacro: function ExposeMacro() {
+		        return;
+		    },
+		    ReferMacro: function ReferMacro() {
+		        return;
+		    }
+		};
+	
+	/***/ },
+	/* 26 */
+	/***/ function(module, exports) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		if (!WebGLRenderingContext.ONE) {
+		    throw new Error("WebGLRenderingContext constant can not be retrived!");
+		}
+		var gl = WebGLRenderingContext;
+		var result = {
+		    vec2: gl.FLOAT_VEC2,
+		    vec3: gl.FLOAT_VEC3,
+		    vec4: gl.FLOAT_VEC4,
+		    ivec2: gl.INT_VEC2,
+		    ivec3: gl.INT_VEC3,
+		    ivec4: gl.INT_VEC4,
+		    bvec2: gl.BOOL_VEC2,
+		    bvec3: gl.BOOL_VEC3,
+		    bvec4: gl.BOOL_VEC4,
+		    float: gl.FLOAT,
+		    int: gl.INT,
+		    bool: gl.BOOL,
+		    sampler2D: gl.SAMPLER_2D,
+		    samplerCube: gl.SAMPLER_CUBE,
+		    mat4: gl.FLOAT_MAT4,
+		    mat3: gl.FLOAT_MAT3,
+		    mat2: gl.FLOAT_MAT2
+		};
+		exports.default = result;
+	
+	/***/ },
+	/* 27 */
+	/***/ function(module, exports) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		exports.default = {
+		    attribute: {
+		        position: "POSITION",
+		        normal: "NORMAL",
+		        texCoord: "TEXCOORD"
+		    },
+		    uniform: {
+		        _time: "TIME",
+		        _viewportSize: "VIEWPORT_SIZE",
+		        _matL: "LOCAL",
+		        _matM: "MODEL",
+		        _matV: "VIEW",
+		        _matP: "PROJECTION",
+		        _matVM: "MODELVIEW",
+		        _matPVM: "MODELVIEWPROJECTION",
+		        _matIM: "MODELINVERSE",
+		        _matIV: "VIEWINVERSE",
+		        _matIP: "PROJECTIONINVERSE",
+		        _matIVM: "MODELVIEWINVERSE",
+		        _matIPVM: "MODELVIEWPROJECTIONINVERSE",
+		        _matITM: "MODELINVERSETRANSPOSE",
+		        _matITVM: "MODELVIEWINVERSETRANSPOSE"
+		    }
+		};
+	
+	/***/ },
+	/* 28 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		exports.ImportResolver = undefined;
+		
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+		
+		var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+		
+		var _CacheResolver2 = __webpack_require__(3);
+		
+		var _CacheResolver3 = _interopRequireDefault(_CacheResolver2);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+		
+		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+		
+		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+		
+		var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
+		    return new (P || (P = Promise))(function (resolve, reject) {
+		        function fulfilled(value) {
+		            try {
+		                step(generator.next(value));
+		            } catch (e) {
+		                reject(e);
+		            }
+		        }
+		        function rejected(value) {
+		            try {
+		                step(generator["throw"](value));
+		            } catch (e) {
+		                reject(e);
+		            }
+		        }
+		        function step(result) {
+		            result.done ? resolve(result.value) : new P(function (resolve) {
+		                resolve(result.value);
+		            }).then(fulfilled, rejected);
+		        }
+		        step((generator = generator.apply(thisArg, _arguments)).next());
+		    });
+		};
+		
+		var ImportResolver = exports.ImportResolver = function (_CacheResolver) {
+		    _inherits(ImportResolver, _CacheResolver);
+		
+		    function ImportResolver() {
+		        _classCallCheck(this, ImportResolver);
+		
+		        var _this = _possibleConstructorReturn(this, (ImportResolver.__proto__ || Object.getPrototypeOf(ImportResolver)).call(this, function (str) {
+		            var regex = /^https?:\/\/.*/gm;
+		            return regex.test(str) ? ImportResolver._toAbsolute(str) : str;
+		        }));
+		
+		        _this.staticImports = {};
+		        return _this;
+		    }
+		
+		    _createClass(ImportResolver, [{
+		        key: "resolve",
+		        value: function resolve(path) {
+		            var _this2 = this;
+		
+		            return _get(ImportResolver.prototype.__proto__ || Object.getPrototypeOf(ImportResolver.prototype), "resolve", this).call(this, path, function (abs) {
+		                return _this2._resolve(path);
+		            });
+		        }
+		    }, {
+		        key: "_resolve",
+		        value: function _resolve(path) {
+		            return __awaiter(this, void 0, void 0, regeneratorRuntime.mark(function _callee() {
+		                return regeneratorRuntime.wrap(function _callee$(_context) {
+		                    while (1) {
+		                        switch (_context.prev = _context.next) {
+		                            case 0:
+		                                if (!this.staticImports[path]) {
+		                                    _context.next = 4;
+		                                    break;
+		                                }
+		
+		                                return _context.abrupt("return", this.staticImports[path]);
+		
+		                            case 4:
+		                                _context.next = 6;
+		                                return this._fromExternal(path);
+		
+		                            case 6:
+		                                return _context.abrupt("return", _context.sent);
+		
+		                            case 7:
+		                            case "end":
+		                                return _context.stop();
+		                        }
+		                    }
+		                }, _callee, this);
+		            }));
+		        }
+		    }, {
+		        key: "_fromExternal",
+		        value: function _fromExternal(path) {
+		            return new Promise(function (resolve, reject) {
+		                var xhr = new XMLHttpRequest();
+		                xhr.open("GET", path);
+		                xhr.onload = function (v) {
+		                    resolve(xhr.responseText);
+		                };
+		                xhr.onerror = function (e) {
+		                    reject(e);
+		                };
+		                xhr.send();
+		            });
+		        }
+		    }], [{
+		        key: "_toAbsolute",
+		        value: function _toAbsolute(href) {
+		            var link = document.createElement("a");
+		            link.href = href;
+		            return link.protocol + "//" + link.host + link.pathname + link.search + link.hash;
+		        }
+		    }]);
+		
+		    return ImportResolver;
+		}(_CacheResolver3.default);
+		
+		exports.default = new ImportResolver();
+	
+	/***/ },
+	/* 29 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+		
+		var _DefaultMacro = __webpack_require__(30);
+		
+		var _DefaultMacro2 = _interopRequireDefault(_DefaultMacro);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+		
+		/**
+		 * Manage macros which would be appended head of all shaders grimoire.js would load.
+		 */
+		var MacroRegistory = function () {
+		    function MacroRegistory() {
+		        _classCallCheck(this, MacroRegistory);
+		
+		        /**
+		         * The map of macro.
+		         */
+		        this._macro = {};
+		        /**
+		         * Handlers functions for changing macro.
+		         */
+		        this._observers = {};
+		        for (var key in _DefaultMacro2.default) {
+		            this.setValue(key, _DefaultMacro2.default[key]);
+		        }
+		    }
+		    /**
+		     * Set the value of macros.
+		     * @param {string}    key [description]
+		     * @param {string =   null}        val [description]
+		     */
+		
+		
+		    _createClass(MacroRegistory, [{
+		        key: "setValue",
+		        value: function setValue(key) {
+		            var val = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+		
+		            if (val === null) {
+		                val = "";
+		            }
+		            if (this._macro[key] !== val) {
+		                this._macro[key] = val;
+		                if (!this._observers[key]) {
+		                    this._observers[key] = [];
+		                }
+		                this._notifyMacroChanged(key, val);
+		            }
+		        }
+		        /**
+		         * Get the value of macro.
+		         * @param  {string} key [description]
+		         * @return {string}     [description]
+		         */
+		
+		    }, {
+		        key: "getValue",
+		        value: function getValue(key) {
+		            var macro = this._macro[key];
+		            if (macro === null) {
+		                return "";
+		            } else {
+		                return macro;
+		            }
+		        }
+		    }, {
+		        key: "watch",
+		        value: function watch(macroName, handler) {
+		            var immediate = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+		
+		            var observers = this._observers[macroName];
+		            if (!observers) {
+		                observers = this._observers[macroName] = [];
+		            }
+		            observers.push(handler);
+		            if (immediate && this._macro[macroName] !== void 0) {
+		                handler(this._macro[macroName], true);
+		            }
+		        }
+		    }, {
+		        key: "unwatch",
+		        value: function unwatch(macroName, handler) {
+		            var observers = this._observers[macroName];
+		            if (!observers) {
+		                return false;
+		            }
+		            for (var i = 0; i < observers.length; i++) {
+		                if (observers[i] === handler) {
+		                    observers.splice(i, 1);
+		                    return true;
+		                }
+		            }
+		        }
+		    }, {
+		        key: "_notifyMacroChanged",
+		        value: function _notifyMacroChanged(key, value) {
+		            for (var i = 0; i < this._observers[key].length; i++) {
+		                this._observers[key][i](value, false);
+		            }
+		        }
+		    }]);
+		
+		    return MacroRegistory;
+		}();
+		
+		exports.default = MacroRegistory;
+	
+	/***/ },
+	/* 30 */
+	/***/ function(module, exports) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		exports.default = {
+		    "GRIMOIRE": null,
+		    "WEBGL_VERSION": "1"
+		};
+	
+	/***/ },
+	/* 31 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+		
+		var _Technique = __webpack_require__(32);
+		
+		var _Technique2 = _interopRequireDefault(_Technique);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+		
+		var Material = function () {
+		    function Material(gl, techniqueRecipes) {
+		        _classCallCheck(this, Material);
+		
+		        this.gl = gl;
+		        this.techniqueRecipes = techniqueRecipes;
+		        this.argumentDeclarations = {};
+		        this.arguments = {};
+		        this.macroDeclarations = {};
+		        this.techniques = {};
+		        this._macroObserver = {};
+		        for (var key in techniqueRecipes) {
+		            this.techniques[key] = new _Technique2.default(this, techniqueRecipes[key]);
+		        }
+		    }
+		
+		    _createClass(Material, [{
+		        key: "draw",
+		        value: function draw(arg) {
+		            var technique = this.techniques[arg.technique];
+		            if (technique) {
+		                technique.draw(arg);
+		            }
+		        }
+		    }, {
+		        key: "addMacroObserver",
+		        value: function addMacroObserver(key, macroDeclaration, onChanged) {
+		            if (!this._macroObserver[key]) {
+		                this._macroObserver[key] = [];
+		            }
+		            this._macroObserver[key].push(onChanged);
+		            this.macroDeclarations[key] = macroDeclaration;
+		        }
+		    }, {
+		        key: "setMacroValue",
+		        value: function setMacroValue(key, value) {
+		            if (this._macroObserver[key]) {
+		                this._macroObserver[key].forEach(function (o) {
+		                    return o(value);
+		                });
+		            }
+		        }
+		    }, {
+		        key: "addArgument",
+		        value: function addArgument(key, argumentDeclaration) {
+		            this.argumentDeclarations[key] = argumentDeclaration;
+		        }
+		    }, {
+		        key: "deleteArgument",
+		        value: function deleteArgument(key) {
+		            delete this.argumentDeclarations[key];
+		        }
+		    }]);
+		
+		    return Material;
+		}();
+		
+		exports.default = Material;
+	
+	/***/ },
+	/* 32 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+		
+		var _Pass = __webpack_require__(33);
+		
+		var _Pass2 = _interopRequireDefault(_Pass);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+		
+		var Technique = function () {
+		    function Technique(material, recipe) {
+		        _classCallCheck(this, Technique);
+		
+		        this.material = material;
+		        this.passes = [];
+		        if (recipe.drawOrder === "Auto") {
+		            this.drawOrder = "UseAlpha";
+		        } else {
+		            this.drawOrder = recipe.drawOrder;
+		        }
+		        this.passes = recipe.passes.map(function (p) {
+		            return new _Pass2.default(material, p);
+		        });
+		    }
+		
+		    _createClass(Technique, [{
+		        key: "draw",
+		        value: function draw(args) {
+		            for (var i = 0; i < this.passes.length; i++) {
+		                this.passes[i].draw(args);
+		            }
+		        }
+		    }, {
+		        key: "dispose",
+		        value: function dispose() {
+		            this.passes.forEach(function (p) {
+		                return p.dispose();
+		            });
+		        }
+		    }]);
+		
+		    return Technique;
+		}();
+		
+		exports.default = Technique;
+	
+	/***/ },
+	/* 33 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+		
+		var _ManagedProgram = __webpack_require__(34);
+		
+		var _ManagedProgram2 = _interopRequireDefault(_ManagedProgram);
+		
+		var _ManagedShader = __webpack_require__(39);
+		
+		var _ManagedShader2 = _interopRequireDefault(_ManagedShader);
+		
+		var _MaterialFactory = __webpack_require__(21);
+		
+		var _MaterialFactory2 = _interopRequireDefault(_MaterialFactory);
+		
+		var _Geometry = __webpack_require__(41);
+		
+		var _Geometry2 = _interopRequireDefault(_Geometry);
+		
+		var _UniformResolverRegistry = __webpack_require__(44);
+		
+		var _UniformResolverRegistry2 = _interopRequireDefault(_UniformResolverRegistry);
+		
+		var _header = __webpack_require__(45);
+		
+		var _header2 = _interopRequireDefault(_header);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+		
+		var Pass = function () {
+		    function Pass(material, passRecipe) {
+		        var _this = this;
+		
+		        _classCallCheck(this, Pass);
+		
+		        this.material = material;
+		        this.passRecipe = passRecipe;
+		        this._macro = {};
+		        var registers = _UniformResolverRegistry2.default.generateRegisterers(material, passRecipe);
+		        this._registers = registers.registerers;
+		        this._disposers = registers.disposers;
+		        this._gl = material.gl;
+		        var factory = _MaterialFactory2.default.get(this._gl);
+		        var macroRegister = factory.macro;
+		        // register macro
+		
+		        var _loop = function _loop(key) {
+		            var macro = passRecipe.macros[key];
+		            _this._macro[macro.macroName] = macro.value;
+		            if (macro.target === "expose") {
+		                _this.material.addMacroObserver(key, {
+		                    converter: macro.type === "bool" ? "Boolean" : "Number",
+		                    default: macro.value
+		                }, function (value) {
+		                    if (macro.type === "bool") {
+		                        _this._macro[macro.macroName] = value ? "" : undefined;
+		                    } else {
+		                        _this._macro[macro.macroName] = value;
+		                    }
+		                    _this._updateProgram();
+		                });
+		            } else if (macro.target === "refer") {
+		                _this._macro[macro.macroName] = macro.value;
+		                macroRegister.watch(macro.macroName, function (val, immediate) {
+		                    _this._macro[macro.macroName] = val;
+		                    if (!immediate) {
+		                        _this._updateProgram();
+		                    }
+		                }, true);
+		            }
+		        };
+		
+		        for (var key in passRecipe.macros) {
+		            _loop(key);
+		        }
+		        this._updateProgram();
+		        this._disables = Pass._glEnableTargets.concat();
+		        for (var i = 0; i < passRecipe.states.enable.length; i++) {
+		            var enable = passRecipe.states.enable[i];
+		            var index = this._disables.indexOf(enable);
+		            if (index > -1) {
+		                this._disables.splice(index, 1);
+		            }
+		        }
+		    }
+		
+		    _createClass(Pass, [{
+		        key: "draw",
+		        value: function draw(args) {
+		            this.program.use();
+		            for (var i = 0; i < this._registers.length; i++) {
+		                this._registers[i](this.program.uniforms, args);
+		            }
+		            this._configure();
+		            for (var key in this.passRecipe.attributes) {
+		                var attribute = this.passRecipe.attributes[key];
+		                _Geometry2.default.bindBufferToAttribute(args.geometry, this.program, key, attribute.semantic);
+		            }
+		            _Geometry2.default.drawWithCurrentVertexBuffer(args.geometry, args.targetBuffer, args.drawCount, args.drawOffset);
+		        }
+		    }, {
+		        key: "dispose",
+		        value: function dispose() {
+		            for (var i = 0; i < this._disposers.length; i++) {
+		                this._disposers[i]();
+		            }
+		        }
+		    }, {
+		        key: "_configure",
+		        value: function _configure() {
+		            var states = this.passRecipe.states;
+		            var functions = this.passRecipe.states.functions;
+		            for (var i = 0; i < states.enable.length; i++) {
+		                this._gl.enable(states.enable[i]);
+		            }
+		            for (var _i = 0; _i < this._disables.length; _i++) {
+		                this._gl.disable(this._disables[_i]);
+		            }
+		            if (functions.blendColor) {
+		                this._gl.blendColor(functions.blendColor[0], functions.blendColor[1], functions.blendColor[2], functions.blendColor[3]);
+		            }
+		            if (functions.blendEquationSeparate) {
+		                this._gl.blendEquationSeparate(functions.blendEquationSeparate[0], functions.blendEquationSeparate[1]);
+		            }
+		            if (functions.blendFuncSeparate) {
+		                this._gl.blendFuncSeparate(functions.blendFuncSeparate[0], functions.blendFuncSeparate[1], functions.blendFuncSeparate[2], functions.blendFuncSeparate[3]);
+		            }
+		            if (functions.colorMask) {
+		                this._gl.colorMask(functions.colorMask[0], functions.colorMask[1], functions.colorMask[2], functions.colorMask[3]);
+		            }
+		            if (functions.cullFace) {
+		                this._gl.cullFace(functions.cullFace[0]);
+		            }
+		            if (functions.depthFunc) {
+		                this._gl.depthFunc(functions.depthFunc[0]);
+		            }
+		            if (functions.depthMask) {
+		                this._gl.depthMask(functions.depthMask[0]);
+		            }
+		            if (functions.depthRange) {
+		                this._gl.depthRange(functions.depthRange[0], functions.depthRange[1]);
+		            }
+		            if (functions.frontFace) {
+		                this._gl.frontFace(functions.frontFace[0]);
+		            }
+		            if (functions.lineWidth) {
+		                this._gl.lineWidth(functions.lineWidth[0]);
+		            }
+		            if (functions.polygonOffset) {
+		                this._gl.polygonOffset(functions.polygonOffset[0], functions.polygonOffset[1]);
+		            }
+		            if (functions.scissor) {
+		                this._gl.scissor(functions.scissor[0], functions.scissor[1], functions.scissor[2], functions.scissor[3]);
+		            }
+		        }
+		    }, {
+		        key: "_updateProgram",
+		        value: function _updateProgram() {
+		            var lFS = this.fs;
+		            this.fs = _ManagedShader2.default.getShader(this._gl, WebGLRenderingContext.FRAGMENT_SHADER, this._generateShaderCode("FS"));
+		            var lVS = this.vs;
+		            this.vs = _ManagedShader2.default.getShader(this._gl, WebGLRenderingContext.VERTEX_SHADER, this._generateShaderCode("VS"));
+		            if (lFS && lVS) {
+		                lFS.release();
+		                lVS.release();
+		            }
+		            var lP = this.program;
+		            this.program = _ManagedProgram2.default.getProgram(this._gl, [this.vs, this.fs]);
+		            if (lP) {
+		                lP.release();
+		            }
+		        }
+		    }, {
+		        key: "_generateShaderCode",
+		        value: function _generateShaderCode(shaderType) {
+		            return "#define " + shaderType + "\n" + this._macroCode() + "\n" + _header2.default + "/*BEGINNING OF USER CODE*/\n" + (shaderType === "VS" ? this.passRecipe.vertex : this.passRecipe.fragment);
+		        }
+		    }, {
+		        key: "_macroCode",
+		        value: function _macroCode() {
+		            var macroCode = "";
+		            for (var macroName in this._macro) {
+		                macroCode += "#define " + macroName + " " + this._macro[macroName] + "\n";
+		            }
+		            return macroCode;
+		        }
+		    }]);
+		
+		    return Pass;
+		}();
+		
+		exports.default = Pass;
+		
+		Pass._glEnableTargets = [WebGLRenderingContext.CULL_FACE, WebGLRenderingContext.DEPTH_TEST, WebGLRenderingContext.STENCIL_TEST, WebGLRenderingContext.BLEND, WebGLRenderingContext.SCISSOR_TEST, WebGLRenderingContext.DITHER, WebGLRenderingContext.POLYGON_OFFSET_FILL, WebGLRenderingContext.SAMPLE_ALPHA_TO_COVERAGE, WebGLRenderingContext.SAMPLE_COVERAGE];
+	
+	/***/ },
+	/* 34 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+		
+		var _HashCalculator = __webpack_require__(23);
+		
+		var _HashCalculator2 = _interopRequireDefault(_HashCalculator);
+		
+		var _Program2 = __webpack_require__(35);
+		
+		var _Program3 = _interopRequireDefault(_Program2);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+		
+		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+		
+		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+		
+		var ManagedProgram = function (_Program) {
+		    _inherits(ManagedProgram, _Program);
+		
+		    function ManagedProgram(gl, hash) {
+		        _classCallCheck(this, ManagedProgram);
+		
+		        var _this = _possibleConstructorReturn(this, (ManagedProgram.__proto__ || Object.getPrototypeOf(ManagedProgram)).call(this, gl));
+		
+		        _this.hash = hash;
+		        _this._referenceCount = 0;
+		        return _this;
+		    }
+		
+		    _createClass(ManagedProgram, [{
+		        key: "release",
+		        value: function release() {
+		            this._referenceCount--;
+		            if (this._referenceCount === 0) {
+		                this.destroy();
+		                ManagedProgram._managedPrograms.get(this.gl)[this.hash] = void 0;
+		            }
+		        }
+		    }], [{
+		        key: "getProgram",
+		        value: function getProgram(gl, shaders) {
+		            if (!ManagedProgram._managedPrograms.has(gl)) {
+		                ManagedProgram._managedPrograms.set(gl, {});
+		            }
+		            var programs = ManagedProgram._managedPrograms.get(gl);
+		            var hashSource = "";
+		            shaders = shaders.sort();
+		            shaders.forEach(function (s) {
+		                hashSource += s.index + ",";
+		            });
+		            var hash = _HashCalculator2.default.calcHash(hashSource);
+		            if (programs[hash] === void 0) {
+		                programs[hash] = new ManagedProgram(gl, hash);
+		                programs[hash].update(shaders);
+		            }
+		            programs[hash]._referenceCount++;
+		            return programs[hash];
+		        }
+		    }]);
+		
+		    return ManagedProgram;
+		}(_Program3.default);
+		
+		exports.default = ManagedProgram;
+		
+		ManagedProgram._managedPrograms = new Map();
+	
+	/***/ },
+	/* 35 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -24342,7 +26929,1115 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 		
-		var _ResourceBase2 = __webpack_require__(26);
+		var _ResourceCache = __webpack_require__(36);
+		
+		var _ResourceCache2 = _interopRequireDefault(_ResourceCache);
+		
+		var _UniformProxy = __webpack_require__(37);
+		
+		var _UniformProxy2 = _interopRequireDefault(_UniformProxy);
+		
+		var _ResourceBase2 = __webpack_require__(38);
+		
+		var _ResourceBase3 = _interopRequireDefault(_ResourceBase2);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+		
+		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+		
+		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+		
+		/**
+		 * Manages WebGLProgram related stuff.
+		 */
+		var Program = function (_ResourceBase) {
+		    _inherits(Program, _ResourceBase);
+		
+		    function Program(gl) {
+		        _classCallCheck(this, Program);
+		
+		        var _this = _possibleConstructorReturn(this, (Program.__proto__ || Object.getPrototypeOf(Program)).call(this, gl));
+		
+		        _this._uniformLocations = {};
+		        _this._attributeLocations = {};
+		        _this.uniforms = new _UniformProxy2.default(_this);
+		        _this.program = gl.createProgram();
+		        return _this;
+		    }
+		    /**
+		     * Check this program is the last used one or not.
+		     * @return {boolean} [description]
+		     */
+		
+		
+		    _createClass(Program, [{
+		        key: "update",
+		
+		        /**
+		         * Update program with shader instance.
+		         * The array might be set of vertex shader and fragment shader couple.
+		         * @param {Shader[]} shaders [description]
+		         */
+		        value: function update(shaders) {
+		            var _this2 = this;
+		
+		            if (this.valid) {
+		                // detach all attached shaders previously
+		                var preciousShaders = this.gl.getAttachedShaders(this.program);
+		                preciousShaders.forEach(function (s) {
+		                    return _this2.gl.detachShader(_this2.program, s);
+		                });
+		                this._uniformLocations = {}; // reset location caches
+		                this._attributeLocations = {};
+		            }
+		            // attach all shader passed
+		            shaders.forEach(function (shader) {
+		                _this2.gl.attachShader(_this2.program, shader.shader);
+		            });
+		            this.gl.linkProgram(this.program); // link program and check errors
+		            if (!this.gl.getProgramParameter(this.program, WebGLRenderingContext.LINK_STATUS)) {
+		                var errorLog = this.gl.getProgramInfoLog(this.program);
+		                throw new Error("LINK FAILED\n" + errorLog);
+		            }
+		            this.valid = true;
+		        }
+		        /**
+		         * Use this program for drawing.
+		         */
+		
+		    }, {
+		        key: "use",
+		        value: function use() {
+		            if (!this.isLastUsed) {
+		                this.gl.useProgram(this.program);
+		            }
+		            this.uniforms.onUse();
+		        }
+		        /**
+		         * Destroy this instance.
+		         */
+		
+		    }, {
+		        key: "destroy",
+		        value: function destroy() {
+		            _get(Program.prototype.__proto__ || Object.getPrototypeOf(Program.prototype), "destroy", this).call(this);
+		            this.gl.deleteProgram(this.program);
+		        }
+		        /**
+		         * Fetch attribute location from this program.
+		         * @param  {string} variableName [description]
+		         * @return {number}              [description]
+		         */
+		
+		    }, {
+		        key: "findAttributeLocation",
+		        value: function findAttributeLocation(variableName) {
+		            if (this._attributeLocations[variableName] === void 0) {
+		                this._attributeLocations[variableName] = this.gl.getAttribLocation(this.program, variableName);
+		                this._safeEnableVertexAttribArray(this._attributeLocations[variableName]);
+		                return this._attributeLocations[variableName];
+		            } else {
+		                return this._attributeLocations[variableName];
+		            }
+		        }
+		        /**
+		         * Fetch uniform location from this program
+		         * @param  {string}               variableName [description]
+		         * @return {WebGLUniformLocation}              [description]
+		         */
+		
+		    }, {
+		        key: "findUniformLocation",
+		        value: function findUniformLocation(variableName) {
+		            var location = this._uniformLocations[variableName];
+		            if (location === void 0) {
+		                return this._uniformLocations[variableName] = this.gl.getUniformLocation(this.program, variableName);
+		            } else {
+		                return location;
+		            }
+		        }
+		    }, {
+		        key: "_safeEnableVertexAttribArray",
+		        value: function _safeEnableVertexAttribArray(location) {
+		            if (location < 0) {
+		                return;
+		            }
+		            this.gl.enableVertexAttribArray(location);
+		        }
+		    }, {
+		        key: "isLastUsed",
+		        get: function get() {
+		            return _ResourceCache2.default.useProgramCheck(this.gl, this.program);
+		        }
+		    }]);
+		
+		    return Program;
+		}(_ResourceBase3.default);
+		
+		exports.default = Program;
+	
+	/***/ },
+	/* 36 */
+	/***/ function(module, exports) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+		
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+		
+		var ResourceCache = exports.ResourceCache = function () {
+		    function ResourceCache() {
+		        _classCallCheck(this, ResourceCache);
+		
+		        this._lastUsedPrograms = new Map();
+		    }
+		    /**
+		     * Save the specified WebGLProgram as last used program.
+		     * And check the specified program was used last time.
+		     */
+		
+		
+		    _createClass(ResourceCache, [{
+		        key: "useProgramCheck",
+		        value: function useProgramCheck(gl, program) {
+		            if (this._lastUsedPrograms.get(gl) === program) {
+		                return true;
+		            }
+		            this._lastUsedPrograms.set(gl, program);
+		            return false;
+		        }
+		    }]);
+		
+		    return ResourceCache;
+		}();
+		
+		exports.default = new ResourceCache();
+	
+	/***/ },
+	/* 37 */
+	/***/ function(module, exports) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+		
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+		
+		var mat3Cache = new Float32Array(9);
+		
+		var UniformProxy = function () {
+		    function UniformProxy(program) {
+		        _classCallCheck(this, UniformProxy);
+		
+		        this.program = program;
+		        this._currentTextureRegister = 0;
+		        this._gl = program.gl;
+		    }
+		
+		    _createClass(UniformProxy, [{
+		        key: "uniformBool",
+		        value: function uniformBool(variableName, val) {
+		            var _this = this;
+		
+		            this._pass(variableName, function (l) {
+		                return _this._gl.uniform1i(l, val ? 1 : 0);
+		            });
+		        }
+		    }, {
+		        key: "uniformMatrix",
+		        value: function uniformMatrix(variableName, mat) {
+		            var _this2 = this;
+		
+		            this._pass(variableName, function (l) {
+		                _this2._gl.uniformMatrix4fv(l, false, mat.rawElements);
+		            });
+		        }
+		    }, {
+		        key: "uniformMatrix3",
+		        value: function uniformMatrix3(variableName, mat) {
+		            var _this3 = this;
+		
+		            this._pass(variableName, function (l) {
+		                var r = mat.rawElements;
+		                for (var i = 0; i < 3; i++) {
+		                    mat3Cache[3 * i + 0] = r[4 * i + 0];
+		                    mat3Cache[3 * i + 1] = r[4 * i + 1];
+		                    mat3Cache[3 * i + 2] = r[4 * i + 2];
+		                }
+		                _this3._gl.uniformMatrix3fv(l, false, mat3Cache);
+		            });
+		        }
+		    }, {
+		        key: "uniformMatrixArray",
+		        value: function uniformMatrixArray(variableName, matricies) {
+		            var _this4 = this;
+		
+		            var length = matricies.length / 16;
+		
+		            var _loop = function _loop(i) {
+		                _this4._passAsArray(variableName, i, function (l) {
+		                    return _this4._gl.uniformMatrix4fv(l, false, new Float32Array(matricies.buffer, matricies.byteOffset + i * 64));
+		                });
+		            };
+		
+		            for (var i = 0; i < length; i++) {
+		                _loop(i);
+		            }
+		        }
+		    }, {
+		        key: "uniformFloat",
+		        value: function uniformFloat(variableName, val) {
+		            var _this5 = this;
+		
+		            this._pass(variableName, function (l) {
+		                return _this5._gl.uniform1f(l, val);
+		            });
+		        }
+		    }, {
+		        key: "uniformFloatArray",
+		        value: function uniformFloatArray(variableName, val) {
+		            var _this6 = this;
+		
+		            this._pass(variableName, function (l) {
+		                return _this6._gl.uniform1fv(l, val);
+		            });
+		        }
+		    }, {
+		        key: "uniformInt",
+		        value: function uniformInt(variableName, val) {
+		            var _this7 = this;
+		
+		            this._pass(variableName, function (l) {
+		                return _this7._gl.uniform1i(l, val);
+		            });
+		        }
+		    }, {
+		        key: "uniformVector2",
+		        value: function uniformVector2(variableName, val) {
+		            var _this8 = this;
+		
+		            this._pass(variableName, function (l) {
+		                return _this8._gl.uniform2f(l, val.X, val.Y);
+		            });
+		        }
+		    }, {
+		        key: "uniformIntVector2",
+		        value: function uniformIntVector2(variableName, val) {
+		            var _this9 = this;
+		
+		            this._pass(variableName, function (l) {
+		                return _this9._gl.uniform2i(l, val.X, val.Y);
+		            });
+		        }
+		    }, {
+		        key: "uniformVector2Array",
+		        value: function uniformVector2Array(variableName, val) {
+		            var _this10 = this;
+		
+		            this._pass(variableName, function (l) {
+		                return _this10._gl.uniform2fv(l, val);
+		            });
+		        }
+		    }, {
+		        key: "uniformVector3",
+		        value: function uniformVector3(variableName, val) {
+		            var _this11 = this;
+		
+		            this._pass(variableName, function (l) {
+		                return _this11._gl.uniform3f(l, val.X, val.Y, val.Z);
+		            });
+		        }
+		    }, {
+		        key: "uniformIntVector3",
+		        value: function uniformIntVector3(variableName, val) {
+		            var _this12 = this;
+		
+		            this._pass(variableName, function (l) {
+		                return _this12._gl.uniform3i(l, val.X, val.Y, val.Z);
+		            });
+		        }
+		    }, {
+		        key: "uniformVector3Array",
+		        value: function uniformVector3Array(variableName, val) {
+		            var _this13 = this;
+		
+		            this._pass(variableName, function (l) {
+		                return _this13._gl.uniform3fv(l, val);
+		            });
+		        }
+		    }, {
+		        key: "uniformColor3",
+		        value: function uniformColor3(variableName, val) {
+		            var _this14 = this;
+		
+		            this._pass(variableName, function (l) {
+		                return _this14._gl.uniform3f(l, val.R, val.G, val.B);
+		            });
+		        }
+		    }, {
+		        key: "uniformVector4",
+		        value: function uniformVector4(variableName, val) {
+		            var _this15 = this;
+		
+		            this._pass(variableName, function (l) {
+		                return _this15._gl.uniform4f(l, val.X, val.Y, val.Z, val.W);
+		            });
+		        }
+		    }, {
+		        key: "uniformIntVector4",
+		        value: function uniformIntVector4(variableName, val) {
+		            var _this16 = this;
+		
+		            this._pass(variableName, function (l) {
+		                return _this16._gl.uniform4f(l, val.X, val.Y, val.Z, val.W);
+		            });
+		        }
+		    }, {
+		        key: "uniformVector4Array",
+		        value: function uniformVector4Array(variableName, val) {
+		            var _this17 = this;
+		
+		            this._pass(variableName, function (l) {
+		                return _this17._gl.uniform4fv(l, val);
+		            });
+		        }
+		    }, {
+		        key: "uniformColor4",
+		        value: function uniformColor4(variableName, val) {
+		            var _this18 = this;
+		
+		            this._pass(variableName, function (l) {
+		                return _this18._gl.uniform4f(l, val.R, val.G, val.B, val.A);
+		            });
+		        }
+		    }, {
+		        key: "uniformTexture2D",
+		        value: function uniformTexture2D(variableName, val) {
+		            if (val.valid) {
+		                val.register(this._currentTextureRegister);
+		                this.uniformInt(variableName, this._currentTextureRegister);
+		                this._currentTextureRegister++;
+		            } else {
+		                console.warn("The texture assigned to '" + variableName + "' is not valid.");
+		            }
+		        }
+		    }, {
+		        key: "onUse",
+		        value: function onUse() {
+		            this._currentTextureRegister = 0;
+		        }
+		    }, {
+		        key: "_pass",
+		        value: function _pass(variableName, act) {
+		            var location = this.program.findUniformLocation(variableName);
+		            if (location) {
+		                act(location);
+		            }
+		        }
+		    }, {
+		        key: "_passAsArray",
+		        value: function _passAsArray(variableName, index, act) {
+		            var location = this.program.findUniformLocation(variableName + "[" + index + "]");
+		            if (location) {
+		                act(location);
+		            }
+		        }
+		    }]);
+		
+		    return UniformProxy;
+		}();
+		
+		exports.default = UniformProxy;
+	
+	/***/ },
+	/* 38 */
+	/***/ function(module, exports) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+		
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+		
+		var ResourceBase = function () {
+		    function ResourceBase(gl) {
+		        _classCallCheck(this, ResourceBase);
+		
+		        this.gl = gl;
+		        this.destroyed = false;
+		        this.index = ResourceBase._maxIndex++;
+		        this.valid = false;
+		    }
+		
+		    _createClass(ResourceBase, [{
+		        key: "destroy",
+		        value: function destroy() {
+		            this.destroyed = true;
+		        }
+		    }, {
+		        key: "valid",
+		        get: function get() {
+		            return this._valid;
+		        },
+		        set: function set(val) {
+		            var _this = this;
+		
+		            if (this._valid === val) {
+		                return;
+		            }
+		            this._valid = val;
+		            if (this._valid) {
+		                this._validResolve(this);
+		            } else {
+		                this.validPromise = new Promise(function (resolve) {
+		                    _this._validResolve = resolve;
+		                });
+		            }
+		        }
+		    }]);
+		
+		    return ResourceBase;
+		}();
+		
+		ResourceBase._maxIndex = 0;
+		exports.default = ResourceBase;
+	
+	/***/ },
+	/* 39 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+		
+		var _HashCalculator = __webpack_require__(23);
+		
+		var _HashCalculator2 = _interopRequireDefault(_HashCalculator);
+		
+		var _Shader2 = __webpack_require__(40);
+		
+		var _Shader3 = _interopRequireDefault(_Shader2);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+		
+		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+		
+		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+		
+		/**
+		 * Provides abstraction of shader instance.
+		 * If specified shader source was instanced already, delegate actual instance.
+		 * And counts reference of shader and if that shader was released and the count is zero, this shader resource would be deleted automatically.
+		 *
+		 * DO NOT instanciate this class directly. Use getShader method instead.
+		 */
+		var ManagedShader = function (_Shader) {
+		    _inherits(ManagedShader, _Shader);
+		
+		    function ManagedShader(gl, type, sourceCode, hash) {
+		        _classCallCheck(this, ManagedShader);
+		
+		        var _this = _possibleConstructorReturn(this, (ManagedShader.__proto__ || Object.getPrototypeOf(ManagedShader)).call(this, gl, type, sourceCode));
+		
+		        _this.type = type;
+		        _this.sourceCode = sourceCode;
+		        _this.hash = hash;
+		        _this._referenceCount = 0;
+		        return _this;
+		    }
+		    /**
+		     * Obtain a reference to shader.
+		     * @param  {WebGLRenderingContext} gl     [description]
+		     * @param  {number}                type   [description]
+		     * @param  {string}                shader [description]
+		     * @return {ManagedShader}                [description]
+		     */
+		
+		
+		    _createClass(ManagedShader, [{
+		        key: "release",
+		
+		        /**
+		         * Release shader instance from reference.
+		         * Do not call this method dupelicately per a getShader call.
+		         *
+		         * That would make this shader disposed unintendedly.
+		         */
+		        value: function release() {
+		            this._referenceCount--;
+		            if (this._referenceCount === 0) {
+		                this.destroy();
+		                ManagedShader._managedShaders.get(this.gl)[this.hash] = void 0;
+		            }
+		        }
+		    }], [{
+		        key: "getShader",
+		        value: function getShader(gl, type, shader) {
+		            if (!ManagedShader._managedShaders.has(gl)) {
+		                ManagedShader._managedShaders.set(gl, {});
+		            }
+		            var shaders = ManagedShader._managedShaders.get(gl);
+		            var hash = _HashCalculator2.default.calcHash(shader + type);
+		            if (shaders[hash] === void 0) {
+		                shaders[hash] = new ManagedShader(gl, type, shader, hash);
+		            }
+		            shaders[hash]._referenceCount++;
+		            return shaders[hash];
+		        }
+		    }]);
+		
+		    return ManagedShader;
+		}(_Shader3.default);
+		
+		exports.default = ManagedShader;
+		
+		ManagedShader._managedShaders = new Map();
+	
+	/***/ },
+	/* 40 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+		
+		var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+		
+		var _ResourceBase2 = __webpack_require__(38);
+		
+		var _ResourceBase3 = _interopRequireDefault(_ResourceBase2);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+		
+		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+		
+		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+		
+		var Shader = function (_ResourceBase) {
+		    _inherits(Shader, _ResourceBase);
+		
+		    function Shader(gl, type, sourceCode) {
+		        _classCallCheck(this, Shader);
+		
+		        var _this = _possibleConstructorReturn(this, (Shader.__proto__ || Object.getPrototypeOf(Shader)).call(this, gl));
+		
+		        _this.type = type;
+		        _this.sourceCode = sourceCode;
+		        _this.shader = gl.createShader(type);
+		        if (sourceCode) {
+		            _this.update(sourceCode);
+		        }
+		        return _this;
+		    }
+		
+		    _createClass(Shader, [{
+		        key: "update",
+		        value: function update(source) {
+		            this.gl.shaderSource(this.shader, source);
+		            this.gl.compileShader(this.shader);
+		            if (!this.gl.getShaderParameter(this.shader, WebGLRenderingContext.COMPILE_STATUS)) {
+		                throw new Error("Compiling shader failed.\nSourceCode:\n" + this._insertLineNumbers(source) + "\n\nErrorCode:" + this.gl.getShaderInfoLog(this.shader));
+		            }
+		            this.sourceCode = source;
+		            this.valid = true;
+		        }
+		    }, {
+		        key: "destroy",
+		        value: function destroy() {
+		            _get(Shader.prototype.__proto__ || Object.getPrototypeOf(Shader.prototype), "destroy", this).call(this);
+		            this.gl.deleteShader(this.shader);
+		        }
+		    }, {
+		        key: "_insertLineNumbers",
+		        value: function _insertLineNumbers(source) {
+		            source = "1:" + source;
+		            var lN = 2;
+		            for (var i = 0; i < source.length; i++) {
+		                var c = source.charAt(i);
+		                if (c === '\n') {
+		                    source = source.substring(0, i + 1) + (lN + ":") + source.substring(i + 1, source.length);
+		                    i++;
+		                    lN++;
+		                }
+		            }
+		            return source;
+		        }
+		    }]);
+		
+		    return Shader;
+		}(_ResourceBase3.default);
+		
+		exports.default = Shader;
+	
+	/***/ },
+	/* 41 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+		
+		var _Vector = __webpack_require__(14);
+		
+		var _Vector2 = _interopRequireDefault(_Vector);
+		
+		var _AABB = __webpack_require__(42);
+		
+		var _AABB2 = _interopRequireDefault(_AABB);
+		
+		var _Buffer = __webpack_require__(43);
+		
+		var _Buffer2 = _interopRequireDefault(_Buffer);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+		
+		/**
+		 * The geometry class for managing buffer resource
+		 */
+		var Geometry = function () {
+		    function Geometry(gl) {
+		        _classCallCheck(this, Geometry);
+		
+		        this.gl = gl;
+		        /**
+		         * Vertex buffer
+		         * @type {Buffer[]}
+		         */
+		        this.buffers = [];
+		        this.indices = {};
+		        this.accessors = {};
+		        this.aabb = new _AABB2.default([_Vector2.default.Zero]);
+		    }
+		
+		    _createClass(Geometry, [{
+		        key: "addAttributes",
+		        value: function addAttributes(buffer, accessors) {
+		            var usage = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : WebGLRenderingContext.STATIC_DRAW;
+		
+		            buffer = this._ensureToBeVertexBuffer(buffer, usage);
+		            var index = this.buffers.length;
+		            this.buffers.push(buffer);
+		            for (var semantic in accessors) {
+		                var accessor = accessors[semantic];
+		                accessor.bufferIndex = index;
+		                if (accessor.size === void 0) {
+		                    throw new Error("Accessor specified with the semantics \"" + semantic + "\" is not containing size as paranmeter.");
+		                }
+		                if (accessor.type === void 0) {
+		                    accessor.type = WebGLRenderingContext.FLOAT;
+		                }
+		                if (accessor.stride === void 0) {
+		                    accessor.stride = accessor.size * this._attribTypeToByteSize(accessor.type);
+		                }
+		                if (accessor.offset === void 0) {
+		                    accessor.offset = 0;
+		                }
+		                this.accessors[semantic] = accessor;
+		            }
+		        }
+		        /**
+		         * add new index buffer to this geometry.
+		         * @param {string}                       indexName [description]
+		         * @param {Buffer|number[]|BufferSource} buffer    [description]
+		         * @param {number                    =         WebGLRenderingContext.TRIANGLES} topology [description]
+		         * @param {number                    =         0}                               offset   [description]
+		         * @param {number                    =         null}                            count    [description]
+		         * @param {number                    =         0}                               type     [description]
+		         */
+		
+		    }, {
+		        key: "addIndex",
+		        value: function addIndex(indexName, buffer) {
+		            var topology = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : WebGLRenderingContext.TRIANGLES;
+		            var offset = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0;
+		            var count = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
+		            var type = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : 0;
+		
+		            if (!count) {
+		                if (buffer instanceof _Buffer2.default || buffer instanceof ArrayBuffer || buffer instanceof DataView) {
+		                    throw new Error("The argument 'count' is necessary if you specified buffer with an instance of Buffer or ArrayBuffer");
+		                } else {
+		                    count = buffer["length"];
+		                }
+		            }
+		            if (type === 0) {
+		                type = this._indexTypeFromCount(count);
+		            }
+		            buffer = this._ensureToBeIndexBuffer(buffer, type);
+		            this.indices[indexName] = {
+		                byteOffset: offset,
+		                byteSize: this._indexTypeToByteSize(type),
+		                type: type,
+		                topology: topology,
+		                count: count,
+		                index: buffer
+		            };
+		        }
+		    }, {
+		        key: "drawByDefault",
+		        value: function drawByDefault(indexName, attribNames, program) {
+		            var _this = this;
+		
+		            var count = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : Number.MAX_VALUE;
+		            var offset = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 0;
+		
+		            attribNames.forEach(function (name) {
+		                Geometry.bindBufferToAttribute(_this, program, name, name);
+		            });
+		            Geometry.drawWithCurrentVertexBuffer(this, indexName, count, offset);
+		        }
+		        /**
+		         * bind a vertex buffer to specified attribute variable.
+		         * @param  {Geometry} geometry      [description]
+		         * @param  {Program}  program       [description]
+		         * @param  {string}   attributeName [description]
+		         * @param  {string}   semantics    [description]
+		         * @return {boolean}                [description]
+		         */
+		
+		    }, {
+		        key: "_ensureToBeVertexBuffer",
+		
+		        /**
+		         * Make sure buffer sources converted into Buffer
+		         * @param  {Buffer|BufferSource|number[]} buffer [description]
+		         * @return {Buffer}                              [description]
+		         */
+		        value: function _ensureToBeVertexBuffer(buffer, usage) {
+		            if (!(buffer instanceof _Buffer2.default)) {
+		                var bufferSource = buffer;
+		                if (Array.isArray(bufferSource)) {
+		                    bufferSource = new Float32Array(bufferSource);
+		                }
+		                buffer = new _Buffer2.default(this.gl, WebGLRenderingContext.ARRAY_BUFFER, usage);
+		                buffer.update(bufferSource);
+		            }
+		            return buffer;
+		        }
+		        /**
+		         * Make sure buffer sources converted into Buffer
+		         * @param  {Buffer|BufferSource|number[]} buffer [description]
+		         * @return {Buffer}                              [description]
+		         */
+		
+		    }, {
+		        key: "_ensureToBeIndexBuffer",
+		        value: function _ensureToBeIndexBuffer(buffer, type) {
+		            if (!(buffer instanceof _Buffer2.default)) {
+		                var bufferSource = buffer;
+		                if (Array.isArray(bufferSource)) {
+		                    bufferSource = new (this._indexTypeToArrayConstructor(type))(bufferSource);
+		                }
+		                buffer = new _Buffer2.default(this.gl, WebGLRenderingContext.ELEMENT_ARRAY_BUFFER, WebGLRenderingContext.STATIC_DRAW);
+		                buffer.update(bufferSource);
+		            } else {
+		                if (buffer.target !== WebGLRenderingContext.ELEMENT_ARRAY_BUFFER) {
+		                    throw new Error("The usage of buffer specified as index buffer is not ELEMENT_ARRAY_BUFFER");
+		                }
+		            }
+		            return buffer;
+		        }
+		    }, {
+		        key: "_indexTypeFromCount",
+		        value: function _indexTypeFromCount(count) {
+		            if (count < 256) {
+		                return WebGLRenderingContext.UNSIGNED_BYTE;
+		            } else if (count < 65536) {
+		                return WebGLRenderingContext.UNSIGNED_SHORT;
+		            } else if (count < 4294967296) {
+		                return WebGLRenderingContext.UNSIGNED_INT;
+		            } else {
+		                throw new Error("Index count exceeds 4,294,967,296. WebGL can not handle such a big index buffer");
+		            }
+		        }
+		    }, {
+		        key: "_indexTypeToArrayConstructor",
+		        value: function _indexTypeToArrayConstructor(type) {
+		            switch (type) {
+		                case WebGLRenderingContext.UNSIGNED_BYTE:
+		                    return Uint8Array;
+		                case WebGLRenderingContext.UNSIGNED_SHORT:
+		                    return Uint16Array;
+		                case WebGLRenderingContext.UNSIGNED_INT:
+		                    return Uint32Array;
+		                default:
+		                    throw new Error("Unsupported index type");
+		            }
+		        }
+		    }, {
+		        key: "_indexTypeToByteSize",
+		        value: function _indexTypeToByteSize(type) {
+		            switch (type) {
+		                case WebGLRenderingContext.UNSIGNED_BYTE:
+		                    return 1;
+		                case WebGLRenderingContext.UNSIGNED_SHORT:
+		                    return 2;
+		                case WebGLRenderingContext.UNSIGNED_INT:
+		                    return 4;
+		                default:
+		                    throw new Error("Unsupported index type");
+		            }
+		        }
+		    }, {
+		        key: "_attribTypeToByteSize",
+		        value: function _attribTypeToByteSize(type) {
+		            switch (type) {
+		                case WebGLRenderingContext.FLOAT:
+		                    return 4;
+		                default:
+		                    throw new Error("Unsupported attribute variable type \"" + type + "\"");
+		            }
+		        }
+		    }], [{
+		        key: "bindBufferToAttribute",
+		        value: function bindBufferToAttribute(geometry, program, attributeName, semantics) {
+		            var index = program.findAttributeLocation(attributeName);
+		            if (index < 0) {
+		                return false;
+		            }
+		            var accessors = geometry.accessors[semantics];
+		            if (!accessors) {
+		                throw new Error("Specified buffer \"" + semantics + " was not found on this geometry while attempt to bind \"" + attributeName + "\" of attribute variables.\n\n\t  All of the vertex buffer available on this geometry is " + Object.keys(geometry.accessors) + "\"");
+		            }
+		            var buffer = geometry.buffers[accessors.bufferIndex];
+		            buffer.bind();
+		            program.gl.vertexAttribPointer(index, accessors.size, accessors.type, false, accessors.stride, accessors.offset);
+		            return true;
+		        }
+		    }, {
+		        key: "drawWithCurrentVertexBuffer",
+		        value: function drawWithCurrentVertexBuffer(geometry, indexName) {
+		            var count = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : Number.MAX_VALUE;
+		            var offset = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0;
+		
+		            var targetIndex = geometry.indices[indexName];
+		            if (targetIndex === void 0) {
+		                throw new Error("Specified index buffer \"" + indexName + "\" was not found on this geometry.All of the index buffer available on this geometry is \"" + Object.keys(geometry.indices) + "\"");
+		            }
+		            targetIndex.index.bind();
+		            targetIndex.index.gl.drawElements(targetIndex.topology, Math.min(targetIndex.count, count), targetIndex.type, Math.min(offset * targetIndex.byteSize + targetIndex.byteOffset, targetIndex.byteOffset + (targetIndex.count - 1) * targetIndex.byteSize));
+		        }
+		    }]);
+		
+		    return Geometry;
+		}();
+		
+		exports.default = Geometry;
+		
+		Geometry._lastGeometry = new Map();
+	
+	/***/ },
+	/* 42 */
+	/***/ function(module, exports) {
+	
+			Object.defineProperty(exports, "__esModule", {
+			    value: true
+			});exports.default=window.GrimoireJS.lib.math.AABB;
+	
+	/***/ },
+	/* 43 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+		
+		var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+		
+		var _ResourceBase2 = __webpack_require__(38);
+		
+		var _ResourceBase3 = _interopRequireDefault(_ResourceBase2);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+		
+		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+		
+		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+		
+		var Buffer = function (_ResourceBase) {
+		    _inherits(Buffer, _ResourceBase);
+		
+		    function Buffer(gl) {
+		        var target = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : WebGLRenderingContext.ARRAY_BUFFER;
+		        var usage = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : WebGLRenderingContext.STATIC_DRAW;
+		
+		        _classCallCheck(this, Buffer);
+		
+		        var _this = _possibleConstructorReturn(this, (Buffer.__proto__ || Object.getPrototypeOf(Buffer)).call(this, gl));
+		
+		        _this.target = target;
+		        _this.usage = usage;
+		        _this.buffer = gl.createBuffer();
+		        return _this;
+		    }
+		
+		    _createClass(Buffer, [{
+		        key: "update",
+		        value: function update(length, subBuffer) {
+		            this.bind();
+		            if (subBuffer) {
+		                if (!this.valid) {
+		                    this.gl.bufferData(this.target, length + subBuffer.byteLength, this.usage);
+		                }
+		                this.gl.bufferSubData(this.target, length, subBuffer);
+		            } else {
+		                if (typeof length === "number") {
+		                    this.gl.bufferData(this.target, length, this.usage);
+		                } else {
+		                    this.gl.bufferData(this.target, length, this.usage);
+		                }
+		            }
+		            this.valid = true;
+		        }
+		    }, {
+		        key: "bind",
+		        value: function bind() {
+		            this.gl.bindBuffer(this.target, this.buffer);
+		        }
+		    }, {
+		        key: "destroy",
+		        value: function destroy() {
+		            _get(Buffer.prototype.__proto__ || Object.getPrototypeOf(Buffer.prototype), "destroy", this).call(this);
+		            this.gl.deleteBuffer(this.buffer);
+		        }
+		    }]);
+		
+		    return Buffer;
+		}(_ResourceBase3.default);
+		
+		exports.default = Buffer;
+	
+	/***/ },
+	/* 44 */
+	/***/ function(module, exports) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+		
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+		
+		var UniformResolverRegistry = exports.UniformResolverRegistry = function () {
+		    function UniformResolverRegistry() {
+		        _classCallCheck(this, UniformResolverRegistry);
+		
+		        this._generators = {};
+		    }
+		
+		    _createClass(UniformResolverRegistry, [{
+		        key: "add",
+		        value: function add(semantic, generator) {
+		            if (typeof generator !== "function") {
+		                throw new Error("secound argument of add must be function");
+		            }
+		            this._generators[semantic.toUpperCase()] = generator;
+		        }
+		    }, {
+		        key: "generateRegisterers",
+		        value: function generateRegisterers(material, passInfo) {
+		            var registerers = [],
+		                disposers = [];
+		            for (var key in passInfo.uniforms) {
+		                var valueInfo = passInfo.uniforms[key];
+		                var semantic = valueInfo.semantic;
+		                var registeredGenerator = this._generators[semantic];
+		                if (!registeredGenerator) {
+		                    throw new Error("There was no suitable registerer for specified semantic " + semantic);
+		                }
+		                var registerer = registeredGenerator(valueInfo, material);
+		                if (typeof registerer === "function") {
+		                    registerers.push(registerer);
+		                } else {
+		                    registerers.push(registerer.register);
+		                    if (registerer.dispose) {
+		                        disposers.push(registerer.dispose);
+		                    }
+		                }
+		            }
+		            return {
+		                registerers: registerers,
+		                disposers: disposers
+		            };
+		        }
+		    }]);
+		
+		    return UniformResolverRegistry;
+		}();
+		
+		exports.default = new UniformResolverRegistry();
+	
+	/***/ },
+	/* 45 */
+	/***/ function(module, exports) {
+	
+		module.exports = "/*Header start*/\n// helper macros\n#ifdef FS\n  #define FS_PREC(prec,type) precision prec type;\n  #define VS_PREC(prec,type)\n#endif\n#ifdef VS\n#define VS_PREC(prec,type) precision prec type;\n#define FS_PREC(prec,type)\n#endif\n// constants\n#define PI 3.141592653589793\n#define E 2.718281828459045\n#define LN2 0.6931471805599453\n#define LN10 2.302585092994046\n#define LOG2E 1.4426950408889634\n#define LOG10E 0.4342944819032518\n#define SQRT2 1.4142135623730951\n#define SQRT1_2 0.7071067811865476\n\n/*Header end*/\n"
+	
+	/***/ },
+	/* 46 */
+	/***/ function(module, exports) {
+	
+			Object.defineProperty(exports, "__esModule", {
+			    value: true
+			});exports.default=window.GrimoireJS.GrimoireInterface;
+	
+	/***/ },
+	/* 47 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+		
+		var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+		
+		var _ResourceBase2 = __webpack_require__(38);
 		
 		var _ResourceBase3 = _interopRequireDefault(_ResourceBase2);
 		
@@ -24540,21 +28235,30 @@ return /******/ (function(modules) { // webpackBootstrap
 		                this._wrapT = filter;
 		            }
 		        }
+		    }], [{
+		        key: "generateDefaultTexture",
+		        value: function generateDefaultTexture(gl) {
+		            Texture2D.defaultTextures.set(gl, null); // for preventing called this method recursively by instanciating default texture
+		            var texture = new Texture2D(gl);
+		            texture.update(0, 1, 1, 0, WebGLRenderingContext.RGBA, WebGLRenderingContext.UNSIGNED_BYTE, new Uint8Array([0, 0, 0, 0]));
+		            Texture2D.defaultTextures.set(gl, texture);
+		        }
 		    }]);
 		
 		    return Texture2D;
 		}(_ResourceBase3.default);
+		
+		exports.default = Texture2D;
+		
+		Texture2D.defaultTextures = new Map();
 		/**
 		 * ミップマップの更新が必要なフィルタ
 		 * @type {number[]}
 		 */
-		
-		
-		exports.default = Texture2D;
 		Texture2D._filtersNeedsMipmap = [WebGLRenderingContext.LINEAR_MIPMAP_LINEAR, WebGLRenderingContext.LINEAR_MIPMAP_NEAREST, WebGLRenderingContext.NEAREST_MIPMAP_LINEAR, WebGLRenderingContext.NEAREST_MIPMAP_NEAREST];
 	
 	/***/ },
-	/* 26 */
+	/* 48 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -24565,83 +28269,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 		
-		var _IDObject2 = __webpack_require__(27);
+		var _MaterialFactory = __webpack_require__(21);
 		
-		var _IDObject3 = _interopRequireDefault(_IDObject2);
+		var _MaterialFactory2 = _interopRequireDefault(_MaterialFactory);
 		
 		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-		
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-		
-		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-		
-		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-		
-		var ResourceBase = function (_IDObject) {
-		    _inherits(ResourceBase, _IDObject);
-		
-		    function ResourceBase(gl) {
-		        _classCallCheck(this, ResourceBase);
-		
-		        var _this = _possibleConstructorReturn(this, (ResourceBase.__proto__ || Object.getPrototypeOf(ResourceBase)).call(this));
-		
-		        _this.gl = gl;
-		        _this.destroyed = false;
-		        _this.valid = false;
-		        return _this;
-		    }
-		
-		    _createClass(ResourceBase, [{
-		        key: "destroy",
-		        value: function destroy() {
-		            this.destroyed = true;
-		        }
-		    }, {
-		        key: "valid",
-		        get: function get() {
-		            return this._valid;
-		        },
-		        set: function set(val) {
-		            var _this2 = this;
-		
-		            if (this._valid === val) {
-		                return;
-		            }
-		            this._valid = val;
-		            if (this._valid) {
-		                this._validResolve(this);
-		            } else {
-		                this.validPromise = new Promise(function (resolve) {
-		                    _this2._validResolve = resolve;
-		                });
-		            }
-		        }
-		    }]);
-		
-		    return ResourceBase;
-		}(_IDObject3.default);
-		
-		exports.default = ResourceBase;
-	
-	/***/ },
-	/* 27 */
-	/***/ function(module, exports) {
-	
-			Object.defineProperty(exports, "__esModule", {
-			    value: true
-			});exports.default=window.GrimoireJS.Base.IDObject;
-	
-	/***/ },
-	/* 28 */
-	/***/ function(module, exports) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 		
 		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 		
@@ -24695,6 +28327,9 @@ return /******/ (function(modules) { // webpackBootstrap
 		                ext = this.extensions[name] = GLExtRequestor._customExtensionResolvers[name](this.gl);
 		            }
 		            this._readyExtensions[name] = this.extensions[name] !== void 0;
+		            if (ext) {
+		                _MaterialFactory2.default.get(this.gl).macro.setValue(name.toUpperCase(), "");
+		            }
 		            return !!this._readyExtensions[name];
 		        }
 		    }], [{
@@ -24762,7 +28397,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		};
 	
 	/***/ },
-	/* 29 */
+	/* 49 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -24773,7 +28408,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 		
-		var _Component2 = __webpack_require__(15);
+		var _Component2 = __webpack_require__(9);
 		
 		var _Component3 = _interopRequireDefault(_Component2);
 		
@@ -24785,6 +28420,17 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 		
+		/**
+		 * フルスクリーン状態を管理するコンポーネント
+		 *
+		 * Grimoire.jsによって管理されているキャンバス(正確にはその親のコンテナ)のフルスクリーン状態等を管理します。
+		 * (他の要素をフルスクリーン化することも可能ですが、通常このGrimoire.jsによって生成されるキャンバスを含むDOM要素に対して用いられます。)
+		 *
+		 * また、一部の古いブラウザでは動作しない機能であることに注意してください。
+		 * また、`fullscreen`属性は必ず マウスのイベントなどのユーザーのインタラクションを伴うイベントからの呼び出しで **動的に** trueにされる必要があります。
+		 *
+		 * 最初からtrueに設定して初期状態でキャンバスをフルスクリーン状態にすることはWebAPIの制約上できません。
+		 */
 		var FullscreenComponent = function (_Component) {
 		    _inherits(FullscreenComponent, _Component);
 		
@@ -24860,10 +28506,22 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = FullscreenComponent;
 		
 		FullscreenComponent.attributes = {
+		    /**
+		     * フルスクリーン状態かどうか
+		     *
+		     * このフラグをtrueにする際は、**必ず**、マウスイベントなどのユーザーのインタラクションを伴うイベントからの呼び出しで変更されなければなりません。
+		     *
+		     * したがって、GOMLで初期状態からこのフラグをtrueにすることはできません。
+		     */
 		    fullscreen: {
 		        converter: "Boolean",
 		        default: false
 		    },
+		    /**
+		     * フルスクリーンにするDOM要素へのクエリ
+		     *
+		     * nullが指定された場合、キャンバスの親要素が用いられます。
+		     */
 		    fullscreenTarget: {
 		        converter: "String",
 		        default: null
@@ -24871,7 +28529,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		};
 	
 	/***/ },
-	/* 30 */
+	/* 50 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -24882,11 +28540,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 		
-		var _GeometryFactory = __webpack_require__(31);
+		var _GeometryFactory = __webpack_require__(51);
 		
 		var _GeometryFactory2 = _interopRequireDefault(_GeometryFactory);
 		
-		var _Component2 = __webpack_require__(15);
+		var _Component2 = __webpack_require__(9);
 		
 		var _Component3 = _interopRequireDefault(_Component2);
 		
@@ -24898,6 +28556,13 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 		
+		/**
+		 * ジオメトリを生成するためのコンポーネント
+		 *
+		 * `type`属性に指定されたタイプのジオメトリを生成して、`name`属性に指定された名前で利用できる形にして登録します。
+		 *
+		 * このコンポーネントは`type`属性に応じて、**動的** に属性が増えることに気をつけてください。
+		 */
 		var GeometryComponent = function (_Component) {
 		    _inherits(GeometryComponent, _Component);
 		
@@ -24936,10 +28601,23 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = GeometryComponent;
 		
 		GeometryComponent.attributes = {
+		    /**
+		     * 生成するプリミティブのタイプ
+		     *
+		     * `GeometryFactory`に登録されたプリミティブのジェネレーターの名前を指します。
+		     * この指定する名前によって、動的に属性が増えることに気をつけてください。
+		     * また、増えたジオメトリの属性は動的に操作できないことに気をつけてください。
+		     */
 		    type: {
 		        converter: "String",
 		        default: null
 		    },
+		    /**
+		     * ジオメトリにつける名前
+		     *
+		     * `GeometryConverter`によって取得される際に利用されるジオメトリ名です。
+		     * もし、`quad`など事前に登録されたジオメトリを指定した場合、そのジオメトリを上書きすることができます。
+		     */
 		    name: {
 		        converter: "String",
 		        default: null
@@ -24947,7 +28625,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		};
 	
 	/***/ },
-	/* 31 */
+	/* 51 */
 	/***/ function(module, exports) {
 	
 		"use strict";
@@ -24984,7 +28662,13 @@ return /******/ (function(modules) { // webpackBootstrap
 		            if (!factoryDelegate) {
 		                throw new Error("Can not instanciate unknown geometry type " + type);
 		            }
-		            return factoryDelegate(this.gl, args);
+		            var geometry = factoryDelegate(this.gl, args);
+		            if (GeometryFactory.factoryExtentions[type] !== void 0) {
+		                GeometryFactory.factoryExtentions[type].forEach(function (v) {
+		                    return v(geometry, args);
+		                });
+		            }
+		            return geometry;
 		        }
 		    }, {
 		        key: "instanciateAsDefault",
@@ -25003,6 +28687,14 @@ return /******/ (function(modules) { // webpackBootstrap
 		            GeometryFactory.factoryDelegates[typeName] = factoryDelegate;
 		            GeometryFactory.factoryArgumentDeclarations[typeName] = argumentDeclarations;
 		        }
+		    }, {
+		        key: "extend",
+		        value: function extend(typeName, extender) {
+		            if (GeometryFactory.factoryExtentions[typeName] === void 0) {
+		                GeometryFactory.factoryExtentions[typeName] = [];
+		            }
+		            GeometryFactory.factoryExtentions[typeName].push(extender);
+		        }
 		    }]);
 		
 		    return GeometryFactory;
@@ -25018,9 +28710,10 @@ return /******/ (function(modules) { // webpackBootstrap
 		 * Argument inputs to be used for construction of geometry.
 		 */
 		GeometryFactory.factoryArgumentDeclarations = {};
+		GeometryFactory.factoryExtentions = {};
 	
 	/***/ },
-	/* 32 */
+	/* 52 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -25031,15 +28724,15 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 		
-		var _GeometryFactory = __webpack_require__(31);
+		var _GeometryFactory = __webpack_require__(51);
 		
 		var _GeometryFactory2 = _interopRequireDefault(_GeometryFactory);
 		
-		var _Component2 = __webpack_require__(15);
+		var _Component2 = __webpack_require__(9);
 		
 		var _Component3 = _interopRequireDefault(_Component2);
 		
-		var _grimoirejs = __webpack_require__(14);
+		var _grimoirejs = __webpack_require__(8);
 		
 		var _grimoirejs2 = _interopRequireDefault(_grimoirejs);
 		
@@ -25051,6 +28744,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 		
+		/**
+		 * ジオメトリを管理するコンポーネント
+		 *
+		 * あまりユーザーが直接操作することはありません。
+		 */
 		var GeometryRegistoryComponent = function (_Component) {
 		    _inherits(GeometryRegistoryComponent, _Component);
 		
@@ -25119,6 +28817,9 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = GeometryRegistoryComponent;
 		
 		GeometryRegistoryComponent.attributes = {
+		    /**
+		     * デフォルトで生成するジオメトリの種類
+		     */
 		    defaultGeometry: {
 		        converter: "StringArray",
 		        default: ["quad", "cube", "sphere"]
@@ -25126,7 +28827,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		};
 	
 	/***/ },
-	/* 33 */
+	/* 53 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -25137,19 +28838,19 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 		
-		var _TransformComponent = __webpack_require__(19);
+		var _TransformComponent = __webpack_require__(17);
 		
 		var _TransformComponent2 = _interopRequireDefault(_TransformComponent);
 		
-		var _Component2 = __webpack_require__(15);
+		var _Component2 = __webpack_require__(9);
 		
 		var _Component3 = _interopRequireDefault(_Component2);
 		
-		var _Vector = __webpack_require__(11);
+		var _Vector = __webpack_require__(13);
 		
 		var _Vector2 = _interopRequireDefault(_Vector);
 		
-		var _Matrix = __webpack_require__(10);
+		var _Matrix = __webpack_require__(15);
 		
 		var _Matrix2 = _interopRequireDefault(_Matrix);
 		
@@ -25161,6 +28862,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 		
+		/**
+		 * (Deprecated)DOM要素とTransformを同期させるためのコンポーネント
+		 *
+		 * このコンポーネントはfundamentalからは削除されます。(別のパッケージとして分離予定)
+		 */
 		var HTMLBinderComponent = function (_Component) {
 		    _inherits(HTMLBinderComponent, _Component);
 		
@@ -25209,7 +28915,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		            }
 		            if (this._queriedElement && args.caller.node === this._targetNode) {
 		                var vp = args.viewport;
-		                var rawPos = _Matrix2.default.transform(this._currentTransform.calcPVM(args.camera.camera), new _Vector2.default(0, 0, 0, 1));
+		                var rawPos = _Matrix2.default.transform(this._currentTransform.calcPVM(args.camera), new _Vector2.default(0, 0, 0, 1));
 		                var rawScPos = {
 		                    x: rawPos.X / rawPos.W,
 		                    y: rawPos.Y / rawPos.W,
@@ -25311,7 +29017,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		};
 	
 	/***/ },
-	/* 34 */
+	/* 54 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -25322,7 +29028,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 		
-		var _Component2 = __webpack_require__(15);
+		var _Component2 = __webpack_require__(9);
 		
 		var _Component3 = _interopRequireDefault(_Component2);
 		
@@ -25334,6 +29040,9 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 		
+		/**
+		 * 全体のループを管理しているコンポーネント。あまり直接ユーザーがいじることはありません。
+		 */
 		var LoopManagerComponent = function (_Component) {
 		    _inherits(LoopManagerComponent, _Component);
 		
@@ -25408,7 +29117,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = LoopManagerComponent;
 	
 	/***/ },
-	/* 35 */
+	/* 55 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -25417,21 +29126,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		    value: true
 		});
 		
-		var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-		
 		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 		
-		var _SORTPass = __webpack_require__(36);
-		
-		var _SORTPass2 = _interopRequireDefault(_SORTPass);
-		
-		var _Component2 = __webpack_require__(15);
+		var _Component2 = __webpack_require__(9);
 		
 		var _Component3 = _interopRequireDefault(_Component2);
-		
-		var _ResourceBase = __webpack_require__(26);
-		
-		var _ResourceBase2 = _interopRequireDefault(_ResourceBase);
 		
 		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 		
@@ -25493,7 +29192,8 @@ return /******/ (function(modules) { // webpackBootstrap
 		            return __awaiter(this, void 0, void 0, regeneratorRuntime.mark(function _callee() {
 		                var _this2 = this;
 		
-		                var promises;
+		                var key, _loop, _key;
+		
 		                return regeneratorRuntime.wrap(function _callee$(_context) {
 		                    while (1) {
 		                        switch (_context.prev = _context.next) {
@@ -25503,98 +29203,25 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		                            case 2:
 		                                this.material = _context.sent;
-		                                promises = [];
 		
-		                                this.material.pass.forEach(function (p) {
-		                                    if (p instanceof _SORTPass2.default) {
-		                                        var _ret = function () {
-		                                            var cp = p;
+		                                for (key in this.material.argumentDeclarations) {
+		                                    this.__addAtribute(key, this.material.argumentDeclarations[key]);
+		                                    this.getAttributeRaw(key).boundTo(key, this.material.arguments);
+		                                }
 		
-		                                            var _loop = function _loop(key) {
-		                                                _this2.__addAtribute(key, cp.sort.gomlAttributes[key]);
-		                                                _this2.getAttributeRaw(key).watch(function (v) {
-		                                                    _this2.materialArgs[key] = v;
-		                                                });
-		                                                var value = _this2.materialArgs[key] = _this2.getAttribute(key);
-		                                                if (value instanceof _ResourceBase2.default) {
-		                                                    promises.push(value.validPromise);
-		                                                }
-		                                            };
+		                                _loop = function _loop(_key) {
+		                                    _this2.__addAtribute(_key, _this2.material.macroDeclarations[_key]);
+		                                    _this2.getAttributeRaw(_key).watch(function (v) {
+		                                        _this2.material.setMacroValue(_key, v);
+		                                    }, true);
+		                                };
 		
-		                                            for (var key in cp.sort.gomlAttributes) {
-		                                                _loop(key);
-		                                            }
-		                                            var _iteratorNormalCompletion = true;
-		                                            var _didIteratorError = false;
-		                                            var _iteratorError = undefined;
-		
-		                                            try {
-		                                                var _loop2 = function _loop2() {
-		                                                    var macro = _step.value;
-		
-		                                                    switch (macro.type) {
-		                                                        case "int":
-		                                                            _this2.__addAtribute(macro.attributeName, {
-		                                                                converter: "Number",
-		                                                                default: macro.default
-		                                                            });
-		                                                            _this2.getAttributeRaw(macro.attributeName).watch(function (v) {
-		                                                                cp.setMacro(macro.macroName, "" + Math.floor(v));
-		                                                            }, true);
-		                                                            return {
-		                                                                v: {
-		                                                                    v: void 0
-		                                                                }
-		                                                            };
-		                                                        case "bool":
-		                                                            _this2.__addAtribute(macro.attributeName, {
-		                                                                converter: "Boolean",
-		                                                                default: macro.default
-		                                                            });
-		                                                            _this2.getAttributeRaw(macro.attributeName).watch(function (v) {
-		                                                                cp.setMacro(macro.macroName, v);
-		                                                            }, true);
-		                                                            return {
-		                                                                v: {
-		                                                                    v: void 0
-		                                                                }
-		                                                            };
-		                                                        default:
-		                                                            throw new Error("Unexpected macro type " + macro.type);
-		                                                    }
-		                                                };
-		
-		                                                for (var _iterator = cp.sort.macros[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-		                                                    var _ret3 = _loop2();
-		
-		                                                    if ((typeof _ret3 === "undefined" ? "undefined" : _typeof(_ret3)) === "object") return _ret3.v;
-		                                                }
-		                                            } catch (err) {
-		                                                _didIteratorError = true;
-		                                                _iteratorError = err;
-		                                            } finally {
-		                                                try {
-		                                                    if (!_iteratorNormalCompletion && _iterator.return) {
-		                                                        _iterator.return();
-		                                                    }
-		                                                } finally {
-		                                                    if (_didIteratorError) {
-		                                                        throw _iteratorError;
-		                                                    }
-		                                                }
-		                                            }
-		                                        }();
-		
-		                                        if ((typeof _ret === "undefined" ? "undefined" : _typeof(_ret)) === "object") return _ret.v;
-		                                    }
-		                                });
-		                                _context.next = 7;
-		                                return Promise.all(promises);
-		
-		                            case 7:
+		                                for (_key in this.material.macroDeclarations) {
+		                                    _loop(_key);
+		                                }
 		                                this.ready = true;
 		
-		                            case 8:
+		                            case 7:
 		                            case "end":
 		                                return _context.stop();
 		                        }
@@ -25617,7 +29244,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		};
 	
 	/***/ },
-	/* 36 */
+	/* 56 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -25628,627 +29255,15 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 		
-		var _Shader = __webpack_require__(37);
-		
-		var _Shader2 = _interopRequireDefault(_Shader);
-		
-		var _Program = __webpack_require__(38);
-		
-		var _Program2 = _interopRequireDefault(_Program);
-		
-		var _Pass2 = __webpack_require__(41);
-		
-		var _Pass3 = _interopRequireDefault(_Pass2);
-		
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-		
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-		
-		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-		
-		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-		
-		var SORTPass = function (_Pass) {
-		    _inherits(SORTPass, _Pass);
-		
-		    function SORTPass(factory, sort) {
-		        _classCallCheck(this, SORTPass);
-		
-		        var _this = _possibleConstructorReturn(this, (SORTPass.__proto__ || Object.getPrototypeOf(SORTPass)).call(this));
-		
-		        _this.factory = factory;
-		        _this.sort = sort;
-		        _this._macroValues = {};
-		        _this.attributes = Object.keys(sort.attributes);
-		        _this.gl = factory.gl;
-		        _this.fs = new _Shader2.default(_this.gl, WebGLRenderingContext.FRAGMENT_SHADER);
-		        _this.vs = new _Shader2.default(_this.gl, WebGLRenderingContext.VERTEX_SHADER);
-		        _this.program = new _Program2.default(_this.gl);
-		        for (var i = 0; i < sort.macros.length; i++) {
-		            var macroInfo = sort.macros[i];
-		            if (macroInfo.type === "boolean") {
-		                if (macroInfo.default) {
-		                    _this._macroValues[macroInfo.macroName] = "";
-		                }
-		            } else {
-		                _this._macroValues[macroInfo.macroName] = macroInfo.default;
-		            }
-		        }
-		        factory.macro.addObserver(function () {
-		            _this._updateProgram();
-		        });
-		        _this._updateProgram();
-		        return _this;
-		    }
-		
-		    _createClass(SORTPass, [{
-		        key: "setMacro",
-		        value: function setMacro(key, value) {
-		            if (this._macroValues[key] === value) {
-		                return; // Nothing to do if specified value is unchanged
-		            }
-		            if (typeof value === "boolean") {
-		                this._macroValues[key] = value ? "" : null;
-		            } else {
-		                this._macroValues[key] = value;
-		            }
-		            this._updateProgram();
-		        }
-		    }, {
-		        key: "getMacro",
-		        value: function getMacro(key) {
-		            return this._macroValues[key];
-		        }
-		    }, {
-		        key: "__beforeDraw",
-		        value: function __beforeDraw(args) {
-		            for (var attributeKey in this.sort.gomlAttributes) {
-		                this.sort.gomlAttributes[attributeKey].register(this.program.uniforms, args);
-		            }
-		            for (var key in this.sort.systemRegisterers) {
-		                this.sort.systemRegisterers[key](this.program.uniforms, args);
-		            }
-		            // apply gl states
-		            for (var _key in this.sort.configurator) {
-		                this.sort.configurator[_key](this.gl);
-		            }
-		        }
-		    }, {
-		        key: "_updateProgram",
-		        value: function _updateProgram() {
-		            this.fs.update(this._generateShaderCode("FS"));
-		            this.vs.update(this._generateShaderCode("VS"));
-		            this.program.update([this.vs, this.fs]);
-		        }
-		    }, {
-		        key: "_generateShaderCode",
-		        value: function _generateShaderCode(shaderType) {
-		            return "#define " + shaderType + "\n" + this.factory.shaderHeader + "\n" + this.factory.macro.macroString + "\n" + this._getMaterialMacro() + "\n/*BEGINNING OF USER CODE*/\n" + this.sort.shaderSource;
-		        }
-		        /**
-		         * Obtain macro code of material
-		         * @return {string} [description]
-		         */
-		
-		    }, {
-		        key: "_getMaterialMacro",
-		        value: function _getMaterialMacro() {
-		            var result = "";
-		            for (var key in this._macroValues) {
-		                if (this._macroValues[key] === null) {
-		                    continue;
-		                }
-		                result += "#define " + key + " " + this._macroValues[key] + "\n";
-		            }
-		            return result;
-		        }
-		    }]);
-		
-		    return SORTPass;
-		}(_Pass3.default);
-		
-		exports.default = SORTPass;
-	
-	/***/ },
-	/* 37 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-		
-		var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-		
-		var _ResourceBase2 = __webpack_require__(26);
-		
-		var _ResourceBase3 = _interopRequireDefault(_ResourceBase2);
-		
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-		
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-		
-		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-		
-		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-		
-		var Shader = function (_ResourceBase) {
-		    _inherits(Shader, _ResourceBase);
-		
-		    function Shader(gl, type, sourceCode) {
-		        _classCallCheck(this, Shader);
-		
-		        var _this = _possibleConstructorReturn(this, (Shader.__proto__ || Object.getPrototypeOf(Shader)).call(this, gl));
-		
-		        _this.type = type;
-		        _this.sourceCode = sourceCode;
-		        _this.shader = gl.createShader(type);
-		        if (sourceCode) {
-		            _this.update(sourceCode);
-		        }
-		        return _this;
-		    }
-		
-		    _createClass(Shader, [{
-		        key: "update",
-		        value: function update(source) {
-		            this.gl.shaderSource(this.shader, source);
-		            this.gl.compileShader(this.shader);
-		            if (!this.gl.getShaderParameter(this.shader, WebGLRenderingContext.COMPILE_STATUS)) {
-		                throw new Error("Compiling shader failed.\nSourceCode:\n" + source + "\n\nErrorCode:" + this.gl.getShaderInfoLog(this.shader));
-		            }
-		            this.sourceCode = source;
-		            this.valid = true;
-		        }
-		    }, {
-		        key: "destroy",
-		        value: function destroy() {
-		            _get(Shader.prototype.__proto__ || Object.getPrototypeOf(Shader.prototype), "destroy", this).call(this);
-		            this.gl.deleteShader(this.shader);
-		        }
-		    }]);
-		
-		    return Shader;
-		}(_ResourceBase3.default);
-		
-		exports.default = Shader;
-	
-	/***/ },
-	/* 38 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-		
-		var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-		
-		var _ResourceCache = __webpack_require__(39);
-		
-		var _ResourceCache2 = _interopRequireDefault(_ResourceCache);
-		
-		var _UniformProxy = __webpack_require__(40);
-		
-		var _UniformProxy2 = _interopRequireDefault(_UniformProxy);
-		
-		var _ResourceBase2 = __webpack_require__(26);
-		
-		var _ResourceBase3 = _interopRequireDefault(_ResourceBase2);
-		
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-		
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-		
-		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-		
-		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-		
-		var Program = function (_ResourceBase) {
-		    _inherits(Program, _ResourceBase);
-		
-		    function Program(gl) {
-		        _classCallCheck(this, Program);
-		
-		        var _this = _possibleConstructorReturn(this, (Program.__proto__ || Object.getPrototypeOf(Program)).call(this, gl));
-		
-		        _this._uniformLocations = {};
-		        _this._attributeLocations = {};
-		        _this.uniforms = new _UniformProxy2.default(_this);
-		        _this.program = gl.createProgram();
-		        return _this;
-		    }
-		
-		    _createClass(Program, [{
-		        key: "update",
-		        value: function update(shaders) {
-		            var _this2 = this;
-		
-		            if (this.valid) {
-		                // detach all attached shaders previously
-		                var preciousShaders = this.gl.getAttachedShaders(this.program);
-		                preciousShaders.forEach(function (s) {
-		                    return _this2.gl.detachShader(_this2.program, s);
-		                });
-		            }
-		            shaders.forEach(function (shader) {
-		                _this2.gl.attachShader(_this2.program, shader.shader);
-		            });
-		            this.gl.linkProgram(this.program);
-		            if (!this.gl.getProgramParameter(this.program, WebGLRenderingContext.LINK_STATUS)) {
-		                var errorLog = this.gl.getProgramInfoLog(this.program);
-		                throw new Error("LINK FAILED\n" + errorLog);
-		            }
-		            this.valid = true;
-		        }
-		    }, {
-		        key: "use",
-		        value: function use() {
-		            if (!_ResourceCache2.default.useProgramCheck(this.gl, this.program)) {
-		                this.gl.useProgram(this.program);
-		            }
-		            this.uniforms.onUse();
-		        }
-		    }, {
-		        key: "destroy",
-		        value: function destroy() {
-		            _get(Program.prototype.__proto__ || Object.getPrototypeOf(Program.prototype), "destroy", this).call(this);
-		            this.gl.deleteProgram(this.program);
-		        }
-		    }, {
-		        key: "findAttributeLocation",
-		        value: function findAttributeLocation(variableName) {
-		            if (this._attributeLocations[variableName] === void 0) {
-		                this._attributeLocations[variableName] = this.gl.getAttribLocation(this.program, variableName);
-		                this._safeEnableVertexAttribArray(this._attributeLocations[variableName]);
-		                return this._attributeLocations[variableName];
-		            } else {
-		                return this._attributeLocations[variableName];
-		            }
-		        }
-		    }, {
-		        key: "findUniformLocation",
-		        value: function findUniformLocation(variableName) {
-		            var location = this._uniformLocations[variableName];
-		            if (!location) {
-		                return this._uniformLocations[variableName] = this.gl.getUniformLocation(this.program, variableName);
-		            } else {
-		                return location;
-		            }
-		        }
-		    }, {
-		        key: "_safeEnableVertexAttribArray",
-		        value: function _safeEnableVertexAttribArray(location) {
-		            if (location < 0) {
-		                return;
-		            }
-		            this.gl.enableVertexAttribArray(location);
-		        }
-		    }]);
-		
-		    return Program;
-		}(_ResourceBase3.default);
-		
-		exports.default = Program;
-	
-	/***/ },
-	/* 39 */
-	/***/ function(module, exports) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-		
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-		
-		var ResourceCache = exports.ResourceCache = function () {
-		    function ResourceCache() {
-		        _classCallCheck(this, ResourceCache);
-		
-		        this._lastUsedPrograms = new Map();
-		    }
-		    /**
-		     * Save the specified WebGLProgram as last used program.
-		     * And check the specified program was used last time.
-		     */
-		
-		
-		    _createClass(ResourceCache, [{
-		        key: "useProgramCheck",
-		        value: function useProgramCheck(gl, program) {
-		            if (this._lastUsedPrograms.get(gl) === program) {
-		                return true;
-		            }
-		            this._lastUsedPrograms.set(gl, program);
-		            return false;
-		        }
-		    }]);
-		
-		    return ResourceCache;
-		}();
-		
-		exports.default = new ResourceCache();
-	
-	/***/ },
-	/* 40 */
-	/***/ function(module, exports) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-		
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-		
-		var UniformProxy = function () {
-		    function UniformProxy(program) {
-		        _classCallCheck(this, UniformProxy);
-		
-		        this.program = program;
-		        this._currentTextureRegister = 0;
-		        this._gl = program.gl;
-		    }
-		
-		    _createClass(UniformProxy, [{
-		        key: "uniformBool",
-		        value: function uniformBool(variableName, val) {
-		            var _this = this;
-		
-		            this._pass(variableName, function (l) {
-		                return _this._gl.uniform1i(l, val ? 1 : 0);
-		            });
-		        }
-		    }, {
-		        key: "uniformMatrix",
-		        value: function uniformMatrix(variableName, mat) {
-		            var _this2 = this;
-		
-		            this._pass(variableName, function (l) {
-		                return _this2._gl.uniformMatrix4fv(l, false, mat.rawElements);
-		            });
-		        }
-		    }, {
-		        key: "uniformMatrixArray",
-		        value: function uniformMatrixArray(variableName, matricies) {
-		            var _this3 = this;
-		
-		            var length = matricies.length / 16;
-		
-		            var _loop = function _loop(i) {
-		                _this3._passAsArray(variableName, i, function (l) {
-		                    return _this3._gl.uniformMatrix4fv(l, false, new Float32Array(matricies.buffer, matricies.byteOffset + i * 64));
-		                });
-		            };
-		
-		            for (var i = 0; i < length; i++) {
-		                _loop(i);
-		            }
-		        }
-		    }, {
-		        key: "uniformFloat",
-		        value: function uniformFloat(variableName, val) {
-		            var _this4 = this;
-		
-		            this._pass(variableName, function (l) {
-		                return _this4._gl.uniform1f(l, val);
-		            });
-		        }
-		    }, {
-		        key: "uniformFloatArray",
-		        value: function uniformFloatArray(variableName, val) {
-		            var _this5 = this;
-		
-		            this._pass(variableName, function (l) {
-		                return _this5._gl.uniform1fv(l, val);
-		            });
-		        }
-		    }, {
-		        key: "uniformInt",
-		        value: function uniformInt(variableName, val) {
-		            var _this6 = this;
-		
-		            this._pass(variableName, function (l) {
-		                return _this6._gl.uniform1i(l, val);
-		            });
-		        }
-		    }, {
-		        key: "uniformVector2",
-		        value: function uniformVector2(variableName, val) {
-		            var _this7 = this;
-		
-		            this._pass(variableName, function (l) {
-		                return _this7._gl.uniform2f(l, val.X, val.Y);
-		            });
-		        }
-		    }, {
-		        key: "uniformVector2Array",
-		        value: function uniformVector2Array(variableName, val) {
-		            var _this8 = this;
-		
-		            this._pass(variableName, function (l) {
-		                return _this8._gl.uniform2fv(l, val);
-		            });
-		        }
-		    }, {
-		        key: "uniformVector3",
-		        value: function uniformVector3(variableName, val) {
-		            var _this9 = this;
-		
-		            this._pass(variableName, function (l) {
-		                return _this9._gl.uniform3f(l, val.X, val.Y, val.Z);
-		            });
-		        }
-		    }, {
-		        key: "uniformVector3Array",
-		        value: function uniformVector3Array(variableName, val) {
-		            var _this10 = this;
-		
-		            this._pass(variableName, function (l) {
-		                return _this10._gl.uniform3fv(l, val);
-		            });
-		        }
-		    }, {
-		        key: "uniformColor3",
-		        value: function uniformColor3(variableName, val) {
-		            var _this11 = this;
-		
-		            this._pass(variableName, function (l) {
-		                return _this11._gl.uniform3f(l, val.R, val.G, val.B);
-		            });
-		        }
-		    }, {
-		        key: "uniformVector4",
-		        value: function uniformVector4(variableName, val) {
-		            var _this12 = this;
-		
-		            this._pass(variableName, function (l) {
-		                return _this12._gl.uniform4f(l, val.X, val.Y, val.Z, val.W);
-		            });
-		        }
-		    }, {
-		        key: "uniformVector4Array",
-		        value: function uniformVector4Array(variableName, val) {
-		            var _this13 = this;
-		
-		            this._pass(variableName, function (l) {
-		                return _this13._gl.uniform4fv(l, val);
-		            });
-		        }
-		    }, {
-		        key: "uniformColor4",
-		        value: function uniformColor4(variableName, val) {
-		            var _this14 = this;
-		
-		            this._pass(variableName, function (l) {
-		                return _this14._gl.uniform4f(l, val.R, val.G, val.B, val.A);
-		            });
-		        }
-		    }, {
-		        key: "uniformTexture2D",
-		        value: function uniformTexture2D(variableName, val) {
-		            if (val.valid) {
-		                val.register(this._currentTextureRegister);
-		                this.uniformInt(variableName, this._currentTextureRegister);
-		                this._currentTextureRegister++;
-		            } else {
-		                console.warn("The texture assigned to '" + variableName + "' is not valid.");
-		            }
-		        }
-		    }, {
-		        key: "onUse",
-		        value: function onUse() {
-		            this._currentTextureRegister = 0;
-		        }
-		    }, {
-		        key: "_pass",
-		        value: function _pass(variableName, act) {
-		            var location = this.program.findUniformLocation(variableName);
-		            if (location) {
-		                act(location);
-		            }
-		        }
-		    }, {
-		        key: "_passAsArray",
-		        value: function _passAsArray(variableName, index, act) {
-		            var location = this.program.findUniformLocation(variableName + "[" + index + "]");
-		            if (location) {
-		                act(location);
-		            }
-		        }
-		    }]);
-		
-		    return UniformProxy;
-		}();
-		
-		exports.default = UniformProxy;
-	
-	/***/ },
-	/* 41 */
-	/***/ function(module, exports) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-		
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-		
-		var Pass = function () {
-		    function Pass() {
-		        _classCallCheck(this, Pass);
-		
-		        this.attributes = [];
-		    }
-		
-		    _createClass(Pass, [{
-		        key: "draw",
-		        value: function draw(arg) {
-		            if (!this.program) {
-		                return;
-		            }
-		            this.program.use();
-		            this.__beforeDraw(arg);
-		            arg.geometry.drawByDefault(arg.targetBuffer, this.attributes, this.program, arg.drawCount, arg.drawOffset);
-		        }
-		    }, {
-		        key: "__beforeDraw",
-		        value: function __beforeDraw(arg) {
-		            // Should be overrrided or rewritten
-		        }
-		    }]);
-		
-		    return Pass;
-		}();
-		
-		exports.default = Pass;
-	
-	/***/ },
-	/* 42 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-		
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-		
-		var _DrawPriorty = __webpack_require__(43);
+		var _DrawPriorty = __webpack_require__(57);
 		
 		var _DrawPriorty2 = _interopRequireDefault(_DrawPriorty);
 		
-		var _ResourceBase = __webpack_require__(26);
-		
-		var _ResourceBase2 = _interopRequireDefault(_ResourceBase);
-		
-		var _SORTPass = __webpack_require__(36);
-		
-		var _SORTPass2 = _interopRequireDefault(_SORTPass);
-		
-		var _Component2 = __webpack_require__(15);
+		var _Component2 = __webpack_require__(9);
 		
 		var _Component3 = _interopRequireDefault(_Component2);
 		
-		var _grimoirejs = __webpack_require__(14);
+		var _grimoirejs = __webpack_require__(8);
 		
 		var _grimoirejs2 = _interopRequireDefault(_grimoirejs);
 		
@@ -26285,6 +29300,12 @@ return /******/ (function(modules) { // webpackBootstrap
 		    });
 		};
 		
+		/**
+		 * マテリアルとマテリアルへの属性を管理するためのコンポーネント
+		 *
+		 * このコンポーネントは将来的に`MeshRenderer`と統合されます。
+		 * 指定されたマテリアルの初期化の管理や、マテリアルによって動的に追加される属性の管理を行います、
+		 */
 		var MaterialContainerComponent = function (_Component) {
 		    _inherits(MaterialContainerComponent, _Component);
 		
@@ -26294,7 +29315,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		        var _this = _possibleConstructorReturn(this, (MaterialContainerComponent.__proto__ || Object.getPrototypeOf(MaterialContainerComponent)).apply(this, arguments));
 		
 		        _this.materialArgs = {};
-		        _this.ready = false;
+		        _this.materialReady = false;
 		        _this.useMaterial = false;
 		        return _this;
 		    }
@@ -26302,10 +29323,13 @@ return /******/ (function(modules) { // webpackBootstrap
 		    _createClass(MaterialContainerComponent, [{
 		        key: "getDrawPriorty",
 		        value: function getDrawPriorty(depth) {
-		            if (!this.ready) {
+		            if (!this.materialReady) {
 		                return Number.MAX_VALUE;
 		            }
-		            var orderCriteria = _DrawPriorty2.default[this._drawOrder ? this._drawOrder : this.material.drawOrder];
+		            var orderCriteria = _DrawPriorty2.default[this._drawOrder ? this._drawOrder : this.material.techniques["default"].drawOrder];
+		            if (orderCriteria === void 0) {
+		                throw new Error("Specified drawing order \"" + this.material.techniques["default"].drawOrder + "\" is not defined");
+		            }
 		            if (orderCriteria.descending) {
 		                return (1.0 - depth / 10000) * orderCriteria.priorty;
 		            } else {
@@ -26315,7 +29339,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		    }, {
 		        key: "$mount",
 		        value: function $mount() {
-		            this.getAttributeRaw("material").watch(this._onMaterialChanged);
+		            this.getAttributeRaw("material").watch(this._onMaterialChanged.bind(this));
 		            this.companion.get("loader").register(this._onMaterialChanged());
 		            this.getAttributeRaw("drawOrder").boundTo("_drawOrder");
 		        }
@@ -26344,13 +29368,16 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		                            case 4:
 		                                this.useMaterial = true;
+		                                if (this._registeredAttributes) {
+		                                    this.__removeAttributes();
+		                                }
 		                                if (!this._materialComponent) {
 		                                    this._prepareInternalMaterial(materialPromise);
 		                                } else {
 		                                    this._prepareExternalMaterial(materialPromise);
 		                                }
 		
-		                            case 6:
+		                            case 7:
 		                            case "end":
 		                                return _context.stop();
 		                        }
@@ -26380,10 +29407,10 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		                            case 4:
 		                                material = _context2.sent;
-		
+		                                // waiting for material load completion
 		                                this.material = material;
 		                                this.materialArgs = this._materialComponent.materialArgs;
-		                                this.ready = true;
+		                                this.materialReady = true;
 		
 		                            case 8:
 		                            case "end":
@@ -26399,7 +29426,8 @@ return /******/ (function(modules) { // webpackBootstrap
 		            return __awaiter(this, void 0, void 0, regeneratorRuntime.mark(function _callee3() {
 		                var _this2 = this;
 		
-		                var loader, material, promises;
+		                var loader, material, key, _loop, _key;
+		
 		                return regeneratorRuntime.wrap(function _callee3$(_context3) {
 		                    while (1) {
 		                        switch (_context3.prev = _context3.next) {
@@ -26422,95 +29450,27 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		                            case 6:
 		                                material = _context3.sent;
-		                                promises = [];
-		
-		                                material.pass.forEach(function (p) {
-		                                    if (p instanceof _SORTPass2.default) {
-		                                        var _ret = function () {
-		                                            var cp = p;
-		
-		                                            var _loop = function _loop(key) {
-		                                                var val = cp.sort.gomlAttributes[key];
-		                                                _this2.__addAtribute(key, val);
-		                                                _this2.getAttributeRaw(key).watch(function (v) {
-		                                                    _this2.materialArgs[key] = v;
-		                                                });
-		                                                var value = _this2.materialArgs[key] = _this2.getAttribute(key);
-		                                                if (value instanceof _ResourceBase2.default) {
-		                                                    promises.push(value.validPromise);
-		                                                }
-		                                            };
-		
-		                                            for (var key in cp.sort.gomlAttributes) {
-		                                                _loop(key);
-		                                            }
-		                                            var _iteratorNormalCompletion = true;
-		                                            var _didIteratorError = false;
-		                                            var _iteratorError = undefined;
-		
-		                                            try {
-		                                                var _loop2 = function _loop2() {
-		                                                    var macro = _step.value;
-		
-		                                                    switch (macro.type) {
-		                                                        case "int":
-		                                                            _this2.__addAtribute(macro.attributeName, {
-		                                                                converter: "Number",
-		                                                                default: macro.default
-		                                                            });
-		                                                            _this2.getAttributeRaw(macro.attributeName).watch(function (v) {
-		                                                                cp.setMacro(macro.macroName, "" + Math.floor(v));
-		                                                            }, true);
-		                                                            return {
-		                                                                v: {
-		                                                                    v: void 0
-		                                                                }
-		                                                            };
-		                                                        case "bool":
-		                                                            _this2.__addAtribute(macro.attributeName, {
-		                                                                converter: "Boolean",
-		                                                                default: macro.default
-		                                                            });
-		                                                            _this2.getAttributeRaw(macro.attributeName).watch(function (v) {
-		                                                                cp.setMacro(macro.macroName, v);
-		                                                            }, true);
-		                                                            return {
-		                                                                v: {
-		                                                                    v: void 0
-		                                                                }
-		                                                            };
-		                                                    }
-		                                                };
-		
-		                                                for (var _iterator = cp.sort.macros[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-		                                                    var _ret3 = _loop2();
-		
-		                                                    if ((typeof _ret3 === "undefined" ? "undefined" : _typeof(_ret3)) === "object") return _ret3.v;
-		                                                }
-		                                            } catch (err) {
-		                                                _didIteratorError = true;
-		                                                _iteratorError = err;
-		                                            } finally {
-		                                                try {
-		                                                    if (!_iteratorNormalCompletion && _iterator.return) {
-		                                                        _iterator.return();
-		                                                    }
-		                                                } finally {
-		                                                    if (_didIteratorError) {
-		                                                        throw _iteratorError;
-		                                                    }
-		                                                }
-		                                            }
-		                                        }();
-		
-		                                        if ((typeof _ret === "undefined" ? "undefined" : _typeof(_ret)) === "object") return _ret.v;
-		                                    }
-		                                });
-		                                Promise.all(promises);
+		                                // waiting for material load completion
 		                                this.material = material;
-		                                this.ready = true;
+		                                for (key in this.material.argumentDeclarations) {
+		                                    this.__addAtribute(key, this.material.argumentDeclarations[key]);
+		                                    this.getAttributeRaw(key).boundTo(key, this.material.arguments);
+		                                }
 		
-		                            case 12:
+		                                _loop = function _loop(_key) {
+		                                    _this2.__addAtribute(_key, _this2.material.macroDeclarations[_key]);
+		                                    _this2.getAttributeRaw(_key).watch(function (v) {
+		                                        _this2.material.setMacroValue(_key, v);
+		                                    }, true);
+		                                };
+		
+		                                for (_key in this.material.macroDeclarations) {
+		                                    _loop(_key);
+		                                }
+		                                this._registeredAttributes = true;
+		                                this.materialReady = true;
+		
+		                            case 13:
 		                            case "end":
 		                                return _context3.stop();
 		                        }
@@ -26539,11 +29499,19 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = MaterialContainerComponent;
 		
 		MaterialContainerComponent.attributes = {
+		    /**
+		     * 対象のマテリアル
+		     */
 		    material: {
 		        converter: "Material",
 		        default: "new(unlit)",
 		        componentBoundTo: "_materialComponent" // When the material was specified with the other material tag, this field would be assigned.
 		    },
+		    /**
+		     * 描画順序
+		     *
+		     * デフォルトの状態では、マテリアルから読み込んだ描画順序設定を用います
+		     */
 		    drawOrder: {
 		        converter: "String",
 		        default: null
@@ -26552,7 +29520,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		MaterialContainerComponent._defaultMaterial = "unlit";
 	
 	/***/ },
-	/* 43 */
+	/* 57 */
 	/***/ function(module, exports) {
 	
 		"use strict";
@@ -26569,7 +29537,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		};
 	
 	/***/ },
-	/* 44 */
+	/* 58 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -26580,11 +29548,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 		
-		var _MaterialFactory = __webpack_require__(45);
+		var _MaterialFactory = __webpack_require__(21);
 		
 		var _MaterialFactory2 = _interopRequireDefault(_MaterialFactory);
 		
-		var _Component2 = __webpack_require__(15);
+		var _Component2 = __webpack_require__(9);
 		
 		var _Component3 = _interopRequireDefault(_Component2);
 		
@@ -26596,6 +29564,9 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 		
+		/**
+		 * マテリアル設定ファイルを読み込むためのコンポーネント
+		 */
 		var MaterialImporterComponent = function (_Component) {
 		    _inherits(MaterialImporterComponent, _Component);
 		
@@ -26608,9 +29579,19 @@ return /******/ (function(modules) { // webpackBootstrap
 		    _createClass(MaterialImporterComponent, [{
 		        key: "$awake",
 		        value: function $awake() {
+		            this.getAttributeRaw("typeName").watch(function (v) {
+		                console.warn("Changeing 'typeName' on MaterialImporter makes no sense. This change won't affect anything.");
+		            });
+		            this.getAttributeRaw("src").watch(function (v) {
+		                console.warn("Changeing 'src' on MaterialImporter makes no sense. This change won't affect anything.");
+		            });
 		            if (!this.getAttribute("typeName") || !this.getAttribute("src")) {
 		                throw new Error("type or src cannot be null in material importer");
 		            } else {
+		                var typeName = this.getAttribute("typeName");
+		                if (_MaterialFactory2.default.factories[typeName] !== void 0) {
+		                    throw new Error("A material type '" + typeName + "' is already loaded.");
+		                }
 		                _MaterialFactory2.default.addSORTMaterialFromURL(this.getAttribute("typeName"), this.getAttribute("src"));
 		            }
 		        }
@@ -26622,10 +29603,16 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = MaterialImporterComponent;
 		
 		MaterialImporterComponent.attributes = {
+		    /**
+		     * マテリアル名として登録される名前
+		     */
 		    typeName: {
 		        default: null,
 		        converter: "String"
 		    },
+		    /**
+		     * 読み込み先のファイルパス
+		     */
 		    src: {
 		        default: null,
 		        converter: "String"
@@ -26633,2623 +29620,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		};
 	
 	/***/ },
-	/* 45 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-		
-		var _DrawPriorty = __webpack_require__(43);
-		
-		var _DrawPriorty2 = _interopRequireDefault(_DrawPriorty);
-		
-		var _SORTPass = __webpack_require__(36);
-		
-		var _SORTPass2 = _interopRequireDefault(_SORTPass);
-		
-		var _MacroRegistory = __webpack_require__(46);
-		
-		var _MacroRegistory2 = _interopRequireDefault(_MacroRegistory);
-		
-		var _PassFactory = __webpack_require__(48);
-		
-		var _PassFactory2 = _interopRequireDefault(_PassFactory);
-		
-		var _TextFileResolver = __webpack_require__(6);
-		
-		var _TextFileResolver2 = _interopRequireDefault(_TextFileResolver);
-		
-		var _Material = __webpack_require__(62);
-		
-		var _Material2 = _interopRequireDefault(_Material);
-		
-		var _header = __webpack_require__(63);
-		
-		var _header2 = _interopRequireDefault(_header);
-		
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-		
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-		
-		var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
-		    return new (P || (P = Promise))(function (resolve, reject) {
-		        function fulfilled(value) {
-		            try {
-		                step(generator.next(value));
-		            } catch (e) {
-		                reject(e);
-		            }
-		        }
-		        function rejected(value) {
-		            try {
-		                step(generator["throw"](value));
-		            } catch (e) {
-		                reject(e);
-		            }
-		        }
-		        function step(result) {
-		            result.done ? resolve(result.value) : new P(function (resolve) {
-		                resolve(result.value);
-		            }).then(fulfilled, rejected);
-		        }
-		        step((generator = generator.apply(thisArg, _arguments)).next());
-		    });
-		};
-		
-		/**
-		 * Manage factories for materials.
-		 * Materials can be instanciated with this instance.
-		 */
-		var MaterialFactory = function () {
-		    function MaterialFactory(gl) {
-		        _classCallCheck(this, MaterialFactory);
-		
-		        this.gl = gl;
-		        this.shaderHeader = MaterialFactory.defaultShaderHeader;
-		        this.macro = new _MacroRegistory2.default();
-		    }
-		
-		    _createClass(MaterialFactory, [{
-		        key: "instanciate",
-		        value: function instanciate(typeName) {
-		            return __awaiter(this, void 0, void 0, regeneratorRuntime.mark(function _callee() {
-		                return regeneratorRuntime.wrap(function _callee$(_context) {
-		                    while (1) {
-		                        switch (_context.prev = _context.next) {
-		                            case 0:
-		                                if (!MaterialFactory.factories[typeName]) {
-		                                    _context.next = 4;
-		                                    break;
-		                                }
-		
-		                                return _context.abrupt("return", MaterialFactory.factories[typeName](this));
-		
-		                            case 4:
-		                                _context.next = 6;
-		                                return this._waitForRegistered(typeName);
-		
-		                            case 6:
-		                                return _context.abrupt("return", _context.sent);
-		
-		                            case 7:
-		                            case "end":
-		                                return _context.stop();
-		                        }
-		                    }
-		                }, _callee, this);
-		            }));
-		        }
-		    }, {
-		        key: "_waitForRegistered",
-		        value: function _waitForRegistered(typeName) {
-		            var _this = this;
-		
-		            return new Promise(function (resolve) {
-		                MaterialFactory._onRegister(typeName, function () {
-		                    resolve(MaterialFactory.factories[typeName](_this));
-		                });
-		            });
-		        }
-		    }], [{
-		        key: "addMaterialType",
-		        value: function addMaterialType(typeName, factory) {
-		            MaterialFactory.factories[typeName] = factory;
-		            if (MaterialFactory.registerdHandlers[typeName]) {
-		                MaterialFactory.registerdHandlers[typeName].forEach(function (t) {
-		                    return t();
-		                });
-		            }
-		        }
-		        /**
-		         * Add source of .sort material as specified typename.
-		         * @param  {string}        typeName [description]
-		         * @param  {string}        source   [description]
-		         * @return {Promise<void>}          [description]
-		         */
-		
-		    }, {
-		        key: "addSORTMaterial",
-		        value: function addSORTMaterial(typeName, source) {
-		            return __awaiter(this, void 0, void 0, regeneratorRuntime.mark(function _callee2() {
-		                var sortInfos;
-		                return regeneratorRuntime.wrap(function _callee2$(_context2) {
-		                    while (1) {
-		                        switch (_context2.prev = _context2.next) {
-		                            case 0:
-		                                _context2.next = 2;
-		                                return _PassFactory2.default.passInfoFromSORT(source);
-		
-		                            case 2:
-		                                sortInfos = _context2.sent;
-		
-		                                MaterialFactory.addMaterialType(typeName, function (factory) {
-		                                    var sorts = sortInfos.map(function (p) {
-		                                        return new _SORTPass2.default(factory, p);
-		                                    });
-		                                    return new _Material2.default(sorts, MaterialFactory._parseSortDrawOrder(source));
-		                                });
-		
-		                            case 4:
-		                            case "end":
-		                                return _context2.stop();
-		                        }
-		                    }
-		                }, _callee2, this);
-		            }));
-		        }
-		        /**
-		         * Add source of .sort material from external url as specified typeName.
-		         * @param  {string}        typeName [description]
-		         * @param  {string}        url      [description]
-		         * @return {Promise<void>}          [description]
-		         */
-		
-		    }, {
-		        key: "addSORTMaterialFromURL",
-		        value: function addSORTMaterialFromURL(typeName, url) {
-		            return __awaiter(this, void 0, void 0, regeneratorRuntime.mark(function _callee3() {
-		                var source;
-		                return regeneratorRuntime.wrap(function _callee3$(_context3) {
-		                    while (1) {
-		                        switch (_context3.prev = _context3.next) {
-		                            case 0:
-		                                _context3.next = 2;
-		                                return _TextFileResolver2.default.resolve(url);
-		
-		                            case 2:
-		                                source = _context3.sent;
-		                                _context3.next = 5;
-		                                return MaterialFactory.addSORTMaterial(typeName, source);
-		
-		                            case 5:
-		                            case "end":
-		                                return _context3.stop();
-		                        }
-		                    }
-		                }, _callee3, this);
-		            }));
-		        }
-		    }, {
-		        key: "_onRegister",
-		        value: function _onRegister(factoryName, handler) {
-		            if (MaterialFactory.registerdHandlers[factoryName]) {
-		                MaterialFactory.registerdHandlers[factoryName].push(handler);
-		            } else {
-		                MaterialFactory.registerdHandlers[factoryName] = [handler];
-		            }
-		        }
-		    }, {
-		        key: "_parseSortDrawOrder",
-		        value: function _parseSortDrawOrder(source) {
-		            var regex = /@DrawOrder\(\s*([a-zA-Z0-9]+)\s*\)/;
-		            var result = regex.exec(source);
-		            if (!result) {
-		                return undefined;
-		            } else {
-		                var drawOrder = result[1];
-		                if (_DrawPriorty2.default[drawOrder] === void 0) {
-		                    throw new Error("Specified draw order " + drawOrder + " was not found.");
-		                } else {
-		                    return drawOrder;
-		                }
-		            }
-		        }
-		    }]);
-		
-		    return MaterialFactory;
-		}();
-		
-		exports.default = MaterialFactory;
-		
-		MaterialFactory.defaultShaderHeader = _header2.default;
-		/**
-		 * Actual material generator.
-		 */
-		MaterialFactory.factories = {};
-		MaterialFactory.registerdHandlers = {};
-	
-	/***/ },
-	/* 46 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-		
-		var _DefaultMacro = __webpack_require__(47);
-		
-		var _DefaultMacro2 = _interopRequireDefault(_DefaultMacro);
-		
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-		
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-		
-		/**
-		 * Manage macros which would be appended head of all shaders grimoire.js would load.
-		 */
-		var MacroRegistory = function () {
-		    function MacroRegistory() {
-		        _classCallCheck(this, MacroRegistory);
-		
-		        /**
-		         * Macro string which generated by registored macro.
-		         * @type {string}
-		         */
-		        this.macroString = "";
-		        /**
-		         * The map of macro.
-		         */
-		        this._macro = {};
-		        /**
-		         * Handlers functions for changing macro.
-		         */
-		        this._observers = [];
-		        for (var key in _DefaultMacro2.default) {
-		            this.setValue(key, _DefaultMacro2.default[key]);
-		        }
-		    }
-		    /**
-		     * Set the value of macros.
-		     * @param {string}    key [description]
-		     * @param {string =   null}        val [description]
-		     */
-		
-		
-		    _createClass(MacroRegistory, [{
-		        key: "setValue",
-		        value: function setValue(key) {
-		            var val = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-		
-		            if (this._macro[key] !== val) {
-		                this._macro[key] = val;
-		                this.macroString = this._getMacroString();
-		                this._notifyMacroChanged();
-		            }
-		        }
-		        /**
-		         * Get the value of macro.
-		         * @param  {string} key [description]
-		         * @return {string}     [description]
-		         */
-		
-		    }, {
-		        key: "getValue",
-		        value: function getValue(key) {
-		            return this._macro[key];
-		        }
-		    }, {
-		        key: "addObserver",
-		        value: function addObserver(handler) {
-		            this._observers.push(handler);
-		        }
-		    }, {
-		        key: "removeObserver",
-		        value: function removeObserver(handler) {
-		            for (var i = 0; i < this._observers.length; i++) {
-		                if (this._observers[i] === handler) {
-		                    this._observers.splice(i, 1);
-		                }
-		            }
-		        }
-		    }, {
-		        key: "_getMacroString",
-		        value: function _getMacroString() {
-		            var result = "";
-		            for (var key in this._macro) {
-		                result += this._genSingleMacroString(key, this._macro[key]);
-		            }
-		            return result;
-		        }
-		    }, {
-		        key: "_notifyMacroChanged",
-		        value: function _notifyMacroChanged() {
-		            for (var i = 0; i < this._observers.length; i++) {
-		                this._observers[i]();
-		            }
-		        }
-		        /**
-		         * Generate macro string for single macro
-		         * @param  {string} key [description]
-		         * @param  {string} val [description]
-		         * @return {string}     [description]
-		         */
-		
-		    }, {
-		        key: "_genSingleMacroString",
-		        value: function _genSingleMacroString(key, val) {
-		            if (val === void 0) {
-		                throw new Error("Macro value of " + key + " can't be undefined");
-		            }
-		            if (val === null) {
-		                return "#define " + key + "\n";
-		            } else {
-		                return "#define " + key + " " + val + "\n";
-		            }
-		        }
-		    }]);
-		
-		    return MacroRegistory;
-		}();
-		
-		exports.default = MacroRegistory;
-	
-	/***/ },
-	/* 47 */
-	/***/ function(module, exports) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		exports.default = {
-		    "GRIMOIRE": null,
-		    "WEBGL_VERSION": "1"
-		};
-	
-	/***/ },
-	/* 48 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-		
-		var _SORTPassParser = __webpack_require__(49);
-		
-		var _SORTPassParser2 = _interopRequireDefault(_SORTPassParser);
-		
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-		
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-		
-		var PassFactory = function () {
-		    function PassFactory() {
-		        _classCallCheck(this, PassFactory);
-		    }
-		
-		    _createClass(PassFactory, null, [{
-		        key: "passInfoFromSORT",
-		        value: function passInfoFromSORT(source) {
-		            var splitted = source.split("@Pass");
-		            splitted.splice(0, 1); // Separate with @Pass and if there was some pass without containing @, that would be skipped since that is assumed as empty.
-		            return Promise.all(splitted.map(function (p) {
-		                return _SORTPassParser2.default.parse(p);
-		            }));
-		        }
-		    }]);
-		
-		    return PassFactory;
-		}();
-		
-		exports.default = PassFactory;
-	
-	/***/ },
-	/* 49 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-		
-		var _UniformRegisterer = __webpack_require__(50);
-		
-		var _UniformRegisterer2 = _interopRequireDefault(_UniformRegisterer);
-		
-		var _CommentRemover = __webpack_require__(54);
-		
-		var _CommentRemover2 = _interopRequireDefault(_CommentRemover);
-		
-		var _ImportTransformer = __webpack_require__(55);
-		
-		var _ImportTransformer2 = _interopRequireDefault(_ImportTransformer);
-		
-		var _VariableParser = __webpack_require__(57);
-		
-		var _VariableParser2 = _interopRequireDefault(_VariableParser);
-		
-		var _VariableAnnotationRemover = __webpack_require__(59);
-		
-		var _VariableAnnotationRemover2 = _interopRequireDefault(_VariableAnnotationRemover);
-		
-		var _PreferenceParser = __webpack_require__(60);
-		
-		var _PreferenceParser2 = _interopRequireDefault(_PreferenceParser);
-		
-		var _AnnotationRemover = __webpack_require__(61);
-		
-		var _AnnotationRemover2 = _interopRequireDefault(_AnnotationRemover);
-		
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-		
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-		
-		var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
-		    return new (P || (P = Promise))(function (resolve, reject) {
-		        function fulfilled(value) {
-		            try {
-		                step(generator.next(value));
-		            } catch (e) {
-		                reject(e);
-		            }
-		        }
-		        function rejected(value) {
-		            try {
-		                step(generator["throw"](value));
-		            } catch (e) {
-		                reject(e);
-		            }
-		        }
-		        function step(result) {
-		            result.done ? resolve(result.value) : new P(function (resolve) {
-		                resolve(result.value);
-		            }).then(fulfilled, rejected);
-		        }
-		        step((generator = generator.apply(thisArg, _arguments)).next());
-		    });
-		};
-		
-		var SORTPassParser = function () {
-		    function SORTPassParser() {
-		        _classCallCheck(this, SORTPassParser);
-		    }
-		
-		    _createClass(SORTPassParser, null, [{
-		        key: "parse",
-		        value: function parse(source) {
-		            return __awaiter(this, void 0, void 0, regeneratorRuntime.mark(function _callee() {
-		                var transformingInfo, i;
-		                return regeneratorRuntime.wrap(function _callee$(_context) {
-		                    while (1) {
-		                        switch (_context.prev = _context.next) {
-		                            case 0:
-		                                transformingInfo = {
-		                                    origin: source,
-		                                    info: {
-		                                        shaderSource: source,
-		                                        uniforms: {},
-		                                        attributes: {},
-		                                        macros: [],
-		                                        configurator: [],
-		                                        systemRegisterers: [],
-		                                        gomlAttributes: {}
-		                                    }
-		                                };
-		                                i = 0;
-		
-		                            case 2:
-		                                if (!(i < SORTPassParser.transformers.length)) {
-		                                    _context.next = 9;
-		                                    break;
-		                                }
-		
-		                                _context.next = 5;
-		                                return SORTPassParser.transformers[i](transformingInfo);
-		
-		                            case 5:
-		                                transformingInfo = _context.sent;
-		
-		                            case 6:
-		                                i++;
-		                                _context.next = 2;
-		                                break;
-		
-		                            case 9:
-		                                return _context.abrupt("return", transformingInfo.info);
-		
-		                            case 10:
-		                            case "end":
-		                                return _context.stop();
-		                        }
-		                    }
-		                }, _callee, this);
-		            }));
-		        }
-		    }]);
-		
-		    return SORTPassParser;
-		}();
-		
-		exports.default = SORTPassParser;
-		
-		SORTPassParser.transformers = [_CommentRemover2.default, _ImportTransformer2.default, (0, _VariableParser2.default)("uniform"), (0, _VariableParser2.default)("attribute"), _PreferenceParser2.default, _AnnotationRemover2.default, _VariableAnnotationRemover2.default, _UniformRegisterer2.default];
-	
-	/***/ },
-	/* 50 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		exports.default = function (input) {
-		    return __awaiter(this, void 0, void 0, regeneratorRuntime.mark(function _callee2() {
-		        return regeneratorRuntime.wrap(function _callee2$(_context2) {
-		            while (1) {
-		                switch (_context2.prev = _context2.next) {
-		                    case 0:
-		                        _context2.next = 2;
-		                        return _registerUserUniforms(input);
-		
-		                    case 2:
-		                        _registerEnvUniforms(input);
-		                        return _context2.abrupt("return", input);
-		
-		                    case 4:
-		                    case "end":
-		                        return _context2.stop();
-		                }
-		            }
-		        }, _callee2, this);
-		    }));
-		};
-		
-		var _GLSLUtil = __webpack_require__(51);
-		
-		var _GLSLUtil2 = _interopRequireDefault(_GLSLUtil);
-		
-		var _EnvUniformValueResolver = __webpack_require__(52);
-		
-		var _EnvUniformValueResolver2 = _interopRequireDefault(_EnvUniformValueResolver);
-		
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-		
-		var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
-		    return new (P || (P = Promise))(function (resolve, reject) {
-		        function fulfilled(value) {
-		            try {
-		                step(generator.next(value));
-		            } catch (e) {
-		                reject(e);
-		            }
-		        }
-		        function rejected(value) {
-		            try {
-		                step(generator["throw"](value));
-		            } catch (e) {
-		                reject(e);
-		            }
-		        }
-		        function step(result) {
-		            result.done ? resolve(result.value) : new P(function (resolve) {
-		                resolve(result.value);
-		            }).then(fulfilled, rejected);
-		        }
-		        step((generator = generator.apply(thisArg, _arguments)).next());
-		    });
-		};
-		
-		function _getDecl(converter, defaultValue, register) {
-		    return {
-		        converter: converter,
-		        default: defaultValue,
-		        register: register
-		    };
-		}
-		// return default value if annotation containing default value. if not, return provided default value.
-		function _resolveDefault(vi, defaultValue) {
-		    if (vi.variableAnnotation.default) {
-		        return vi.variableAnnotation.default;
-		    } else {
-		        return defaultValue;
-		    }
-		}
-		function _registerUserUniforms(input) {
-		    return __awaiter(this, void 0, void 0, regeneratorRuntime.mark(function _callee() {
-		        var promises, attributes, _loop, variableName, _ret;
-		
-		        return regeneratorRuntime.wrap(function _callee$(_context) {
-		            while (1) {
-		                switch (_context.prev = _context.next) {
-		                    case 0:
-		                        promises = [];
-		                        attributes = input.info.gomlAttributes;
-		
-		                        _loop = function _loop(variableName) {
-		                            if (variableName.charAt(0) === "_") {
-		                                // this should not assigned by material argument
-		                                return "continue";
-		                            }
-		                            var valName = variableName;
-		                            var uniforms = input.info.uniforms;
-		                            var variableInfo = uniforms[variableName];
-		                            var annotations = variableInfo.variableAnnotation;
-		                            if (_GLSLUtil2.default.isPrimitive(variableInfo.variableType)) {
-		                                if (variableInfo.isArray) {
-		                                    switch (variableInfo.variableType) {
-		                                        case "float":
-		                                            var defaultArray = new Array();
-		                                            defaultArray = defaultArray.map(function (p) {
-		                                                return 0;
-		                                            });
-		                                            attributes[valName] = _getDecl("NumberArray", _resolveDefault(variableInfo, defaultArray), function (proxy, matArg) {
-		                                                proxy.uniformFloatArray(valName, matArg.attributeValues[valName]);
-		                                            });
-		                                            break;
-		                                        case "mat4":
-		                                            var defaultArray2 = new Array();
-		                                            defaultArray = defaultArray2.map(function (p) {
-		                                                return 0;
-		                                            });
-		                                            attributes[valName] = _getDecl("Object", _resolveDefault(variableInfo, defaultArray), function (proxy, matArg) {
-		                                                proxy.uniformMatrixArray(valName, matArg.attributeValues[valName]);
-		                                            });
-		                                            break;
-		                                        default:
-		                                            throw new Error("Unsupported array type " + variableInfo.variableType);
-		                                    }
-		                                } else {
-		                                    (function () {
-		                                        switch (variableInfo.variableType) {
-		                                            case "bool":
-		                                                attributes[valName] = _getDecl("Boolean", _resolveDefault(variableInfo, false), function (proxy, matArg) {
-		                                                    proxy.uniformBool(valName, matArg.attributeValues[valName]);
-		                                                });
-		                                                break;
-		                                            case "float":
-		                                                attributes[valName] = _getDecl("Number", _resolveDefault(variableInfo, 0), function (proxy, matArg) {
-		                                                    proxy.uniformFloat(valName, matArg.attributeValues[valName]);
-		                                                });
-		                                                break;
-		                                            case "vec2":
-		                                                attributes[valName] = _getDecl("Vector2", _resolveDefault(variableInfo, "0,0"), function (proxy, matArg) {
-		                                                    proxy.uniformVector2(valName, matArg.attributeValues[valName]);
-		                                                });
-		                                                break;
-		                                            case "vec3":
-		                                                if (annotations["type"] === "color") {
-		                                                    attributes[valName] = _getDecl("Color3", _resolveDefault(variableInfo, "#000"), function (proxy, matArg) {
-		                                                        proxy.uniformColor3(valName, matArg.attributeValues[valName]);
-		                                                    });
-		                                                } else {
-		                                                    attributes[valName] = _getDecl("Vector3", _resolveDefault(variableInfo, "0,0,0"), function (proxy, matArg) {
-		                                                        proxy.uniformVector3(valName, matArg.attributeValues[valName]);
-		                                                    });
-		                                                }
-		                                                break;
-		                                            case "vec4":
-		                                                if (annotations["type"] === "color") {
-		                                                    attributes[valName] = _getDecl("Color4", _resolveDefault(variableInfo, "#0000"), function (proxy, matArg) {
-		                                                        proxy.uniformColor4(valName, matArg.attributeValues[valName]);
-		                                                    });
-		                                                } else {
-		                                                    attributes[valName] = _getDecl("Vector4", _resolveDefault(variableInfo, "0,0,0,0"), function (proxy, matArg) {
-		                                                        proxy.uniformVector4(valName, matArg.attributeValues[valName]);
-		                                                    });
-		                                                }
-		                                                break;
-		                                            case "sampler2D":
-		                                                var flagAssignTo = undefined;
-		                                                // check used flag is existing
-		                                                if (annotations["usedFlag"]) {
-		                                                    if (annotations["usedFlag"] !== void 0) {
-		                                                        flagAssignTo = annotations["usedFlag"];
-		                                                    }
-		                                                }
-		                                                attributes[valName] = _getDecl("Texture", _resolveDefault(variableInfo, null), function (proxy, matArgs) {
-		                                                    var texture = void 0;
-		                                                    if (matArgs.attributeValues[valName] && (texture = matArgs.attributeValues[valName].get(matArgs.buffers))) {
-		                                                        proxy.uniformTexture2D(valName, texture);
-		                                                        if (flagAssignTo) {
-		                                                            proxy.uniformBool(flagAssignTo, true);
-		                                                        }
-		                                                    } else {
-		                                                        proxy.uniformTexture2D(valName, matArgs.defaultTexture);
-		                                                        if (flagAssignTo) {
-		                                                            proxy.uniformBool(flagAssignTo, false);
-		                                                        }
-		                                                    }
-		                                                });
-		                                                break;
-		                                            default:
-		                                                throw new Error("Unsupported type was found");
-		                                        }
-		                                    })();
-		                                }
-		                            } else {
-		                                debugger;
-		                            }
-		                        };
-		
-		                        _context.t0 = regeneratorRuntime.keys(input.info.uniforms);
-		
-		                    case 4:
-		                        if ((_context.t1 = _context.t0()).done) {
-		                            _context.next = 11;
-		                            break;
-		                        }
-		
-		                        variableName = _context.t1.value;
-		                        _ret = _loop(variableName);
-		
-		                        if (!(_ret === "continue")) {
-		                            _context.next = 9;
-		                            break;
-		                        }
-		
-		                        return _context.abrupt("continue", 4);
-		
-		                    case 9:
-		                        _context.next = 4;
-		                        break;
-		
-		                    case 11:
-		                        _context.next = 13;
-		                        return Promise.all(promises);
-		
-		                    case 13:
-		                    case "end":
-		                        return _context.stop();
-		                }
-		            }
-		        }, _callee, this);
-		    }));
-		}
-		/**
-		 * Register system shader variables whose name starts with _.
-		 * @param  {ITransformingArgument} input [description]
-		 * @return {Promise<void>}           [description]
-		 */
-		function _registerEnvUniforms(input) {
-		    var registerers = input.info.systemRegisterers;
-		    for (var variableName in input.info.uniforms) {
-		        if (variableName.charAt(0) === "_") {
-		            var _variableInfo = input.info.uniforms[variableName];
-		            var resolver = _EnvUniformValueResolver2.default.resolve(variableName, _variableInfo);
-		            if (resolver) {
-		                registerers.push(resolver);
-		                continue;
-		            }
-		        }
-		    }
-		}
-	
-	/***/ },
-	/* 51 */
-	/***/ function(module, exports) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-		
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-		
-		var GLSLUtil = function () {
-		    function GLSLUtil() {
-		        _classCallCheck(this, GLSLUtil);
-		    }
-		
-		    _createClass(GLSLUtil, null, [{
-		        key: "isPrimitive",
-		        value: function isPrimitive(type) {
-		            return GLSLUtil._primitives.indexOf(type) >= 0;
-		        }
-		    }]);
-		
-		    return GLSLUtil;
-		}();
-		
-		exports.default = GLSLUtil;
-		
-		GLSLUtil._primitives = ["float", "bool", "int", "vec2", "vec3", "vec4", "ivec2", "ivec3", "ivec4", "bvec2", "bvec3", "bvec4", "mat2", "mat3", "mat4", "sampler1D", "sampler2D", "sampler3D", "samplerCube", "sampler1DShadow", "sampler2DShadow"];
-	
-	/***/ },
-	/* 52 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-		
-		var _Vector = __webpack_require__(53);
-		
-		var _Vector2 = _interopRequireDefault(_Vector);
-		
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-		
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-		
-		/**
-		 * Environment uniform value resolver
-		 */
-		var EnvUniformValueResolver = function () {
-		    function EnvUniformValueResolver() {
-		        _classCallCheck(this, EnvUniformValueResolver);
-		    }
-		
-		    _createClass(EnvUniformValueResolver, null, [{
-		        key: "addResolver",
-		
-		        /**
-		         * Add static environment uniform value resolver to specified name.
-		         * @param  {string} name     [description]
-		         * @param  {string} resolver [description]
-		         * @return {[type]}          [description]
-		         */
-		        value: function addResolver(name, resolver) {
-		            EnvUniformValueResolver.resolvers[name] = resolver;
-		        }
-		        /**
-		         * Add dynamic environment uniform value resolver.
-		         * When pasased variable are not resolved by a resolver, that resolver should return null or undefined.
-		         * @param  {string} resolver [description]
-		         * @return {[type]}          [description]
-		         */
-		
-		    }, {
-		        key: "addDynamicResolver",
-		        value: function addDynamicResolver(resolver) {
-		            EnvUniformValueResolver.dynamicResolvers.push(resolver);
-		        }
-		    }, {
-		        key: "resolve",
-		        value: function resolve(name, valInfo) {
-		            if (EnvUniformValueResolver.resolvers[name]) {
-		                return EnvUniformValueResolver.resolvers[name](valInfo, name);
-		            } else {
-		                var targetResolver = null;
-		                for (var i = 0; i < EnvUniformValueResolver.dynamicResolvers.length; i++) {
-		                    targetResolver = EnvUniformValueResolver.dynamicResolvers[i](valInfo, name);
-		                    if (targetResolver != null) {
-		                        return targetResolver;
-		                    }
-		                }
-		            }
-		        }
-		    }]);
-		
-		    return EnvUniformValueResolver;
-		}();
-		/**
-		 * Static environment uniform value resolvers which names are already known.
-		 * @type {IVariableInfo}
-		 */
-		
-		
-		exports.default = EnvUniformValueResolver;
-		EnvUniformValueResolver.resolvers = {};
-		/**
-		 * Dynamic environment uniform value resolvers which names are not known yet.
-		 * @type {IVariableInfo}
-		 */
-		EnvUniformValueResolver.dynamicResolvers = [];
-		// Matricies
-		EnvUniformValueResolver.addResolver("_matPVM", function (valInfo, name) {
-		    return function (proxy, args) {
-		        return proxy.uniformMatrix(name, args.transform.calcPVM(args.camera.camera));
-		    };
-		});
-		EnvUniformValueResolver.addResolver("_matP", function (valInfo, name) {
-		    return function (proxy, args) {
-		        return proxy.uniformMatrix(name, args.camera.camera.getProjectionMatrix());
-		    };
-		});
-		EnvUniformValueResolver.addResolver("_matV", function (valInfo, name) {
-		    return function (proxy, args) {
-		        return proxy.uniformMatrix(name, args.camera.camera.getViewMatrix());
-		    };
-		});
-		EnvUniformValueResolver.addResolver("_matM", function (valInfo, name) {
-		    return function (proxy, args) {
-		        return proxy.uniformMatrix(name, args.transform.globalTransform);
-		    };
-		});
-		EnvUniformValueResolver.addResolver("_matVM", function (valInfo, name) {
-		    return function (proxy, args) {
-		        return proxy.uniformMatrix(name, args.transform.calcVM(args.camera.camera));
-		    };
-		});
-		EnvUniformValueResolver.addResolver("_matPV", function (valInfo, name) {
-		    return function (proxy, args) {
-		        return proxy.uniformMatrix(name, args.camera.camera.getProjectionViewMatrix());
-		    };
-		});
-		// Misc
-		EnvUniformValueResolver.addResolver("_time", function (valInfo, name) {
-		    return function (proxy, args) {
-		        return proxy.uniformFloat(name, Date.now() % 1000000);
-		    };
-		});
-		EnvUniformValueResolver.addResolver("_viewportSize", function (valInfo, name) {
-		    var cacheVec = new _Vector2.default(0, 0);
-		    return function (proxy, args) {
-		        cacheVec.X = args.viewport.Width;
-		        cacheVec.Y = args.viewport.Height;
-		        proxy.uniformVector2(name, cacheVec);
-		    };
-		});
-		EnvUniformValueResolver.addResolver("_cameraPosition", function (valInfo, name) {
-		    return function (proxy, args) {
-		        return proxy.uniformVector3(name, args.camera.transform.globalPosition);
-		    };
-		});
-		EnvUniformValueResolver.addResolver("_cameraDirection", function (valInfo, name) {
-		    return function (proxy, args) {
-		        return proxy.uniformVector3(name, args.camera.transform.forward);
-		    };
-		});
-	
-	/***/ },
-	/* 53 */
-	/***/ function(module, exports) {
-	
-			Object.defineProperty(exports, "__esModule", {
-			    value: true
-			});exports.default=window.GrimoireJS.lib.math.Vector2;
-	
-	/***/ },
-	/* 54 */
-	/***/ function(module, exports) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		exports.default = function (input) {
-		    return __awaiter(this, void 0, void 0, regeneratorRuntime.mark(function _callee() {
-		        return regeneratorRuntime.wrap(function _callee$(_context) {
-		            while (1) {
-		                switch (_context.prev = _context.next) {
-		                    case 0:
-		                        input.info.shaderSource = _removeComment(input.info.shaderSource);
-		                        return _context.abrupt("return", input);
-		
-		                    case 2:
-		                    case "end":
-		                        return _context.stop();
-		                }
-		            }
-		        }, _callee, this);
-		    }));
-		};
-		
-		var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
-		    return new (P || (P = Promise))(function (resolve, reject) {
-		        function fulfilled(value) {
-		            try {
-		                step(generator.next(value));
-		            } catch (e) {
-		                reject(e);
-		            }
-		        }
-		        function rejected(value) {
-		            try {
-		                step(generator["throw"](value));
-		            } catch (e) {
-		                reject(e);
-		            }
-		        }
-		        function step(result) {
-		            result.done ? resolve(result.value) : new P(function (resolve) {
-		                resolve(result.value);
-		            }).then(fulfilled, rejected);
-		        }
-		        step((generator = generator.apply(thisArg, _arguments)).next());
-		    });
-		};
-		function _removeComment(source) {
-		    var text = "";
-		    var isLineComment = false;
-		    var isMultiLineComment = false;
-		    for (var i = 0; i < source.length; i++) {
-		        var c = source.charAt(i);
-		        if (c === "/") {
-		            if (i + 1 < source.length) {
-		                if (source.charAt(i + 1) === "/" && !isMultiLineComment) {
-		                    isLineComment = true;
-		                    i++;
-		                    continue;
-		                } else if (source.charAt(i + 1) === "*" && !isLineComment) {
-		                    isMultiLineComment = true;
-		                    i++;
-		                    continue;
-		                }
-		            }
-		        }
-		        if (c === "*" && isMultiLineComment && i + 1 < source.length && source.charAt(i + 1) === "/") {
-		            isMultiLineComment = false;
-		            i++;
-		            continue;
-		        }
-		        if (c === "\n" && isLineComment) {
-		            isLineComment = false;
-		            continue;
-		        }
-		        if (!isLineComment && !isMultiLineComment) {
-		            text += c;
-		        }
-		    }
-		    return text;
-		}
-	
-	/***/ },
-	/* 55 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		exports.default = function (input) {
-		    return __awaiter(this, void 0, void 0, regeneratorRuntime.mark(function _callee2() {
-		        var transformed;
-		        return regeneratorRuntime.wrap(function _callee2$(_context2) {
-		            while (1) {
-		                switch (_context2.prev = _context2.next) {
-		                    case 0:
-		                        _context2.next = 2;
-		                        return _parseImport(input.info.shaderSource);
-		
-		                    case 2:
-		                        transformed = _context2.sent;
-		
-		                        input.info.shaderSource = transformed;
-		                        return _context2.abrupt("return", input);
-		
-		                    case 5:
-		                    case "end":
-		                        return _context2.stop();
-		                }
-		            }
-		        }, _callee2, this);
-		    }));
-		};
-		
-		var _ImportResolver = __webpack_require__(56);
-		
-		var _ImportResolver2 = _interopRequireDefault(_ImportResolver);
-		
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-		
-		var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
-		    return new (P || (P = Promise))(function (resolve, reject) {
-		        function fulfilled(value) {
-		            try {
-		                step(generator.next(value));
-		            } catch (e) {
-		                reject(e);
-		            }
-		        }
-		        function rejected(value) {
-		            try {
-		                step(generator["throw"](value));
-		            } catch (e) {
-		                reject(e);
-		            }
-		        }
-		        function step(result) {
-		            result.done ? resolve(result.value) : new P(function (resolve) {
-		                resolve(result.value);
-		            }).then(fulfilled, rejected);
-		        }
-		        step((generator = generator.apply(thisArg, _arguments)).next());
-		    });
-		};
-		
-		function _parseImport(source) {
-		    return __awaiter(this, void 0, void 0, regeneratorRuntime.mark(function _callee() {
-		        var regexResult, importContent;
-		        return regeneratorRuntime.wrap(function _callee$(_context) {
-		            while (1) {
-		                switch (_context.prev = _context.next) {
-		                    case 0:
-		                        if (false) {
-		                            _context.next = 16;
-		                            break;
-		                        }
-		
-		                        regexResult = /\s*@import\s+"([^"]+)"/.exec(source);
-		
-		                        if (regexResult) {
-		                            _context.next = 4;
-		                            break;
-		                        }
-		
-		                        return _context.abrupt("break", 16);
-		
-		                    case 4:
-		                        importContent = void 0;
-		                        _context.next = 7;
-		                        return _ImportResolver2.default.resolve(regexResult[1]);
-		
-		                    case 7:
-		                        _context.t0 = _context.sent;
-		                        _context.next = 10;
-		                        return _parseImport(_context.t0);
-		
-		                    case 10:
-		                        importContent = _context.sent;
-		
-		                        if (importContent) {
-		                            _context.next = 13;
-		                            break;
-		                        }
-		
-		                        throw new Error("Required shader chunk '" + regexResult[1] + "' was not found!!");
-		
-		                    case 13:
-		                        source = source.replace(regexResult[0], "\n" + importContent + "\n");
-		                        _context.next = 0;
-		                        break;
-		
-		                    case 16:
-		                        return _context.abrupt("return", source);
-		
-		                    case 17:
-		                    case "end":
-		                        return _context.stop();
-		                }
-		            }
-		        }, _callee, this);
-		    }));
-		}
-	
-	/***/ },
-	/* 56 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		exports.ImportResolver = undefined;
-		
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-		
-		var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-		
-		var _CacheResolver2 = __webpack_require__(3);
-		
-		var _CacheResolver3 = _interopRequireDefault(_CacheResolver2);
-		
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-		
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-		
-		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-		
-		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-		
-		var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
-		    return new (P || (P = Promise))(function (resolve, reject) {
-		        function fulfilled(value) {
-		            try {
-		                step(generator.next(value));
-		            } catch (e) {
-		                reject(e);
-		            }
-		        }
-		        function rejected(value) {
-		            try {
-		                step(generator["throw"](value));
-		            } catch (e) {
-		                reject(e);
-		            }
-		        }
-		        function step(result) {
-		            result.done ? resolve(result.value) : new P(function (resolve) {
-		                resolve(result.value);
-		            }).then(fulfilled, rejected);
-		        }
-		        step((generator = generator.apply(thisArg, _arguments)).next());
-		    });
-		};
-		
-		var ImportResolver = exports.ImportResolver = function (_CacheResolver) {
-		    _inherits(ImportResolver, _CacheResolver);
-		
-		    function ImportResolver() {
-		        _classCallCheck(this, ImportResolver);
-		
-		        var _this = _possibleConstructorReturn(this, (ImportResolver.__proto__ || Object.getPrototypeOf(ImportResolver)).call(this, function (str) {
-		            var regex = /^https?:\/\/.*/gm;
-		            return regex.test(str) ? ImportResolver._toAbsolute(str) : str;
-		        }));
-		
-		        _this.staticImports = {};
-		        return _this;
-		    }
-		
-		    _createClass(ImportResolver, [{
-		        key: "resolve",
-		        value: function resolve(path) {
-		            var _this2 = this;
-		
-		            return _get(ImportResolver.prototype.__proto__ || Object.getPrototypeOf(ImportResolver.prototype), "resolve", this).call(this, path, function (abs) {
-		                return _this2._resolve(path);
-		            });
-		        }
-		    }, {
-		        key: "_resolve",
-		        value: function _resolve(path) {
-		            return __awaiter(this, void 0, void 0, regeneratorRuntime.mark(function _callee() {
-		                return regeneratorRuntime.wrap(function _callee$(_context) {
-		                    while (1) {
-		                        switch (_context.prev = _context.next) {
-		                            case 0:
-		                                if (!this.staticImports[path]) {
-		                                    _context.next = 4;
-		                                    break;
-		                                }
-		
-		                                return _context.abrupt("return", this.staticImports[path]);
-		
-		                            case 4:
-		                                _context.next = 6;
-		                                return this._fromExternal(path);
-		
-		                            case 6:
-		                                return _context.abrupt("return", _context.sent);
-		
-		                            case 7:
-		                            case "end":
-		                                return _context.stop();
-		                        }
-		                    }
-		                }, _callee, this);
-		            }));
-		        }
-		    }, {
-		        key: "_fromExternal",
-		        value: function _fromExternal(path) {
-		            return new Promise(function (resolve, reject) {
-		                var xhr = new XMLHttpRequest();
-		                xhr.open("GET", path);
-		                xhr.onload = function (v) {
-		                    resolve(xhr.responseText);
-		                };
-		                xhr.onerror = function (e) {
-		                    reject(e);
-		                };
-		                xhr.send();
-		            });
-		        }
-		    }], [{
-		        key: "_toAbsolute",
-		        value: function _toAbsolute(href) {
-		            var link = document.createElement("a");
-		            link.href = href;
-		            return link.protocol + "//" + link.host + link.pathname + link.search + link.hash;
-		        }
-		    }]);
-		
-		    return ImportResolver;
-		}(_CacheResolver3.default);
-		
-		exports.default = new ImportResolver();
-	
-	/***/ },
-	/* 57 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		exports.default = function (type) {
-		    return function (arg) {
-		        return __awaiter(this, void 0, void 0, regeneratorRuntime.mark(function _callee() {
-		            var variables;
-		            return regeneratorRuntime.wrap(function _callee$(_context) {
-		                while (1) {
-		                    switch (_context.prev = _context.next) {
-		                        case 0:
-		                            variables = _parseVariables(arg.info.shaderSource, type);
-		                            _context.t0 = type;
-		                            _context.next = _context.t0 === "uniform" ? 4 : _context.t0 === "attribute" ? 6 : 8;
-		                            break;
-		
-		                        case 4:
-		                            arg.info.uniforms = variables;
-		                            return _context.abrupt("break", 9);
-		
-		                        case 6:
-		                            arg.info.attributes = variables;
-		                            return _context.abrupt("break", 9);
-		
-		                        case 8:
-		                            throw new Error("Unknown variable type!!");
-		
-		                        case 9:
-		                            return _context.abrupt("return", arg);
-		
-		                        case 10:
-		                        case "end":
-		                            return _context.stop();
-		                    }
-		                }
-		            }, _callee, this);
-		        }));
-		    };
-		};
-		
-		var _json = __webpack_require__(58);
-		
-		var _json2 = _interopRequireDefault(_json);
-		
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-		
-		var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
-		    return new (P || (P = Promise))(function (resolve, reject) {
-		        function fulfilled(value) {
-		            try {
-		                step(generator.next(value));
-		            } catch (e) {
-		                reject(e);
-		            }
-		        }
-		        function rejected(value) {
-		            try {
-		                step(generator["throw"](value));
-		            } catch (e) {
-		                reject(e);
-		            }
-		        }
-		        function step(result) {
-		            result.done ? resolve(result.value) : new P(function (resolve) {
-		                resolve(result.value);
-		            }).then(fulfilled, rejected);
-		        }
-		        step((generator = generator.apply(thisArg, _arguments)).next());
-		    });
-		};
-		
-		function _parseVariableAttributes(attributes) {
-		    return _json2.default.parse(attributes);
-		}
-		function _generateVariableFetchRegex(variableType) {
-		    return new RegExp("(?:@(\\{.+\\}))?\\s*" + variableType + "\\s+(?:(lowp|mediump|highp)\\s+)?([a-z0-9A-Z]+)\\s+([a-zA-Z0-9_]+)(?:\\s*\\[\\s*([a-zA-Z0-9_]+)\\s*\\]\\s*)?\\s*;", "g");
-		}
-		function _parseVariables(source, variableType) {
-		    var result = {};
-		    var regex = _generateVariableFetchRegex(variableType);
-		    var regexResult = void 0;
-		
-		    var _loop = function _loop() {
-		        var name = regexResult[4];
-		        var type = regexResult[3];
-		        var precision = regexResult[2];
-		        var rawAnnotations = regexResult[1];
-		        var isArray = regexResult[5] !== void 0;
-		        var arrayCount = undefined;
-		        if (isArray) {
-		            (function () {
-		                var c = parseInt(regexResult[5], 10);
-		                arrayCount = function arrayCount() {
-		                    return c;
-		                };
-		                if (isNaN(c)) {
-		                    arrayCount = function (_arrayCount) {
-		                        function arrayCount(_x) {
-		                            return _arrayCount.apply(this, arguments);
-		                        }
-		
-		                        arrayCount.toString = function () {
-		                            return _arrayCount.toString();
-		                        };
-		
-		                        return arrayCount;
-		                    }(function (m) {
-		                        return m[arrayCount];
-		                    });
-		                }
-		            })();
-		        }
-		        result[name] = {
-		            variableName: name,
-		            variableType: type,
-		            variablePrecision: precision,
-		            variableAnnotation: rawAnnotations ? _parseVariableAttributes(rawAnnotations) : {},
-		            isArray: isArray,
-		            arrayLength: arrayCount
-		        };
-		    };
-		
-		    while (regexResult = regex.exec(source)) {
-		        _loop();
-		    }
-		    return result;
-		}
-	
-	/***/ },
-	/* 58 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		// json5.js
-		// Modern JSON. See README.md for details.
-		//
-		// This file is based directly off of Douglas Crockford's json_parse.js:
-		// https://github.com/douglascrockford/JSON-js/blob/master/json_parse.js
-		
-		var JSON5 = ( true ? exports : {});
-		
-		JSON5.parse = (function () {
-		    "use strict";
-		
-		// This is a function that can parse a JSON5 text, producing a JavaScript
-		// data structure. It is a simple, recursive descent parser. It does not use
-		// eval or regular expressions, so it can be used as a model for implementing
-		// a JSON5 parser in other languages.
-		
-		// We are defining the function inside of another function to avoid creating
-		// global variables.
-		
-		    var at,           // The index of the current character
-		        lineNumber,   // The current line number
-		        columnNumber, // The current column number
-		        ch,           // The current character
-		        escapee = {
-		            "'":  "'",
-		            '"':  '"',
-		            '\\': '\\',
-		            '/':  '/',
-		            '\n': '',       // Replace escaped newlines in strings w/ empty string
-		            b:    '\b',
-		            f:    '\f',
-		            n:    '\n',
-		            r:    '\r',
-		            t:    '\t'
-		        },
-		        ws = [
-		            ' ',
-		            '\t',
-		            '\r',
-		            '\n',
-		            '\v',
-		            '\f',
-		            '\xA0',
-		            '\uFEFF'
-		        ],
-		        text,
-		
-		        renderChar = function (chr) {
-		            return chr === '' ? 'EOF' : "'" + chr + "'";
-		        },
-		
-		        error = function (m) {
-		
-		// Call error when something is wrong.
-		
-		            var error = new SyntaxError();
-		            // beginning of message suffix to agree with that provided by Gecko - see https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse
-		            error.message = m + " at line " + lineNumber + " column " + columnNumber + " of the JSON5 data. Still to read: " + JSON.stringify(text.substring(at - 1, at + 19));
-		            error.at = at;
-		            // These two property names have been chosen to agree with the ones in Gecko, the only popular
-		            // environment which seems to supply this info on JSON.parse
-		            error.lineNumber = lineNumber;
-		            error.columnNumber = columnNumber;
-		            throw error;
-		        },
-		
-		        next = function (c) {
-		
-		// If a c parameter is provided, verify that it matches the current character.
-		
-		            if (c && c !== ch) {
-		                error("Expected " + renderChar(c) + " instead of " + renderChar(ch));
-		            }
-		
-		// Get the next character. When there are no more characters,
-		// return the empty string.
-		
-		            ch = text.charAt(at);
-		            at++;
-		            columnNumber++;
-		            if (ch === '\n' || ch === '\r' && peek() !== '\n') {
-		                lineNumber++;
-		                columnNumber = 0;
-		            }
-		            return ch;
-		        },
-		
-		        peek = function () {
-		
-		// Get the next character without consuming it or
-		// assigning it to the ch varaible.
-		
-		            return text.charAt(at);
-		        },
-		
-		        identifier = function () {
-		
-		// Parse an identifier. Normally, reserved words are disallowed here, but we
-		// only use this for unquoted object keys, where reserved words are allowed,
-		// so we don't check for those here. References:
-		// - http://es5.github.com/#x7.6
-		// - https://developer.mozilla.org/en/Core_JavaScript_1.5_Guide/Core_Language_Features#Variables
-		// - http://docstore.mik.ua/orelly/webprog/jscript/ch02_07.htm
-		// TODO Identifiers can have Unicode "letters" in them; add support for those.
-		
-		            var key = ch;
-		
-		            // Identifiers must start with a letter, _ or $.
-		            if ((ch !== '_' && ch !== '$') &&
-		                    (ch < 'a' || ch > 'z') &&
-		                    (ch < 'A' || ch > 'Z')) {
-		                error("Bad identifier as unquoted key");
-		            }
-		
-		            // Subsequent characters can contain digits.
-		            while (next() && (
-		                    ch === '_' || ch === '$' ||
-		                    (ch >= 'a' && ch <= 'z') ||
-		                    (ch >= 'A' && ch <= 'Z') ||
-		                    (ch >= '0' && ch <= '9'))) {
-		                key += ch;
-		            }
-		
-		            return key;
-		        },
-		
-		        number = function () {
-		
-		// Parse a number value.
-		
-		            var number,
-		                sign = '',
-		                string = '',
-		                base = 10;
-		
-		            if (ch === '-' || ch === '+') {
-		                sign = ch;
-		                next(ch);
-		            }
-		
-		            // support for Infinity (could tweak to allow other words):
-		            if (ch === 'I') {
-		                number = word();
-		                if (typeof number !== 'number' || isNaN(number)) {
-		                    error('Unexpected word for number');
-		                }
-		                return (sign === '-') ? -number : number;
-		            }
-		
-		            // support for NaN
-		            if (ch === 'N' ) {
-		              number = word();
-		              if (!isNaN(number)) {
-		                error('expected word to be NaN');
-		              }
-		              // ignore sign as -NaN also is NaN
-		              return number;
-		            }
-		
-		            if (ch === '0') {
-		                string += ch;
-		                next();
-		                if (ch === 'x' || ch === 'X') {
-		                    string += ch;
-		                    next();
-		                    base = 16;
-		                } else if (ch >= '0' && ch <= '9') {
-		                    error('Octal literal');
-		                }
-		            }
-		
-		            switch (base) {
-		            case 10:
-		                while (ch >= '0' && ch <= '9' ) {
-		                    string += ch;
-		                    next();
-		                }
-		                if (ch === '.') {
-		                    string += '.';
-		                    while (next() && ch >= '0' && ch <= '9') {
-		                        string += ch;
-		                    }
-		                }
-		                if (ch === 'e' || ch === 'E') {
-		                    string += ch;
-		                    next();
-		                    if (ch === '-' || ch === '+') {
-		                        string += ch;
-		                        next();
-		                    }
-		                    while (ch >= '0' && ch <= '9') {
-		                        string += ch;
-		                        next();
-		                    }
-		                }
-		                break;
-		            case 16:
-		                while (ch >= '0' && ch <= '9' || ch >= 'A' && ch <= 'F' || ch >= 'a' && ch <= 'f') {
-		                    string += ch;
-		                    next();
-		                }
-		                break;
-		            }
-		
-		            if(sign === '-') {
-		                number = -string;
-		            } else {
-		                number = +string;
-		            }
-		
-		            if (!isFinite(number)) {
-		                error("Bad number");
-		            } else {
-		                return number;
-		            }
-		        },
-		
-		        string = function () {
-		
-		// Parse a string value.
-		
-		            var hex,
-		                i,
-		                string = '',
-		                delim,      // double quote or single quote
-		                uffff;
-		
-		// When parsing for string values, we must look for ' or " and \ characters.
-		
-		            if (ch === '"' || ch === "'") {
-		                delim = ch;
-		                while (next()) {
-		                    if (ch === delim) {
-		                        next();
-		                        return string;
-		                    } else if (ch === '\\') {
-		                        next();
-		                        if (ch === 'u') {
-		                            uffff = 0;
-		                            for (i = 0; i < 4; i += 1) {
-		                                hex = parseInt(next(), 16);
-		                                if (!isFinite(hex)) {
-		                                    break;
-		                                }
-		                                uffff = uffff * 16 + hex;
-		                            }
-		                            string += String.fromCharCode(uffff);
-		                        } else if (ch === '\r') {
-		                            if (peek() === '\n') {
-		                                next();
-		                            }
-		                        } else if (typeof escapee[ch] === 'string') {
-		                            string += escapee[ch];
-		                        } else {
-		                            break;
-		                        }
-		                    } else if (ch === '\n') {
-		                        // unescaped newlines are invalid; see:
-		                        // https://github.com/aseemk/json5/issues/24
-		                        // TODO this feels special-cased; are there other
-		                        // invalid unescaped chars?
-		                        break;
-		                    } else {
-		                        string += ch;
-		                    }
-		                }
-		            }
-		            error("Bad string");
-		        },
-		
-		        inlineComment = function () {
-		
-		// Skip an inline comment, assuming this is one. The current character should
-		// be the second / character in the // pair that begins this inline comment.
-		// To finish the inline comment, we look for a newline or the end of the text.
-		
-		            if (ch !== '/') {
-		                error("Not an inline comment");
-		            }
-		
-		            do {
-		                next();
-		                if (ch === '\n' || ch === '\r') {
-		                    next();
-		                    return;
-		                }
-		            } while (ch);
-		        },
-		
-		        blockComment = function () {
-		
-		// Skip a block comment, assuming this is one. The current character should be
-		// the * character in the /* pair that begins this block comment.
-		// To finish the block comment, we look for an ending */ pair of characters,
-		// but we also watch for the end of text before the comment is terminated.
-		
-		            if (ch !== '*') {
-		                error("Not a block comment");
-		            }
-		
-		            do {
-		                next();
-		                while (ch === '*') {
-		                    next('*');
-		                    if (ch === '/') {
-		                        next('/');
-		                        return;
-		                    }
-		                }
-		            } while (ch);
-		
-		            error("Unterminated block comment");
-		        },
-		
-		        comment = function () {
-		
-		// Skip a comment, whether inline or block-level, assuming this is one.
-		// Comments always begin with a / character.
-		
-		            if (ch !== '/') {
-		                error("Not a comment");
-		            }
-		
-		            next('/');
-		
-		            if (ch === '/') {
-		                inlineComment();
-		            } else if (ch === '*') {
-		                blockComment();
-		            } else {
-		                error("Unrecognized comment");
-		            }
-		        },
-		
-		        white = function () {
-		
-		// Skip whitespace and comments.
-		// Note that we're detecting comments by only a single / character.
-		// This works since regular expressions are not valid JSON(5), but this will
-		// break if there are other valid values that begin with a / character!
-		
-		            while (ch) {
-		                if (ch === '/') {
-		                    comment();
-		                } else if (ws.indexOf(ch) >= 0) {
-		                    next();
-		                } else {
-		                    return;
-		                }
-		            }
-		        },
-		
-		        word = function () {
-		
-		// true, false, or null.
-		
-		            switch (ch) {
-		            case 't':
-		                next('t');
-		                next('r');
-		                next('u');
-		                next('e');
-		                return true;
-		            case 'f':
-		                next('f');
-		                next('a');
-		                next('l');
-		                next('s');
-		                next('e');
-		                return false;
-		            case 'n':
-		                next('n');
-		                next('u');
-		                next('l');
-		                next('l');
-		                return null;
-		            case 'I':
-		                next('I');
-		                next('n');
-		                next('f');
-		                next('i');
-		                next('n');
-		                next('i');
-		                next('t');
-		                next('y');
-		                return Infinity;
-		            case 'N':
-		              next( 'N' );
-		              next( 'a' );
-		              next( 'N' );
-		              return NaN;
-		            }
-		            error("Unexpected " + renderChar(ch));
-		        },
-		
-		        value,  // Place holder for the value function.
-		
-		        array = function () {
-		
-		// Parse an array value.
-		
-		            var array = [];
-		
-		            if (ch === '[') {
-		                next('[');
-		                white();
-		                while (ch) {
-		                    if (ch === ']') {
-		                        next(']');
-		                        return array;   // Potentially empty array
-		                    }
-		                    // ES5 allows omitting elements in arrays, e.g. [,] and
-		                    // [,null]. We don't allow this in JSON5.
-		                    if (ch === ',') {
-		                        error("Missing array element");
-		                    } else {
-		                        array.push(value());
-		                    }
-		                    white();
-		                    // If there's no comma after this value, this needs to
-		                    // be the end of the array.
-		                    if (ch !== ',') {
-		                        next(']');
-		                        return array;
-		                    }
-		                    next(',');
-		                    white();
-		                }
-		            }
-		            error("Bad array");
-		        },
-		
-		        object = function () {
-		
-		// Parse an object value.
-		
-		            var key,
-		                object = {};
-		
-		            if (ch === '{') {
-		                next('{');
-		                white();
-		                while (ch) {
-		                    if (ch === '}') {
-		                        next('}');
-		                        return object;   // Potentially empty object
-		                    }
-		
-		                    // Keys can be unquoted. If they are, they need to be
-		                    // valid JS identifiers.
-		                    if (ch === '"' || ch === "'") {
-		                        key = string();
-		                    } else {
-		                        key = identifier();
-		                    }
-		
-		                    white();
-		                    next(':');
-		                    object[key] = value();
-		                    white();
-		                    // If there's no comma after this pair, this needs to be
-		                    // the end of the object.
-		                    if (ch !== ',') {
-		                        next('}');
-		                        return object;
-		                    }
-		                    next(',');
-		                    white();
-		                }
-		            }
-		            error("Bad object");
-		        };
-		
-		    value = function () {
-		
-		// Parse a JSON value. It could be an object, an array, a string, a number,
-		// or a word.
-		
-		        white();
-		        switch (ch) {
-		        case '{':
-		            return object();
-		        case '[':
-		            return array();
-		        case '"':
-		        case "'":
-		            return string();
-		        case '-':
-		        case '+':
-		        case '.':
-		            return number();
-		        default:
-		            return ch >= '0' && ch <= '9' ? number() : word();
-		        }
-		    };
-		
-		// Return the json_parse function. It will have access to all of the above
-		// functions and variables.
-		
-		    return function (source, reviver) {
-		        var result;
-		
-		        text = String(source);
-		        at = 0;
-		        lineNumber = 1;
-		        columnNumber = 1;
-		        ch = ' ';
-		        result = value();
-		        white();
-		        if (ch) {
-		            error("Syntax error");
-		        }
-		
-		// If there is a reviver function, we recursively walk the new structure,
-		// passing each name/value pair to the reviver function for possible
-		// transformation, starting with a temporary root object that holds the result
-		// in an empty key. If there is not a reviver function, we simply return the
-		// result.
-		
-		        return typeof reviver === 'function' ? (function walk(holder, key) {
-		            var k, v, value = holder[key];
-		            if (value && typeof value === 'object') {
-		                for (k in value) {
-		                    if (Object.prototype.hasOwnProperty.call(value, k)) {
-		                        v = walk(value, k);
-		                        if (v !== undefined) {
-		                            value[k] = v;
-		                        } else {
-		                            delete value[k];
-		                        }
-		                    }
-		                }
-		            }
-		            return reviver.call(holder, key, value);
-		        }({'': result}, '')) : result;
-		    };
-		}());
-		
-		// JSON5 stringify will not quote keys where appropriate
-		JSON5.stringify = function (obj, replacer, space) {
-		    if (replacer && (typeof(replacer) !== "function" && !isArray(replacer))) {
-		        throw new Error('Replacer must be a function or an array');
-		    }
-		    var getReplacedValueOrUndefined = function(holder, key, isTopLevel) {
-		        var value = holder[key];
-		
-		        // Replace the value with its toJSON value first, if possible
-		        if (value && value.toJSON && typeof value.toJSON === "function") {
-		            value = value.toJSON();
-		        }
-		
-		        // If the user-supplied replacer if a function, call it. If it's an array, check objects' string keys for
-		        // presence in the array (removing the key/value pair from the resulting JSON if the key is missing).
-		        if (typeof(replacer) === "function") {
-		            return replacer.call(holder, key, value);
-		        } else if(replacer) {
-		            if (isTopLevel || isArray(holder) || replacer.indexOf(key) >= 0) {
-		                return value;
-		            } else {
-		                return undefined;
-		            }
-		        } else {
-		            return value;
-		        }
-		    };
-		
-		    function isWordChar(c) {
-		        return (c >= 'a' && c <= 'z') ||
-		            (c >= 'A' && c <= 'Z') ||
-		            (c >= '0' && c <= '9') ||
-		            c === '_' || c === '$';
-		    }
-		
-		    function isWordStart(c) {
-		        return (c >= 'a' && c <= 'z') ||
-		            (c >= 'A' && c <= 'Z') ||
-		            c === '_' || c === '$';
-		    }
-		
-		    function isWord(key) {
-		        if (typeof key !== 'string') {
-		            return false;
-		        }
-		        if (!isWordStart(key[0])) {
-		            return false;
-		        }
-		        var i = 1, length = key.length;
-		        while (i < length) {
-		            if (!isWordChar(key[i])) {
-		                return false;
-		            }
-		            i++;
-		        }
-		        return true;
-		    }
-		
-		    // export for use in tests
-		    JSON5.isWord = isWord;
-		
-		    // polyfills
-		    function isArray(obj) {
-		        if (Array.isArray) {
-		            return Array.isArray(obj);
-		        } else {
-		            return Object.prototype.toString.call(obj) === '[object Array]';
-		        }
-		    }
-		
-		    function isDate(obj) {
-		        return Object.prototype.toString.call(obj) === '[object Date]';
-		    }
-		
-		    var objStack = [];
-		    function checkForCircular(obj) {
-		        for (var i = 0; i < objStack.length; i++) {
-		            if (objStack[i] === obj) {
-		                throw new TypeError("Converting circular structure to JSON");
-		            }
-		        }
-		    }
-		
-		    function makeIndent(str, num, noNewLine) {
-		        if (!str) {
-		            return "";
-		        }
-		        // indentation no more than 10 chars
-		        if (str.length > 10) {
-		            str = str.substring(0, 10);
-		        }
-		
-		        var indent = noNewLine ? "" : "\n";
-		        for (var i = 0; i < num; i++) {
-		            indent += str;
-		        }
-		
-		        return indent;
-		    }
-		
-		    var indentStr;
-		    if (space) {
-		        if (typeof space === "string") {
-		            indentStr = space;
-		        } else if (typeof space === "number" && space >= 0) {
-		            indentStr = makeIndent(" ", space, true);
-		        } else {
-		            // ignore space parameter
-		        }
-		    }
-		
-		    // Copied from Crokford's implementation of JSON
-		    // See https://github.com/douglascrockford/JSON-js/blob/e39db4b7e6249f04a195e7dd0840e610cc9e941e/json2.js#L195
-		    // Begin
-		    var cx = /[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,
-		        escapable = /[\\\"\x00-\x1f\x7f-\x9f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,
-		        meta = { // table of character substitutions
-		        '\b': '\\b',
-		        '\t': '\\t',
-		        '\n': '\\n',
-		        '\f': '\\f',
-		        '\r': '\\r',
-		        '"' : '\\"',
-		        '\\': '\\\\'
-		    };
-		    function escapeString(string) {
-		
-		// If the string contains no control characters, no quote characters, and no
-		// backslash characters, then we can safely slap some quotes around it.
-		// Otherwise we must also replace the offending characters with safe escape
-		// sequences.
-		        escapable.lastIndex = 0;
-		        return escapable.test(string) ? '"' + string.replace(escapable, function (a) {
-		            var c = meta[a];
-		            return typeof c === 'string' ?
-		                c :
-		                '\\u' + ('0000' + a.charCodeAt(0).toString(16)).slice(-4);
-		        }) + '"' : '"' + string + '"';
-		    }
-		    // End
-		
-		    function internalStringify(holder, key, isTopLevel) {
-		        var buffer, res;
-		
-		        // Replace the value, if necessary
-		        var obj_part = getReplacedValueOrUndefined(holder, key, isTopLevel);
-		
-		        if (obj_part && !isDate(obj_part)) {
-		            // unbox objects
-		            // don't unbox dates, since will turn it into number
-		            obj_part = obj_part.valueOf();
-		        }
-		        switch(typeof obj_part) {
-		            case "boolean":
-		                return obj_part.toString();
-		
-		            case "number":
-		                if (isNaN(obj_part) || !isFinite(obj_part)) {
-		                    return "null";
-		                }
-		                return obj_part.toString();
-		
-		            case "string":
-		                return escapeString(obj_part.toString());
-		
-		            case "object":
-		                if (obj_part === null) {
-		                    return "null";
-		                } else if (isArray(obj_part)) {
-		                    checkForCircular(obj_part);
-		                    buffer = "[";
-		                    objStack.push(obj_part);
-		
-		                    for (var i = 0; i < obj_part.length; i++) {
-		                        res = internalStringify(obj_part, i, false);
-		                        buffer += makeIndent(indentStr, objStack.length);
-		                        if (res === null || typeof res === "undefined") {
-		                            buffer += "null";
-		                        } else {
-		                            buffer += res;
-		                        }
-		                        if (i < obj_part.length-1) {
-		                            buffer += ",";
-		                        } else if (indentStr) {
-		                            buffer += "\n";
-		                        }
-		                    }
-		                    objStack.pop();
-		                    if (obj_part.length) {
-		                        buffer += makeIndent(indentStr, objStack.length, true)
-		                    }
-		                    buffer += "]";
-		                } else {
-		                    checkForCircular(obj_part);
-		                    buffer = "{";
-		                    var nonEmpty = false;
-		                    objStack.push(obj_part);
-		                    for (var prop in obj_part) {
-		                        if (obj_part.hasOwnProperty(prop)) {
-		                            var value = internalStringify(obj_part, prop, false);
-		                            isTopLevel = false;
-		                            if (typeof value !== "undefined" && value !== null) {
-		                                buffer += makeIndent(indentStr, objStack.length);
-		                                nonEmpty = true;
-		                                key = isWord(prop) ? prop : escapeString(prop);
-		                                buffer += key + ":" + (indentStr ? ' ' : '') + value + ",";
-		                            }
-		                        }
-		                    }
-		                    objStack.pop();
-		                    if (nonEmpty) {
-		                        buffer = buffer.substring(0, buffer.length-1) + makeIndent(indentStr, objStack.length) + "}";
-		                    } else {
-		                        buffer = '{}';
-		                    }
-		                }
-		                return buffer;
-		            default:
-		                // functions and undefined should be ignored
-		                return undefined;
-		        }
-		    }
-		
-		    // special case...when undefined is used inside of
-		    // a compound object/array, return null.
-		    // but when top-level, return undefined
-		    var topLevelHolder = {"":obj};
-		    if (obj === undefined) {
-		        return getReplacedValueOrUndefined(topLevelHolder, '', true);
-		    }
-		    return internalStringify(topLevelHolder, '', true);
-		};
-	
-	
-	/***/ },
 	/* 59 */
-	/***/ function(module, exports) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		exports.default = function (input) {
-		    return __awaiter(this, void 0, void 0, regeneratorRuntime.mark(function _callee() {
-		        return regeneratorRuntime.wrap(function _callee$(_context) {
-		            while (1) {
-		                switch (_context.prev = _context.next) {
-		                    case 0:
-		                        input.info.shaderSource = _removeVariableAnnotations(input.info.shaderSource);
-		                        return _context.abrupt("return", input);
-		
-		                    case 2:
-		                    case "end":
-		                        return _context.stop();
-		                }
-		            }
-		        }, _callee, this);
-		    }));
-		};
-		
-		var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
-		    return new (P || (P = Promise))(function (resolve, reject) {
-		        function fulfilled(value) {
-		            try {
-		                step(generator.next(value));
-		            } catch (e) {
-		                reject(e);
-		            }
-		        }
-		        function rejected(value) {
-		            try {
-		                step(generator["throw"](value));
-		            } catch (e) {
-		                reject(e);
-		            }
-		        }
-		        function step(result) {
-		            result.done ? resolve(result.value) : new P(function (resolve) {
-		                resolve(result.value);
-		            }).then(fulfilled, rejected);
-		        }
-		        step((generator = generator.apply(thisArg, _arguments)).next());
-		    });
-		};
-		function _removeVariableAnnotations(source) {
-		    var regexResult = void 0;
-		    while (regexResult = /@\{.+\}/g.exec(source)) {
-		        source = source.substr(0, regexResult.index) + source.substring(regexResult.index + regexResult[0].length, source.length);
-		    }
-		    return source;
-		}
-	
-	/***/ },
-	/* 60 */
-	/***/ function(module, exports) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		exports.default = function (input) {
-		    return __awaiter(this, void 0, void 0, regeneratorRuntime.mark(function _callee() {
-		        return regeneratorRuntime.wrap(function _callee$(_context2) {
-		            while (1) {
-		                switch (_context2.prev = _context2.next) {
-		                    case 0:
-		                        _parsePreference(input.info);
-		                        return _context2.abrupt("return", input);
-		
-		                    case 2:
-		                    case "end":
-		                        return _context2.stop();
-		                }
-		            }
-		        }, _callee, this);
-		    }));
-		};
-		
-		var _marked = [_regexPreferences].map(regeneratorRuntime.mark);
-		
-		var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
-		    return new (P || (P = Promise))(function (resolve, reject) {
-		        function fulfilled(value) {
-		            try {
-		                step(generator.next(value));
-		            } catch (e) {
-		                reject(e);
-		            }
-		        }
-		        function rejected(value) {
-		            try {
-		                step(generator["throw"](value));
-		            } catch (e) {
-		                reject(e);
-		            }
-		        }
-		        function step(result) {
-		            result.done ? resolve(result.value) : new P(function (resolve) {
-		                resolve(result.value);
-		            }).then(fulfilled, rejected);
-		        }
-		        step((generator = generator.apply(thisArg, _arguments)).next());
-		    });
-		};
-		function _regexPreferences(source) {
-		    var regex, regexResult;
-		    return regeneratorRuntime.wrap(function _regexPreferences$(_context) {
-		        while (1) {
-		            switch (_context.prev = _context.next) {
-		                case 0:
-		                    regex = /@([a-zA-Z]+)\(([^)]*)\)/g;
-		                    regexResult = void 0;
-		
-		                case 2:
-		                    if (!(regexResult = regex.exec(source))) {
-		                        _context.next = 7;
-		                        break;
-		                    }
-		
-		                    _context.next = 5;
-		                    return {
-		                        name: regexResult[1],
-		                        args: regexResult[2].split(",")
-		                    };
-		
-		                case 5:
-		                    _context.next = 2;
-		                    break;
-		
-		                case 7:
-		                case "end":
-		                    return _context.stop();
-		            }
-		        }
-		    }, _marked[0], this);
-		}
-		function _enablingFunc(target, enabled) {
-		    if (enabled) {
-		        return function (gl) {
-		            gl.enable(target);
-		        };
-		    } else {
-		        return function (gl) {
-		            gl.disable(target);
-		        };
-		    }
-		}
-		function _asGLConstants(args, length) {
-		    if (args.length !== length) {
-		        throw new Error("The arguments should contain " + length + " of items but there was " + args.length);
-		    }
-		    return args.map(function (arg) {
-		        var value = WebGLRenderingContext[arg.toUpperCase().trim()];
-		        if (value !== void 0) {
-		            return value;
-		        } else {
-		            throw new Error("Specified WebGL constant " + arg + " was not found");
-		        }
-		    });
-		}
-		function _exposeMacro(info, args) {
-		    if (args.length !== 4) {
-		        throw new Error("ExposeMacro must have 4 of arguments");
-		    }
-		    info.macros.push({
-		        type: args[0],
-		        attributeName: args[1],
-		        macroName: args[2],
-		        default: args[3]
-		    });
-		}
-		function _parsePreference(info) {
-		    var configs = _regexPreferences(info.shaderSource);
-		    var configResult = void 0;
-		    var result = [];
-		    var depthEnabled = true,
-		        blendEnabled = true,
-		        cullEnabled = true;
-		    while (configResult = configs.next()) {
-		        if (configResult.done) {
-		            break;
-		        }
-		        var config = configResult.value;
-		
-		        (function () {
-		            switch (config.name) {
-		                case "NoDepth":
-		                    depthEnabled = false;
-		                    break;
-		                case "DepthFunc":
-		                    depthEnabled = true;
-		                    var depth = _asGLConstants(config.args, 1);
-		                    result.push(function (gl) {
-		                        gl.depthFunc(depth[0]);
-		                    });
-		                    break;
-		                case "NoBlend":
-		                    blendEnabled = false;
-		                    break;
-		                case "NoCull":
-		                    cullEnabled = false;
-		                    break;
-		                case "CullFace":
-		                    cullEnabled = true;
-		                    var cullConfig = _asGLConstants(config.args, 1);
-		                    result.push(function (gl) {
-		                        gl.cullFace(cullConfig[0]);
-		                    });
-		                    break;
-		                case "BlendFunc":
-		                    blendEnabled = true;
-		                    var blendFuncConfig = _asGLConstants(config.args, 2);
-		                    result.push(function (gl) {
-		                        gl.blendFunc(blendFuncConfig[0], blendFuncConfig[1]);
-		                    });
-		                    break;
-		                case "BlendFuncSeparate":
-		                    blendEnabled = true;
-		                    var blendFuncSeparate = _asGLConstants(config.args, 4);
-		                    result.push(function (gl) {
-		                        gl.blendFuncSeparate(blendFuncSeparate[0], blendFuncSeparate[1], blendFuncSeparate[2], blendFuncSeparate[3]);
-		                    });
-		                    break;
-		                case "BlendEquation":
-		                    blendEnabled = true;
-		                    var blendEquation = _asGLConstants(config.args, 1);
-		                    result.push(function (gl) {
-		                        gl.blendEquation(blendEquation[0]);
-		                    });
-		                    break;
-		                case "BlendEquationSeparate":
-		                    blendEnabled = true;
-		                    var blendEquationSeparate = _asGLConstants(config.args, 2);
-		                    result.push(function (gl) {
-		                        gl.blendEquationSeparate(blendEquationSeparate[0], blendEquationSeparate[1]);
-		                    });
-		                    break;
-		                case "ExposeMacro":
-		                    _exposeMacro(info, config.args);
-		                    break;
-		            }
-		        })();
-		    }
-		    result.unshift(_enablingFunc(WebGLRenderingContext.DEPTH_TEST, depthEnabled));
-		    result.unshift(_enablingFunc(WebGLRenderingContext.BLEND, blendEnabled));
-		    result.unshift(_enablingFunc(WebGLRenderingContext.CULL_FACE, cullEnabled));
-		    info.configurator = result;
-		}
-	
-	/***/ },
-	/* 61 */
-	/***/ function(module, exports) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		exports.default = function (input) {
-		    return __awaiter(this, void 0, void 0, regeneratorRuntime.mark(function _callee() {
-		        return regeneratorRuntime.wrap(function _callee$(_context) {
-		            while (1) {
-		                switch (_context.prev = _context.next) {
-		                    case 0:
-		                        input.info.shaderSource = _removeAnnotations(input.info.shaderSource);
-		                        return _context.abrupt("return", input);
-		
-		                    case 2:
-		                    case "end":
-		                        return _context.stop();
-		                }
-		            }
-		        }, _callee, this);
-		    }));
-		};
-		
-		var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
-		    return new (P || (P = Promise))(function (resolve, reject) {
-		        function fulfilled(value) {
-		            try {
-		                step(generator.next(value));
-		            } catch (e) {
-		                reject(e);
-		            }
-		        }
-		        function rejected(value) {
-		            try {
-		                step(generator["throw"](value));
-		            } catch (e) {
-		                reject(e);
-		            }
-		        }
-		        function step(result) {
-		            result.done ? resolve(result.value) : new P(function (resolve) {
-		                resolve(result.value);
-		            }).then(fulfilled, rejected);
-		        }
-		        step((generator = generator.apply(thisArg, _arguments)).next());
-		    });
-		};
-		function _removeAnnotations(source) {
-		    var regex = /(\s*@[a-zA-Z]*\([^)]*\))/;
-		    while (true) {
-		        var found = regex.exec(source);
-		        if (!found) {
-		            break;
-		        }
-		        source = source.replace(found[0], "");
-		    }
-		    return source;
-		}
-	
-	/***/ },
-	/* 62 */
-	/***/ function(module, exports) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-		
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-		
-		var Material = function () {
-		    function Material(pass) {
-		        var drawOrder = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "UseAlpha";
-		
-		        _classCallCheck(this, Material);
-		
-		        this.pass = pass;
-		        this.drawOrder = drawOrder;
-		    }
-		
-		    _createClass(Material, [{
-		        key: "draw",
-		        value: function draw(arg) {
-		            this.pass.forEach(function (p) {
-		                return p.draw(arg);
-		            });
-		        }
-		    }]);
-		
-		    return Material;
-		}();
-		
-		exports.default = Material;
-	
-	/***/ },
-	/* 63 */
-	/***/ function(module, exports) {
-	
-		module.exports = "/*Header start*/\n// helper macros\n#ifdef FS\n  #define FS_PREC(prec,type) precision prec type;\n  #define VS_PREC(prec,type)\n#endif\n#ifdef VS\n#define VS_PREC(prec,type) precision prec type;\n#define FS_PREC(prec,type)\n#endif\n// constants\n#define PI 3.141592653589793\n#define E 2.718281828459045\n#define LN2 0.6931471805599453\n#define LN10 2.302585092994046\n#define LOG2E 1.4426950408889634\n#define LOG10E 0.4342944819032518\n#define SQRT2 1.4142135623730951\n#define SQRT1_2 0.7071067811865476\n/*Header end*/\n"
-	
-	/***/ },
-	/* 64 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -29260,77 +29631,25 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 		
-		var _grimoirejs = __webpack_require__(14);
-		
-		var _grimoirejs2 = _interopRequireDefault(_grimoirejs);
-		
-		var _MaterialFactory = __webpack_require__(45);
-		
-		var _MaterialFactory2 = _interopRequireDefault(_MaterialFactory);
-		
-		var _Component2 = __webpack_require__(15);
-		
-		var _Component3 = _interopRequireDefault(_Component2);
-		
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-		
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-		
-		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-		
-		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-		
-		var MaterialManagerComponent = function (_Component) {
-		    _inherits(MaterialManagerComponent, _Component);
-		
-		    function MaterialManagerComponent() {
-		        _classCallCheck(this, MaterialManagerComponent);
-		
-		        return _possibleConstructorReturn(this, (MaterialManagerComponent.__proto__ || Object.getPrototypeOf(MaterialManagerComponent)).apply(this, arguments));
-		    }
-		
-		    _createClass(MaterialManagerComponent, [{
-		        key: "$awake",
-		        value: function $awake() {
-		            var ns = _grimoirejs2.default.ns(this.name.ns);
-		            this.companion.set(ns("MaterialFactory"), new _MaterialFactory2.default(this.companion.get("gl")));
-		        }
-		    }]);
-		
-		    return MaterialManagerComponent;
-		}(_Component3.default);
-		
-		exports.default = MaterialManagerComponent;
-		
-		MaterialManagerComponent.attributes = {};
-	
-	/***/ },
-	/* 65 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-		
-		var _SceneComponent = __webpack_require__(21);
+		var _SceneComponent = __webpack_require__(18);
 		
 		var _SceneComponent2 = _interopRequireDefault(_SceneComponent);
 		
-		var _MaterialContainerComponent = __webpack_require__(42);
+		var _MaterialContainerComponent = __webpack_require__(56);
 		
 		var _MaterialContainerComponent2 = _interopRequireDefault(_MaterialContainerComponent);
 		
-		var _TransformComponent = __webpack_require__(19);
+		var _TransformComponent = __webpack_require__(17);
 		
 		var _TransformComponent2 = _interopRequireDefault(_TransformComponent);
 		
-		var _Component2 = __webpack_require__(15);
+		var _Component2 = __webpack_require__(9);
 		
 		var _Component3 = _interopRequireDefault(_Component2);
+		
+		var _GLM = __webpack_require__(12);
+		
+		var _GLM2 = _interopRequireDefault(_GLM);
 		
 		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 		
@@ -29339,6 +29658,13 @@ return /******/ (function(modules) { // webpackBootstrap
 		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 		
 		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+		
+		var vec3 = _GLM2.default.vec3;
+		/**
+		 * シーン中に存在するメッシュ一つあたりのレンダリングを司るコンポーネント
+		 *
+		 * このメッシュが、対象となるノードの`Transform`や描画に用いる`Camera`、マテリアルなどを考慮して実際のレンダリングを行います。
+		 */
 		
 		var MeshRenderer = function (_Component) {
 		    _inherits(MeshRenderer, _Component);
@@ -29346,13 +29672,24 @@ return /******/ (function(modules) { // webpackBootstrap
 		    function MeshRenderer() {
 		        _classCallCheck(this, MeshRenderer);
 		
-		        return _possibleConstructorReturn(this, (MeshRenderer.__proto__ || Object.getPrototypeOf(MeshRenderer)).apply(this, arguments));
+		        var _this = _possibleConstructorReturn(this, (MeshRenderer.__proto__ || Object.getPrototypeOf(MeshRenderer)).apply(this, arguments));
+		
+		        _this._priortyCalcCache = new Float32Array(3);
+		        return _this;
 		    }
+		    /**
+		    * Find scene tag recursively.
+		    * @param  {GomlNode}       node [the node to searching currently]
+		    * @return {SceneComponent}      [the scene component found]
+		    */
+		
 		
 		    _createClass(MeshRenderer, [{
 		        key: "getRenderingPriorty",
 		        value: function getRenderingPriorty(camera, cameraMoved, lastPriorty) {
-		            return this._materialContainer.getDrawPriorty(camera.transform.globalPosition.addWith(this._geometry.aabb.Center).subtractWith(this._transformComponent.globalPosition).magnitude); // Obtains distance between camera and center of aabb
+		            vec3.add(this._priortyCalcCache, camera.transform.globalPosition.rawElements, this._geometry.aabb.Center.rawElements);
+		            vec3.sub(this._priortyCalcCache, this._priortyCalcCache, this._transformComponent.globalPosition.rawElements);
+		            return this._materialContainer.getDrawPriorty(vec3.sqrLen(this._priortyCalcCache)); // Obtains distance between camera and center of aabb
 		        }
 		    }, {
 		        key: "$awake",
@@ -29382,7 +29719,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		            if (!this.node.isActive || !this.enabled || this._layer !== args.layer) {
 		                return;
 		            }
-		            if (!this._geometry || !args.material && !this._materialContainer.ready) {
+		            if (!this._geometry || !args.material && !this._materialContainer.material) {
 		                return; // material is not instanciated yet.
 		            }
 		            var renderArgs = {
@@ -29396,25 +29733,14 @@ return /******/ (function(modules) { // webpackBootstrap
 		                drawCount: this._drawCount,
 		                drawOffset: this._drawOffset,
 		                sceneDescription: args.sceneDescription,
-		                defaultTexture: args.defaultTexture
+		                technique: args.technique
 		            };
-		            if (args.material) {
-		                renderArgs.attributeValues = args.materialArgs;
-		                args.material.draw(renderArgs);
-		            } else {
-		                renderArgs.attributeValues = this._materialContainer.materialArgs;
-		                this._materialContainer.material.draw(renderArgs);
-		            }
+		            renderArgs.attributeValues = this._materialContainer.materialArgs;
+		            this._materialContainer.material.draw(renderArgs);
 		            this.node.emit("render", args);
 		        }
 		    }], [{
 		        key: "_findContainedScene",
-		
-		        /**
-		        * Find scene tag recursively.
-		        * @param  {GomlNode}       node [the node to searching currently]
-		        * @return {SceneComponent}      [the scene component found]
-		        */
 		        value: function _findContainedScene(node) {
 		            if (node.parent) {
 		                var scene = node.parent.getComponent(_SceneComponent2.default);
@@ -29435,22 +29761,41 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = MeshRenderer;
 		
 		MeshRenderer.attributes = {
+		    /**
+		     * 描画に用いる形状データ
+		     */
 		    geometry: {
 		        converter: "Geometry",
 		        default: "quad"
 		    },
+		    /**
+		     * 描画に用いるインデックスバッファ名
+		     */
 		    targetBuffer: {
 		        converter: "String",
 		        default: "default"
 		    },
+		    /**
+		     * このメッシュが属するレイヤー
+		     *
+		     * 詳しくは`render-scene`ノードを参考にしてください。
+		     */
 		    layer: {
 		        converter: "String",
 		        default: "default"
 		    },
+		    /**
+		     * 描画するインデックスの個数
+		     *
+		     * デフォルトの状態でジオメトリの全インデックスを描画する
+		     */
 		    drawCount: {
 		        converter: "Number",
 		        default: Number.MAX_VALUE
 		    },
+		    /**
+		     * 描画するジオメトリのインデックスのオフセット
+		     */
 		    drawOffset: {
 		        converter: "Number",
 		        default: 0
@@ -29458,7 +29803,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		};
 	
 	/***/ },
-	/* 66 */
+	/* 60 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -29469,23 +29814,23 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 		
-		var _Vector = __webpack_require__(9);
+		var _Vector = __webpack_require__(14);
 		
 		var _Vector2 = _interopRequireDefault(_Vector);
 		
-		var _Quaternion = __webpack_require__(20);
+		var _Quaternion = __webpack_require__(61);
 		
 		var _Quaternion2 = _interopRequireDefault(_Quaternion);
 		
-		var _Matrix = __webpack_require__(10);
+		var _Matrix = __webpack_require__(15);
 		
 		var _Matrix2 = _interopRequireDefault(_Matrix);
 		
-		var _TransformComponent = __webpack_require__(19);
+		var _TransformComponent = __webpack_require__(17);
 		
 		var _TransformComponent2 = _interopRequireDefault(_TransformComponent);
 		
-		var _Component2 = __webpack_require__(15);
+		var _Component2 = __webpack_require__(9);
 		
 		var _Component3 = _interopRequireDefault(_Component2);
 		
@@ -29505,44 +29850,90 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		        var _this = _possibleConstructorReturn(this, (MouseCameraControlComponent.__proto__ || Object.getPrototypeOf(MouseCameraControlComponent)).apply(this, arguments));
 		
+		        _this._updated = false;
+		        _this._lastCenter = null;
 		        _this._lastScreenPos = null;
 		        _this._xsum = 0;
 		        _this._ysum = 0;
-		        _this._center = 0;
+		        _this._d = _Vector2.default.Zero;
 		        return _this;
 		    }
 		
 		    _createClass(MouseCameraControlComponent, [{
 		        key: "$awake",
 		        value: function $awake() {
-		            this.getAttributeRaw("center").boundTo("_center");
-		            this.getAttributeRaw("rotateSpeed").boundTo("_rotateSpeed");
-		            this.getAttributeRaw("zoomSpeed").boundTo("_zoomSpeed");
-		            this.getAttributeRaw("moveSpeed").boundTo("_moveSpeed");
-		            this.getAttributeRaw("origin").boundTo("_origin");
-		            this._transform = this.node.getComponent(_TransformComponent2.default);
+		            this.__bindAttributes();
+		            this._listeners = {
+		                mousemove: this._mouseMove.bind(this),
+		                contextmenu: this._contextMenu.bind(this),
+		                wheel: this._mouseWheel.bind(this)
+		            };
 		        }
 		    }, {
 		        key: "$mount",
 		        value: function $mount() {
-		            this._initialRight = _Vector2.default.copy(this._transform.right);
-		            this._initialUp = _Vector2.default.copy(this._transform.up);
-		            this._initialDirection = this._transform.localPosition.subtractWith(this._origin);
-		            this._initialRotation = this._transform.localRotation;
-		            this._origin = this._transform.localPosition.addWith(this._transform.forward.multiplyWith(this._center));
-		            var scriptTag = this.companion.get("canvasElement");
-		            scriptTag.addEventListener("mousemove", this._mouseMove.bind(this));
-		            scriptTag.addEventListener("contextmenu", this._contextMenu.bind(this));
-		            scriptTag.addEventListener("mousewheel", this._mouseWheel.bind(this));
+		            this._transform = this.node.getComponent(_TransformComponent2.default);
+		            var canvasElement = this.companion.get("canvasElement");
+		            canvasElement.addEventListener("mousemove", this._listeners.mousemove);
+		            canvasElement.addEventListener("contextmenu", this._listeners.contextmenu);
+		            canvasElement.addEventListener("wheel", this._listeners.wheel);
+		            this._lastScreenPos = null;
+		            this._xsum = 0;
+		            this._ysum = 0;
+		        }
+		    }, {
+		        key: "$unmount",
+		        value: function $unmount() {
+		            var canvasElement = this.companion.get("canvasElement");
+		            canvasElement.removeEventListener("mousemove", this._listeners.mousemove);
+		            canvasElement.removeEventListener("contextmenu", this._listeners.contextmenu);
+		            canvasElement.removeEventListener("wheel", this._listeners.wheel);
+		        }
+		    }, {
+		        key: "$initialized",
+		        value: function $initialized() {
+		            var look = _Vector2.default.normalize(this._center.subtractWith(this._transform.localPosition));
+		            var g = _Quaternion2.default.fromToRotation(this._transform.forward, look).normalize();
+		            this._transform.localRotation = g;
+		            this._initialRotation = g;
+		            this._initialDirection = _Vector2.default.copy(this._transform.forward.negateThis()).normalized;
+		            if (this._distance !== null) {
+		                this._transform.localPosition = this._center.addWith(this._initialDirection.multiplyWith(this._distance));
+		            } else {
+		                this._distance = this._transform.localPosition.subtractWith(this._center).magnitude;
+		            }
+		        }
+		    }, {
+		        key: "$update",
+		        value: function $update() {
+		            if (this._updated || !this._lastCenter || !this._center.equalWith(this._lastCenter)) {
+		                this._updated = false;
+		                this._lastCenter = this._center;
+		                // rotate excution
+		                var rotationVartical = _Quaternion2.default.angleAxis(-this._xsum * this._rotateSpeed * 0.01, _Vector2.default.YUnit);
+		                var rotationHorizontal = _Quaternion2.default.angleAxis(-this._ysum * this._rotateSpeed * 0.01, _Vector2.default.XUnit);
+		                var rotation = _Quaternion2.default.multiply(rotationVartical, rotationHorizontal);
+		                var rotationMat = _Matrix2.default.rotationQuaternion(rotation);
+		                var direction = _Matrix2.default.transformNormal(rotationMat, this._initialDirection);
+		                this._transform.localPosition = this._center.addWith(this._d).addWith(_Vector2.default.normalize(direction).multiplyWith(this._distance));
+		                this._transform.localRotation = rotation;
+		                this._transform.localRotation = _Quaternion2.default.multiply(rotation, this._initialRotation);
+		            }
 		        }
 		    }, {
 		        key: "_contextMenu",
 		        value: function _contextMenu(m) {
+		            if (!this.isActive) {
+		                return;
+		            }
 		            m.preventDefault();
 		        }
 		    }, {
 		        key: "_mouseMove",
 		        value: function _mouseMove(m) {
+		            if (!this.isActive) {
+		                return;
+		            }
 		            if (this._lastScreenPos === null) {
 		                this._lastScreenPos = {
 		                    x: m.screenX,
@@ -29550,33 +29941,20 @@ return /******/ (function(modules) { // webpackBootstrap
 		                };
 		                return;
 		            }
-		            var updated = false;
 		            var diffX = m.screenX - this._lastScreenPos.x;
 		            var diffY = m.screenY - this._lastScreenPos.y;
-		            var distance = this._transform.localPosition.subtractWith(this._origin).magnitude;
-		            if ((m.buttons & 1) > 0) {
+		            if (this._checkButtonPress(m, true)) {
 		                this._xsum += diffX;
 		                this._ysum += diffY;
 		                this._ysum = Math.min(Math.PI * 50, this._ysum);
 		                this._ysum = Math.max(-Math.PI * 50, this._ysum);
-		                updated = true;
+		                this._updated = true;
 		            }
-		            if ((m.buttons & 2) > 0) {
+		            if (this._checkButtonPress(m, false)) {
 		                var moveX = -diffX * this._moveSpeed * 0.01;
 		                var moveY = diffY * this._moveSpeed * 0.01;
-		                this._origin = this._origin.addWith(this._transform.right.multiplyWith(moveX)).addWith(this._transform.up.multiplyWith(moveY));
-		                distance = this._transform.localPosition.subtractWith(this._origin).magnitude;
-		                updated = true;
-		            }
-		            if (updated) {
-		                // rotate excution
-		                var rotationVartical = _Quaternion2.default.angleAxis(-this._xsum * this._rotateSpeed * 0.01, this._initialUp);
-		                var rotationHorizontal = _Quaternion2.default.angleAxis(-this._ysum * this._rotateSpeed * 0.01, this._initialRight);
-		                var rotation = _Quaternion2.default.multiply(rotationVartical, rotationHorizontal);
-		                var rotationMat = _Matrix2.default.rotationQuaternion(rotation);
-		                var direction = _Matrix2.default.transformNormal(rotationMat, this._initialDirection);
-		                this._transform.localPosition = this._origin.addWith(_Vector2.default.normalize(direction).multiplyWith(distance));
-		                this._transform.localRotation = _Quaternion2.default.multiply(this._initialRotation, rotation);
+		                this._d = this._d.addWith(this._transform.right.multiplyWith(moveX)).addWith(this._transform.up.multiplyWith(moveY));
+		                this._updated = true;
 		            }
 		            this._lastScreenPos = {
 		                x: m.screenX,
@@ -29584,13 +29962,32 @@ return /******/ (function(modules) { // webpackBootstrap
 		            };
 		        }
 		    }, {
+		        key: "_checkButtonPress",
+		        value: function _checkButtonPress(m, isRight) {
+		            if ("buttons" in m) {
+		                if (isRight) {
+		                    return (m.buttons & 1) > 0;
+		                } else {
+		                    return (m.buttons & 2) > 0;
+		                }
+		            } else {
+		                if (isRight) {
+		                    return m.which === 1;
+		                } else {
+		                    return m.which === 3;
+		                }
+		            }
+		        }
+		    }, {
 		        key: "_mouseWheel",
 		        value: function _mouseWheel(m) {
-		            var dir = _Vector2.default.normalize(_Vector2.default.subtract(this._transform.localPosition, this._origin));
-		            var moveDist = -m.deltaY * this._zoomSpeed * 0.05;
-		            var distance = _Vector2.default.subtract(this._origin, this._transform.localPosition).magnitude;
-		            var nextDist = Math.max(1, distance - moveDist);
-		            this._transform.localPosition = this._origin.addWith(dir.multiplyWith(nextDist));
+		            if (!this.isActive) {
+		                return;
+		            }
+		            var dir = _Vector2.default.subtract(this._transform.localPosition, this._center).normalized;
+		            var moveDist = m.deltaY * this._zoomSpeed * 0.05;
+		            this._distance = Math.max(1, this._distance + moveDist);
+		            this._transform.localPosition = this._center.addWith(dir.multiplyWith(this._distance));
 		            m.preventDefault();
 		        }
 		    }]);
@@ -29614,17 +30011,26 @@ return /******/ (function(modules) { // webpackBootstrap
 		        converter: "Number"
 		    },
 		    center: {
-		        default: 20,
-		        converter: "Number"
-		    },
-		    origin: {
 		        default: "0,0,0",
-		        converter: "Vector3"
+		        converter: "Position",
+		        lazy: true
+		    },
+		    distance: {
+		        default: null,
+		        converter: "Number"
 		    }
 		};
 	
 	/***/ },
-	/* 67 */
+	/* 61 */
+	/***/ function(module, exports) {
+	
+			Object.defineProperty(exports, "__esModule", {
+			    value: true
+			});exports.default=window.GrimoireJS.lib.math.Quaternion;
+	
+	/***/ },
+	/* 62 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -29635,15 +30041,15 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 		
-		var _RenderBuffer = __webpack_require__(68);
+		var _RenderBuffer = __webpack_require__(63);
 		
 		var _RenderBuffer2 = _interopRequireDefault(_RenderBuffer);
 		
-		var _Component2 = __webpack_require__(15);
+		var _Component2 = __webpack_require__(9);
 		
 		var _Component3 = _interopRequireDefault(_Component2);
 		
-		var _TextureSizeCalculator = __webpack_require__(69);
+		var _TextureSizeCalculator = __webpack_require__(64);
 		
 		var _TextureSizeCalculator2 = _interopRequireDefault(_TextureSizeCalculator);
 		
@@ -29702,7 +30108,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		};
 	
 	/***/ },
-	/* 68 */
+	/* 63 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -29715,7 +30121,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 		
-		var _ResourceBase2 = __webpack_require__(26);
+		var _ResourceBase2 = __webpack_require__(38);
 		
 		var _ResourceBase3 = _interopRequireDefault(_ResourceBase2);
 		
@@ -29765,7 +30171,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = RenderBuffer;
 	
 	/***/ },
-	/* 69 */
+	/* 64 */
 	/***/ function(module, exports) {
 	
 		"use strict";
@@ -29801,7 +30207,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = TextureSizeCalculator;
 	
 	/***/ },
-	/* 70 */
+	/* 65 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -29812,7 +30218,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 		
-		var _Component2 = __webpack_require__(15);
+		var _Component2 = __webpack_require__(9);
 		
 		var _Component3 = _interopRequireDefault(_Component2);
 		
@@ -29909,7 +30315,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		};
 	
 	/***/ },
-	/* 71 */
+	/* 66 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -29920,15 +30326,15 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 		
-		var _Color = __webpack_require__(72);
+		var _Color = __webpack_require__(67);
 		
 		var _Color2 = _interopRequireDefault(_Color);
 		
-		var _LoopManagerComponent = __webpack_require__(34);
+		var _LoopManagerComponent = __webpack_require__(54);
 		
 		var _LoopManagerComponent2 = _interopRequireDefault(_LoopManagerComponent);
 		
-		var _Component2 = __webpack_require__(15);
+		var _Component2 = __webpack_require__(9);
 		
 		var _Component3 = _interopRequireDefault(_Component2);
 		
@@ -29940,6 +30346,9 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 		
+		/**
+		 * 全レンダラーを管理するためのコンポーネント
+		 */
 		var RendererManagerComponent = function (_Component) {
 		    _inherits(RendererManagerComponent, _Component);
 		
@@ -29976,7 +30385,9 @@ return /******/ (function(modules) { // webpackBootstrap
 		                this.gl.clearColor(c.R, c.G, c.B, c.A);
 		                this.gl.clearDepth(this._clearDepth);
 		                this.gl.clear(WebGLRenderingContext.COLOR_BUFFER_BIT | WebGLRenderingContext.DEPTH_BUFFER_BIT);
-		                this.node.broadcastMessage(1, "renderViewport", { loopIndex: loopIndex });
+		                this.node.broadcastMessage(1, "renderViewport", {
+		                    loopIndex: loopIndex
+		                });
 		            }
 		        }
 		    }]);
@@ -29987,14 +30398,23 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = RendererManagerComponent;
 		
 		RendererManagerComponent.attributes = {
+		    /**
+		     * キャンバスの初期化色
+		     */
 		    bgColor: {
 		        default: new _Color2.default(0, 0, 0, 0),
 		        converter: "Color4"
 		    },
+		    /**
+		     * キャンバスの初期化深度値
+		     */
 		    clearDepth: {
 		        default: 1.0,
 		        converter: "Number"
 		    },
+		    /**
+		     * goml内にrendererが一つもなかった場合に自動的に補完するかどうか
+		     */
 		    complementRenderer: {
 		        default: true,
 		        converter: "Boolean"
@@ -30002,7 +30422,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		};
 	
 	/***/ },
-	/* 72 */
+	/* 67 */
 	/***/ function(module, exports) {
 	
 			Object.defineProperty(exports, "__esModule", {
@@ -30010,7 +30430,7 @@ return /******/ (function(modules) { // webpackBootstrap
 			});exports.default=window.GrimoireJS.lib.math.Color4;
 	
 	/***/ },
-	/* 73 */
+	/* 68 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -30021,15 +30441,15 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 		
-		var _MaterialContainerComponent = __webpack_require__(42);
+		var _MaterialContainerComponent = __webpack_require__(56);
 		
 		var _MaterialContainerComponent2 = _interopRequireDefault(_MaterialContainerComponent);
 		
-		var _FrameBuffer = __webpack_require__(74);
+		var _FrameBuffer = __webpack_require__(69);
 		
 		var _FrameBuffer2 = _interopRequireDefault(_FrameBuffer);
 		
-		var _Component2 = __webpack_require__(15);
+		var _Component2 = __webpack_require__(9);
 		
 		var _Component3 = _interopRequireDefault(_Component2);
 		
@@ -30058,6 +30478,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		            this.getAttributeRaw("clearColorEnabled").boundTo("_clearColorEnabled");
 		            this.getAttributeRaw("clearDepthEnabled").boundTo("_clearDepthEnabled");
 		            this.getAttributeRaw("clearDepth").boundTo("_clearDepth");
+		            this.getAttributeRaw("technique").boundTo("_technique");
 		        }
 		    }, {
 		        key: "$mount",
@@ -30085,7 +30506,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		    }, {
 		        key: "$render",
 		        value: function $render(args) {
-		            if (!this._materialContainer.ready) {
+		            if (!this._materialContainer.materialReady) {
 		                return;
 		            }
 		            // bound render target
@@ -30114,7 +30535,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		                transform: null,
 		                buffers: args.buffers,
 		                viewport: args.viewport,
-		                defaultTexture: this.companion.get("defaultTexture")
+		                technique: this._technique
 		            };
 		            renderArgs.attributeValues = this._materialContainer.materialArgs;
 		            // do render
@@ -30156,11 +30577,15 @@ return /******/ (function(modules) { // webpackBootstrap
 		    clearDepth: {
 		        default: 1.0,
 		        converter: "Number"
+		    },
+		    technique: {
+		        default: "default",
+		        converter: "String"
 		    }
 		};
 	
 	/***/ },
-	/* 74 */
+	/* 69 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -30173,15 +30598,15 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 		
-		var _RenderBuffer = __webpack_require__(68);
+		var _RenderBuffer = __webpack_require__(63);
 		
 		var _RenderBuffer2 = _interopRequireDefault(_RenderBuffer);
 		
-		var _Texture2D = __webpack_require__(25);
+		var _Texture2D = __webpack_require__(47);
 		
 		var _Texture2D2 = _interopRequireDefault(_Texture2D);
 		
-		var _ResourceBase2 = __webpack_require__(26);
+		var _ResourceBase2 = __webpack_require__(38);
 		
 		var _ResourceBase3 = _interopRequireDefault(_ResourceBase2);
 		
@@ -30248,7 +30673,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = FrameBuffer;
 	
 	/***/ },
-	/* 75 */
+	/* 70 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -30259,17 +30684,13 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 		
-		var _Component2 = __webpack_require__(15);
+		var _Component2 = __webpack_require__(9);
 		
 		var _Component3 = _interopRequireDefault(_Component2);
 		
-		var _FrameBuffer = __webpack_require__(74);
+		var _FrameBuffer = __webpack_require__(69);
 		
 		var _FrameBuffer2 = _interopRequireDefault(_FrameBuffer);
-		
-		var _MaterialContainerComponent = __webpack_require__(42);
-		
-		var _MaterialContainerComponent2 = _interopRequireDefault(_MaterialContainerComponent);
 		
 		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 		
@@ -30298,14 +30719,14 @@ return /******/ (function(modules) { // webpackBootstrap
 		            this.getAttributeRaw("clearColorEnabled").boundTo("_clearColorEnabled");
 		            this.getAttributeRaw("clearDepthEnabled").boundTo("_clearDepthEnabled");
 		            this.getAttributeRaw("clearDepth").boundTo("_clearDepth");
-		            this.getAttributeRaw("camera").boundTo("_camera");
+		            this.getAttributeRaw("camera").boundTo("camera");
+		            this.getAttributeRaw("technique").boundTo("_technique");
 		        }
 		    }, {
 		        key: "$mount",
 		        value: function $mount() {
 		            this._gl = this.companion.get("gl");
 		            this._canvas = this.companion.get("canvasElement");
-		            this._materialContainer = this.node.getComponent(_MaterialContainerComponent2.default);
 		        }
 		    }, {
 		        key: "$bufferUpdated",
@@ -30324,7 +30745,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		    }, {
 		        key: "$render",
 		        value: function $render(args) {
-		            var camera = this._camera ? this._camera : args.camera;
+		            var camera = this.camera ? this.camera : args.camera;
 		            if (!camera) {
 		                return;
 		            }
@@ -30345,16 +30766,13 @@ return /******/ (function(modules) { // webpackBootstrap
 		                this._gl.clear(WebGLRenderingContext.DEPTH_BUFFER_BIT);
 		            }
 		            args.camera.updateContainedScene(args.loopIndex);
-		            var useMaterial = this._materialContainer.useMaterial;
 		            args.camera.renderScene({
-		                caller: this,
 		                camera: camera,
 		                buffers: args.buffers,
 		                layer: this._layer,
 		                viewport: args.viewport,
-		                material: useMaterial ? this._materialContainer.material : undefined,
-		                materialArgs: useMaterial ? this._materialContainer.material : undefined,
-		                loopIndex: args.loopIndex
+		                loopIndex: args.loopIndex,
+		                technique: this._technique
 		            });
 		        }
 		    }]);
@@ -30397,11 +30815,15 @@ return /******/ (function(modules) { // webpackBootstrap
 		        default: null,
 		        converter: "Component",
 		        target: "Camera"
+		    },
+		    technique: {
+		        default: "default",
+		        converter: "String"
 		    }
 		};
 	
 	/***/ },
-	/* 76 */
+	/* 71 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -30412,15 +30834,15 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 		
-		var _Texture2D = __webpack_require__(25);
+		var _Texture2D = __webpack_require__(47);
 		
 		var _Texture2D2 = _interopRequireDefault(_Texture2D);
 		
-		var _Component2 = __webpack_require__(15);
+		var _Component2 = __webpack_require__(9);
 		
 		var _Component3 = _interopRequireDefault(_Component2);
 		
-		var _TextureSizeCalculator = __webpack_require__(69);
+		var _TextureSizeCalculator = __webpack_require__(64);
 		
 		var _TextureSizeCalculator2 = _interopRequireDefault(_TextureSizeCalculator);
 		
@@ -30460,8 +30882,9 @@ return /******/ (function(modules) { // webpackBootstrap
 		                throw new Error("Attribute 'name' must be specified.");
 		            }
 		            var format = this.getAttribute("format");
+		            var type = this.getAttribute("type");
 		            var newSize = _TextureSizeCalculator2.default.getPow2Size(arg.width, arg.height);
-		            this.buffer.update(0, newSize.width, newSize.height, 0, format, WebGLRenderingContext.UNSIGNED_BYTE, null);
+		            this.buffer.update(0, newSize.width, newSize.height, 0, format, type, null);
 		            arg.bufferSizes[bufferName] = { width: newSize.width, height: newSize.height };
 		            arg.buffers[bufferName] = this.buffer;
 		        }
@@ -30491,11 +30914,24 @@ return /******/ (function(modules) { // webpackBootstrap
 		            DEPTH_COMPONENT: WebGLRenderingContext["DEPTH_COMPONENT"],
 		            DEPTH_STENCIL: WebGLRenderingContext["DEPTH_STENCIL"]
 		        }
+		    },
+		    type: {
+		        converter: "Enum",
+		        default: WebGLRenderingContext.UNSIGNED_BYTE,
+		        table: {
+		            UNSIGNED_BYTE: WebGLRenderingContext.UNSIGNED_BYTE,
+		            UNSIGNED_SHORT_5_6_5: WebGLRenderingContext.UNSIGNED_SHORT_5_6_5,
+		            UNSIGNED_SHORT_4_4_4_4: WebGLRenderingContext.UNSIGNED_SHORT_4_4_4_4,
+		            UNSIGNED_SHORT_5_5_5_1: WebGLRenderingContext.UNSIGNED_SHORT_5_5_5_1,
+		            UNSIGNED_SHORT: WebGLRenderingContext.UNSIGNED_SHORT,
+		            UNSIGNED_INT: WebGLRenderingContext.UNSIGNED_INT,
+		            FLOAT: WebGLRenderingContext.FLOAT
+		        }
 		    }
 		};
 	
 	/***/ },
-	/* 77 */
+	/* 72 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -30506,11 +30942,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 		
-		var _Texture2D = __webpack_require__(25);
+		var _Texture2D = __webpack_require__(47);
 		
 		var _Texture2D2 = _interopRequireDefault(_Texture2D);
 		
-		var _Component2 = __webpack_require__(15);
+		var _Component2 = __webpack_require__(9);
 		
 		var _Component3 = _interopRequireDefault(_Component2);
 		
@@ -30665,150 +31101,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		};
 	
 	/***/ },
-	/* 78 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		var _RotationParser = __webpack_require__(79);
-		
-		var _RotationParser2 = _interopRequireDefault(_RotationParser);
-		
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-		
-		function Angle2DConverter(val) {
-		    if (typeof val === "number") {
-		        return val;
-		    }
-		    if (typeof val === "string") {
-		        return _RotationParser2.default.parseAngle(val);
-		    }
-		    throw new Error("Passed argument \"" + val + "\" can't be parsed as angle.");
-		}
-		exports.default = Angle2DConverter;
-	
-	/***/ },
-	/* 79 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-		
-		var _Vector = __webpack_require__(9);
-		
-		var _Vector2 = _interopRequireDefault(_Vector);
-		
-		var _Quaternion = __webpack_require__(20);
-		
-		var _Quaternion2 = _interopRequireDefault(_Quaternion);
-		
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-		
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-		
-		/**
-		 * Utility class to parse the arguments of attributes.
-		 */
-		var RotationParser = function () {
-		    function RotationParser() {
-		        _classCallCheck(this, RotationParser);
-		    }
-		
-		    _createClass(RotationParser, null, [{
-		        key: "parseAngle",
-		
-		        /**
-		         * Parse angle strings.
-		         * "p" means Pi. Ex) 3/4 p
-		         * "d" means degree. if this unit was specified, the argument will be parsed as degree. Ex) 90d
-		         * @param input the string to parse.
-		         * @returns {number} parsed angle in radians.
-		         */
-		        value: function parseAngle(input) {
-		            var regex = /^ *(-?[\de+-.]*) *(?:\/ *([\de+-.]*))? *(p|prad|deg|d|r|rad)? *$/gm;
-		            var result = regex.exec(input);
-		            if (result == null) {
-		                throw new Error("faild parse Angle string:'" + input + "'");
-		            }
-		            var numerator = parseFloat(result[1]);
-		            if (result[2]) {
-		                numerator /= parseFloat(result[2]);
-		            }
-		            var unit = result[3];
-		            if (unit == null) {
-		                unit = "d";
-		            }
-		            if (unit === "r" || unit === "rad") {
-		                return numerator;
-		            }
-		            if (unit === "p" || unit === "prad") {
-		                return numerator * Math.PI;
-		            }
-		            return numerator / 180 * Math.PI;
-		        }
-		        /**
-		         * Parse angle string in 3D.
-		         * "p" means Pi. Ex) 3/4 p
-		         * "d" means degree. if this unit was specified, the argument will be parsed as degree. Ex) 90d
-		         * "eular(x,y,z)" means rotation in eular. This means Z-X-Y rotation like Unity.
-		         * "axis(angle,x,y,z)" means rotation around specified axis. This means angle radians will be rotated around the axis (x,y,z).
-		         * This angle can be specified with the character "p" or "d".
-		         * "x(angle)","y(angle)" or "z(angle)" means rotation around unit axis.
-		         * This angle can be specified with the character "p" or "d".
-		         * @param input the string to be parsed as angle in 3D.
-		         * @returns {Quaternion} parsed rotation in Quaternion.
-		         */
-		
-		    }, {
-		        key: "parseRotation3D",
-		        value: function parseRotation3D(input) {
-		            var reg1 = /^ *(x|y|z) *\(([^\(\)]+)\) *$/gm;
-		            var reg2 = /^ *axis *\(([^\(\),]+),([^\(\),]+),([^\(\),]+),([^\(\),]+)\) *$/gm;
-		            var reg3 = /^ *([^\(\),]+),([^\(\),]+),([^\(\),]+) *$/gm;
-		            var result = reg1.exec(input);
-		            if (result) {
-		                if (result[1] === "x") {
-		                    return _Quaternion2.default.angleAxis(RotationParser.parseAngle(result[2]), _Vector2.default.XUnit);
-		                }
-		                if (result[1] === "y") {
-		                    return _Quaternion2.default.angleAxis(RotationParser.parseAngle(result[2]), _Vector2.default.YUnit);
-		                }
-		                if (result[1] === "z") {
-		                    return _Quaternion2.default.angleAxis(RotationParser.parseAngle(result[2]), _Vector2.default.ZUnit);
-		                }
-		            }
-		            var res2 = reg2.exec(input);
-		            if (res2) {
-		                var rotation = RotationParser.parseAngle(res2[1]);
-		                var x = parseFloat(res2[2]);
-		                var y = parseFloat(res2[3]);
-		                var z = parseFloat(res2[4]);
-		                return _Quaternion2.default.angleAxis(rotation, new _Vector2.default(x, y, z));
-		            }
-		            var res3 = reg3.exec(input);
-		            if (res3) {
-		                return _Quaternion2.default.euler(RotationParser.parseAngle(res3[1]), RotationParser.parseAngle(res3[2]), RotationParser.parseAngle(res3[3]));
-		            }
-		            throw new Error("Unknown format for rotation3D:'" + input + "'");
-		        }
-		    }]);
-		
-		    return RotationParser;
-		}();
-		
-		exports.default = RotationParser;
-	
-	/***/ },
-	/* 80 */
+	/* 73 */
 	/***/ function(module, exports) {
 	
 		"use strict";
@@ -30816,32 +31109,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		Object.defineProperty(exports, "__esModule", {
 		    value: true
 		});
-		function BooleanConverter(val) {
-		    if (typeof val === "boolean") {
-		        return val;
-		    } else if (typeof val === "string") {
-		        switch (val) {
-		            case "true":
-		                return true;
-		            case "false":
-		                return false;
-		            default:
-		                throw new Error("Invalid string " + val + " for parsing as boolean");
-		        }
-		    }
-		    throw new Error("Unsupported type to be parsed as boolean");
-		}
-		exports.default = BooleanConverter;
-	
-	/***/ },
-	/* 81 */
-	/***/ function(module, exports) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
+		exports.default = CanvasSizeConverter;
 		function CanvasSizeConverter(val) {
 		    if (val === "fit") {
 		        return {
@@ -30862,10 +31130,9 @@ return /******/ (function(modules) { // webpackBootstrap
 		        size: Number.parseFloat(val)
 		    };
 		}
-		exports.default = CanvasSizeConverter;
 	
 	/***/ },
-	/* 82 */
+	/* 74 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -30873,166 +31140,9 @@ return /******/ (function(modules) { // webpackBootstrap
 		Object.defineProperty(exports, "__esModule", {
 		    value: true
 		});
+		exports.default = GeometryConverter;
 		
-		var _Color = __webpack_require__(83);
-		
-		var _Color2 = _interopRequireDefault(_Color);
-		
-		var _Color3 = __webpack_require__(72);
-		
-		var _Color4 = _interopRequireDefault(_Color3);
-		
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-		
-		function Color3Converter(val) {
-		    if (val instanceof _Color2.default) {
-		        return val;
-		    } else if (val instanceof _Color4.default) {
-		        return new _Color2.default(val.R, val.G, val.B);
-		    } else if (typeof val === "string") {
-		        return _Color2.default.parse(val);
-		    } else if (Array.isArray(val)) {
-		        return new _Color2.default(val[0], val[1], val[2]);
-		    } else {
-		        throw new Error(val + " can not be parsed as Color4.");
-		    }
-		}
-		exports.default = Color3Converter;
-	
-	/***/ },
-	/* 83 */
-	/***/ function(module, exports) {
-	
-			Object.defineProperty(exports, "__esModule", {
-			    value: true
-			});exports.default=window.GrimoireJS.lib.math.Color3;
-	
-	/***/ },
-	/* 84 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		var _Color = __webpack_require__(83);
-		
-		var _Color2 = _interopRequireDefault(_Color);
-		
-		var _Color3 = __webpack_require__(72);
-		
-		var _Color4 = _interopRequireDefault(_Color3);
-		
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-		
-		function Color4Converter(val) {
-		    if (val instanceof _Color4.default) {
-		        return val;
-		    } else if (val instanceof _Color2.default) {
-		        return new _Color4.default(val.R, val.G, val.B, 1.0);
-		    } else if (typeof val === "string") {
-		        return _Color4.default.parse(val);
-		    } else if (Array.isArray(val)) {
-		        return new _Color4.default(val[0], val[1], val[2], val[3]);
-		    } else {
-		        throw new Error(val + " can not be parsed as Color4.");
-		    }
-		}
-		exports.default = Color4Converter;
-	
-	/***/ },
-	/* 85 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		var _Component = __webpack_require__(15);
-		
-		var _Component2 = _interopRequireDefault(_Component);
-		
-		var _GomlNode = __webpack_require__(86);
-		
-		var _GomlNode2 = _interopRequireDefault(_GomlNode);
-		
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-		
-		function ComponentConverter(val) {
-		    if (!this.declaration["target"]) {
-		        throw new Error("Component converter require to be specified target");
-		    }
-		    if (val === null) {
-		        return null;
-		    }
-		    if (val instanceof _GomlNode2.default) {
-		        return val.getComponent(this.declaration["target"]);
-		    } else if (val instanceof _Component2.default) {
-		        if (val.name === this.declaration["target"]) {
-		            return val; // check component type?
-		        } else {
-		            throw new Error("Specified component must be " + this.declaration["target"]);
-		        }
-		    } else {
-		        var n = this.tree(val).first();
-		        if (n) {
-		            return n.getComponent(this.declaration["target"]);
-		        }
-		        return null;
-		    }
-		}
-		exports.default = ComponentConverter;
-	
-	/***/ },
-	/* 86 */
-	/***/ function(module, exports) {
-	
-			Object.defineProperty(exports, "__esModule", {
-			    value: true
-			});exports.default=window.GrimoireJS.Node.GomlNode;
-	
-	/***/ },
-	/* 87 */
-	/***/ function(module, exports) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		function EnumConverter(val) {
-		    if (!this.declaration["table"]) {
-		        throw new Error("Enum converter needs to be specified table in attribute dictionary");
-		    }
-		    if (typeof val === "number") {
-		        return val;
-		    }
-		    if (typeof val === "string") {
-		        var result = this.declaration["table"][val];
-		        if (!result) {
-		            throw new Error("Specified value is not exisiting in the relation table");
-		        } else {
-		            return result;
-		        }
-		    }
-		}
-		exports.default = EnumConverter;
-	
-	/***/ },
-	/* 88 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		var _Geometry = __webpack_require__(89);
+		var _Geometry = __webpack_require__(41);
 		
 		var _Geometry2 = _interopRequireDefault(_Geometry);
 		
@@ -31046,103 +31156,9 @@ return /******/ (function(modules) { // webpackBootstrap
 		    }
 		    throw new Error("Specified geometry \"" + val + "\" is not supported for converting into geometry.");
 		}
-		exports.default = GeometryConverter;
 	
 	/***/ },
-	/* 89 */
-	/***/ function(module, exports) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-		
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-		
-		/**
-		 * The geometry class for managing buffer resource
-		 */
-		var Geometry = function () {
-		    function Geometry(vertices, attribInfo, indices, aabb) {
-		        _classCallCheck(this, Geometry);
-		
-		        this.vertices = vertices;
-		        this.attribInfo = attribInfo;
-		        this.indices = indices;
-		        this.aabb = aabb;
-		        // check all buffers requested by attribute variables are all contained in vertices
-		        for (var attrKey in attribInfo) {
-		            if (vertices[attribInfo[attrKey].bufferName] === void 0) {
-		                throw new Error("The buffer request by " + attribInfo[attrKey].bufferName + " is not contained in geometry.");
-		            }
-		        }
-		    }
-		
-		    _createClass(Geometry, [{
-		        key: "drawByDefault",
-		        value: function drawByDefault(indexName, attribNames, program) {
-		            var _this = this;
-		
-		            var count = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : Number.MAX_VALUE;
-		            var offset = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 0;
-		
-		            attribNames.forEach(function (name) {
-		                Geometry.bindBufferToAttribute(_this, program, name, name);
-		            });
-		            Geometry.drawWithCurrentVertexBuffer(this, program, indexName, count, offset);
-		        }
-		        /**
-		         * bind a vertex buffer to specified attribute variable.
-		         * @param  {Geometry} geometry      [description]
-		         * @param  {Program}  program       [description]
-		         * @param  {string}   attributeName [description]
-		         * @param  {string}   bufferName    [description]
-		         * @return {boolean}                [description]
-		         */
-		
-		    }], [{
-		        key: "bindBufferToAttribute",
-		        value: function bindBufferToAttribute(geometry, program, attributeName, bufferName) {
-		            var index = program.findAttributeLocation(attributeName);
-		            if (index < 0) {
-		                return false;
-		            }
-		            var attribInfo = geometry.attribInfo[bufferName];
-		            if (!attribInfo) {
-		                throw new Error("Specified buffer \"" + bufferName + " was not found on this geometry while attempt to bind \"" + attributeName + "\" of attribute variables.\n\n\t  All of the vertex buffer available on this geometry is " + Object.keys(geometry.attribInfo) + "\"");
-		            }
-		            var buffer = geometry.vertices[attribInfo.bufferName];
-		            buffer.bind();
-		            program.gl.vertexAttribPointer(index, attribInfo.size, attribInfo.type, false, attribInfo.stride, attribInfo.offset);
-		            return true;
-		        }
-		    }, {
-		        key: "drawWithCurrentVertexBuffer",
-		        value: function drawWithCurrentVertexBuffer(geometry, program, indexName) {
-		            var count = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : Number.MAX_VALUE;
-		            var offset = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 0;
-		
-		            var targetIndex = geometry.indices[indexName];
-		            if (targetIndex === void 0) {
-		                throw new Error("Specified index buffer \"" + indexName + "\" was not found on this geometry.All of the index buffer available on this geometry is \"" + Object.keys(geometry.indices) + "\"");
-		            }
-		            targetIndex.index.bind();
-		            program.gl.drawElements(targetIndex.topology, Math.min(targetIndex.count, count), targetIndex.type, Math.min(offset * targetIndex.byteSize + targetIndex.byteOffset, (targetIndex.count - 1) * targetIndex.byteSize));
-		        }
-		    }]);
-		
-		    return Geometry;
-		}();
-		
-		exports.default = Geometry;
-		
-		Geometry._lastGeometry = new Map();
-	
-	/***/ },
-	/* 90 */
+	/* 75 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -31150,8 +31166,9 @@ return /******/ (function(modules) { // webpackBootstrap
 		Object.defineProperty(exports, "__esModule", {
 		    value: true
 		});
+		exports.default = MaterialConverter;
 		
-		var _MaterialComponent = __webpack_require__(35);
+		var _MaterialComponent = __webpack_require__(55);
 		
 		var _MaterialComponent2 = _interopRequireDefault(_MaterialComponent);
 		
@@ -31165,72 +31182,22 @@ return /******/ (function(modules) { // webpackBootstrap
 		            this.component[this.declaration["componentBoundTo"]] = null;
 		            return this.companion.get("MaterialFactory").instanciate(regexResult[1]);
 		        } else {
-		            var mc = this.tree(val).single().getComponent(_MaterialComponent2.default);
-		            this.component[this.declaration["componentBoundTo"]] = mc;
-		            return mc.materialPromise;
+		            var node = this.tree(val).first();
+		            if (node) {
+		                var mc = node.getComponent(_MaterialComponent2.default);
+		                this.component[this.declaration["componentBoundTo"]] = mc;
+		                return mc.materialPromise;
+		            } else {
+		                console.warn("There was no matching material component filtered by '" + val + "'");
+		                return null;
+		            }
 		        }
 		    }
 		    return null; // TODO ??
 		}
-		exports.default = MaterialConverter;
 	
 	/***/ },
-	/* 91 */
-	/***/ function(module, exports) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		function NumberArrayConverter(val) {
-		    if (val instanceof Array) {
-		        return val;
-		    }
-		    if (typeof val === "string") {
-		        var splitted = val.split(",");
-		        return splitted.map(function (s) {
-		            return Number.parseFloat(s);
-		        });
-		    }
-		}
-		exports.default = NumberArrayConverter;
-	
-	/***/ },
-	/* 92 */
-	/***/ function(module, exports) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		function NumberConverter(val) {
-		    if (typeof val === "number") {
-		        return val;
-		    } else if (typeof val === "string") {
-		        return Number.parseFloat(val);
-		    }
-		    throw new Error("Unsupported input to convert into number!");
-		}
-		exports.default = NumberConverter;
-	
-	/***/ },
-	/* 93 */
-	/***/ function(module, exports) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		function ObjectConverter(val) {
-		    return val;
-		}
-		exports.default = ObjectConverter;
-	
-	/***/ },
-	/* 94 */
+	/* 76 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -31238,29 +31205,86 @@ return /******/ (function(modules) { // webpackBootstrap
 		Object.defineProperty(exports, "__esModule", {
 		    value: true
 		});
+		exports.default = NodeConverter;
 		
-		var _RotationParser = __webpack_require__(79);
+		var _GomlNode = __webpack_require__(77);
 		
-		var _RotationParser2 = _interopRequireDefault(_RotationParser);
-		
-		var _Quaternion = __webpack_require__(20);
-		
-		var _Quaternion2 = _interopRequireDefault(_Quaternion);
+		var _GomlNode2 = _interopRequireDefault(_GomlNode);
 		
 		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 		
-		function Rotation3Converter(val) {
-		    if (val instanceof _Quaternion2.default) {
-		        return val;
-		    } else if (Array.isArray(val)) {
-		        return new _Quaternion2.default([val[0], val[1], val[2], val[3]]);
+		function NodeConverter(val) {
+		    if (val === null) {
+		        return null;
 		    }
-		    return _RotationParser2.default.parseRotation3D(val);
+		    if (val instanceof _GomlNode2.default) {
+		        return val;
+		    } else if (typeof val === "string") {
+		        return this.component.node.tree(val).first();
+		    }
 		}
-		exports.default = Rotation3Converter;
 	
 	/***/ },
-	/* 95 */
+	/* 77 */
+	/***/ function(module, exports) {
+	
+			Object.defineProperty(exports, "__esModule", {
+			    value: true
+			});exports.default=window.GrimoireJS.Node.GomlNode;
+	
+	/***/ },
+	/* 78 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		exports.default = PositionConverter;
+		
+		var _Attribute = __webpack_require__(79);
+		
+		var _Attribute2 = _interopRequireDefault(_Attribute);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		var _lastVal = void 0;
+		var _node = void 0;
+		function PositionConverter(val) {
+		    if (val === null) {
+		        return null;
+		    }
+		    if (_lastVal === val) {
+		        return _node.getAttribute("position");
+		    } else {
+		        _lastVal = null;
+		        try {
+		            var vec = _Attribute2.default.convert("Vector3", this, val);
+		            if (vec) {
+		                return vec;
+		            }
+		        } catch (e) {
+		            ;
+		        }
+		        _node = _Attribute2.default.convert("Node", this, val);
+		        if (_node) {
+		            _lastVal = val;
+		            return _node.getAttribute("position");
+		        }
+		    }
+		}
+	
+	/***/ },
+	/* 79 */
+	/***/ function(module, exports) {
+	
+			Object.defineProperty(exports, "__esModule", {
+			    value: true
+			});exports.default=window.GrimoireJS.Node.Attribute;
+	
+	/***/ },
+	/* 80 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -31271,15 +31295,17 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 		
-		var _TextureComponent = __webpack_require__(77);
+		exports.default = TextureConverter;
+		
+		var _TextureComponent = __webpack_require__(72);
 		
 		var _TextureComponent2 = _interopRequireDefault(_TextureComponent);
 		
-		var _TextureReference = __webpack_require__(96);
+		var _TextureReference = __webpack_require__(81);
 		
 		var _TextureReference2 = _interopRequireDefault(_TextureReference);
 		
-		var _Texture2D = __webpack_require__(25);
+		var _Texture2D = __webpack_require__(47);
 		
 		var _Texture2D2 = _interopRequireDefault(_Texture2D);
 		
@@ -31396,19 +31422,18 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		            if ((typeof _ret4 === "undefined" ? "undefined" : _typeof(_ret4)) === "object") return _ret4.v;
 		        } else if (val instanceof HTMLCanvasElement) {
-		            var _tex = new _Texture2D2.default(this.companion.get("gl"));
-		            _tex.update(val);
-		            return new _TextureReference2.default(_tex);
+		            var tex = new _Texture2D2.default(this.companion.get("gl"));
+		            tex.update(val);
+		            return new _TextureReference2.default(tex);
 		        } else if (val instanceof HTMLVideoElement) {
 		            return new _TextureReference2.default(fromVideoTexture(this.companion.get("gl"), val));
 		        }
 		    }
 		    return null;
 		}
-		exports.default = TextureConverter;
 	
 	/***/ },
-	/* 96 */
+	/* 81 */
 	/***/ function(module, exports) {
 	
 		"use strict";
@@ -31449,94 +31474,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = TextureReference;
 	
 	/***/ },
-	/* 97 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		var _Vector = __webpack_require__(53);
-		
-		var _Vector2 = _interopRequireDefault(_Vector);
-		
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-		
-		function Vector2Converter(val) {
-		    if (val instanceof _Vector2.default) {
-		        return val;
-		    } else if (typeof val === "string") {
-		        return _Vector2.default.parse(val);
-		    } else if (typeof val === "number") {
-		        return new _Vector2.default(val, val);
-		    } else if (Array.isArray(val)) {
-		        return new _Vector2.default(val[0], val[1]);
-		    }
-		}
-		exports.default = Vector2Converter;
-	
-	/***/ },
-	/* 98 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		var _Vector = __webpack_require__(9);
-		
-		var _Vector2 = _interopRequireDefault(_Vector);
-		
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-		
-		function Vector3Converter(val) {
-		    if (val instanceof _Vector2.default) {
-		        return val;
-		    } else if (typeof val === "string") {
-		        return _Vector2.default.parse(val);
-		    } else if (typeof val == "number") {
-		        return new _Vector2.default(val, val, val);
-		    } else if (Array.isArray(val)) {
-		        return new _Vector2.default(val[0], val[1], val[2]);
-		    }
-		}
-		exports.default = Vector3Converter;
-	
-	/***/ },
-	/* 99 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		var _Vector = __webpack_require__(11);
-		
-		var _Vector2 = _interopRequireDefault(_Vector);
-		
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-		
-		function Vector4Converter(val) {
-		    if (val instanceof _Vector2.default) {
-		        return val;
-		    } else if (typeof val === "string") {
-		        return _Vector2.default.parse(val);
-		    } else if (typeof val === "number") {
-		        return new _Vector2.default(val, val, val, val);
-		    } else if (Array.isArray(val)) {
-		        return new _Vector2.default(val[0], val[1], val[2], val[3]);
-		    }
-		}
-		exports.default = Vector4Converter;
-	
-	/***/ },
-	/* 100 */
+	/* 82 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -31547,7 +31485,9 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 		
-		var _Rectangle = __webpack_require__(101);
+		exports.default = ViewportConverter;
+		
+		var _Rectangle = __webpack_require__(83);
 		
 		var _Rectangle2 = _interopRequireDefault(_Rectangle);
 		
@@ -31593,10 +31533,9 @@ return /******/ (function(modules) { // webpackBootstrap
 		    }
 		    throw new Error(val + " could not be parsed");
 		}
-		exports.default = ViewportConverter;
 	
 	/***/ },
-	/* 101 */
+	/* 83 */
 	/***/ function(module, exports) {
 	
 			Object.defineProperty(exports, "__esModule", {
@@ -31604,7 +31543,7 @@ return /******/ (function(modules) { // webpackBootstrap
 			});exports.default=window.GrimoireJS.lib.math.Rectangle;
 	
 	/***/ },
-	/* 102 */
+	/* 84 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -31615,25 +31554,25 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 		
-		var _AABB = __webpack_require__(103);
+		var _Geometry = __webpack_require__(41);
+		
+		var _Geometry2 = _interopRequireDefault(_Geometry);
+		
+		var _AABB = __webpack_require__(42);
 		
 		var _AABB2 = _interopRequireDefault(_AABB);
 		
-		var _Vector = __webpack_require__(9);
+		var _Vector = __webpack_require__(14);
 		
 		var _Vector2 = _interopRequireDefault(_Vector);
 		
-		var _GeometryUtility = __webpack_require__(104);
+		var _GeometryUtility = __webpack_require__(85);
 		
 		var _GeometryUtility2 = _interopRequireDefault(_GeometryUtility);
 		
-		var _GeometryFactory = __webpack_require__(31);
+		var _GeometryFactory = __webpack_require__(51);
 		
 		var _GeometryFactory2 = _interopRequireDefault(_GeometryFactory);
-		
-		var _GeometryBuilder = __webpack_require__(105);
-		
-		var _GeometryBuilder2 = _interopRequireDefault(_GeometryBuilder);
 		
 		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 		
@@ -31642,6 +31581,22 @@ return /******/ (function(modules) { // webpackBootstrap
 		var unitBox = new _AABB2.default();
 		unitBox.expand(new _Vector2.default(-1, -1, -1));
 		unitBox.expand(new _Vector2.default(1, 1, 1));
+		var primitiveLayout = {
+		    POSITION: {
+		        size: 3,
+		        stride: 32
+		    },
+		    NORMAL: {
+		        size: 3,
+		        stride: 32,
+		        offset: 12
+		    },
+		    TEXCOORD: {
+		        size: 2,
+		        stride: 32,
+		        offset: 24
+		    }
+		};
 		
 		var DefaultPrimitives = function () {
 		    function DefaultPrimitives() {
@@ -31651,7 +31606,6 @@ return /******/ (function(modules) { // webpackBootstrap
 		    _createClass(DefaultPrimitives, null, [{
 		        key: "register",
 		        value: function register() {
-		            DefaultPrimitives._registerTriangle();
 		            DefaultPrimitives._registerQuad();
 		            DefaultPrimitives._registerCube();
 		            DefaultPrimitives._registerSphere();
@@ -31659,631 +31613,28 @@ return /******/ (function(modules) { // webpackBootstrap
 		            DefaultPrimitives._registerCylinder();
 		            DefaultPrimitives._registerCone();
 		            DefaultPrimitives._registerPlane();
-		        }
-		    }, {
-		        key: "_registerTriangle",
-		        value: function _registerTriangle() {
-		            _GeometryFactory2.default.addType("triangle", {}, function (gl, attrs) {
-		                return _GeometryBuilder2.default.build(gl, {
-		                    indices: {
-		                        default: {
-		                            generator: regeneratorRuntime.mark(function generator() {
-		                                return regeneratorRuntime.wrap(function generator$(_context) {
-		                                    while (1) {
-		                                        switch (_context.prev = _context.next) {
-		                                            case 0:
-		                                                return _context.delegateYield(_GeometryUtility2.default.triangleIndex(0), "t0", 1);
-		
-		                                            case 1:
-		                                            case "end":
-		                                                return _context.stop();
-		                                        }
-		                                    }
-		                                }, generator, this);
-		                            }),
-		                            topology: WebGLRenderingContext.TRIANGLES
-		                        },
-		                        wireframe: {
-		                            generator: regeneratorRuntime.mark(function generator() {
-		                                return regeneratorRuntime.wrap(function generator$(_context2) {
-		                                    while (1) {
-		                                        switch (_context2.prev = _context2.next) {
-		                                            case 0:
-		                                                return _context2.delegateYield(_GeometryUtility2.default.linesFromTriangles(_GeometryUtility2.default.triangleIndex(0)), "t0", 1);
-		
-		                                            case 1:
-		                                            case "end":
-		                                                return _context2.stop();
-		                                        }
-		                                    }
-		                                }, generator, this);
-		                            }),
-		                            topology: WebGLRenderingContext.LINES
-		                        }
-		                    },
-		                    vertices: {
-		                        main: {
-		                            size: {
-		                                position: 3,
-		                                normal: 3,
-		                                texCoord: 2
-		                            },
-		                            count: _GeometryUtility2.default.triangleSize(),
-		                            getGenerators: function getGenerators() {
-		                                return {
-		                                    position: regeneratorRuntime.mark(function position() {
-		                                        return regeneratorRuntime.wrap(function position$(_context3) {
-		                                            while (1) {
-		                                                switch (_context3.prev = _context3.next) {
-		                                                    case 0:
-		                                                        return _context3.delegateYield(_GeometryUtility2.default.trianglePosition(_Vector2.default.Zero, _Vector2.default.YUnit, _Vector2.default.XUnit), "t0", 1);
-		
-		                                                    case 1:
-		                                                    case "end":
-		                                                        return _context3.stop();
-		                                                }
-		                                            }
-		                                        }, position, this);
-		                                    }),
-		                                    normal: regeneratorRuntime.mark(function normal() {
-		                                        return regeneratorRuntime.wrap(function normal$(_context4) {
-		                                            while (1) {
-		                                                switch (_context4.prev = _context4.next) {
-		                                                    case 0:
-		                                                        return _context4.delegateYield(_GeometryUtility2.default.triangleNormal(_Vector2.default.ZUnit), "t0", 1);
-		
-		                                                    case 1:
-		                                                    case "end":
-		                                                        return _context4.stop();
-		                                                }
-		                                            }
-		                                        }, normal, this);
-		                                    }),
-		                                    texCoord: regeneratorRuntime.mark(function texCoord() {
-		                                        return regeneratorRuntime.wrap(function texCoord$(_context5) {
-		                                            while (1) {
-		                                                switch (_context5.prev = _context5.next) {
-		                                                    case 0:
-		                                                        return _context5.delegateYield(_GeometryUtility2.default.triangleTexCoord(), "t0", 1);
-		
-		                                                    case 1:
-		                                                    case "end":
-		                                                        return _context5.stop();
-		                                                }
-		                                            }
-		                                        }, texCoord, this);
-		                                    })
-		                                };
-		                            }
-		                        }
-		                    }
-		                });
-		            });
+		            DefaultPrimitives._registerTriangle();
 		        }
 		    }, {
 		        key: "_registerQuad",
 		        value: function _registerQuad() {
 		            _GeometryFactory2.default.addType("quad", {}, function (gl, attrs) {
-		                return _GeometryBuilder2.default.build(gl, {
-		                    indices: {
-		                        default: {
-		                            generator: regeneratorRuntime.mark(function generator() {
-		                                return regeneratorRuntime.wrap(function generator$(_context6) {
-		                                    while (1) {
-		                                        switch (_context6.prev = _context6.next) {
-		                                            case 0:
-		                                                return _context6.delegateYield(_GeometryUtility2.default.quadIndex(0), "t0", 1);
-		
-		                                            case 1:
-		                                            case "end":
-		                                                return _context6.stop();
-		                                        }
-		                                    }
-		                                }, generator, this);
-		                            }),
-		                            topology: WebGLRenderingContext.TRIANGLES
-		                        },
-		                        wireframe: {
-		                            generator: regeneratorRuntime.mark(function generator() {
-		                                return regeneratorRuntime.wrap(function generator$(_context7) {
-		                                    while (1) {
-		                                        switch (_context7.prev = _context7.next) {
-		                                            case 0:
-		                                                return _context7.delegateYield(_GeometryUtility2.default.linesFromTriangles(_GeometryUtility2.default.quadIndex(0)), "t0", 1);
-		
-		                                            case 1:
-		                                            case "end":
-		                                                return _context7.stop();
-		                                        }
-		                                    }
-		                                }, generator, this);
-		                            }),
-		                            topology: WebGLRenderingContext.LINES
-		                        }
-		                    },
-		                    vertices: {
-		                        main: {
-		                            size: {
-		                                position: 3,
-		                                normal: 3,
-		                                texCoord: 2
-		                            },
-		                            count: _GeometryUtility2.default.quadSize(),
-		                            getGenerators: function getGenerators() {
-		                                return {
-		                                    position: regeneratorRuntime.mark(function position() {
-		                                        return regeneratorRuntime.wrap(function position$(_context8) {
-		                                            while (1) {
-		                                                switch (_context8.prev = _context8.next) {
-		                                                    case 0:
-		                                                        return _context8.delegateYield(_GeometryUtility2.default.quadPosition(_Vector2.default.Zero, _Vector2.default.YUnit, _Vector2.default.XUnit), "t0", 1);
-		
-		                                                    case 1:
-		                                                    case "end":
-		                                                        return _context8.stop();
-		                                                }
-		                                            }
-		                                        }, position, this);
-		                                    }),
-		                                    normal: regeneratorRuntime.mark(function normal() {
-		                                        return regeneratorRuntime.wrap(function normal$(_context9) {
-		                                            while (1) {
-		                                                switch (_context9.prev = _context9.next) {
-		                                                    case 0:
-		                                                        return _context9.delegateYield(_GeometryUtility2.default.quadNormal(_Vector2.default.ZUnit), "t0", 1);
-		
-		                                                    case 1:
-		                                                    case "end":
-		                                                        return _context9.stop();
-		                                                }
-		                                            }
-		                                        }, normal, this);
-		                                    }),
-		                                    texCoord: regeneratorRuntime.mark(function texCoord() {
-		                                        return regeneratorRuntime.wrap(function texCoord$(_context10) {
-		                                            while (1) {
-		                                                switch (_context10.prev = _context10.next) {
-		                                                    case 0:
-		                                                        return _context10.delegateYield(_GeometryUtility2.default.quadTexCoord(), "t0", 1);
-		
-		                                                    case 1:
-		                                                    case "end":
-		                                                        return _context10.stop();
-		                                                }
-		                                            }
-		                                        }, texCoord, this);
-		                                    })
-		                                };
-		                            }
-		                        }
-		                    }
-		                });
+		                var geometry = new _Geometry2.default(gl);
+		                geometry.addAttributes(_GeometryUtility2.default.plane([0, 0, 0], [0, 0, 1], [0, 1, 0], [1, 0, 0], 1, 1), primitiveLayout);
+		                geometry.addIndex("default", _GeometryUtility2.default.planeIndex(0, 1, 1));
+		                geometry.addIndex("wireframe", _GeometryUtility2.default.linesFromTriangles(_GeometryUtility2.default.planeIndex(0, 1, 1)), WebGLRenderingContext.LINES);
+		                return geometry;
 		            });
 		        }
 		    }, {
-		        key: "_registerCube",
-		        value: function _registerCube() {
-		            _GeometryFactory2.default.addType("cube", {}, function (gl, attrs) {
-		                return _GeometryBuilder2.default.build(gl, {
-		                    indices: {
-		                        default: {
-		                            generator: regeneratorRuntime.mark(function generator() {
-		                                return regeneratorRuntime.wrap(function generator$(_context11) {
-		                                    while (1) {
-		                                        switch (_context11.prev = _context11.next) {
-		                                            case 0:
-		                                                return _context11.delegateYield(_GeometryUtility2.default.cubeIndex(0), "t0", 1);
-		
-		                                            case 1:
-		                                            case "end":
-		                                                return _context11.stop();
-		                                        }
-		                                    }
-		                                }, generator, this);
-		                            }),
-		                            topology: WebGLRenderingContext.TRIANGLES
-		                        },
-		                        wireframe: {
-		                            generator: regeneratorRuntime.mark(function generator() {
-		                                return regeneratorRuntime.wrap(function generator$(_context12) {
-		                                    while (1) {
-		                                        switch (_context12.prev = _context12.next) {
-		                                            case 0:
-		                                                return _context12.delegateYield(_GeometryUtility2.default.linesFromTriangles(_GeometryUtility2.default.cubeIndex(0)), "t0", 1);
-		
-		                                            case 1:
-		                                            case "end":
-		                                                return _context12.stop();
-		                                        }
-		                                    }
-		                                }, generator, this);
-		                            }),
-		                            topology: WebGLRenderingContext.LINES
-		                        }
-		                    },
-		                    vertices: {
-		                        main: {
-		                            size: {
-		                                position: 3,
-		                                normal: 3,
-		                                texCoord: 2
-		                            },
-		                            count: _GeometryUtility2.default.cubeSize(),
-		                            getGenerators: function getGenerators() {
-		                                return {
-		                                    position: regeneratorRuntime.mark(function position() {
-		                                        return regeneratorRuntime.wrap(function position$(_context13) {
-		                                            while (1) {
-		                                                switch (_context13.prev = _context13.next) {
-		                                                    case 0:
-		                                                        return _context13.delegateYield(_GeometryUtility2.default.cubePosition(_Vector2.default.Zero, _Vector2.default.YUnit, _Vector2.default.XUnit, _Vector2.default.ZUnit.negateThis()), "t0", 1);
-		
-		                                                    case 1:
-		                                                    case "end":
-		                                                        return _context13.stop();
-		                                                }
-		                                            }
-		                                        }, position, this);
-		                                    }),
-		                                    normal: regeneratorRuntime.mark(function normal() {
-		                                        return regeneratorRuntime.wrap(function normal$(_context14) {
-		                                            while (1) {
-		                                                switch (_context14.prev = _context14.next) {
-		                                                    case 0:
-		                                                        return _context14.delegateYield(_GeometryUtility2.default.cubeNormal(_Vector2.default.Zero, _Vector2.default.YUnit, _Vector2.default.XUnit, _Vector2.default.ZUnit.negateThis()), "t0", 1);
-		
-		                                                    case 1:
-		                                                    case "end":
-		                                                        return _context14.stop();
-		                                                }
-		                                            }
-		                                        }, normal, this);
-		                                    }),
-		                                    texCoord: regeneratorRuntime.mark(function texCoord() {
-		                                        return regeneratorRuntime.wrap(function texCoord$(_context15) {
-		                                            while (1) {
-		                                                switch (_context15.prev = _context15.next) {
-		                                                    case 0:
-		                                                        return _context15.delegateYield(_GeometryUtility2.default.cubeTexCoord(), "t0", 1);
-		
-		                                                    case 1:
-		                                                    case "end":
-		                                                        return _context15.stop();
-		                                                }
-		                                            }
-		                                        }, texCoord, this);
-		                                    })
-		                                };
-		                            }
-		                        }
-		                    },
-		                    aabb: unitBox
-		                });
-		            });
-		        }
-		    }, {
-		        key: "_registerSphere",
-		        value: function _registerSphere() {
-		            _GeometryFactory2.default.addType("sphere", {
-		                divVertical: {
-		                    converter: "Number",
-		                    default: 100
-		                },
-		                divHorizontal: {
-		                    converter: "Number",
-		                    default: 100
-		                }
-		            }, function (gl, attrs) {
-		                var dH = attrs["divHorizontal"];
-		                var dV = attrs["divVertical"];
-		                return _GeometryBuilder2.default.build(gl, {
-		                    indices: {
-		                        default: {
-		                            generator: regeneratorRuntime.mark(function generator() {
-		                                return regeneratorRuntime.wrap(function generator$(_context16) {
-		                                    while (1) {
-		                                        switch (_context16.prev = _context16.next) {
-		                                            case 0:
-		                                                return _context16.delegateYield(_GeometryUtility2.default.sphereIndex(0, dH, dV), "t0", 1);
-		
-		                                            case 1:
-		                                            case "end":
-		                                                return _context16.stop();
-		                                        }
-		                                    }
-		                                }, generator, this);
-		                            }),
-		                            topology: WebGLRenderingContext.TRIANGLES
-		                        },
-		                        wireframe: {
-		                            generator: regeneratorRuntime.mark(function generator() {
-		                                return regeneratorRuntime.wrap(function generator$(_context17) {
-		                                    while (1) {
-		                                        switch (_context17.prev = _context17.next) {
-		                                            case 0:
-		                                                return _context17.delegateYield(_GeometryUtility2.default.linesFromTriangles(_GeometryUtility2.default.sphereIndex(0, dH, dV)), "t0", 1);
-		
-		                                            case 1:
-		                                            case "end":
-		                                                return _context17.stop();
-		                                        }
-		                                    }
-		                                }, generator, this);
-		                            }),
-		                            topology: WebGLRenderingContext.LINES
-		                        }
-		                    },
-		                    vertices: {
-		                        main: {
-		                            size: {
-		                                position: 3,
-		                                normal: 3,
-		                                texCoord: 2
-		                            },
-		                            count: _GeometryUtility2.default.sphereSize(dH, dV),
-		                            getGenerators: function getGenerators() {
-		                                return {
-		                                    position: regeneratorRuntime.mark(function position() {
-		                                        return regeneratorRuntime.wrap(function position$(_context18) {
-		                                            while (1) {
-		                                                switch (_context18.prev = _context18.next) {
-		                                                    case 0:
-		                                                        return _context18.delegateYield(_GeometryUtility2.default.spherePosition(_Vector2.default.Zero, _Vector2.default.YUnit, _Vector2.default.XUnit, _Vector2.default.ZUnit.negateThis(), dH, dV), "t0", 1);
-		
-		                                                    case 1:
-		                                                    case "end":
-		                                                        return _context18.stop();
-		                                                }
-		                                            }
-		                                        }, position, this);
-		                                    }),
-		                                    normal: regeneratorRuntime.mark(function normal() {
-		                                        return regeneratorRuntime.wrap(function normal$(_context19) {
-		                                            while (1) {
-		                                                switch (_context19.prev = _context19.next) {
-		                                                    case 0:
-		                                                        return _context19.delegateYield(_GeometryUtility2.default.sphereNormal(_Vector2.default.YUnit, _Vector2.default.XUnit, _Vector2.default.ZUnit.negateThis(), dH, dV), "t0", 1);
-		
-		                                                    case 1:
-		                                                    case "end":
-		                                                        return _context19.stop();
-		                                                }
-		                                            }
-		                                        }, normal, this);
-		                                    }),
-		                                    texCoord: regeneratorRuntime.mark(function texCoord() {
-		                                        return regeneratorRuntime.wrap(function texCoord$(_context20) {
-		                                            while (1) {
-		                                                switch (_context20.prev = _context20.next) {
-		                                                    case 0:
-		                                                        return _context20.delegateYield(_GeometryUtility2.default.sphereTexCoord(dH, dV), "t0", 1);
-		
-		                                                    case 1:
-		                                                    case "end":
-		                                                        return _context20.stop();
-		                                                }
-		                                            }
-		                                        }, texCoord, this);
-		                                    })
-		                                };
-		                            }
-		                        }
-		                    },
-		                    aabb: unitBox
-		                });
-		            });
-		        }
-		    }, {
-		        key: "_registerCircle",
-		        value: function _registerCircle() {
-		            _GeometryFactory2.default.addType("circle", {
-		                divide: {
-		                    converter: "Number",
-		                    default: 50
-		                }
-		            }, function (gl, attrs) {
-		                var div = attrs["divide"];
-		                return _GeometryBuilder2.default.build(gl, {
-		                    indices: {
-		                        default: {
-		                            generator: regeneratorRuntime.mark(function generator() {
-		                                return regeneratorRuntime.wrap(function generator$(_context21) {
-		                                    while (1) {
-		                                        switch (_context21.prev = _context21.next) {
-		                                            case 0:
-		                                                return _context21.delegateYield(_GeometryUtility2.default.ellipseIndex(0, div), "t0", 1);
-		
-		                                            case 1:
-		                                            case "end":
-		                                                return _context21.stop();
-		                                        }
-		                                    }
-		                                }, generator, this);
-		                            }),
-		                            topology: WebGLRenderingContext.TRIANGLES
-		                        },
-		                        wireframe: {
-		                            generator: regeneratorRuntime.mark(function generator() {
-		                                return regeneratorRuntime.wrap(function generator$(_context22) {
-		                                    while (1) {
-		                                        switch (_context22.prev = _context22.next) {
-		                                            case 0:
-		                                                return _context22.delegateYield(_GeometryUtility2.default.linesFromTriangles(_GeometryUtility2.default.ellipseIndex(0, div)), "t0", 1);
-		
-		                                            case 1:
-		                                            case "end":
-		                                                return _context22.stop();
-		                                        }
-		                                    }
-		                                }, generator, this);
-		                            }),
-		                            topology: WebGLRenderingContext.LINES
-		                        }
-		                    },
-		                    vertices: {
-		                        main: {
-		                            size: {
-		                                position: 3,
-		                                normal: 3,
-		                                texCoord: 2
-		                            },
-		                            count: _GeometryUtility2.default.ellipseSize(div),
-		                            getGenerators: function getGenerators() {
-		                                return {
-		                                    position: regeneratorRuntime.mark(function position() {
-		                                        return regeneratorRuntime.wrap(function position$(_context23) {
-		                                            while (1) {
-		                                                switch (_context23.prev = _context23.next) {
-		                                                    case 0:
-		                                                        return _context23.delegateYield(_GeometryUtility2.default.ellipsePosition(_Vector2.default.Zero, _Vector2.default.YUnit, _Vector2.default.XUnit, div), "t0", 1);
-		
-		                                                    case 1:
-		                                                    case "end":
-		                                                        return _context23.stop();
-		                                                }
-		                                            }
-		                                        }, position, this);
-		                                    }),
-		                                    normal: regeneratorRuntime.mark(function normal() {
-		                                        return regeneratorRuntime.wrap(function normal$(_context24) {
-		                                            while (1) {
-		                                                switch (_context24.prev = _context24.next) {
-		                                                    case 0:
-		                                                        return _context24.delegateYield(_GeometryUtility2.default.ellipseNormal(_Vector2.default.ZUnit, div), "t0", 1);
-		
-		                                                    case 1:
-		                                                    case "end":
-		                                                        return _context24.stop();
-		                                                }
-		                                            }
-		                                        }, normal, this);
-		                                    }),
-		                                    texCoord: regeneratorRuntime.mark(function texCoord() {
-		                                        return regeneratorRuntime.wrap(function texCoord$(_context25) {
-		                                            while (1) {
-		                                                switch (_context25.prev = _context25.next) {
-		                                                    case 0:
-		                                                        return _context25.delegateYield(_GeometryUtility2.default.ellipseTexCoord(div), "t0", 1);
-		
-		                                                    case 1:
-		                                                    case "end":
-		                                                        return _context25.stop();
-		                                                }
-		                                            }
-		                                        }, texCoord, this);
-		                                    })
-		                                };
-		                            }
-		                        }
-		                    }
-		                });
-		            });
-		        }
-		    }, {
-		        key: "_registerCylinder",
-		        value: function _registerCylinder() {
-		            _GeometryFactory2.default.addType("cylinder", {
-		                divide: {
-		                    converter: "Number",
-		                    default: 50
-		                }
-		            }, function (gl, attrs) {
-		                var div = attrs["divide"];
-		                return _GeometryBuilder2.default.build(gl, {
-		                    indices: {
-		                        default: {
-		                            generator: regeneratorRuntime.mark(function generator() {
-		                                return regeneratorRuntime.wrap(function generator$(_context26) {
-		                                    while (1) {
-		                                        switch (_context26.prev = _context26.next) {
-		                                            case 0:
-		                                                return _context26.delegateYield(_GeometryUtility2.default.cylinderIndex(0, div), "t0", 1);
-		
-		                                            case 1:
-		                                            case "end":
-		                                                return _context26.stop();
-		                                        }
-		                                    }
-		                                }, generator, this);
-		                            }),
-		                            topology: WebGLRenderingContext.TRIANGLES
-		                        },
-		                        wireframe: {
-		                            generator: regeneratorRuntime.mark(function generator() {
-		                                return regeneratorRuntime.wrap(function generator$(_context27) {
-		                                    while (1) {
-		                                        switch (_context27.prev = _context27.next) {
-		                                            case 0:
-		                                                return _context27.delegateYield(_GeometryUtility2.default.linesFromTriangles(_GeometryUtility2.default.cylinderIndex(0, div)), "t0", 1);
-		
-		                                            case 1:
-		                                            case "end":
-		                                                return _context27.stop();
-		                                        }
-		                                    }
-		                                }, generator, this);
-		                            }),
-		                            topology: WebGLRenderingContext.LINES
-		                        }
-		                    },
-		                    vertices: {
-		                        main: {
-		                            size: {
-		                                position: 3,
-		                                normal: 3,
-		                                texCoord: 2
-		                            },
-		                            count: _GeometryUtility2.default.cylinderSize(div),
-		                            getGenerators: function getGenerators() {
-		                                return {
-		                                    position: regeneratorRuntime.mark(function position() {
-		                                        return regeneratorRuntime.wrap(function position$(_context28) {
-		                                            while (1) {
-		                                                switch (_context28.prev = _context28.next) {
-		                                                    case 0:
-		                                                        return _context28.delegateYield(_GeometryUtility2.default.cylinderPosition(_Vector2.default.Zero, _Vector2.default.YUnit, _Vector2.default.XUnit, _Vector2.default.ZUnit.negateThis(), div), "t0", 1);
-		
-		                                                    case 1:
-		                                                    case "end":
-		                                                        return _context28.stop();
-		                                                }
-		                                            }
-		                                        }, position, this);
-		                                    }),
-		                                    normal: regeneratorRuntime.mark(function normal() {
-		                                        return regeneratorRuntime.wrap(function normal$(_context29) {
-		                                            while (1) {
-		                                                switch (_context29.prev = _context29.next) {
-		                                                    case 0:
-		                                                        return _context29.delegateYield(_GeometryUtility2.default.cylinderNormal(_Vector2.default.Zero, _Vector2.default.YUnit, _Vector2.default.XUnit, _Vector2.default.ZUnit.negateThis(), div), "t0", 1);
-		
-		                                                    case 1:
-		                                                    case "end":
-		                                                        return _context29.stop();
-		                                                }
-		                                            }
-		                                        }, normal, this);
-		                                    }),
-		                                    texCoord: regeneratorRuntime.mark(function texCoord() {
-		                                        return regeneratorRuntime.wrap(function texCoord$(_context30) {
-		                                            while (1) {
-		                                                switch (_context30.prev = _context30.next) {
-		                                                    case 0:
-		                                                        return _context30.delegateYield(_GeometryUtility2.default.cylinderTexCoord(div), "t0", 1);
-		
-		                                                    case 1:
-		                                                    case "end":
-		                                                        return _context30.stop();
-		                                                }
-		                                            }
-		                                        }, texCoord, this);
-		                                    })
-		                                };
-		                            }
-		                        }
-		                    },
-		                    aabb: unitBox
-		                });
+		        key: "_registerTriangle",
+		        value: function _registerTriangle() {
+		            _GeometryFactory2.default.addType("triangle", {}, function (gl, attrs) {
+		                var geometry = new _Geometry2.default(gl);
+		                geometry.addAttributes(_GeometryUtility2.default.triangle([0, 0, 0], [0, 0, 1], [0, 1, 0], [1, 0, 0]), primitiveLayout);
+		                geometry.addIndex("default", _GeometryUtility2.default.triangleIndex(0));
+		                geometry.addIndex("wireframe", _GeometryUtility2.default.linesFromTriangles(_GeometryUtility2.default.triangleIndex(0)), WebGLRenderingContext.LINES);
+		                return geometry;
 		            });
 		        }
 		    }, {
@@ -32292,105 +31643,125 @@ return /******/ (function(modules) { // webpackBootstrap
 		            _GeometryFactory2.default.addType("cone", {
 		                divide: {
 		                    converter: "Number",
-		                    default: 50
+		                    default: 6
 		                }
 		            }, function (gl, attrs) {
 		                var div = attrs["divide"];
-		                return _GeometryBuilder2.default.build(gl, {
-		                    indices: {
-		                        default: {
-		                            generator: regeneratorRuntime.mark(function generator() {
-		                                return regeneratorRuntime.wrap(function generator$(_context31) {
-		                                    while (1) {
-		                                        switch (_context31.prev = _context31.next) {
-		                                            case 0:
-		                                                return _context31.delegateYield(_GeometryUtility2.default.coneIndex(0, div), "t0", 1);
-		
-		                                            case 1:
-		                                            case "end":
-		                                                return _context31.stop();
-		                                        }
-		                                    }
-		                                }, generator, this);
-		                            }),
-		                            topology: WebGLRenderingContext.TRIANGLES
-		                        },
-		                        wireframe: {
-		                            generator: regeneratorRuntime.mark(function generator() {
-		                                return regeneratorRuntime.wrap(function generator$(_context32) {
-		                                    while (1) {
-		                                        switch (_context32.prev = _context32.next) {
-		                                            case 0:
-		                                                return _context32.delegateYield(_GeometryUtility2.default.linesFromTriangles(_GeometryUtility2.default.coneIndex(0, div)), "t0", 1);
-		
-		                                            case 1:
-		                                            case "end":
-		                                                return _context32.stop();
-		                                        }
-		                                    }
-		                                }, generator, this);
-		                            }),
-		                            topology: WebGLRenderingContext.LINES
-		                        }
-		                    },
-		                    vertices: {
-		                        main: {
-		                            size: {
-		                                position: 3,
-		                                normal: 3,
-		                                texCoord: 2
-		                            },
-		                            count: _GeometryUtility2.default.coneSize(div),
-		                            getGenerators: function getGenerators() {
-		                                return {
-		                                    position: regeneratorRuntime.mark(function position() {
-		                                        return regeneratorRuntime.wrap(function position$(_context33) {
-		                                            while (1) {
-		                                                switch (_context33.prev = _context33.next) {
-		                                                    case 0:
-		                                                        return _context33.delegateYield(_GeometryUtility2.default.conePosition(_Vector2.default.Zero, _Vector2.default.YUnit, _Vector2.default.XUnit, _Vector2.default.ZUnit.negateThis(), div), "t0", 1);
-		
-		                                                    case 1:
-		                                                    case "end":
-		                                                        return _context33.stop();
-		                                                }
-		                                            }
-		                                        }, position, this);
-		                                    }),
-		                                    normal: regeneratorRuntime.mark(function normal() {
-		                                        return regeneratorRuntime.wrap(function normal$(_context34) {
-		                                            while (1) {
-		                                                switch (_context34.prev = _context34.next) {
-		                                                    case 0:
-		                                                        return _context34.delegateYield(_GeometryUtility2.default.coneNormal(_Vector2.default.Zero, _Vector2.default.YUnit, _Vector2.default.XUnit, _Vector2.default.ZUnit.negateThis(), div), "t0", 1);
-		
-		                                                    case 1:
-		                                                    case "end":
-		                                                        return _context34.stop();
-		                                                }
-		                                            }
-		                                        }, normal, this);
-		                                    }),
-		                                    texCoord: regeneratorRuntime.mark(function texCoord() {
-		                                        return regeneratorRuntime.wrap(function texCoord$(_context35) {
-		                                            while (1) {
-		                                                switch (_context35.prev = _context35.next) {
-		                                                    case 0:
-		                                                        return _context35.delegateYield(_GeometryUtility2.default.coneTexCoord(div), "t0", 1);
-		
-		                                                    case 1:
-		                                                    case "end":
-		                                                        return _context35.stop();
-		                                                }
-		                                            }
-		                                        }, texCoord, this);
-		                                    })
-		                                };
-		                            }
-		                        }
-		                    },
-		                    aabb: unitBox
-		                });
+		                var geometry = new _Geometry2.default(gl);
+		                var theta = div % 2 != 0 ? Math.PI / div : 0;
+		                var vertices = [].concat.apply([], [_GeometryUtility2.default.circle([0, -0.5, 0], [0, -1, 0], [-Math.sin(theta), 0, Math.cos(theta)], [Math.cos(theta), 0, Math.sin(theta)], div)]);
+		                var g = Math.cos(Math.PI / div) / 3;
+		                var length = Math.sin(Math.PI / div) / Math.pow(3, 0.5) * 2;
+		                var radius = Math.cos(Math.PI / div) - g;
+		                var s = Math.PI / div;
+		                for (var i = 0; i < div; i++) {
+		                    var step = s * (i * 2 + 1);
+		                    Array.prototype.push.apply(vertices, _GeometryUtility2.default.coneTriangle([-Math.sin(step) * radius, 0, -Math.cos(step) * radius], [-Math.cos(Math.PI / 2 - step), 1, -Math.sin(Math.PI / 2 - step)], [Math.sin(step) * radius, 1, Math.cos(step) * radius], [-Math.cos(step) * length, 0, Math.sin(step) * length], div, i));
+		                }
+		                geometry.addAttributes(vertices, primitiveLayout);
+		                var os = div + 2;
+		                var indices = [].concat.apply([], [_GeometryUtility2.default.circleIndex(0, div)]);
+		                for (var _i = 0; _i < div; _i++) {
+		                    Array.prototype.push.apply(indices, _GeometryUtility2.default.triangleIndex(os + _i * 3));
+		                }
+		                geometry.addIndex("default", indices);
+		                geometry.addIndex("wireframe", _GeometryUtility2.default.linesFromTriangles(indices), WebGLRenderingContext.LINES);
+		                return geometry;
+		            });
+		        }
+		    }, {
+		        key: "_registerCylinder",
+		        value: function _registerCylinder() {
+		            _GeometryFactory2.default.addType("cylinder", {
+		                divide: {
+		                    converter: "Number",
+		                    default: 5
+		                }
+		            }, function (gl, attrs) {
+		                var div = attrs["divide"];
+		                var geometry = new _Geometry2.default(gl);
+		                var theta = div % 2 != 0 ? Math.PI / div : 0;
+		                var vertices = [].concat.apply([], [_GeometryUtility2.default.circle([0, 1, 0], [0, 1, 0], [0, 0, -1], [1, 0, 0], div), _GeometryUtility2.default.circle([0, -1, 0], [0, -1, 0], [-Math.sin(theta), 0, Math.cos(theta)], [Math.cos(theta), 0, Math.sin(theta)], div)]);
+		                var length = Math.sin(Math.PI / div);
+		                var radius = Math.cos(Math.PI / div);
+		                var s = Math.PI / div;
+		                for (var i = 0; i < div; i++) {
+		                    var step = s * (i * 2 + 1);
+		                    Array.prototype.push.apply(vertices, _GeometryUtility2.default.cylinderPlane([-Math.sin(step) * radius, 0, -Math.cos(step) * radius], [-Math.sin(step), 0, -Math.cos(step)], [0, 1, 0], [-Math.cos(step) * length, 0, Math.sin(step) * length], div, i));
+		                }
+		                geometry.addAttributes(vertices, primitiveLayout);
+		                var os = div + 2;
+		                var indices = [].concat.apply([], [_GeometryUtility2.default.circleIndex(0, div), _GeometryUtility2.default.circleIndex(os, div)]);
+		                for (var _i2 = 0; _i2 < div; _i2++) {
+		                    Array.prototype.push.apply(indices, _GeometryUtility2.default.planeIndex(os * 2 + _i2 * 4, 1, 1));
+		                }
+		                geometry.addIndex("default", indices);
+		                geometry.addIndex("wireframe", _GeometryUtility2.default.linesFromTriangles(indices), WebGLRenderingContext.LINES);
+		                return geometry;
+		            });
+		        }
+		    }, {
+		        key: "_registerCube",
+		        value: function _registerCube() {
+		            _GeometryFactory2.default.addType("cube", {
+		                divHorizontal: {
+		                    converter: "Number",
+		                    default: 1
+		                },
+		                divVertical: {
+		                    converter: "Number",
+		                    default: 1
+		                }
+		            }, function (gl, attrs) {
+		                var hdiv = attrs["divHorizontal"];
+		                var vdiv = attrs["divVertical"];
+		                var geometry = new _Geometry2.default(gl);
+		                var vertices = [].concat.apply([], [_GeometryUtility2.default.plane([0, 0, 1], [0, 0, 1], [0, 1, 0], [1, 0, 0], hdiv, vdiv), _GeometryUtility2.default.plane([0, 0, -1], [0, 0, -1], [0, 1, 0], [-1, 0, 0], hdiv, vdiv), _GeometryUtility2.default.plane([0, 1, 0], [0, 1, 0], [0, 0, -1], [1, 0, 0], hdiv, vdiv), _GeometryUtility2.default.plane([0, -1, 0], [0, -1, 0], [0, 0, -1], [-1, 0, 0], hdiv, vdiv), _GeometryUtility2.default.plane([1, 0, 0], [1, 0, 0], [0, 1, 0], [0, 0, -1], hdiv, vdiv), _GeometryUtility2.default.plane([-1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, 0, 1], hdiv, vdiv)]);
+		                geometry.addAttributes(vertices, primitiveLayout);
+		                var os = (hdiv + 1) * (vdiv + 1);
+		                var indices = [].concat.apply([], [_GeometryUtility2.default.planeIndex(0, hdiv, vdiv), _GeometryUtility2.default.planeIndex(os, hdiv, vdiv), _GeometryUtility2.default.planeIndex(2 * os, hdiv, vdiv), _GeometryUtility2.default.planeIndex(3 * os, hdiv, vdiv), _GeometryUtility2.default.planeIndex(4 * os, hdiv, vdiv), _GeometryUtility2.default.planeIndex(5 * os, hdiv, vdiv)]);
+		                geometry.addIndex("default", indices);
+		                geometry.addIndex("wireframe", _GeometryUtility2.default.linesFromTriangles(indices), WebGLRenderingContext.LINES);
+		                return geometry;
+		            });
+		        }
+		    }, {
+		        key: "_registerSphere",
+		        value: function _registerSphere() {
+		            _GeometryFactory2.default.addType("sphere", {
+		                divVertical: {
+		                    converter: "Number",
+		                    default: 50
+		                },
+		                divHorizontal: {
+		                    converter: "Number",
+		                    default: 50
+		                }
+		            }, function (gl, attrs) {
+		                var dH = attrs["divHorizontal"];
+		                var dV = attrs["divVertical"];
+		                var geometry = new _Geometry2.default(gl);
+		                geometry.addAttributes(_GeometryUtility2.default.sphere([0, 0, 0], [0, 1, 0], [1, 0, 0], [0, 0, -1], dV, dH), primitiveLayout);
+		                geometry.addIndex("default", _GeometryUtility2.default.sphereIndex(0, dV, dH));
+		                geometry.addIndex("wireframe", _GeometryUtility2.default.linesFromTriangles(_GeometryUtility2.default.sphereIndex(0, dV, dH)), WebGLRenderingContext.LINES);
+		                return geometry;
+		            });
+		        }
+		    }, {
+		        key: "_registerCircle",
+		        value: function _registerCircle() {
+		            _GeometryFactory2.default.addType("circle", {
+		                divide: {
+		                    converter: "Number",
+		                    default: 10
+		                }
+		            }, function (gl, attrs) {
+		                var div = attrs["divide"];
+		                var geometry = new _Geometry2.default(gl);
+		                geometry.addAttributes(_GeometryUtility2.default.circle([0, 0, 0], [0, 0, 1], [0, 1, 0], [1, 0, 0], div), primitiveLayout);
+		                geometry.addIndex("default", _GeometryUtility2.default.circleIndex(0, div));
+		                geometry.addIndex("wireframe", _GeometryUtility2.default.linesFromTriangles(_GeometryUtility2.default.circleIndex(0, div)), WebGLRenderingContext.LINES);
+		                return geometry;
 		            });
 		        }
 		    }, {
@@ -32402,101 +31773,15 @@ return /******/ (function(modules) { // webpackBootstrap
 		                    default: 10
 		                }
 		            }, function (gl, attrs) {
-		                var div = attrs["divide"];
-		                return _GeometryBuilder2.default.build(gl, {
-		                    indices: {
-		                        default: {
-		                            generator: regeneratorRuntime.mark(function generator() {
-		                                return regeneratorRuntime.wrap(function generator$(_context36) {
-		                                    while (1) {
-		                                        switch (_context36.prev = _context36.next) {
-		                                            case 0:
-		                                                return _context36.delegateYield(_GeometryUtility2.default.planeIndex(0, div), "t0", 1);
-		
-		                                            case 1:
-		                                            case "end":
-		                                                return _context36.stop();
-		                                        }
-		                                    }
-		                                }, generator, this);
-		                            }),
-		                            topology: WebGLRenderingContext.TRIANGLES
-		                        },
-		                        wireframe: {
-		                            generator: regeneratorRuntime.mark(function generator() {
-		                                return regeneratorRuntime.wrap(function generator$(_context37) {
-		                                    while (1) {
-		                                        switch (_context37.prev = _context37.next) {
-		                                            case 0:
-		                                                return _context37.delegateYield(_GeometryUtility2.default.linesFromTriangles(_GeometryUtility2.default.planeIndex(0, div)), "t0", 1);
-		
-		                                            case 1:
-		                                            case "end":
-		                                                return _context37.stop();
-		                                        }
-		                                    }
-		                                }, generator, this);
-		                            }),
-		                            topology: WebGLRenderingContext.LINES
-		                        }
-		                    },
-		                    vertices: {
-		                        main: {
-		                            size: {
-		                                position: 3,
-		                                normal: 3,
-		                                texCoord: 2
-		                            },
-		                            count: _GeometryUtility2.default.planeSize(div),
-		                            getGenerators: function getGenerators() {
-		                                return {
-		                                    position: regeneratorRuntime.mark(function position() {
-		                                        return regeneratorRuntime.wrap(function position$(_context38) {
-		                                            while (1) {
-		                                                switch (_context38.prev = _context38.next) {
-		                                                    case 0:
-		                                                        return _context38.delegateYield(_GeometryUtility2.default.planePosition(_Vector2.default.Zero, _Vector2.default.YUnit, _Vector2.default.XUnit, div), "t0", 1);
-		
-		                                                    case 1:
-		                                                    case "end":
-		                                                        return _context38.stop();
-		                                                }
-		                                            }
-		                                        }, position, this);
-		                                    }),
-		                                    normal: regeneratorRuntime.mark(function normal() {
-		                                        return regeneratorRuntime.wrap(function normal$(_context39) {
-		                                            while (1) {
-		                                                switch (_context39.prev = _context39.next) {
-		                                                    case 0:
-		                                                        return _context39.delegateYield(_GeometryUtility2.default.planeNormal(_Vector2.default.ZUnit, div), "t0", 1);
-		
-		                                                    case 1:
-		                                                    case "end":
-		                                                        return _context39.stop();
-		                                                }
-		                                            }
-		                                        }, normal, this);
-		                                    }),
-		                                    texCoord: regeneratorRuntime.mark(function texCoord() {
-		                                        return regeneratorRuntime.wrap(function texCoord$(_context40) {
-		                                            while (1) {
-		                                                switch (_context40.prev = _context40.next) {
-		                                                    case 0:
-		                                                        return _context40.delegateYield(_GeometryUtility2.default.planeTexCoord(div), "t0", 1);
-		
-		                                                    case 1:
-		                                                    case "end":
-		                                                        return _context40.stop();
-		                                                }
-		                                            }
-		                                        }, texCoord, this);
-		                                    })
-		                                };
-		                            }
-		                        }
-		                    }
-		                });
+		                var hdiv = attrs["divide"];
+		                var vdiv = attrs["divide"];
+		                var geometry = new _Geometry2.default(gl);
+		                var vertices = [].concat.apply([], [_GeometryUtility2.default.plane([0, 0, 0], [0, 0, 1], [0, 1, 0], [1, 0, 0], hdiv, vdiv), _GeometryUtility2.default.plane([0, 0, 0], [0, 0, -1], [0, 1, 0], [-1, 0, 0], hdiv, vdiv)]);
+		                geometry.addAttributes(vertices, primitiveLayout);
+		                var indices = [].concat.apply([], [_GeometryUtility2.default.planeIndex(0, hdiv, vdiv), _GeometryUtility2.default.planeIndex((hdiv + 1) * (vdiv + 1), hdiv, vdiv)]);
+		                geometry.addIndex("default", indices);
+		                geometry.addIndex("wireframe", _GeometryUtility2.default.linesFromTriangles(indices), WebGLRenderingContext.LINES);
+		                return geometry;
 		            });
 		        }
 		    }]);
@@ -32507,16 +31792,8 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = DefaultPrimitives;
 	
 	/***/ },
-	/* 103 */
+	/* 85 */
 	/***/ function(module, exports) {
-	
-			Object.defineProperty(exports, "__esModule", {
-			    value: true
-			});exports.default=window.GrimoireJS.lib.math.AABB;
-	
-	/***/ },
-	/* 104 */
-	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
 		
@@ -32525,12 +31802,6 @@ return /******/ (function(modules) { // webpackBootstrap
 		});
 		
 		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-		
-		var _Vector = __webpack_require__(9);
-		
-		var _Vector2 = _interopRequireDefault(_Vector);
-		
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 		
 		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 		
@@ -32541,1484 +31812,315 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		    _createClass(GeometryUtility, null, [{
 		        key: "linesFromTriangles",
+		        value: function linesFromTriangles(indices) {
+		            var ret = [];
+		            var ic = new Array(3);
+		            var i = 0;
+		            var _iteratorNormalCompletion = true;
+		            var _didIteratorError = false;
+		            var _iteratorError = undefined;
 		
-		        /**
-		         * Convert triangles topology to lines. Basically uses for making wireframes.
-		         * @param  {IterableIterator<number>} indices [description]
-		         * @return {IterableIterator<number>}          [description]
-		         */
-		        value: regeneratorRuntime.mark(function linesFromTriangles(indices) {
-		            var ic, i, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, index, a, b, c;
+		            try {
+		                for (var _iterator = indices[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+		                    var index = _step.value;
 		
-		            return regeneratorRuntime.wrap(function linesFromTriangles$(_context) {
-		                while (1) {
-		                    switch (_context.prev = _context.next) {
-		                        case 0:
-		                            ic = new Array(3);
-		                            i = 0;
-		                            _iteratorNormalCompletion = true;
-		                            _didIteratorError = false;
-		                            _iteratorError = undefined;
-		                            _context.prev = 5;
-		                            _iterator = indices[Symbol.iterator]();
-		
-		                        case 7:
-		                            if (_iteratorNormalCompletion = (_step = _iterator.next()).done) {
-		                                _context.next = 17;
-		                                break;
-		                            }
-		
-		                            index = _step.value;
-		
-		                            ic[i % 3] = index;
-		
-		                            if (!(i % 3 === 2)) {
-		                                _context.next = 13;
-		                                break;
-		                            }
-		
-		                            a = ic[0], b = ic[1], c = ic[2];
-		                            return _context.delegateYield([a, b, b, c, c, a], "t0", 13);
-		
-		                        case 13:
-		                            i++;
-		
-		                        case 14:
-		                            _iteratorNormalCompletion = true;
-		                            _context.next = 7;
-		                            break;
-		
-		                        case 17:
-		                            _context.next = 23;
-		                            break;
-		
-		                        case 19:
-		                            _context.prev = 19;
-		                            _context.t1 = _context["catch"](5);
-		                            _didIteratorError = true;
-		                            _iteratorError = _context.t1;
-		
-		                        case 23:
-		                            _context.prev = 23;
-		                            _context.prev = 24;
-		
-		                            if (!_iteratorNormalCompletion && _iterator.return) {
-		                                _iterator.return();
-		                            }
-		
-		                        case 26:
-		                            _context.prev = 26;
-		
-		                            if (!_didIteratorError) {
-		                                _context.next = 29;
-		                                break;
-		                            }
-		
-		                            throw _iteratorError;
-		
-		                        case 29:
-		                            return _context.finish(26);
-		
-		                        case 30:
-		                            return _context.finish(23);
-		
-		                        case 31:
-		                        case "end":
-		                            return _context.stop();
+		                    ic[i % 3] = index;
+		                    if (i % 3 === 2) {
+		                        var a = ic[0],
+		                            b = ic[1],
+		                            c = ic[2];
+		                        Array.prototype.push.apply(ret, [a, b, b, c, c, a]);
+		                    }
+		                    i++;
+		                }
+		            } catch (err) {
+		                _didIteratorError = true;
+		                _iteratorError = err;
+		            } finally {
+		                try {
+		                    if (!_iteratorNormalCompletion && _iterator.return) {
+		                        _iterator.return();
+		                    }
+		                } finally {
+		                    if (_didIteratorError) {
+		                        throw _iteratorError;
 		                    }
 		                }
-		            }, linesFromTriangles, this, [[5, 19, 23, 31], [24,, 26, 30]]);
-		        })
-		        /**
-		         * Generator for ellipse positions
-		         * @param  {Vector3}                  center [the center position of ellipse]
-		         * @param  {Vector3}                  up     [up vector for ellipse]
-		         * @param  {Vector3}                  right  [right vector for ellipse]
-		         * @param  {number}                   divide [how many triangles should consists in the ellipse]
-		         * @return {IterableIterator<number>}        [Generated iterator for position]
-		         */
+		            }
 		
+		            return ret;
+		        }
 		    }, {
-		        key: "ellipsePosition",
-		        value: regeneratorRuntime.mark(function ellipsePosition(center, up, right, divide) {
-		            var step, i, theta, sin, cos;
-		            return regeneratorRuntime.wrap(function ellipsePosition$(_context2) {
-		                while (1) {
-		                    switch (_context2.prev = _context2.next) {
-		                        case 0:
-		                            _context2.next = 2;
-		                            return center.X;
+		        key: "plane",
+		        value: function plane(center, normal, up, right) {
+		            var hdiv = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 1;
+		            var vdiv = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : 1;
 		
-		                        case 2:
-		                            _context2.next = 4;
-		                            return center.Y;
-		
-		                        case 4:
-		                            _context2.next = 6;
-		                            return center.Z;
-		
-		                        case 6:
-		                            step = 2 * Math.PI / divide;
-		                            i = 0;
-		
-		                        case 8:
-		                            if (!(i < divide)) {
-		                                _context2.next = 21;
-		                                break;
-		                            }
-		
-		                            theta = step * i;
-		                            sin = Math.sin(Math.PI * 2 - theta);
-		                            cos = Math.cos(Math.PI * 2 - theta);
-		                            _context2.next = 14;
-		                            return center.X + cos * up.X + sin * right.X;
-		
-		                        case 14:
-		                            _context2.next = 16;
-		                            return center.Y + cos * up.Y + sin * right.Y;
-		
-		                        case 16:
-		                            _context2.next = 18;
-		                            return center.Z + cos * up.Z + sin * right.Z;
-		
-		                        case 18:
-		                            i++;
-		                            _context2.next = 8;
-		                            break;
-		
-		                        case 21:
-		                        case "end":
-		                            return _context2.stop();
-		                    }
+		            var ret = new Array(8 * (hdiv + 1) * (vdiv + 1));
+		            var sp = [center[0] - up[0] - right[0], center[1] - up[1] - right[1], center[2] - up[2] - right[2]];
+		            var sr = [right[0] / hdiv * 2, right[1] / hdiv * 2, right[2] / hdiv * 2];
+		            var su = [up[0] / vdiv * 2, up[1] / vdiv * 2, up[2] / vdiv * 2];
+		            for (var v = 0; v < vdiv + 1; v++) {
+		                for (var h = 0; h < hdiv + 1; h++) {
+		                    var fi = ((hdiv + 1) * v + h) * 8;
+		                    ret[fi + 0] = sp[0] + sr[0] * h + su[0] * v;
+		                    ret[fi + 1] = sp[1] + sr[1] * h + su[1] * v;
+		                    ret[fi + 2] = sp[2] + sr[2] * h + su[2] * v;
+		                    ret[fi + 3] = normal[0];
+		                    ret[fi + 4] = normal[1];
+		                    ret[fi + 5] = normal[2];
+		                    ret[fi + 6] = 1 / hdiv * h;
+		                    ret[fi + 7] = 1 - 1 / vdiv * v;
 		                }
-		            }, ellipsePosition, this);
-		        })
+		            }
+		            return ret;
+		        }
 		    }, {
-		        key: "trianglePosition",
-		        value: regeneratorRuntime.mark(function trianglePosition(center, up, right) {
-		            var p0, p1, p2;
-		            return regeneratorRuntime.wrap(function trianglePosition$(_context3) {
-		                while (1) {
-		                    switch (_context3.prev = _context3.next) {
-		                        case 0:
-		                            p0 = center.addWith(up);
-		                            p1 = center.subtractWith(up).addWith(right);
-		                            p2 = center.subtractWith(up).subtractWith(right);
-		                            return _context3.delegateYield(p0.rawElements, "t0", 4);
-		
-		                        case 4:
-		                            return _context3.delegateYield(p1.rawElements, "t1", 5);
-		
-		                        case 5:
-		                            return _context3.delegateYield(p2.rawElements, "t2", 6);
-		
-		                        case 6:
-		                        case "end":
-		                            return _context3.stop();
+		        key: "cylinderPlane",
+		        value: function cylinderPlane(center, normal, up, right, divide, order) {
+		            var ret = new Array(32);
+		            var sp = [center[0] - up[0] - right[0], center[1] - up[1] - right[1], center[2] - up[2] - right[2]];
+		            var sr = [right[0] * 2, right[1] * 2, right[2] * 2];
+		            var su = [up[0] * 2, up[1] * 2, up[2] * 2];
+		            for (var v = 0; v < 2; v++) {
+		                for (var h = 0; h < 2; h++) {
+		                    var fi = (2 * v + h) * 8;
+		                    ret[fi + 0] = sp[0] + sr[0] * h + su[0] * v;
+		                    ret[fi + 1] = sp[1] + sr[1] * h + su[1] * v;
+		                    ret[fi + 2] = sp[2] + sr[2] * h + su[2] * v;
+		                    var l = Math.tan(Math.PI / divide) / Math.sin(Math.PI / divide);
+		                    if (h == 0) {
+		                        ret[fi + 3] = normal[0] - l * right[0];
+		                        ret[fi + 4] = normal[1] - l * right[1];
+		                        ret[fi + 5] = normal[2] - l * right[2];
+		                    } else {
+		                        ret[fi + 3] = normal[0] + l * right[0];
+		                        ret[fi + 4] = normal[1] + l * right[1];
+		                        ret[fi + 5] = normal[2] + l * right[2];
 		                    }
+		                    ret[fi + 6] = 1 / divide * (order + 1 + h);
+		                    ret[fi + 7] = v == 0 ? 1 : 0;
 		                }
-		            }, trianglePosition, this);
-		        })
+		            }
+		            return ret;
+		        }
 		    }, {
-		        key: "cubePosition",
-		        value: regeneratorRuntime.mark(function cubePosition(center, up, right, forward) {
-		            return regeneratorRuntime.wrap(function cubePosition$(_context4) {
-		                while (1) {
-		                    switch (_context4.prev = _context4.next) {
-		                        case 0:
-		                            return _context4.delegateYield(GeometryUtility.quadPosition(center.subtractWith(forward), up, right), "t0", 1);
-		
-		                        case 1:
-		                            return _context4.delegateYield(GeometryUtility.quadPosition(center.addWith(forward), up, right.negateThis()), "t1", 2);
-		
-		                        case 2:
-		                            return _context4.delegateYield(GeometryUtility.quadPosition(center.addWith(up), forward, right), "t2", 3);
-		
-		                        case 3:
-		                            return _context4.delegateYield(GeometryUtility.quadPosition(center.addWith(right), forward, up.negateThis()), "t3", 4);
-		
-		                        case 4:
-		                            return _context4.delegateYield(GeometryUtility.quadPosition(center.subtractWith(up), forward, right.negateThis()), "t4", 5);
-		
-		                        case 5:
-		                            return _context4.delegateYield(GeometryUtility.quadPosition(center.subtractWith(right), forward, up), "t5", 6);
-		
-		                        case 6:
-		                        case "end":
-		                            return _context4.stop();
-		                    }
-		                }
-		            }, cubePosition, this);
-		        })
+		        key: "triangle",
+		        value: function triangle(center, normal, up, right) {
+		            var ret = new Array(24);
+		            var delta = 2 * Math.PI / 3;
+		            for (var i = 0; i < 3; i++) {
+		                var s = Math.sin(delta * i);
+		                var c = Math.cos(delta * i);
+		                ret[0 + 8 * i] = center[0] + c * up[0] + s * right[0];
+		                ret[1 + 8 * i] = center[1] + c * up[1] + s * right[1];
+		                ret[2 + 8 * i] = center[2] + c * up[2] + s * right[2];
+		                ret[3 + 8 * i] = normal[0];
+		                ret[4 + 8 * i] = normal[1];
+		                ret[5 + 8 * i] = normal[2];
+		                ret[6 + 8 * i] = 0.5 + (c * up[0] + s * right[0]) / 2;
+		                ret[7 + 8 * i] = 0.5 + (c * up[1] + s * right[1]) / 2;
+		            }
+		            return ret;
+		        }
 		    }, {
-		        key: "quadPosition",
-		        value: regeneratorRuntime.mark(function quadPosition(center, up, right) {
-		            var p0, p1, p2, p3;
-		            return regeneratorRuntime.wrap(function quadPosition$(_context5) {
-		                while (1) {
-		                    switch (_context5.prev = _context5.next) {
-		                        case 0:
-		                            p0 = center.subtractWith(right).addWith(up);
-		                            p1 = center.addWith(right).addWith(up);
-		                            p2 = center.addWith(right).subtractWith(up);
-		                            p3 = center.subtractWith(right).subtractWith(up);
-		                            return _context5.delegateYield(p0.rawElements, "t0", 5);
-		
-		                        case 5:
-		                            return _context5.delegateYield(p1.rawElements, "t1", 6);
-		
-		                        case 6:
-		                            return _context5.delegateYield(p2.rawElements, "t2", 7);
-		
-		                        case 7:
-		                            return _context5.delegateYield(p3.rawElements, "t3", 8);
-		
-		                        case 8:
-		                        case "end":
-		                            return _context5.stop();
-		                    }
+		        key: "coneTriangle",
+		        value: function coneTriangle(center, normal, up, right, divide, order) {
+		            var ret = new Array(24);
+		            var delta = 2 * Math.PI / 3;
+		            for (var i = 0; i < 3; i++) {
+		                var s = Math.sin(delta * i);
+		                var c = Math.cos(delta * i);
+		                ret[0 + 8 * i] = center[0] + c * up[0] + s * right[0];
+		                ret[1 + 8 * i] = center[1] + c * up[1] + s * right[1];
+		                ret[2 + 8 * i] = center[2] + c * up[2] + s * right[2];
+		                ret[3 + 8 * i] = normal[0];
+		                ret[4 + 8 * i] = normal[1];
+		                ret[5 + 8 * i] = normal[2];
+		                var k = Math.pow(2, 0.5);
+		                var l = Math.tan(Math.PI / divide) / Math.sin(Math.PI / divide) / Math.pow(3, 0.5) * 2;
+		                if (i == 0) {
+		                    ret[3 + 8 * i] = normal[0];
+		                    ret[4 + 8 * i] = normal[1];
+		                    ret[5 + 8 * i] = normal[2];
+		                    ret[6 + 8 * i] = 0;
+		                    ret[7 + 8 * i] = 0;
+		                } else if (i == 1) {
+		                    ret[3 + 8 * i] = normal[0] / k + l * right[0];
+		                    ret[4 + 8 * i] = normal[1] / k + l * right[1];
+		                    ret[5 + 8 * i] = normal[2] / k + l * right[2];
+		                    ret[6 + 8 * i] = Math.cos(-Math.PI / divide / 2 * (order + 1));
+		                    ret[7 + 8 * i] = Math.sin(-Math.PI / divide / 2 * (order + 1));
+		                } else {
+		                    ret[3 + 8 * i] = normal[0] / k - l * right[0];
+		                    ret[4 + 8 * i] = normal[1] / k - l * right[1];
+		                    ret[5 + 8 * i] = normal[2] / k - l * right[2];
+		                    ret[6 + 8 * i] = Math.cos(-Math.PI / divide / 2 * order);
+		                    ret[7 + 8 * i] = Math.sin(-Math.PI / divide / 2 * order);
 		                }
-		            }, quadPosition, this);
-		        })
-		    }, {
-		        key: "planePosition",
-		        value: regeneratorRuntime.mark(function planePosition(center, up, right, divide) {
-		            var x, y, i, j, _i, _j;
-		
-		            return regeneratorRuntime.wrap(function planePosition$(_context6) {
-		                while (1) {
-		                    switch (_context6.prev = _context6.next) {
-		                        case 0:
-		                            x = center.addWith(right).multiplyWith(2);
-		                            y = center.subtractWith(up).multiplyWith(2);
-		                            i = -divide / 2;
-		
-		                        case 3:
-		                            if (!(i < divide / 2 + 1)) {
-		                                _context6.next = 13;
-		                                break;
-		                            }
-		
-		                            j = -divide / 2;
-		
-		                        case 5:
-		                            if (!(j < divide / 2 + 1)) {
-		                                _context6.next = 10;
-		                                break;
-		                            }
-		
-		                            return _context6.delegateYield(x.multiplyWith(j / divide).addWith(y.multiplyWith(i / divide)).rawElements, "t0", 7);
-		
-		                        case 7:
-		                            j++;
-		                            _context6.next = 5;
-		                            break;
-		
-		                        case 10:
-		                            i++;
-		                            _context6.next = 3;
-		                            break;
-		
-		                        case 13:
-		                            _i = -divide / 2;
-		
-		                        case 14:
-		                            if (!(_i < divide / 2 + 1)) {
-		                                _context6.next = 24;
-		                                break;
-		                            }
-		
-		                            _j = -divide / 2;
-		
-		                        case 16:
-		                            if (!(_j < divide / 2 + 1)) {
-		                                _context6.next = 21;
-		                                break;
-		                            }
-		
-		                            return _context6.delegateYield(x.multiplyWith(_j / divide).addWith(y.multiplyWith(_i / divide)).rawElements, "t1", 18);
-		
-		                        case 18:
-		                            _j++;
-		                            _context6.next = 16;
-		                            break;
-		
-		                        case 21:
-		                            _i++;
-		                            _context6.next = 14;
-		                            break;
-		
-		                        case 24:
-		                        case "end":
-		                            return _context6.stop();
-		                    }
-		                }
-		            }, planePosition, this);
-		        })
-		    }, {
-		        key: "cylinderPosition",
-		        value: regeneratorRuntime.mark(function cylinderPosition(center, up, right, forward, divide) {
-		            var step, d, d2, temp, i, theta, sin, cos, currentCenter, currentRight;
-		            return regeneratorRuntime.wrap(function cylinderPosition$(_context7) {
-		                while (1) {
-		                    switch (_context7.prev = _context7.next) {
-		                        case 0:
-		                            return _context7.delegateYield(GeometryUtility.ellipsePosition(center.addWith(up), forward, right, divide), "t0", 1);
-		
-		                        case 1:
-		                            return _context7.delegateYield(GeometryUtility.ellipsePosition(center.subtractWith(up), forward, _Vector2.default.negate(right), divide), "t1", 2);
-		
-		                        case 2:
-		                            step = 2 * Math.PI / divide;
-		                            d = Math.cos(step / 2);
-		                            d2 = Math.sin(step / 2);
-		                            temp = divide % 2 == 0 ? step / 2 : 0;
-		                            i = 0;
-		
-		                        case 7:
-		                            if (!(i < divide)) {
-		                                _context7.next = 17;
-		                                break;
-		                            }
-		
-		                            theta = step / 2 + step * i;
-		                            sin = Math.sin((Math.PI - step) / 2 - theta - temp);
-		                            cos = Math.cos((Math.PI - step) / 2 - theta - temp);
-		                            currentCenter = new _Vector2.default(d * cos, center.Y, d * sin);
-		                            currentRight = new _Vector2.default(Math.cos(-step / 2 - theta - temp), center.Y, Math.sin(-step / 2 - theta - temp));
-		                            return _context7.delegateYield(GeometryUtility.quadPosition(currentCenter, up, _Vector2.default.multiply(d2, currentRight)), "t2", 14);
-		
-		                        case 14:
-		                            i++;
-		                            _context7.next = 7;
-		                            break;
-		
-		                        case 17:
-		                        case "end":
-		                            return _context7.stop();
-		                    }
-		                }
-		            }, cylinderPosition, this);
-		        })
-		    }, {
-		        key: "conePosition",
-		        value: regeneratorRuntime.mark(function conePosition(center, up, right, forward, divide) {
-		            var step, d, d2, temp, i, theta, sin, cos, currentCenter, currentRight;
-		            return regeneratorRuntime.wrap(function conePosition$(_context8) {
-		                while (1) {
-		                    switch (_context8.prev = _context8.next) {
-		                        case 0:
-		                            return _context8.delegateYield(GeometryUtility.ellipsePosition(center.subtractWith(up), forward, _Vector2.default.negate(right), divide), "t0", 1);
-		
-		                        case 1:
-		                            step = 2 * Math.PI / divide;
-		                            d = Math.cos(step / 2) / 2;
-		                            d2 = Math.sin(step / 2);
-		                            temp = divide % 2 == 1 ? step / 2 : 0;
-		                            i = 0;
-		
-		                        case 6:
-		                            if (!(i < divide)) {
-		                                _context8.next = 16;
-		                                break;
-		                            }
-		
-		                            theta = step * i;
-		                            sin = Math.sin((Math.PI - step) / 2 - theta - temp);
-		                            cos = Math.cos((Math.PI - step) / 2 - theta - temp);
-		                            currentCenter = new _Vector2.default(d * cos, center.Y, d * sin);
-		                            currentRight = new _Vector2.default(Math.cos(-step / 2 - theta - temp), center.Y, Math.sin(-step / 2 - theta - temp));
-		                            return _context8.delegateYield(GeometryUtility.trianglePosition(currentCenter, up.subtractWith(currentCenter), _Vector2.default.multiply(d2, currentRight)), "t1", 13);
-		
-		                        case 13:
-		                            i++;
-		                            _context8.next = 6;
-		                            break;
-		
-		                        case 16:
-		                        case "end":
-		                            return _context8.stop();
-		                    }
-		                }
-		            }, conePosition, this);
-		        })
-		    }, {
-		        key: "spherePosition",
-		        value: regeneratorRuntime.mark(function spherePosition(center, up, right, forward, rowDiv, circleDiv) {
-		            var ia, ja, j, phi, sinPhi, upVector, i, theta;
-		            return regeneratorRuntime.wrap(function spherePosition$(_context9) {
-		                while (1) {
-		                    switch (_context9.prev = _context9.next) {
-		                        case 0:
-		                            return _context9.delegateYield(center.addWith(up).rawElements, "t0", 1);
-		
-		                        case 1:
-		                            return _context9.delegateYield(center.subtractWith(up).rawElements, "t1", 2);
-		
-		                        case 2:
-		                            ia = 2 * Math.PI / circleDiv;
-		                            ja = Math.PI / (rowDiv + 1);
-		                            j = 1;
-		
-		                        case 5:
-		                            if (!(j <= rowDiv)) {
-		                                _context9.next = 19;
-		                                break;
-		                            }
-		
-		                            phi = ja * j;
-		                            sinPhi = Math.sin(phi);
-		                            upVector = up.multiplyWith(Math.cos(phi));
-		                            i = 0;
-		
-		                        case 10:
-		                            if (!(i <= circleDiv)) {
-		                                _context9.next = 16;
-		                                break;
-		                            }
-		
-		                            theta = ia * i;
-		                            return _context9.delegateYield(right.multiplyWith(Math.cos(theta)).addWith(forward.multiplyWith(Math.sin(theta))).multiplyWith(sinPhi).addWith(upVector).rawElements, "t2", 13);
-		
-		                        case 13:
-		                            i++;
-		                            _context9.next = 10;
-		                            break;
-		
-		                        case 16:
-		                            j++;
-		                            _context9.next = 5;
-		                            break;
-		
-		                        case 19:
-		                        case "end":
-		                            return _context9.stop();
-		                    }
-		                }
-		            }, spherePosition, this);
-		        })
-		    }, {
-		        key: "quadNormal",
-		        value: regeneratorRuntime.mark(function quadNormal(normal) {
-		            return regeneratorRuntime.wrap(function quadNormal$(_context10) {
-		                while (1) {
-		                    switch (_context10.prev = _context10.next) {
-		                        case 0:
-		                            return _context10.delegateYield(normal.rawElements, "t0", 1);
-		
-		                        case 1:
-		                            return _context10.delegateYield(normal.rawElements, "t1", 2);
-		
-		                        case 2:
-		                            return _context10.delegateYield(normal.rawElements, "t2", 3);
-		
-		                        case 3:
-		                            return _context10.delegateYield(normal.rawElements, "t3", 4);
-		
-		                        case 4:
-		                        case "end":
-		                            return _context10.stop();
-		                    }
-		                }
-		            }, quadNormal, this);
-		        })
-		    }, {
-		        key: "ellipseNormal",
-		        value: regeneratorRuntime.mark(function ellipseNormal(normal, divide) {
-		            var i;
-		            return regeneratorRuntime.wrap(function ellipseNormal$(_context11) {
-		                while (1) {
-		                    switch (_context11.prev = _context11.next) {
-		                        case 0:
-		                            i = 0;
-		
-		                        case 1:
-		                            if (!(i < divide + 1)) {
-		                                _context11.next = 6;
-		                                break;
-		                            }
-		
-		                            return _context11.delegateYield(normal.rawElements, "t0", 3);
-		
-		                        case 3:
-		                            i++;
-		                            _context11.next = 1;
-		                            break;
-		
-		                        case 6:
-		                        case "end":
-		                            return _context11.stop();
-		                    }
-		                }
-		            }, ellipseNormal, this);
-		        })
-		    }, {
-		        key: "triangleNormal",
-		        value: regeneratorRuntime.mark(function triangleNormal(normal) {
-		            return regeneratorRuntime.wrap(function triangleNormal$(_context12) {
-		                while (1) {
-		                    switch (_context12.prev = _context12.next) {
-		                        case 0:
-		                            return _context12.delegateYield(normal.rawElements, "t0", 1);
-		
-		                        case 1:
-		                            return _context12.delegateYield(normal.rawElements, "t1", 2);
-		
-		                        case 2:
-		                            return _context12.delegateYield(normal.rawElements, "t2", 3);
-		
-		                        case 3:
-		                        case "end":
-		                            return _context12.stop();
-		                    }
-		                }
-		            }, triangleNormal, this);
-		        })
-		    }, {
-		        key: "cubeNormal",
-		        value: regeneratorRuntime.mark(function cubeNormal(center, up, right, forward) {
-		            return regeneratorRuntime.wrap(function cubeNormal$(_context13) {
-		                while (1) {
-		                    switch (_context13.prev = _context13.next) {
-		                        case 0:
-		                            return _context13.delegateYield(GeometryUtility.quadNormal(forward.negateThis()), "t0", 1);
-		
-		                        case 1:
-		                            return _context13.delegateYield(GeometryUtility.quadNormal(forward), "t1", 2);
-		
-		                        case 2:
-		                            return _context13.delegateYield(GeometryUtility.quadNormal(up), "t2", 3);
-		
-		                        case 3:
-		                            return _context13.delegateYield(GeometryUtility.quadNormal(right), "t3", 4);
-		
-		                        case 4:
-		                            return _context13.delegateYield(GeometryUtility.quadNormal(up.negateThis()), "t4", 5);
-		
-		                        case 5:
-		                            return _context13.delegateYield(GeometryUtility.quadNormal(right.negateThis()), "t5", 6);
-		
-		                        case 6:
-		                        case "end":
-		                            return _context13.stop();
-		                    }
-		                }
-		            }, cubeNormal, this);
-		        })
-		    }, {
-		        key: "cylinderNormal",
-		        value: regeneratorRuntime.mark(function cylinderNormal(center, up, right, forward, divide) {
-		            var step, lastRight, i, theta, sin, cos, currentRight;
-		            return regeneratorRuntime.wrap(function cylinderNormal$(_context14) {
-		                while (1) {
-		                    switch (_context14.prev = _context14.next) {
-		                        case 0:
-		                            return _context14.delegateYield(GeometryUtility.ellipseNormal(up, divide), "t0", 1);
-		
-		                        case 1:
-		                            return _context14.delegateYield(GeometryUtility.ellipseNormal(up.negateThis(), divide), "t1", 2);
-		
-		                        case 2:
-		                            step = 2 * Math.PI / divide;
-		                            lastRight = new _Vector2.default(Math.cos(-step / 2), center.Y, Math.sin(-step / 2));
-		                            i = 0;
-		
-		                        case 5:
-		                            if (!(i < divide)) {
-		                                _context14.next = 18;
-		                                break;
-		                            }
-		
-		                            theta = step * (i + 1);
-		                            sin = Math.sin(Math.PI / 2 - theta);
-		                            cos = Math.cos(Math.PI / 2 - theta);
-		                            currentRight = new _Vector2.default(Math.cos(-step / 2 - theta), center.Y, Math.sin(-step / 2 - theta));
-		                            return _context14.delegateYield(_Vector2.default.cross(lastRight, up).rawElements, "t2", 11);
-		
-		                        case 11:
-		                            return _context14.delegateYield(_Vector2.default.cross(currentRight, up).rawElements, "t3", 12);
-		
-		                        case 12:
-		                            return _context14.delegateYield(_Vector2.default.cross(currentRight, up).rawElements, "t4", 13);
-		
-		                        case 13:
-		                            return _context14.delegateYield(_Vector2.default.cross(lastRight, up).rawElements, "t5", 14);
-		
-		                        case 14:
-		                            lastRight = currentRight;
-		
-		                        case 15:
-		                            i++;
-		                            _context14.next = 5;
-		                            break;
-		
-		                        case 18:
-		                        case "end":
-		                            return _context14.stop();
-		                    }
-		                }
-		            }, cylinderNormal, this);
-		        })
-		    }, {
-		        key: "coneNormal",
-		        value: regeneratorRuntime.mark(function coneNormal(center, up, right, forward, divide) {
-		            var step, d, lastNormal, i, theta, sin, cos, currentCenter, currentRight;
-		            return regeneratorRuntime.wrap(function coneNormal$(_context15) {
-		                while (1) {
-		                    switch (_context15.prev = _context15.next) {
-		                        case 0:
-		                            return _context15.delegateYield(GeometryUtility.ellipseNormal(up.negateThis(), divide), "t0", 1);
-		
-		                        case 1:
-		                            step = Math.PI / divide;
-		                            d = Math.cos(step / 2) / 2;
-		                            lastNormal = _Vector2.default.cross(new _Vector2.default(Math.cos(step / 2), center.Y, Math.sin(step / 2)), up.subtractWith(new _Vector2.default(d * Math.cos((Math.PI + step) / 2), center.Y, d * Math.sin((Math.PI + step) / 2))));
-		                            i = 0;
-		
-		                        case 5:
-		                            if (!(i < divide * 2)) {
-		                                _context15.next = 18;
-		                                break;
-		                            }
-		
-		                            theta = step * i;
-		                            sin = Math.sin((Math.PI - step) / 2 - theta);
-		                            cos = Math.cos((Math.PI - step) / 2 - theta);
-		                            currentCenter = new _Vector2.default(d * cos, center.Y, d * sin);
-		                            currentRight = new _Vector2.default(Math.cos(-step / 2 - theta), center.Y, Math.sin(-step / 2 - theta));
-		                            return _context15.delegateYield(_Vector2.default.cross(currentRight, up.subtractWith(currentCenter)).rawElements, "t1", 12);
-		
-		                        case 12:
-		                            if (!(i % 2 == 1)) {
-		                                _context15.next = 15;
-		                                break;
-		                            }
-		
-		                            return _context15.delegateYield(lastNormal.rawElements, "t2", 14);
-		
-		                        case 14:
-		                            lastNormal = _Vector2.default.cross(currentRight, up.subtractWith(currentCenter));
-		
-		                        case 15:
-		                            i++;
-		                            _context15.next = 5;
-		                            break;
-		
-		                        case 18:
-		                            return _context15.delegateYield(_Vector2.default.cross(new _Vector2.default(Math.cos(step / 2), center.Y, Math.sin(step / 2)), up.subtractWith(new _Vector2.default(d * Math.cos((Math.PI + step) / 2), center.Y, d * Math.sin((Math.PI + step) / 2)))).rawElements, "t3", 19);
-		
-		                        case 19:
-		                        case "end":
-		                            return _context15.stop();
-		                    }
-		                }
-		            }, coneNormal, this);
-		        })
-		    }, {
-		        key: "planeNormal",
-		        value: regeneratorRuntime.mark(function planeNormal(normal, divide) {
-		            var s, i, _i2;
-		
-		            return regeneratorRuntime.wrap(function planeNormal$(_context16) {
-		                while (1) {
-		                    switch (_context16.prev = _context16.next) {
-		                        case 0:
-		                            s = GeometryUtility.planeSize(divide) / 2;
-		                            i = 0;
-		
-		                        case 2:
-		                            if (!(i < s)) {
-		                                _context16.next = 7;
-		                                break;
-		                            }
-		
-		                            return _context16.delegateYield(normal.rawElements, "t0", 4);
-		
-		                        case 4:
-		                            i++;
-		                            _context16.next = 2;
-		                            break;
-		
-		                        case 7:
-		                            _i2 = 0;
-		
-		                        case 8:
-		                            if (!(_i2 < s)) {
-		                                _context16.next = 13;
-		                                break;
-		                            }
-		
-		                            return _context16.delegateYield(normal.negateThis().rawElements, "t1", 10);
-		
-		                        case 10:
-		                            _i2++;
-		                            _context16.next = 8;
-		                            break;
-		
-		                        case 13:
-		                        case "end":
-		                            return _context16.stop();
-		                    }
-		                }
-		            }, planeNormal, this);
-		        })
-		    }, {
-		        key: "sphereNormal",
-		        value: regeneratorRuntime.mark(function sphereNormal(up, right, forward, rowDiv, circleDiv) {
-		            return regeneratorRuntime.wrap(function sphereNormal$(_context17) {
-		                while (1) {
-		                    switch (_context17.prev = _context17.next) {
-		                        case 0:
-		                            return _context17.delegateYield(GeometryUtility.spherePosition(_Vector2.default.Zero, up, right, forward, rowDiv, circleDiv), "t0", 1);
-		
-		                        case 1:
-		                        case "end":
-		                            return _context17.stop();
-		                    }
-		                }
-		            }, sphereNormal, this);
-		        })
-		    }, {
-		        key: "sphereTexCoord",
-		        value: regeneratorRuntime.mark(function sphereTexCoord(rowDiv, circleDiv) {
-		            var ia, ja, j, phi, sinPhi, i, theta;
-		            return regeneratorRuntime.wrap(function sphereTexCoord$(_context18) {
-		                while (1) {
-		                    switch (_context18.prev = _context18.next) {
-		                        case 0:
-		                            return _context18.delegateYield([0, 0, 0, 1], "t0", 1);
-		
-		                        case 1:
-		                            ia = 2 * Math.PI / circleDiv;
-		                            ja = Math.PI / (rowDiv + 1);
-		                            j = 1;
-		
-		                        case 4:
-		                            if (!(j <= rowDiv)) {
-		                                _context18.next = 17;
-		                                break;
-		                            }
-		
-		                            phi = ja * j;
-		                            sinPhi = Math.sin(phi);
-		                            i = 0;
-		
-		                        case 8:
-		                            if (!(i <= circleDiv)) {
-		                                _context18.next = 14;
-		                                break;
-		                            }
-		
-		                            theta = ia * i;
-		                            return _context18.delegateYield([theta / Math.PI / 2, phi / Math.PI], "t1", 11);
-		
-		                        case 11:
-		                            i++;
-		                            _context18.next = 8;
-		                            break;
-		
-		                        case 14:
-		                            j++;
-		                            _context18.next = 4;
-		                            break;
-		
-		                        case 17:
-		                        case "end":
-		                            return _context18.stop();
-		                    }
-		                }
-		            }, sphereTexCoord, this);
-		        })
-		    }, {
-		        key: "quadTexCoord",
-		        value: regeneratorRuntime.mark(function quadTexCoord() {
-		            return regeneratorRuntime.wrap(function quadTexCoord$(_context19) {
-		                while (1) {
-		                    switch (_context19.prev = _context19.next) {
-		                        case 0:
-		                            return _context19.delegateYield([0, 0], "t0", 1);
-		
-		                        case 1:
-		                            return _context19.delegateYield([1, 0], "t1", 2);
-		
-		                        case 2:
-		                            return _context19.delegateYield([1, 1], "t2", 3);
-		
-		                        case 3:
-		                            return _context19.delegateYield([0, 1], "t3", 4);
-		
-		                        case 4:
-		                        case "end":
-		                            return _context19.stop();
-		                    }
-		                }
-		            }, quadTexCoord, this);
-		        })
-		    }, {
-		        key: "cubeTexCoord",
-		        value: regeneratorRuntime.mark(function cubeTexCoord() {
-		            var i;
-		            return regeneratorRuntime.wrap(function cubeTexCoord$(_context20) {
-		                while (1) {
-		                    switch (_context20.prev = _context20.next) {
-		                        case 0:
-		                            i = 0;
-		
-		                        case 1:
-		                            if (!(i < 6)) {
-		                                _context20.next = 6;
-		                                break;
-		                            }
-		
-		                            return _context20.delegateYield(GeometryUtility.quadTexCoord(), "t0", 3);
-		
-		                        case 3:
-		                            i++;
-		                            _context20.next = 1;
-		                            break;
-		
-		                        case 6:
-		                        case "end":
-		                            return _context20.stop();
-		                    }
-		                }
-		            }, cubeTexCoord, this);
-		        })
-		    }, {
-		        key: "triangleTexCoord",
-		        value: regeneratorRuntime.mark(function triangleTexCoord() {
-		            return regeneratorRuntime.wrap(function triangleTexCoord$(_context21) {
-		                while (1) {
-		                    switch (_context21.prev = _context21.next) {
-		                        case 0:
-		                            return _context21.delegateYield([0, 0], "t0", 1);
-		
-		                        case 1:
-		                            return _context21.delegateYield([1, 0], "t1", 2);
-		
-		                        case 2:
-		                            return _context21.delegateYield([0, 1], "t2", 3);
-		
-		                        case 3:
-		                        case "end":
-		                            return _context21.stop();
-		                    }
-		                }
-		            }, triangleTexCoord, this);
-		        })
-		    }, {
-		        key: "ellipseTexCoord",
-		        value: regeneratorRuntime.mark(function ellipseTexCoord(divide) {
-		            var step, i, theta;
-		            return regeneratorRuntime.wrap(function ellipseTexCoord$(_context22) {
-		                while (1) {
-		                    switch (_context22.prev = _context22.next) {
-		                        case 0:
-		                            return _context22.delegateYield([0.5, 0.5], "t0", 1);
-		
-		                        case 1:
-		                            step = 2 * Math.PI / divide;
-		                            i = 0;
-		
-		                        case 3:
-		                            if (!(i < divide)) {
-		                                _context22.next = 9;
-		                                break;
-		                            }
-		
-		                            theta = step * i;
-		                            return _context22.delegateYield([0.5 + Math.cos(theta + Math.PI) / 2, 0.5 + Math.sin(theta + Math.PI) / 2], "t1", 6);
-		
-		                        case 6:
-		                            i++;
-		                            _context22.next = 3;
-		                            break;
-		
-		                        case 9:
-		                        case "end":
-		                            return _context22.stop();
-		                    }
-		                }
-		            }, ellipseTexCoord, this);
-		        })
-		    }, {
-		        key: "planeTexCoord",
-		        value: regeneratorRuntime.mark(function planeTexCoord(divide) {
-		            var i, j, _i3, _j2;
-		
-		            return regeneratorRuntime.wrap(function planeTexCoord$(_context23) {
-		                while (1) {
-		                    switch (_context23.prev = _context23.next) {
-		                        case 0:
-		                            i = 0;
-		
-		                        case 1:
-		                            if (!(i < divide + 1)) {
-		                                _context23.next = 11;
-		                                break;
-		                            }
-		
-		                            j = 0;
-		
-		                        case 3:
-		                            if (!(j < divide + 1)) {
-		                                _context23.next = 8;
-		                                break;
-		                            }
-		
-		                            return _context23.delegateYield([j / divide, i / divide], "t0", 5);
-		
-		                        case 5:
-		                            j++;
-		                            _context23.next = 3;
-		                            break;
-		
-		                        case 8:
-		                            i++;
-		                            _context23.next = 1;
-		                            break;
-		
-		                        case 11:
-		                            _i3 = 0;
-		
-		                        case 12:
-		                            if (!(_i3 < divide + 1)) {
-		                                _context23.next = 22;
-		                                break;
-		                            }
-		
-		                            _j2 = 0;
-		
-		                        case 14:
-		                            if (!(_j2 < divide + 1)) {
-		                                _context23.next = 19;
-		                                break;
-		                            }
-		
-		                            return _context23.delegateYield([_j2 / divide, _i3 / divide], "t1", 16);
-		
-		                        case 16:
-		                            _j2++;
-		                            _context23.next = 14;
-		                            break;
-		
-		                        case 19:
-		                            _i3++;
-		                            _context23.next = 12;
-		                            break;
-		
-		                        case 22:
-		                        case "end":
-		                            return _context23.stop();
-		                    }
-		                }
-		            }, planeTexCoord, this);
-		        })
-		    }, {
-		        key: "cylinderTexCoord",
-		        value: regeneratorRuntime.mark(function cylinderTexCoord(divide) {
-		            var p, j;
-		            return regeneratorRuntime.wrap(function cylinderTexCoord$(_context24) {
-		                while (1) {
-		                    switch (_context24.prev = _context24.next) {
-		                        case 0:
-		                            return _context24.delegateYield(GeometryUtility.ellipseTexCoord(divide), "t0", 1);
-		
-		                        case 1:
-		                            return _context24.delegateYield(GeometryUtility.ellipseTexCoord(divide), "t1", 2);
-		
-		                        case 2:
-		                            p = 1 / divide;
-		                            j = 0;
-		
-		                        case 4:
-		                            if (!(j < divide)) {
-		                                _context24.next = 12;
-		                                break;
-		                            }
-		
-		                            return _context24.delegateYield([p * j, 0], "t2", 6);
-		
-		                        case 6:
-		                            return _context24.delegateYield([p * (j + 1), 0], "t3", 7);
-		
-		                        case 7:
-		                            return _context24.delegateYield([p * (j + 1), 1], "t4", 8);
-		
-		                        case 8:
-		                            return _context24.delegateYield([p * j, 1], "t5", 9);
-		
-		                        case 9:
-		                            j++;
-		                            _context24.next = 4;
-		                            break;
-		
-		                        case 12:
-		                        case "end":
-		                            return _context24.stop();
-		                    }
-		                }
-		            }, cylinderTexCoord, this);
-		        })
-		    }, {
-		        key: "coneTexCoord",
-		        value: regeneratorRuntime.mark(function coneTexCoord(divide) {
-		            var step, i, theta;
-		            return regeneratorRuntime.wrap(function coneTexCoord$(_context25) {
-		                while (1) {
-		                    switch (_context25.prev = _context25.next) {
-		                        case 0:
-		                            return _context25.delegateYield(GeometryUtility.ellipseTexCoord(divide), "t0", 1);
-		
-		                        case 1:
-		                            step = Math.PI / 2 / divide;
-		                            i = 0;
-		
-		                        case 3:
-		                            if (!(i < divide)) {
-		                                _context25.next = 11;
-		                                break;
-		                            }
-		
-		                            theta = -step * i;
-		                            return _context25.delegateYield([0, 0], "t1", 6);
-		
-		                        case 6:
-		                            return _context25.delegateYield([Math.cos(theta - step), Math.sin(theta - step)], "t2", 7);
-		
-		                        case 7:
-		                            return _context25.delegateYield([Math.cos(theta), Math.sin(theta)], "t3", 8);
-		
-		                        case 8:
-		                            i++;
-		                            _context25.next = 3;
-		                            break;
-		
-		                        case 11:
-		                        case "end":
-		                            return _context25.stop();
-		                    }
-		                }
-		            }, coneTexCoord, this);
-		        })
+		            }
+		            return ret;
+		        }
 		    }, {
 		        key: "triangleIndex",
-		        value: regeneratorRuntime.mark(function triangleIndex(offset) {
-		            var o;
-		            return regeneratorRuntime.wrap(function triangleIndex$(_context26) {
-		                while (1) {
-		                    switch (_context26.prev = _context26.next) {
-		                        case 0:
-		                            o = offset;
-		                            return _context26.delegateYield([o, o + 2, o + 1], "t0", 2);
-		
-		                        case 2:
-		                        case "end":
-		                            return _context26.stop();
-		                    }
-		                }
-		            }, triangleIndex, this);
-		        })
-		    }, {
-		        key: "quadIndex",
-		        value: regeneratorRuntime.mark(function quadIndex(offset) {
-		            var o;
-		            return regeneratorRuntime.wrap(function quadIndex$(_context27) {
-		                while (1) {
-		                    switch (_context27.prev = _context27.next) {
-		                        case 0:
-		                            o = offset;
-		                            return _context27.delegateYield([o, o + 2, o + 1, o, o + 3, o + 2], "t0", 2);
-		
-		                        case 2:
-		                        case "end":
-		                            return _context27.stop();
-		                    }
-		                }
-		            }, quadIndex, this);
-		        })
-		    }, {
-		        key: "cubeIndex",
-		        value: regeneratorRuntime.mark(function cubeIndex(offset) {
-		            var s, i;
-		            return regeneratorRuntime.wrap(function cubeIndex$(_context28) {
-		                while (1) {
-		                    switch (_context28.prev = _context28.next) {
-		                        case 0:
-		                            s = GeometryUtility.quadSize();
-		                            i = 0;
-		
-		                        case 2:
-		                            if (!(i < 6)) {
-		                                _context28.next = 7;
-		                                break;
-		                            }
-		
-		                            return _context28.delegateYield(GeometryUtility.quadIndex(offset + s * i), "t0", 4);
-		
-		                        case 4:
-		                            i++;
-		                            _context28.next = 2;
-		                            break;
-		
-		                        case 7:
-		                        case "end":
-		                            return _context28.stop();
-		                    }
-		                }
-		            }, cubeIndex, this);
-		        })
-		    }, {
-		        key: "sphereIndex",
-		        value: regeneratorRuntime.mark(function sphereIndex(offset, rowDiv, circleDiv) {
-		            var getIndex, top, bottom, i, j, _i4, _i5;
-		
-		            return regeneratorRuntime.wrap(function sphereIndex$(_context29) {
-		                while (1) {
-		                    switch (_context29.prev = _context29.next) {
-		                        case 0:
-		                            getIndex = function getIndex(i, j) {
-		                                return offset + (circleDiv + 1) * j + 2 + i;
-		                            };
-		
-		                            top = offset;
-		                            bottom = offset + 1;
-		                            // upper side
-		
-		                            i = 0;
-		
-		                        case 4:
-		                            if (!(i < circleDiv)) {
-		                                _context29.next = 14;
-		                                break;
-		                            }
-		
-		                            _context29.next = 7;
-		                            return top;
-		
-		                        case 7:
-		                            _context29.next = 9;
-		                            return getIndex(i, 0);
-		
-		                        case 9:
-		                            _context29.next = 11;
-		                            return getIndex(i + 1, 0);
-		
-		                        case 11:
-		                            i++;
-		                            _context29.next = 4;
-		                            break;
-		
-		                        case 14:
-		                            j = 0;
-		
-		                        case 15:
-		                            if (!(j < rowDiv - 1)) {
-		                                _context29.next = 36;
-		                                break;
-		                            }
-		
-		                            _i4 = 0;
-		
-		                        case 17:
-		                            if (!(_i4 < circleDiv)) {
-		                                _context29.next = 33;
-		                                break;
-		                            }
-		
-		                            _context29.next = 20;
-		                            return getIndex(_i4, j);
-		
-		                        case 20:
-		                            _context29.next = 22;
-		                            return getIndex(_i4, j + 1);
-		
-		                        case 22:
-		                            _context29.next = 24;
-		                            return getIndex(_i4 + 1, j);
-		
-		                        case 24:
-		                            _context29.next = 26;
-		                            return getIndex(_i4, j + 1);
-		
-		                        case 26:
-		                            _context29.next = 28;
-		                            return getIndex(_i4 + 1, j + 1);
-		
-		                        case 28:
-		                            _context29.next = 30;
-		                            return getIndex(_i4 + 1, j);
-		
-		                        case 30:
-		                            _i4++;
-		                            _context29.next = 17;
-		                            break;
-		
-		                        case 33:
-		                            j++;
-		                            _context29.next = 15;
-		                            break;
-		
-		                        case 36:
-		                            _i5 = 0;
-		
-		                        case 37:
-		                            if (!(_i5 < circleDiv)) {
-		                                _context29.next = 47;
-		                                break;
-		                            }
-		
-		                            _context29.next = 40;
-		                            return bottom;
-		
-		                        case 40:
-		                            _context29.next = 42;
-		                            return getIndex(_i5 + 1, rowDiv - 1);
-		
-		                        case 42:
-		                            _context29.next = 44;
-		                            return getIndex(_i5, rowDiv - 1);
-		
-		                        case 44:
-		                            _i5++;
-		                            _context29.next = 37;
-		                            break;
-		
-		                        case 47:
-		                        case "end":
-		                            return _context29.stop();
-		                    }
-		                }
-		            }, sphereIndex, this);
-		        })
-		    }, {
-		        key: "cylinderIndex",
-		        value: regeneratorRuntime.mark(function cylinderIndex(offset, divide) {
-		            var s, t, i;
-		            return regeneratorRuntime.wrap(function cylinderIndex$(_context30) {
-		                while (1) {
-		                    switch (_context30.prev = _context30.next) {
-		                        case 0:
-		                            s = GeometryUtility.ellipseSize(divide);
-		                            t = GeometryUtility.quadSize();
-		                            return _context30.delegateYield(GeometryUtility.ellipseIndex(offset, divide), "t0", 3);
-		
-		                        case 3:
-		                            return _context30.delegateYield(GeometryUtility.ellipseIndex(offset + s, divide), "t1", 4);
-		
-		                        case 4:
-		                            i = 0;
-		
-		                        case 5:
-		                            if (!(i < divide)) {
-		                                _context30.next = 10;
-		                                break;
-		                            }
-		
-		                            return _context30.delegateYield(GeometryUtility.quadIndex(offset + s * 2 + t * i), "t2", 7);
-		
-		                        case 7:
-		                            i++;
-		                            _context30.next = 5;
-		                            break;
-		
-		                        case 10:
-		                        case "end":
-		                            return _context30.stop();
-		                    }
-		                }
-		            }, cylinderIndex, this);
-		        })
-		    }, {
-		        key: "coneIndex",
-		        value: regeneratorRuntime.mark(function coneIndex(offset, divide) {
-		            var s, t, i;
-		            return regeneratorRuntime.wrap(function coneIndex$(_context31) {
-		                while (1) {
-		                    switch (_context31.prev = _context31.next) {
-		                        case 0:
-		                            s = GeometryUtility.ellipseSize(divide);
-		                            t = GeometryUtility.triangleSize();
-		                            return _context31.delegateYield(GeometryUtility.ellipseIndex(offset, divide), "t0", 3);
-		
-		                        case 3:
-		                            i = 0;
-		
-		                        case 4:
-		                            if (!(i < divide)) {
-		                                _context31.next = 9;
-		                                break;
-		                            }
-		
-		                            return _context31.delegateYield(GeometryUtility.triangleIndex(offset + s + i * t), "t1", 6);
-		
-		                        case 6:
-		                            i++;
-		                            _context31.next = 4;
-		                            break;
-		
-		                        case 9:
-		                        case "end":
-		                            return _context31.stop();
-		                    }
-		                }
-		            }, coneIndex, this);
-		        })
+		        value: function triangleIndex(offset) {
+		            var ret = new Array(3);
+		            ret[0] = offset;
+		            ret[1] = offset + 2;
+		            ret[2] = offset + 1;
+		            return ret;
+		        }
 		    }, {
 		        key: "planeIndex",
-		        value: regeneratorRuntime.mark(function planeIndex(offset, divide) {
-		            var o, s, j, i, _j3, _i6;
+		        value: function planeIndex() {
+		            var offset = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+		            var hdiv = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+		            var vdiv = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
 		
-		            return regeneratorRuntime.wrap(function planeIndex$(_context32) {
-		                while (1) {
-		                    switch (_context32.prev = _context32.next) {
-		                        case 0:
-		                            o = offset;
-		                            s = GeometryUtility.planeSize(divide) / 2;
-		                            j = 0;
-		
-		                        case 3:
-		                            if (!(j < divide)) {
-		                                _context32.next = 15;
-		                                break;
-		                            }
-		
-		                            i = 0;
-		
-		                        case 5:
-		                            if (!(i < divide)) {
-		                                _context32.next = 12;
-		                                break;
-		                            }
-		
-		                            o = offset + i + j * (divide + 1);
-		                            return _context32.delegateYield([o, o + divide + 2, o + 1], "t0", 8);
-		
-		                        case 8:
-		                            return _context32.delegateYield([o, o + divide + 1, o + divide + 2], "t1", 9);
-		
-		                        case 9:
-		                            i++;
-		                            _context32.next = 5;
-		                            break;
-		
-		                        case 12:
-		                            j++;
-		                            _context32.next = 3;
-		                            break;
-		
-		                        case 15:
-		                            _j3 = 0;
-		
-		                        case 16:
-		                            if (!(_j3 < divide)) {
-		                                _context32.next = 28;
-		                                break;
-		                            }
-		
-		                            _i6 = 0;
-		
-		                        case 18:
-		                            if (!(_i6 < divide)) {
-		                                _context32.next = 25;
-		                                break;
-		                            }
-		
-		                            o = offset + _i6 + _j3 * (divide + 1) + s;
-		                            return _context32.delegateYield([o, o + 1, o + divide + 2], "t2", 21);
-		
-		                        case 21:
-		                            return _context32.delegateYield([o, o + divide + 2, o + divide + 1], "t3", 22);
-		
-		                        case 22:
-		                            _i6++;
-		                            _context32.next = 18;
-		                            break;
-		
-		                        case 25:
-		                            _j3++;
-		                            _context32.next = 16;
-		                            break;
-		
-		                        case 28:
-		                        case "end":
-		                            return _context32.stop();
-		                    }
+		            var ret = new Array(6 * hdiv * vdiv);
+		            for (var v = 0; v < vdiv; v++) {
+		                for (var h = 0; h < hdiv; h++) {
+		                    var fi = (hdiv * v + h) * 6;
+		                    var ld = offset + (hdiv + 1) * v + h;
+		                    var lu = offset + (hdiv + 1) * (v + 1) + h;
+		                    ret[fi + 0] = ld;
+		                    ret[fi + 1] = ld + 1;
+		                    ret[fi + 2] = lu;
+		                    ret[fi + 3] = lu;
+		                    ret[fi + 4] = ld + 1;
+		                    ret[fi + 5] = lu + 1;
 		                }
-		            }, planeIndex, this);
-		        })
+		            }
+		            return ret;
+		        }
 		    }, {
-		        key: "ellipseIndex",
-		        value: regeneratorRuntime.mark(function ellipseIndex(offset, divide) {
-		            var i;
-		            return regeneratorRuntime.wrap(function ellipseIndex$(_context33) {
-		                while (1) {
-		                    switch (_context33.prev = _context33.next) {
-		                        case 0:
-		                            i = 0;
+		        key: "circle",
+		        value: function circle(center, normal, up, right) {
+		            var divide = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 5;
 		
-		                        case 1:
-		                            if (!(i < divide - 1)) {
-		                                _context33.next = 6;
-		                                break;
-		                            }
+		            var ret = new Array((3 + divide) * 6);
+		            // center
+		            ret[0] = center[0];
+		            ret[1] = center[1];
+		            ret[2] = center[2];
+		            ret[3] = normal[0];
+		            ret[4] = normal[1];
+		            ret[5] = normal[2];
+		            ret[6] = 0.5;
+		            ret[7] = 0.5;
+		            var delta = 2 * Math.PI / divide;
+		            for (var v = 0; v < divide + 1; v++) {
+		                var fi = 8 + v * 8;
+		                var s = Math.sin(delta * v);
+		                var c = Math.cos(delta * v);
+		                ret[fi + 0] = center[0] + c * up[0] + s * right[0];
+		                ret[fi + 1] = center[1] + c * up[1] + s * right[1];
+		                ret[fi + 2] = center[2] + c * up[2] + s * right[2];
+		                ret[fi + 3] = normal[0];
+		                ret[fi + 4] = normal[1];
+		                ret[fi + 5] = normal[2];
+		                ret[fi + 6] = 0.5 + 0.5 * s;
+		                ret[fi + 7] = 0.5 - 0.5 * c;
+		            }
+		            return ret;
+		        }
+		    }, {
+		        key: "circleIndex",
+		        value: function circleIndex(offset, divide) {
+		            var ret = new Array(3 * divide);
+		            for (var i = 0; i < divide; i++) {
+		                ret[3 * i + 0] = offset;
+		                ret[3 * i + 1] = offset + (i + 2);
+		                ret[3 * i + 2] = offset + (i + 1);
+		            }
+		            return ret;
+		        }
+		    }, {
+		        key: "sphere",
+		        value: function sphere(center, up, right, forward) {
+		            var vdiv = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 3;
+		            var hdiv = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : 3;
 		
-		                            return _context33.delegateYield([offset, offset + 1 + i, offset + 2 + i], "t0", 3);
-		
-		                        case 3:
-		                            i++;
-		                            _context33.next = 1;
-		                            break;
-		
-		                        case 6:
-		                            return _context33.delegateYield([offset, offset + divide, offset + 1], "t1", 7);
-		
-		                        case 7:
-		                        case "end":
-		                            return _context33.stop();
-		                    }
+		            var ret = new Array((vdiv * hdiv + 2) * 8);
+		            //top(0)
+		            ret[0] = center[0] + up[0];
+		            ret[1] = center[1] + up[1];
+		            ret[2] = center[2] + up[2];
+		            ret[3] = up[0];
+		            ret[4] = up[1];
+		            ret[5] = up[2];
+		            ret[6] = 0;
+		            ret[7] = 0;
+		            // bottom(1)
+		            ret[8] = center[0] - up[0];
+		            ret[9] = center[1] - up[1];
+		            ret[10] = center[2] - up[2];
+		            ret[11] = -up[0];
+		            ret[12] = -up[1];
+		            ret[13] = -up[2];
+		            ret[14] = 0;
+		            ret[15] = 1;
+		            var vDelta = Math.PI / (vdiv + 1);
+		            var hDelta = Math.PI * 2 / hdiv;
+		            for (var v = 0; v < vdiv; v++) {
+		                var vc = Math.cos((v + 1) * vDelta);
+		                var vs = Math.sin((v + 1) * vDelta);
+		                var phi = vDelta * v;
+		                for (var h = 0; h < hdiv + 1; h++) {
+		                    var hc = Math.cos(h * hDelta);
+		                    var hs = Math.sin(h * hDelta);
+		                    var fi = 16 + (v * (hdiv + 1) + h) * 8;
+		                    ret[fi + 0] = center[0] + vc * up[0] + vs * (forward[0] * hc + right[0] * hs);
+		                    ret[fi + 1] = center[1] + vc * up[1] + vs * (forward[1] * hc + right[1] * hs);
+		                    ret[fi + 2] = center[2] + vc * up[2] + vs * (forward[2] * hc + right[2] * hs);
+		                    ret[fi + 3] = center[0] + vc * up[0] + vs * (forward[0] * hc + right[0] * hs);
+		                    ret[fi + 4] = center[1] + vc * up[1] + vs * (forward[1] * hc + right[1] * hs);
+		                    ret[fi + 5] = center[2] + vc * up[2] + vs * (forward[2] * hc + right[2] * hs);
+		                    var theta = hDelta * h;
+		                    ret[fi + 6] = theta / Math.PI / 2;
+		                    ret[fi + 7] = phi / Math.PI;
 		                }
-		            }, ellipseIndex, this);
-		        })
-		    }, {
-		        key: "quadSize",
-		        value: function quadSize() {
-		            return 4;
+		            }
+		            return ret;
 		        }
 		    }, {
-		        key: "triangleSize",
-		        value: function triangleSize() {
-		            return 3;
-		        }
-		    }, {
-		        key: "cubeSize",
-		        value: function cubeSize() {
-		            return 6 * GeometryUtility.quadSize();
-		        }
-		    }, {
-		        key: "sphereSize",
-		        value: function sphereSize(rowDiv, circleDiv) {
-		            return 2 + rowDiv * (circleDiv + 1);
-		        }
-		    }, {
-		        key: "cylinderSize",
-		        value: function cylinderSize(divide) {
-		            return GeometryUtility.ellipseSize(divide) * 2 + divide * GeometryUtility.quadSize();
-		        }
-		    }, {
-		        key: "coneSize",
-		        value: function coneSize(divide) {
-		            return GeometryUtility.ellipseSize(divide) + divide * GeometryUtility.triangleSize();
-		        }
-		    }, {
-		        key: "planeSize",
-		        value: function planeSize(divide) {
-		            return (divide + 1) * (divide + 1) * 2;
-		        }
-		    }, {
-		        key: "ellipseSize",
-		        value: function ellipseSize(divide) {
-		            return divide + 1;
+		        key: "sphereIndex",
+		        value: function sphereIndex(offset) {
+		            var vdiv = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 3;
+		            var hdiv = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 3;
+		
+		            var ret = new Array(hdiv * vdiv * 6);
+		            var getIndex = function getIndex(i, j) {
+		                return offset + (hdiv + 1) * j + 2 + i;
+		            };
+		            var top = offset;
+		            var bottom = offset + 1;
+		            // upper side
+		            for (var i = 0; i < hdiv; i++) {
+		                ret[3 * i + 0] = top;
+		                ret[3 * i + 1] = getIndex(i + 1, 0);
+		                ret[3 * i + 2] = getIndex(i, 0);
+		            }
+		            var k = 3 * hdiv;
+		            // middle
+		            for (var j = 0; j < vdiv - 1; j++) {
+		                for (var _i = 0; _i < hdiv; _i++) {
+		                    ret[(hdiv * j + _i) * 6 + k] = getIndex(_i, j);
+		                    ret[(hdiv * j + _i) * 6 + k + 1] = getIndex(_i + 1, j);
+		                    ret[(hdiv * j + _i) * 6 + k + 2] = getIndex(_i, j + 1);
+		                    ret[(hdiv * j + _i) * 6 + k + 3] = getIndex(_i, j + 1);
+		                    ret[(hdiv * j + _i) * 6 + k + 4] = getIndex(_i + 1, j);
+		                    ret[(hdiv * j + _i) * 6 + k + 5] = getIndex(_i + 1, j + 1);
+		                }
+		            }
+		            var l = hdiv * (vdiv - 1) * 6 + k;
+		            // lower side
+		            for (var _i2 = 0; _i2 < hdiv; _i2++) {
+		                ret[3 * _i2 + l + 0] = bottom;
+		                ret[3 * _i2 + l + 1] = getIndex(_i2, vdiv - 1);
+		                ret[3 * _i2 + l + 2] = getIndex(_i2 + 1, vdiv - 1);
+		            }
+		            return ret;
 		        }
 		    }]);
 		
@@ -34028,7 +32130,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = GeometryUtility;
 	
 	/***/ },
-	/* 105 */
+	/* 86 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -34039,300 +32141,13 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 		
-		var _Vector = __webpack_require__(9);
-		
-		var _Vector2 = _interopRequireDefault(_Vector);
-		
-		var _AABB = __webpack_require__(103);
-		
-		var _AABB2 = _interopRequireDefault(_AABB);
-		
-		var _Buffer = __webpack_require__(106);
-		
-		var _Buffer2 = _interopRequireDefault(_Buffer);
-		
-		var _Geometry = __webpack_require__(89);
-		
-		var _Geometry2 = _interopRequireDefault(_Geometry);
-		
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-		
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-		
-		/**
-		 * Helper class to instanciate Geometry easily.
-		 */
-		var GeometryBuilder = function () {
-		    function GeometryBuilder() {
-		        _classCallCheck(this, GeometryBuilder);
-		    }
-		
-		    _createClass(GeometryBuilder, null, [{
-		        key: "build",
-		        value: function build(gl, info) {
-		            if (info["verticies"] | info["indicies"]) {
-		                throw new Error("Misspelled API was fixed already. use vertices and indices");
-		            }
-		            var buffers = {};
-		            var attribs = {};
-		            var aabb = info.aabb;
-		            var needConstructAABB = !aabb;
-		            if (needConstructAABB) {
-		                aabb = new _AABB2.default();
-		            }
-		            for (var bufferKey in info.vertices) {
-		                var byteWidth = 4;
-		                var buffer = info.vertices[bufferKey];
-		                var sizeSum = 0;
-		                for (var attribKey in buffer.size) {
-		                    if (attribs[attribKey]) {
-		                        throw new Error("Attribute variable name was dupelicated");
-		                    }
-		                    var size = buffer.size[attribKey];
-		                    attribs[attribKey] = {
-		                        size: size,
-		                        offset: sizeSum * byteWidth,
-		                        bufferName: bufferKey,
-		                        type: buffer.type ? buffer.type : WebGLRenderingContext.FLOAT,
-		                        stride: 0
-		                    };
-		                    sizeSum += size;
-		                }
-		                for (var _attribKey in buffer.size) {
-		                    attribs[_attribKey].stride = sizeSum * byteWidth;
-		                }
-		                // generate source array of vertex buffer
-		                var bufferSource = new Array(sizeSum * buffer.count);
-		                var bufferGenerator = buffer.getGenerators();
-		                var generators = [];
-		                var positionGeneratorIndex = 0;
-		                var sizes = [];
-		                var beforeEach = bufferGenerator.beforeEach ? bufferGenerator.beforeEach() : undefined;
-		                for (var _attribKey2 in buffer.size) {
-		                    if (_attribKey2 === "beforeEach") {
-		                        continue;
-		                    }
-		                    var generator = bufferGenerator[_attribKey2];
-		                    generators.push(generator());
-		                    sizes.push(buffer.size[_attribKey2]);
-		                    if (_attribKey2 === "position") {
-		                        positionGeneratorIndex = generators.length - 1;
-		                    }
-		                }
-		                var i = 0;
-		                for (var vertCount = 0; vertCount < buffer.count; vertCount++) {
-		                    if (beforeEach && beforeEach.next().done) {
-		                        throw new Error("before each was ended before reaching count.");
-		                    }
-		                    for (var genIndex = 0; genIndex < generators.length; genIndex++) {
-		                        var _generator = generators[genIndex];
-		                        for (var sizeIndex = 0; sizeIndex < sizes[genIndex]; sizeIndex++) {
-		                            var genResult = _generator.next();
-		                            if (genResult.done) {
-		                                throw new Error("Generator function finished before reaching specified count");
-		                            }
-		                            bufferSource[i] = genResult.value;
-		                            i++;
-		                        }
-		                        if (needConstructAABB && genIndex === positionGeneratorIndex) {
-		                            aabb.expand(new _Vector2.default(bufferSource[i - 3], bufferSource[i - 2], bufferSource[i - 1]));
-		                        }
-		                    }
-		                }
-		                // instanciate buffers
-		                buffers[bufferKey] = new _Buffer2.default(gl, WebGLRenderingContext.ARRAY_BUFFER, buffer.usage ? buffer.usage : WebGLRenderingContext.STATIC_DRAW);
-		                buffers[bufferKey].update(new Float32Array(bufferSource));
-		            }
-		            return new _Geometry2.default(buffers, attribs, this._generateIndices(gl, info.indices), aabb);
-		        }
-		    }, {
-		        key: "_generateIndices",
-		        value: function _generateIndices(gl, indexGenerator) {
-		            var indexMap = {};
-		            for (var indexName in indexGenerator) {
-		                var indices = [];
-		                var generatorInfo = indexGenerator[indexName];
-		                var _iteratorNormalCompletion = true;
-		                var _didIteratorError = false;
-		                var _iteratorError = undefined;
-		
-		                try {
-		                    for (var _iterator = generatorInfo.generator()[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-		                        var variable = _step.value;
-		
-		                        indices.push(variable);
-		                    }
-		                } catch (err) {
-		                    _didIteratorError = true;
-		                    _iteratorError = err;
-		                } finally {
-		                    try {
-		                        if (!_iteratorNormalCompletion && _iterator.return) {
-		                            _iterator.return();
-		                        }
-		                    } finally {
-		                        if (_didIteratorError) {
-		                            throw _iteratorError;
-		                        }
-		                    }
-		                }
-		
-		                var bufferType = this._getIndexType(indices.length);
-		                var buffer = new _Buffer2.default(gl, WebGLRenderingContext.ELEMENT_ARRAY_BUFFER, WebGLRenderingContext.STATIC_DRAW);
-		                buffer.update(new bufferType.ctor(indices));
-		                indexMap[indexName] = {
-		                    count: indices.length,
-		                    index: buffer,
-		                    type: bufferType.format,
-		                    byteSize: bufferType.byteSize,
-		                    byteOffset: 0,
-		                    topology: generatorInfo.topology ? generatorInfo.topology : WebGLRenderingContext.TRIANGLES
-		                };
-		            }
-		            return indexMap;
-		        }
-		        /**
-		         * Determine which index type should be used
-		         * @param  {number} length [description]
-		         * @return {[type]}        [description]
-		         */
-		
-		    }, {
-		        key: "_getIndexType",
-		        value: function _getIndexType(length) {
-		            var format = WebGLRenderingContext.UNSIGNED_INT;
-		            var arrayConstructor = Uint32Array;
-		            var byteSize = 4;
-		            if (length < 256) {
-		                format = WebGLRenderingContext.UNSIGNED_BYTE;
-		                arrayConstructor = Uint8Array;
-		                byteSize = 1;
-		            } else if (length < 65535) {
-		                format = WebGLRenderingContext.UNSIGNED_SHORT;
-		                arrayConstructor = Uint16Array;
-		                byteSize = 2;
-		            } else if (length >= 4294967296) {
-		                throw new Error("Too many index of geometry!");
-		            }
-		            return {
-		                format: format,
-		                ctor: arrayConstructor,
-		                byteSize: byteSize
-		            };
-		        }
-		    }]);
-		
-		    return GeometryBuilder;
-		}();
-		
-		exports.default = GeometryBuilder;
-	
-	/***/ },
-	/* 106 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-		
-		var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-		
-		var _ResourceBase2 = __webpack_require__(26);
-		
-		var _ResourceBase3 = _interopRequireDefault(_ResourceBase2);
-		
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-		
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-		
-		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-		
-		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-		
-		var Buffer = function (_ResourceBase) {
-		    _inherits(Buffer, _ResourceBase);
-		
-		    function Buffer(gl) {
-		        var target = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : WebGLRenderingContext.ARRAY_BUFFER;
-		        var usage = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : WebGLRenderingContext.ELEMENT_ARRAY_BUFFER;
-		
-		        _classCallCheck(this, Buffer);
-		
-		        var _this = _possibleConstructorReturn(this, (Buffer.__proto__ || Object.getPrototypeOf(Buffer)).call(this, gl));
-		
-		        _this.target = target;
-		        _this.usage = usage;
-		        _this.buffer = gl.createBuffer();
-		        return _this;
-		    }
-		
-		    _createClass(Buffer, [{
-		        key: "update",
-		        value: function update(length, subBuffer) {
-		            this.bind();
-		            if (subBuffer) {
-		                if (!this.valid) {
-		                    this.gl.bufferData(this.target, length + subBuffer.byteLength, this.usage);
-		                }
-		                this.gl.bufferSubData(this.target, length, subBuffer);
-		            } else {
-		                if (typeof length === "number") {
-		                    this.gl.bufferData(this.target, length, this.usage);
-		                } else {
-		                    this.gl.bufferData(this.target, length, this.usage);
-		                }
-		            }
-		            this.valid = true;
-		        }
-		    }, {
-		        key: "bind",
-		        value: function bind() {
-		            this.gl.bindBuffer(this.target, this.buffer);
-		        }
-		    }, {
-		        key: "destroy",
-		        value: function destroy() {
-		            _get(Buffer.prototype.__proto__ || Object.getPrototypeOf(Buffer.prototype), "destroy", this).call(this);
-		            this.gl.deleteBuffer(this.buffer);
-		        }
-		    }]);
-		
-		    return Buffer;
-		}(_ResourceBase3.default);
-		
-		exports.default = Buffer;
-	
-	/***/ },
-	/* 107 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-		
-		var _MaterialFactory = __webpack_require__(45);
+		var _MaterialFactory = __webpack_require__(21);
 		
 		var _MaterialFactory2 = _interopRequireDefault(_MaterialFactory);
 		
-		var _Unlit = __webpack_require__(108);
+		var _Unlit = __webpack_require__(87);
 		
 		var _Unlit2 = _interopRequireDefault(_Unlit);
-		
-		var _UnlitColor = __webpack_require__(109);
-		
-		var _UnlitColor2 = _interopRequireDefault(_UnlitColor);
-		
-		var _UnlitTextured = __webpack_require__(110);
-		
-		var _UnlitTextured2 = _interopRequireDefault(_UnlitTextured);
 		
 		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 		
@@ -34347,8 +32162,6 @@ return /******/ (function(modules) { // webpackBootstrap
 		        key: "register",
 		        value: function register() {
 		            _MaterialFactory2.default.addSORTMaterial("unlit", _Unlit2.default);
-		            _MaterialFactory2.default.addSORTMaterial("unlit-texture", _UnlitTextured2.default);
-		            _MaterialFactory2.default.addSORTMaterial("unlit-color", _UnlitColor2.default);
 		        }
 		    }]);
 		
@@ -34358,25 +32171,13 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = DefaultMaterial;
 	
 	/***/ },
-	/* 108 */
+	/* 87 */
 	/***/ function(module, exports) {
 	
-		module.exports = "@Pass\n@BlendFunc(SRC_ALPHA,ONE_MINUS_SRC_ALPHA)\nFS_PREC(mediump,float)\nvarying vec2 vTexCoord;\n#ifdef VS\nattribute vec3 position;\nattribute vec2 texCoord;\nuniform mat4 _matPVM;\nvoid main()\n{\n  gl_Position = _matPVM * vec4(position,1.0);\n  vTexCoord = texCoord;\n}\n#endif\n#ifdef FS\n@{type:\"color\",default:\"white\"}\nuniform vec4 color;\n@{usedFlag:\"_textureUsed\"}\nuniform sampler2D texture;\nuniform bool _textureUsed;\nvoid main(void)\n{\n  if(_textureUsed){\n    gl_FragColor = color * texture2D(texture,vTexCoord);\n  }else{\n    gl_FragColor = color;\n }\n}\n#endif\n"
+		module.exports = "@Technique default{\n@Pass{\n  @BlendFunc(SRC_ALPHA,ONE_MINUS_SRC_ALPHA)\n  FS_PREC(mediump,float)\n  varying vec2 vTexCoord;\n  #ifdef VS\n\n  attribute vec3 position;\n  attribute vec2 texCoord;\n  @MODELVIEWPROJECTION\n  uniform mat4 _matPVM;\n  void main()\n  {\n    gl_Position = _matPVM * vec4(position,1.0);\n    vTexCoord = texCoord;\n  }\n  #endif\n  #ifdef FS\n  @{type:\"color\",default:\"white\"}\n  uniform vec4 color;\n\n  uniform sampler2D texture;\n  @HAS_TEXTURE{sampler:\"texture\"}\n  uniform bool _textureUsed;\n\n  uniform float _time;\n  void main(void)\n  {\n    if(_textureUsed){\n      gl_FragColor = color * texture2D(texture,vTexCoord);\n    }else{\n      gl_FragColor = color;\n   }\n  }\n  #endif\n}\n}\n"
 	
 	/***/ },
-	/* 109 */
-	/***/ function(module, exports) {
-	
-		module.exports = "@Pass\nFS_PREC(mediump,float)\nvarying vec2 vTexCoord;\n#ifdef VS\nattribute vec3 position;\nattribute vec2 texCoord;\nuniform mat4 _matPVM;\nvoid main()\n{\n  gl_Position = _matPVM * vec4(position,1.0);\n  vTexCoord = texCoord;\n}\n#endif\n#ifdef FS\n@{type:\"color\",default:\"white\"}\nuniform vec4 color;\nvoid main(void)\n{\n    gl_FragColor = color;\n}\n#endif\n"
-	
-	/***/ },
-	/* 110 */
-	/***/ function(module, exports) {
-	
-		module.exports = "@Pass\nFS_PREC(mediump,float)\nvarying vec2 vTexCoord;\n#ifdef VS\nattribute vec3 position;\nattribute vec2 texCoord;\nuniform mat4 _matPVM;\nvoid main()\n{\n  gl_Position = _matPVM * vec4(position,1.0);\n  vTexCoord = texCoord;\n}\n#endif\n#ifdef FS\nuniform sampler2D texture;\nvoid main(void)\n{\n  gl_FragColor = texture2D(texture,vTexCoord);\n}\n#endif\n"
-	
-	/***/ },
-	/* 111 */
+	/* 88 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -34385,179 +32186,583 @@ return /******/ (function(modules) { // webpackBootstrap
 		    value: true
 		});
 		
-		var _DefaultMaterial = __webpack_require__(107);
+		var _Matrix = __webpack_require__(15);
+		
+		var _Matrix2 = _interopRequireDefault(_Matrix);
+		
+		var _UniformResolverRegistry = __webpack_require__(44);
+		
+		var _UniformResolverRegistry2 = _interopRequireDefault(_UniformResolverRegistry);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		_UniformResolverRegistry2.default.add("MODELVIEWPROJECTION", function (valInfo) {
+		    return function (proxy, args) {
+		        proxy.uniformMatrix(valInfo.name, args.transform.calcPVM(args.camera));
+		    };
+		});
+		_UniformResolverRegistry2.default.add("LOCAL", function (valInfo) {
+		    return function (proxy, args) {
+		        proxy.uniformMatrix(valInfo.name, args.transform.localTransform);
+		    };
+		});
+		_UniformResolverRegistry2.default.add("MODEL", function (valInfo) {
+		    return function (proxy, args) {
+		        proxy.uniformMatrix(valInfo.name, args.transform.globalTransform);
+		    };
+		});
+		_UniformResolverRegistry2.default.add("MODELVIEW", function (valInfo) {
+		    return function (proxy, args) {
+		        proxy.uniformMatrix(valInfo.name, args.camera.ViewMatrix.multiplyWith(args.transform.globalTransform));
+		    };
+		});
+		_UniformResolverRegistry2.default.add("VIEW", function (valInfo) {
+		    return function (proxy, args) {
+		        proxy.uniformMatrix(valInfo.name, args.camera.ViewMatrix);
+		    };
+		});
+		_UniformResolverRegistry2.default.add("PROJECTION", function (valInfo) {
+		    return function (proxy, args) {
+		        proxy.uniformMatrix(valInfo.name, args.camera.ProjectionMatrix);
+		    };
+		});
+		_UniformResolverRegistry2.default.add("MODELINVERSE", function (valInfo) {
+		    return function (proxy, args) {
+		        proxy.uniformMatrix(valInfo.name, _Matrix2.default.inverse(args.transform.globalTransform));
+		    };
+		});
+		_UniformResolverRegistry2.default.add("VIEWINVERSE", function (valInfo) {
+		    return function (proxy, args) {
+		        proxy.uniformMatrix(valInfo.name, _Matrix2.default.inverse(args.camera.ViewMatrix));
+		    };
+		});
+		_UniformResolverRegistry2.default.add("PROJECTIONINVERSE", function (valInfo) {
+		    return function (proxy, args) {
+		        proxy.uniformMatrix(valInfo.name, args.camera.InvProjectionMatrix);
+		    };
+		});
+		_UniformResolverRegistry2.default.add("MODELVIEWINVERSE", function (valInfo) {
+		    return function (proxy, args) {
+		        proxy.uniformMatrix(valInfo.name, _Matrix2.default.inverse(args.transform.calcVM(args.camera)));
+		    };
+		});
+		_UniformResolverRegistry2.default.add("MODELVIEWPROJECTIONINVERSE", function (valInfo) {
+		    return function (proxy, args) {
+		        proxy.uniformMatrix(valInfo.name, _Matrix2.default.inverse(args.transform.calcPVM(args.camera)));
+		    };
+		});
+		_UniformResolverRegistry2.default.add("MODELINVERSETRANSPOSE", function (valInfo) {
+		    return function (proxy, args) {
+		        proxy.uniformMatrix(valInfo.name, _Matrix2.default.transpose(_Matrix2.default.inverse(args.transform.globalTransform)));
+		    };
+		});
+		_UniformResolverRegistry2.default.add("MODELVIEWINVERSETRANSPOSE", function (valInfo) {
+		    return function (proxy, args) {
+		        proxy.uniformMatrix3(valInfo.name, _Matrix2.default.transpose(_Matrix2.default.inverse(args.transform.calcVM(args.camera))));
+		    };
+		});
+		exports.default = null;
+	
+	/***/ },
+	/* 89 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _Vector = __webpack_require__(90);
+		
+		var _Vector2 = _interopRequireDefault(_Vector);
+		
+		var _Vector3 = __webpack_require__(13);
+		
+		var _Vector4 = _interopRequireDefault(_Vector3);
+		
+		var _UniformResolverRegistry = __webpack_require__(44);
+		
+		var _UniformResolverRegistry2 = _interopRequireDefault(_UniformResolverRegistry);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		_UniformResolverRegistry2.default.add("VIEWPORT", function (valInfo) {
+		    return function (proxy, args) {
+		        var vp = args.viewport;
+		        proxy.uniformVector4(valInfo.name, new _Vector4.default(vp.Left, vp.Top, vp.Width, vp.Height));
+		    };
+		});
+		_UniformResolverRegistry2.default.add("VIEWPORT_SIZE", function (valInfo) {
+		    return function (proxy, args) {
+		        var vp = args.viewport;
+		        proxy.uniformVector2(valInfo.name, new _Vector2.default(vp.Width, vp.Height));
+		    };
+		});
+		_UniformResolverRegistry2.default.add("TIME", function (valInfo) {
+		    return function (proxy, args) {
+		        proxy.uniformFloat(valInfo.name, Date.now() % 1.0e7);
+		    };
+		});
+		_UniformResolverRegistry2.default.add("HAS_TEXTURE", function (valInfo, material) {
+		    var sampler = valInfo.attributes["sampler"];
+		    if (!sampler) {
+		        throw new Error("The variable having HAS_TEXTURE as semantics must have sampler attribute");
+		    }
+		    return function (proxy, args) {
+		        var hasTexture = !!material.arguments[sampler] && !!material.arguments[sampler].get(args.buffers);
+		        proxy.uniformBool(valInfo.name, hasTexture);
+		    };
+		});
+		_UniformResolverRegistry2.default.add("CAMERA_POSITION", function (valInfo) {
+		    return function (proxy, args) {
+		        proxy.uniformVector3(valInfo.name, args.camera.transform.globalPosition);
+		    };
+		});
+		_UniformResolverRegistry2.default.add("CAMERA_DIRECTION", function (valInfo) {
+		    return function (proxy, args) {
+		        proxy.uniformVector3(valInfo.name, args.camera.transform.forward);
+		    };
+		});
+		exports.default = null;
+	
+	/***/ },
+	/* 90 */
+	/***/ function(module, exports) {
+	
+			Object.defineProperty(exports, "__esModule", {
+			    value: true
+			});exports.default=window.GrimoireJS.lib.math.Vector2;
+	
+	/***/ },
+	/* 91 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _Texture2D = __webpack_require__(47);
+		
+		var _Texture2D2 = _interopRequireDefault(_Texture2D);
+		
+		var _UniformResolverRegistry = __webpack_require__(44);
+		
+		var _UniformResolverRegistry2 = _interopRequireDefault(_UniformResolverRegistry);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		var gl = WebGLRenderingContext;
+		var _userValueRegisterers = {
+		    array: {},
+		    single: {}
+		};
+		_UniformResolverRegistry2.default.add("USER_VALUE", function (valInfo, material) {
+		    var register = void 0;
+		    if (valInfo.count) {
+		        register = _userValueRegisterers.array[valInfo.type];
+		        if (!register) {
+		            throw new Error("No user_value registerer was registered for " + valInfo.type + "[]");
+		        }
+		    } else {
+		        register = _userValueRegisterers.single[valInfo.type];
+		        if (!register) {
+		            throw new Error("No user_value registerer was registered for " + valInfo.type);
+		        }
+		    }
+		    return register(valInfo, material);
+		});
+		function basicRegister(type, isArray, converter, defaultValue, _register) {
+		    var registerTarget = void 0;
+		    if (isArray) {
+		        registerTarget = _userValueRegisterers.array;
+		    } else {
+		        registerTarget = _userValueRegisterers.single;
+		    }
+		    registerTarget[type] = function (valInfo, material) {
+		        material.addArgument(valInfo.name, {
+		            converter: converter,
+		            default: valInfo.attributes["default"] ? valInfo.attributes["default"] : defaultValue
+		        });
+		        return {
+		            register: function register(proxy, args) {
+		                _register(proxy, valInfo.name, material.arguments[valInfo.name], args);
+		            },
+		            dispose: function dispose() {
+		                material.deleteArgument(valInfo.name);
+		            }
+		        };
+		    };
+		}
+		basicRegister(gl.FLOAT, false, "Number", 0, function (proxy, name, value) {
+		    return proxy.uniformFloat(name, value);
+		});
+		basicRegister(gl.INT, false, "Number", 0, function (proxy, name, value) {
+		    return proxy.uniformInt(name, value);
+		});
+		basicRegister(gl.BOOL, false, "Boolean", false, function (proxy, name, value) {
+		    return proxy.uniformBool(name, value);
+		});
+		basicRegister(gl.INT_VEC2, false, "Vector2", [0, 0], function (proxy, name, value) {
+		    return proxy.uniformVector2(name, value);
+		});
+		basicRegister(gl.INT_VEC3, false, "Vector3", [0, 0, 0], function (proxy, name, value) {
+		    return proxy.uniformVector3(name, value);
+		});
+		basicRegister(gl.INT_VEC4, false, "Vector4", [0, 0, 0, 0], function (proxy, name, value) {
+		    return proxy.uniformVector4(name, value);
+		});
+		basicRegister(gl.FLOAT_VEC2, false, "Vector2", [0, 0], function (proxy, name, value) {
+		    return proxy.uniformVector2(name, value);
+		});
+		basicRegister(gl.FLOAT_MAT4, true, "Object", [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], function (proxy, name, value) {
+		    return proxy.uniformMatrixArray(name, value);
+		});
+		basicRegister(gl.SAMPLER_2D, false, "Texture", null, function (proxy, name, value, args) {
+		    var texture = void 0;
+		    if (value && (texture = value.get(args.buffers))) {
+		        proxy.uniformTexture2D(name, texture);
+		    } else {
+		        proxy.uniformTexture2D(name, _Texture2D2.default.defaultTextures.get(proxy.program.gl));
+		    }
+		});
+		_userValueRegisterers.single[gl.FLOAT_VEC3] = function (valInfo, material) {
+		    var isColor = valInfo.attributes["type"] === "color";
+		    var attrDefault = valInfo.attributes["default"];
+		    var defaultValue = attrDefault ? attrDefault : isColor ? [1, 1, 1] : [0, 0, 0];
+		    material.addArgument(valInfo.name, {
+		        converter: isColor ? "Color3" : "Vector3",
+		        default: defaultValue
+		    });
+		    return {
+		        register: isColor ? function (proxy, args) {
+		            proxy.uniformColor3(valInfo.name, material.arguments[valInfo.name]);
+		        } : function (proxy, args) {
+		            proxy.uniformVector3(valInfo.name, material.arguments[valInfo.name]);
+		        },
+		        dispose: function dispose() {
+		            material.deleteArgument(valInfo.name);
+		        }
+		    };
+		};
+		_userValueRegisterers.single[gl.FLOAT_VEC4] = function (valInfo, material) {
+		    var isColor = valInfo.attributes["type"] === "color";
+		    var attrDefault = valInfo.attributes["default"];
+		    var defaultValue = attrDefault ? attrDefault : isColor ? [1, 1, 1, 1] : [0, 0, 0, 0];
+		    material.addArgument(valInfo.name, {
+		        converter: isColor ? "Color4" : "Vector4",
+		        default: defaultValue
+		    });
+		    return {
+		        register: isColor ? function (proxy, args) {
+		            proxy.uniformColor4(valInfo.name, material.arguments[valInfo.name]);
+		        } : function (proxy, args) {
+		            proxy.uniformVector4(valInfo.name, material.arguments[valInfo.name]);
+		        },
+		        dispose: function dispose() {
+		            material.deleteArgument(valInfo.name);
+		        }
+		    };
+		};
+		exports.default = null;
+	
+	/***/ },
+	/* 92 */
+	/***/ function(module, exports) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		exports.default = {
+		    /**
+		     * GOMLファイルのルートノード
+		     *
+		     * ツリーに唯一一つ必要なコンポーネントなどをつけておくためのノード。
+		     * 特に、`<canvas>`の初期化やループの管理など、最初の初期化時のパラメーターを受け取るためのコンポーネントとともに、
+		     * `<canvas>`の設定(`width`や`height`)またはフルスクリーンなどのコンポーネントを含む。
+		     */
+		    goml: {
+		        components: ["CanvasInitializer", "LoopManager", "AssetLoadingManager", "GeometryRegistory", "RendererManager", "Fullscreen"]
+		    },
+		    /**
+		     * ある3D空間上のモデルの配置やカメラの設定などの場面の設定を含むためのノード
+		     *
+		     * カメラや、ライト、メッシュなど空間に配置するためのノードです。
+		     * 全ての場面に存在する座標を持ちうるノード(`TransformComponent`を含むノード)は必ずこのノードの子ノードのとして存在する必要があります。
+		     */
+		    scene: {
+		        components: ["Scene"]
+		    },
+		    /**
+		     * 3D空間上の物体を意味するノード
+		     *
+		     * メッシュやカメラなどのベースとなるノードです。このノードの子要素には親要素の変型量(`position`や`rotation`)などが伝搬します。
+		     * 詳しくは`TransformComponent`を参照すると良いでしょう。
+		     */
+		    object: {
+		        components: ["Transform"]
+		    },
+		    /**
+		     * 3D空間を撮影するためのカメラのノード
+		     *
+		     * 3D空間を撮影するためのカメラを意味するノードです。シーンをレンダリングするには最低一つのカメラがシーンに属していなければなりません。
+		     */
+		    camera: {
+		        components: ["Camera"],
+		        default: {
+		            position: [0, 0, 10]
+		        },
+		        super: "object"
+		    },
+		    /**
+		     * 3D空間上のモデルなど、 **映るもの** を表すためのノード
+		     *
+		     * 3D空間上に存在する映るものを意味するノードです。シーンに何かを写すには最低一つのメッシュがシーンに属していなければなりません。
+		     *
+		     * メッシュは、マテリアル(材質)とジオメトリ(形状)からなります。この2つの指定を変えることで、様々な表現が3D空間上で可能になります。
+		     */
+		    mesh: {
+		        components: ["MaterialContainer", "MeshRenderer"],
+		        super: "object"
+		    },
+		    /**
+		     * キャンバスの描画手法を指定するためのノード
+		     *
+		     * キャンバス上の領域をどのように描画するかを示すためのノードです。gomlの読み込み時に一つも存在しない場合は、自動的にgoml直下に生成されます。
+		     *
+		     * 1つ以上のレンダラーを含むことで、キャンバスの複数の領域をレンダリングしたりすることができるようになります。
+		     * また、この子要素に指定する`<render-XXX>`ノードなどによって、どのようにその領域を描画するかが決定されます。
+		     *
+		     * 通常、`<renderer>`の子ノードに何も存在しない場合、自動的に`<render-scene>`タグが生成されます。
+		     */
+		    renderer: {
+		        components: ["Renderer"]
+		    },
+		    /**
+		     * 新しい形状を生成するためのノード
+		     *
+		     * 単純な変形(`scale`、`position`、`rotation`だけで表せない)、例えば円の分割数などを指定したい別の形状を明示的に生成するためのノードです。
+		     */
+		    geometry: {
+		        components: ["Geometry"]
+		    },
+		    /**
+		     * テクスチャを明示的に読み込むためのノード
+		     *
+		     * テクスチャを読み込むためのノードです。通常、テクスチャはurlをマテリアルに指定するなどして読み込まれますが、
+		     * サンプラの指定などをしたい場合、このタグで明示的に読み込むことにより読み込むことができます。
+		     *
+		     */
+		    texture: {
+		        components: ["Texture"]
+		    },
+		    /**
+		     * マテリアルを明示的に読み込むためのノード
+		     *
+		     * マテリアルを生成するためのノードです。メッシュからこのノードを参照して利用することにより、複数のメッシュで共通のマテリアルのインスタンスを参照させることができます。
+		     *
+		     * これは、同時にマテリアルの値が編集できるだけでなく、パフォーマンス的にも大きな利点をもたらします。
+		     */
+		    material: {
+		        components: ["Material"]
+		    },
+		    /**
+		     * 新しいマテリアルを外部から読み込むためのノード
+		     *
+		     * Grimoire.jsのマテリアルファイル(*.sort)から新しい種類のマテリアルを読み込むためのノードです。
+		     */
+		    "import-material": {
+		        components: ["MaterialImporter"]
+		    },
+		    /**
+		     * カラーバッファ用のテクスチャを生成するためのノード
+		     *
+		     * `<renderer>`ノードの直下に含まれうるノードの一つです。
+		     *
+		     * このノードによってレンダリングに用いるカラーバッファを生成することができます。
+		     * カラーバッファはオフスクリーンレンダリングなどへの利用など様々な面で利用することができます。
+		     */
+		    "texture-buffer": {
+		        components: ["TextureBuffer"]
+		    },
+		    /**
+		     * 深度バッファ/ステンシルバッファ用の`renderbuffer`を生成するためのノード``
+		     *
+		     * `<renderer>`ノードの直下に含まれうるノードの一つです。
+		     *
+		     * このノードによってレンダリングに用いる深度バッファやステンシルバッファを生成することができます。
+		     */
+		    "render-buffer": {
+		        components: ["RenderBuffer"]
+		    },
+		    /**
+		     *
+		     * シーンを描画するレンダリング手順を表すためのノード``
+		     *
+		     * `<renderer>`ノードの直下に含まれうるノードの一つです。
+		     *
+		     * このノードは`out`に指定されたテクスチャ(デフォルトではキャンバス自身)に対して、シーンの内容を描画します。
+		     */
+		    "render-scene": {
+		        components: ["RenderScene"],
+		        default: {
+		            material: null
+		        }
+		    },
+		    /**
+		     * 四角形単体を特定のマテリアルで描画するためのノード``
+		     *
+		     * `<renderer>`ノードの直下に含まれうるノードの一つです。
+		     *
+		     * このノードは`out`に指定されたテクスチャ(デフォルトではキャンバス自身)に対して、単純な四角形(`quad`)を指定されたマテリアルで描画します。
+		     */
+		    "render-quad": {
+		        components: ["MaterialContainer", "RenderQuad"],
+		        default: {
+		            material: null
+		        }
+		    }
+		};
+	
+	/***/ },
+	/* 93 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _PositionConverter = __webpack_require__(78);
+		
+		var _PositionConverter2 = _interopRequireDefault(_PositionConverter);
+		
+		var _NodeConverter = __webpack_require__(76);
+		
+		var _NodeConverter2 = _interopRequireDefault(_NodeConverter);
+		
+		var _DefaultMaterial = __webpack_require__(86);
 		
 		var _DefaultMaterial2 = _interopRequireDefault(_DefaultMaterial);
 		
-		var _DefaultPrimitives = __webpack_require__(102);
+		var _DefaultPrimitives = __webpack_require__(84);
 		
 		var _DefaultPrimitives2 = _interopRequireDefault(_DefaultPrimitives);
 		
-		var _grimoirejs = __webpack_require__(14);
+		var _grimoirejs = __webpack_require__(8);
 		
 		var _grimoirejs2 = _interopRequireDefault(_grimoirejs);
 		
-		var _AssetLoadingManagerComponent = __webpack_require__(13);
+		var _AssetLoadingManagerComponent = __webpack_require__(7);
 		
 		var _AssetLoadingManagerComponent2 = _interopRequireDefault(_AssetLoadingManagerComponent);
 		
-		var _CameraComponent = __webpack_require__(17);
+		var _CameraComponent = __webpack_require__(11);
 		
 		var _CameraComponent2 = _interopRequireDefault(_CameraComponent);
 		
-		var _CanvasInitializerComponent = __webpack_require__(23);
+		var _CanvasInitializerComponent = __webpack_require__(20);
 		
 		var _CanvasInitializerComponent2 = _interopRequireDefault(_CanvasInitializerComponent);
 		
-		var _FullscreenComponent = __webpack_require__(29);
+		var _FullscreenComponent = __webpack_require__(49);
 		
 		var _FullscreenComponent2 = _interopRequireDefault(_FullscreenComponent);
 		
-		var _GeometryComponent = __webpack_require__(30);
+		var _GeometryComponent = __webpack_require__(50);
 		
 		var _GeometryComponent2 = _interopRequireDefault(_GeometryComponent);
 		
-		var _GeometryRegistoryComponent = __webpack_require__(32);
+		var _GeometryRegistoryComponent = __webpack_require__(52);
 		
 		var _GeometryRegistoryComponent2 = _interopRequireDefault(_GeometryRegistoryComponent);
 		
-		var _HTMLBinderComponent = __webpack_require__(33);
+		var _HTMLBinderComponent = __webpack_require__(53);
 		
 		var _HTMLBinderComponent2 = _interopRequireDefault(_HTMLBinderComponent);
 		
-		var _LoopManagerComponent = __webpack_require__(34);
+		var _LoopManagerComponent = __webpack_require__(54);
 		
 		var _LoopManagerComponent2 = _interopRequireDefault(_LoopManagerComponent);
 		
-		var _MaterialComponent = __webpack_require__(35);
+		var _MaterialComponent = __webpack_require__(55);
 		
 		var _MaterialComponent2 = _interopRequireDefault(_MaterialComponent);
 		
-		var _MaterialContainerComponent = __webpack_require__(42);
+		var _MaterialContainerComponent = __webpack_require__(56);
 		
 		var _MaterialContainerComponent2 = _interopRequireDefault(_MaterialContainerComponent);
 		
-		var _MaterialImporterComponent = __webpack_require__(44);
+		var _MaterialImporterComponent = __webpack_require__(58);
 		
 		var _MaterialImporterComponent2 = _interopRequireDefault(_MaterialImporterComponent);
 		
-		var _MaterialManagerComponent = __webpack_require__(64);
-		
-		var _MaterialManagerComponent2 = _interopRequireDefault(_MaterialManagerComponent);
-		
-		var _MeshRendererComponent = __webpack_require__(65);
+		var _MeshRendererComponent = __webpack_require__(59);
 		
 		var _MeshRendererComponent2 = _interopRequireDefault(_MeshRendererComponent);
 		
-		var _MouseCameraControlComponent = __webpack_require__(66);
+		var _MouseCameraControlComponent = __webpack_require__(60);
 		
 		var _MouseCameraControlComponent2 = _interopRequireDefault(_MouseCameraControlComponent);
 		
-		var _RenderBufferComponent = __webpack_require__(67);
+		var _RenderBufferComponent = __webpack_require__(62);
 		
 		var _RenderBufferComponent2 = _interopRequireDefault(_RenderBufferComponent);
 		
-		var _RendererComponent = __webpack_require__(70);
+		var _RendererComponent = __webpack_require__(65);
 		
 		var _RendererComponent2 = _interopRequireDefault(_RendererComponent);
 		
-		var _RendererManagerComponent = __webpack_require__(71);
+		var _RendererManagerComponent = __webpack_require__(66);
 		
 		var _RendererManagerComponent2 = _interopRequireDefault(_RendererManagerComponent);
 		
-		var _RenderQuadComponent = __webpack_require__(73);
+		var _RenderQuadComponent = __webpack_require__(68);
 		
 		var _RenderQuadComponent2 = _interopRequireDefault(_RenderQuadComponent);
 		
-		var _RenderSceneComponent = __webpack_require__(75);
+		var _RenderSceneComponent = __webpack_require__(70);
 		
 		var _RenderSceneComponent2 = _interopRequireDefault(_RenderSceneComponent);
 		
-		var _SceneComponent = __webpack_require__(21);
+		var _SceneComponent = __webpack_require__(18);
 		
 		var _SceneComponent2 = _interopRequireDefault(_SceneComponent);
 		
-		var _TextureBufferComponent = __webpack_require__(76);
+		var _TextureBufferComponent = __webpack_require__(71);
 		
 		var _TextureBufferComponent2 = _interopRequireDefault(_TextureBufferComponent);
 		
-		var _TextureComponent = __webpack_require__(77);
+		var _TextureComponent = __webpack_require__(72);
 		
 		var _TextureComponent2 = _interopRequireDefault(_TextureComponent);
 		
-		var _TransformComponent = __webpack_require__(19);
+		var _TransformComponent = __webpack_require__(17);
 		
 		var _TransformComponent2 = _interopRequireDefault(_TransformComponent);
 		
-		var _Angle2DConverter = __webpack_require__(78);
-		
-		var _Angle2DConverter2 = _interopRequireDefault(_Angle2DConverter);
-		
-		var _BooleanConverter = __webpack_require__(80);
-		
-		var _BooleanConverter2 = _interopRequireDefault(_BooleanConverter);
-		
-		var _CanvasSizeConverter = __webpack_require__(81);
+		var _CanvasSizeConverter = __webpack_require__(73);
 		
 		var _CanvasSizeConverter2 = _interopRequireDefault(_CanvasSizeConverter);
 		
-		var _Color3Converter = __webpack_require__(82);
-		
-		var _Color3Converter2 = _interopRequireDefault(_Color3Converter);
-		
-		var _Color4Converter = __webpack_require__(84);
-		
-		var _Color4Converter2 = _interopRequireDefault(_Color4Converter);
-		
-		var _ComponentConverter = __webpack_require__(85);
-		
-		var _ComponentConverter2 = _interopRequireDefault(_ComponentConverter);
-		
-		var _EnumConverter = __webpack_require__(87);
-		
-		var _EnumConverter2 = _interopRequireDefault(_EnumConverter);
-		
-		var _GeometryConverter = __webpack_require__(88);
+		var _GeometryConverter = __webpack_require__(74);
 		
 		var _GeometryConverter2 = _interopRequireDefault(_GeometryConverter);
 		
-		var _MaterialConverter = __webpack_require__(90);
+		var _MaterialConverter = __webpack_require__(75);
 		
 		var _MaterialConverter2 = _interopRequireDefault(_MaterialConverter);
 		
-		var _TextureConverter = __webpack_require__(95);
+		var _TextureConverter = __webpack_require__(80);
 		
 		var _TextureConverter2 = _interopRequireDefault(_TextureConverter);
 		
-		var _NumberArrayConverter = __webpack_require__(91);
-		
-		var _NumberArrayConverter2 = _interopRequireDefault(_NumberArrayConverter);
-		
-		var _NumberConverter = __webpack_require__(92);
-		
-		var _NumberConverter2 = _interopRequireDefault(_NumberConverter);
-		
-		var _ObjectConverter = __webpack_require__(93);
-		
-		var _ObjectConverter2 = _interopRequireDefault(_ObjectConverter);
-		
-		var _Rotation3Converter = __webpack_require__(94);
-		
-		var _Rotation3Converter2 = _interopRequireDefault(_Rotation3Converter);
-		
-		var _Vector2Converter = __webpack_require__(97);
-		
-		var _Vector2Converter2 = _interopRequireDefault(_Vector2Converter);
-		
-		var _Vector3Converter = __webpack_require__(98);
-		
-		var _Vector3Converter2 = _interopRequireDefault(_Vector3Converter);
-		
-		var _Vector4Converter = __webpack_require__(99);
-		
-		var _Vector4Converter2 = _interopRequireDefault(_Vector4Converter);
-		
-		var _ViewportConverter = __webpack_require__(100);
+		var _ViewportConverter = __webpack_require__(82);
 		
 		var _ViewportConverter2 = _interopRequireDefault(_ViewportConverter);
 		
@@ -34613,7 +32818,6 @@ return /******/ (function(modules) { // webpackBootstrap
 		                            _grimoirejs2.default.registerComponent(_$ns("Material"), _MaterialComponent2.default);
 		                            _grimoirejs2.default.registerComponent(_$ns("MaterialContainer"), _MaterialContainerComponent2.default);
 		                            _grimoirejs2.default.registerComponent(_$ns("MaterialImporter"), _MaterialImporterComponent2.default);
-		                            _grimoirejs2.default.registerComponent(_$ns("MaterialManager"), _MaterialManagerComponent2.default);
 		                            _grimoirejs2.default.registerComponent(_$ns("MeshRenderer"), _MeshRendererComponent2.default);
 		                            _grimoirejs2.default.registerComponent(_$ns("MouseCameraControl"), _MouseCameraControlComponent2.default);
 		                            _grimoirejs2.default.registerComponent(_$ns("RenderBuffer"), _RenderBufferComponent2.default);
@@ -34625,39 +32829,27 @@ return /******/ (function(modules) { // webpackBootstrap
 		                            _grimoirejs2.default.registerComponent(_$ns("TextureBuffer"), _TextureBufferComponent2.default);
 		                            _grimoirejs2.default.registerComponent(_$ns("Texture"), _TextureComponent2.default);
 		                            _grimoirejs2.default.registerComponent(_$ns("Transform"), _TransformComponent2.default);
-		                            _grimoirejs2.default.registerConverter(_$ns("Angle2D"), _Angle2DConverter2.default);
-		                            _grimoirejs2.default.registerConverter(_$ns("Boolean"), _BooleanConverter2.default);
 		                            _grimoirejs2.default.registerConverter(_$ns("CanvasSize"), _CanvasSizeConverter2.default);
-		                            _grimoirejs2.default.registerConverter(_$ns("Color3"), _Color3Converter2.default);
-		                            _grimoirejs2.default.registerConverter(_$ns("Color4"), _Color4Converter2.default);
-		                            _grimoirejs2.default.registerConverter(_$ns("Component"), _ComponentConverter2.default);
-		                            _grimoirejs2.default.registerConverter(_$ns("Enum"), _EnumConverter2.default);
 		                            _grimoirejs2.default.registerConverter(_$ns("Geometry"), _GeometryConverter2.default);
 		                            _grimoirejs2.default.registerConverter(_$ns("Material"), _MaterialConverter2.default);
 		                            _grimoirejs2.default.registerConverter(_$ns("Texture"), _TextureConverter2.default);
-		                            _grimoirejs2.default.registerConverter(_$ns("NumberArray"), _NumberArrayConverter2.default);
-		                            _grimoirejs2.default.registerConverter(_$ns("Number"), _NumberConverter2.default);
-		                            _grimoirejs2.default.registerConverter(_$ns("Object"), _ObjectConverter2.default);
-		                            _grimoirejs2.default.registerConverter(_$ns("Rotation3"), _Rotation3Converter2.default);
 		                            _grimoirejs2.default.registerConverter(_$ns("Texture2D"), _TextureConverter2.default);
-		                            _grimoirejs2.default.registerConverter(_$ns("Vector2"), _Vector2Converter2.default);
-		                            _grimoirejs2.default.registerConverter(_$ns("Vector3"), _Vector3Converter2.default);
-		                            _grimoirejs2.default.registerConverter(_$ns("Vector4"), _Vector4Converter2.default);
 		                            _grimoirejs2.default.registerConverter(_$ns("Viewport"), _ViewportConverter2.default);
-		                            _grimoirejs2.default.registerNode("goml", ["CanvasInitializer", "LoopManager", "AssetLoadingManager", "GeometryRegistory", "MaterialManager", "RendererManager", "Fullscreen"]);
-		                            _grimoirejs2.default.registerNode("renderer", ["Renderer"]);
+		                            _grimoirejs2.default.registerConverter(_$ns("Node"), _NodeConverter2.default);
+		                            _grimoirejs2.default.registerConverter(_$ns("Position"), _PositionConverter2.default);
+		                            _grimoirejs2.default.registerNode("goml", ["CanvasInitializer", "LoopManager", "AssetLoadingManager", "GeometryRegistory", "RendererManager", "Fullscreen"]);
 		                            _grimoirejs2.default.registerNode("scene", ["Scene"]);
-		                            _grimoirejs2.default.registerNode("camera", ["Camera"], { position: "0,0,10" }, "object");
-		                            _grimoirejs2.default.registerNode("empty", []);
 		                            _grimoirejs2.default.registerNode("object", ["Transform"]);
+		                            _grimoirejs2.default.registerNode("camera", ["Camera"], { position: "0,0,10" }, "object");
+		                            _grimoirejs2.default.registerNode("mesh", ["MaterialContainer", "MeshRenderer"], {}, "object");
+		                            _grimoirejs2.default.registerNode("renderer", ["Renderer"]);
 		                            _grimoirejs2.default.registerNode("geometry", ["Geometry"]);
 		                            _grimoirejs2.default.registerNode("texture", ["Texture"]);
-		                            _grimoirejs2.default.registerNode("mesh", ["MaterialContainer", "MeshRenderer"], {}, "object");
 		                            _grimoirejs2.default.registerNode("material", ["Material"]);
 		                            _grimoirejs2.default.registerNode("import-material", ["MaterialImporter"]);
 		                            _grimoirejs2.default.registerNode("texture-buffer", ["TextureBuffer"]);
 		                            _grimoirejs2.default.registerNode("render-buffer", ["RenderBuffer"]);
-		                            _grimoirejs2.default.registerNode("render-scene", ["MaterialContainer", "RenderScene"], {
+		                            _grimoirejs2.default.registerNode("render-scene", ["RenderScene"], {
 		                                material: null
 		                            });
 		                            _grimoirejs2.default.registerNode("render-quad", ["MaterialContainer", "RenderQuad"], {
@@ -34666,7 +32858,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		                            _DefaultPrimitives2.default.register();
 		                            _DefaultMaterial2.default.register();
 		
-		                        case 60:
+		                        case 47:
 		                        case "end":
 		                            return _context.stop();
 		                    }

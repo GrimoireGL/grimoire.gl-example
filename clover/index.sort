@@ -1,4 +1,4 @@
-@Pass
+@Pass{
 @DepthFunc(LEQUAL)
 @BlendFunc(SRC_ALPHA, ONE_MINUS_SRC_ALPHA)
 FS_PREC(highp,float)
@@ -88,3 +88,4 @@ FS_PREC(highp,float)
     }
   }
 #endif
+}

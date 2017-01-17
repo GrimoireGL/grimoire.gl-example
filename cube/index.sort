@@ -1,4 +1,4 @@
-@Pass
+@Pass{
 @DepthFunc(LEQUAL)
 @BlendFunc(SRC_ALPHA,ONE_MINUS_SRC_ALPHA)
 @CullFace(BACK)
@@ -37,3 +37,4 @@ varying vec3 vNormal;
     gl_FragColor = vec4(diffuse, 1.0);
   }
 #endif
+}

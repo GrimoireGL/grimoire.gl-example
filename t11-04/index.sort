@@ -1,4 +1,4 @@
-@Pass
+@Pass{
 @BlendFunc(ONE,ONE)
 @CullFace(FRONT)
 FS_PREC(mediump,float)
@@ -24,8 +24,8 @@ varying vec2 vTexCoord;
     gl_FragColor = edgeColor;
   }
 #endif
-
-@Pass
+}
+@Pass{
 @BlendFunc(ONE,ONE)
 @CullFace(BACK)
 FS_PREC(mediump,float)
@@ -49,3 +49,4 @@ varying vec2 vTexCoord;
     gl_FragColor = color;
   }
 #endif
+}

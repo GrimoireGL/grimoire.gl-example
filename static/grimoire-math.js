@@ -150,6 +150,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	var __VERSION__ = "1.8.0";
+	var __NAME__ = "grimoirejs-math";
+	
 	var __EXPOSE__ = {
 	    "AABB": _AABB2.default,
 	    "Color3": _Color2.default,
@@ -178,6 +181,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    "VectorBase": _VectorBase2.default
 	};
 	var __BASE__ = (0, _main2.default)();
+	Object.assign(__EXPOSE__, {
+	    __VERSION__: __VERSION__,
+	    __NAME__: __NAME__
+	});
 	Object.assign(__BASE__ || {}, __EXPOSE__);
 	window["GrimoireJS"].lib.math = __EXPOSE__;
 	exports.default = __BASE__;
@@ -761,7 +768,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	glMatrix.ENABLE_SIMD = false;
 	
 	// Capability detection
-	glMatrix.SIMD_AVAILABLE = (glMatrix.ARRAY_TYPE === Float32Array) && ('SIMD' in this);
+	const global = new Function('return this')();
+	glMatrix.SIMD_AVAILABLE = (glMatrix.ARRAY_TYPE === global.Float32Array) && ('SIMD' in global);
 	glMatrix.USE_SIMD = glMatrix.ENABLE_SIMD && glMatrix.SIMD_AVAILABLE;
 	
 	/**
@@ -778,7 +786,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	* Convert Degree To Radian
 	*
-	* @param {Number} Angle in Degrees
+	* @param {Number} a Angle in Degrees
 	*/
 	glMatrix.toRadian = function(a){
 	     return a * degree;
@@ -1108,7 +1116,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * Returns a string representation of a mat2
 	 *
-	 * @param {mat2} mat matrix to represent as a string
+	 * @param {mat2} a matrix to represent as a string
 	 * @returns {String} string representation of the matrix
 	 */
 	mat2.str = function (a) {
@@ -1931,7 +1939,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        out[7] = a[5];
 	        out[8] = a[8];
 	    }
-	    
+	
 	    return out;
 	};
 	
@@ -1954,8 +1962,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        // Calculate the determinant
 	        det = a00 * b01 + a01 * b11 + a02 * b21;
 	
-	    if (!det) { 
-	        return null; 
+	    if (!det) {
+	        return null;
 	    }
 	    det = 1.0 / det;
 	
@@ -2298,8 +2306,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        // Calculate the determinant
 	        det = b00 * b11 - b01 * b10 + b02 * b09 + b03 * b08 - b04 * b07 + b05 * b06;
 	
-	    if (!det) { 
-	        return null; 
+	    if (!det) {
+	        return null;
 	    }
 	    det = 1.0 / det;
 	
@@ -2321,12 +2329,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * Returns a string representation of a mat3
 	 *
-	 * @param {mat3} mat matrix to represent as a string
+	 * @param {mat3} a matrix to represent as a string
 	 * @returns {String} string representation of the matrix
 	 */
 	mat3.str = function (a) {
-	    return 'mat3(' + a[0] + ', ' + a[1] + ', ' + a[2] + ', ' + 
-	                    a[3] + ', ' + a[4] + ', ' + a[5] + ', ' + 
+	    return 'mat3(' + a[0] + ', ' + a[1] + ', ' + a[2] + ', ' +
+	                    a[3] + ', ' + a[4] + ', ' + a[5] + ', ' +
 	                    a[6] + ', ' + a[7] + ', ' + a[8] + ')';
 	};
 	
@@ -2431,7 +2439,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return out;
 	};
 	
-	/*
+	/**
 	 * Returns whether or not the matrices have exactly the same elements in the same position (when compared with ===)
 	 *
 	 * @param {mat3} a The first matrix.
@@ -2439,7 +2447,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @returns {Boolean} True if the matrices are equal, false otherwise.
 	 */
 	mat3.exactEquals = function (a, b) {
-	    return a[0] === b[0] && a[1] === b[1] && a[2] === b[2] && 
+	    return a[0] === b[0] && a[1] === b[1] && a[2] === b[2] &&
 	           a[3] === b[3] && a[4] === b[4] && a[5] === b[5] &&
 	           a[6] === b[6] && a[7] === b[7] && a[8] === b[8];
 	};
@@ -2453,7 +2461,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	mat3.equals = function (a, b) {
 	    var a0 = a[0], a1 = a[1], a2 = a[2], a3 = a[3], a4 = a[4], a5 = a[5], a6 = a[6], a7 = a[7], a8 = a[8];
-	    var b0 = b[0], b1 = b[1], b2 = b[2], b3 = b[3], b4 = b[4], b5 = b[5], b6 = a[6], b7 = b[7], b8 = b[8];
+	    var b0 = b[0], b1 = b[1], b2 = b[2], b3 = b[3], b4 = b[4], b5 = b[5], b6 = b[6], b7 = b[7], b8 = b[8];
 	    return (Math.abs(a0 - b0) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a0), Math.abs(b0)) &&
 	            Math.abs(a1 - b1) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a1), Math.abs(b1)) &&
 	            Math.abs(a2 - b2) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a2), Math.abs(b2)) &&
@@ -2501,7 +2509,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	var mat4 = {
 	  scalar: {},
-	  SIMD: {},
+	  SIMD: {}
 	};
 	
 	/**
@@ -2994,10 +3002,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var tmp1;
 	  var minor0, minor1, minor2, minor3;
 	
-	  var a0 = SIMD.Float32x4.load(a, 0);
-	  var a1 = SIMD.Float32x4.load(a, 4);
-	  var a2 = SIMD.Float32x4.load(a, 8);
-	  var a3 = SIMD.Float32x4.load(a, 12);
+	  a0 = SIMD.Float32x4.load(a, 0);
+	  a1 = SIMD.Float32x4.load(a, 4);
+	  a2 = SIMD.Float32x4.load(a, 8);
+	  a3 = SIMD.Float32x4.load(a, 12);
 	
 	  // Transpose the source matrix.  Sort of.  Not a true transpose operation
 	  tmp1 = SIMD.Float32x4.shuffle(a0, a1, 0, 1, 4, 5);
@@ -3976,6 +3984,34 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 	
 	/**
+	 * Returns the scaling factor component of a transformation
+	 *  matrix. If a matrix is built with fromRotationTranslationScale
+	 *  with a normalized Quaternion paramter, the returned vector will be 
+	 *  the same as the scaling vector
+	 *  originally supplied.
+	 * @param  {vec3} out Vector to receive scaling factor component
+	 * @param  {mat4} mat Matrix to be decomposed (input)
+	 * @return {vec3} out
+	 */
+	mat4.getScaling = function (out, mat) {
+	  var m11 = mat[0],
+	      m12 = mat[1],
+	      m13 = mat[2],
+	      m21 = mat[4],
+	      m22 = mat[5],
+	      m23 = mat[6],
+	      m31 = mat[8],
+	      m32 = mat[9],
+	      m33 = mat[10];
+	
+	  out[0] = Math.sqrt(m11 * m11 + m12 * m12 + m13 * m13);
+	  out[1] = Math.sqrt(m21 * m21 + m22 * m22 + m23 * m23);
+	  out[2] = Math.sqrt(m31 * m31 + m32 * m32 + m33 * m33);
+	
+	  return out;
+	};
+	
+	/**
 	 * Returns a quaternion representing the rotational component
 	 *  of a transformation matrix. If a matrix is built with
 	 *  fromRotationTranslation, the returned quaternion will be the
@@ -4417,7 +4453,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * Returns a string representation of a mat4
 	 *
-	 * @param {mat4} mat matrix to represent as a string
+	 * @param {mat4} a matrix to represent as a string
 	 * @returns {String} string representation of the matrix
 	 */
 	mat4.str = function (a) {
@@ -5189,7 +5225,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * Returns a string representation of a quatenion
 	 *
-	 * @param {quat} vec vector to represent as a string
+	 * @param {quat} a vector to represent as a string
 	 * @returns {String} string representation of the vector
 	 */
 	quat.str = function (a) {
@@ -5954,8 +5990,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	 
 	    var cosine = vec3.dot(tempA, tempB);
 	
-	    if(cosine > 1.0){
+	    if(cosine > 1.0) {
 	        return 0;
+	    }
+	    else if(cosine < -1.0) {
+	        return Math.PI;
 	    } else {
 	        return Math.acos(cosine);
 	    }     
@@ -5964,7 +6003,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * Returns a string representation of a vector
 	 *
-	 * @param {vec3} vec vector to represent as a string
+	 * @param {vec3} a vector to represent as a string
 	 * @returns {String} string representation of the vector
 	 */
 	vec3.str = function (a) {
@@ -6578,7 +6617,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * Returns a string representation of a vector
 	 *
-	 * @param {vec4} vec vector to represent as a string
+	 * @param {vec4} a vector to represent as a string
 	 * @returns {String} string representation of the vector
 	 */
 	vec4.str = function (a) {
@@ -7173,7 +7212,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * Returns a string representation of a vector
 	 *
-	 * @param {vec2} vec vector to represent as a string
+	 * @param {vec2} a vector to represent as a string
 	 * @returns {String} string representation of the vector
 	 */
 	vec2.str = function (a) {
@@ -9219,7 +9258,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (val instanceof _Vector2.default) {
 	        return val;
 	    } else if (typeof val === "string") {
-	        return _Vector2.default.parse(val);
+	        return _Vector2.default.parse(val); // TODO: to do not throws execptions.
 	    } else if (typeof val == "number") {
 	        return new _Vector2.default(val, val, val);
 	    } else if (Array.isArray(val)) {

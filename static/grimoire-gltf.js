@@ -859,9 +859,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	                // adjust skin to node
 	                parentNode = parentNode.addChildByName("object", {});
 	                var mat = _Matrix2.default.inverse(data.skins[node.skin].bindShapeMatrix);
-	                parentNode.setAttribute("position", mat.getTranslation());
-	                parentNode.setAttribute("scale", mat.getScaling());
-	                parentNode.setAttribute("rotation", mat.getRotation());
 	            }
 	            var gomlNode = parentNode.addChildByName("object", {});
 	            gomlNode.element.className = nodeName;

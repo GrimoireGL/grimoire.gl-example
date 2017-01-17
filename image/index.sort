@@ -1,4 +1,4 @@
-@Pass
+@Pass{
 
 FS_PREC(mediump,float)
 varying vec2 vUV;
@@ -19,3 +19,4 @@ varying vec2 vUV;
     gl_FragColor = vec4(texture2D(texture,vUV).rgb, 1);
   }
 #endif
+}

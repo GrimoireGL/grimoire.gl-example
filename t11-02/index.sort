@@ -1,4 +1,4 @@
-@Pass
+@Pass{
 @BlendFunc(ONE,ONE)
 FS_PREC(mediump,float)
 
@@ -24,3 +24,4 @@ varying vec2 vTexCoord;
     gl_FragColor = color * texture2D(noise,vTexCoord + vec2(sin(_time/1000.)));
   }
 #endif
+}

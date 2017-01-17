@@ -1,7 +1,7 @@
-@Pass
-@NoBlend()
-@NoCull()
-@NoDepth()
+@Pass{
+@Disable(BLEND)
+@Disable(CULL_FACE)()
+@Disable(DEPTH_TEST)
 precision highp float;
 precision highp int;
 #ifdef VS
@@ -157,3 +157,4 @@ precision highp int;
     gl_FragColor = vec4(color,1);
   }
 #endif
+}

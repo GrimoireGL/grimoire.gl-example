@@ -21,7 +21,7 @@ gr.registerComponent('StareAt', {
   },
   $mount: function() {
     this.phi = 0;
-    var d = this.node.getAttribute('position').subtractWith(this.getValue('center'));
+    var d = this.node.getAttribute('position').subtractWith(this.getAttribute('center'));
     this.direction = d.normalized;
     this.distance = d.magnitude;
     this.baseRotation = this._transform.localRotation;

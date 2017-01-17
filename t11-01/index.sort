@@ -1,4 +1,4 @@
-@Pass
+@Pass{
 @BlendFunc(ONE,ONE)
 FS_PREC(mediump,float)
 #ifdef VS
@@ -17,3 +17,4 @@ FS_PREC(mediump,float)
     gl_FragColor = color;
   }
 #endif
+}

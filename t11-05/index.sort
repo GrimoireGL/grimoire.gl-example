@@ -1,4 +1,4 @@
-@Pass
+@Pass{
 @BlendFunc(ONE,ONE)
 @CullFace(FRONT)
 @ExposeMacro(bool,viewspace,VIEW_SPACE,false)
@@ -28,3 +28,4 @@ varying vec3 vNormal;
     gl_FragColor = vec4(vNormal,1);
   }
 #endif
+}
