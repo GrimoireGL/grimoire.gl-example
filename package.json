@@ -10,7 +10,7 @@
     "grimoirejs": "^0.13.0",
     "grimoirejs-forward-shading": "^1.1.8",
     "grimoirejs-fundamental": "^0.10.1",
-    "grimoirejs-gltf": "^1.7.0",
+    "grimoirejs-gltf": "beta",
     "grimoirejs-math": "^1.8.0",
     "grimoirejs-preset-basic": "^1.5.0"
   },

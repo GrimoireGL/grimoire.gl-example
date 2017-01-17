@@ -88,19 +88,30 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _ConstantConverter2 = _interopRequireDefault(_ConstantConverter);
 	
-	var _MaterialsCommonParser = __webpack_require__(15);
+	var _GLTFMaterialFactory = __webpack_require__(26);
 	
-	var _MaterialsCommonParser2 = _interopRequireDefault(_MaterialsCommonParser);
+	var _GLTFMaterialFactory2 = _interopRequireDefault(_GLTFMaterialFactory);
+	
+	var _MaterialParser = __webpack_require__(18);
+	
+	var _MaterialParser2 = _interopRequireDefault(_MaterialParser);
 	
 	var _Parser = __webpack_require__(14);
 	
 	var _Parser2 = _interopRequireDefault(_Parser);
 	
-	var _main = __webpack_require__(23);
+	var _ResourceResolver = __webpack_require__(15);
+	
+	var _ResourceResolver2 = _interopRequireDefault(_ResourceResolver);
+	
+	var _main = __webpack_require__(27);
 	
 	var _main2 = _interopRequireDefault(_main);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var __VERSION__ = "1.8.0-beta1";
+	var __NAME__ = "grimoirejs-gltf";
 	
 	var __EXPOSE__ = {
 	    "Accessor": {
@@ -117,11 +128,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	    "Parser": {
 	        "ConstantConverter": _ConstantConverter2.default,
-	        "MaterialsCommonParser": _MaterialsCommonParser2.default,
+	        "GLTFMaterialFactory": _GLTFMaterialFactory2.default,
+	        "MaterialParser": _MaterialParser2.default,
 	        "Parser": _Parser2.default
+	    },
+	    "Util": {
+	        "ResourceResolver": _ResourceResolver2.default
 	    }
 	};
 	var __BASE__ = (0, _main2.default)();
+	Object.assign(__EXPOSE__, {
+	    __VERSION__: __VERSION__,
+	    __NAME__: __NAME__
+	});
 	Object.assign(__BASE__ || {}, __EXPOSE__);
 	window["GrimoireJS"].lib.gltf = __EXPOSE__;
 	exports.default = __BASE__;
@@ -858,7 +877,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if (node.skin) {
 	                // adjust skin to node
 	                parentNode = parentNode.addChildByName("object", {});
-	                var mat = _Matrix2.default.inverse(data.skins[node.skin].bindShapeMatrix);
 	            }
 	            var gomlNode = parentNode.addChildByName("object", {});
 	            gomlNode.element.className = nodeName;
@@ -973,6 +991,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
+	var _ResourceResolver = __webpack_require__(15);
+	
+	var _ResourceResolver2 = _interopRequireDefault(_ResourceResolver);
+	
 	var _Accessor = __webpack_require__(1);
 	
 	var _Accessor2 = _interopRequireDefault(_Accessor);
@@ -985,39 +1007,35 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _Animation2 = _interopRequireDefault(_Animation);
 	
-	var _MaterialsCommonParser = __webpack_require__(15);
+	var _MaterialParser = __webpack_require__(18);
 	
-	var _MaterialsCommonParser2 = _interopRequireDefault(_MaterialsCommonParser);
+	var _MaterialParser2 = _interopRequireDefault(_MaterialParser);
 	
 	var _ConstantConverter = __webpack_require__(2);
 	
 	var _ConstantConverter2 = _interopRequireDefault(_ConstantConverter);
 	
-	var _Vector = __webpack_require__(16);
+	var _Vector = __webpack_require__(21);
 	
 	var _Vector2 = _interopRequireDefault(_Vector);
 	
-	var _AABB = __webpack_require__(17);
+	var _AABB = __webpack_require__(22);
 	
 	var _AABB2 = _interopRequireDefault(_AABB);
 	
-	var _TextFileResolver = __webpack_require__(18);
+	var _TextFileResolver = __webpack_require__(16);
 	
 	var _TextFileResolver2 = _interopRequireDefault(_TextFileResolver);
 	
-	var _Buffer = __webpack_require__(19);
+	var _Buffer = __webpack_require__(23);
 	
 	var _Buffer2 = _interopRequireDefault(_Buffer);
 	
-	var _Geometry = __webpack_require__(20);
+	var _Geometry = __webpack_require__(24);
 	
 	var _Geometry2 = _interopRequireDefault(_Geometry);
 	
-	var _ImageResolver = __webpack_require__(21);
-	
-	var _ImageResolver2 = _interopRequireDefault(_ImageResolver);
-	
-	var _Texture2D = __webpack_require__(22);
+	var _Texture2D = __webpack_require__(25);
 	
 	var _Texture2D2 = _interopRequireDefault(_Texture2D);
 	
@@ -1046,7 +1064,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                resolve(result.value);
 	            }).then(fulfilled, rejected);
 	        }
-	        step((generator = generator.apply(thisArg, _arguments)).next());
+	        step((generator = generator.apply(thisArg, _arguments || [])).next());
 	    });
 	};
 	
@@ -1059,15 +1077,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: "parseFromURL",
 	        value: function parseFromURL(gl, url) {
 	            return __awaiter(this, void 0, void 0, regeneratorRuntime.mark(function _callee() {
-	                var _this = this;
-	
-	                var baseUrl, resolved, tf, rawBuffer, rawbufferView, meshes, buffers, images, textures, animations, skins, materials, accessors, key, _key, bufferView, currentBuffer, buffer, _key2, imgLoadTask, _loop, _key3, _key4, texInfo, sampler, tex, _key5, material, _key6, _key7, skin, accessor;
+	                var resourceResolver, resolved, tf, rawBuffer, rawbufferView, meshes, buffers, images, textures, animations, skins, materials, accessors, key, _key, bufferView, currentBuffer, buffer, _key2, imgLoadTask, _loop, _key3, _key4, texInfo, sampler, tex, _key5, material, _key6, _key7, skin, accessor;
 	
 	                return regeneratorRuntime.wrap(function _callee$(_context) {
 	                    while (1) {
 	                        switch (_context.prev = _context.next) {
 	                            case 0:
-	                                baseUrl = GLTFParser.getBaseDir(url);
+	                                resourceResolver = new _ResourceResolver2.default(url);
 	                                _context.next = 3;
 	                                return _TextFileResolver2.default.resolve(url);
 	
@@ -1096,7 +1112,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	                                key = _context.t1.value;
 	                                _context.next = 20;
-	                                return GLTFParser.bufferFromURL(tf, key, baseUrl);
+	                                return resourceResolver.loadBuffer(tf.buffers[key].uri);
 	
 	                            case 20:
 	                                rawBuffer[key] = _context.sent;
@@ -1123,15 +1139,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	                                imgLoadTask = [];
 	
 	                                _loop = function _loop(_key3) {
-	                                    if (GLTFParser.isDataUri(tf.images[_key3].uri)) {
-	                                        imgLoadTask.push(_this.imageFromDataUrl(tf.images[_key3].uri).then(function (t) {
-	                                            images[_key3] = t;
-	                                        }));
-	                                    } else {
-	                                        imgLoadTask.push(_ImageResolver2.default.resolve(baseUrl + tf.images[_key3].uri).then(function (t) {
-	                                            images[_key3] = t;
-	                                        }));
-	                                    }
+	                                    imgLoadTask.push(resourceResolver.loadImage(tf.images[_key3].uri).then(function (t) {
+	                                        images[_key3] = t;
+	                                    }));
 	                                };
 	
 	                                for (_key3 in tf.images) {
@@ -1141,6 +1151,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                                return Promise.all(imgLoadTask);
 	
 	                            case 30:
+	                                // parse textures
 	                                for (_key4 in tf.textures) {
 	                                    texInfo = tf.textures[_key4];
 	                                    sampler = tf.samplers[texInfo.sampler];
@@ -1152,24 +1163,42 @@ return /******/ (function(modules) { // webpackBootstrap
 	                                    tex.wrapT = sampler.wrapT || WebGLRenderingContext.REPEAT;
 	                                    tex.update(images[texInfo.source]);
 	                                }
-	                                for (_key5 in tf.materials) {
-	                                    material = tf.materials[_key5];
+	                                _context.t2 = regeneratorRuntime.keys(tf.materials);
 	
-	                                    if (material.extensions !== void 0 && material.extensions.KHR_materials_common) {
-	                                        materials[_key5] = _MaterialsCommonParser2.default.parse(tf, _key5, baseUrl, textures);
-	                                    } else {
-	                                        console.warn("program is not parsed. Common material configuration are used alternatively");
-	                                        tf.materials[_key5].extensions = {};
-	                                        tf.materials[_key5].extensions.KHR_materials_common = {
-	                                            values: material.values,
-	                                            technique: "PHONG",
-	                                            transparent: true,
-	                                            jointCount: 0,
-	                                            doubleSided: true
-	                                        };
-	                                        materials[_key5] = _MaterialsCommonParser2.default.parse(tf, _key5, baseUrl, textures);
-	                                    }
+	                            case 32:
+	                                if ((_context.t3 = _context.t2()).done) {
+	                                    _context.next = 46;
+	                                    break;
 	                                }
+	
+	                                _key5 = _context.t3.value;
+	                                material = tf.materials[_key5];
+	
+	                                if (!(material.extensions !== void 0 && material.extensions.KHR_materials_common)) {
+	                                    _context.next = 41;
+	                                    break;
+	                                }
+	
+	                                _context.next = 38;
+	                                return _MaterialParser2.default.parse(tf, _key5, resourceResolver, textures);
+	
+	                            case 38:
+	                                materials[_key5] = _context.sent;
+	                                _context.next = 44;
+	                                break;
+	
+	                            case 41:
+	                                _context.next = 43;
+	                                return _MaterialParser2.default.parse(tf, _key5, resourceResolver, textures);
+	
+	                            case 43:
+	                                materials[_key5] = _context.sent;
+	
+	                            case 44:
+	                                _context.next = 32;
+	                                break;
+	
+	                            case 46:
 	                                // parse animations
 	                                if (tf.animations) {
 	                                    for (_key6 in tf.animations) {
@@ -1198,7 +1227,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                                    skins: skins
 	                                });
 	
-	                            case 35:
+	                            case 49:
 	                            case "end":
 	                                return _context.stop();
 	                        }
@@ -1212,36 +1241,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	            var meshInfo = tf.meshes[meshName];
 	            var geometries = [];
 	            for (var p = 0; p < meshInfo.primitives.length; p++) {
+	                var geometry = new _Geometry2.default(gl);
 	                var primitive = meshInfo.primitives[p];
-	                var index = {};
-	                index.topology = primitive.mode || WebGLRenderingContext.TRIANGLES;
+	                var topology = primitive.mode || WebGLRenderingContext.TRIANGLES;
 	                if (primitive.indices) {
 	                    var indexAccessor = tf.accessors[primitive.indices];
-	                    index.byteSize = _ConstantConverter2.default.asByteSize(indexAccessor.componentType);
-	                    // construct index buffer
-	                    var baseBuffer = arrayBuffers[indexAccessor.bufferView];
-	                    var typedArrCtor = _ConstantConverter2.default.elementTypeToTypedArray(indexAccessor.componentType);
-	                    var indexBufferSrc = new typedArrCtor(baseBuffer.buffer, indexAccessor.byteOffset + baseBuffer.byteOffset);
-	                    var indexBuffer = new _Buffer2.default(gl, WebGLRenderingContext.ELEMENT_ARRAY_BUFFER, WebGLRenderingContext.STATIC_DRAW);
-	                    indexBuffer.update(indexBufferSrc);
-	                    index.type = indexAccessor.componentType;
-	                    index.index = indexBuffer;
-	                    index.byteOffset = 0;
-	                    index.count = indexAccessor.count;
+	                    geometry.addIndex("default", buffers[indexAccessor.bufferView], topology, indexAccessor.byteOffset, indexAccessor.count, indexAccessor.componentType);
 	                } else {
 	                    // should generate new index buffer for primitives
 	                    var vertCount = tf.accessors[primitive.attributes["POSITION"]].count;
 	                    var bufferInfo = _ConstantConverter2.default.indexCountToBufferInfo(vertCount);
-	                    index.type = bufferInfo.elementType;
-	                    index.index = new _Buffer2.default(gl, WebGLRenderingContext.ELEMENT_ARRAY_BUFFER, WebGLRenderingContext.STATIC_DRAW);
-	                    index.byteSize = bufferInfo.byteSize;
-	                    index.byteOffset = 0;
-	                    index.count = vertCount;
-	                    var array = new bufferInfo.ctor(index.count);
-	                    for (var i = 0; i < index.count; i++) {
+	                    var ibuf = new _Buffer2.default(gl, WebGLRenderingContext.ELEMENT_ARRAY_BUFFER, WebGLRenderingContext.STATIC_DRAW);
+	                    var array = new bufferInfo.ctor(vertCount);
+	                    for (var i = 0; i < vertCount; i++) {
 	                        array[i] = i;
 	                    }
-	                    index.index.update(array);
+	                    ibuf.update(array);
+	                    geometry.addIndex("default", ibuf, topology, 0, vertCount, bufferInfo.elementType);
 	                }
 	                // parse verticies
 	                var attribInfo = {};
@@ -1252,13 +1268,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    var uvBuf = new _Buffer2.default(gl, WebGLRenderingContext.ARRAY_BUFFER, WebGLRenderingContext.STATIC_DRAW);
 	                    uvBuf.update(new Float32Array(new ArrayBuffer(8 * posAttr.count)));
 	                    usedBuffers["@@UV"] = uvBuf;
-	                    attribInfo["TEXCOORD_0"] = {
-	                        bufferName: "@@UV",
-	                        size: 2,
-	                        offset: 0,
-	                        stride: 0,
-	                        type: WebGLRenderingContext.FLOAT
-	                    };
+	                    geometry.addAttributes(uvBuf, {
+	                        TEXCOORD_0: {
+	                            size: 2
+	                        }
+	                    });
 	                }
 	                for (var attrib in primitive.attributes) {
 	                    var accessor = tf.accessors[primitive.attributes[attrib]];
@@ -1270,40 +1284,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	                            aabb = GLTFParser._genAABB(arrayBuffers[accessor.bufferView], accessor.byteStride, accessor.byteOffset, accessor.count);
 	                        }
 	                    }
-	                    attribInfo[attrib] = {
-	                        bufferName: accessor.bufferView,
+	                    var bufAccessor = {};
+	                    bufAccessor[attrib] = {
 	                        size: _ConstantConverter2.default.asVectorSize(accessor.type),
 	                        type: accessor.componentType,
 	                        stride: accessor.byteStride,
 	                        offset: accessor.byteOffset
 	                    };
+	                    geometry.addAttributes(buffers[accessor.bufferView], bufAccessor);
 	                }
-	                var geometry = new _Geometry2.default(usedBuffers, attribInfo, { default: index }, aabb);
 	                geometry["materialName"] = primitive.material; // TODO fix this bad implementation to find material from geometry
 	                geometries.push(geometry);
 	            }
 	            return geometries;
-	        }
-	    }, {
-	        key: "bufferFromURL",
-	        value: function bufferFromURL(tf, bufferName, baseUrl) {
-	            if (GLTFParser.isDataUri(tf.buffers[bufferName].uri)) {
-	                return new Promise(function (resolve, reject) {
-	                    resolve(GLTFParser.dataUriToArrayBuffer(tf.buffers[bufferName].uri));
-	                });
-	            }
-	            return new Promise(function (resolve, reject) {
-	                var xhr = new XMLHttpRequest();
-	                xhr.open("GET", baseUrl + tf.buffers[bufferName].uri);
-	                xhr.responseType = "arraybuffer";
-	                xhr.onload = function (v) {
-	                    resolve(xhr.response);
-	                };
-	                xhr.onerror = function (e) {
-	                    reject(e);
-	                };
-	                xhr.send();
-	            });
 	        }
 	    }, {
 	        key: "_genAABB",
@@ -1314,50 +1307,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	                aabb.expand(new _Vector2.default(dView[i], dView[i + 1], dView[i + 2]));
 	            }
 	            return aabb;
-	        }
-	    }, {
-	        key: "isDataUri",
-	        value: function isDataUri(dataUri) {
-	            return !!dataUri.match(/^\s*data\:.*;base64/);
-	        }
-	    }, {
-	        key: "dataUriToArrayBuffer",
-	        value: function dataUriToArrayBuffer(dataUri) {
-	            var splittedUri = dataUri.split(",");
-	            var byteString = atob(splittedUri[1]);
-	            var byteStringLength = byteString.length;
-	            var arrayBuffer = new ArrayBuffer(byteStringLength);
-	            var uint8Array = new Uint8Array(arrayBuffer);
-	            for (var i = 0; i < byteStringLength; i++) {
-	                uint8Array[i] = byteString.charCodeAt(i);
-	            }
-	            return arrayBuffer;
-	        }
-	    }, {
-	        key: "imageFromDataUrl",
-	        value: function imageFromDataUrl(dataUrl) {
-	            return new Promise(function (resolve, reject) {
-	                var canvas = document.createElement('canvas');
-	                var context = canvas.getContext('2d');
-	                var image = new Image();
-	                image.src = dataUrl;
-	                image.onload = function () {
-	                    var cWidth = Math.pow(2, Math.ceil(Math.log(image.width) / Math.LN2));
-	                    var cHeight = Math.pow(2, Math.ceil(Math.log(image.height) / Math.LN2));
-	                    if (cWidth === image.width && cHeight == image.height) {
-	                        resolve(image);
-	                    }
-	                    canvas.width = cWidth;
-	                    canvas.height = cHeight;
-	                    context.drawImage(image, 0, 0, image.width, image.height, 0, 0, cWidth, cHeight);
-	                    resolve(canvas);
-	                };
-	            });
-	        }
-	    }, {
-	        key: "getBaseDir",
-	        value: function getBaseDir(url) {
-	            return url.substr(0, url.lastIndexOf("/") + 1);
 	        }
 	    }]);
 	
@@ -1378,6 +1327,201 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
+	var _TextFileResolver = __webpack_require__(16);
+	
+	var _TextFileResolver2 = _interopRequireDefault(_TextFileResolver);
+	
+	var _ImageResolver = __webpack_require__(17);
+	
+	var _ImageResolver2 = _interopRequireDefault(_ImageResolver);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	/**
+	 * Provides resolving resource dependency while parsing gltf file.
+	 */
+	var ResourceResolver = function () {
+	    function ResourceResolver(_rootPath) {
+	        _classCallCheck(this, ResourceResolver);
+	
+	        this._rootPath = _rootPath;
+	        this.baseDirectory = this._getBaseDir(_rootPath);
+	    }
+	    /**
+	     * Load image from specified url or dataURL.
+	     * @param  {string}  url [description]
+	     * @return {Promise}     [description]
+	     */
+	
+	
+	    _createClass(ResourceResolver, [{
+	        key: "loadImage",
+	        value: function loadImage(url) {
+	            if (this._isDataUrl(url)) {
+	                return this._dataUriToImage(url);
+	            } else {
+	                return _ImageResolver2.default.resolve(this.baseDirectory + url);
+	            }
+	        }
+	        /**
+	         * Load buffer from specified url or dataURL.
+	         * @return {Promise<ArrayBuffer>} [description]
+	         */
+	
+	    }, {
+	        key: "loadBuffer",
+	        value: function loadBuffer(url) {
+	            var _this = this;
+	
+	            if (this._isDataUrl(url)) {
+	                return new Promise(function (resolve, reject) {
+	                    resolve(_this._dataUriToArrayBuffer(url));
+	                });
+	            }
+	            return new Promise(function (resolve, reject) {
+	                var xhr = new XMLHttpRequest();
+	                xhr.open("GET", _this.baseDirectory + url);
+	                xhr.responseType = "arraybuffer";
+	                xhr.onload = function (v) {
+	                    resolve(xhr.response);
+	                };
+	                xhr.onerror = function (e) {
+	                    reject({
+	                        message: "Loading resource at '" + (_this.baseDirectory + url) + " failed. Is there resource file in dependency at correct location?'",
+	                        error: e
+	                    });
+	                };
+	                xhr.send();
+	            });
+	        }
+	        /**
+	         * Load string from specified url or dataURL
+	         * @param  {string}          url [description]
+	         * @return {Promise<string>}     [description]
+	         */
+	
+	    }, {
+	        key: "loadString",
+	        value: function loadString(url) {
+	            if (this._isDataUrl(url)) {
+	                throw new Error("Not implemented yet");
+	            } else {
+	                return _TextFileResolver2.default.resolve(this.baseDirectory + url);
+	            }
+	        }
+	        /**
+	         * Convert data url string into array buffer
+	         * @param  {string}      dataUri [description]
+	         * @return {ArrayBuffer}         [description]
+	         */
+	
+	    }, {
+	        key: "_dataUriToArrayBuffer",
+	        value: function _dataUriToArrayBuffer(dataUri) {
+	            var splittedUri = dataUri.split(",");
+	            var byteString = atob(splittedUri[1]);
+	            var byteStringLength = byteString.length;
+	            var arrayBuffer = new ArrayBuffer(byteStringLength);
+	            var uint8Array = new Uint8Array(arrayBuffer);
+	            for (var i = 0; i < byteStringLength; i++) {
+	                uint8Array[i] = byteString.charCodeAt(i);
+	            }
+	            return arrayBuffer;
+	        }
+	        /**
+	         * Convert data uri into image element
+	         * @param  {string}  dataUrl [description]
+	         * @return {Promise}         [description]
+	         */
+	
+	    }, {
+	        key: "_dataUriToImage",
+	        value: function _dataUriToImage(dataUrl) {
+	            return new Promise(function (resolve, reject) {
+	                var canvas = document.createElement('canvas');
+	                var context = canvas.getContext('2d');
+	                var image = new Image();
+	                image.src = dataUrl;
+	                image.onload = function () {
+	                    var cWidth = Math.pow(2, Math.ceil(Math.log(image.width) / Math.LN2));
+	                    var cHeight = Math.pow(2, Math.ceil(Math.log(image.height) / Math.LN2));
+	                    if (cWidth === image.width && cHeight == image.height) {
+	                        resolve(image);
+	                    }
+	                    canvas.width = cWidth;
+	                    canvas.height = cHeight;
+	                    context.drawImage(image, 0, 0, image.width, image.height, 0, 0, cWidth, cHeight);
+	                    resolve(canvas);
+	                };
+	            });
+	        }
+	        /**
+	         * Check specified url is dataUrl or not
+	         * @param  {string}  dataUrl [description]
+	         * @return {boolean}         [description]
+	         */
+	
+	    }, {
+	        key: "_isDataUrl",
+	        value: function _isDataUrl(dataUrl) {
+	            return !!dataUrl.match(/^\s*data\:.*;base64/);
+	        }
+	        /**
+	         * Get directiory location from specified url
+	         * @param  {string} url [description]
+	         * @return {string}     [description]
+	         */
+	
+	    }, {
+	        key: "_getBaseDir",
+	        value: function _getBaseDir(url) {
+	            return url.substr(0, url.lastIndexOf("/") + 1);
+	        }
+	    }]);
+	
+	    return ResourceResolver;
+	}();
+	
+	exports.default = ResourceResolver;
+
+/***/ },
+/* 16 */
+/***/ function(module, exports) {
+
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});exports.default=window.GrimoireJS.lib.fundamental.Asset.TextFileResolver;
+
+/***/ },
+/* 17 */
+/***/ function(module, exports) {
+
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});exports.default=window.GrimoireJS.lib.fundamental.Asset.ImageResolver;
+
+/***/ },
+/* 18 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _Material = __webpack_require__(19);
+	
+	var _Material2 = _interopRequireDefault(_Material);
+	
+	var _MaterialFactory = __webpack_require__(20);
+	
+	var _MaterialFactory2 = _interopRequireDefault(_MaterialFactory);
+	
 	var _ConstantConverter = __webpack_require__(2);
 	
 	var _ConstantConverter2 = _interopRequireDefault(_ConstantConverter);
@@ -1386,66 +1530,278 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	var GLTFMaterialsCommonParser = function () {
-	    function GLTFMaterialsCommonParser() {
-	        _classCallCheck(this, GLTFMaterialsCommonParser);
+	var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
+	    return new (P || (P = Promise))(function (resolve, reject) {
+	        function fulfilled(value) {
+	            try {
+	                step(generator.next(value));
+	            } catch (e) {
+	                reject(e);
+	            }
+	        }
+	        function rejected(value) {
+	            try {
+	                step(generator["throw"](value));
+	            } catch (e) {
+	                reject(e);
+	            }
+	        }
+	        function step(result) {
+	            result.done ? resolve(result.value) : new P(function (resolve) {
+	                resolve(result.value);
+	            }).then(fulfilled, rejected);
+	        }
+	        step((generator = generator.apply(thisArg, _arguments || [])).next());
+	    });
+	};
+	
+	var MaterialParser = function () {
+	    function MaterialParser() {
+	        _classCallCheck(this, MaterialParser);
 	    }
 	
-	    _createClass(GLTFMaterialsCommonParser, null, [{
+	    _createClass(MaterialParser, null, [{
 	        key: "parse",
-	        value: function parse(tf, matKey, baseUrl, textures) {
-	            var material = tf.materials[matKey];
-	            if (material.extensions.KHR_materials_common) {
-	                var cmatData = material.extensions.KHR_materials_common;
-	                var matValues = cmatData.values;
-	                switch (cmatData.technique) {
-	                    case "PHONG":
-	                    case "BLINN":
-	                        var result = {
-	                            type: "gltf-unlit",
-	                            class: "gltf-" + matKey
-	                        };
-	                        if (typeof matValues.diffuse === "string") {
-	                            result["texture"] = textures[matValues.diffuse];
-	                        } else if (Array.isArray(matValues.diffuse)) {
-	                            result["diffuse"] = _ConstantConverter2.default.asColorValue(matValues.diffuse);
+	        value: function parse(tf, matKey, rr, textures) {
+	            return __awaiter(this, void 0, void 0, regeneratorRuntime.mark(function _callee2() {
+	                var _this = this;
+	
+	                var material, result, key, v, teq, tv, valName, uKey;
+	                return regeneratorRuntime.wrap(function _callee2$(_context2) {
+	                    while (1) {
+	                        switch (_context2.prev = _context2.next) {
+	                            case 0:
+	                                material = tf.materials[matKey];
+	
+	                                if (!(material.extensions && material.extensions.KHR_materials_common)) {
+	                                    _context2.next = 5;
+	                                    break;
+	                                }
+	
+	                                return _context2.abrupt("return", this._parseMaterialCommon(material, matKey, textures));
+	
+	                            case 5:
+	                                if (!(_MaterialFactory2.default.materialGenerators[material.technique] === void 0)) {
+	                                    _context2.next = 7;
+	                                    break;
+	                                }
+	
+	                                return _context2.delegateYield(regeneratorRuntime.mark(function _callee() {
+	                                    var techniqueRecipe;
+	                                    return regeneratorRuntime.wrap(function _callee$(_context) {
+	                                        while (1) {
+	                                            switch (_context.prev = _context.next) {
+	                                                case 0:
+	                                                    _context.next = 2;
+	                                                    return _this._convertIntoTechniqueRecipe(tf, matKey, rr);
+	
+	                                                case 2:
+	                                                    techniqueRecipe = _context.sent;
+	
+	                                                    _MaterialFactory2.default.addMaterialType(material.technique, function (factory) {
+	                                                        return new _Material2.default(factory.gl, techniqueRecipe);
+	                                                    });
+	
+	                                                case 4:
+	                                                case "end":
+	                                                    return _context.stop();
+	                                            }
+	                                        }
+	                                    }, _callee, _this);
+	                                })(), "t0", 7);
+	
+	                            case 7:
+	                                result = {
+	                                    type: material.technique,
+	                                    class: "gltf-" + matKey
+	                                };
+	
+	                                for (key in material.values) {
+	                                    v = material.values[key];
+	                                    teq = tf.techniques[material.technique];
+	                                    tv = teq.parameters[key];
+	                                    valName = "";
+	
+	                                    for (uKey in teq.uniforms) {
+	                                        if (teq.uniforms[uKey] === key) {
+	                                            valName = uKey;
+	                                        }
+	                                    }
+	                                    if (tv.type !== WebGLRenderingContext.SAMPLER_2D) {
+	                                        result[valName] = material.values[key];
+	                                    } else {
+	                                        result[valName] = textures[material.values[key]];
+	                                    }
+	                                }
+	                                return _context2.abrupt("return", result);
+	
+	                            case 10:
+	                            case "end":
+	                                return _context2.stop();
 	                        }
-	                        return result;
-	                    default:
-	                        throw new Error("Unsupported common material technique " + cmatData.technique);
+	                    }
+	                }, _callee2, this);
+	            }));
+	        }
+	    }, {
+	        key: "_convertIntoTechniqueRecipe",
+	        value: function _convertIntoTechniqueRecipe(tf, matKey, resourceResolver) {
+	            return __awaiter(this, void 0, void 0, regeneratorRuntime.mark(function _callee3() {
+	                var mat, technique, program, techniqueRecipe;
+	                return regeneratorRuntime.wrap(function _callee3$(_context3) {
+	                    while (1) {
+	                        switch (_context3.prev = _context3.next) {
+	                            case 0:
+	                                mat = tf.materials[matKey];
+	                                technique = tf.techniques[mat.technique];
+	                                program = tf.programs[technique.program];
+	                                _context3.next = 5;
+	                                return resourceResolver.loadString(tf.shaders[program.vertexShader].uri);
+	
+	                            case 5:
+	                                _context3.t0 = _context3.sent;
+	                                _context3.next = 8;
+	                                return resourceResolver.loadString(tf.shaders[program.fragmentShader].uri);
+	
+	                            case 8:
+	                                _context3.t1 = _context3.sent;
+	                                _context3.t2 = this._asAttributeInfo(technique);
+	                                _context3.t3 = this._asUniformInfo(technique);
+	                                _context3.t4 = {};
+	                                _context3.t5 = this._getState(technique);
+	                                _context3.t6 = {
+	                                    vertex: _context3.t0,
+	                                    fragment: _context3.t1,
+	                                    attributes: _context3.t2,
+	                                    uniforms: _context3.t3,
+	                                    macros: _context3.t4,
+	                                    states: _context3.t5
+	                                };
+	                                _context3.t7 = [_context3.t6];
+	                                techniqueRecipe = {
+	                                    passes: _context3.t7,
+	                                    drawOrder: "UseAlpha"
+	                                };
+	                                return _context3.abrupt("return", {
+	                                    default: techniqueRecipe
+	                                });
+	
+	                            case 17:
+	                            case "end":
+	                                return _context3.stop();
+	                        }
+	                    }
+	                }, _callee3, this);
+	            }));
+	        }
+	    }, {
+	        key: "_asAttributeInfo",
+	        value: function _asAttributeInfo(technique) {
+	            var result = {};
+	            for (var key in technique.attributes) {
+	                var attrGlue = technique.attributes[key];
+	                var paramInfo = technique.parameters[attrGlue];
+	                result[key] = {
+	                    name: key,
+	                    semantic: paramInfo.semantic,
+	                    type: paramInfo.type
+	                };
+	            }
+	            return result;
+	        }
+	    }, {
+	        key: "_asUniformInfo",
+	        value: function _asUniformInfo(technique) {
+	            var result = {};
+	            for (var key in technique.uniforms) {
+	                var uniGlue = technique.uniforms[key];
+	                var paramInfo = technique.parameters[uniGlue];
+	                var annotations = {};
+	                if (paramInfo.value) {
+	                    annotations["default"] = paramInfo.value;
 	                }
+	                result[key] = {
+	                    name: key,
+	                    semantic: paramInfo.semantic || "USER_VALUE",
+	                    type: paramInfo.type,
+	                    attributes: annotations
+	                };
+	            }
+	            return result;
+	        }
+	    }, {
+	        key: "_getState",
+	        value: function _getState(technique) {
+	            var result = {
+	                enable: [],
+	                functions: {
+	                    blendColor: [0, 0, 0, 0],
+	                    cullFace: [WebGLRenderingContext.BACK],
+	                    blendFuncSeparate: [WebGLRenderingContext.ONE, WebGLRenderingContext.ZERO, WebGLRenderingContext.ONE, WebGLRenderingContext.ZERO],
+	                    blendEquationSeparate: [WebGLRenderingContext.FUNC_ADD, WebGLRenderingContext.FUNC_ADD],
+	                    lineWidth: [1],
+	                    frontFace: [WebGLRenderingContext.CCW],
+	                    depthRange: [0, 1],
+	                    depthFunc: [WebGLRenderingContext.LESS]
+	                }
+	            };
+	            var st = technique.states;
+	            if (st.enable) {
+	                var _iteratorNormalCompletion = true;
+	                var _didIteratorError = false;
+	                var _iteratorError = undefined;
+	
+	                try {
+	                    for (var _iterator = st.enable[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	                        var item = _step.value;
+	
+	                        result.enable.push(item);
+	                    }
+	                } catch (err) {
+	                    _didIteratorError = true;
+	                    _iteratorError = err;
+	                } finally {
+	                    try {
+	                        if (!_iteratorNormalCompletion && _iterator.return) {
+	                            _iterator.return();
+	                        }
+	                    } finally {
+	                        if (_didIteratorError) {
+	                            throw _iteratorError;
+	                        }
+	                    }
+	                }
+	            }
+	            return result;
+	        }
+	    }, {
+	        key: "_parseMaterialCommon",
+	        value: function _parseMaterialCommon(material, matKey, textures) {
+	            var cmatData = material.extensions.KHR_materials_common;
+	            var matValues = cmatData.values;
+	            switch (cmatData.technique) {
+	                case "PHONG":
+	                case "BLINN":
+	                    var result = {
+	                        type: "gltf-unlit",
+	                        class: "gltf-" + matKey
+	                    };
+	                    if (typeof matValues.diffuse === "string") {
+	                        result["texture"] = textures[matValues.diffuse];
+	                    } else if (Array.isArray(matValues.diffuse)) {
+	                        result["diffuse"] = _ConstantConverter2.default.asColorValue(matValues.diffuse);
+	                    }
+	                    return result;
+	                default:
+	                    throw new Error("Unsupported common material technique " + cmatData.technique);
 	            }
 	        }
 	    }]);
 	
-	    return GLTFMaterialsCommonParser;
+	    return MaterialParser;
 	}();
 	
-	exports.default = GLTFMaterialsCommonParser;
-
-/***/ },
-/* 16 */
-/***/ function(module, exports) {
-
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});exports.default=window.GrimoireJS.lib.math.Vector3;
-
-/***/ },
-/* 17 */
-/***/ function(module, exports) {
-
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});exports.default=window.GrimoireJS.lib.math.AABB;
-
-/***/ },
-/* 18 */
-/***/ function(module, exports) {
-
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});exports.default=window.GrimoireJS.lib.fundamental.Asset.TextFileResolver;
+	exports.default = MaterialParser;
 
 /***/ },
 /* 19 */
@@ -1453,7 +1809,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 		Object.defineProperty(exports, "__esModule", {
 		    value: true
-		});exports.default=window.GrimoireJS.lib.fundamental.Resource.Buffer;
+		});exports.default=window.GrimoireJS.lib.fundamental.Material.Material;
 
 /***/ },
 /* 20 */
@@ -1461,7 +1817,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 		Object.defineProperty(exports, "__esModule", {
 		    value: true
-		});exports.default=window.GrimoireJS.lib.fundamental.Geometry.Geometry;
+		});exports.default=window.GrimoireJS.lib.fundamental.Material.MaterialFactory;
 
 /***/ },
 /* 21 */
@@ -1469,7 +1825,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 		Object.defineProperty(exports, "__esModule", {
 		    value: true
-		});exports.default=window.GrimoireJS.lib.fundamental.Asset.ImageResolver;
+		});exports.default=window.GrimoireJS.lib.math.Vector3;
 
 /***/ },
 /* 22 */
@@ -1477,10 +1833,52 @@ return /******/ (function(modules) { // webpackBootstrap
 
 		Object.defineProperty(exports, "__esModule", {
 		    value: true
-		});exports.default=window.GrimoireJS.lib.fundamental.Resource.Texture2D;
+		});exports.default=window.GrimoireJS.lib.math.AABB;
 
 /***/ },
 /* 23 */
+/***/ function(module, exports) {
+
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});exports.default=window.GrimoireJS.lib.fundamental.Resource.Buffer;
+
+/***/ },
+/* 24 */
+/***/ function(module, exports) {
+
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});exports.default=window.GrimoireJS.lib.fundamental.Geometry.Geometry;
+
+/***/ },
+/* 25 */
+/***/ function(module, exports) {
+
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});exports.default=window.GrimoireJS.lib.fundamental.Resource.Texture2D;
+
+/***/ },
+/* 26 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	var GLTFMaterilFactory = exports.GLTFMaterilFactory = function GLTFMaterilFactory() {
+	  _classCallCheck(this, GLTFMaterilFactory);
+	};
+	
+	exports.default = new GLTFMaterilFactory();
+
+/***/ },
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -1501,15 +1899,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _GLTFModelComponent2 = _interopRequireDefault(_GLTFModelComponent);
 	
-	var _grimoirejs = __webpack_require__(24);
+	var _grimoirejs = __webpack_require__(28);
 	
 	var _grimoirejs2 = _interopRequireDefault(_grimoirejs);
 	
-	var _MaterialFactory = __webpack_require__(25);
+	var _MaterialFactory = __webpack_require__(20);
 	
 	var _MaterialFactory2 = _interopRequireDefault(_MaterialFactory);
 	
-	var _gltfUnlit = __webpack_require__(26);
+	var _gltfUnlit = __webpack_require__(29);
 	
 	var _gltfUnlit2 = _interopRequireDefault(_gltfUnlit);
 	
@@ -1536,7 +1934,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                resolve(result.value);
 	            }).then(fulfilled, rejected);
 	        }
-	        step((generator = generator.apply(thisArg, _arguments)).next());
+	        step((generator = generator.apply(thisArg, _arguments || [])).next());
 	    });
 	};
 	
@@ -1570,7 +1968,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 24 */
+/* 28 */
 /***/ function(module, exports) {
 
 		Object.defineProperty(exports, "__esModule", {
@@ -1578,18 +1976,10 @@ return /******/ (function(modules) { // webpackBootstrap
 		});exports.default=window.GrimoireJS;
 
 /***/ },
-/* 25 */
+/* 29 */
 /***/ function(module, exports) {
 
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});exports.default=window.GrimoireJS.lib.fundamental.Material.MaterialFactory;
-
-/***/ },
-/* 26 */
-/***/ function(module, exports) {
-
-	module.exports = "@Pass{\n@Disable(CULL_FACE)\n@ExposeMacro(int,boneCount,BONE_COUNT,0)\nFS_PREC(mediump,float)\n\nvarying vec3 vNormal;\nvarying vec2 vUV;\n\n#ifdef VS\n#if BONE_COUNT > 0\n  uniform mat4 boneMatrices[BONE_COUNT];\n#endif\n  @NORMAL\n  attribute vec3 normal;\n  @POSITION\n  attribute vec3 position;\n  @TEXCOORD_0\n  attribute vec2 texCoord;\n#if BONE_COUNT > 0\n  @JOINT\n  attribute vec4 joint;\n  @WEIGHT\n  attribute vec4 weight;\n#endif\n  uniform mat4 _matPVM;\n  uniform mat4 _matM;\n  void main(){\n    #if BONE_COUNT > 0\n      mat4 skinMat = weight.x * boneMatrices[int(joint.x)] + weight.y * boneMatrices[int(joint.y)] + weight.z * boneMatrices[int(joint.z)] + weight.w * boneMatrices[int(joint.w)];\n      gl_Position = _matPVM * skinMat * vec4(position,1);\n      vNormal = normalize((_matM * skinMat  * vec4(normal,0)).xyz);\n    #else\n      gl_Position = _matPVM  * vec4(position,1);\n      vNormal = normalize((_matM  * vec4(normal,0)).xyz);\n    #endif\n    vUV = texCoord;\n  }\n\n\n#endif\n\n\n#ifdef FS\n  uniform sampler2D texture;\n\n  @HAS_TEXTURE{sampler:\"texture\"}\n  uniform bool _textureUsed;\n\n  @{type:\"color\"}\n  uniform vec4 diffuse;\n\n  @{default:\"n(1,1,-1)\"}\n  uniform vec3 sunDir;\n\n  void main(){\n    vec4 dColor;\n    if(_textureUsed){\n      dColor = texture2D(texture,vUV);\n    }else{\n      dColor = diffuse;\n    }\n    gl_FragColor.xyz = dot(sunDir,vNormal) * dColor.xyz;\n    gl_FragColor.w = dColor.w;\n  }\n#endif\n}\n"
+	module.exports = "@Pass{\n@ExposeMacro(int,boneCount,BONE_COUNT,0)\nFS_PREC(mediump,float)\n\nvarying vec3 vNormal;\nvarying vec2 vUV;\n\n#ifdef VS\n#if BONE_COUNT > 0\n  uniform mat4 boneMatrices[BONE_COUNT];\n#endif\n  @NORMAL\n  attribute vec3 normal;\n  @POSITION\n  attribute vec3 position;\n  @TEXCOORD_0\n  attribute vec2 texCoord;\n#if BONE_COUNT > 0\n  @JOINT\n  attribute vec4 joint;\n  @WEIGHT\n  attribute vec4 weight;\n#endif\n  uniform mat4 _matPVM;\n  uniform mat4 _matM;\n  void main(){\n    #if BONE_COUNT > 0\n      mat4 skinMat = weight.x * boneMatrices[int(joint.x)] + weight.y * boneMatrices[int(joint.y)] + weight.z * boneMatrices[int(joint.z)] + weight.w * boneMatrices[int(joint.w)];\n      gl_Position = _matPVM * skinMat * vec4(position,1);\n      vNormal = normalize((_matM * skinMat  * vec4(normal,0)).xyz);\n    #else\n      gl_Position = _matPVM  * vec4(position,1);\n      vNormal = normalize((_matM  * vec4(normal,0)).xyz);\n    #endif\n    vUV = texCoord;\n  }\n\n\n#endif\n\n\n#ifdef FS\n  uniform sampler2D texture;\n\n  @HAS_TEXTURE{sampler:\"texture\"}\n  uniform bool _textureUsed;\n\n  @{type:\"color\"}\n  uniform vec4 diffuse;\n\n  @{default:\"n(1,1,-1)\"}\n  uniform vec3 sunDir;\n\n  void main(){\n    vec4 dColor;\n    if(_textureUsed){\n      dColor = texture2D(texture,vUV);\n    }else{\n      dColor = diffuse;\n    }\n    gl_FragColor.xyz = dot(sunDir,vNormal) * dColor.xyz;\n    gl_FragColor.w = dColor.w;\n  }\n#endif\n}\n"
 
 /***/ }
 /******/ ])

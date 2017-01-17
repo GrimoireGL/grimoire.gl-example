@@ -118,12 +118,12 @@ GeometryFactory.addType("wave-grid", {
     vertices: {
       pos:{
         size:{
-          position:3
+          POSITION:3
         },
         count:positions.length,
         getGenerators:()=>{
           return {
-            position: function*() {
+            POSITION: function*() {
               for (let i = 0; i < positions.length; i++) {
                 yield* positions[i];
               }
@@ -133,18 +133,18 @@ GeometryFactory.addType("wave-grid", {
       },
       main: {
         size: {
-          normal: 3,
-          texCoord: 2
+          NORMAL: 3,
+          TEXCOORD: 2
         },
         count: positions.length,
         getGenerators: () => {
           return {
-            normal: function*() {
+            NORMAL: function*() {
               while (true) {
                 yield 1;
               }
             },
-            texCoord: function*() {
+            TEXCOORD: function*() {
               while (true) yield 0;
             }
           };
@@ -171,4 +171,3 @@ gr.registerComponent("GeometryUpdator", {
     });
   }
 })
-

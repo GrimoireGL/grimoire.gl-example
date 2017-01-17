@@ -1,4 +1,6 @@
 gr(function() {
     var $$ = gr("#main");
-    $$(".camera")("MouseCameraControl").setAttribute("zoomSpeend", 1);
+    var camera = $$(".camera").get(0);
+    var mc = camera.getComponent("MouseCameraControl");
+    mc.setAttribute("zoomSpeed", -1);
 });

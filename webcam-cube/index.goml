@@ -2,7 +2,7 @@
   <scene>
     <camera position="0,0,10">
       <camera.components>
-        <MouseCameraControl center="10"/>
+        <MouseCameraControl/>
       </camera.components>
     </camera>
     <mesh geometry="sphere" color="red"/>

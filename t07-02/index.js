@@ -1,8 +1,8 @@
 gr.registerComponent("RotateSelf", {
     attributes: {
-        test: {
-            default: "HELLO WORLD!",
-            converter: "String"
+        speed: {
+            default: 1,
+            converter: "Number"
         }
     },
     $awake: function() {
@@ -12,12 +12,14 @@ gr.registerComponent("RotateSelf", {
     $mount: function() {},
     $update: function() {
       console.log("update");
-        this.i++;
+        this.i+= this.getAttribute("speed");
         this.node.setAttribute("rotation", this.i + "," + this.i + "," + this.i);
     }
 });
 gr.registerNode("rotate", ["RotateSelf"], {}, "mesh");
 gr(function() {
     var $$ = gr("#main");
-    $$("#mesh-1").addComponent("RotateSelf");
+    $$("#mesh-1").addComponent("RotateSelf",{
+      speed:10
+    });
 });

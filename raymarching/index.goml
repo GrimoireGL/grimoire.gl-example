@@ -1,8 +1,0 @@
-<goml width="fit" height="fit">
-  <import-material typeName="raymarching" src="./raymarching.sort"/>
-  <geometry name="quad" type="quad"/>
-  <material id="solid" type="solid" color="green"/>
-  <renderer viewport="0,0,100%,100%">
-    <render-quad material="new(raymarching)" lightDir="0,0,1"/>
-  </renderer>
-</goml>
