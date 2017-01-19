@@ -359,9 +359,9 @@ grimoirejs-forward-shading@^1.1.8:
     grimoirejs-fundamental "^0.5.2"
     grimoirejs-math "^1.4.1"
 
-grimoirejs-fundamental@^0.10.1:
-  version "0.10.11"
-  resolved "https://registry.yarnpkg.com/grimoirejs-fundamental/-/grimoirejs-fundamental-0.10.11.tgz#4bb062e4b935006780f73d137e07e5b620f31a69"
+grimoirejs-fundamental@^0.10.10:
+  version "0.10.10"
+  resolved "https://registry.yarnpkg.com/grimoirejs-fundamental/-/grimoirejs-fundamental-0.10.10.tgz#ea29340bd2b54f7bb60bc89a00c774774acf4c8d"
   dependencies:
     "@types/json5" "0.0.29"
     grimoirejs "^0.13.0"
@@ -398,7 +398,7 @@ grimoirejs-math@^1.4.1, grimoirejs-math@^1.8.0, grimoirejs-math@^1.8.1:
   dependencies:
     gl-matrix "^2.3.2"
 
-grimoirejs-preset-basic@^1.5.0:
+grimoirejs-preset-basic@^1.7.0:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/grimoirejs-preset-basic/-/grimoirejs-preset-basic-1.7.0.tgz#817288fd6565ff3755c3ed48c4fa6b1e1dc57498"
   dependencies:
