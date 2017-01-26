@@ -7,12 +7,12 @@
     "check": "sh ./check-example.sh"
   },
   "dependencies": {
-    "grimoirejs": "^0.13.0",
-    "grimoirejs-forward-shading": "^1.1.8",
-    "grimoirejs-fundamental": "^0.10.10",
-    "grimoirejs-gltf": "beta",
+    "grimoirejs": "^0.14.0",
+    "grimoirejs-forward-shading": "^1.3.1",
+    "grimoirejs-fundamental": "^0.12.0",
+    "grimoirejs-gltf": "^1.8.0",
     "grimoirejs-math": "^1.8.0",
-    "grimoirejs-preset-basic": "^1.7.0"
+    "grimoirejs-preset-basic": "^1.8.0"
   },
   "devDependencies": {},
   "repository": {

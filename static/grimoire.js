@@ -8212,11 +8212,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _AttributeManager2 = _interopRequireDefault(_AttributeManager);
 	
-	var _Constants = __webpack_require__(304);
+	var _Constants = __webpack_require__(307);
 	
 	var _Constants2 = _interopRequireDefault(_Constants);
 	
-	var _EEObject = __webpack_require__(309);
+	var _EEObject = __webpack_require__(313);
 	
 	var _EEObject2 = _interopRequireDefault(_EEObject);
 	
@@ -8224,47 +8224,71 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _Ensure2 = _interopRequireDefault(_Ensure);
 	
-	var _IDObject = __webpack_require__(311);
+	var _IDObject = __webpack_require__(315);
 	
 	var _IDObject2 = _interopRequireDefault(_IDObject);
 	
-	var _NSDictionary = __webpack_require__(313);
+	var _NSDictionary = __webpack_require__(310);
 	
 	var _NSDictionary2 = _interopRequireDefault(_NSDictionary);
 	
-	var _NSIdentity = __webpack_require__(314);
+	var _NSIdentity = __webpack_require__(309);
 	
 	var _NSIdentity2 = _interopRequireDefault(_NSIdentity);
 	
-	var _NSSet = __webpack_require__(322);
+	var _NSSet = __webpack_require__(331);
 	
 	var _NSSet2 = _interopRequireDefault(_NSSet);
 	
-	var _Utility = __webpack_require__(302);
+	var _Utility = __webpack_require__(311);
 	
 	var _Utility2 = _interopRequireDefault(_Utility);
 	
-	var _XMLHttpRequestAsync = __webpack_require__(324);
+	var _XMLHttpRequestAsync = __webpack_require__(317);
 	
 	var _XMLHttpRequestAsync2 = _interopRequireDefault(_XMLHttpRequestAsync);
 	
-	var _XMLReader = __webpack_require__(306);
+	var _XMLReader = __webpack_require__(312);
 	
 	var _XMLReader2 = _interopRequireDefault(_XMLReader);
 	
-	var _GrimoireComponent = __webpack_require__(316);
+	var _GrimoireComponent = __webpack_require__(328);
 	
 	var _GrimoireComponent2 = _interopRequireDefault(_GrimoireComponent);
 	
-	var _BooleanConverter = __webpack_require__(315);
+	var _ArrayConverter = __webpack_require__(324);
+	
+	var _ArrayConverter2 = _interopRequireDefault(_ArrayConverter);
+	
+	var _BooleanConverter = __webpack_require__(327);
 	
 	var _BooleanConverter2 = _interopRequireDefault(_BooleanConverter);
 	
-	var _StringArrayConverter = __webpack_require__(319);
+	var _ComponentConverter = __webpack_require__(320);
+	
+	var _ComponentConverter2 = _interopRequireDefault(_ComponentConverter);
+	
+	var _EnumConverter = __webpack_require__(318);
+	
+	var _EnumConverter2 = _interopRequireDefault(_EnumConverter);
+	
+	var _NumberArrayConverter = __webpack_require__(319);
+	
+	var _NumberArrayConverter2 = _interopRequireDefault(_NumberArrayConverter);
+	
+	var _NumberConverter = __webpack_require__(322);
+	
+	var _NumberConverter2 = _interopRequireDefault(_NumberConverter);
+	
+	var _ObjectConverter = __webpack_require__(323);
+	
+	var _ObjectConverter2 = _interopRequireDefault(_ObjectConverter);
+	
+	var _StringArrayConverter = __webpack_require__(329);
 	
 	var _StringArrayConverter2 = _interopRequireDefault(_StringArrayConverter);
 	
-	var _StringConverter = __webpack_require__(320);
+	var _StringConverter = __webpack_require__(330);
 	
 	var _StringConverter2 = _interopRequireDefault(_StringConverter);
 	
@@ -8272,51 +8296,58 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _GrimoireInterface2 = _interopRequireDefault(_GrimoireInterface);
 	
-	var _GomlInterface = __webpack_require__(303);
+	var _GrimoireInterfaceImpl = __webpack_require__(302);
+	
+	var _GrimoireInterfaceImpl2 = _interopRequireDefault(_GrimoireInterfaceImpl);
+	
+	var _GomlInterface = __webpack_require__(326);
 	
 	var _GomlInterface2 = _interopRequireDefault(_GomlInterface);
 	
-	var _NodeInterface = __webpack_require__(305);
+	var _NodeInterface = __webpack_require__(325);
 	
 	var _NodeInterface2 = _interopRequireDefault(_NodeInterface);
 	
-	var _Attribute = __webpack_require__(318);
+	var _Attribute = __webpack_require__(308);
 	
 	var _Attribute2 = _interopRequireDefault(_Attribute);
 	
-	var _Component = __webpack_require__(317);
+	var _Component = __webpack_require__(321);
 	
 	var _Component2 = _interopRequireDefault(_Component);
 	
-	var _ComponentDeclaration = __webpack_require__(321);
+	var _ComponentDeclaration = __webpack_require__(306);
 	
 	var _ComponentDeclaration2 = _interopRequireDefault(_ComponentDeclaration);
 	
-	var _GomlLoader = __webpack_require__(325);
+	var _GomlLoader = __webpack_require__(303);
 	
 	var _GomlLoader2 = _interopRequireDefault(_GomlLoader);
 	
-	var _GomlNode = __webpack_require__(308);
+	var _GomlNode = __webpack_require__(305);
 	
 	var _GomlNode2 = _interopRequireDefault(_GomlNode);
 	
-	var _GomlParser = __webpack_require__(307);
+	var _GomlParser = __webpack_require__(304);
 	
 	var _GomlParser2 = _interopRequireDefault(_GomlParser);
 	
-	var _NodeDeclaration = __webpack_require__(323);
+	var _NodeDeclaration = __webpack_require__(332);
 	
 	var _NodeDeclaration2 = _interopRequireDefault(_NodeDeclaration);
 	
-	var _NodeUtility = __webpack_require__(312);
+	var _NodeUtility = __webpack_require__(316);
 	
 	var _NodeUtility2 = _interopRequireDefault(_NodeUtility);
 	
-	var _main = __webpack_require__(326);
+	var _main = __webpack_require__(333);
 	
 	var _main2 = _interopRequireDefault(_main);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var __VERSION__ = "0.13.6-beta9";
+	var __NAME__ = "grimoirejs";
 	
 	var __EXPOSE__ = {
 	    "Base": {
@@ -8336,11 +8367,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	        "GrimoireComponent": _GrimoireComponent2.default
 	    },
 	    "Converters": {
+	        "ArrayConverter": _ArrayConverter2.default,
 	        "BooleanConverter": _BooleanConverter2.default,
+	        "ComponentConverter": _ComponentConverter2.default,
+	        "EnumConverter": _EnumConverter2.default,
+	        "NumberArrayConverter": _NumberArrayConverter2.default,
+	        "NumberConverter": _NumberConverter2.default,
+	        "ObjectConverter": _ObjectConverter2.default,
 	        "StringArrayConverter": _StringArrayConverter2.default,
 	        "StringConverter": _StringConverter2.default
 	    },
 	    "GrimoireInterface": _GrimoireInterface2.default,
+	    "GrimoireInterfaceImpl": _GrimoireInterfaceImpl2.default,
 	    "Interface": {
 	        "GomlInterface": _GomlInterface2.default,
 	        "NodeInterface": _NodeInterface2.default
@@ -8357,7 +8395,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	};
 	var __BASE__ = (0, _main2.default)();
+	Object.assign(__EXPOSE__, {
+	    __VERSION__: __VERSION__,
+	    __NAME__: __NAME__
+	});
 	Object.assign(__BASE__ || {}, __EXPOSE__);
+	window["GrimoireJS"]["__VERSION__"] = __VERSION__;
 	exports.default = __BASE__;
 
 /***/ },
@@ -8477,11 +8520,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _GrimoireInterface2 = _interopRequireDefault(_GrimoireInterface);
 	
-	var _NSIdentity = __webpack_require__(314);
+	var _NSIdentity = __webpack_require__(309);
 	
 	var _NSIdentity2 = _interopRequireDefault(_NSIdentity);
 	
-	var _NSDictionary = __webpack_require__(313);
+	var _NSDictionary = __webpack_require__(310);
 	
 	var _NSDictionary2 = _interopRequireDefault(_NSDictionary);
 	
@@ -8592,10 +8635,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: function ensureTobeComponentConstructor(c) {
 	            if (typeof c === "function") {
 	                return c;
-	            } else if (typeof c === "string") {
-	                return _GrimoireInterface2.default.componentDeclarations.get(c).ctor;
 	            } else {
-	                return _GrimoireInterface2.default.componentDeclarations.get(c).ctor;
+	                var dec = _GrimoireInterface2.default.componentDeclarations.get(c);
+	                if (dec) {
+	                    return dec.ctor;
+	                }
+	                return null;
 	            }
 	        }
 	    }]);
@@ -8615,59 +8660,132 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	
+	var _GrimoireInterfaceImpl = __webpack_require__(302);
+	
+	var _GrimoireInterfaceImpl2 = _interopRequireDefault(_GrimoireInterfaceImpl);
+	
+	var _GomlInterface = __webpack_require__(326);
+	
+	var _GomlInterface2 = _interopRequireDefault(_GomlInterface);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var context = new _GrimoireInterfaceImpl2.default();
+	var obtainGomlInterface = function obtainGomlInterface(query) {
+	    if (typeof query === "string") {
+	        // return GomlInterfaceGenerator(context.queryRootNodes(query));
+	        var gomlContext = new _GomlInterface2.default(context.queryRootNodes(query));
+	        var queryFunc = gomlContext.queryFunc.bind(gomlContext);
+	        Object.setPrototypeOf(queryFunc, gomlContext);
+	        return queryFunc;
+	    } else if (typeof query === "function") {
+	        context.initializedEventHandler.push(query);
+	    } else {
+	        var _gomlContext = new _GomlInterface2.default(query);
+	        var _queryFunc = _gomlContext.queryFunc.bind(_gomlContext);
+	        Object.setPrototypeOf(_queryFunc, _gomlContext);
+	        return _queryFunc;
+	    }
+	};
+	// const bindedFunction = obtainGomlInterface.bind(context);
+	Object.setPrototypeOf(obtainGomlInterface, context);
+	exports.default = obtainGomlInterface;
+
+/***/ },
+/* 302 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _Utility = __webpack_require__(302);
+	var _GomlLoader = __webpack_require__(303);
+	
+	var _GomlLoader2 = _interopRequireDefault(_GomlLoader);
+	
+	var _EnumConverter = __webpack_require__(318);
+	
+	var _EnumConverter2 = _interopRequireDefault(_EnumConverter);
+	
+	var _NumberArrayConverter = __webpack_require__(319);
+	
+	var _NumberArrayConverter2 = _interopRequireDefault(_NumberArrayConverter);
+	
+	var _ComponentConverter = __webpack_require__(320);
+	
+	var _ComponentConverter2 = _interopRequireDefault(_ComponentConverter);
+	
+	var _NumberConverter = __webpack_require__(322);
+	
+	var _NumberConverter2 = _interopRequireDefault(_NumberConverter);
+	
+	var _ObjectConverter = __webpack_require__(323);
+	
+	var _ObjectConverter2 = _interopRequireDefault(_ObjectConverter);
+	
+	var _ArrayConverter = __webpack_require__(324);
+	
+	var _ArrayConverter2 = _interopRequireDefault(_ArrayConverter);
+	
+	var _NodeInterface = __webpack_require__(325);
+	
+	var _NodeInterface2 = _interopRequireDefault(_NodeInterface);
+	
+	var _Utility = __webpack_require__(311);
 	
 	var _Utility2 = _interopRequireDefault(_Utility);
 	
-	var _GomlInterface = __webpack_require__(303);
+	var _GomlInterface = __webpack_require__(326);
 	
 	var _GomlInterface2 = _interopRequireDefault(_GomlInterface);
 	
-	var _BooleanConverter = __webpack_require__(315);
+	var _BooleanConverter = __webpack_require__(327);
 	
 	var _BooleanConverter2 = _interopRequireDefault(_BooleanConverter);
 	
-	var _GrimoireComponent = __webpack_require__(316);
+	var _GrimoireComponent = __webpack_require__(328);
 	
 	var _GrimoireComponent2 = _interopRequireDefault(_GrimoireComponent);
 	
-	var _StringArrayConverter = __webpack_require__(319);
+	var _StringArrayConverter = __webpack_require__(329);
 	
 	var _StringArrayConverter2 = _interopRequireDefault(_StringArrayConverter);
 	
-	var _StringConverter = __webpack_require__(320);
+	var _StringConverter = __webpack_require__(330);
 	
 	var _StringConverter2 = _interopRequireDefault(_StringConverter);
 	
-	var _Constants = __webpack_require__(304);
+	var _Constants = __webpack_require__(307);
 	
 	var _Constants2 = _interopRequireDefault(_Constants);
 	
-	var _ComponentDeclaration = __webpack_require__(321);
+	var _ComponentDeclaration = __webpack_require__(306);
 	
 	var _ComponentDeclaration2 = _interopRequireDefault(_ComponentDeclaration);
 	
-	var _Component = __webpack_require__(317);
+	var _Component = __webpack_require__(321);
 	
 	var _Component2 = _interopRequireDefault(_Component);
 	
-	var _NSSet = __webpack_require__(322);
+	var _NSSet = __webpack_require__(331);
 	
 	var _NSSet2 = _interopRequireDefault(_NSSet);
 	
-	var _NodeDeclaration = __webpack_require__(323);
+	var _NodeDeclaration = __webpack_require__(332);
 	
 	var _NodeDeclaration2 = _interopRequireDefault(_NodeDeclaration);
 	
-	var _NSIdentity = __webpack_require__(314);
+	var _NSIdentity = __webpack_require__(309);
 	
 	var _NSIdentity2 = _interopRequireDefault(_NSIdentity);
 	
-	var _NSDictionary = __webpack_require__(313);
+	var _NSDictionary = __webpack_require__(310);
 	
 	var _NSDictionary2 = _interopRequireDefault(_NSDictionary);
 	
@@ -8700,7 +8818,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                resolve(result.value);
 	            }).then(fulfilled, rejected);
 	        }
-	        step((generator = generator.apply(thisArg, _arguments)).next());
+	        step((generator = generator.apply(thisArg, _arguments || [])).next());
 	    });
 	};
 	
@@ -8716,19 +8834,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.lib = {};
 	        this.nodeDictionary = {};
 	        this.componentDictionary = {};
-	        this.companion = new _NSDictionary2.default();
-	        this.initializedEventHandler = [];
-	        this.debug = false;
+	        this.debug = true;
 	    }
-	    /**
-	     * Generate namespace helper function
-	     * @param  {string} ns namespace URI to be used
-	     * @return {[type]}    the namespaced identity
-	     */
-	
 	
 	    _createClass(GrimoireInterfaceImpl, [{
 	        key: "ns",
+	
+	        /**
+	         * Generate namespace helper function
+	         * @param  {string} ns namespace URI to be used
+	         * @return {[type]}    the namespaced identity
+	         */
 	        value: function ns(_ns) {
 	            return function (name) {
 	                return _NSIdentity2.default.from(_ns, name);
@@ -8740,6 +8856,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this.registerConverter("String", _StringConverter2.default);
 	            this.registerConverter("StringArray", _StringArrayConverter2.default);
 	            this.registerConverter("Boolean", _BooleanConverter2.default);
+	            this.registerConverter("Array", _ArrayConverter2.default);
+	            this.registerConverter("Object", _ObjectConverter2.default);
+	            this.registerConverter(_EnumConverter2.default);
+	            this.registerConverter("Number", _NumberConverter2.default);
+	            this.registerConverter("Component", _ComponentConverter2.default);
+	            this.registerConverter("NumberArray", _NumberArrayConverter2.default);
 	            this.registerComponent("GrimoireComponent", _GrimoireComponent2.default);
 	            this.registerNode("grimoire-node-base", ["GrimoireComponent"]);
 	        }
@@ -8805,14 +8927,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if (this.debug && !_Utility2.default.isCamelCase(name.name)) {
 	                console.warn("component " + name.name + " is registerd. but,it should be 'CamelCase'.");
 	            }
-	            obj = this._ensureTobeComponentConstructor(obj, this._ensureNameTobeConstructor(superComponent));
-	            var attrs = obj["attributes"] || {};
+	            var superCtor = void 0;
+	            if (superComponent) {
+	                superCtor = this._ensureNameTobeConstructor(superComponent);
+	                if (!superCtor) {
+	                    throw new Error(superComponent + " is not exist.");
+	                }
+	            }
+	            obj = this._ensureTobeComponentConstructor(obj, superCtor);
+	            var ctor = this._ensureTobeComponentConstructor(obj, superCtor);
+	            var attrs = ctor["attributes"] || {};
 	            for (var key in attrs) {
 	                if (attrs[key].default === void 0) {
 	                    throw new Error("default value of attribute " + key + " in " + name.fqn + " must be not 'undefined'.");
 	                }
 	            }
-	            var dec = new _ComponentDeclaration2.default(name, attrs, obj);
+	            var dec = new _ComponentDeclaration2.default(name, attrs, ctor);
 	            this.componentDeclarations.set(name, dec);
 	            return dec;
 	        }
@@ -8832,33 +8962,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	            this.nodeDeclarations.set(name, new _NodeDeclaration2.default(name, _NSSet2.default.fromArray(requiredComponents), defaults, superNode, freezeAttributes));
 	        }
 	    }, {
-	        key: "registerConverter",
-	        value: function registerConverter(name, converter) {
-	            name = _Ensure2.default.ensureTobeNSIdentity(name);
-	            this.converters.set(name, { name: name, convert: converter });
-	        }
-	    }, {
-	        key: "overrideDeclaration",
-	        value: function overrideDeclaration(targetDeclaration, arg2, defaults) {
-	            var dec = this.nodeDeclarations.get(targetDeclaration);
-	            if (!dec) {
-	                throw new Error("attempt not-exist node declaration : " + _Ensure2.default.ensureTobeNSIdentity(targetDeclaration).name);
-	            }
-	            if (defaults) {
-	                var additionalC = arg2;
-	                for (var i = 0; i < additionalC.length; i++) {
-	                    dec.addDefaultComponent(additionalC[i]);
-	                }
-	                dec.defaultAttributes.pushDictionary(_Ensure2.default.ensureTobeNSDictionary(defaults));
-	            } else if (Array.isArray(arg2)) {
-	                var _additionalC = arg2;
-	                for (var _i = 0; _i < _additionalC.length; _i++) {
-	                    dec.addDefaultComponent(_additionalC[_i]);
-	                }
+	        key: "getCompanion",
+	        value: function getCompanion(scriptTag) {
+	            var root = this.getRootNode(scriptTag);
+	            if (root) {
+	                return root.companion;
 	            } else {
-	                dec.defaultAttributes.pushDictionary(_Ensure2.default.ensureTobeNSDictionary(arg2));
+	                throw new Error("scriptTag is not goml");
 	            }
-	            return dec;
 	        }
 	    }, {
 	        key: "addRootNode",
@@ -8866,6 +8977,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if (!rootNode) {
 	                throw new Error("can not register null to rootNodes.");
 	            }
+	            tag.setAttribute("x-rootNodeId", rootNode.id);
 	            this.rootNodes[rootNode.id] = rootNode;
 	            rootNode.companion.set(this.ns(_Constants2.default.defaultNamespace)("scriptElement"), tag);
 	            // awake and mount tree.
@@ -8874,8 +8986,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	                ownerScriptTag: tag,
 	                id: rootNode.id
 	            });
-	            tag.setAttribute("x-rootNodeId", rootNode.id);
-	            this._onTreeInitialized(tag);
+	            rootNode.sendInitializedMessage({
+	                ownerScriptTag: tag,
+	                id: rootNode.id
+	            });
 	            return rootNode.id;
 	        }
 	    }, {
@@ -8902,6 +9016,41 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 	            return nodes;
 	        }
+	    }, {
+	        key: "registerConverter",
+	        value: function registerConverter(arg1, converter) {
+	            if (converter) {
+	                this.registerConverter({ name: _Ensure2.default.ensureTobeNSIdentity(arg1), verify: function verify() {
+	                        return true;
+	                    }, convert: converter });
+	                return;
+	            }
+	            var dec = arg1;
+	            this.converters.set(_Ensure2.default.ensureTobeNSIdentity(dec.name), dec);
+	        }
+	    }, {
+	        key: "overrideDeclaration",
+	        value: function overrideDeclaration(targetDeclaration, arg2, defaults) {
+	            var dec = this.nodeDeclarations.get(targetDeclaration);
+	            if (!dec) {
+	                throw new Error("attempt not-exist node declaration : " + _Ensure2.default.ensureTobeNSIdentity(targetDeclaration).name);
+	            }
+	            if (defaults) {
+	                var additionalC = arg2;
+	                for (var i = 0; i < additionalC.length; i++) {
+	                    dec.addDefaultComponent(additionalC[i]);
+	                }
+	                dec.defaultAttributes.pushDictionary(_Ensure2.default.ensureTobeNSDictionary(defaults));
+	            } else if (Array.isArray(arg2)) {
+	                var _additionalC = arg2;
+	                for (var _i = 0; _i < _additionalC.length; _i++) {
+	                    dec.addDefaultComponent(_additionalC[_i]);
+	                }
+	            } else {
+	                dec.defaultAttributes.pushDictionary(_Ensure2.default.ensureTobeNSDictionary(arg2));
+	            }
+	            return dec;
+	        }
 	        /**
 	         * This method is not for users.
 	         * Just for unit testing.
@@ -8918,8 +9067,38 @@ return /******/ (function(modules) { // webpackBootstrap
 	            for (var key in this.rootNodes) {
 	                delete this.rootNodes[key];
 	            }
+	            for (var _key in this.nodeDictionary) {
+	                delete this.nodeDictionary[_key];
+	            }
+	            for (var _key2 in this.componentDictionary) {
+	                delete this.componentDictionary[_key2];
+	            }
 	            this.loadTasks.splice(0, this.loadTasks.length);
 	            this.initialize();
+	        }
+	    }, {
+	        key: "extendGrimoireInterface",
+	        value: function extendGrimoireInterface(name, func) {
+	            if (this[name]) {
+	                throw new Error("gr." + name + " can not extend.it is already exist.");
+	            }
+	            this[name] = func.bind(this);
+	        }
+	    }, {
+	        key: "extendGomlInterface",
+	        value: function extendGomlInterface(name, func) {
+	            if (_GomlInterface2.default[name]) {
+	                throw new Error("gr." + name + " can not extend.it is already exist.");
+	            }
+	            _GomlInterface2.default[name] = func.bind(this);
+	        }
+	    }, {
+	        key: "extendNodeInterface",
+	        value: function extendNodeInterface(name, func) {
+	            if (_NodeInterface2.default[name]) {
+	                throw new Error("gr." + name + " can not extend.it is already exist.");
+	            }
+	            _NodeInterface2.default[name] = func.bind(this);
 	        }
 	        /**
 	         * Ensure the given object or constructor to be an constructor inherits Component;
@@ -8952,11 +9131,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        properties[key] = { value: obj[key] };
 	                    }
 	                    var attributes = {};
-	                    for (var _key in ctor["attributes"]) {
-	                        attributes[_key] = ctor["attributes"][_key];
+	                    for (var _key3 in ctor["attributes"]) {
+	                        attributes[_key3] = ctor["attributes"][_key3];
 	                    }
-	                    for (var _key2 in obj["attributes"]) {
-	                        attributes[_key2] = obj["attributes"][_key2];
+	                    for (var _key4 in obj["attributes"]) {
+	                        attributes[_key4] = obj["attributes"][_key4];
 	                    }
 	                    newCtor.prototype = Object.create(ctor.prototype, properties);
 	                    Object.defineProperty(newCtor, "attributes", {
@@ -8983,7 +9162,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            } else if (typeof component === "string") {
 	                return this._ensureNameTobeConstructor(_Ensure2.default.ensureTobeNSIdentity(component));
 	            } else {
-	                //here NSIdentity.
+	                // here NSIdentity.
 	                var c = this.componentDeclarations.get(component);
 	                if (!c) {
 	                    return null;
@@ -8992,40 +9171,1941 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 	        }
 	    }, {
-	        key: "_onTreeInitialized",
-	        value: function _onTreeInitialized(tag) {
-	            this.initializedEventHandler.forEach(function (h) {
-	                h(tag.id, tag.className, tag);
-	            });
+	        key: "initializedEventHandler",
+	        get: function get() {
+	            return _GomlLoader2.default.initializedEventHandlers;
 	        }
 	    }]);
 	
 	    return GrimoireInterfaceImpl;
 	}();
 	
-	var context = new GrimoireInterfaceImpl();
-	var obtainGomlInterface = function obtainGomlInterface(query) {
-	    if (typeof query === "string") {
-	        // return GomlInterfaceGenerator(context.queryRootNodes(query));
-	        var gomlContext = new _GomlInterface2.default(context.queryRootNodes(query));
-	        var queryFunc = gomlContext.queryFunc.bind(gomlContext);
-	        Object.setPrototypeOf(queryFunc, gomlContext);
-	        return queryFunc;
-	    } else if (typeof query === "function") {
-	        context.initializedEventHandler.push(query);
-	    } else {
-	        var _gomlContext = new _GomlInterface2.default(query);
-	        var _queryFunc = _gomlContext.queryFunc.bind(_gomlContext);
-	        Object.setPrototypeOf(_queryFunc, _gomlContext);
-	        return _queryFunc;
-	    }
-	};
-	// const bindedFunction = obtainGomlInterface.bind(context);
-	Object.setPrototypeOf(obtainGomlInterface, context);
-	exports.default = obtainGomlInterface;
+	exports.default = GrimoireInterfaceImpl;
 
 /***/ },
-/* 302 */
+/* 303 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _GrimoireInterface = __webpack_require__(301);
+	
+	var _GrimoireInterface2 = _interopRequireDefault(_GrimoireInterface);
+	
+	var _GomlParser = __webpack_require__(304);
+	
+	var _GomlParser2 = _interopRequireDefault(_GomlParser);
+	
+	var _XMLReader = __webpack_require__(312);
+	
+	var _XMLReader2 = _interopRequireDefault(_XMLReader);
+	
+	var _XMLHttpRequestAsync = __webpack_require__(317);
+	
+	var _XMLHttpRequestAsync2 = _interopRequireDefault(_XMLHttpRequestAsync);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
+	    return new (P || (P = Promise))(function (resolve, reject) {
+	        function fulfilled(value) {
+	            try {
+	                step(generator.next(value));
+	            } catch (e) {
+	                reject(e);
+	            }
+	        }
+	        function rejected(value) {
+	            try {
+	                step(generator["throw"](value));
+	            } catch (e) {
+	                reject(e);
+	            }
+	        }
+	        function step(result) {
+	            result.done ? resolve(result.value) : new P(function (resolve) {
+	                resolve(result.value);
+	            }).then(fulfilled, rejected);
+	        }
+	        step((generator = generator.apply(thisArg, _arguments || [])).next());
+	    });
+	};
+	
+	/**
+	 * Provides the features to fetch Goml source.
+	 */
+	var GomlLoader = function () {
+	    function GomlLoader() {
+	        _classCallCheck(this, GomlLoader);
+	    }
+	
+	    _createClass(GomlLoader, null, [{
+	        key: "loadFromScriptTag",
+	
+	        /**
+	         * Obtain the Goml source from specified tag.
+	         * @param  {HTMLScriptElement} scriptTag [the script tag to load]
+	         * @return {Promise<void>}               [the promise to wait for loading]
+	         */
+	        value: function loadFromScriptTag(scriptTag) {
+	            return __awaiter(this, void 0, void 0, regeneratorRuntime.mark(function _callee() {
+	                var srcAttr, source, req, doc, rootNode;
+	                return regeneratorRuntime.wrap(function _callee$(_context) {
+	                    while (1) {
+	                        switch (_context.prev = _context.next) {
+	                            case 0:
+	                                srcAttr = scriptTag.getAttribute("src");
+	                                source = void 0;
+	
+	                                if (!srcAttr) {
+	                                    _context.next = 10;
+	                                    break;
+	                                }
+	
+	                                // ignore text element
+	                                req = new XMLHttpRequest();
+	
+	                                req.open("GET", srcAttr);
+	                                _context.next = 7;
+	                                return _XMLHttpRequestAsync2.default.send(req);
+	
+	                            case 7:
+	                                source = req.responseText;
+	                                _context.next = 11;
+	                                break;
+	
+	                            case 10:
+	                                source = scriptTag.text;
+	
+	                            case 11:
+	                                doc = _XMLReader2.default.parseXML(source, "GOML");
+	                                rootNode = _GomlParser2.default.parse(doc[0], null, scriptTag);
+	
+	                                _GrimoireInterface2.default.addRootNode(scriptTag, rootNode);
+	
+	                            case 14:
+	                            case "end":
+	                                return _context.stop();
+	                        }
+	                    }
+	                }, _callee, this);
+	            }));
+	        }
+	        /**
+	         * Load from the script tags which will be found with specified query.
+	         * @param  {string}          query [the query to find script tag]
+	         * @return {Promise<void[]>}       [the promise to wait for all goml loading]
+	         */
+	
+	    }, {
+	        key: "loadFromQuery",
+	        value: function loadFromQuery(query) {
+	            return __awaiter(this, void 0, void 0, regeneratorRuntime.mark(function _callee2() {
+	                var tags, pArray, elements, i, element;
+	                return regeneratorRuntime.wrap(function _callee2$(_context2) {
+	                    while (1) {
+	                        switch (_context2.prev = _context2.next) {
+	                            case 0:
+	                                tags = document.querySelectorAll(query);
+	                                pArray = [];
+	                                elements = [];
+	
+	                                for (i = 0; i < tags.length; i++) {
+	                                    element = tags.item(i);
+	
+	                                    elements.push(element);
+	                                    pArray[i] = GomlLoader.loadFromScriptTag(element);
+	                                }
+	                                if (pArray.length === 0 && _GrimoireInterface2.default.debug) {
+	                                    console.warn("There was no goml file detected. Have you specified `type='text/goml'` to the script tag?");
+	                                }
+	                                _context2.next = 7;
+	                                return Promise.all(pArray);
+	
+	                            case 7:
+	                                GomlLoader.initializedEventHandlers.forEach(function (handler) {
+	                                    handler(elements);
+	                                });
+	
+	                            case 8:
+	                            case "end":
+	                                return _context2.stop();
+	                        }
+	                    }
+	                }, _callee2, this);
+	            }));
+	        }
+	        /**
+	         * Load all Goml sources contained in HTML.
+	         * @return {Promise<void>} [the promise to wait for all goml loading]
+	         */
+	
+	    }, {
+	        key: "loadForPage",
+	        value: function loadForPage() {
+	            return __awaiter(this, void 0, void 0, regeneratorRuntime.mark(function _callee3() {
+	                return regeneratorRuntime.wrap(function _callee3$(_context3) {
+	                    while (1) {
+	                        switch (_context3.prev = _context3.next) {
+	                            case 0:
+	                                _context3.next = 2;
+	                                return GomlLoader.loadFromQuery('script[type="text/goml"]');
+	
+	                            case 2:
+	                            case "end":
+	                                return _context3.stop();
+	                        }
+	                    }
+	                }, _callee3, this);
+	            }));
+	        }
+	    }]);
+	
+	    return GomlLoader;
+	}();
+	
+	GomlLoader.initializedEventHandlers = [];
+	exports.default = GomlLoader;
+
+/***/ },
+/* 304 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _GomlNode = __webpack_require__(305);
+	
+	var _GomlNode2 = _interopRequireDefault(_GomlNode);
+	
+	var _GrimoireInterface = __webpack_require__(301);
+	
+	var _GrimoireInterface2 = _interopRequireDefault(_GrimoireInterface);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	/**
+	 * Parser of Goml to Node utilities.
+	 * This class do not store any nodes and goml properties.
+	 */
+	var GomlParser = function () {
+	    function GomlParser() {
+	        _classCallCheck(this, GomlParser);
+	    }
+	
+	    _createClass(GomlParser, null, [{
+	        key: "parse",
+	
+	        /**
+	         * Domをパースする
+	         * @param  {Element}           source    [description]
+	         * @param  {GomlNode}          parent    あればこのノードにaddChildされる
+	         * @return {GomlNode}                    ルートノード
+	         */
+	        value: function parse(source, parent, scriptTag) {
+	            var newNode = GomlParser._createNode(source);
+	            if (!newNode) {
+	                // when specified node could not be found
+	                console.warn("\"" + source.tagName + "\" was not parsed.");
+	                return null;
+	            }
+	            // Parse children recursively
+	            var children = source.childNodes;
+	            var childNodeElements = []; // for parse after .Components has resolved.
+	            if (children && children.length !== 0) {
+	                var removeTarget = [];
+	                for (var i = 0; i < children.length; i++) {
+	                    var child = children.item(i);
+	                    if (!GomlParser._isElement(child)) {
+	                        removeTarget.push(child);
+	                        continue;
+	                    }
+	                    if (this._isComponentsTag(child)) {
+	                        // parse as components
+	                        GomlParser._parseComponents(newNode, child);
+	                        removeTarget.push(child);
+	                    } else {
+	                        // parse as child node.
+	                        childNodeElements.push(child);
+	                    }
+	                }
+	                // remove unused elements
+	                for (var _i = 0; _i < removeTarget.length; _i++) {
+	                    source.removeChild(removeTarget[_i]);
+	                }
+	            }
+	            // generate tree
+	            if (parent) {
+	                parent.addChild(newNode, null, false);
+	            }
+	            childNodeElements.forEach(function (child) {
+	                GomlParser.parse(child, newNode, null);
+	            });
+	            return newNode;
+	        }
+	        /**
+	         * GomlNodeのインスタンス化。GrimoireInterfaceへの登録
+	         * @param  {HTMLElement}      elem         [description]
+	         * @param  {GomlConfigurator} configurator [description]
+	         * @return {GomlTreeNodeBase}              [description]
+	         */
+	
+	    }, {
+	        key: "_createNode",
+	        value: function _createNode(elem) {
+	            var tagName = elem.localName;
+	            var recipe = _GrimoireInterface2.default.nodeDeclarations.get(elem);
+	            if (!recipe) {
+	                throw new Error("Tag \"" + tagName + "\" is not found.");
+	            }
+	            return new _GomlNode2.default(recipe, elem);
+	        }
+	        /**
+	         * .COMPONENTSのパース。
+	         * @param {GomlNode} node          アタッチされるコンポーネント
+	         * @param {Element}  componentsTag .COMPONENTSタグ
+	         */
+	
+	    }, {
+	        key: "_parseComponents",
+	        value: function _parseComponents(node, componentsTag) {
+	            var componentNodes = componentsTag.childNodes;
+	            if (!componentNodes) {
+	                return;
+	            }
+	            for (var i = 0; i < componentNodes.length; i++) {
+	                var componentNode = componentNodes.item(i);
+	                if (!GomlParser._isElement(componentNode)) {
+	                    continue; // Skip if the node was not element
+	                }
+	                var componentDecl = _GrimoireInterface2.default.componentDeclarations.get(componentNode);
+	                if (!componentDecl) {
+	                    throw new Error("Component " + componentNode.tagName + " is not found.");
+	                }
+	                var component = componentDecl.generateInstance(componentNode);
+	                node._addComponentDirectly(component, false);
+	            }
+	        }
+	    }, {
+	        key: "_isElement",
+	        value: function _isElement(node) {
+	            return node.nodeType === Node.ELEMENT_NODE;
+	        }
+	    }, {
+	        key: "_isComponentsTag",
+	        value: function _isComponentsTag(element) {
+	            var regexToFindComponent = /\.COMPONENTS$/mi; // TODO might needs to fix
+	            return regexToFindComponent.test(element.nodeName);
+	        }
+	    }]);
+	
+	    return GomlParser;
+	}();
+	
+	exports.default = GomlParser;
+
+/***/ },
+/* 305 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _ComponentDeclaration = __webpack_require__(306);
+	
+	var _ComponentDeclaration2 = _interopRequireDefault(_ComponentDeclaration);
+	
+	var _AttributeManager = __webpack_require__(299);
+	
+	var _AttributeManager2 = _interopRequireDefault(_AttributeManager);
+	
+	var _Utility = __webpack_require__(311);
+	
+	var _Utility2 = _interopRequireDefault(_Utility);
+	
+	var _Constants = __webpack_require__(307);
+	
+	var _Constants2 = _interopRequireDefault(_Constants);
+	
+	var _GomlParser = __webpack_require__(304);
+	
+	var _GomlParser2 = _interopRequireDefault(_GomlParser);
+	
+	var _XMLReader = __webpack_require__(312);
+	
+	var _XMLReader2 = _interopRequireDefault(_XMLReader);
+	
+	var _GrimoireInterface = __webpack_require__(301);
+	
+	var _GrimoireInterface2 = _interopRequireDefault(_GrimoireInterface);
+	
+	var _EEObject2 = __webpack_require__(313);
+	
+	var _EEObject3 = _interopRequireDefault(_EEObject2);
+	
+	var _NodeUtility = __webpack_require__(316);
+	
+	var _NodeUtility2 = _interopRequireDefault(_NodeUtility);
+	
+	var _NSDictionary = __webpack_require__(310);
+	
+	var _NSDictionary2 = _interopRequireDefault(_NSDictionary);
+	
+	var _NSIdentity = __webpack_require__(309);
+	
+	var _NSIdentity2 = _interopRequireDefault(_NSIdentity);
+	
+	var _Ensure = __webpack_require__(300);
+	
+	var _Ensure2 = _interopRequireDefault(_Ensure);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var GomlNode = function (_EEObject) {
+	    _inherits(GomlNode, _EEObject);
+	
+	    /**
+	     * create new instance.
+	     * @param  {NodeDeclaration} recipe  作成するノードのDeclaration
+	     * @param  {Element}         element 対応するDomElement
+	     * @return {[type]}                  [description]
+	     */
+	    function GomlNode(recipe, element) {
+	        _classCallCheck(this, GomlNode);
+	
+	        var _this = _possibleConstructorReturn(this, (GomlNode.__proto__ || Object.getPrototypeOf(GomlNode)).call(this));
+	
+	        _this.children = [];
+	        _this._parent = null;
+	        _this._root = null;
+	        _this._tree = null;
+	        _this._companion = new _NSDictionary2.default();
+	        _this._isActive = false;
+	        _this._messageCache = {};
+	        _this._deleted = false;
+	        _this._mounted = false;
+	        _this._enabled = true;
+	        _this._defaultValueResolved = false;
+	        _this._initializedInfo = null;
+	        if (!recipe) {
+	            throw new Error("recipe must not be null");
+	        }
+	        _this.nodeDeclaration = recipe;
+	        _this.element = element ? element : document.createElementNS(recipe.name.ns, recipe.name.name); // TODO Could be undefined or null?
+	        _this.componentsElement = document.createElement("COMPONENTS");
+	        _this._root = _this;
+	        _this._tree = (0, _GrimoireInterface2.default)([_this]);
+	        _this._components = [];
+	        _this._attributeManager = new _AttributeManager2.default(recipe.name.name, new _NSDictionary2.default());
+	        _this.element.setAttribute(_Constants2.default.x_gr_id, _this.id);
+	        var defaultComponentNames = recipe.defaultComponentsActual;
+	        // instanciate default components
+	        defaultComponentNames.forEach(function (id) {
+	            _this.addComponent(id, null, true);
+	        });
+	        // register to GrimoireInterface.
+	        _GrimoireInterface2.default.nodeDictionary[_this.id] = _this;
+	        return _this;
+	    }
+	    /**
+	     * Get actual goml node from element of xml tree.
+	     * @param  {Element}  elem [description]
+	     * @return {GomlNode}      [description]
+	     */
+	
+	
+	    _createClass(GomlNode, [{
+	        key: "getChildrenByClass",
+	
+	        /**
+	         * search from children node by class property.
+	         * return all nodes has same class as given.
+	         * @param  {string}     className [description]
+	         * @return {GomlNode[]}           [description]
+	         */
+	        value: function getChildrenByClass(className) {
+	            var nodes = this.element.getElementsByClassName(className);
+	            var array = new Array(nodes.length);
+	            for (var i = 0; i < nodes.length; i++) {
+	                array[i] = GomlNode.fromElement(nodes.item(i));
+	            }
+	            return array;
+	        }
+	        /**
+	         * search from children node by name property.
+	         * return all nodes has same name as given.
+	         * @param  {string}     nodeName [description]
+	         * @return {GomlNode[]}          [description]
+	         */
+	
+	    }, {
+	        key: "getChildrenByNodeName",
+	        value: function getChildrenByNodeName(nodeName) {
+	            var nodes = this.element.getElementsByTagName(nodeName);
+	            var array = new Array(nodes.length);
+	            for (var i = 0; i < nodes.length; i++) {
+	                array[i] = GomlNode.fromElement(nodes.item(i));
+	            }
+	            return array;
+	        }
+	    }, {
+	        key: "remove",
+	        value: function remove() {
+	            this.children.forEach(function (c) {
+	                c.remove();
+	            });
+	            _GrimoireInterface2.default.nodeDictionary[this.id] = null;
+	            if (this._parent) {
+	                this._parent.detachChild(this);
+	            } else {
+	                this.setMounted(false);
+	                if (this.element.parentNode) {
+	                    this.element.parentNode.removeChild(this.element);
+	                }
+	            }
+	            this._sendMessageForced("$$dispose");
+	            this._deleted = true;
+	        }
+	        /**
+	         * send message to this node.
+	         * invoke component method has same name as message if this node isActive.
+	         * @param  {string}  message [description]
+	         * @param  {any}     args    [description]
+	         * @return {boolean}         is this node active.
+	         */
+	
+	    }, {
+	        key: "sendMessage",
+	        value: function sendMessage(message, args) {
+	            if (!this.isActive) {
+	                return false;
+	            }
+	            message = _Ensure2.default.ensureTobeMessage(message);
+	            this._sendMessage(message, args);
+	            return true;
+	        }
+	    }, {
+	        key: "broadcastMessage",
+	        value: function broadcastMessage(arg1, arg2, arg3) {
+	            if (!this.enabled || !this.mounted) {
+	                return;
+	            }
+	            if (typeof arg1 === "number") {
+	                var range = arg1;
+	                var message = _Ensure2.default.ensureTobeMessage(arg2);
+	                var args = arg3;
+	                this._broadcastMessage(message, args, range);
+	            } else {
+	                var _message = _Ensure2.default.ensureTobeMessage(arg1);
+	                var _args = arg2;
+	                this._broadcastMessage(_message, _args, -1);
+	            }
+	        }
+	    }, {
+	        key: "append",
+	        value: function append(tag) {
+	            var _this2 = this;
+	
+	            var elems = _XMLReader2.default.parseXML(tag);
+	            var ret = [];
+	            elems.forEach(function (elem) {
+	                var child = _GomlParser2.default.parse(elem, null, null);
+	                _this2.addChild(child);
+	                ret.push(child);
+	            });
+	            return ret;
+	        }
+	        /**
+	         * add new instance created by given name and attributes for this node as child.
+	         * @param {string |   NSIdentity} nodeName      [description]
+	         * @param {any    }} attributes   [description]
+	         */
+	
+	    }, {
+	        key: "addChildByName",
+	        value: function addChildByName(nodeName, attributes) {
+	            if (typeof nodeName === "string") {
+	                return this.addChildByName(_NSIdentity2.default.from(nodeName), attributes);
+	            } else {
+	                var nodeDec = _GrimoireInterface2.default.nodeDeclarations.get(nodeName);
+	                var node = new GomlNode(nodeDec, null);
+	                if (attributes) {
+	                    for (var key in attributes) {
+	                        var id = _Ensure2.default.ensureTobeNSIdentity(key);
+	                        node.setAttribute(id, attributes[key]);
+	                    }
+	                }
+	                this.addChild(node);
+	                return node;
+	            }
+	        }
+	        /**
+	         * Add child for this node.
+	         * @param {GomlNode} child            child node to add.
+	         * @param {number}   index            index for insert.なければ末尾に追加
+	         * @param {[type]}   elementSync=true trueのときはElementのツリーを同期させる。（Elementからパースするときはfalseにする）
+	         */
+	
+	    }, {
+	        key: "addChild",
+	        value: function addChild(child, index) {
+	            var elementSync = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+	
+	            if (child._deleted) {
+	                throw new Error("deleted node never use.");
+	            }
+	            if (index != null && typeof index !== "number") {
+	                throw new Error("insert index should be number or null or undefined.");
+	            }
+	            // add process.
+	            var insertIndex = index == null ? this.children.length : index;
+	            this.children.splice(insertIndex, 0, child);
+	            child._parent = this;
+	            child._tree = this._tree;
+	            child._companion = this._companion;
+	            // sync html
+	            if (elementSync) {
+	                var referenceElement = this.element[_NodeUtility2.default.getNodeListIndexByElementIndex(this.element, insertIndex)];
+	                this.element.insertBefore(child.element, referenceElement);
+	            }
+	            // mounting
+	            if (this.mounted) {
+	                child.setMounted(true);
+	            }
+	            // send initializedInfo if needed
+	            if (this._initializedInfo) {
+	                child.sendInitializedMessage(this._initializedInfo);
+	            }
+	        }
+	    }, {
+	        key: "callRecursively",
+	        value: function callRecursively(func) {
+	            return this._callRecursively(func, function (n) {
+	                return n.children;
+	            });
+	        }
+	        /**
+	         * delete child node.
+	         * @param {GomlNode} child Target node to be inserted.
+	         */
+	
+	    }, {
+	        key: "removeChild",
+	        value: function removeChild(child) {
+	            var node = this.detachChild(child);
+	            if (node) {
+	                node.remove();
+	            }
+	        }
+	        /**
+	         * detach given node from this node if target is child of this node.
+	         * return null if target is not child of this node.
+	         * @param  {GomlNode} child [description]
+	         * @return {GomlNode}       detached node.
+	         */
+	
+	    }, {
+	        key: "detachChild",
+	        value: function detachChild(target) {
+	            // search child.
+	            var index = this.children.indexOf(target);
+	            if (index === -1) {
+	                return null;
+	            }
+	            target.setMounted(false);
+	            target._parent = null;
+	            this.children.splice(index, 1);
+	            // html sync
+	            this.element.removeChild(target.element);
+	            return target;
+	        }
+	        /**
+	         * detach this node from parent.
+	         */
+	
+	    }, {
+	        key: "detach",
+	        value: function detach() {
+	            if (this.parent) {
+	                this.parent.detachChild(this);
+	            } else {
+	                throw new Error("root Node cannot be detached.");
+	            }
+	        }
+	        /**
+	         * [[[OBSOLETE!]]]get value of attribute.
+	         * @param  {string | NSIdentity}  attrName [description]
+	         * @return {any}         [description]
+	         */
+	
+	    }, {
+	        key: "getValue",
+	        value: function getValue(attrName) {
+	            console.warn("getValue is obsolate. please use getAttribute instead of");
+	            return this.getAttribute(attrName);
+	        }
+	    }, {
+	        key: "getAttribute",
+	        value: function getAttribute(attrName) {
+	            return this._attributeManager.getAttribute(attrName);
+	        }
+	    }, {
+	        key: "getAttributeRaw",
+	        value: function getAttributeRaw(attrName) {
+	            return this._attributeManager.attributes.get(attrName);
+	        }
+	    }, {
+	        key: "setAttribute",
+	        value: function setAttribute(attrName, value) {
+	            var ignoireFreeze = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+	
+	            if (!ignoireFreeze && this.isFreezeAttribute(_Ensure2.default.ensureTobeNSIdentity(attrName).name)) {
+	                throw new Error("attribute " + _Ensure2.default.ensureTobeNSIdentity(attrName).name + " can not set. Attribute is frozen. ");
+	            }
+	            return this._attributeManager.setAttribute(attrName, value);
+	        }
+	        /**
+	         *  Add new attribute. In most of case, users no need to call this method.
+	         *  Use __addAttribute in Component should be used instead.
+	         */
+	
+	    }, {
+	        key: "addAttribute",
+	        value: function addAttribute(attr) {
+	            return this._attributeManager.addAttribute(attr);
+	        }
+	        /**
+	         * Update mounted status and emit events
+	         * @param {boolean} mounted Mounted status.
+	         */
+	
+	    }, {
+	        key: "setMounted",
+	        value: function setMounted(mounted) {
+	            if (this._mounted === mounted) {
+	                return;
+	            }
+	            if (mounted) {
+	                this._mount();
+	                for (var i = 0; i < this.children.length; i++) {
+	                    this.children[i].setMounted(mounted);
+	                }
+	            } else {
+	                for (var _i = 0; _i < this.children.length; _i++) {
+	                    this.children[_i].setMounted(mounted);
+	                }
+	                this._sendMessageForced("unmount");
+	                this._isActive = false;
+	                this._tree = null;
+	                this._companion = null;
+	                this._mounted = mounted;
+	            }
+	        }
+	        /**
+	         * Get index of this node from parent.
+	         * @return {number} number of index.
+	         */
+	
+	    }, {
+	        key: "removeAttribute",
+	
+	        /**
+	         * remove attribute from this node.
+	         * @param {Attribute} attr [description]
+	         */
+	        value: function removeAttribute(attr) {
+	            return this._attributeManager.removeAttribute(attr);
+	        }
+	        /**
+	         * attach component to this node.
+	         * @param {Component} component [description]
+	         */
+	
+	    }, {
+	        key: "addComponent",
+	        value: function addComponent(component) {
+	            var attributes = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+	            var isDefaultComponent = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+	
+	            if (typeof component === "function") {
+	                var obj = _ComponentDeclaration2.default.ctorMap.find(function (o) {
+	                    return o.ctor === component;
+	                });
+	                component = obj.name;
+	            }
+	            var declaration = _GrimoireInterface2.default.componentDeclarations.get(component);
+	            var instance = declaration.generateInstance();
+	            attributes = attributes || {};
+	            for (var key in attributes) {
+	                instance.setAttribute(key, attributes[key]);
+	            }
+	            this._addComponentDirectly(instance, isDefaultComponent);
+	            return instance;
+	        }
+	        /**
+	         * Internal use!
+	         * Should not operate by users or plugin developpers
+	         * @param {Component} component          [description]
+	         * @param {boolean}   isDefaultComponent [description]
+	         */
+	
+	    }, {
+	        key: "_addComponentDirectly",
+	        value: function _addComponentDirectly(component, isDefaultComponent) {
+	            var _this3 = this;
+	
+	            if (component.node || component.disposed) {
+	                throw new Error("component never change attached node");
+	            }
+	            // resetting cache
+	            this._messageCache = {}; // TODO: optimize.
+	            //
+	            component.isDefaultComponent = !!isDefaultComponent;
+	            component.node = this;
+	            var referenceElement = this.componentsElement[_NodeUtility2.default.getNodeListIndexByElementIndex(this.componentsElement, this._components.length)];
+	            this.componentsElement.insertBefore(component.element, referenceElement);
+	            // bind this for message reciever.
+	            var propNames = [];
+	            var o = component;
+	            while (o) {
+	                propNames = propNames.concat(Object.getOwnPropertyNames(o));
+	                o = Object.getPrototypeOf(o);
+	            }
+	            propNames.filter(function (name) {
+	                return name.startsWith("$") && typeof component[name] === "function";
+	            }).forEach(function (method) {
+	                component["$" + method] = component[method].bind(component);
+	            });
+	            this._components.push(component);
+	            if (isDefaultComponent) {
+	                // attributes should be exposed on node
+	                component.attributes.forEach(function (p) {
+	                    return _this3.addAttribute(p);
+	                });
+	                if (this._defaultValueResolved) {
+	                    component.attributes.forEach(function (p) {
+	                        return p.resolveDefaultValue(_NodeUtility2.default.getAttributes(_this3.element));
+	                    });
+	                }
+	            }
+	            if (this._mounted) {
+	                component.resolveDefaultAttributes(null); // here must be optional component.should not use node element attributes.
+	                this._sendMessageForcedTo(component, "awake");
+	                this._sendMessageForcedTo(component, "mount");
+	            }
+	            // sending `initialized` message if needed.
+	            if (this._initializedInfo) {
+	                component.initialized(this._initializedInfo);
+	            }
+	        }
+	    }, {
+	        key: "removeComponent",
+	        value: function removeComponent(component) {
+	            var index = this._components.indexOf(component);
+	            if (index !== -1) {
+	                this._sendMessageForcedTo(component, "unmount");
+	                this._sendMessageForcedTo(component, "dispose");
+	                this.componentsElement.removeChild(component.element);
+	                this._components.splice(index, 1);
+	                this._messageCache = {}; // TODO:optimize.
+	                component.node = null;
+	                component.disposed = true;
+	                return true;
+	            }
+	            return false;
+	        }
+	    }, {
+	        key: "getComponents",
+	        value: function getComponents(filter) {
+	            var _this4 = this;
+	
+	            if (!filter) {
+	                return this._components;
+	            } else {
+	                var _ret = function () {
+	                    var ctor = _Ensure2.default.ensureTobeComponentConstructor(filter);
+	                    return {
+	                        v: _this4._components.filter(function (c) {
+	                            return c instanceof ctor;
+	                        })
+	                    };
+	                }();
+	
+	                if ((typeof _ret === "undefined" ? "undefined" : _typeof(_ret)) === "object") return _ret.v;
+	            }
+	        }
+	        /**
+	         * search component by name from this node.
+	         * @param  {string | NSIdentity}  name [description]
+	         * @return {Component}   component found first.
+	         */
+	
+	    }, {
+	        key: "getComponent",
+	        value: function getComponent(name) {
+	            // 事情により<T extends Component>とはできない。
+	            // これはref/Node/Componentによって参照されるのが外部ライブラリにおけるコンポーネントであるが、
+	            // src/Node/Componentがこのプロジェクトにおけるコンポーネントのため、別のコンポーネントとみなされ、型の制約をみたさなくなるからである。
+	            if (!name) {
+	                throw new Error("name must not be null or undefined");
+	            } else if (typeof name === "function") {
+	                return this._components.find(function (c) {
+	                    return c instanceof name;
+	                }) || null;
+	            } else {
+	                var ctor = _Ensure2.default.ensureTobeComponentConstructor(name);
+	                if (!ctor) {
+	                    throw new Error("component " + name + " is not exist");
+	                }
+	                return this.getComponent(ctor);
+	            }
+	        }
+	    }, {
+	        key: "getComponentsInChildren",
+	        value: function getComponentsInChildren(name) {
+	            return this.callRecursively(function (node) {
+	                return node.getComponent(name);
+	            }).filter(function (c) {
+	                return !!c;
+	            });
+	        }
+	    }, {
+	        key: "getComponentInAncesotor",
+	        value: function getComponentInAncesotor(name) {
+	            if (this.parent) {
+	                return this.parent._getComponentInAncesotor(name);
+	            }
+	            return null;
+	        }
+	    }, {
+	        key: "sendInitializedMessage",
+	        value: function sendInitializedMessage(info) {
+	            if (this._initializedInfo === info) {
+	                return;
+	            }
+	            var components = this._components.concat();
+	            for (var i = 0; i < components.length; i++) {
+	                components[i].initialized(info);
+	            }
+	            this._initializedInfo = info;
+	            var children = this.children.concat();
+	            children.forEach(function (child) {
+	                child.sendInitializedMessage(info);
+	            });
+	        }
+	        /**
+	         * resolve default attribute value for all component.
+	         * すべてのコンポーネントの属性をエレメントかデフォルト値で初期化
+	         */
+	
+	    }, {
+	        key: "resolveAttributesValue",
+	        value: function resolveAttributesValue() {
+	            this._defaultValueResolved = true;
+	            var attrs = _NodeUtility2.default.getAttributes(this.element);
+	            for (var key in attrs) {
+	                if (key === _Constants2.default.x_gr_id) {
+	                    continue;
+	                }
+	                if (this.isFreezeAttribute(key)) {
+	                    throw new Error("attribute " + key + " can not change from GOML. Attribute is frozen. ");
+	                }
+	            }
+	            this._components.forEach(function (component) {
+	                component.resolveDefaultAttributes(attrs);
+	            });
+	        }
+	    }, {
+	        key: "isFreezeAttribute",
+	        value: function isFreezeAttribute(attributeName) {
+	            return !!this.nodeDeclaration.freezeAttributes.find(function (name) {
+	                return attributeName === name;
+	            });
+	        }
+	    }, {
+	        key: "notifyActivenessUpdate",
+	        value: function notifyActivenessUpdate(activeness) {
+	            if (this.isActive !== activeness) {
+	                this._isActive = activeness;
+	                this.children.forEach(function (child) {
+	                    child.notifyActivenessUpdate(activeness && child.enabled);
+	                });
+	            }
+	        }
+	    }, {
+	        key: "watch",
+	        value: function watch(attrName, watcher) {
+	            var immediate = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+	
+	            this._attributeManager.watch(attrName, watcher, immediate);
+	        }
+	    }, {
+	        key: "_sendMessage",
+	        value: function _sendMessage(message, args) {
+	            if (this._messageCache[message] === void 0) {
+	                this._messageCache[message] = this._components.filter(function (c) {
+	                    return typeof c[message] === "function";
+	                });
+	            }
+	            var targetList = this._messageCache[message];
+	            for (var i = 0; i < targetList.length; i++) {
+	                if (targetList[i].disposed) {
+	                    continue;
+	                }
+	                this._sendMessageToComponent(targetList[i], message, args);
+	            }
+	        }
+	    }, {
+	        key: "_broadcastMessage",
+	        value: function _broadcastMessage(message, args, range) {
+	            // message is already ensured.-1 to unlimited range.
+	            if (!this.isActive) {
+	                return;
+	            }
+	            this._sendMessage(message, args);
+	            if (range === 0) {
+	                return;
+	            }
+	            var nextRange = range - 1;
+	            for (var i = 0; i < this.children.length; i++) {
+	                this.children[i]._broadcastMessage(message, args, nextRange);
+	            }
+	        }
+	    }, {
+	        key: "_getComponentInAncesotor",
+	        value: function _getComponentInAncesotor(name) {
+	            var ret = this.getComponent(name);
+	            if (ret) {
+	                return ret;
+	            }
+	            if (this.parent) {
+	                return this.parent._getComponentInAncesotor(name);
+	            }
+	            return null;
+	        }
+	        /**
+	         * コンポーネントにメッセージを送る。送信したらバッファからは削除される.
+	         * @param  {Component} targetComponent 対象コンポーネント
+	         * @param  {string}    message         メッセージ
+	         * @param  {boolean}   forced          trueでコンポーネントのenableを無視して送信
+	         * @param  {boolean}   toBuffer        trueで送信失敗したらバッファに追加
+	         * @param  {any}       args            [description]
+	         * @return {boolean}                   送信したか
+	         */
+	
+	    }, {
+	        key: "_sendMessageToComponent",
+	        value: function _sendMessageToComponent(targetComponent, message, args) {
+	            if (!targetComponent.enabled) {
+	                return false;
+	            }
+	            var method = targetComponent[message];
+	            if (typeof method === "function") {
+	                method(args);
+	                return true;
+	            }
+	            return false;
+	        }
+	    }, {
+	        key: "_sendMessageForced",
+	        value: function _sendMessageForced(message) {
+	            var componentsBuffer = this._components.concat();
+	            for (var i = 0; i < componentsBuffer.length; i++) {
+	                var target = componentsBuffer[i];
+	                if (target.disposed) {
+	                    continue;
+	                }
+	                this._sendMessageForcedTo(target, message);
+	            }
+	        }
+	        /**
+	         * for system messages.
+	         * @param {Component} target  [description]
+	         * @param {string}    message [description]
+	         */
+	
+	    }, {
+	        key: "_sendMessageForcedTo",
+	        value: function _sendMessageForcedTo(target, message) {
+	            message = _Ensure2.default.ensureTobeMessage(message);
+	            var method = target[message];
+	            if (typeof method === "function") {
+	                method();
+	            }
+	        }
+	        /**
+	         * sending mount and awake message if needed to all components.
+	         */
+	
+	    }, {
+	        key: "_mount",
+	        value: function _mount() {
+	            this._mounted = true;
+	            var componentsBuffer = this._components.concat();
+	            for (var i = 0; i < componentsBuffer.length; i++) {
+	                var target = componentsBuffer[i];
+	                if (target.disposed) {
+	                    continue;
+	                }
+	                target.awake();
+	                this._sendMessageForcedTo(target, "$$mount");
+	            }
+	        }
+	    }, {
+	        key: "_callRecursively",
+	        value: function _callRecursively(func, nextGenerator) {
+	            var val = func(this);
+	            var nexts = nextGenerator(this);
+	            var nextVals = nexts.map(function (c) {
+	                return c.callRecursively(func);
+	            });
+	            var list = _Utility2.default.flat(nextVals);
+	            list.unshift(val);
+	            return list;
+	        }
+	    }, {
+	        key: "name",
+	
+	        /**
+	         * Tag name.
+	         */
+	        get: function get() {
+	            return this.nodeDeclaration.name;
+	        }
+	    }, {
+	        key: "attributes",
+	        get: function get() {
+	            return this._attributeManager.attributes;
+	        }
+	        /**
+	         * GomlInterface that this node is bound to.
+	         * throw exception if this node is not mounted.
+	         * @return {IGomlInterface} [description]
+	         */
+	
+	    }, {
+	        key: "tree",
+	        get: function get() {
+	            if (!this.mounted) {
+	                throw new Error("this node is not mounted");
+	            }
+	            return this._tree;
+	        }
+	        /**
+	         * indicate this node is already deleted.
+	         * if this node is deleted once, this node will not be mounted.
+	         * @return {boolean} [description]
+	         */
+	
+	    }, {
+	        key: "deleted",
+	        get: function get() {
+	            return this._deleted;
+	        }
+	        /**
+	         * indicate this node is enabled in tree.
+	         * This value must be false when ancestor of this node is disabled.
+	         * @return {boolean} [description]
+	         */
+	
+	    }, {
+	        key: "isActive",
+	        get: function get() {
+	            return this._isActive;
+	        }
+	        /**
+	         * indicate this node is enabled.
+	         * this node never recieve any message if this node is not enabled.
+	         * @return {boolean} [description]
+	         */
+	
+	    }, {
+	        key: "enabled",
+	        get: function get() {
+	            return this._enabled;
+	        },
+	        set: function set(value) {
+	            this.setAttribute("enabled", value);
+	        }
+	        /**
+	         * the shared object by all nodes in tree.
+	         * @return {NSDictionary<any>} [description]
+	         */
+	
+	    }, {
+	        key: "companion",
+	        get: function get() {
+	            return this._companion;
+	        }
+	        /**
+	         * parent node of this node.
+	         * if this node is root, return null.
+	         * @return {GomlNode} [description]
+	         */
+	
+	    }, {
+	        key: "parent",
+	        get: function get() {
+	            return this._parent;
+	        }
+	        /**
+	         * return true if this node has some child nodes.
+	         * @return {boolean} [description]
+	         */
+	
+	    }, {
+	        key: "hasChildren",
+	        get: function get() {
+	            return this.children.length > 0;
+	        }
+	        /**
+	         * indicate mounted status.
+	         * this property to be true when treeroot registered to GrimoireInterface.
+	         * to be false when this node detachd from the tree.
+	         * @return {boolean} Whether this node is mounted or not.
+	         */
+	
+	    }, {
+	        key: "mounted",
+	        get: function get() {
+	            return this._mounted;
+	        }
+	    }, {
+	        key: "index",
+	        get: function get() {
+	            if (!this._parent) {
+	                return -1;
+	            }
+	            return this._parent.children.indexOf(this);
+	        }
+	    }], [{
+	        key: "fromElement",
+	        value: function fromElement(elem) {
+	            return _GrimoireInterface2.default.nodeDictionary[elem.getAttribute(_Constants2.default.x_gr_id)];
+	        }
+	    }]);
+	
+	    return GomlNode;
+	}(_EEObject3.default);
+	
+	exports.default = GomlNode;
+
+/***/ },
+/* 306 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _Constants = __webpack_require__(307);
+	
+	var _Constants2 = _interopRequireDefault(_Constants);
+	
+	var _GrimoireInterface = __webpack_require__(301);
+	
+	var _GrimoireInterface2 = _interopRequireDefault(_GrimoireInterface);
+	
+	var _Attribute = __webpack_require__(308);
+	
+	var _Attribute2 = _interopRequireDefault(_Attribute);
+	
+	var _NSDictionary = __webpack_require__(310);
+	
+	var _NSDictionary2 = _interopRequireDefault(_NSDictionary);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	var ComponentDeclaration = function () {
+	    function ComponentDeclaration(name, attributes, ctor) {
+	        _classCallCheck(this, ComponentDeclaration);
+	
+	        this.name = name;
+	        this.attributes = attributes;
+	        this.ctor = ctor;
+	        ComponentDeclaration.ctorMap.push({ ctor: ctor, name: name });
+	    }
+	
+	    _createClass(ComponentDeclaration, [{
+	        key: "generateInstance",
+	        value: function generateInstance(componentElement) {
+	            componentElement = componentElement ? componentElement : document.createElementNS(this.name.ns, this.name.name);
+	            var component = new this.ctor();
+	            componentElement.setAttribute(_Constants2.default.x_gr_id, component.id);
+	            _GrimoireInterface2.default.componentDictionary[component.id] = component;
+	            component.name = this.name;
+	            component.element = componentElement;
+	            component.attributes = new _NSDictionary2.default();
+	            for (var key in this.attributes) {
+	                _Attribute2.default.generateAttributeForComponent(key, this.attributes[key], component);
+	            }
+	            return component;
+	        }
+	    }]);
+	
+	    return ComponentDeclaration;
+	}();
+	
+	ComponentDeclaration.ctorMap = [];
+	exports.default = ComponentDeclaration;
+
+/***/ },
+/* 307 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	var Constants = function () {
+	    function Constants() {
+	        _classCallCheck(this, Constants);
+	    }
+	
+	    _createClass(Constants, null, [{
+	        key: "defaultNamespace",
+	        get: function get() {
+	            return "HTTP://GRIMOIRE.GL/NS/DEFAULT";
+	        }
+	    }, {
+	        key: "x_gr_id",
+	        get: function get() {
+	            return "x-gr-id";
+	        }
+	    }]);
+	
+	    return Constants;
+	}();
+	
+	exports.default = Constants;
+
+/***/ },
+/* 308 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _Ensure = __webpack_require__(300);
+	
+	var _Ensure2 = _interopRequireDefault(_Ensure);
+	
+	var _NSIdentity = __webpack_require__(309);
+	
+	var _NSIdentity2 = _interopRequireDefault(_NSIdentity);
+	
+	var _GrimoireInterface = __webpack_require__(301);
+	
+	var _GrimoireInterface2 = _interopRequireDefault(_GrimoireInterface);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	/**
+	 * Manage a attribute attached to components.
+	 */
+	var Attribute = function () {
+	    function Attribute() {
+	        _classCallCheck(this, Attribute);
+	
+	        this.convertContext = {};
+	        /**
+	         * List of functions that is listening changing values.
+	         */
+	        this._observers = [];
+	    }
+	    /**
+	     * Goml tree interface which contains the component this attribute bound to.
+	     * @return {IGomlInterface} [description]
+	     */
+	
+	
+	    _createClass(Attribute, [{
+	        key: "watch",
+	
+	        /**
+	         * Add event handler to observe changing this attribute.
+	         * @param  {(attr: Attribute) => void} handler handler the handler you want to add.
+	         * @param {boolean = false} callFirst whether that handler should be called first time.
+	         */
+	        value: function watch(watcher) {
+	            var immedateCalls = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+	
+	            this._observers.push(watcher);
+	            if (immedateCalls) {
+	                watcher(this.Value, undefined, this);
+	            }
+	        }
+	        /**
+	         * Remove event handler you added.
+	         * @param  {Attribute} handler [description]
+	         * @return {[type]}            [description]
+	         */
+	
+	    }, {
+	        key: "removeObserver",
+	        value: function removeObserver(target) {
+	            var index = this._observers.findIndex(function (f) {
+	                return f === target;
+	            });
+	            if (index < 0) {
+	                return;
+	            }
+	            this._observers.splice(index, 1);
+	        }
+	        /**
+	         * Bind converted value to specified field.
+	         * When target object was not specified, field of owner component would be assigned.
+	         * @param {string} variableName [description]
+	         * @param {any} targetObject [description]
+	         */
+	
+	    }, {
+	        key: "boundTo",
+	        value: function boundTo(variableName) {
+	            var _this = this;
+	
+	            var targetObject = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.component;
+	
+	            if (this.converter["lazy"]) {
+	                targetObject.__defineGetter__(variableName, function () {
+	                    return _this.Value;
+	                });
+	            } else {
+	                (function () {
+	                    var backing = void 0;
+	                    _this.watch(function (v) {
+	                        backing = v;
+	                    }, true);
+	                    targetObject.__defineGetter__(variableName, function () {
+	                        return backing;
+	                    });
+	                })();
+	            }
+	            targetObject.__defineSetter__(variableName, function (val) {
+	                _this.Value = val;
+	            });
+	        }
+	        /**
+	         * Apply default value to attribute from DOM values.
+	         * @param {string }} domValues [description]
+	         */
+	
+	    }, {
+	        key: "resolveDefaultValue",
+	        value: function resolveDefaultValue(domValues) {
+	            if (this._value !== void 0) {
+	                return;
+	            }
+	            var tagAttrValue = domValues[this.name.name];
+	            if (tagAttrValue !== void 0) {
+	                this.Value = tagAttrValue; // Dom指定値で解決
+	                return;
+	            }
+	            var nodeDefaultValue = this.component.node.nodeDeclaration.defaultAttributesActual.get(this.name);
+	            if (nodeDefaultValue !== void 0) {
+	                this.Value = nodeDefaultValue; // Node指定値で解決
+	                return;
+	            }
+	            this.Value = this.declaration.default;
+	        }
+	    }, {
+	        key: "_valuate",
+	        value: function _valuate(raw) {
+	            var v = this.converter.convert(raw, this);
+	            if (v === void 0) {
+	                throw new Error("attribute " + this.name.name + " value can not be convert from " + this._value);
+	            }
+	            this._lastValuete = v;
+	            return v;
+	        }
+	    }, {
+	        key: "_notifyChange",
+	        value: function _notifyChange(newValue) {
+	            var _this2 = this;
+	
+	            if (!this.component.isActive) {
+	                return;
+	            }
+	            var lastvalue = this._lastValuete;
+	            this._observers.forEach(function (handler) {
+	                handler(_this2.converter.convert(newValue, _this2), lastvalue, _this2);
+	            });
+	        }
+	    }, {
+	        key: "tree",
+	        get: function get() {
+	            return this.component.tree;
+	        }
+	        /**
+	         * Companion map which is bounding to the component this attribute bound to.
+	         * @return {NSDictionary<any>} [description]
+	         */
+	
+	    }, {
+	        key: "companion",
+	        get: function get() {
+	            return this.component.companion;
+	        }
+	        /**
+	         * Get a value with specified type.
+	         * @return {any} value with specified type.
+	         */
+	
+	    }, {
+	        key: "Value",
+	        get: function get() {
+	            if (this._value === void 0) {
+	                throw new Error("attribute " + this.name.name + " value is undefined in " + this.component.node.name.name);
+	            }
+	            return this._valuate(this._value);
+	        }
+	        /**
+	         * Set a value with any type.
+	         * @param {any} val Value with string or specified type.
+	         */
+	        ,
+	        set: function set(val) {
+	            if (this._value === val) {
+	                return;
+	            }
+	            this._value = val;
+	            this._notifyChange(val);
+	        }
+	    }], [{
+	        key: "convert",
+	        value: function convert(converter, self, val) {
+	            var cname = _Ensure2.default.ensureTobeNSIdentity(converter);
+	            var conv = _GrimoireInterface2.default.converters.get(cname);
+	            if (!conv) {
+	                throw new Error("converter " + cname.name + " is not defined.");
+	            }
+	            return conv.convert(val, self);
+	        }
+	        /**
+	         * Construct a new attribute with name of key and any value with specified type. If constant flag is true, This attribute will be immutable.
+	         * If converter is not served, string converter will be set as default.
+	         * @param {string}        key       Key of this attribute.
+	         * @param {any}           value     Value of this attribute.
+	         * @param {ConverterBase} converter Converter of this attribute.
+	         * @param {boolean}       constant  Whether this attribute is immutable or not. False as default.
+	         */
+	
+	    }, {
+	        key: "generateAttributeForComponent",
+	        value: function generateAttributeForComponent(name, declaration, component) {
+	            var attr = new Attribute();
+	            attr.name = _NSIdentity2.default.from(component.name.ns, name);
+	            attr.component = component;
+	            attr.declaration = declaration;
+	            var converterName = _Ensure2.default.ensureTobeNSIdentity(declaration.converter);
+	            attr.converter = _GrimoireInterface2.default.converters.get(converterName);
+	            if (attr.converter === void 0) {
+	                // When the specified converter was not found
+	                throw new Error("Specified converter " + converterName.name + " was not found from registered converters.\n Component: " + attr.component.name.fqn + "\n Attribute: " + attr.name.name);
+	            }
+	            attr.component.attributes.set(attr.name, attr);
+	            attr.converter.verify(attr);
+	            return attr;
+	        }
+	    }]);
+	
+	    return Attribute;
+	}();
+	
+	exports.default = Attribute;
+
+/***/ },
+/* 309 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _Constants = __webpack_require__(307);
+	
+	var _Constants2 = _interopRequireDefault(_Constants);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	/**
+	 * The class to identity with XML namespace feature.
+	 */
+	var NSIdentity = function () {
+	    function NSIdentity(ns, name) {
+	        _classCallCheck(this, NSIdentity);
+	
+	        this._ns = ns.toUpperCase();
+	        this._name = name;
+	        // Ensure all of the characters are uppercase
+	        this._name = NSIdentity._ensureValidIdentity(this.name, true);
+	        this._ns = NSIdentity._ensureValidIdentity(this.ns);
+	        this._fqn = this.name + "|" + this.ns;
+	        NSIdentity._instances[this._fqn] = this;
+	        if (!NSIdentity._map[this.name]) {
+	            NSIdentity._map[this.name] = [this];
+	        } else {
+	            NSIdentity._map[this.name].push(this);
+	        }
+	    }
+	    /**
+	     * Namespace of this identity
+	     * @type {string}
+	     */
+	
+	
+	    _createClass(NSIdentity, [{
+	        key: "ns",
+	        get: function get() {
+	            return this._ns;
+	        }
+	        /**
+	         * Short name for this identity
+	         * @type {string}
+	         */
+	
+	    }, {
+	        key: "name",
+	        get: function get() {
+	            return this._name;
+	        }
+	        /**
+	         * Full qualified name of this identity
+	         * @type {string}
+	         */
+	
+	    }, {
+	        key: "fqn",
+	        get: function get() {
+	            return this._fqn;
+	        }
+	        /**
+	         * Generate an instance from Full qualified name.
+	         * @param  {string}             fqn [description]
+	         * @return {NSIdentity}     [description]
+	         */
+	
+	    }], [{
+	        key: "fromFQN",
+	        value: function fromFQN(fqn) {
+	            var inst = NSIdentity._instances[fqn];
+	            if (inst) {
+	                return inst;
+	            }
+	            var splitted = fqn.split("|");
+	            if (splitted.length !== 2) {
+	                throw new Error("Invalid fqn was given");
+	            }
+	            return new NSIdentity(splitted[1], splitted[0]);
+	        }
+	        /**
+	         * デフォルト名前空間でID作成
+	         * @param  {string}     name [description]
+	         * @return {NSIdentity}      [description]
+	         */
+	
+	    }, {
+	        key: "createOnDefaultNS",
+	        value: function createOnDefaultNS(name) {
+	            return NSIdentity.from(_Constants2.default.defaultNamespace, name);
+	        }
+	    }, {
+	        key: "from",
+	        value: function from(arg1, name) {
+	            if (name) {
+	                var fqn = name + "|" + arg1.toUpperCase();
+	                var inst = NSIdentity._instances[fqn];
+	                if (inst) {
+	                    return inst;
+	                }
+	                return new NSIdentity(arg1, name);
+	            } else {
+	                var list = NSIdentity._map[arg1];
+	                if (!list) {
+	                    return new NSIdentity(_Constants2.default.defaultNamespace, arg1);
+	                }
+	                if (list.length === 1) {
+	                    return list[0];
+	                }
+	                throw new Error("name " + arg1 + " is ambiguous in NSIdentity." + list + " exists.");
+	            }
+	        }
+	    }, {
+	        key: "clear",
+	        value: function clear() {
+	            NSIdentity._instances = {};
+	            NSIdentity._map = {};
+	        }
+	        /**
+	         * Make sure given name is valid for using in identity.
+	         * | is prohibited for using in name or namespace.
+	         * . is prohibited for using in name.
+	         * All lowercase alphabet will be transformed into uppercase.
+	         * @param  {string} name        [A name to verify]
+	         * @param  {[type]} noDot=false [Ensure not using dot or not]
+	         * @return {string}             [Valid name]
+	         */
+	
+	    }, {
+	        key: "_ensureValidIdentity",
+	        value: function _ensureValidIdentity(name) {
+	            var noDot = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+	
+	            if (name == null) {
+	                throw new Error("Specified name was null or undefined");
+	            }
+	            if (name.indexOf("|") > -1) {
+	                throw new Error("Namespace and identity cannnot contain | ");
+	            }
+	            if (noDot && name.indexOf(".") > -1) {
+	                throw new Error("identity cannnot contain .");
+	            }
+	            return name;
+	        }
+	    }]);
+	
+	    return NSIdentity;
+	}();
+	
+	NSIdentity._instances = {};
+	NSIdentity._map = {};
+	exports.default = NSIdentity;
+
+/***/ },
+/* 310 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _NSIdentity = __webpack_require__(309);
+	
+	var _NSIdentity2 = _interopRequireDefault(_NSIdentity);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	var NSDictionary = function () {
+	    function NSDictionary() {
+	        _classCallCheck(this, NSDictionary);
+	
+	        this._nameObjectMap = {};
+	        this._fqnObjectMap = {};
+	    }
+	
+	    _createClass(NSDictionary, [{
+	        key: "set",
+	        value: function set(key, value) {
+	            if (!this._fqnObjectMap[key.fqn]) {
+	                this._fqnObjectMap[key.fqn] = value;
+	                var c = this._nameObjectMap[key.name];
+	                if (c !== void 0) {
+	                    c.push({ id: key, value: value });
+	                } else {
+	                    this._nameObjectMap[key.name] = [{ id: key, value: value }];
+	                }
+	            } else {
+	                this._fqnObjectMap[key.fqn] = value;
+	                var _c = this._nameObjectMap[key.name];
+	                for (var i = 0; i < _c.length; i++) {
+	                    if (_c[i].id.fqn === key.fqn) {
+	                        _c[i] = { id: key, value: value };
+	                        break;
+	                    }
+	                }
+	            }
+	        }
+	    }, {
+	        key: "delete",
+	        value: function _delete(key) {
+	            if (this._fqnObjectMap[key.fqn] !== void 0) {
+	                delete this._fqnObjectMap[key.fqn];
+	                var theMap = this._nameObjectMap[key.name];
+	                for (var i = 0; i < theMap.length; i++) {
+	                    if (theMap[i].id.fqn === key.fqn) {
+	                        theMap.splice(i, 1);
+	                        break;
+	                    }
+	                }
+	                return true;
+	            }
+	            return false;
+	        }
+	    }, {
+	        key: "get",
+	        value: function get(arg1, name) {
+	            if (!arg1) {
+	                throw new Error("NSDictionary.get() can not recieve args null or undefined.");
+	            }
+	            if (typeof arg1 === "string") {
+	                if (name) {
+	                    return this.fromFQN(name + "|" + arg1.toUpperCase());
+	                } else {
+	                    var namedMap = this._nameObjectMap[arg1];
+	                    if (!namedMap) {
+	                        return null;
+	                    }
+	                    if (namedMap.length === 1) {
+	                        return namedMap[0].value;
+	                    } else {
+	                        throw new Error("Specified tag name " + arg1 + " is ambigious to identify.");
+	                    }
+	                }
+	            } else {
+	                if (arg1 instanceof _NSIdentity2.default) {
+	                    return this.fromFQN(arg1.fqn);
+	                } else {
+	                    if (arg1.prefix) {
+	                        return this.get(_NSIdentity2.default.from(arg1.namespaceURI, arg1.localName));
+	                    } else {
+	                        if (arg1.namespaceURI && this._fqnObjectMap[arg1.localName + "|" + arg1.namespaceURI] !== void 0) {
+	                            return this.get(_NSIdentity2.default.from(arg1.namespaceURI, arg1.localName));
+	                        }
+	                        if (arg1 && arg1.ownerElement && arg1.ownerElement.namespaceURI && this._fqnObjectMap[arg1.localName + "|" + arg1.ownerElement.namespaceURI] !== void 0) {
+	                            return this.get(_NSIdentity2.default.from(arg1.ownerElement.namespaceURI, arg1.localName));
+	                        }
+	                        return this.get(arg1.localName);
+	                    }
+	                }
+	            }
+	        }
+	    }, {
+	        key: "fromFQN",
+	        value: function fromFQN(fqn) {
+	            return this._fqnObjectMap[fqn];
+	        }
+	    }, {
+	        key: "isAmbigious",
+	        value: function isAmbigious(name) {
+	            return this._nameObjectMap[name].length > 1;
+	        }
+	    }, {
+	        key: "has",
+	        value: function has(name) {
+	            return this._nameObjectMap[name] !== void 0;
+	        }
+	    }, {
+	        key: "pushDictionary",
+	        value: function pushDictionary(dict) {
+	            var _this = this;
+	
+	            dict.forEach(function (value, keyFQN) {
+	                var id = _NSIdentity2.default.fromFQN(keyFQN);
+	                _this.set(id, value);
+	            });
+	            return this;
+	        }
+	    }, {
+	        key: "toArray",
+	        value: function toArray() {
+	            var _this2 = this;
+	
+	            var ret = [];
+	            Object.keys(this._fqnObjectMap).forEach(function (key) {
+	                ret.push(_this2._fqnObjectMap[key]);
+	            });
+	            return ret;
+	        }
+	    }, {
+	        key: "clone",
+	        value: function clone() {
+	            var dict = new NSDictionary();
+	            return dict.pushDictionary(this);
+	        }
+	    }, {
+	        key: "forEach",
+	        value: function forEach(callback) {
+	            var _this3 = this;
+	
+	            Object.keys(this._fqnObjectMap).forEach(function (key) {
+	                callback(_this3._fqnObjectMap[key], key);
+	            });
+	            return this;
+	        }
+	    }, {
+	        key: "map",
+	        value: function map(callback) {
+	            var ret = new NSDictionary();
+	            this.forEach(function (val, fqn) {
+	                var id = _NSIdentity2.default.fromFQN(fqn);
+	                ret.set(id, callback(val, fqn));
+	            });
+	            return ret;
+	        }
+	    }, {
+	        key: "clear",
+	        value: function clear() {
+	            this._nameObjectMap = {};
+	            this._fqnObjectMap = {};
+	        }
+	    }]);
+	
+	    return NSDictionary;
+	}();
+	
+	exports.default = NSDictionary;
+
+/***/ },
+/* 311 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9128,468 +11208,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = Utility;
 
 /***/ },
-/* 303 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _Constants = __webpack_require__(304);
-	
-	var _Constants2 = _interopRequireDefault(_Constants);
-	
-	var _GrimoireInterface = __webpack_require__(301);
-	
-	var _GrimoireInterface2 = _interopRequireDefault(_GrimoireInterface);
-	
-	var _NodeInterface = __webpack_require__(305);
-	
-	var _NodeInterface2 = _interopRequireDefault(_NodeInterface);
-	
-	var _GomlNode = __webpack_require__(308);
-	
-	var _GomlNode2 = _interopRequireDefault(_GomlNode);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	/**
-	 * Provides interfaces to treat whole goml tree for each.
-	 */
-	var GomlInterface = function () {
-	    function GomlInterface(rootNodes) {
-	        _classCallCheck(this, GomlInterface);
-	
-	        this.rootNodes = rootNodes;
-	    }
-	
-	    _createClass(GomlInterface, [{
-	        key: "getNodeById",
-	        value: function getNodeById(id) {
-	            return this.rootNodes.map(function (root) {
-	                return _GomlNode2.default.fromElement(root.element.ownerDocument.getElementById(id));
-	            });
-	        }
-	    }, {
-	        key: "queryFunc",
-	        value: function queryFunc(query) {
-	            return new _NodeInterface2.default(this.queryNodes(query));
-	        }
-	    }, {
-	        key: "queryNodes",
-	        value: function queryNodes(query) {
-	            return this.rootNodes.map(function (root) {
-	                var nodelist = root.element.ownerDocument.querySelectorAll(query);
-	                var nodes = [];
-	                for (var i = 0; i < nodelist.length; i++) {
-	                    var node = _GrimoireInterface2.default.nodeDictionary[nodelist.item(i).getAttribute(_Constants2.default.x_gr_id)];
-	                    if (node) {
-	                        nodes.push(node);
-	                    }
-	                }
-	                return nodes;
-	            });
-	        }
-	    }]);
-	
-	    return GomlInterface;
-	}();
-	
-	exports.default = GomlInterface;
-
-/***/ },
-/* 304 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	var Constants = function () {
-	    function Constants() {
-	        _classCallCheck(this, Constants);
-	    }
-	
-	    _createClass(Constants, null, [{
-	        key: "defaultNamespace",
-	        get: function get() {
-	            return "HTTP://GRIMOIRE.GL/NS/DEFAULT";
-	        }
-	    }, {
-	        key: "x_gr_id",
-	        get: function get() {
-	            return "x-gr-id";
-	        }
-	    }]);
-	
-	    return Constants;
-	}();
-	
-	exports.default = Constants;
-
-/***/ },
-/* 305 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _Utility = __webpack_require__(302);
-	
-	var _Utility2 = _interopRequireDefault(_Utility);
-	
-	var _XMLReader = __webpack_require__(306);
-	
-	var _XMLReader2 = _interopRequireDefault(_XMLReader);
-	
-	var _GomlParser = __webpack_require__(307);
-	
-	var _GomlParser2 = _interopRequireDefault(_GomlParser);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	/**
-	 * 複数のノードを対象とした操作を提供するインタフェース
-	 */
-	var NodeInterface = function () {
-	    function NodeInterface(nodes) {
-	        _classCallCheck(this, NodeInterface);
-	
-	        this.nodes = nodes;
-	        if (!nodes) {
-	            throw new Error("nodes is null");
-	        }
-	    }
-	
-	    _createClass(NodeInterface, [{
-	        key: "isEmpty",
-	        value: function isEmpty() {
-	            return this.count() === 0;
-	        }
-	    }, {
-	        key: "get",
-	        value: function get(i1, i2) {
-	            var _this = this;
-	
-	            if (i1 === void 0) {
-	                var first = this.first();
-	                if (!first) {
-	                    throw new Error("this NodeInterface is empty.");
-	                } else {
-	                    return first;
-	                }
-	            } else if (i2 === void 0) {
-	                if (this.count() <= i1) {
-	                    throw new Error("index out of range.");
-	                } else {
-	                    var _ret = function () {
-	                        var c = i1;
-	                        var returnNode = null;
-	                        _this.forEach(function (node) {
-	                            if (c === 0) {
-	                                returnNode = node;
-	                            }
-	                            c--;
-	                        });
-	                        return {
-	                            v: returnNode
-	                        };
-	                    }();
-	
-	                    if ((typeof _ret === "undefined" ? "undefined" : _typeof(_ret)) === "object") return _ret.v;
-	                }
-	            } else {
-	                if (this.nodes.length <= i1 || this.nodes[i1].length <= i2) {
-	                    throw new Error("index out of range.");
-	                } else {
-	                    return this.nodes[i1][i2];
-	                }
-	            }
-	        }
-	    }, {
-	        key: "getAttribute",
-	        value: function getAttribute(attrName) {
-	            var first = this.first();
-	            if (!first) {
-	                throw new Error("this NodeInterface is empty.");
-	            }
-	            return first.getAttribute(attrName);
-	        }
-	    }, {
-	        key: "setAttribute",
-	        value: function setAttribute(attrName, value) {
-	            this.forEach(function (node) {
-	                node.setAttribute(attrName, value, false);
-	            });
-	        }
-	        /**
-	         * 対象ノードにイベントリスナを追加します。
-	         * @param {string}   eventName [description]
-	         * @param {Function} listener  [description]
-	         */
-	
-	    }, {
-	        key: "on",
-	        value: function on(eventName, listener) {
-	            this.forEach(function (node) {
-	                node.on(eventName, listener);
-	            });
-	            return this;
-	        }
-	        /**
-	         * 対象ノードに指定したイベントリスナが登録されていれば削除します
-	         * @param {string}   eventName [description]
-	         * @param {Function} listener  [description]
-	         */
-	
-	    }, {
-	        key: "off",
-	        value: function off(eventName, listener) {
-	            this.forEach(function (node) {
-	                node.removeListener(eventName, listener);
-	            });
-	            return this;
-	        }
-	        /**
-	         * このノードインタフェースが対象とするノードそれぞれに、
-	         * タグで指定したノードを子要素として追加します。
-	         * @param {string} tag [description]
-	         */
-	
-	    }, {
-	        key: "append",
-	        value: function append(tag) {
-	            this.forEach(function (node) {
-	                var elems = _XMLReader2.default.parseXML(tag);
-	                elems.forEach(function (elem) {
-	                    var child = _GomlParser2.default.parse(elem, null, null);
-	                    node.addChild(child);
-	                });
-	            });
-	            return this;
-	        }
-	        /**
-	         * このノードインタフェースが対象とするノードの子に、
-	         * 指定されたノードが存在すれば削除します。
-	         * @param {GomlNode} child [description]
-	         */
-	
-	    }, {
-	        key: "remove",
-	        value: function remove() {
-	            this.forEach(function (node) {
-	                node.remove();
-	            });
-	            return this;
-	        }
-	        /**
-	         * このノードインタフェースが対象とするノードに対して反復処理を行います
-	         * @param  {GomlNode} callback [description]
-	         * @return {[type]}            [description]
-	         */
-	
-	    }, {
-	        key: "forEach",
-	        value: function forEach(callback) {
-	            this.nodes.forEach(function (array, gomlIndex) {
-	                array.forEach(function (node, nodeIndex) {
-	                    callback(node, gomlIndex, nodeIndex);
-	                });
-	            });
-	            return this;
-	        }
-	    }, {
-	        key: "find",
-	        value: function find(predicate) {
-	            var nodes = this.nodes;
-	            for (var i = 0; i < nodes.length; i++) {
-	                var array = nodes[i];
-	                for (var j = 0; j < array.length; j++) {
-	                    var node = array[j];
-	                    if (predicate(node, i, j)) {
-	                        return node;
-	                    }
-	                }
-	            }
-	            return null;
-	        }
-	    }, {
-	        key: "watch",
-	        value: function watch(attrName, watcher) {
-	            var immediate = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-	
-	            this.forEach(function (node) {
-	                node.watch(attrName, watcher, immediate);
-	            });
-	        }
-	        /**
-	         * このノードインタフェースが対象とするノードを有効、または無効にします。
-	         * @param {boolean} enable [description]
-	         */
-	
-	    }, {
-	        key: "setEnable",
-	        value: function setEnable(enable) {
-	            this.forEach(function (node) {
-	                node.enabled = !!enable;
-	            });
-	            return this;
-	        }
-	        /**
-	         * このノードインタフェースが対象とするノードのそれぞれの子ノードを対象とする、
-	         * 新しいノードインタフェースを取得します。
-	         * @return {NodeInterface} [description]
-	         */
-	
-	    }, {
-	        key: "children",
-	        value: function children() {
-	            var children = this.nodes.map(function (nodes) {
-	                return _Utility2.default.flatMap(nodes, function (node) {
-	                    return node.children;
-	                });
-	            });
-	            return new NodeInterface(children);
-	        }
-	        /**
-	         * 対象ノードにコンポーネントをアタッチします。
-	         * @param {Component} component [description]
-	         */
-	
-	    }, {
-	        key: "addComponent",
-	        value: function addComponent(componentId) {
-	            var attributes = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-	
-	            this.forEach(function (node) {
-	                node.addComponent(componentId, attributes);
-	            });
-	            return this;
-	        }
-	        /**
-	         * 最初の対象ノードを取得する
-	         * @return {GomlNode} [description]
-	         */
-	
-	    }, {
-	        key: "first",
-	        value: function first() {
-	            return this.find(function () {
-	                return true;
-	            });
-	        }
-	        /**
-	         * 対象となる唯一のノードを取得する。
-	         * 対象が存在しない、あるいは複数存在するときは例外を投げる。
-	         * @return {GomlNode} [description]
-	         */
-	
-	    }, {
-	        key: "single",
-	        value: function single() {
-	            if (this.count() !== 1) {
-	                throw new Error("this nodeInterface is not single.");
-	            }
-	            var first = this.first();
-	            if (!first) {
-	                throw new Error("this nodeInterface is not single,but is empty.");
-	            }
-	            return first;
-	        }
-	        /**
-	         * 対象となるノードの個数を取得する
-	         * @return {number} [description]
-	         */
-	
-	    }, {
-	        key: "count",
-	        value: function count() {
-	            if (this.nodes.length === 0) {
-	                return 0;
-	            }
-	            var counts = this.nodes.map(function (nodes) {
-	                return nodes.length;
-	            });
-	            return _Utility2.default.sum(counts);
-	        }
-	    }, {
-	        key: "filter",
-	        value: function filter(predicate) {
-	            var newNodes = [];
-	            for (var i = 0; i < this.nodes.length; i++) {
-	                var goml = this.nodes[i];
-	                newNodes.push([]);
-	                for (var j = 0; j < goml.length; j++) {
-	                    var node = goml[j];
-	                    if (predicate(node, i, j)) {
-	                        newNodes[i].push(node);
-	                    }
-	                }
-	            }
-	            return new NodeInterface(newNodes);
-	        }
-	    }, {
-	        key: "toArray",
-	        value: function toArray() {
-	            return _Utility2.default.flat(this.nodes);
-	        }
-	    }, {
-	        key: "addChildByName",
-	        value: function addChildByName(nodeName, attributes) {
-	            this.forEach(function (node) {
-	                node.addChildByName(nodeName, attributes);
-	            });
-	        }
-	    }, {
-	        key: "sendMessage",
-	        value: function sendMessage(message, args) {
-	            this.forEach(function (node) {
-	                node.sendMessage(message, args);
-	            });
-	        }
-	    }, {
-	        key: "broadcastMessage",
-	        value: function broadcastMessage(arg1, arg2, arg3) {
-	            if (typeof arg1 === "number") {
-	                this.forEach(function (node) {
-	                    node.broadcastMessage(arg1, arg2, arg3);
-	                });
-	            } else {
-	                this.forEach(function (node) {
-	                    node.broadcastMessage(arg2, arg3);
-	                });
-	            }
-	        }
-	    }]);
-	
-	    return NodeInterface;
-	}();
-	
-	exports.default = NodeInterface;
-
-/***/ },
-/* 306 */
+/* 312 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -9723,7 +11342,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = XMLReader;
 
 /***/ },
-/* 307 */
+/* 313 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -9732,991 +11351,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: true
 	});
 	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	var _events = __webpack_require__(314);
 	
-	var _GomlNode = __webpack_require__(308);
-	
-	var _GomlNode2 = _interopRequireDefault(_GomlNode);
-	
-	var _GrimoireInterface = __webpack_require__(301);
-	
-	var _GrimoireInterface2 = _interopRequireDefault(_GrimoireInterface);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	/**
-	 * Parser of Goml to Node utilities.
-	 * This class do not store any nodes and goml properties.
-	 */
-	var GomlParser = function () {
-	    function GomlParser() {
-	        _classCallCheck(this, GomlParser);
-	    }
-	
-	    _createClass(GomlParser, null, [{
-	        key: "parse",
-	
-	        /**
-	         * Domをパースする
-	         * @param  {Element}           source    [description]
-	         * @param  {GomlNode}          parent    あればこのノードにaddChildされる
-	         * @return {GomlNode}                    ルートノード
-	         */
-	        value: function parse(source, parent, scriptTag) {
-	            var newNode = GomlParser._createNode(source);
-	            if (!newNode) {
-	                // when specified node could not be found
-	                console.warn("\"" + source.tagName + "\" was not parsed.");
-	                return null;
-	            }
-	            // Parse children recursively
-	            var children = source.childNodes;
-	            var childNodeElements = []; // for parse after .Components has resolved.
-	            if (children && children.length !== 0) {
-	                var removeTarget = [];
-	                for (var i = 0; i < children.length; i++) {
-	                    var child = children.item(i);
-	                    if (!GomlParser._isElement(child)) {
-	                        removeTarget.push(child);
-	                        continue;
-	                    }
-	                    if (this._isComponentsTag(child)) {
-	                        // parse as components
-	                        GomlParser._parseComponents(newNode, child);
-	                        removeTarget.push(child);
-	                    } else {
-	                        // parse as child node.
-	                        childNodeElements.push(child);
-	                    }
-	                }
-	                // remove unused elements
-	                for (var _i = 0; _i < removeTarget.length; _i++) {
-	                    source.removeChild(removeTarget[_i]);
-	                }
-	            }
-	            // generate tree
-	            if (parent) {
-	                parent.addChild(newNode, null, false);
-	            }
-	            childNodeElements.forEach(function (child) {
-	                GomlParser.parse(child, newNode, null);
-	            });
-	            return newNode;
-	        }
-	        /**
-	         * GomlNodeのインスタンス化。GrimoireInterfaceへの登録
-	         * @param  {HTMLElement}      elem         [description]
-	         * @param  {GomlConfigurator} configurator [description]
-	         * @return {GomlTreeNodeBase}              [description]
-	         */
-	
-	    }, {
-	        key: "_createNode",
-	        value: function _createNode(elem) {
-	            var tagName = elem.localName;
-	            var recipe = _GrimoireInterface2.default.nodeDeclarations.get(elem);
-	            if (!recipe) {
-	                throw new Error("Tag \"" + tagName + "\" is not found.");
-	            }
-	            return new _GomlNode2.default(recipe, elem);
-	        }
-	        /**
-	         * .COMPONENTSのパース。
-	         * @param {GomlNode} node          アタッチされるコンポーネント
-	         * @param {Element}  componentsTag .COMPONENTSタグ
-	         */
-	
-	    }, {
-	        key: "_parseComponents",
-	        value: function _parseComponents(node, componentsTag) {
-	            var componentNodes = componentsTag.childNodes;
-	            if (!componentNodes) {
-	                return;
-	            }
-	            for (var i = 0; i < componentNodes.length; i++) {
-	                var componentNode = componentNodes.item(i);
-	                if (!GomlParser._isElement(componentNode)) {
-	                    continue; // Skip if the node was not element
-	                }
-	                var componentDecl = _GrimoireInterface2.default.componentDeclarations.get(componentNode);
-	                if (!componentDecl) {
-	                    throw new Error("Component " + componentNode.tagName + " is not found.");
-	                }
-	                var component = componentDecl.generateInstance(componentNode);
-	                node._addComponentDirectly(component, false);
-	            }
-	        }
-	    }, {
-	        key: "_isElement",
-	        value: function _isElement(node) {
-	            return node.nodeType === Node.ELEMENT_NODE;
-	        }
-	    }, {
-	        key: "_isComponentsTag",
-	        value: function _isComponentsTag(element) {
-	            var regexToFindComponent = /\.COMPONENTS$/mi; // TODO might needs to fix
-	            return regexToFindComponent.test(element.nodeName);
-	        }
-	    }]);
-	
-	    return GomlParser;
-	}();
-	
-	exports.default = GomlParser;
-
-/***/ },
-/* 308 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _AttributeManager = __webpack_require__(299);
-	
-	var _AttributeManager2 = _interopRequireDefault(_AttributeManager);
-	
-	var _Utility = __webpack_require__(302);
-	
-	var _Utility2 = _interopRequireDefault(_Utility);
-	
-	var _Constants = __webpack_require__(304);
-	
-	var _Constants2 = _interopRequireDefault(_Constants);
-	
-	var _GomlParser = __webpack_require__(307);
-	
-	var _GomlParser2 = _interopRequireDefault(_GomlParser);
-	
-	var _XMLReader = __webpack_require__(306);
-	
-	var _XMLReader2 = _interopRequireDefault(_XMLReader);
-	
-	var _GrimoireInterface = __webpack_require__(301);
-	
-	var _GrimoireInterface2 = _interopRequireDefault(_GrimoireInterface);
-	
-	var _EEObject2 = __webpack_require__(309);
-	
-	var _EEObject3 = _interopRequireDefault(_EEObject2);
-	
-	var _NodeUtility = __webpack_require__(312);
-	
-	var _NodeUtility2 = _interopRequireDefault(_NodeUtility);
-	
-	var _NSDictionary = __webpack_require__(313);
-	
-	var _NSDictionary2 = _interopRequireDefault(_NSDictionary);
-	
-	var _NSIdentity = __webpack_require__(314);
-	
-	var _NSIdentity2 = _interopRequireDefault(_NSIdentity);
-	
-	var _Ensure = __webpack_require__(300);
-	
-	var _Ensure2 = _interopRequireDefault(_Ensure);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var GomlNode = function (_EEObject) {
-	    _inherits(GomlNode, _EEObject);
-	
-	    /**
-	     * create new instance.
-	     * @param  {NodeDeclaration} recipe  作成するノードのDeclaration
-	     * @param  {Element}         element 対応するDomElement
-	     * @return {[type]}                  [description]
-	     */
-	    function GomlNode(recipe, element) {
-	        _classCallCheck(this, GomlNode);
-	
-	        var _this = _possibleConstructorReturn(this, (GomlNode.__proto__ || Object.getPrototypeOf(GomlNode)).call(this));
-	
-	        _this.children = [];
-	        _this._parent = null;
-	        _this._root = null;
-	        _this._mounted = false;
-	        _this._enabled = true;
-	        // private _messageBuffer: { message: string, target: Component }[] = [];
-	        _this._tree = null;
-	        _this._companion = new _NSDictionary2.default();
-	        _this._deleted = false;
-	        _this._attrBuffer = {};
-	        _this._defaultValueResolved = false;
-	        _this._isActive = false;
-	        _this._messageCache = {};
-	        if (!recipe) {
-	            throw new Error("recipe must not be null");
-	        }
-	        _this.nodeDeclaration = recipe;
-	        _this.element = element ? element : document.createElementNS(recipe.name.ns, recipe.name.name); // TODO Could be undefined or null?
-	        _this.componentsElement = document.createElement("COMPONENTS");
-	        _this._root = _this;
-	        _this._tree = (0, _GrimoireInterface2.default)([_this]);
-	        _this._components = [];
-	        _this._attributeManager = new _AttributeManager2.default(recipe.name.name, new _NSDictionary2.default());
-	        _this.element.setAttribute(_Constants2.default.x_gr_id, _this.id);
-	        var defaultComponentNames = recipe.defaultComponentsActual;
-	        // instanciate default components
-	        defaultComponentNames.forEach(function (id) {
-	            _this.addComponent(id, null, true);
-	        });
-	        // register to GrimoireInterface.
-	        _GrimoireInterface2.default.nodeDictionary[_this.id] = _this;
-	        return _this;
-	    }
-	    /**
-	     * Get actual goml node from element of xml tree.
-	     * @param  {Element}  elem [description]
-	     * @return {GomlNode}      [description]
-	     */
-	
-	
-	    _createClass(GomlNode, [{
-	        key: "getChildrenByClass",
-	
-	        /**
-	         * search from children node by class property.
-	         * return all nodes has same class as given.
-	         * @param  {string}     className [description]
-	         * @return {GomlNode[]}           [description]
-	         */
-	        value: function getChildrenByClass(className) {
-	            var nodes = this.element.getElementsByClassName(className);
-	            var array = new Array(nodes.length);
-	            for (var i = 0; i < nodes.length; i++) {
-	                array[i] = GomlNode.fromElement(nodes.item(i));
-	            }
-	            return array;
-	        }
-	        /**
-	         * search from children node by name property.
-	         * return all nodes has same name as given.
-	         * @param  {string}     nodeName [description]
-	         * @return {GomlNode[]}          [description]
-	         */
-	
-	    }, {
-	        key: "getChildrenByNodeName",
-	        value: function getChildrenByNodeName(nodeName) {
-	            var nodes = this.element.getElementsByTagName(nodeName);
-	            var array = new Array(nodes.length);
-	            for (var i = 0; i < nodes.length; i++) {
-	                array[i] = GomlNode.fromElement(nodes.item(i));
-	            }
-	            return array;
-	        }
-	    }, {
-	        key: "remove",
-	        value: function remove() {
-	            this.children.forEach(function (c) {
-	                c.remove();
-	            });
-	            _GrimoireInterface2.default.nodeDictionary[this.id] = null;
-	            if (this._parent) {
-	                this._parent.detachChild(this);
-	            } else {
-	                this.setMounted(false);
-	                if (this.element.parentNode) {
-	                    this.element.parentNode.removeChild(this.element);
-	                }
-	            }
-	            this._deleted = true;
-	        }
-	        /**
-	         * send message to this node.
-	         * invoke component method has same name as message if this node isActive.
-	         * @param  {string}  message [description]
-	         * @param  {any}     args    [description]
-	         * @return {boolean}         is this node active.
-	         */
-	
-	    }, {
-	        key: "sendMessage",
-	        value: function sendMessage(message, args) {
-	            if (!this.isActive) {
-	                return false;
-	            }
-	            message = _Ensure2.default.ensureTobeMessage(message);
-	            this._sendMessage(message, args);
-	            return true;
-	        }
-	    }, {
-	        key: "_sendMessage",
-	        value: function _sendMessage(message, args) {
-	            if (this._messageCache[message] === void 0) {
-	                this._messageCache[message] = this._components.filter(function (c) {
-	                    return typeof c[message] === "function";
-	                });
-	            }
-	            var targetList = this._messageCache[message];
-	            for (var i = 0; i < targetList.length; i++) {
-	                this._sendMessageToComponent(targetList[i], message, args);
-	            }
-	        }
-	    }, {
-	        key: "broadcastMessage",
-	        value: function broadcastMessage(arg1, arg2, arg3) {
-	            if (!this.enabled || !this.mounted) {
-	                return;
-	            }
-	            if (typeof arg1 === "number") {
-	                var range = arg1;
-	                var message = _Ensure2.default.ensureTobeMessage(arg2);
-	                var args = arg3;
-	                this._broadcastMessage(message, args, range);
-	            } else {
-	                var _message = _Ensure2.default.ensureTobeMessage(arg1);
-	                var _args = arg2;
-	                this._broadcastMessage(_message, _args, -1);
-	            }
-	        }
-	    }, {
-	        key: "_broadcastMessage",
-	        value: function _broadcastMessage(message, args, range) {
-	            //message is already ensured.-1 to unlimited range.
-	            if (!this.isActive) {
-	                return;
-	            }
-	            this._sendMessage(message, args);
-	            if (range === 0) {
-	                return;
-	            }
-	            var nextRange = range - 1;
-	            for (var i = 0; i < this.children.length; i++) {
-	                this.children[i]._broadcastMessage(message, args, nextRange);
-	            }
-	        }
-	    }, {
-	        key: "append",
-	        value: function append(tag) {
-	            var _this2 = this;
-	
-	            var elems = _XMLReader2.default.parseXML(tag);
-	            var ret = [];
-	            elems.forEach(function (elem) {
-	                var child = _GomlParser2.default.parse(elem, null, null);
-	                _this2.addChild(child);
-	                ret.push(child);
-	            });
-	            return ret;
-	        }
-	        /**
-	         * add new instance created by given name and attributes for this node as child.
-	         * @param {string |   NSIdentity} nodeName      [description]
-	         * @param {any    }} attributes   [description]
-	         */
-	
-	    }, {
-	        key: "addChildByName",
-	        value: function addChildByName(nodeName, attributes) {
-	            if (typeof nodeName === "string") {
-	                return this.addChildByName(_NSIdentity2.default.from(nodeName), attributes);
-	            } else {
-	                var nodeDec = _GrimoireInterface2.default.nodeDeclarations.get(nodeName);
-	                var node = new GomlNode(nodeDec, null);
-	                if (attributes) {
-	                    for (var key in attributes) {
-	                        var id = _Ensure2.default.ensureTobeNSIdentity(key);
-	                        node.setAttribute(id, attributes[key]);
-	                    }
-	                }
-	                this.addChild(node);
-	                return node;
-	            }
-	        }
-	        /**
-	         * Add child for this node.
-	         * @param {GomlNode} child            child node to add.
-	         * @param {number}   index            index for insert.なければ末尾に追加
-	         * @param {[type]}   elementSync=true trueのときはElementのツリーを同期させる。（Elementからパースするときはfalseにする）
-	         */
-	
-	    }, {
-	        key: "addChild",
-	        value: function addChild(child, index) {
-	            var elementSync = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
-	
-	            if (child._deleted) {
-	                throw new Error("deleted node never use.");
-	            }
-	            if (index != null && typeof index !== "number") {
-	                throw new Error("insert index should be number or null or undefined.");
-	            }
-	            child._parent = this;
-	            var insertIndex = index == null ? this.children.length : index;
-	            this.children.splice(insertIndex, 0, child);
-	            // handling html
-	            if (elementSync) {
-	                var referenceElement = this.element[_NodeUtility2.default.getNodeListIndexByElementIndex(this.element, insertIndex)];
-	                this.element.insertBefore(child.element, referenceElement);
-	            }
-	            child._tree = this._tree;
-	            child._companion = this._companion;
-	            // mounting
-	            if (this.mounted) {
-	                child.setMounted(true);
-	            }
-	        }
-	    }, {
-	        key: "callRecursively",
-	        value: function callRecursively(func) {
-	            return this._callRecursively(func, function (n) {
-	                return n.children;
-	            });
-	        }
-	        /**
-	         * delete child node.
-	         * @param {GomlNode} child Target node to be inserted.
-	         */
-	
-	    }, {
-	        key: "removeChild",
-	        value: function removeChild(child) {
-	            var node = this.detachChild(child);
-	            if (node) {
-	                node.remove();
-	            }
-	        }
-	        /**
-	         * detach given node from this node if target is child of this node.
-	         * return null if target is not child of this node.
-	         * @param  {GomlNode} child [description]
-	         * @return {GomlNode}       detached node.
-	         */
-	
-	    }, {
-	        key: "detachChild",
-	        value: function detachChild(target) {
-	            // search child.
-	            var index = this.children.indexOf(target);
-	            if (index === -1) {
-	                return null;
-	            }
-	            target.setMounted(false);
-	            target._parent = null;
-	            this.children.splice(index, 1);
-	            // html sync
-	            this.element.removeChild(target.element);
-	            return target;
-	        }
-	        /**
-	         * detach this node from parent.
-	         */
-	
-	    }, {
-	        key: "detach",
-	        value: function detach() {
-	            if (this.parent) {
-	                this.parent.detachChild(this);
-	            } else {
-	                throw new Error("root Node cannot be detached.");
-	            }
-	        }
-	        /**
-	         * [[[OBSOLETE!]]]get value of attribute.
-	         * @param  {string | NSIdentity}  attrName [description]
-	         * @return {any}         [description]
-	         */
-	
-	    }, {
-	        key: "getValue",
-	        value: function getValue(attrName) {
-	            console.warn("getValue is obsolate. please use getAttribute instead of");
-	            return this.getAttribute(attrName);
-	        }
-	    }, {
-	        key: "getAttribute",
-	        value: function getAttribute(attrName) {
-	            return this._attributeManager.getAttribute(attrName);
-	        }
-	    }, {
-	        key: "getAttributeRaw",
-	        value: function getAttributeRaw(attrName) {
-	            return this._attributeManager.attributes.get(attrName);
-	        }
-	    }, {
-	        key: "setAttribute",
-	        value: function setAttribute(attrName, value) {
-	            var ignoireFreeze = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
-	
-	            if (!ignoireFreeze && this.isFreezeAttribute(_Ensure2.default.ensureTobeNSIdentity(attrName).name)) {
-	                throw new Error("attribute " + _Ensure2.default.ensureTobeNSIdentity(attrName).name + " can not set. Attribute is frozen. ");
-	            }
-	            return this._attributeManager.setAttribute(attrName, value);
-	        }
-	        /**
-	         *  Add new attribute. In most of case, users no need to call this method.
-	         *  Use __addAttribute in Component should be used instead.
-	         */
-	
-	    }, {
-	        key: "addAttribute",
-	        value: function addAttribute(attr) {
-	            return this._attributeManager.addAttribute(attr);
-	        }
-	        /**
-	         * Update mounted status and emit events
-	         * @param {boolean} mounted Mounted status.
-	         */
-	
-	    }, {
-	        key: "setMounted",
-	        value: function setMounted(mounted) {
-	            if (this._mounted === mounted) {
-	                return;
-	            }
-	            if (mounted) {
-	                this._mounted = mounted;
-	                this._sendMessageForced("awake");
-	                this._isActive = this._parent ? this._parent.isActive && this.enabled : this.enabled;
-	                this._sendMessageForced("mount");
-	                this.children.forEach(function (child) {
-	                    child.setMounted(mounted);
-	                });
-	            } else {
-	                this.children.forEach(function (child) {
-	                    child.setMounted(mounted);
-	                });
-	                this._sendMessageForced("unmount");
-	                this._sendMessageForced("dispose");
-	                this._isActive = false;
-	                this._tree = null;
-	                this._companion = null;
-	                this._mounted = mounted;
-	            }
-	        }
-	        /**
-	         * Get index of this node from parent.
-	         * @return {number} number of index.
-	         */
-	
-	    }, {
-	        key: "index",
-	        value: function index() {
-	            if (!this._parent) {
-	                return -1;
-	            }
-	            return this._parent.children.indexOf(this);
-	        }
-	        /**
-	         * remove attribute from this node.
-	         * @param {Attribute} attr [description]
-	         */
-	
-	    }, {
-	        key: "removeAttribute",
-	        value: function removeAttribute(attr) {
-	            return this._attributeManager.removeAttribute(attr);
-	        }
-	        /**
-	         * attach component to this node.
-	         * @param {Component} component [description]
-	         */
-	
-	    }, {
-	        key: "addComponent",
-	        value: function addComponent(component) {
-	            var attributes = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-	            var isDefaultComponent = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-	
-	            var declaration = _GrimoireInterface2.default.componentDeclarations.get(component);
-	            var instance = declaration.generateInstance();
-	            attributes = attributes || {};
-	            for (var key in attributes) {
-	                instance.setAttribute(key, attributes[key]);
-	            }
-	            this._addComponentDirectly(instance, isDefaultComponent);
-	            return instance;
-	        }
-	        /**
-	         * Internal use!
-	         * Should not operate by users or plugin developpers
-	         * @param {Component} component          [description]
-	         * @param {boolean}   isDefaultComponent [description]
-	         */
-	
-	    }, {
-	        key: "_addComponentDirectly",
-	        value: function _addComponentDirectly(component, isDefaultComponent) {
-	            var _this3 = this;
-	
-	            if (component.node || component.disposed) {
-	                throw new Error("component never change attached node");
-	            }
-	            this._messageCache = {}; //TODO:optimize.
-	            component.isDefaultComponent = !!isDefaultComponent;
-	            component.node = this;
-	            var referenceElement = this.componentsElement[_NodeUtility2.default.getNodeListIndexByElementIndex(this.componentsElement, this._components.length)];
-	            this.componentsElement.insertBefore(component.element, referenceElement);
-	            var propNames = [];
-	            var o = component;
-	            while (o) {
-	                propNames = propNames.concat(Object.getOwnPropertyNames(o));
-	                o = Object.getPrototypeOf(o);
-	            }
-	            propNames.filter(function (name) {
-	                return name.startsWith("$") && typeof component[name] === "function";
-	            }).forEach(function (method) {
-	                component["$" + method] = component[method].bind(component);
-	            });
-	            this._components.push(component);
-	            if (isDefaultComponent) {
-	                // attributes should be exposed on node
-	                component.attributes.forEach(function (p) {
-	                    return _this3.addAttribute(p);
-	                });
-	                if (this._defaultValueResolved) {
-	                    component.attributes.forEach(function (p) {
-	                        return p.resolveDefaultValue(_NodeUtility2.default.getAttributes(_this3.element));
-	                    });
-	                }
-	            }
-	            if (this._mounted) {
-	                component.resolveDefaultAttributes(null); // here must be optional component.should not use node element attributes.
-	                this._sendMessageForcedTo(component, "awake");
-	                this._sendMessageForcedTo(component, "mount");
-	            }
-	        }
-	    }, {
-	        key: "removeComponent",
-	        value: function removeComponent(component) {
-	            if (_Utility2.default.remove(this._components, component)) {
-	                this._messageCache = {}; //TODO:optimize.
-	                component.node = null;
-	                component.disposed = true;
-	                return true;
-	            }
-	            return false;
-	        }
-	    }, {
-	        key: "getComponents",
-	        value: function getComponents(filter) {
-	            var _this4 = this;
-	
-	            if (!filter) {
-	                return this._components;
-	            } else {
-	                var _ret = function () {
-	                    var ctor = _Ensure2.default.ensureTobeComponentConstructor(filter);
-	                    return {
-	                        v: _this4._components.filter(function (c) {
-	                            return c instanceof ctor;
-	                        })
-	                    };
-	                }();
-	
-	                if ((typeof _ret === "undefined" ? "undefined" : _typeof(_ret)) === "object") return _ret.v;
-	            }
-	        }
-	        /**
-	         * search component by name from this node.
-	         * @param  {string | NSIdentity}  name [description]
-	         * @return {Component}   component found first.
-	         */
-	
-	    }, {
-	        key: "getComponent",
-	        value: function getComponent(name) {
-	            // 事情により<T extends Component>とはできない。
-	            // これはref/Node/Componentによって参照されるのが外部ライブラリにおけるコンポーネントであるが、
-	            // src/Node/Componentがこのプロジェクトにおけるコンポーネントのため、別のコンポーネントとみなされ、型の制約をみたさなくなるからである。
-	            if (!name) {
-	                throw new Error("name must be not null or undefined");
-	            } else if (typeof name === "function") {
-	                return this._components.find(function (c) {
-	                    return c instanceof name;
-	                }) || null;
-	            } else {
-	                var ctor = _Ensure2.default.ensureTobeComponentConstructor(name);
-	                if (!ctor) {
-	                    throw new Error("component " + name + " is not exist");
-	                }
-	                return this.getComponent(ctor);
-	            }
-	        }
-	    }, {
-	        key: "getComponentsInChildren",
-	        value: function getComponentsInChildren(name) {
-	            if (typeof name === "function") {
-	                return this.callRecursively(function (node) {
-	                    return node.getComponent(name);
-	                });
-	            } else {
-	                return this.callRecursively(function (node) {
-	                    return node.getComponent(name);
-	                });
-	            }
-	        }
-	    }, {
-	        key: "getComponentInAncesotor",
-	        value: function getComponentInAncesotor(name) {
-	            if (this.parent) {
-	                return this.parent._getComponentInAncesotor(name);
-	            }
-	            return null;
-	        }
-	    }, {
-	        key: "_getComponentInAncesotor",
-	        value: function _getComponentInAncesotor(name) {
-	            var ret = this.getComponent(name);
-	            if (ret) {
-	                return ret;
-	            }
-	            if (this.parent) {
-	                return this.parent._getComponentInAncesotor(name);
-	            }
-	            return null;
-	        }
-	        /**
-	         * resolve default attribute value for all component.
-	         * すべてのコンポーネントの属性をエレメントかデフォルト値で初期化
-	         */
-	
-	    }, {
-	        key: "resolveAttributesValue",
-	        value: function resolveAttributesValue() {
-	            this._defaultValueResolved = true;
-	            var attrs = _NodeUtility2.default.getAttributes(this.element);
-	            for (var key in attrs) {
-	                if (this.isFreezeAttribute(key)) {
-	                    throw new Error("attribute " + key + " can not change from GOML. Attribute is frozen. ");
-	                }
-	                if (!this.attributes.get(key)) {
-	                    _Utility2.default.w("attribute '" + key + "' is not exist in this node '" + this.name.fqn + "'");
-	                }
-	            }
-	            this._components.forEach(function (component) {
-	                component.resolveDefaultAttributes(attrs);
-	            });
-	        }
-	    }, {
-	        key: "isFreezeAttribute",
-	        value: function isFreezeAttribute(attributeName) {
-	            return !!this.nodeDeclaration.freezeAttributes.find(function (name) {
-	                return attributeName === name;
-	            });
-	        }
-	    }, {
-	        key: "notifyActivenessUpdate",
-	        value: function notifyActivenessUpdate(activeness) {
-	            if (this.isActive !== activeness) {
-	                this._isActive = activeness;
-	                this.children.forEach(function (child) {
-	                    child.notifyActivenessUpdate(activeness && child.enabled);
-	                });
-	            }
-	        }
-	    }, {
-	        key: "watch",
-	        value: function watch(attrName, watcher) {
-	            var immediate = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-	
-	            this._attributeManager.watch(attrName, watcher, immediate);
-	        }
-	        /**
-	         * コンポーネントにメッセージを送る。送信したらバッファからは削除される.
-	         * @param  {Component} targetComponent 対象コンポーネント
-	         * @param  {string}    message         メッセージ
-	         * @param  {boolean}   forced          trueでコンポーネントのenableを無視して送信
-	         * @param  {boolean}   toBuffer        trueで送信失敗したらバッファに追加
-	         * @param  {any}       args            [description]
-	         * @return {boolean}                   送信したか
-	         */
-	
-	    }, {
-	        key: "_sendMessageToComponent",
-	        value: function _sendMessageToComponent(targetComponent, message, args) {
-	            if (!targetComponent.enabled) {
-	                return false;
-	            }
-	            var method = targetComponent[message];
-	            if (typeof method === "function") {
-	                method(args);
-	                return true;
-	            }
-	            return false;
-	        }
-	    }, {
-	        key: "_sendMessageForced",
-	        value: function _sendMessageForced(message) {
-	            for (var i = 0; i < this._components.length; i++) {
-	                this._sendMessageForcedTo(this._components[i], message);
-	            }
-	        }
-	        /**
-	         * for $awake
-	         * @param {Component} target  [description]
-	         * @param {string}    message [description]
-	         */
-	
-	    }, {
-	        key: "_sendMessageForcedTo",
-	        value: function _sendMessageForcedTo(target, message) {
-	            message = _Ensure2.default.ensureTobeMessage(message);
-	            var method = target[message];
-	            if (typeof method === "function") {
-	                method();
-	            }
-	        }
-	    }, {
-	        key: "_callRecursively",
-	        value: function _callRecursively(func, nextGenerator) {
-	            var val = func(this);
-	            var nexts = nextGenerator(this);
-	            var nextVals = nexts.map(function (c) {
-	                return c.callRecursively(func);
-	            });
-	            var list = _Utility2.default.flat(nextVals);
-	            list.unshift(val);
-	            return list;
-	        }
-	    }, {
-	        key: "name",
-	
-	        /**
-	         * Tag name.
-	         */
-	        get: function get() {
-	            return this.nodeDeclaration.name;
-	        }
-	    }, {
-	        key: "attributes",
-	        get: function get() {
-	            return this._attributeManager.attributes;
-	        }
-	        /**
-	         * GomlInterface that this node is bound to.
-	         * throw exception if this node is not mounted.
-	         * @return {IGomlInterface} [description]
-	         */
-	
-	    }, {
-	        key: "tree",
-	        get: function get() {
-	            if (!this.mounted) {
-	                throw new Error("this node is not mounted");
-	            }
-	            return this._tree;
-	        }
-	        /**
-	         * indicate this node is already deleted.
-	         * if this node is deleted once, this node will not be mounted.
-	         * @return {boolean} [description]
-	         */
-	
-	    }, {
-	        key: "deleted",
-	        get: function get() {
-	            return this._deleted;
-	        }
-	        /**
-	         * indicate this node is enabled in tree.
-	         * This value must be false when ancestor of this node is disabled.
-	         * @return {boolean} [description]
-	         */
-	
-	    }, {
-	        key: "isActive",
-	        get: function get() {
-	            return this._isActive;
-	        }
-	        /**
-	         * indicate this node is enabled.
-	         * this node never recieve any message if this node is not enabled.
-	         * @return {boolean} [description]
-	         */
-	
-	    }, {
-	        key: "enabled",
-	        get: function get() {
-	            return this._enabled;
-	        },
-	        set: function set(value) {
-	            this.setAttribute("enabled", value);
-	        }
-	        /**
-	         * the shared object by all nodes in tree.
-	         * @return {NSDictionary<any>} [description]
-	         */
-	
-	    }, {
-	        key: "companion",
-	        get: function get() {
-	            return this._companion;
-	        }
-	        /**
-	         * parent node of this node.
-	         * if this node is root, return null.
-	         * @return {GomlNode} [description]
-	         */
-	
-	    }, {
-	        key: "parent",
-	        get: function get() {
-	            return this._parent;
-	        }
-	        /**
-	         * return true if this node has some child nodes.
-	         * @return {boolean} [description]
-	         */
-	
-	    }, {
-	        key: "hasChildren",
-	        get: function get() {
-	            return this.children.length > 0;
-	        }
-	        /**
-	         * indicate mounted status.
-	         * this property to be true when treeroot registered to GrimoireInterface.
-	         * to be false when this node detachd from the tree.
-	         * @return {boolean} Whether this node is mounted or not.
-	         */
-	
-	    }, {
-	        key: "mounted",
-	        get: function get() {
-	            return this._mounted;
-	        }
-	    }], [{
-	        key: "fromElement",
-	        value: function fromElement(elem) {
-	            return _GrimoireInterface2.default.nodeDictionary[elem.getAttribute(_Constants2.default.x_gr_id)];
-	        }
-	    }]);
-	
-	    return GomlNode;
-	}(_EEObject3.default);
-	
-	exports.default = GomlNode;
-
-/***/ },
-/* 309 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _events = __webpack_require__(310);
-	
-	var _IDObject2 = __webpack_require__(311);
+	var _IDObject2 = __webpack_require__(315);
 	
 	var _IDObject3 = _interopRequireDefault(_IDObject2);
 	
@@ -10754,7 +11391,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = EEObject;
 
 /***/ },
-/* 310 */
+/* 314 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -11062,7 +11699,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 311 */
+/* 315 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -11130,7 +11767,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = IDObject;
 
 /***/ },
-/* 312 */
+/* 316 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -11174,6 +11811,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	            for (var i = 0; i < domAttr.length; i++) {
 	                var attrNode = domAttr.item(i);
 	                var name = attrNode.name;
+	                if (name.startsWith("xmlns")) {
+	                    continue;
+	                }
 	                attributes[name] = attrNode.value;
 	            }
 	            return attributes;
@@ -11186,350 +11826,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = NodeUtility;
 
 /***/ },
-/* 313 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _NSIdentity = __webpack_require__(314);
-	
-	var _NSIdentity2 = _interopRequireDefault(_NSIdentity);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	var NSDictionary = function () {
-	    function NSDictionary() {
-	        _classCallCheck(this, NSDictionary);
-	
-	        this._nameObjectMap = {};
-	        this._fqnObjectMap = {};
-	    }
-	
-	    _createClass(NSDictionary, [{
-	        key: "set",
-	        value: function set(key, value) {
-	            if (!this._fqnObjectMap[key.fqn]) {
-	                this._fqnObjectMap[key.fqn] = value;
-	                var c = this._nameObjectMap[key.name];
-	                if (c !== void 0) {
-	                    c.push({ id: key, value: value });
-	                } else {
-	                    this._nameObjectMap[key.name] = [{ id: key, value: value }];
-	                }
-	            } else {
-	                this._fqnObjectMap[key.fqn] = value;
-	                var _c = this._nameObjectMap[key.name];
-	                for (var i = 0; i < _c.length; i++) {
-	                    if (_c[i].id.fqn === key.fqn) {
-	                        _c[i] = { id: key, value: value };
-	                        break;
-	                    }
-	                }
-	            }
-	        }
-	    }, {
-	        key: "delete",
-	        value: function _delete(key) {
-	            if (this._fqnObjectMap[key.fqn] !== void 0) {
-	                delete this._fqnObjectMap[key.fqn];
-	                var theMap = this._nameObjectMap[key.name];
-	                for (var i = 0; i < theMap.length; i++) {
-	                    if (theMap[i].id.fqn === key.fqn) {
-	                        theMap.splice(i, 1);
-	                        break;
-	                    }
-	                }
-	                return true;
-	            }
-	            return false;
-	        }
-	    }, {
-	        key: "get",
-	        value: function get(arg1, name) {
-	            if (!arg1) {
-	                throw new Error("NSDictionary.get() can not recieve args null or undefined.");
-	            }
-	            if (typeof arg1 === "string") {
-	                if (name) {
-	                    return this.fromFQN(name + "|" + arg1.toUpperCase());
-	                } else {
-	                    var namedMap = this._nameObjectMap[arg1];
-	                    if (!namedMap) {
-	                        return null;
-	                    }
-	                    if (namedMap.length === 1) {
-	                        return namedMap[0].value;
-	                    } else {
-	                        throw new Error("Specified tag name " + arg1 + " is ambigious to identify.");
-	                    }
-	                }
-	            } else {
-	                if (arg1 instanceof _NSIdentity2.default) {
-	                    return this.fromFQN(arg1.fqn);
-	                } else {
-	                    if (arg1.prefix) {
-	                        return this.get(_NSIdentity2.default.from(arg1.namespaceURI, arg1.localName));
-	                    } else {
-	                        if (arg1.namespaceURI && this._fqnObjectMap[arg1.localName + "|" + arg1.namespaceURI] !== void 0) {
-	                            return this.get(_NSIdentity2.default.from(arg1.namespaceURI, arg1.localName));
-	                        }
-	                        if (arg1 && arg1.ownerElement && arg1.ownerElement.namespaceURI && this._fqnObjectMap[arg1.localName + "|" + arg1.ownerElement.namespaceURI] !== void 0) {
-	                            return this.get(_NSIdentity2.default.from(arg1.ownerElement.namespaceURI, arg1.localName));
-	                        }
-	                        return this.get(arg1.localName);
-	                    }
-	                }
-	            }
-	        }
-	    }, {
-	        key: "fromFQN",
-	        value: function fromFQN(fqn) {
-	            return this._fqnObjectMap[fqn];
-	        }
-	    }, {
-	        key: "isAmbigious",
-	        value: function isAmbigious(name) {
-	            return this._nameObjectMap[name].length > 1;
-	        }
-	    }, {
-	        key: "has",
-	        value: function has(name) {
-	            return this._nameObjectMap[name] !== void 0;
-	        }
-	    }, {
-	        key: "pushDictionary",
-	        value: function pushDictionary(dict) {
-	            var _this = this;
-	
-	            dict.forEach(function (value, keyFQN) {
-	                var id = _NSIdentity2.default.fromFQN(keyFQN);
-	                _this.set(id, value);
-	            });
-	            return this;
-	        }
-	    }, {
-	        key: "toArray",
-	        value: function toArray() {
-	            var _this2 = this;
-	
-	            var ret = [];
-	            Object.keys(this._fqnObjectMap).forEach(function (key) {
-	                ret.push(_this2._fqnObjectMap[key]);
-	            });
-	            return ret;
-	        }
-	    }, {
-	        key: "clone",
-	        value: function clone() {
-	            var dict = new NSDictionary();
-	            return dict.pushDictionary(this);
-	        }
-	    }, {
-	        key: "forEach",
-	        value: function forEach(callback) {
-	            var _this3 = this;
-	
-	            Object.keys(this._fqnObjectMap).forEach(function (key) {
-	                callback(_this3._fqnObjectMap[key], key);
-	            });
-	            return this;
-	        }
-	    }, {
-	        key: "map",
-	        value: function map(callback) {
-	            var ret = new NSDictionary();
-	            this.forEach(function (val, fqn) {
-	                var id = _NSIdentity2.default.fromFQN(fqn);
-	                ret.set(id, callback(val, fqn));
-	            });
-	            return ret;
-	        }
-	    }, {
-	        key: "clear",
-	        value: function clear() {
-	            this._nameObjectMap = {};
-	            this._fqnObjectMap = {};
-	        }
-	    }]);
-	
-	    return NSDictionary;
-	}();
-	
-	exports.default = NSDictionary;
-
-/***/ },
-/* 314 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _Constants = __webpack_require__(304);
-	
-	var _Constants2 = _interopRequireDefault(_Constants);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	/**
-	 * The class to identity with XML namespace feature.
-	 */
-	var NSIdentity = function () {
-	    function NSIdentity(ns, name) {
-	        _classCallCheck(this, NSIdentity);
-	
-	        this._ns = ns.toUpperCase();
-	        this._name = name;
-	        // Ensure all of the characters are uppercase
-	        this._name = NSIdentity._ensureValidIdentity(this.name, true);
-	        this._ns = NSIdentity._ensureValidIdentity(this.ns);
-	        this._fqn = this.name + "|" + this.ns;
-	        NSIdentity._instances[this._fqn] = this;
-	        if (!NSIdentity._map[this.name]) {
-	            NSIdentity._map[this.name] = [this];
-	        } else {
-	            NSIdentity._map[this.name].push(this);
-	        }
-	    }
-	    /**
-	     * Namespace of this identity
-	     * @type {string}
-	     */
-	
-	
-	    _createClass(NSIdentity, [{
-	        key: "ns",
-	        get: function get() {
-	            return this._ns;
-	        }
-	        /**
-	         * Short name for this identity
-	         * @type {string}
-	         */
-	
-	    }, {
-	        key: "name",
-	        get: function get() {
-	            return this._name;
-	        }
-	        /**
-	         * Full qualified name of this identity
-	         * @type {string}
-	         */
-	
-	    }, {
-	        key: "fqn",
-	        get: function get() {
-	            return this._fqn;
-	        }
-	        /**
-	         * Generate an instance from Full qualified name.
-	         * @param  {string}             fqn [description]
-	         * @return {NSIdentity}     [description]
-	         */
-	
-	    }], [{
-	        key: "fromFQN",
-	        value: function fromFQN(fqn) {
-	            var inst = NSIdentity._instances[fqn];
-	            if (inst) {
-	                return inst;
-	            }
-	            var splitted = fqn.split("|");
-	            if (splitted.length !== 2) {
-	                throw new Error("Invalid fqn was given");
-	            }
-	            return new NSIdentity(splitted[1], splitted[0]);
-	        }
-	        /**
-	         * デフォルト名前空間でID作成
-	         * @param  {string}     name [description]
-	         * @return {NSIdentity}      [description]
-	         */
-	
-	    }, {
-	        key: "createOnDefaultNS",
-	        value: function createOnDefaultNS(name) {
-	            return NSIdentity.from(_Constants2.default.defaultNamespace, name);
-	        }
-	    }, {
-	        key: "from",
-	        value: function from(arg1, name) {
-	            if (name) {
-	                var fqn = name + "|" + arg1.toUpperCase();
-	                var inst = NSIdentity._instances[fqn];
-	                if (inst) {
-	                    return inst;
-	                }
-	                return new NSIdentity(arg1, name);
-	            } else {
-	                var list = NSIdentity._map[arg1];
-	                if (!list) {
-	                    return new NSIdentity(_Constants2.default.defaultNamespace, arg1);
-	                }
-	                if (list.length == 1) {
-	                    return list[0];
-	                }
-	                throw new Error("name " + arg1 + " is ambiguous in NSIdentity." + list + " exists.");
-	            }
-	        }
-	    }, {
-	        key: "clear",
-	        value: function clear() {
-	            NSIdentity._instances = {};
-	            NSIdentity._map = {};
-	        }
-	        /**
-	         * Make sure given name is valid for using in identity.
-	         * | is prohibited for using in name or namespace.
-	         * . is prohibited for using in name.
-	         * All lowercase alphabet will be transformed into uppercase.
-	         * @param  {string} name        [A name to verify]
-	         * @param  {[type]} noDot=false [Ensure not using dot or not]
-	         * @return {string}             [Valid name]
-	         */
-	
-	    }, {
-	        key: "_ensureValidIdentity",
-	        value: function _ensureValidIdentity(name) {
-	            var noDot = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-	
-	            if (name == null) {
-	                throw new Error("Specified name was null or undefined");
-	            }
-	            if (name.indexOf("|") > -1) {
-	                throw new Error("Namespace and identity cannnot contain | ");
-	            }
-	            if (noDot && name.indexOf(".") > -1) {
-	                throw new Error("identity cannnot contain .");
-	            }
-	            return name;
-	        }
-	    }]);
-	
-	    return NSIdentity;
-	}();
-	
-	NSIdentity._instances = {};
-	NSIdentity._map = {};
-	exports.default = NSIdentity;
-
-/***/ },
-/* 315 */
+/* 317 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -11537,7 +11834,921 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	function BooleanConverter(val) {
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	var XMLHttpRequestAsync = function () {
+	    function XMLHttpRequestAsync() {
+	        _classCallCheck(this, XMLHttpRequestAsync);
+	    }
+	
+	    _createClass(XMLHttpRequestAsync, null, [{
+	        key: "send",
+	        value: function send(xhr, data) {
+	            return new Promise(function (resolve, reject) {
+	                xhr.onload = function (e) {
+	                    resolve(e);
+	                };
+	                xhr.onerror = function (e) {
+	                    reject(e);
+	                };
+	                xhr.send(data);
+	            });
+	        }
+	    }]);
+	
+	    return XMLHttpRequestAsync;
+	}();
+	
+	exports.default = XMLHttpRequestAsync;
+
+/***/ },
+/* 318 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = {
+	    name: "Enum",
+	    verify: function verify(attr) {
+	        if (!attr.declaration["table"]) {
+	            throw new Error("Enum converter needs to be specified table in attribute dictionary");
+	        }
+	    },
+	    convert: function convert(val, attr) {
+	        if (typeof val === "number") {
+	            return val;
+	        }
+	        if (typeof val === "string") {
+	            var result = attr.declaration["table"][val];
+	            if (!result) {
+	                throw new Error("Specified value is not exisiting in the relation table");
+	            } else {
+	                return result;
+	            }
+	        }
+	        return null;
+	    }
+	};
+
+/***/ },
+/* 319 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = NumberArrayConverter;
+	function NumberArrayConverter(val) {
+	    if (val instanceof Array) {
+	        return val;
+	    }
+	    if (typeof val === "string") {
+	        var splitted = val.split(",");
+	        return splitted.map(function (s) {
+	            return Number.parseFloat(s);
+	        });
+	    }
+	}
+
+/***/ },
+/* 320 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _Component = __webpack_require__(321);
+	
+	var _Component2 = _interopRequireDefault(_Component);
+	
+	var _GomlNode = __webpack_require__(305);
+	
+	var _GomlNode2 = _interopRequireDefault(_GomlNode);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function ComponentConverter(val, attr) {
+	    if (!attr.declaration["target"]) {
+	        throw new Error("Component converter require to be specified target");
+	    }
+	    if (val === null) {
+	        return null;
+	    }
+	    if (val instanceof _GomlNode2.default) {
+	        return val.getComponent(attr.declaration["target"]);
+	    } else if (val instanceof _Component2.default) {
+	        if (val.name === attr.declaration["target"]) {
+	            return val; // check component type?
+	        } else {
+	            throw new Error("Specified component must be " + attr.declaration["target"]);
+	        }
+	    } else {
+	        var n = attr.tree(val).first();
+	        if (n) {
+	            return n.getComponent(attr.declaration["target"]);
+	        }
+	        return null;
+	    }
+	}
+	exports.default = ComponentConverter;
+
+/***/ },
+/* 321 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _Utility = __webpack_require__(311);
+	
+	var _Utility2 = _interopRequireDefault(_Utility);
+	
+	var _Constants = __webpack_require__(307);
+	
+	var _Constants2 = _interopRequireDefault(_Constants);
+	
+	var _NodeUtility = __webpack_require__(316);
+	
+	var _NodeUtility2 = _interopRequireDefault(_NodeUtility);
+	
+	var _Attribute = __webpack_require__(308);
+	
+	var _Attribute2 = _interopRequireDefault(_Attribute);
+	
+	var _IDObject2 = __webpack_require__(315);
+	
+	var _IDObject3 = _interopRequireDefault(_IDObject2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	/**
+	 * Base class for any components
+	 */
+	var Component = function (_IDObject) {
+	    _inherits(Component, _IDObject);
+	
+	    function Component() {
+	        _classCallCheck(this, Component);
+	
+	        /**
+	         * Whether this component was created by nodeDeclaration
+	         * @type {boolean}
+	         */
+	        var _this = _possibleConstructorReturn(this, (Component.__proto__ || Object.getPrototypeOf(Component)).apply(this, arguments));
+	
+	        _this.isDefaultComponent = false;
+	        _this.disposed = false;
+	        /**
+	         * Flag that this component is activated or not.
+	         * @type {boolean}
+	         */
+	        _this._enabled = true;
+	        _this._awaked = false;
+	        _this._handlers = [];
+	        _this._additionalAttributesNames = [];
+	        _this._initializedInfo = null;
+	        return _this;
+	    }
+	
+	    _createClass(Component, [{
+	        key: "setAttribute",
+	
+	        /**
+	         * Set value of attribute
+	         * @param {string} name  [description]
+	         * @param {any}    value [description]
+	         */
+	        value: function setAttribute(name, value) {
+	            var attr = this.attributes.get(name); // TODO:check readonly?
+	            if (attr) {
+	                attr.Value = value;
+	            }
+	        }
+	    }, {
+	        key: "getAttribute",
+	        value: function getAttribute(name) {
+	            var attr = this.getAttributeRaw(name);
+	            if (attr) {
+	                return attr.Value;
+	            } else {
+	                throw new Error("attribute " + name + " is not defined in " + this.name.fqn);
+	            }
+	        }
+	    }, {
+	        key: "getAttributeRaw",
+	        value: function getAttributeRaw(name) {
+	            return this.attributes.get(name);
+	        }
+	    }, {
+	        key: "addEnabledObserver",
+	        value: function addEnabledObserver(observer) {
+	            this._handlers.push(observer);
+	        }
+	    }, {
+	        key: "removeEnabledObserver",
+	        value: function removeEnabledObserver(observer) {
+	            return _Utility2.default.remove(this._handlers, observer);
+	        }
+	    }, {
+	        key: "resolveDefaultAttributes",
+	        value: function resolveDefaultAttributes(nodeAttributes) {
+	            var _this2 = this;
+	
+	            nodeAttributes = nodeAttributes || {};
+	            if (this.isDefaultComponent) {
+	                this.attributes.forEach(function (attr) {
+	                    return attr.resolveDefaultValue(nodeAttributes);
+	                });
+	            } else {
+	                (function () {
+	                    var attrs = _NodeUtility2.default.getAttributes(_this2.element);
+	                    for (var key in attrs) {
+	                        if (key === _Constants2.default.x_gr_id) {
+	                            continue;
+	                        }
+	                    }
+	                    _this2.attributes.forEach(function (attr) {
+	                        return attr.resolveDefaultValue(attrs);
+	                    });
+	                })();
+	            }
+	        }
+	    }, {
+	        key: "dispose",
+	        value: function dispose() {
+	            this.node.removeComponent(this);
+	        }
+	    }, {
+	        key: "awake",
+	        value: function awake() {
+	            if (this._awaked) {
+	                return false;
+	            }
+	            this._awaked = true;
+	            var method = this["$$awake"];
+	            if (typeof method === "function") {
+	                method();
+	            }
+	            return true;
+	        }
+	    }, {
+	        key: "initialized",
+	        value: function initialized(info) {
+	            if (this._initializedInfo === info) {
+	                return;
+	            }
+	            this._initializedInfo = info;
+	            var method = this["$$initialized"];
+	            if (typeof method === "function") {
+	                method(info);
+	            }
+	        }
+	        /**
+	         * Add attribute
+	         * @param {string}                name      [description]
+	         * @param {IAttributeDeclaration} attribute [description]
+	         */
+	
+	    }, {
+	        key: "__addAtribute",
+	        value: function __addAtribute(name, attribute) {
+	            if (!attribute) {
+	                throw new Error("can not add attribute null or undefined.");
+	            }
+	            var attr = _Attribute2.default.generateAttributeForComponent(name, attribute, this);
+	            if (this.isDefaultComponent) {
+	                this.node.addAttribute(attr);
+	            }
+	            if (this.isDefaultComponent) {
+	                attr.resolveDefaultValue(_NodeUtility2.default.getAttributes(this.node.element));
+	            } else {
+	                var attrs = _NodeUtility2.default.getAttributes(this.element);
+	                attr.resolveDefaultValue(attrs);
+	            }
+	            this._additionalAttributesNames.push(attr.name);
+	        }
+	    }, {
+	        key: "__removeAttributes",
+	        value: function __removeAttributes(name) {
+	            var _this3 = this;
+	
+	            if (name) {
+	                var index = this._additionalAttributesNames.findIndex(function (id) {
+	                    return id.name === name;
+	                });
+	                if (index < 0) {
+	                    throw new Error("can not remove attributes :" + name);
+	                }
+	                var attrId = this._additionalAttributesNames[index];
+	                if (this.isDefaultComponent) {
+	                    this.node.removeAttribute(this.attributes.get(attrId));
+	                }
+	                this.attributes.delete(attrId);
+	                this._additionalAttributesNames.splice(index, 1);
+	            } else {
+	                this._additionalAttributesNames.forEach(function (id) {
+	                    _this3.__removeAttributes(id.name);
+	                });
+	            }
+	        }
+	    }, {
+	        key: "__bindAttributes",
+	        value: function __bindAttributes() {
+	            this.attributes.forEach(function (attr) {
+	                var name = attr.name.name;
+	                attr.boundTo(name);
+	            });
+	        }
+	    }, {
+	        key: "enabled",
+	        get: function get() {
+	            return this._enabled;
+	        },
+	        set: function set(val) {
+	            var _this4 = this;
+	
+	            if (this._enabled === val) {
+	                return;
+	            }
+	            this._enabled = val;
+	            this._handlers.forEach(function (handler) {
+	                handler(_this4);
+	            });
+	        }
+	        /**
+	         * The dictionary which is shared in entire tree.
+	         * @return {NSDictionary<any>} [description]
+	         */
+	
+	    }, {
+	        key: "companion",
+	        get: function get() {
+	            return this.node ? this.node.companion : null;
+	        }
+	        /**
+	         * Tree interface for the tree this node is attached.
+	         * @return {IGomlInterface} [description]
+	         */
+	
+	    }, {
+	        key: "tree",
+	        get: function get() {
+	            return this.node ? this.node.tree : null;
+	        }
+	    }, {
+	        key: "isActive",
+	        get: function get() {
+	            return this.enabled && this.node && this.node.isActive;
+	        }
+	    }]);
+	
+	    return Component;
+	}(_IDObject3.default);
+	
+	exports.default = Component;
+
+/***/ },
+/* 322 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = NumberConverter;
+	function NumberConverter(val) {
+	    if (typeof val === "number") {
+	        return val;
+	    } else if (typeof val === "string") {
+	        return Number.parseFloat(val);
+	    } else if (val === null) {
+	        return null;
+	    }
+	}
+
+/***/ },
+/* 323 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = ObjectConverter;
+	function ObjectConverter(val) {
+	    return val;
+	}
+
+/***/ },
+/* 324 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _GrimoireInterface = __webpack_require__(301);
+	
+	var _GrimoireInterface2 = _interopRequireDefault(_GrimoireInterface);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var splitter = " ";
+	var escape = "\\";
+	function ArrayConverter(val, attr) {
+	    if (!attr.declaration["type"]) {
+	        throw new Error("Array converter needs to be specified type in attribute declaration.");
+	    }
+	    var converter = _GrimoireInterface2.default.converters.get(attr.declaration["type"]);
+	    if (!converter) {
+	        throw new Error("converter " + attr.declaration["type"] + " is not registerd.");
+	    }
+	    if (Array.isArray(val)) {
+	        return val.map(function (v) {
+	            return converter.convert(v, attr);
+	        });
+	    }
+	    if (typeof val === "string") {
+	        var ar = val.split(splitter);
+	        for (var i = 0; i < ar.length; i++) {
+	            var s = ar[i];
+	            if (s[s.length - 1] === escape) {
+	                if (i === ar.length - 1) {
+	                    ar[i] = s.substring(0, s.length - escape.length) + splitter;
+	                } else {
+	                    ar[i] = s.substring(0, s.length - escape.length) + splitter + ar[i + 1];
+	                    ar.splice(i + 1, 1);
+	                }
+	            }
+	        }
+	        return ar.map(function (v) {
+	            return converter.convert(v, attr);
+	        });
+	    }
+	    return null;
+	}
+	exports.default = ArrayConverter;
+
+/***/ },
+/* 325 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _Utility = __webpack_require__(311);
+	
+	var _Utility2 = _interopRequireDefault(_Utility);
+	
+	var _XMLReader = __webpack_require__(312);
+	
+	var _XMLReader2 = _interopRequireDefault(_XMLReader);
+	
+	var _GomlParser = __webpack_require__(304);
+	
+	var _GomlParser2 = _interopRequireDefault(_GomlParser);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	/**
+	 * 複数のノードを対象とした操作を提供するインタフェース
+	 */
+	var NodeInterface = function () {
+	    function NodeInterface(nodes) {
+	        _classCallCheck(this, NodeInterface);
+	
+	        this.nodes = nodes;
+	        if (!nodes) {
+	            throw new Error("nodes is null");
+	        }
+	    }
+	    /**
+	     * 対象となるノードの個数を取得する
+	     * @return {number} [description]
+	     */
+	
+	
+	    _createClass(NodeInterface, [{
+	        key: "get",
+	        value: function get(i1, i2) {
+	            var _this = this;
+	
+	            if (i1 === void 0) {
+	                var first = this.first();
+	                if (!first) {
+	                    throw new Error("this NodeInterface is empty.");
+	                } else {
+	                    return first;
+	                }
+	            } else if (i2 === void 0) {
+	                if (this.count <= i1) {
+	                    throw new Error("index out of range.");
+	                } else {
+	                    var _ret = function () {
+	                        var c = i1;
+	                        var returnNode = null;
+	                        _this.forEach(function (node) {
+	                            if (c === 0) {
+	                                returnNode = node;
+	                            }
+	                            c--;
+	                        });
+	                        return {
+	                            v: returnNode
+	                        };
+	                    }();
+	
+	                    if ((typeof _ret === "undefined" ? "undefined" : _typeof(_ret)) === "object") return _ret.v;
+	                }
+	            } else {
+	                if (this.nodes.length <= i1 || this.nodes[i1].length <= i2) {
+	                    throw new Error("index out of range.");
+	                } else {
+	                    return this.nodes[i1][i2];
+	                }
+	            }
+	        }
+	    }, {
+	        key: "getAttribute",
+	        value: function getAttribute(attrName) {
+	            var first = this.first();
+	            if (!first) {
+	                throw new Error("this NodeInterface is empty.");
+	            }
+	            return first.getAttribute(attrName);
+	        }
+	    }, {
+	        key: "setAttribute",
+	        value: function setAttribute(attrName, value) {
+	            this.forEach(function (node) {
+	                node.setAttribute(attrName, value, false);
+	            });
+	        }
+	        /**
+	         * 対象ノードにイベントリスナを追加します。
+	         * @param {string}   eventName [description]
+	         * @param {Function} listener  [description]
+	         */
+	
+	    }, {
+	        key: "on",
+	        value: function on(eventName, listener) {
+	            this.forEach(function (node) {
+	                node.on(eventName, listener);
+	            });
+	            return this;
+	        }
+	        /**
+	         * 対象ノードに指定したイベントリスナが登録されていれば削除します
+	         * @param {string}   eventName [description]
+	         * @param {Function} listener  [description]
+	         */
+	
+	    }, {
+	        key: "off",
+	        value: function off(eventName, listener) {
+	            this.forEach(function (node) {
+	                node.removeListener(eventName, listener);
+	            });
+	            return this;
+	        }
+	        /**
+	         * このノードインタフェースが対象とするノードそれぞれに、
+	         * タグで指定したノードを子要素として追加します。
+	         * @param {string} tag [description]
+	         */
+	
+	    }, {
+	        key: "append",
+	        value: function append(tag) {
+	            this.forEach(function (node) {
+	                var elems = _XMLReader2.default.parseXML(tag);
+	                elems.forEach(function (elem) {
+	                    var child = _GomlParser2.default.parse(elem, null, null);
+	                    node.addChild(child);
+	                });
+	            });
+	            return this;
+	        }
+	        /**
+	         * このノードインタフェースが対象とするノードをツリーから削除します。s
+	         * @param {GomlNode} child [description]
+	         */
+	
+	    }, {
+	        key: "remove",
+	        value: function remove() {
+	            this.forEach(function (node) {
+	                node.remove();
+	            });
+	            return this;
+	        }
+	        /**
+	         * このノードインタフェースが対象とするノードに対して反復処理を行います
+	         * @param  {GomlNode} callback [description]
+	         * @return {[type]}            [description]
+	         */
+	
+	    }, {
+	        key: "forEach",
+	        value: function forEach(callback) {
+	            this.nodes.forEach(function (array, gomlIndex) {
+	                array.forEach(function (node, nodeIndex) {
+	                    callback(node, gomlIndex, nodeIndex);
+	                });
+	            });
+	            return this;
+	        }
+	    }, {
+	        key: "find",
+	        value: function find(predicate) {
+	            var nodes = this.nodes;
+	            for (var i = 0; i < nodes.length; i++) {
+	                var array = nodes[i];
+	                for (var j = 0; j < array.length; j++) {
+	                    var node = array[j];
+	                    if (predicate(node, i, j)) {
+	                        return node;
+	                    }
+	                }
+	            }
+	            return null;
+	        }
+	    }, {
+	        key: "watch",
+	        value: function watch(attrName, watcher) {
+	            var immediate = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+	
+	            this.forEach(function (node) {
+	                node.watch(attrName, watcher, immediate);
+	            });
+	        }
+	        /**
+	         * このノードインタフェースが対象とするノードを有効、または無効にします。
+	         * @param {boolean} enable [description]
+	         */
+	
+	    }, {
+	        key: "setEnable",
+	        value: function setEnable(enable) {
+	            this.forEach(function (node) {
+	                node.enabled = !!enable;
+	            });
+	            return this;
+	        }
+	        /**
+	         * このノードインタフェースが対象とするノードのそれぞれの子ノードを対象とする、
+	         * 新しいノードインタフェースを取得します。
+	         * @return {NodeInterface} [description]
+	         */
+	
+	    }, {
+	        key: "children",
+	        value: function children() {
+	            var children = this.nodes.map(function (nodes) {
+	                return _Utility2.default.flatMap(nodes, function (node) {
+	                    return node.children;
+	                });
+	            });
+	            return new NodeInterface(children);
+	        }
+	        /**
+	         * 対象ノードにコンポーネントをアタッチします。
+	         * @param {Component} component [description]
+	         */
+	
+	    }, {
+	        key: "addComponent",
+	        value: function addComponent(componentId) {
+	            var attributes = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+	
+	            this.forEach(function (node) {
+	                node.addComponent(componentId, attributes);
+	            });
+	            return this;
+	        }
+	        /**
+	         * 最初の対象ノードを取得する
+	         * @return {GomlNode} [description]
+	         */
+	
+	    }, {
+	        key: "first",
+	        value: function first() {
+	            return this.find(function () {
+	                return true;
+	            });
+	        }
+	        /**
+	         * 対象となる唯一のノードを取得する。
+	         * 対象が存在しない、あるいは複数存在するときは例外を投げる。
+	         * @return {GomlNode} [description]
+	         */
+	
+	    }, {
+	        key: "single",
+	        value: function single() {
+	            if (this.count !== 1) {
+	                throw new Error("this nodeInterface is not single.");
+	            }
+	            var first = this.first();
+	            if (!first) {
+	                throw new Error("this nodeInterface is not single,but is empty.");
+	            }
+	            return first;
+	        }
+	    }, {
+	        key: "filter",
+	        value: function filter(predicate) {
+	            var newNodes = [];
+	            for (var i = 0; i < this.nodes.length; i++) {
+	                var goml = this.nodes[i];
+	                newNodes.push([]);
+	                for (var j = 0; j < goml.length; j++) {
+	                    var node = goml[j];
+	                    if (predicate(node, i, j)) {
+	                        newNodes[i].push(node);
+	                    }
+	                }
+	            }
+	            return new NodeInterface(newNodes);
+	        }
+	    }, {
+	        key: "toArray",
+	        value: function toArray() {
+	            return _Utility2.default.flat(this.nodes);
+	        }
+	    }, {
+	        key: "addChildByName",
+	        value: function addChildByName(nodeName, attributes) {
+	            this.forEach(function (node) {
+	                node.addChildByName(nodeName, attributes);
+	            });
+	        }
+	    }, {
+	        key: "sendMessage",
+	        value: function sendMessage(message, args) {
+	            this.forEach(function (node) {
+	                node.sendMessage(message, args);
+	            });
+	        }
+	    }, {
+	        key: "broadcastMessage",
+	        value: function broadcastMessage(arg1, arg2, arg3) {
+	            if (typeof arg1 === "number") {
+	                this.forEach(function (node) {
+	                    node.broadcastMessage(arg1, arg2, arg3);
+	                });
+	            } else {
+	                this.forEach(function (node) {
+	                    node.broadcastMessage(arg2, arg3);
+	                });
+	            }
+	        }
+	    }, {
+	        key: "count",
+	        get: function get() {
+	            if (this.nodes.length === 0) {
+	                return 0;
+	            }
+	            var counts = this.nodes.map(function (nodes) {
+	                return nodes.length;
+	            });
+	            return _Utility2.default.sum(counts);
+	        }
+	    }, {
+	        key: "isEmpty",
+	        get: function get() {
+	            return this.count === 0;
+	        }
+	    }]);
+	
+	    return NodeInterface;
+	}();
+	
+	exports.default = NodeInterface;
+
+/***/ },
+/* 326 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _Constants = __webpack_require__(307);
+	
+	var _Constants2 = _interopRequireDefault(_Constants);
+	
+	var _GrimoireInterface = __webpack_require__(301);
+	
+	var _GrimoireInterface2 = _interopRequireDefault(_GrimoireInterface);
+	
+	var _NodeInterface = __webpack_require__(325);
+	
+	var _NodeInterface2 = _interopRequireDefault(_NodeInterface);
+	
+	var _GomlNode = __webpack_require__(305);
+	
+	var _GomlNode2 = _interopRequireDefault(_GomlNode);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	/**
+	 * Provides interfaces to treat whole goml tree for each.
+	 */
+	var GomlInterface = function () {
+	    function GomlInterface(rootNodes) {
+	        _classCallCheck(this, GomlInterface);
+	
+	        this.rootNodes = rootNodes;
+	    }
+	
+	    _createClass(GomlInterface, [{
+	        key: "getNodeById",
+	        value: function getNodeById(id) {
+	            return this.rootNodes.map(function (root) {
+	                return _GomlNode2.default.fromElement(root.element.ownerDocument.getElementById(id));
+	            });
+	        }
+	    }, {
+	        key: "queryFunc",
+	        value: function queryFunc(query) {
+	            return new _NodeInterface2.default(this._queryNodes(query));
+	        }
+	    }, {
+	        key: "_queryNodes",
+	        value: function _queryNodes(query) {
+	            return this.rootNodes.map(function (root) {
+	                var nodelist = root.element.ownerDocument.querySelectorAll(query);
+	                var nodes = [];
+	                for (var i = 0; i < nodelist.length; i++) {
+	                    var node = _GrimoireInterface2.default.nodeDictionary[nodelist.item(i).getAttribute(_Constants2.default.x_gr_id)];
+	                    if (node) {
+	                        nodes.push(node);
+	                    }
+	                }
+	                return nodes;
+	            });
+	        }
+	    }]);
+	
+	    return GomlInterface;
+	}();
+	
+	exports.default = GomlInterface;
+
+/***/ },
+/* 327 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	function BooleanConverter(val, attr) {
 	    if (typeof val === "boolean") {
 	        return val;
 	    } else if (typeof val === "string") {
@@ -11554,7 +12765,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = BooleanConverter;
 
 /***/ },
-/* 316 */
+/* 328 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -11565,7 +12776,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _Component2 = __webpack_require__(317);
+	var _Component2 = __webpack_require__(321);
 	
 	var _Component3 = _interopRequireDefault(_Component2);
 	
@@ -11631,467 +12842,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = GrimoireComponent;
 
 /***/ },
-/* 317 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _Utility = __webpack_require__(302);
-	
-	var _Utility2 = _interopRequireDefault(_Utility);
-	
-	var _Constants = __webpack_require__(304);
-	
-	var _Constants2 = _interopRequireDefault(_Constants);
-	
-	var _NodeUtility = __webpack_require__(312);
-	
-	var _NodeUtility2 = _interopRequireDefault(_NodeUtility);
-	
-	var _Attribute = __webpack_require__(318);
-	
-	var _Attribute2 = _interopRequireDefault(_Attribute);
-	
-	var _IDObject2 = __webpack_require__(311);
-	
-	var _IDObject3 = _interopRequireDefault(_IDObject2);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	/**
-	 * Base class for any components
-	 */
-	var Component = function (_IDObject) {
-	    _inherits(Component, _IDObject);
-	
-	    function Component() {
-	        _classCallCheck(this, Component);
-	
-	        /**
-	         * Whether this component was created by nodeDeclaration
-	         * @type {boolean}
-	         */
-	        var _this = _possibleConstructorReturn(this, (Component.__proto__ || Object.getPrototypeOf(Component)).apply(this, arguments));
-	
-	        _this.isDefaultComponent = false;
-	        _this.disposed = false;
-	        /**
-	         * Flag that this component is activated or not.
-	         * @type {boolean}
-	         */
-	        _this._enabled = true;
-	        _this._handlers = [];
-	        _this._additionalAttributesNames = [];
-	        return _this;
-	    }
-	
-	    _createClass(Component, [{
-	        key: "setAttribute",
-	
-	        /**
-	         * Set value of attribute
-	         * @param {string} name  [description]
-	         * @param {any}    value [description]
-	         */
-	        value: function setAttribute(name, value) {
-	            var attr = this.attributes.get(name); // TODO:check readonly?
-	            if (attr) {
-	                attr.Value = value;
-	            }
-	        }
-	    }, {
-	        key: "getAttribute",
-	        value: function getAttribute(name) {
-	            var attr = this.getAttributeRaw(name);
-	            if (attr) {
-	                return attr.Value;
-	            } else {
-	                throw new Error("attribute " + name + " is not defined in " + this.name.fqn);
-	            }
-	        }
-	    }, {
-	        key: "getAttributeRaw",
-	        value: function getAttributeRaw(name) {
-	            return this.attributes.get(name);
-	        }
-	    }, {
-	        key: "addEnabledObserver",
-	        value: function addEnabledObserver(observer) {
-	            this._handlers.push(observer);
-	        }
-	    }, {
-	        key: "removeEnabledObserver",
-	        value: function removeEnabledObserver(observer) {
-	            return _Utility2.default.remove(this._handlers, observer);
-	        }
-	    }, {
-	        key: "resolveDefaultAttributes",
-	        value: function resolveDefaultAttributes(nodeAttributes) {
-	            var _this2 = this;
-	
-	            nodeAttributes = nodeAttributes || {};
-	            if (this.isDefaultComponent) {
-	                this.attributes.forEach(function (attr) {
-	                    return attr.resolveDefaultValue(nodeAttributes);
-	                });
-	            } else {
-	                (function () {
-	                    var attrs = _NodeUtility2.default.getAttributes(_this2.element);
-	                    for (var key in attrs) {
-	                        if (key === _Constants2.default.x_gr_id) continue;
-	                        if (!_this2.attributes.get(key)) {
-	                            _Utility2.default.w("attribute '" + key + "' is not exist in this component '" + _this2.name.fqn + "'");
-	                        }
-	                    }
-	                    _this2.attributes.forEach(function (attr) {
-	                        return attr.resolveDefaultValue(attrs);
-	                    });
-	                })();
-	            }
-	        }
-	    }, {
-	        key: "dispose",
-	        value: function dispose() {
-	            this.node.removeComponent(this);
-	        }
-	        /**
-	         * Add attribute
-	         * @param {string}                name      [description]
-	         * @param {IAttributeDeclaration} attribute [description]
-	         */
-	
-	    }, {
-	        key: "__addAtribute",
-	        value: function __addAtribute(name, attribute) {
-	            if (!attribute) {
-	                throw new Error("can not add attribute null or undefined.");
-	            }
-	            var attr = _Attribute2.default.generateAttributeForComponent(name, attribute, this);
-	            if (this.isDefaultComponent) {
-	                this.node.addAttribute(attr);
-	            }
-	            if (this.isDefaultComponent) {
-	                attr.resolveDefaultValue(_NodeUtility2.default.getAttributes(this.node.element));
-	            } else {
-	                var attrs = _NodeUtility2.default.getAttributes(this.element);
-	                attr.resolveDefaultValue(attrs);
-	            }
-	            this._additionalAttributesNames.push(attr.name);
-	        }
-	    }, {
-	        key: "__removeAttributes",
-	        value: function __removeAttributes(name) {
-	            var _this3 = this;
-	
-	            if (name) {
-	                var index = this._additionalAttributesNames.findIndex(function (id) {
-	                    return id.name === name;
-	                });
-	                if (index < 0) {
-	                    throw new Error("can not remove attributes :" + name);
-	                }
-	                var attrId = this._additionalAttributesNames[index];
-	                if (this.isDefaultComponent) {
-	                    this.node.removeAttribute(this.attributes.get(attrId));
-	                }
-	                this.attributes.delete(attrId);
-	                this._additionalAttributesNames.splice(index, 1);
-	            } else {
-	                this._additionalAttributesNames.forEach(function (id) {
-	                    _this3.__removeAttributes(id.name);
-	                });
-	            }
-	        }
-	    }, {
-	        key: "__bindAttributes",
-	        value: function __bindAttributes() {
-	            this.attributes.forEach(function (attr) {
-	                var name = attr.name.name;
-	                attr.boundTo("_" + name);
-	            });
-	        }
-	    }, {
-	        key: "enabled",
-	        get: function get() {
-	            return this._enabled;
-	        },
-	        set: function set(val) {
-	            var _this4 = this;
-	
-	            if (this._enabled === val) {
-	                return;
-	            }
-	            this._enabled = val;
-	            this._handlers.forEach(function (handler) {
-	                handler(_this4);
-	            });
-	        }
-	        /**
-	         * The dictionary which is shared in entire tree.
-	         * @return {NSDictionary<any>} [description]
-	         */
-	
-	    }, {
-	        key: "companion",
-	        get: function get() {
-	            return this.node ? this.node.companion : null;
-	        }
-	        /**
-	         * Tree interface for the tree this node is attached.
-	         * @return {IGomlInterface} [description]
-	         */
-	
-	    }, {
-	        key: "tree",
-	        get: function get() {
-	            return this.node ? this.node.tree : null;
-	        }
-	    }]);
-	
-	    return Component;
-	}(_IDObject3.default);
-	
-	exports.default = Component;
-
-/***/ },
-/* 318 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _Ensure = __webpack_require__(300);
-	
-	var _Ensure2 = _interopRequireDefault(_Ensure);
-	
-	var _NSIdentity = __webpack_require__(314);
-	
-	var _NSIdentity2 = _interopRequireDefault(_NSIdentity);
-	
-	var _GrimoireInterface = __webpack_require__(301);
-	
-	var _GrimoireInterface2 = _interopRequireDefault(_GrimoireInterface);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	/**
-	 * Manage a attribute attached to components.
-	 */
-	var Attribute = function () {
-	    function Attribute() {
-	        _classCallCheck(this, Attribute);
-	
-	        /**
-	         * List of functions that is listening changing values.
-	         */
-	        this._observers = [];
-	    }
-	
-	    _createClass(Attribute, [{
-	        key: "watch",
-	
-	        /**
-	         * Add event handler to observe changing this attribute.
-	         * @param  {(attr: Attribute) => void} handler handler the handler you want to add.
-	         * @param {boolean = false} callFirst whether that handler should be called first time.
-	         */
-	        value: function watch(watcher) {
-	            var immedateCalls = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-	
-	            this._observers.push(watcher);
-	            if (immedateCalls) {
-	                watcher(this.Value, undefined, this);
-	            }
-	        }
-	        /**
-	         * Remove event handler you added.
-	         * @param  {Attribute} handler [description]
-	         * @return {[type]}            [description]
-	         */
-	
-	    }, {
-	        key: "removeObserver",
-	        value: function removeObserver(target) {
-	            var index = this._observers.findIndex(function (f) {
-	                return f === target;
-	            });
-	            if (index < 0) {
-	                return;
-	            }
-	            this._observers.splice(index, 1);
-	        }
-	        /**
-	         * Bind converted value to specified field.
-	         * When target object was not specified, field of owner component would be assigned.
-	         * @param {string} variableName [description]
-	         * @param {any} targetObject [description]
-	         */
-	
-	    }, {
-	        key: "boundTo",
-	        value: function boundTo(variableName) {
-	            var targetObject = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.component;
-	
-	            this.watch(function (v) {
-	                targetObject[variableName] = v;
-	            }, true);
-	        }
-	        /**
-	         * Apply default value to attribute from DOM values.
-	         * @param {string }} domValues [description]
-	         */
-	
-	    }, {
-	        key: "resolveDefaultValue",
-	        value: function resolveDefaultValue(domValues) {
-	            if (this._value !== void 0) {
-	                return;
-	            }
-	            var tagAttrValue = domValues[this.name.name];
-	            if (tagAttrValue !== void 0) {
-	                this.Value = tagAttrValue; // Dom指定値で解決
-	                return;
-	            }
-	            var nodeDefaultValue = this.component.node.nodeDeclaration.defaultAttributesActual.get(this.name);
-	            if (nodeDefaultValue !== void 0) {
-	                this.Value = nodeDefaultValue; // Node指定値で解決
-	                return;
-	            }
-	            this.Value = this.declaration.default;
-	        }
-	    }, {
-	        key: "_valuate",
-	        value: function _valuate(raw) {
-	            var v = this.converter.convert(raw);
-	            if (v === void 0) {
-	                throw new Error("attribute " + this.name.name + " value can not be convert from " + this._value);
-	            }
-	            this._lastValuete = v;
-	            return v;
-	        }
-	    }, {
-	        key: "_notifyChange",
-	        value: function _notifyChange(newValue) {
-	            var _this = this;
-	
-	            var lastvalue = this._lastValuete;
-	            var c = this.converter;
-	            this._observers.forEach(function (handler) {
-	                handler(c.convert(newValue), lastvalue, _this);
-	            });
-	        }
-	    }, {
-	        key: "tree",
-	
-	        /**
-	         * Goml tree interface which contains the component this attribute bound to.
-	         * @return {IGomlInterface} [description]
-	         */
-	        get: function get() {
-	            return this.component.tree;
-	        }
-	        /**
-	         * Companion map which is bounding to the component this attribute bound to.
-	         * @return {NSDictionary<any>} [description]
-	         */
-	
-	    }, {
-	        key: "companion",
-	        get: function get() {
-	            return this.component.companion;
-	        }
-	        /**
-	         * Get a value with specified type.
-	         * @return {any} value with specified type.
-	         */
-	
-	    }, {
-	        key: "Value",
-	        get: function get() {
-	            if (this._value === void 0) {
-	                throw new Error("attribute " + this.name.name + " value is undefined in " + this.component.node.name.name);
-	            }
-	            return this._valuate(this._value);
-	        }
-	        /**
-	         * Set a value with any type.
-	         * @param {any} val Value with string or specified type.
-	         */
-	        ,
-	        set: function set(val) {
-	            if (this._value === val) {
-	                return;
-	            }
-	            this._value = val;
-	            this._notifyChange(val);
-	        }
-	        /**
-	         * Construct a new attribute with name of key and any value with specified type. If constant flag is true, This attribute will be immutable.
-	         * If converter is not served, string converter will be set as default.
-	         * @param {string}        key       Key of this attribute.
-	         * @param {any}           value     Value of this attribute.
-	         * @param {ConverterBase} converter Converter of this attribute.
-	         * @param {boolean}       constant  Whether this attribute is immutable or not. False as default.
-	         */
-	
-	    }], [{
-	        key: "convert",
-	        value: function convert(converter, val) {
-	            var cname = _Ensure2.default.ensureTobeNSIdentity(converter);
-	            var conv = _GrimoireInterface2.default.converters.get(cname);
-	            if (!conv) {
-	                throw new Error("converter " + cname.name + " is not defined.");
-	            }
-	            return conv.convert(val);
-	        }
-	    }, {
-	        key: "generateAttributeForComponent",
-	        value: function generateAttributeForComponent(name, declaration, component) {
-	            var attr = new Attribute();
-	            attr.name = _NSIdentity2.default.from(component.name.ns, name);
-	            attr.component = component;
-	            attr.declaration = declaration;
-	            var converterName = _Ensure2.default.ensureTobeNSIdentity(declaration.converter);
-	            attr.converter = _GrimoireInterface2.default.converters.get(converterName);
-	            if (attr.converter === void 0) {
-	                // When the specified converter was not found
-	                throw new Error("Specified converter " + converterName.name + " was not found from registered converters.\n Component: " + attr.component.name.fqn + "\n Attribute: " + attr.name.name);
-	            }
-	            attr.converter = {
-	                convert: attr.converter.convert.bind(attr),
-	                name: attr.converter.name
-	            };
-	            attr.component.attributes.set(attr.name, attr);
-	            return attr;
-	        }
-	    }]);
-	
-	    return Attribute;
-	}();
-	
-	exports.default = Attribute;
-
-/***/ },
-/* 319 */
+/* 329 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -12099,6 +12850,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	exports.default = StringArrayConverter;
 	function StringArrayConverter(val) {
 	    if (Array.isArray(val) || !val) {
 	        return val;
@@ -12107,10 +12859,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return val.split(" ");
 	    }
 	}
-	exports.default = StringArrayConverter;
 
 /***/ },
-/* 320 */
+/* 330 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -12118,6 +12869,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	exports.default = StringConverter;
 	function StringConverter(val) {
 	    if (typeof val === "string") {
 	        return val;
@@ -12127,73 +12879,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return val.toString();
 	    }
 	}
-	exports.default = StringConverter;
 
 /***/ },
-/* 321 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _Constants = __webpack_require__(304);
-	
-	var _Constants2 = _interopRequireDefault(_Constants);
-	
-	var _GrimoireInterface = __webpack_require__(301);
-	
-	var _GrimoireInterface2 = _interopRequireDefault(_GrimoireInterface);
-	
-	var _Attribute = __webpack_require__(318);
-	
-	var _Attribute2 = _interopRequireDefault(_Attribute);
-	
-	var _NSDictionary = __webpack_require__(313);
-	
-	var _NSDictionary2 = _interopRequireDefault(_NSDictionary);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	var ComponentDeclaration = function () {
-	    function ComponentDeclaration(name, attributes, ctor) {
-	        _classCallCheck(this, ComponentDeclaration);
-	
-	        this.name = name;
-	        this.attributes = attributes;
-	        this.ctor = ctor;
-	    }
-	
-	    _createClass(ComponentDeclaration, [{
-	        key: "generateInstance",
-	        value: function generateInstance(componentElement) {
-	            componentElement = componentElement ? componentElement : document.createElementNS(this.name.ns, this.name.name);
-	            var component = new this.ctor();
-	            componentElement.setAttribute(_Constants2.default.x_gr_id, component.id);
-	            _GrimoireInterface2.default.componentDictionary[component.id] = component;
-	            component.name = this.name;
-	            component.element = componentElement;
-	            component.attributes = new _NSDictionary2.default();
-	            for (var key in this.attributes) {
-	                _Attribute2.default.generateAttributeForComponent(key, this.attributes[key], component);
-	            }
-	            return component;
-	        }
-	    }]);
-	
-	    return ComponentDeclaration;
-	}();
-	
-	exports.default = ComponentDeclaration;
-
-/***/ },
-/* 322 */
+/* 331 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -12329,7 +13017,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = NSSet;
 
 /***/ },
-/* 323 */
+/* 332 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -12344,7 +13032,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _Ensure2 = _interopRequireDefault(_Ensure);
 	
-	var _NSIdentity = __webpack_require__(314);
+	var _NSIdentity = __webpack_require__(309);
 	
 	var _NSIdentity2 = _interopRequireDefault(_NSIdentity);
 	
@@ -12418,213 +13106,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = NodeDeclaration;
 
 /***/ },
-/* 324 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	var XMLHttpRequestAsync = function () {
-	    function XMLHttpRequestAsync() {
-	        _classCallCheck(this, XMLHttpRequestAsync);
-	    }
-	
-	    _createClass(XMLHttpRequestAsync, null, [{
-	        key: "send",
-	        value: function send(xhr, data) {
-	            return new Promise(function (resolve, reject) {
-	                xhr.onload = function (e) {
-	                    resolve(e);
-	                };
-	                xhr.onerror = function (e) {
-	                    reject(e);
-	                };
-	                xhr.send(data);
-	            });
-	        }
-	    }]);
-	
-	    return XMLHttpRequestAsync;
-	}();
-	
-	exports.default = XMLHttpRequestAsync;
-
-/***/ },
-/* 325 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _GrimoireInterface = __webpack_require__(301);
-	
-	var _GrimoireInterface2 = _interopRequireDefault(_GrimoireInterface);
-	
-	var _GomlParser = __webpack_require__(307);
-	
-	var _GomlParser2 = _interopRequireDefault(_GomlParser);
-	
-	var _XMLReader = __webpack_require__(306);
-	
-	var _XMLReader2 = _interopRequireDefault(_XMLReader);
-	
-	var _XMLHttpRequestAsync = __webpack_require__(324);
-	
-	var _XMLHttpRequestAsync2 = _interopRequireDefault(_XMLHttpRequestAsync);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
-	    return new (P || (P = Promise))(function (resolve, reject) {
-	        function fulfilled(value) {
-	            try {
-	                step(generator.next(value));
-	            } catch (e) {
-	                reject(e);
-	            }
-	        }
-	        function rejected(value) {
-	            try {
-	                step(generator["throw"](value));
-	            } catch (e) {
-	                reject(e);
-	            }
-	        }
-	        function step(result) {
-	            result.done ? resolve(result.value) : new P(function (resolve) {
-	                resolve(result.value);
-	            }).then(fulfilled, rejected);
-	        }
-	        step((generator = generator.apply(thisArg, _arguments)).next());
-	    });
-	};
-	
-	/**
-	 * Provides the features to fetch Goml source.
-	 */
-	var GomlLoader = function () {
-	    function GomlLoader() {
-	        _classCallCheck(this, GomlLoader);
-	    }
-	
-	    _createClass(GomlLoader, null, [{
-	        key: "loadFromScriptTag",
-	
-	        /**
-	         * Obtain the Goml source from specified tag.
-	         * @param  {HTMLScriptElement} scriptTag [the script tag to load]
-	         * @return {Promise<void>}               [the promise to wait for loading]
-	         */
-	        value: function loadFromScriptTag(scriptTag) {
-	            return __awaiter(this, void 0, void 0, regeneratorRuntime.mark(function _callee() {
-	                var srcAttr, source, req, doc, rootNode;
-	                return regeneratorRuntime.wrap(function _callee$(_context) {
-	                    while (1) {
-	                        switch (_context.prev = _context.next) {
-	                            case 0:
-	                                srcAttr = scriptTag.getAttribute("src");
-	                                source = void 0;
-	
-	                                if (!srcAttr) {
-	                                    _context.next = 10;
-	                                    break;
-	                                }
-	
-	                                // ignore text element
-	                                req = new XMLHttpRequest();
-	
-	                                req.open("GET", srcAttr);
-	                                _context.next = 7;
-	                                return _XMLHttpRequestAsync2.default.send(req);
-	
-	                            case 7:
-	                                source = req.responseText;
-	                                _context.next = 11;
-	                                break;
-	
-	                            case 10:
-	                                source = scriptTag.text;
-	
-	                            case 11:
-	                                doc = _XMLReader2.default.parseXML(source, "GOML");
-	                                rootNode = _GomlParser2.default.parse(doc[0], null, scriptTag);
-	
-	                                _GrimoireInterface2.default.addRootNode(scriptTag, rootNode);
-	
-	                            case 14:
-	                            case "end":
-	                                return _context.stop();
-	                        }
-	                    }
-	                }, _callee, this);
-	            }));
-	        }
-	        /**
-	         * Load from the script tags which will be found with specified query.
-	         * @param  {string}          query [the query to find script tag]
-	         * @return {Promise<void[]>}       [the promise to wait for all goml loading]
-	         */
-	
-	    }, {
-	        key: "loadFromQuery",
-	        value: function loadFromQuery(query) {
-	            var tags = document.querySelectorAll(query);
-	            var pArray = [];
-	            for (var i = 0; i < tags.length; i++) {
-	                pArray[i] = GomlLoader.loadFromScriptTag(tags.item(i));
-	            }
-	            if (pArray.length === 0 && _GrimoireInterface2.default.debug) {
-	                console.warn("There was no goml file detected. Have you specified `type='text/goml'` to the script tag?");
-	            }
-	            return Promise.all(pArray);
-	        }
-	        /**
-	         * Load all Goml sources contained in HTML.
-	         * @return {Promise<void>} [the promise to wait for all goml loading]
-	         */
-	
-	    }, {
-	        key: "loadForPage",
-	        value: function loadForPage() {
-	            return __awaiter(this, void 0, void 0, regeneratorRuntime.mark(function _callee2() {
-	                return regeneratorRuntime.wrap(function _callee2$(_context2) {
-	                    while (1) {
-	                        switch (_context2.prev = _context2.next) {
-	                            case 0:
-	                                _context2.next = 2;
-	                                return GomlLoader.loadFromQuery('script[type="text/goml"]');
-	
-	                            case 2:
-	                            case "end":
-	                                return _context2.stop();
-	                        }
-	                    }
-	                }, _callee2, this);
-	            }));
-	        }
-	    }]);
-	
-	    return GomlLoader;
-	}();
-	
-	exports.default = GomlLoader;
-
-/***/ },
-/* 326 */
+/* 333 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -12645,7 +13127,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _GrimoireInterface2 = _interopRequireDefault(_GrimoireInterface);
 	
-	var _GomlLoader = __webpack_require__(325);
+	var _GomlLoader = __webpack_require__(303);
 	
 	var _GomlLoader2 = _interopRequireDefault(_GomlLoader);
 	
@@ -12674,7 +13156,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                resolve(result.value);
 	            }).then(fulfilled, rejected);
 	        }
-	        step((generator = generator.apply(thisArg, _arguments)).next());
+	        step((generator = generator.apply(thisArg, _arguments || [])).next());
 	    });
 	};
 	
@@ -12707,29 +13189,30 @@ return /******/ (function(modules) { // webpackBootstrap
 	                                return GrimoireInitializer._waitForDOMLoading();
 	
 	                            case 5:
-	                                _context.next = 7;
+	                                GrimoireInitializer._logVersions();
+	                                _context.next = 8;
 	                                return _GrimoireInterface2.default.resolvePlugins();
 	
-	                            case 7:
-	                                _context.next = 9;
+	                            case 8:
+	                                _context.next = 10;
 	                                return _GomlLoader2.default.loadForPage();
 	
-	                            case 9:
-	                                _context.next = 14;
+	                            case 10:
+	                                _context.next = 15;
 	                                break;
 	
-	                            case 11:
-	                                _context.prev = 11;
+	                            case 12:
+	                                _context.prev = 12;
 	                                _context.t0 = _context["catch"](0);
 	
 	                                console.error(_context.t0);
 	
-	                            case 14:
+	                            case 15:
 	                            case "end":
 	                                return _context.stop();
 	                        }
 	                    }
-	                }, _callee, this, [[0, 11]]);
+	                }, _callee, this, [[0, 12]]);
 	            }));
 	        }
 	        /**
@@ -12766,6 +13249,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    resolve();
 	                });
 	            });
+	        }
+	    }, {
+	        key: "_logVersions",
+	        value: function _logVersions() {
+	            var gr = _GrimoireInterface2.default;
+	            if (!gr.debug) {
+	                return;
+	            }
+	            var log = "%cGrimoire.js v" + gr["__VERSION__"] + "\nplugins:\n\n";
+	            var i = 1;
+	            for (var key in gr.lib) {
+	                var plugin = gr.lib[key];
+	                log += "  " + i + " : " + (plugin.__NAME__ || key) + "@" + plugin.__VERSION__ + "\n";
+	                i++;
+	            }
+	            log += "\nTo suppress this message,please inject a line \"gr.debug = false;\" on the initializing timing.";
+	            console.log(log, "color:#44F;font-weight:bold;");
 	        }
 	    }]);
 	

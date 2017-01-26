@@ -8214,7 +8214,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var __VERSION__ = "1.7.0-beta2";
+	var __VERSION__ = "1.7.0";
 	var __NAME__ = "grimoirejs-preset-basic";
 	
 	var __EXPOSE__ = {};
@@ -8449,7 +8449,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 		
-		var __VERSION__ = "0.13.5-beta5";
+		var __VERSION__ = "0.14.0";
 		var __NAME__ = "grimoirejs";
 		
 		var __EXPOSE__ = {
@@ -8738,10 +8738,12 @@ return /******/ (function(modules) { // webpackBootstrap
 		        value: function ensureTobeComponentConstructor(c) {
 		            if (typeof c === "function") {
 		                return c;
-		            } else if (typeof c === "string") {
-		                return _GrimoireInterface2.default.componentDeclarations.get(c).ctor;
 		            } else {
-		                return _GrimoireInterface2.default.componentDeclarations.get(c).ctor;
+		                var dec = _GrimoireInterface2.default.componentDeclarations.get(c);
+		                if (dec) {
+		                    return dec.ctor;
+		                }
+		                return null;
 		            }
 		        }
 		    }]);
@@ -8919,7 +8921,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		                resolve(result.value);
 		            }).then(fulfilled, rejected);
 		        }
-		        step((generator = generator.apply(thisArg, _arguments)).next());
+		        step((generator = generator.apply(thisArg, _arguments || [])).next());
 		    });
 		};
 		
@@ -8959,7 +8961,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		            this.registerConverter("Boolean", _BooleanConverter2.default);
 		            this.registerConverter("Array", _ArrayConverter2.default);
 		            this.registerConverter("Object", _ObjectConverter2.default);
-		            this.registerConverter("Enum", _EnumConverter2.default);
+		            this.registerConverter(_EnumConverter2.default);
 		            this.registerConverter("Number", _NumberConverter2.default);
 		            this.registerConverter("Component", _ComponentConverter2.default);
 		            this.registerConverter("NumberArray", _NumberArrayConverter2.default);
@@ -9119,9 +9121,15 @@ return /******/ (function(modules) { // webpackBootstrap
 		        }
 		    }, {
 		        key: "registerConverter",
-		        value: function registerConverter(name, converter) {
-		            var n = _Ensure2.default.ensureTobeNSIdentity(name);
-		            this.converters.set(n, { name: n, convert: converter });
+		        value: function registerConverter(arg1, converter) {
+		            if (converter) {
+		                this.registerConverter({ name: _Ensure2.default.ensureTobeNSIdentity(arg1), verify: function verify() {
+		                        return true;
+		                    }, convert: converter });
+		                return;
+		            }
+		            var dec = arg1;
+		            this.converters.set(_Ensure2.default.ensureTobeNSIdentity(dec.name), dec);
 		        }
 		    }, {
 		        key: "overrideDeclaration",
@@ -9161,6 +9169,12 @@ return /******/ (function(modules) { // webpackBootstrap
 		            this.converters.clear();
 		            for (var key in this.rootNodes) {
 		                delete this.rootNodes[key];
+		            }
+		            for (var _key in this.nodeDictionary) {
+		                delete this.nodeDictionary[_key];
+		            }
+		            for (var _key2 in this.componentDictionary) {
+		                delete this.componentDictionary[_key2];
 		            }
 		            this.loadTasks.splice(0, this.loadTasks.length);
 		            this.initialize();
@@ -9220,11 +9234,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		                        properties[key] = { value: obj[key] };
 		                    }
 		                    var attributes = {};
-		                    for (var _key in ctor["attributes"]) {
-		                        attributes[_key] = ctor["attributes"][_key];
+		                    for (var _key3 in ctor["attributes"]) {
+		                        attributes[_key3] = ctor["attributes"][_key3];
 		                    }
-		                    for (var _key2 in obj["attributes"]) {
-		                        attributes[_key2] = obj["attributes"][_key2];
+		                    for (var _key4 in obj["attributes"]) {
+		                        attributes[_key4] = obj["attributes"][_key4];
 		                    }
 		                    newCtor.prototype = Object.create(ctor.prototype, properties);
 		                    Object.defineProperty(newCtor, "attributes", {
@@ -9324,7 +9338,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		                resolve(result.value);
 		            }).then(fulfilled, rejected);
 		        }
-		        step((generator = generator.apply(thisArg, _arguments)).next());
+		        step((generator = generator.apply(thisArg, _arguments || [])).next());
 		    });
 		};
 		
@@ -10045,8 +10059,8 @@ return /******/ (function(modules) { // webpackBootstrap
 		            var isDefaultComponent = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
 		
 		            if (typeof component === "function") {
-		                var obj = _ComponentDeclaration2.default.ctorMap.find(function (obj) {
-		                    return obj.ctor === component;
+		                var obj = _ComponentDeclaration2.default.ctorMap.find(function (o) {
+		                    return o.ctor === component;
 		                });
 		                component = obj.name;
 		            }
@@ -10074,11 +10088,14 @@ return /******/ (function(modules) { // webpackBootstrap
 		            if (component.node || component.disposed) {
 		                throw new Error("component never change attached node");
 		            }
+		            // resetting cache
 		            this._messageCache = {}; // TODO: optimize.
+		            //
 		            component.isDefaultComponent = !!isDefaultComponent;
 		            component.node = this;
 		            var referenceElement = this.componentsElement[_NodeUtility2.default.getNodeListIndexByElementIndex(this.componentsElement, this._components.length)];
 		            this.componentsElement.insertBefore(component.element, referenceElement);
+		            // bind this for message reciever.
 		            var propNames = [];
 		            var o = component;
 		            while (o) {
@@ -10161,7 +10178,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		            // これはref/Node/Componentによって参照されるのが外部ライブラリにおけるコンポーネントであるが、
 		            // src/Node/Componentがこのプロジェクトにおけるコンポーネントのため、別のコンポーネントとみなされ、型の制約をみたさなくなるからである。
 		            if (!name) {
-		                throw new Error("name must be not null or undefined");
+		                throw new Error("name must not be null or undefined");
 		            } else if (typeof name === "function") {
 		                return this._components.find(function (c) {
 		                    return c instanceof name;
@@ -10223,9 +10240,6 @@ return /******/ (function(modules) { // webpackBootstrap
 		                }
 		                if (this.isFreezeAttribute(key)) {
 		                    throw new Error("attribute " + key + " can not change from GOML. Attribute is frozen. ");
-		                }
-		                if (!this.attributes.get(key)) {
-		                    _Utility2.default.w("attribute '" + key + "' is not exist in this node '" + this.name.fqn + "'");
 		                }
 		            }
 		            this._components.forEach(function (component) {
@@ -10643,6 +10657,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		    function Attribute() {
 		        _classCallCheck(this, Attribute);
 		
+		        this.convertContext = {};
 		        /**
 		         * List of functions that is listening changing values.
 		         */
@@ -10701,7 +10716,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		            var targetObject = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.component;
 		
-		            if (this.declaration.lazy) {
+		            if (this.converter["lazy"]) {
 		                targetObject.__defineGetter__(variableName, function () {
 		                    return _this.Value;
 		                });
@@ -10746,7 +10761,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		    }, {
 		        key: "_valuate",
 		        value: function _valuate(raw) {
-		            var v = this.converter.convert(raw);
+		            var v = this.converter.convert(raw, this);
 		            if (v === void 0) {
 		                throw new Error("attribute " + this.name.name + " value can not be convert from " + this._value);
 		            }
@@ -10758,10 +10773,12 @@ return /******/ (function(modules) { // webpackBootstrap
 		        value: function _notifyChange(newValue) {
 		            var _this2 = this;
 		
+		            if (!this.component.isActive) {
+		                return;
+		            }
 		            var lastvalue = this._lastValuete;
-		            var c = this.converter;
 		            this._observers.forEach(function (handler) {
-		                handler(c.convert(newValue), lastvalue, _this2);
+		                handler(_this2.converter.convert(newValue, _this2), lastvalue, _this2);
 		            });
 		        }
 		    }, {
@@ -10812,7 +10829,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		            if (!conv) {
 		                throw new Error("converter " + cname.name + " is not defined.");
 		            }
-		            return conv.convert.bind(self)(val); // TODO: performance problem?
+		            return conv.convert(val, self);
 		        }
 		        /**
 		         * Construct a new attribute with name of key and any value with specified type. If constant flag is true, This attribute will be immutable.
@@ -10836,11 +10853,8 @@ return /******/ (function(modules) { // webpackBootstrap
 		                // When the specified converter was not found
 		                throw new Error("Specified converter " + converterName.name + " was not found from registered converters.\n Component: " + attr.component.name.fqn + "\n Attribute: " + attr.name.name);
 		            }
-		            attr.converter = {
-		                convert: attr.converter.convert.bind(attr),
-		                name: attr.converter.name
-		            };
 		            attr.component.attributes.set(attr.name, attr);
+		            attr.converter.verify(attr);
 		            return attr;
 		        }
 		    }]);
@@ -11962,24 +11976,28 @@ return /******/ (function(modules) { // webpackBootstrap
 		Object.defineProperty(exports, "__esModule", {
 		    value: true
 		});
-		function EnumConverter(val) {
-		    if (!this.declaration["table"]) {
-		        throw new Error("Enum converter needs to be specified table in attribute dictionary");
-		    }
-		    if (typeof val === "number") {
-		        return val;
-		    }
-		    if (typeof val === "string") {
-		        var result = this.declaration["table"][val];
-		        if (!result) {
-		            throw new Error("Specified value is not exisiting in the relation table");
-		        } else {
-		            return result;
+		exports.default = {
+		    name: "Enum",
+		    verify: function verify(attr) {
+		        if (!attr.declaration["table"]) {
+		            throw new Error("Enum converter needs to be specified table in attribute dictionary");
 		        }
+		    },
+		    convert: function convert(val, attr) {
+		        if (typeof val === "number") {
+		            return val;
+		        }
+		        if (typeof val === "string") {
+		            var result = attr.declaration["table"][val];
+		            if (!result) {
+		                throw new Error("Specified value is not exisiting in the relation table");
+		            } else {
+		                return result;
+		            }
+		        }
+		        return null;
 		    }
-		    return null;
-		}
-		exports.default = EnumConverter;
+		};
 	
 	/***/ },
 	/* 21 */
@@ -11990,6 +12008,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		Object.defineProperty(exports, "__esModule", {
 		    value: true
 		});
+		exports.default = NumberArrayConverter;
 		function NumberArrayConverter(val) {
 		    if (val instanceof Array) {
 		        return val;
@@ -12001,7 +12020,6 @@ return /******/ (function(modules) { // webpackBootstrap
 		        });
 		    }
 		}
-		exports.default = NumberArrayConverter;
 	
 	/***/ },
 	/* 22 */
@@ -12023,25 +12041,25 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 		
-		function ComponentConverter(val) {
-		    if (!this.declaration["target"]) {
+		function ComponentConverter(val, attr) {
+		    if (!attr.declaration["target"]) {
 		        throw new Error("Component converter require to be specified target");
 		    }
 		    if (val === null) {
 		        return null;
 		    }
 		    if (val instanceof _GomlNode2.default) {
-		        return val.getComponent(this.declaration["target"]);
+		        return val.getComponent(attr.declaration["target"]);
 		    } else if (val instanceof _Component2.default) {
-		        if (val.name === this.declaration["target"]) {
+		        if (val.name === attr.declaration["target"]) {
 		            return val; // check component type?
 		        } else {
-		            throw new Error("Specified component must be " + this.declaration["target"]);
+		            throw new Error("Specified component must be " + attr.declaration["target"]);
 		        }
 		    } else {
-		        var n = this.tree(val).first();
+		        var n = attr.tree(val).first();
 		        if (n) {
-		            return n.getComponent(this.declaration["target"]);
+		            return n.getComponent(attr.declaration["target"]);
 		        }
 		        return null;
 		    }
@@ -12173,9 +12191,6 @@ return /******/ (function(modules) { // webpackBootstrap
 		                        if (key === _Constants2.default.x_gr_id) {
 		                            continue;
 		                        }
-		                        if (!_this2.attributes.get(key)) {
-		                            _Utility2.default.w("attribute '" + key + "' is not exist in this component '" + _this2.name.fqn + "'");
-		                        }
 		                    }
 		                    _this2.attributes.forEach(function (attr) {
 		                        return attr.resolveDefaultValue(attrs);
@@ -12266,7 +12281,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		        value: function __bindAttributes() {
 		            this.attributes.forEach(function (attr) {
 		                var name = attr.name.name;
-		                attr.boundTo("_" + name);
+		                attr.boundTo(name);
 		            });
 		        }
 		    }, {
@@ -12308,7 +12323,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		    }, {
 		        key: "isActive",
 		        get: function get() {
-		            return this.enabled && this.node.isActive;
+		            return this.enabled && this.node && this.node.isActive;
 		        }
 		    }]);
 		
@@ -12326,6 +12341,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		Object.defineProperty(exports, "__esModule", {
 		    value: true
 		});
+		exports.default = NumberConverter;
 		function NumberConverter(val) {
 		    if (typeof val === "number") {
 		        return val;
@@ -12335,7 +12351,6 @@ return /******/ (function(modules) { // webpackBootstrap
 		        return null;
 		    }
 		}
-		exports.default = NumberConverter;
 	
 	/***/ },
 	/* 25 */
@@ -12346,10 +12361,10 @@ return /******/ (function(modules) { // webpackBootstrap
 		Object.defineProperty(exports, "__esModule", {
 		    value: true
 		});
+		exports.default = ObjectConverter;
 		function ObjectConverter(val) {
 		    return val;
 		}
-		exports.default = ObjectConverter;
 	
 	/***/ },
 	/* 26 */
@@ -12369,18 +12384,17 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var splitter = " ";
 		var escape = "\\";
-		function ArrayConverter(val) {
-		    if (!this.declaration["type"]) {
+		function ArrayConverter(val, attr) {
+		    if (!attr.declaration["type"]) {
 		        throw new Error("Array converter needs to be specified type in attribute declaration.");
 		    }
-		    var converter = _GrimoireInterface2.default.converters.get(this.declaration["type"]);
+		    var converter = _GrimoireInterface2.default.converters.get(attr.declaration["type"]);
 		    if (!converter) {
-		        throw new Error("converter " + this.declaration["type"] + " is not registerd.");
+		        throw new Error("converter " + attr.declaration["type"] + " is not registerd.");
 		    }
-		    var c = converter.convert.bind(this);
 		    if (Array.isArray(val)) {
 		        return val.map(function (v) {
-		            return c(v);
+		            return converter.convert(v, attr);
 		        });
 		    }
 		    if (typeof val === "string") {
@@ -12397,7 +12411,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		            }
 		        }
 		        return ar.map(function (v) {
-		            return c(v);
+		            return converter.convert(v, attr);
 		        });
 		    }
 		    return null;
@@ -12555,8 +12569,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		            return this;
 		        }
 		        /**
-		         * このノードインタフェースが対象とするノードの子に、
-		         * 指定されたノードが存在すれば削除します。
+		         * このノードインタフェースが対象とするノードをツリーから削除します。s
 		         * @param {GomlNode} child [description]
 		         */
 		
@@ -12838,7 +12851,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		Object.defineProperty(exports, "__esModule", {
 		    value: true
 		});
-		function BooleanConverter(val) {
+		function BooleanConverter(val, attr) {
 		    if (typeof val === "boolean") {
 		        return val;
 		    } else if (typeof val === "string") {
@@ -12940,6 +12953,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		Object.defineProperty(exports, "__esModule", {
 		    value: true
 		});
+		exports.default = StringArrayConverter;
 		function StringArrayConverter(val) {
 		    if (Array.isArray(val) || !val) {
 		        return val;
@@ -12948,7 +12962,6 @@ return /******/ (function(modules) { // webpackBootstrap
 		        return val.split(" ");
 		    }
 		}
-		exports.default = StringArrayConverter;
 	
 	/***/ },
 	/* 32 */
@@ -12959,6 +12972,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		Object.defineProperty(exports, "__esModule", {
 		    value: true
 		});
+		exports.default = StringConverter;
 		function StringConverter(val) {
 		    if (typeof val === "string") {
 		        return val;
@@ -12968,7 +12982,6 @@ return /******/ (function(modules) { // webpackBootstrap
 		        return val.toString();
 		    }
 		}
-		exports.default = StringConverter;
 	
 	/***/ },
 	/* 33 */
@@ -13246,7 +13259,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		                resolve(result.value);
 		            }).then(fulfilled, rejected);
 		        }
-		        step((generator = generator.apply(thisArg, _arguments)).next());
+		        step((generator = generator.apply(thisArg, _arguments || [])).next());
 		    });
 		};
 		
@@ -23013,63 +23026,71 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _CanvasInitializerComponent2 = _interopRequireDefault(_CanvasInitializerComponent);
 		
-		var _FullscreenComponent = __webpack_require__(49);
+		var _ClickableMeshComponent = __webpack_require__(49);
+		
+		var _ClickableMeshComponent2 = _interopRequireDefault(_ClickableMeshComponent);
+		
+		var _FullscreenComponent = __webpack_require__(53);
 		
 		var _FullscreenComponent2 = _interopRequireDefault(_FullscreenComponent);
 		
-		var _GeometryComponent = __webpack_require__(50);
+		var _GeometryComponent = __webpack_require__(54);
 		
 		var _GeometryComponent2 = _interopRequireDefault(_GeometryComponent);
 		
-		var _GeometryRegistoryComponent = __webpack_require__(52);
+		var _GeometryRegistoryComponent = __webpack_require__(56);
 		
 		var _GeometryRegistoryComponent2 = _interopRequireDefault(_GeometryRegistoryComponent);
 		
-		var _HTMLBinderComponent = __webpack_require__(53);
+		var _HTMLBinderComponent = __webpack_require__(57);
 		
 		var _HTMLBinderComponent2 = _interopRequireDefault(_HTMLBinderComponent);
 		
-		var _LoopManagerComponent = __webpack_require__(54);
+		var _LoopManagerComponent = __webpack_require__(61);
 		
 		var _LoopManagerComponent2 = _interopRequireDefault(_LoopManagerComponent);
 		
-		var _MaterialComponent = __webpack_require__(55);
+		var _MaterialComponent = __webpack_require__(62);
 		
 		var _MaterialComponent2 = _interopRequireDefault(_MaterialComponent);
 		
-		var _MaterialContainerComponent = __webpack_require__(56);
+		var _MaterialContainerComponent = __webpack_require__(51);
 		
 		var _MaterialContainerComponent2 = _interopRequireDefault(_MaterialContainerComponent);
 		
-		var _MaterialImporterComponent = __webpack_require__(58);
+		var _MaterialImporterComponent = __webpack_require__(63);
 		
 		var _MaterialImporterComponent2 = _interopRequireDefault(_MaterialImporterComponent);
 		
-		var _MeshRendererComponent = __webpack_require__(59);
+		var _MeshRendererComponent = __webpack_require__(50);
 		
 		var _MeshRendererComponent2 = _interopRequireDefault(_MeshRendererComponent);
 		
-		var _MouseCameraControlComponent = __webpack_require__(60);
+		var _MouseCameraControlComponent = __webpack_require__(64);
 		
 		var _MouseCameraControlComponent2 = _interopRequireDefault(_MouseCameraControlComponent);
 		
-		var _RenderBufferComponent = __webpack_require__(62);
+		var _RenderBufferComponent = __webpack_require__(66);
 		
 		var _RenderBufferComponent2 = _interopRequireDefault(_RenderBufferComponent);
 		
-		var _RendererComponent = __webpack_require__(65);
+		var _RendererComponent = __webpack_require__(68);
 		
 		var _RendererComponent2 = _interopRequireDefault(_RendererComponent);
 		
-		var _RendererManagerComponent = __webpack_require__(66);
+		var _RendererManagerComponent = __webpack_require__(69);
 		
 		var _RendererManagerComponent2 = _interopRequireDefault(_RendererManagerComponent);
 		
-		var _RenderQuadComponent = __webpack_require__(68);
+		var _RenderHitareaComponent = __webpack_require__(71);
+		
+		var _RenderHitareaComponent2 = _interopRequireDefault(_RenderHitareaComponent);
+		
+		var _RenderQuadComponent = __webpack_require__(73);
 		
 		var _RenderQuadComponent2 = _interopRequireDefault(_RenderQuadComponent);
 		
-		var _RenderSceneComponent = __webpack_require__(70);
+		var _RenderSceneComponent = __webpack_require__(58);
 		
 		var _RenderSceneComponent2 = _interopRequireDefault(_RenderSceneComponent);
 		
@@ -23077,47 +23098,51 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _SceneComponent2 = _interopRequireDefault(_SceneComponent);
 		
-		var _TextureBufferComponent = __webpack_require__(71);
+		var _TextureBufferComponent = __webpack_require__(74);
 		
 		var _TextureBufferComponent2 = _interopRequireDefault(_TextureBufferComponent);
 		
-		var _TextureComponent = __webpack_require__(72);
+		var _TextureComponent = __webpack_require__(75);
 		
 		var _TextureComponent2 = _interopRequireDefault(_TextureComponent);
+		
+		var _TimeComponent = __webpack_require__(76);
+		
+		var _TimeComponent2 = _interopRequireDefault(_TimeComponent);
 		
 		var _TransformComponent = __webpack_require__(17);
 		
 		var _TransformComponent2 = _interopRequireDefault(_TransformComponent);
 		
-		var _CanvasSizeConverter = __webpack_require__(73);
+		var _CanvasSizeConverter = __webpack_require__(77);
 		
 		var _CanvasSizeConverter2 = _interopRequireDefault(_CanvasSizeConverter);
 		
-		var _GeometryConverter = __webpack_require__(74);
+		var _GeometryConverter = __webpack_require__(78);
 		
 		var _GeometryConverter2 = _interopRequireDefault(_GeometryConverter);
 		
-		var _MaterialConverter = __webpack_require__(75);
+		var _MaterialConverter = __webpack_require__(79);
 		
 		var _MaterialConverter2 = _interopRequireDefault(_MaterialConverter);
 		
-		var _NodeConverter = __webpack_require__(76);
+		var _NodeConverter = __webpack_require__(80);
 		
 		var _NodeConverter2 = _interopRequireDefault(_NodeConverter);
 		
-		var _PositionConverter = __webpack_require__(78);
+		var _PositionConverter = __webpack_require__(82);
 		
 		var _PositionConverter2 = _interopRequireDefault(_PositionConverter);
 		
-		var _TextureConverter = __webpack_require__(80);
+		var _TextureConverter = __webpack_require__(84);
 		
 		var _TextureConverter2 = _interopRequireDefault(_TextureConverter);
 		
-		var _ViewportConverter = __webpack_require__(82);
+		var _ViewportConverter = __webpack_require__(86);
 		
 		var _ViewportConverter2 = _interopRequireDefault(_ViewportConverter);
 		
-		var _DefaultPrimitives = __webpack_require__(84);
+		var _DefaultPrimitives = __webpack_require__(88);
 		
 		var _DefaultPrimitives2 = _interopRequireDefault(_DefaultPrimitives);
 		
@@ -23125,11 +23150,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _Geometry2 = _interopRequireDefault(_Geometry);
 		
-		var _GeometryFactory = __webpack_require__(51);
+		var _GeometryFactory = __webpack_require__(55);
 		
 		var _GeometryFactory2 = _interopRequireDefault(_GeometryFactory);
 		
-		var _GeometryUtility = __webpack_require__(85);
+		var _GeometryUtility = __webpack_require__(89);
 		
 		var _GeometryUtility2 = _interopRequireDefault(_GeometryUtility);
 		
@@ -23137,7 +23162,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _DefaultMacro2 = _interopRequireDefault(_DefaultMacro);
 		
-		var _DefaultMaterial = __webpack_require__(86);
+		var _DefaultMaterial = __webpack_require__(90);
 		
 		var _DefaultMaterial2 = _interopRequireDefault(_DefaultMaterial);
 		
@@ -23161,7 +23186,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _Technique2 = _interopRequireDefault(_Technique);
 		
-		var _TextureReference = __webpack_require__(81);
+		var _TextureReference = __webpack_require__(85);
 		
 		var _TextureReference2 = _interopRequireDefault(_TextureReference);
 		
@@ -23169,19 +23194,19 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _UniformResolverRegistry2 = _interopRequireDefault(_UniformResolverRegistry);
 		
-		var _MatricesRegister = __webpack_require__(88);
+		var _MatricesRegister = __webpack_require__(92);
 		
 		var _MatricesRegister2 = _interopRequireDefault(_MatricesRegister);
 		
-		var _MiscRegister = __webpack_require__(89);
+		var _MiscRegister = __webpack_require__(93);
 		
 		var _MiscRegister2 = _interopRequireDefault(_MiscRegister);
 		
-		var _UserValueRegister = __webpack_require__(91);
+		var _UserValueRegister = __webpack_require__(95);
 		
 		var _UserValueRegister2 = _interopRequireDefault(_UserValueRegister);
 		
-		var _nodes = __webpack_require__(92);
+		var _nodes = __webpack_require__(96);
 		
 		var _nodes2 = _interopRequireDefault(_nodes);
 		
@@ -23189,7 +23214,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _Buffer2 = _interopRequireDefault(_Buffer);
 		
-		var _FrameBuffer = __webpack_require__(69);
+		var _FrameBuffer = __webpack_require__(59);
 		
 		var _FrameBuffer2 = _interopRequireDefault(_FrameBuffer);
 		
@@ -23209,7 +23234,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _Program2 = _interopRequireDefault(_Program);
 		
-		var _RenderBuffer = __webpack_require__(63);
+		var _RenderBuffer = __webpack_require__(60);
 		
 		var _RenderBuffer2 = _interopRequireDefault(_RenderBuffer);
 		
@@ -23233,7 +23258,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _UniformProxy2 = _interopRequireDefault(_UniformProxy);
 		
-		var _DrawPriorty = __webpack_require__(57);
+		var _DrawPriorty = __webpack_require__(52);
 		
 		var _DrawPriorty2 = _interopRequireDefault(_DrawPriorty);
 		
@@ -23273,17 +23298,21 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _HashCalculator2 = _interopRequireDefault(_HashCalculator);
 		
-		var _TextureSizeCalculator = __webpack_require__(64);
+		var _MeshIndexCalculator = __webpack_require__(72);
+		
+		var _MeshIndexCalculator2 = _interopRequireDefault(_MeshIndexCalculator);
+		
+		var _TextureSizeCalculator = __webpack_require__(67);
 		
 		var _TextureSizeCalculator2 = _interopRequireDefault(_TextureSizeCalculator);
 		
-		var _main = __webpack_require__(93);
+		var _main = __webpack_require__(97);
 		
 		var _main2 = _interopRequireDefault(_main);
 		
 		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 		
-		var __VERSION__ = "0.11.1-beta16";
+		var __VERSION__ = "0.12.0";
 		var __NAME__ = "grimoirejs-fundamental";
 		
 		var __EXPOSE__ = {
@@ -23298,6 +23327,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		        "AssetLoadingManagerComponent": _AssetLoadingManagerComponent2.default,
 		        "CameraComponent": _CameraComponent2.default,
 		        "CanvasInitializerComponent": _CanvasInitializerComponent2.default,
+		        "ClickableMeshComponent": _ClickableMeshComponent2.default,
 		        "FullscreenComponent": _FullscreenComponent2.default,
 		        "GeometryComponent": _GeometryComponent2.default,
 		        "GeometryRegistoryComponent": _GeometryRegistoryComponent2.default,
@@ -23311,11 +23341,13 @@ return /******/ (function(modules) { // webpackBootstrap
 		        "RenderBufferComponent": _RenderBufferComponent2.default,
 		        "RendererComponent": _RendererComponent2.default,
 		        "RendererManagerComponent": _RendererManagerComponent2.default,
+		        "RenderHitareaComponent": _RenderHitareaComponent2.default,
 		        "RenderQuadComponent": _RenderQuadComponent2.default,
 		        "RenderSceneComponent": _RenderSceneComponent2.default,
 		        "SceneComponent": _SceneComponent2.default,
 		        "TextureBufferComponent": _TextureBufferComponent2.default,
 		        "TextureComponent": _TextureComponent2.default,
+		        "TimeComponent": _TimeComponent2.default,
 		        "TransformComponent": _TransformComponent2.default
 		    },
 		    "Converters": {
@@ -23379,6 +23411,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		    },
 		    "Util": {
 		        "HashCalculator": _HashCalculator2.default,
+		        "MeshIndexCalculator": _MeshIndexCalculator2.default,
 		        "TextureSizeCalculator": _TextureSizeCalculator2.default
 		    }
 		};
@@ -23436,7 +23469,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		                resolve(result.value);
 		            }).then(fulfilled, rejected);
 		        }
-		        step((generator = generator.apply(thisArg, _arguments)).next());
+		        step((generator = generator.apply(thisArg, _arguments || [])).next());
 		    });
 		};
 		
@@ -23594,7 +23627,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		                resolve(result.value);
 		            }).then(fulfilled, rejected);
 		        }
-		        step((generator = generator.apply(thisArg, _arguments)).next());
+		        step((generator = generator.apply(thisArg, _arguments || [])).next());
 		    });
 		};
 		/**
@@ -23720,6 +23753,9 @@ return /******/ (function(modules) { // webpackBootstrap
 		    _createClass(ExternalResourceResolver, null, [{
 		        key: "_toAbsolute",
 		        value: function _toAbsolute(href) {
+		            if (href.match(/^blob\:/m)) {
+		                return href;
+		            }
 		            var link = document.createElement("a");
 		            link.href = href;
 		            return link.protocol + "//" + link.host + link.pathname + link.search + link.hash;
@@ -23777,7 +23813,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		                        resolve(imgTag);
 		                    };
 		                    imgTag.onerror = function (e) {
-		                        reject(e);
+		                        reject("Error has been occured during loading \"" + abs + "(" + path + ")\"\n" + e);
 		                    };
 		                    imgTag.src = abs;
 		                });
@@ -23907,7 +23943,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		                resolve(result.value);
 		            }).then(fulfilled, rejected);
 		        }
-		        step((generator = generator.apply(thisArg, _arguments)).next());
+		        step((generator = generator.apply(thisArg, _arguments || [])).next());
 		    });
 		};
 		
@@ -24453,7 +24489,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		            var index = 0;
 		            for (; index < this._rendeables.length; index++) {
 		                var r = this._rendeables[index];
-		                if (r.rendarable.id === rendarable.id) {
+		                if (r.rendarable.index === rendarable.index) {
 		                    break;
 		                }
 		            }
@@ -24927,6 +24963,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		            this._queues.forEach(function (q) {
 		                return q.add(rendarable);
 		            });
+		            rendarable.setRenderableIndex(this._renderables.length);
 		        }
 		    }, {
 		        key: "removeRenderable",
@@ -24936,9 +24973,17 @@ return /******/ (function(modules) { // webpackBootstrap
 		                return; // Could not find specified renderable
 		            }
 		            this._renderables.splice(index, 1);
+		            this._renderables.forEach(function (r, i) {
+		                r.setRenderableIndex(i + 1);
+		            });
 		            this._queues.forEach(function (q) {
 		                return q.remove(renderable);
 		            });
+		        }
+		    }, {
+		        key: "getByIndex",
+		        value: function getByIndex(index) {
+		            return this._renderables[index];
 		        }
 		    }]);
 		
@@ -25326,7 +25371,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		                resolve(result.value);
 		            }).then(fulfilled, rejected);
 		        }
-		        step((generator = generator.apply(thisArg, _arguments)).next());
+		        step((generator = generator.apply(thisArg, _arguments || [])).next());
 		    });
 		};
 		
@@ -25704,7 +25749,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		                resolve(result.value);
 		            }).then(fulfilled, rejected);
 		        }
-		        step((generator = generator.apply(thisArg, _arguments)).next());
+		        step((generator = generator.apply(thisArg, _arguments || [])).next());
 		    });
 		};
 		
@@ -26220,7 +26265,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		        _matIP: "PROJECTIONINVERSE",
 		        _matIVM: "MODELVIEWINVERSE",
 		        _matIPVM: "MODELVIEWPROJECTIONINVERSE",
-		        _matITM: "MODELINVERSETRANSPOSE",
+		        _matITM: "MODELINVERMousETRANSPOSE",
 		        _matITVM: "MODELVIEWINVERSETRANSPOSE"
 		    }
 		};
@@ -26273,7 +26318,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		                resolve(result.value);
 		            }).then(fulfilled, rejected);
 		        }
-		        step((generator = generator.apply(thisArg, _arguments)).next());
+		        step((generator = generator.apply(thisArg, _arguments || [])).next());
 		    });
 		};
 		
@@ -26989,9 +27034,9 @@ return /******/ (function(modules) { // webpackBootstrap
 		                preciousShaders.forEach(function (s) {
 		                    return _this2.gl.detachShader(_this2.program, s);
 		                });
-		                this._uniformLocations = {}; // reset location caches
-		                this._attributeLocations = {};
 		            }
+		            this._uniformLocations = {}; // reset location caches
+		            this._attributeLocations = {};
 		            // attach all shader passed
 		            shaders.forEach(function (shader) {
 		                _this2.gl.attachShader(_this2.program, shader.shader);
@@ -27024,6 +27069,8 @@ return /******/ (function(modules) { // webpackBootstrap
 		        value: function destroy() {
 		            _get(Program.prototype.__proto__ || Object.getPrototypeOf(Program.prototype), "destroy", this).call(this);
 		            this.gl.deleteProgram(this.program);
+		            this._uniformLocations = {};
+		            this._attributeLocations = {};
 		        }
 		        /**
 		         * Fetch attribute location from this program.
@@ -28408,6 +28455,10 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 		
+		var _MeshRendererComponent = __webpack_require__(50);
+		
+		var _MeshRendererComponent2 = _interopRequireDefault(_MeshRendererComponent);
+		
 		var _Component2 = __webpack_require__(9);
 		
 		var _Component3 = _interopRequireDefault(_Component2);
@@ -28420,113 +28471,37 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 		
-		/**
-		 * フルスクリーン状態を管理するコンポーネント
-		 *
-		 * Grimoire.jsによって管理されているキャンバス(正確にはその親のコンテナ)のフルスクリーン状態等を管理します。
-		 * (他の要素をフルスクリーン化することも可能ですが、通常このGrimoire.jsによって生成されるキャンバスを含むDOM要素に対して用いられます。)
-		 *
-		 * また、一部の古いブラウザでは動作しない機能であることに注意してください。
-		 * また、`fullscreen`属性は必ず マウスのイベントなどのユーザーのインタラクションを伴うイベントからの呼び出しで **動的に** trueにされる必要があります。
-		 *
-		 * 最初からtrueに設定して初期状態でキャンバスをフルスクリーン状態にすることはWebAPIの制約上できません。
-		 */
-		var FullscreenComponent = function (_Component) {
-		    _inherits(FullscreenComponent, _Component);
+		var ClickableMeshComponent = function (_Component) {
+		    _inherits(ClickableMeshComponent, _Component);
 		
-		    function FullscreenComponent() {
-		        _classCallCheck(this, FullscreenComponent);
+		    function ClickableMeshComponent() {
+		        _classCallCheck(this, ClickableMeshComponent);
 		
-		        var _this = _possibleConstructorReturn(this, (FullscreenComponent.__proto__ || Object.getPrototypeOf(FullscreenComponent)).apply(this, arguments));
-		
-		        _this._fullscreen = false;
-		        return _this;
+		        return _possibleConstructorReturn(this, (ClickableMeshComponent.__proto__ || Object.getPrototypeOf(ClickableMeshComponent)).apply(this, arguments));
 		    }
 		
-		    _createClass(FullscreenComponent, [{
-		        key: "$awake",
-		        value: function $awake() {
-		            var _this2 = this;
-		
-		            this.getAttributeRaw("fullscreen").watch(function (attr) {
-		                if (_this2._fullscreen === attr) {
-		                    return;
-		                }
-		                _this2._fullscreen = attr;
-		                _this2._switchFullscreen();
-		            });
-		        }
-		    }, {
-		        key: "_switchFullscreen",
-		        value: function _switchFullscreen() {
-		            if (this._fullscreen) {
-		                this.requestFullscreen(this.getAttribute("fullscreenTarget") || this.companion.get("canvasContainer"));
-		            } else {
-		                this.exitFullscreen();
+		    _createClass(ClickableMeshComponent, [{
+		        key: "$mount",
+		        value: function $mount() {
+		            this._meshRenderer = this.node.getComponent(_MeshRendererComponent2.default);
+		            if (!this._meshRenderer) {
+		                throw new Error("ClickableMeshComponent must be attached with MeshRenderer");
 		            }
 		        }
 		    }, {
-		        key: "requestFullscreen",
-		        value: function requestFullscreen(target) {
-		            if (target.webkitRequestFullscreen) {
-		                target.webkitRequestFullscreen(); //Chrome15+, Safari5.1+, Opera15+
-		            } else if (target["mozRequestFullScreen"]) {
-		                target["mozRequestFullScreen"](); //FF10+
-		            } else if (target["msRequestFullscreen"]) {
-		                target["msRequestFullscreen"](); //IE11+
-		            } else if (target.requestFullscreen) {
-		                target.requestFullscreen(); // HTML5 Fullscreen API仕様
-		            } else {
-		                console.error('ご利用のブラウザはフルスクリーン操作に対応していません');
-		                return;
-		            }
-		        }
-		        /*フルスクリーン終了用ファンクション*/
-		
+		        key: "render",
+		        value: function render() {}
 		    }, {
-		        key: "exitFullscreen",
-		        value: function exitFullscreen() {
-		            if (document.webkitCancelFullScreen) {
-		                document.webkitCancelFullScreen(); //Chrome15+, Safari5.1+, Opera15+
-		            } else if (document["mozCancelFullScreen"]) {
-		                document["mozCancelFullScreen"](); //FF10+
-		            } else if (document["msExitFullscreen"]) {
-		                document["msExitFullscreen"](); //IE11+
-		            } else if (document["cancelFullScreen"]) {
-		                document["cancelFullScreen"](); //Gecko:FullScreenAPI仕様
-		            } else if (document.exitFullscreen) {
-		                document.exitFullscreen(); // HTML5 Fullscreen API仕様
-		            }
-		        }
+		        key: "onclick",
+		        value: function onclick() {}
 		    }]);
 		
-		    return FullscreenComponent;
+		    return ClickableMeshComponent;
 		}(_Component3.default);
 		
-		exports.default = FullscreenComponent;
+		exports.default = ClickableMeshComponent;
 		
-		FullscreenComponent.attributes = {
-		    /**
-		     * フルスクリーン状態かどうか
-		     *
-		     * このフラグをtrueにする際は、**必ず**、マウスイベントなどのユーザーのインタラクションを伴うイベントからの呼び出しで変更されなければなりません。
-		     *
-		     * したがって、GOMLで初期状態からこのフラグをtrueにすることはできません。
-		     */
-		    fullscreen: {
-		        converter: "Boolean",
-		        default: false
-		    },
-		    /**
-		     * フルスクリーンにするDOM要素へのクエリ
-		     *
-		     * nullが指定された場合、キャンバスの親要素が用いられます。
-		     */
-		    fullscreenTarget: {
-		        converter: "String",
-		        default: null
-		    }
-		};
+		ClickableMeshComponent.attributes = {};
 	
 	/***/ },
 	/* 50 */
@@ -28540,303 +28515,13 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 		
-		var _GeometryFactory = __webpack_require__(51);
+		var _SceneComponent = __webpack_require__(18);
 		
-		var _GeometryFactory2 = _interopRequireDefault(_GeometryFactory);
+		var _SceneComponent2 = _interopRequireDefault(_SceneComponent);
 		
-		var _Component2 = __webpack_require__(9);
+		var _MaterialContainerComponent = __webpack_require__(51);
 		
-		var _Component3 = _interopRequireDefault(_Component2);
-		
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-		
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-		
-		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-		
-		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-		
-		/**
-		 * ジオメトリを生成するためのコンポーネント
-		 *
-		 * `type`属性に指定されたタイプのジオメトリを生成して、`name`属性に指定された名前で利用できる形にして登録します。
-		 *
-		 * このコンポーネントは`type`属性に応じて、**動的** に属性が増えることに気をつけてください。
-		 */
-		var GeometryComponent = function (_Component) {
-		    _inherits(GeometryComponent, _Component);
-		
-		    function GeometryComponent() {
-		        _classCallCheck(this, GeometryComponent);
-		
-		        return _possibleConstructorReturn(this, (GeometryComponent.__proto__ || Object.getPrototypeOf(GeometryComponent)).apply(this, arguments));
-		    }
-		
-		    _createClass(GeometryComponent, [{
-		        key: "$mount",
-		        value: function $mount() {
-		            var type = this.getAttribute("type");
-		            if (type) {
-		                var gf = this.companion.get("GeometryFactory");
-		                var attrs = _GeometryFactory2.default.factoryArgumentDeclarations[type];
-		                var geometryArgument = {};
-		                for (var key in attrs) {
-		                    this.__addAtribute(key, attrs[key]);
-		                    geometryArgument[key] = this.getAttribute(key);
-		                }
-		                this.geometry = gf.instanciate(type, geometryArgument);
-		                var gr = this.companion.get("GeometryRegistory");
-		                var name = this.getAttribute("name");
-		                if (!name) {
-		                    throw new Error("Name was not specified");
-		                }
-		                gr.addGeometry(name, this.geometry);
-		            }
-		        }
-		    }]);
-		
-		    return GeometryComponent;
-		}(_Component3.default);
-		
-		exports.default = GeometryComponent;
-		
-		GeometryComponent.attributes = {
-		    /**
-		     * 生成するプリミティブのタイプ
-		     *
-		     * `GeometryFactory`に登録されたプリミティブのジェネレーターの名前を指します。
-		     * この指定する名前によって、動的に属性が増えることに気をつけてください。
-		     * また、増えたジオメトリの属性は動的に操作できないことに気をつけてください。
-		     */
-		    type: {
-		        converter: "String",
-		        default: null
-		    },
-		    /**
-		     * ジオメトリにつける名前
-		     *
-		     * `GeometryConverter`によって取得される際に利用されるジオメトリ名です。
-		     * もし、`quad`など事前に登録されたジオメトリを指定した場合、そのジオメトリを上書きすることができます。
-		     */
-		    name: {
-		        converter: "String",
-		        default: null
-		    }
-		};
-	
-	/***/ },
-	/* 51 */
-	/***/ function(module, exports) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-		
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-		
-		/**
-		 * Provides the feature to instanciate primitive geometry.
-		 */
-		var GeometryFactory = function () {
-		    function GeometryFactory(gl) {
-		        _classCallCheck(this, GeometryFactory);
-		
-		        this.gl = gl;
-		    }
-		    /**
-		     * Add new type geometry
-		     * @param {string}                   typeName        [description]
-		     * @param {IAttributeDeclaration }}             argumentDeclarations [description]
-		     * @param {IGeometryFactoryDelegate} factoryDelegate [description]
-		     */
-		
-		
-		    _createClass(GeometryFactory, [{
-		        key: "instanciate",
-		        value: function instanciate(type, args) {
-		            var factoryDelegate = GeometryFactory.factoryDelegates[type];
-		            if (!factoryDelegate) {
-		                throw new Error("Can not instanciate unknown geometry type " + type);
-		            }
-		            var geometry = factoryDelegate(this.gl, args);
-		            if (GeometryFactory.factoryExtentions[type] !== void 0) {
-		                GeometryFactory.factoryExtentions[type].forEach(function (v) {
-		                    return v(geometry, args);
-		                });
-		            }
-		            return geometry;
-		        }
-		    }, {
-		        key: "instanciateAsDefault",
-		        value: function instanciateAsDefault(type) {
-		            var decl = GeometryFactory.factoryArgumentDeclarations[type];
-		            var args = {};
-		            for (var attr in decl) {
-		                var attrDecl = decl[attr];
-		                args[attr] = attrDecl.default;
-		            }
-		            return this.instanciate(type, args);
-		        }
-		    }], [{
-		        key: "addType",
-		        value: function addType(typeName, argumentDeclarations, factoryDelegate) {
-		            GeometryFactory.factoryDelegates[typeName] = factoryDelegate;
-		            GeometryFactory.factoryArgumentDeclarations[typeName] = argumentDeclarations;
-		        }
-		    }, {
-		        key: "extend",
-		        value: function extend(typeName, extender) {
-		            if (GeometryFactory.factoryExtentions[typeName] === void 0) {
-		                GeometryFactory.factoryExtentions[typeName] = [];
-		            }
-		            GeometryFactory.factoryExtentions[typeName].push(extender);
-		        }
-		    }]);
-		
-		    return GeometryFactory;
-		}();
-		/**
-		 * Delegates to be used as factory
-		 */
-		
-		
-		exports.default = GeometryFactory;
-		GeometryFactory.factoryDelegates = {};
-		/**
-		 * Argument inputs to be used for construction of geometry.
-		 */
-		GeometryFactory.factoryArgumentDeclarations = {};
-		GeometryFactory.factoryExtentions = {};
-	
-	/***/ },
-	/* 52 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-		
-		var _GeometryFactory = __webpack_require__(51);
-		
-		var _GeometryFactory2 = _interopRequireDefault(_GeometryFactory);
-		
-		var _Component2 = __webpack_require__(9);
-		
-		var _Component3 = _interopRequireDefault(_Component2);
-		
-		var _grimoirejs = __webpack_require__(8);
-		
-		var _grimoirejs2 = _interopRequireDefault(_grimoirejs);
-		
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-		
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-		
-		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-		
-		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-		
-		/**
-		 * ジオメトリを管理するコンポーネント
-		 *
-		 * あまりユーザーが直接操作することはありません。
-		 */
-		var GeometryRegistoryComponent = function (_Component) {
-		    _inherits(GeometryRegistoryComponent, _Component);
-		
-		    function GeometryRegistoryComponent() {
-		        _classCallCheck(this, GeometryRegistoryComponent);
-		
-		        var _this = _possibleConstructorReturn(this, (GeometryRegistoryComponent.__proto__ || Object.getPrototypeOf(GeometryRegistoryComponent)).apply(this, arguments));
-		
-		        _this._geometries = {};
-		        return _this;
-		    }
-		
-		    _createClass(GeometryRegistoryComponent, [{
-		        key: "$awake",
-		        value: function $awake() {
-		            this._factory = new _GeometryFactory2.default(this.companion.get("gl"));
-		            this.companion.set(this.name, this);
-		            this.companion.set(_grimoirejs2.default.ns(this.name.ns)("GeometryFactory"), this._factory);
-		            var _iteratorNormalCompletion = true;
-		            var _didIteratorError = false;
-		            var _iteratorError = undefined;
-		
-		            try {
-		                for (var _iterator = this.getAttribute("defaultGeometry")[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-		                    var geometry = _step.value;
-		
-		                    this.addGeometry(geometry, this._factory.instanciateAsDefault(geometry));
-		                }
-		            } catch (err) {
-		                _didIteratorError = true;
-		                _iteratorError = err;
-		            } finally {
-		                try {
-		                    if (!_iteratorNormalCompletion && _iterator.return) {
-		                        _iterator.return();
-		                    }
-		                } finally {
-		                    if (_didIteratorError) {
-		                        throw _iteratorError;
-		                    }
-		                }
-		            }
-		        }
-		    }, {
-		        key: "addGeometry",
-		        value: function addGeometry(name, geometry) {
-		            this._geometries[name] = geometry;
-		        }
-		    }, {
-		        key: "removeGeometry",
-		        value: function removeGeometry(name) {
-		            if (this._geometries[name]) {
-		                delete this._geometries[name];
-		            }
-		        }
-		    }, {
-		        key: "getGeometry",
-		        value: function getGeometry(name) {
-		            return this._geometries[name];
-		        }
-		    }]);
-		
-		    return GeometryRegistoryComponent;
-		}(_Component3.default);
-		
-		exports.default = GeometryRegistoryComponent;
-		
-		GeometryRegistoryComponent.attributes = {
-		    /**
-		     * デフォルトで生成するジオメトリの種類
-		     */
-		    defaultGeometry: {
-		        converter: "StringArray",
-		        default: ["quad", "cube", "sphere"]
-		    }
-		};
-	
-	/***/ },
-	/* 53 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+		var _MaterialContainerComponent2 = _interopRequireDefault(_MaterialContainerComponent);
 		
 		var _TransformComponent = __webpack_require__(17);
 		
@@ -28846,13 +28531,9 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _Component3 = _interopRequireDefault(_Component2);
 		
-		var _Vector = __webpack_require__(13);
+		var _GLM = __webpack_require__(12);
 		
-		var _Vector2 = _interopRequireDefault(_Vector);
-		
-		var _Matrix = __webpack_require__(15);
-		
-		var _Matrix2 = _interopRequireDefault(_Matrix);
+		var _GLM2 = _interopRequireDefault(_GLM);
 		
 		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 		
@@ -28862,389 +28543,153 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 		
+		var vec3 = _GLM2.default.vec3;
 		/**
-		 * (Deprecated)DOM要素とTransformを同期させるためのコンポーネント
+		 * シーン中に存在するメッシュ一つあたりのレンダリングを司るコンポーネント
 		 *
-		 * このコンポーネントはfundamentalからは削除されます。(別のパッケージとして分離予定)
+		 * このメッシュが、対象となるノードの`Transform`や描画に用いる`Camera`、マテリアルなどを考慮して実際のレンダリングを行います。
 		 */
-		var HTMLBinderComponent = function (_Component) {
-		    _inherits(HTMLBinderComponent, _Component);
 		
-		    function HTMLBinderComponent() {
-		        _classCallCheck(this, HTMLBinderComponent);
+		var MeshRenderer = function (_Component) {
+		    _inherits(MeshRenderer, _Component);
 		
-		        var _this = _possibleConstructorReturn(this, (HTMLBinderComponent.__proto__ || Object.getPrototypeOf(HTMLBinderComponent)).apply(this, arguments));
+		    function MeshRenderer() {
+		        _classCallCheck(this, MeshRenderer);
 		
-		        _this._isFirstCall = true;
+		        var _this = _possibleConstructorReturn(this, (MeshRenderer.__proto__ || Object.getPrototypeOf(MeshRenderer)).apply(this, arguments));
+		
+		        _this._priortyCalcCache = new Float32Array(3);
 		        return _this;
 		    }
+		    /**
+		    * Find scene tag recursively.
+		    * @param  {GomlNode}       node [the node to searching currently]
+		    * @return {SceneComponent}      [the scene component found]
+		    */
 		
-		    _createClass(HTMLBinderComponent, [{
+		
+		    _createClass(MeshRenderer, [{
+		        key: "getRenderingPriorty",
+		        value: function getRenderingPriorty(camera, cameraMoved, lastPriorty) {
+		            vec3.add(this._priortyCalcCache, camera.transform.globalPosition.rawElements, this.geometry.aabb.Center.rawElements);
+		            vec3.sub(this._priortyCalcCache, this._priortyCalcCache, this._transformComponent.globalPosition.rawElements);
+		            return this._materialContainer.getDrawPriorty(vec3.sqrLen(this._priortyCalcCache)); // Obtains distance between camera and center of aabb
+		        }
+		    }, {
 		        key: "$awake",
 		        value: function $awake() {
-		            this._canvasContainer = this.companion.get("canvasContainer");
-		            this._currentTransform = this.node.getComponent(_TransformComponent2.default);
+		            this.__bindAttributes();
 		        }
 		    }, {
 		        key: "$mount",
 		        value: function $mount() {
-		            this._canvasContainer = this.companion.get("canvasContainer");
-		            this._currentTransform = this.node.getComponent(_TransformComponent2.default);
-		            this.node.on("render", this._onRender.bind(this));
+		            this._transformComponent = this.node.getComponent(_TransformComponent2.default);
+		            this._materialContainer = this.node.getComponent(_MaterialContainerComponent2.default);
+		            this._containedScene = MeshRenderer._findContainedScene(this.node);
+		            this._containedScene.queueRegistory.addRenderable(this);
 		        }
 		    }, {
-		        key: "$treeInitialized",
-		        value: function $treeInitialized() {
-		            var _this2 = this;
-		
-		            this.getAttributeRaw("targetRenderer").watch(function (v) {
-		                if (_this2._rendererQuery !== v) {
-		                    _this2._onRendererChanged();
-		                }
-		            }, true);
-		            this.getAttributeRaw("htmlQuery").watch(function (v) {
-		                _this2._onQueryChanged(v);
-		            }, true);
+		        key: "$unmount",
+		        value: function $unmount() {
+		            this._containedScene.queueRegistory.removeRenderable(this);
 		        }
 		    }, {
-		        key: "_onRender",
-		        value: function _onRender(args) {
-		            if (this._isFirstCall) {
-		                this._onRendererChanged();
-		                this._isFirstCall = false;
+		        key: "render",
+		        value: function render(args) {
+		            if (!this.node.isActive || !this.enabled || this.layer !== args.layer) {
+		                return;
 		            }
-		            if (this._queriedElement && args.caller.node === this._targetNode) {
-		                var vp = args.viewport;
-		                var rawPos = _Matrix2.default.transform(this._currentTransform.calcPVM(args.camera), new _Vector2.default(0, 0, 0, 1));
-		                var rawScPos = {
-		                    x: rawPos.X / rawPos.W,
-		                    y: rawPos.Y / rawPos.W,
-		                    z: rawPos.Z / rawPos.W
-		                };
-		                if (rawScPos.z >= -1 && rawScPos.z <= 1) {
-		                    var scPos = {
-		                        x: vp.Left + (rawScPos.x + 1) / 2 * vp.Width,
-		                        y: vp.Top + (rawScPos.y + 1) / 2 * vp.Height
-		                    };
-		                    this._queriedElement.style.visibility = "visible";
-		                    this._queriedElement.style.left = scPos.x + "px";
-		                    this._queriedElement.style.bottom = scPos.y + "px";
-		                } else {
-		                    this._queriedElement.style.visibility = "hidden";
-		                }
+		            if (!this.geometry || !args.material && !this._materialContainer.material) {
+		                return; // material is not instanciated yet.
 		            }
-		        }
-		        /**
-		         * Restore default position of queried html
-		         */
-		
-		    }, {
-		        key: "_restoreDefault",
-		        value: function _restoreDefault() {
-		            this._canvasContainer.removeChild(this._queriedElement);
-		            this._parentCache.appendChild(this._queriedElement);
-		            var s = this._queriedElement.style;
-		            var c = this._styleCache;
-		            s.position = c["position"];
-		            s.left = c["left"];
-		            s.bottom = c["bottom"];
-		            s.visibility = c["visibility"];
-		        }
-		    }, {
-		        key: "_beginTrack",
-		        value: function _beginTrack() {
-		            this._parentCache.removeChild(this._queriedElement);
-		            this._canvasContainer.appendChild(this._queriedElement);
-		            this._queriedElement.style.position = "absolute";
-		        }
-		    }, {
-		        key: "_onRendererChanged",
-		        value: function _onRendererChanged() {
-		            var _this3 = this;
-		
-		            var returned = false;
-		            this.tree(this.getAttribute("targetRenderer")).forEach(function (n) {
-		                if (returned) {
-		                    return true;
-		                } else {
-		                    _this3._targetNode = n;
-		                    returned = true;
-		                }
-		            });
-		        }
-		    }, {
-		        key: "_onQueryChanged",
-		        value: function _onQueryChanged(query) {
-		            var queried = void 0;
-		            if (query && query !== "") {
-		                queried = document.querySelectorAll(query);
-		            }
-		            if (this._queriedElement) {
-		                this._restoreDefault();
-		            }
-		            if (!queried || queried.length === 0) {
-		                this._queriedElement = undefined;
-		                this._parentCache = undefined;
-		            } else {
-		                this._queriedElement = queried.item(0);
-		                var s = this._queriedElement.style;
-		                this._styleCache = {
-		                    position: s.position,
-		                    visibility: s.visibility,
-		                    left: s.left,
-		                    bottom: s.bottom
-		                };
-		                this._parentCache = this._queriedElement.parentElement;
-		                this._beginTrack();
-		            }
-		        }
-		    }]);
-		
-		    return HTMLBinderComponent;
-		}(_Component3.default);
-		
-		exports.default = HTMLBinderComponent;
-		
-		HTMLBinderComponent.attributes = {
-		    htmlQuery: {
-		        default: null,
-		        converter: "String"
-		    },
-		    targetRenderer: {
-		        default: "render-scene",
-		        converter: "String"
-		    }
-		};
-	
-	/***/ },
-	/* 54 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-		
-		var _Component2 = __webpack_require__(9);
-		
-		var _Component3 = _interopRequireDefault(_Component2);
-		
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-		
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-		
-		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-		
-		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-		
-		/**
-		 * 全体のループを管理しているコンポーネント。あまり直接ユーザーがいじることはありません。
-		 */
-		var LoopManagerComponent = function (_Component) {
-		    _inherits(LoopManagerComponent, _Component);
-		
-		    function LoopManagerComponent() {
-		        _classCallCheck(this, LoopManagerComponent);
-		
-		        var _this = _possibleConstructorReturn(this, (LoopManagerComponent.__proto__ || Object.getPrototypeOf(LoopManagerComponent)).apply(this, arguments));
-		
-		        _this._loopActions = [];
-		        _this._loopIndex = 0;
-		        return _this;
-		    }
-		
-		    _createClass(LoopManagerComponent, [{
-		        key: "$awake",
-		        value: function $awake() {
-		            var _this2 = this;
-		
-		            this.getAttributeRaw("loopEnabled").watch(function (attr) {
-		                if (attr) {
-		                    _this2._begin();
-		                }
-		            });
-		            this._registerNextLoop = window.requestAnimationFrame // if window.requestAnimationFrame is defined or undefined
-		            ? function () {
-		                window.requestAnimationFrame(_this2._loop.bind(_this2));
-		            } : function () {
-		                window.setTimeout(_this2._loop.bind(_this2), 1000 / 60);
+		            var renderArgs = {
+		                targetBuffer: this.targetBuffer,
+		                geometry: this.geometry,
+		                attributeValues: null,
+		                camera: args.camera,
+		                transform: this._transformComponent,
+		                buffers: args.buffers,
+		                viewport: args.viewport,
+		                drawCount: this.drawCount,
+		                drawOffset: this.drawOffset,
+		                sceneDescription: args.sceneDescription,
+		                technique: args.technique,
+		                renderable: this
 		            };
+		            renderArgs.attributeValues = this._materialContainer.materialArgs;
+		            this._materialContainer.material.draw(renderArgs);
+		            this.node.emit("render", args);
 		        }
 		    }, {
-		        key: "register",
-		        value: function register(action, priorty) {
-		            this._loopActions.push({
-		                action: action,
-		                priorty: priorty
-		            });
-		            this._loopActions.sort(function (a, b) {
-		                return a.priorty - b.priorty;
-		            });
+		        key: "setRenderableIndex",
+		        value: function setRenderableIndex(index) {
+		            this.index = index;
 		        }
-		    }, {
-		        key: "_begin",
-		        value: function _begin() {
-		            this._registerNextLoop();
-		        }
-		    }, {
-		        key: "_loop",
-		        value: function _loop() {
-		            var _this3 = this;
-		
-		            this.node.emit("loop", {
-		                loopIndex: this._loopIndex
-		            });
-		            this._loopActions.forEach(function (a) {
-		                return a.action(_this3._loopIndex);
-		            });
-		            this._loopIndex++;
-		            this._registerNextLoop();
+		    }], [{
+		        key: "_findContainedScene",
+		        value: function _findContainedScene(node) {
+		            if (node.parent) {
+		                var scene = node.parent.getComponent(_SceneComponent2.default);
+		                if (scene) {
+		                    return scene;
+		                } else {
+		                    return MeshRenderer._findContainedScene(node.parent);
+		                }
+		            } else {
+		                return null;
+		            }
 		        }
 		    }]);
 		
-		    return LoopManagerComponent;
+		    return MeshRenderer;
 		}(_Component3.default);
 		
-		LoopManagerComponent.attributes = {
-		    loopEnabled: {
-		        default: false,
-		        converter: "Boolean"
-		    }
-		};
-		exports.default = LoopManagerComponent;
-	
-	/***/ },
-	/* 55 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		"use strict";
+		exports.default = MeshRenderer;
 		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-		
-		var _Component2 = __webpack_require__(9);
-		
-		var _Component3 = _interopRequireDefault(_Component2);
-		
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-		
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-		
-		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-		
-		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-		
-		var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
-		    return new (P || (P = Promise))(function (resolve, reject) {
-		        function fulfilled(value) {
-		            try {
-		                step(generator.next(value));
-		            } catch (e) {
-		                reject(e);
-		            }
-		        }
-		        function rejected(value) {
-		            try {
-		                step(generator["throw"](value));
-		            } catch (e) {
-		                reject(e);
-		            }
-		        }
-		        function step(result) {
-		            result.done ? resolve(result.value) : new P(function (resolve) {
-		                resolve(result.value);
-		            }).then(fulfilled, rejected);
-		        }
-		        step((generator = generator.apply(thisArg, _arguments)).next());
-		    });
-		};
-		
-		var MaterialComponent = function (_Component) {
-		    _inherits(MaterialComponent, _Component);
-		
-		    function MaterialComponent() {
-		        _classCallCheck(this, MaterialComponent);
-		
-		        var _this = _possibleConstructorReturn(this, (MaterialComponent.__proto__ || Object.getPrototypeOf(MaterialComponent)).apply(this, arguments));
-		
-		        _this.materialArgs = {};
-		        return _this;
-		    }
-		
-		    _createClass(MaterialComponent, [{
-		        key: "$mount",
-		        value: function $mount() {
-		            var typeName = this.getAttribute("type");
-		            if (typeName) {
-		                this.materialPromise = this.companion.get("MaterialFactory").instanciate(typeName);
-		                this._registerAttributes();
-		            }
-		        }
-		    }, {
-		        key: "_registerAttributes",
-		        value: function _registerAttributes() {
-		            return __awaiter(this, void 0, void 0, regeneratorRuntime.mark(function _callee() {
-		                var _this2 = this;
-		
-		                var key, _loop, _key;
-		
-		                return regeneratorRuntime.wrap(function _callee$(_context) {
-		                    while (1) {
-		                        switch (_context.prev = _context.next) {
-		                            case 0:
-		                                _context.next = 2;
-		                                return this.materialPromise;
-		
-		                            case 2:
-		                                this.material = _context.sent;
-		
-		                                for (key in this.material.argumentDeclarations) {
-		                                    this.__addAtribute(key, this.material.argumentDeclarations[key]);
-		                                    this.getAttributeRaw(key).boundTo(key, this.material.arguments);
-		                                }
-		
-		                                _loop = function _loop(_key) {
-		                                    _this2.__addAtribute(_key, _this2.material.macroDeclarations[_key]);
-		                                    _this2.getAttributeRaw(_key).watch(function (v) {
-		                                        _this2.material.setMacroValue(_key, v);
-		                                    }, true);
-		                                };
-		
-		                                for (_key in this.material.macroDeclarations) {
-		                                    _loop(_key);
-		                                }
-		                                this.ready = true;
-		
-		                            case 7:
-		                            case "end":
-		                                return _context.stop();
-		                        }
-		                    }
-		                }, _callee, this);
-		            }));
-		        }
-		    }]);
-		
-		    return MaterialComponent;
-		}(_Component3.default);
-		
-		exports.default = MaterialComponent;
-		
-		MaterialComponent.attributes = {
-		    type: {
+		MeshRenderer.attributes = {
+		    /**
+		     * 描画に用いる形状データ
+		     */
+		    geometry: {
+		        converter: "Geometry",
+		        default: "quad"
+		    },
+		    /**
+		     * 描画に用いるインデックスバッファ名
+		     */
+		    targetBuffer: {
 		        converter: "String",
-		        default: null
+		        default: "default"
+		    },
+		    /**
+		     * このメッシュが属するレイヤー
+		     *
+		     * 詳しくは`render-scene`ノードを参考にしてください。
+		     */
+		    layer: {
+		        converter: "String",
+		        default: "default"
+		    },
+		    /**
+		     * 描画するインデックスの個数
+		     *
+		     * デフォルトの状態でジオメトリの全インデックスを描画する
+		     */
+		    drawCount: {
+		        converter: "Number",
+		        default: Number.MAX_VALUE
+		    },
+		    /**
+		     * 描画するジオメトリのインデックスのオフセット
+		     */
+		    drawOffset: {
+		        converter: "Number",
+		        default: 0
 		    }
 		};
 	
 	/***/ },
-	/* 56 */
+	/* 51 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -29255,7 +28700,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 		
-		var _DrawPriorty = __webpack_require__(57);
+		var _DrawPriorty = __webpack_require__(52);
 		
 		var _DrawPriorty2 = _interopRequireDefault(_DrawPriorty);
 		
@@ -29296,7 +28741,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		                resolve(result.value);
 		            }).then(fulfilled, rejected);
 		        }
-		        step((generator = generator.apply(thisArg, _arguments)).next());
+		        step((generator = generator.apply(thisArg, _arguments || [])).next());
 		    });
 		};
 		
@@ -29520,7 +28965,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		MaterialContainerComponent._defaultMaterial = "unlit";
 	
 	/***/ },
-	/* 57 */
+	/* 52 */
 	/***/ function(module, exports) {
 	
 		"use strict";
@@ -29537,7 +28982,1162 @@ return /******/ (function(modules) { // webpackBootstrap
 		};
 	
 	/***/ },
+	/* 53 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+		
+		var _Component2 = __webpack_require__(9);
+		
+		var _Component3 = _interopRequireDefault(_Component2);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+		
+		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+		
+		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+		
+		/**
+		 * フルスクリーン状態を管理するコンポーネント
+		 *
+		 * Grimoire.jsによって管理されているキャンバス(正確にはその親のコンテナ)のフルスクリーン状態等を管理します。
+		 * (他の要素をフルスクリーン化することも可能ですが、通常このGrimoire.jsによって生成されるキャンバスを含むDOM要素に対して用いられます。)
+		 *
+		 * また、一部の古いブラウザでは動作しない機能であることに注意してください。
+		 * また、`fullscreen`属性は必ず マウスのイベントなどのユーザーのインタラクションを伴うイベントからの呼び出しで **動的に** trueにされる必要があります。
+		 *
+		 * 最初からtrueに設定して初期状態でキャンバスをフルスクリーン状態にすることはWebAPIの制約上できません。
+		 */
+		var FullscreenComponent = function (_Component) {
+		    _inherits(FullscreenComponent, _Component);
+		
+		    function FullscreenComponent() {
+		        _classCallCheck(this, FullscreenComponent);
+		
+		        var _this = _possibleConstructorReturn(this, (FullscreenComponent.__proto__ || Object.getPrototypeOf(FullscreenComponent)).apply(this, arguments));
+		
+		        _this._fullscreen = false;
+		        return _this;
+		    }
+		
+		    _createClass(FullscreenComponent, [{
+		        key: "$awake",
+		        value: function $awake() {
+		            var _this2 = this;
+		
+		            this.getAttributeRaw("fullscreen").watch(function (attr) {
+		                if (_this2._fullscreen === attr) {
+		                    return;
+		                }
+		                _this2._fullscreen = attr;
+		                _this2._switchFullscreen();
+		            });
+		        }
+		    }, {
+		        key: "_switchFullscreen",
+		        value: function _switchFullscreen() {
+		            if (this._fullscreen) {
+		                this.requestFullscreen(this.getAttribute("fullscreenTarget") || this.companion.get("canvasContainer"));
+		            } else {
+		                this.exitFullscreen();
+		            }
+		        }
+		    }, {
+		        key: "requestFullscreen",
+		        value: function requestFullscreen(target) {
+		            if (target.webkitRequestFullscreen) {
+		                target.webkitRequestFullscreen(); //Chrome15+, Safari5.1+, Opera15+
+		            } else if (target["mozRequestFullScreen"]) {
+		                target["mozRequestFullScreen"](); //FF10+
+		            } else if (target["msRequestFullscreen"]) {
+		                target["msRequestFullscreen"](); //IE11+
+		            } else if (target.requestFullscreen) {
+		                target.requestFullscreen(); // HTML5 Fullscreen API仕様
+		            } else {
+		                console.error('ご利用のブラウザはフルスクリーン操作に対応していません');
+		                return;
+		            }
+		        }
+		        /*フルスクリーン終了用ファンクション*/
+		
+		    }, {
+		        key: "exitFullscreen",
+		        value: function exitFullscreen() {
+		            if (document.webkitCancelFullScreen) {
+		                document.webkitCancelFullScreen(); //Chrome15+, Safari5.1+, Opera15+
+		            } else if (document["mozCancelFullScreen"]) {
+		                document["mozCancelFullScreen"](); //FF10+
+		            } else if (document["msExitFullscreen"]) {
+		                document["msExitFullscreen"](); //IE11+
+		            } else if (document["cancelFullScreen"]) {
+		                document["cancelFullScreen"](); //Gecko:FullScreenAPI仕様
+		            } else if (document.exitFullscreen) {
+		                document.exitFullscreen(); // HTML5 Fullscreen API仕様
+		            }
+		        }
+		    }]);
+		
+		    return FullscreenComponent;
+		}(_Component3.default);
+		
+		exports.default = FullscreenComponent;
+		
+		FullscreenComponent.attributes = {
+		    /**
+		     * フルスクリーン状態かどうか
+		     *
+		     * このフラグをtrueにする際は、**必ず**、マウスイベントなどのユーザーのインタラクションを伴うイベントからの呼び出しで変更されなければなりません。
+		     *
+		     * したがって、GOMLで初期状態からこのフラグをtrueにすることはできません。
+		     */
+		    fullscreen: {
+		        converter: "Boolean",
+		        default: false
+		    },
+		    /**
+		     * フルスクリーンにするDOM要素へのクエリ
+		     *
+		     * nullが指定された場合、キャンバスの親要素が用いられます。
+		     */
+		    fullscreenTarget: {
+		        converter: "String",
+		        default: null
+		    }
+		};
+	
+	/***/ },
+	/* 54 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+		
+		var _GeometryFactory = __webpack_require__(55);
+		
+		var _GeometryFactory2 = _interopRequireDefault(_GeometryFactory);
+		
+		var _Component2 = __webpack_require__(9);
+		
+		var _Component3 = _interopRequireDefault(_Component2);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+		
+		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+		
+		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+		
+		/**
+		 * ジオメトリを生成するためのコンポーネント
+		 *
+		 * `type`属性に指定されたタイプのジオメトリを生成して、`name`属性に指定された名前で利用できる形にして登録します。
+		 *
+		 * このコンポーネントは`type`属性に応じて、**動的** に属性が増えることに気をつけてください。
+		 */
+		var GeometryComponent = function (_Component) {
+		    _inherits(GeometryComponent, _Component);
+		
+		    function GeometryComponent() {
+		        _classCallCheck(this, GeometryComponent);
+		
+		        return _possibleConstructorReturn(this, (GeometryComponent.__proto__ || Object.getPrototypeOf(GeometryComponent)).apply(this, arguments));
+		    }
+		
+		    _createClass(GeometryComponent, [{
+		        key: "$mount",
+		        value: function $mount() {
+		            var type = this.getAttribute("type");
+		            if (type) {
+		                var gf = this.companion.get("GeometryFactory");
+		                var attrs = _GeometryFactory2.default.factoryArgumentDeclarations[type];
+		                var geometryArgument = {};
+		                for (var key in attrs) {
+		                    this.__addAtribute(key, attrs[key]);
+		                    geometryArgument[key] = this.getAttribute(key);
+		                }
+		                this.geometry = gf.instanciate(type, geometryArgument);
+		                var gr = this.companion.get("GeometryRegistory");
+		                var name = this.getAttribute("name");
+		                if (!name) {
+		                    throw new Error("Name was not specified");
+		                }
+		                gr.addGeometry(name, this.geometry);
+		            }
+		        }
+		    }]);
+		
+		    return GeometryComponent;
+		}(_Component3.default);
+		
+		exports.default = GeometryComponent;
+		
+		GeometryComponent.attributes = {
+		    /**
+		     * 生成するプリミティブのタイプ
+		     *
+		     * `GeometryFactory`に登録されたプリミティブのジェネレーターの名前を指します。
+		     * この指定する名前によって、動的に属性が増えることに気をつけてください。
+		     * また、増えたジオメトリの属性は動的に操作できないことに気をつけてください。
+		     */
+		    type: {
+		        converter: "String",
+		        default: null
+		    },
+		    /**
+		     * ジオメトリにつける名前
+		     *
+		     * `GeometryConverter`によって取得される際に利用されるジオメトリ名です。
+		     * もし、`quad`など事前に登録されたジオメトリを指定した場合、そのジオメトリを上書きすることができます。
+		     */
+		    name: {
+		        converter: "String",
+		        default: null
+		    }
+		};
+	
+	/***/ },
+	/* 55 */
+	/***/ function(module, exports) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+		
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+		
+		/**
+		 * Provides the feature to instanciate primitive geometry.
+		 */
+		var GeometryFactory = function () {
+		    function GeometryFactory(gl) {
+		        _classCallCheck(this, GeometryFactory);
+		
+		        this.gl = gl;
+		    }
+		    /**
+		     * Add new type geometry
+		     * @param {string}                   typeName        [description]
+		     * @param {IAttributeDeclaration }}             argumentDeclarations [description]
+		     * @param {IGeometryFactoryDelegate} factoryDelegate [description]
+		     */
+		
+		
+		    _createClass(GeometryFactory, [{
+		        key: "instanciate",
+		        value: function instanciate(type, args) {
+		            var factoryDelegate = GeometryFactory.factoryDelegates[type];
+		            if (!factoryDelegate) {
+		                throw new Error("Can not instanciate unknown geometry type " + type);
+		            }
+		            var geometry = factoryDelegate(this.gl, args);
+		            if (GeometryFactory.factoryExtentions[type] !== void 0) {
+		                GeometryFactory.factoryExtentions[type].forEach(function (v) {
+		                    return v(geometry, args);
+		                });
+		            }
+		            return geometry;
+		        }
+		    }, {
+		        key: "instanciateAsDefault",
+		        value: function instanciateAsDefault(type) {
+		            var decl = GeometryFactory.factoryArgumentDeclarations[type];
+		            var args = {};
+		            for (var attr in decl) {
+		                var attrDecl = decl[attr];
+		                args[attr] = attrDecl.default;
+		            }
+		            return this.instanciate(type, args);
+		        }
+		    }], [{
+		        key: "addType",
+		        value: function addType(typeName, argumentDeclarations, factoryDelegate) {
+		            GeometryFactory.factoryDelegates[typeName] = factoryDelegate;
+		            GeometryFactory.factoryArgumentDeclarations[typeName] = argumentDeclarations;
+		        }
+		    }, {
+		        key: "extend",
+		        value: function extend(typeName, extender) {
+		            if (GeometryFactory.factoryExtentions[typeName] === void 0) {
+		                GeometryFactory.factoryExtentions[typeName] = [];
+		            }
+		            GeometryFactory.factoryExtentions[typeName].push(extender);
+		        }
+		    }]);
+		
+		    return GeometryFactory;
+		}();
+		/**
+		 * Delegates to be used as factory
+		 */
+		
+		
+		exports.default = GeometryFactory;
+		GeometryFactory.factoryDelegates = {};
+		/**
+		 * Argument inputs to be used for construction of geometry.
+		 */
+		GeometryFactory.factoryArgumentDeclarations = {};
+		GeometryFactory.factoryExtentions = {};
+	
+	/***/ },
+	/* 56 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+		
+		var _GeometryFactory = __webpack_require__(55);
+		
+		var _GeometryFactory2 = _interopRequireDefault(_GeometryFactory);
+		
+		var _Component2 = __webpack_require__(9);
+		
+		var _Component3 = _interopRequireDefault(_Component2);
+		
+		var _grimoirejs = __webpack_require__(8);
+		
+		var _grimoirejs2 = _interopRequireDefault(_grimoirejs);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+		
+		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+		
+		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+		
+		/**
+		 * ジオメトリを管理するコンポーネント
+		 *
+		 * あまりユーザーが直接操作することはありません。
+		 */
+		var GeometryRegistoryComponent = function (_Component) {
+		    _inherits(GeometryRegistoryComponent, _Component);
+		
+		    function GeometryRegistoryComponent() {
+		        _classCallCheck(this, GeometryRegistoryComponent);
+		
+		        var _this = _possibleConstructorReturn(this, (GeometryRegistoryComponent.__proto__ || Object.getPrototypeOf(GeometryRegistoryComponent)).apply(this, arguments));
+		
+		        _this._geometries = {};
+		        return _this;
+		    }
+		
+		    _createClass(GeometryRegistoryComponent, [{
+		        key: "$awake",
+		        value: function $awake() {
+		            this._factory = new _GeometryFactory2.default(this.companion.get("gl"));
+		            this.companion.set(this.name, this);
+		            this.companion.set(_grimoirejs2.default.ns(this.name.ns)("GeometryFactory"), this._factory);
+		            var _iteratorNormalCompletion = true;
+		            var _didIteratorError = false;
+		            var _iteratorError = undefined;
+		
+		            try {
+		                for (var _iterator = this.getAttribute("defaultGeometry")[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+		                    var geometry = _step.value;
+		
+		                    this.addGeometry(geometry, this._factory.instanciateAsDefault(geometry));
+		                }
+		            } catch (err) {
+		                _didIteratorError = true;
+		                _iteratorError = err;
+		            } finally {
+		                try {
+		                    if (!_iteratorNormalCompletion && _iterator.return) {
+		                        _iterator.return();
+		                    }
+		                } finally {
+		                    if (_didIteratorError) {
+		                        throw _iteratorError;
+		                    }
+		                }
+		            }
+		        }
+		    }, {
+		        key: "addGeometry",
+		        value: function addGeometry(name, geometry) {
+		            this._geometries[name] = geometry;
+		        }
+		    }, {
+		        key: "removeGeometry",
+		        value: function removeGeometry(name) {
+		            if (this._geometries[name]) {
+		                delete this._geometries[name];
+		            }
+		        }
+		    }, {
+		        key: "getGeometry",
+		        value: function getGeometry(name) {
+		            return this._geometries[name];
+		        }
+		    }]);
+		
+		    return GeometryRegistoryComponent;
+		}(_Component3.default);
+		
+		exports.default = GeometryRegistoryComponent;
+		
+		GeometryRegistoryComponent.attributes = {
+		    /**
+		     * デフォルトで生成するジオメトリの種類
+		     */
+		    defaultGeometry: {
+		        converter: "StringArray",
+		        default: ["quad", "cube", "sphere"]
+		    }
+		};
+	
+	/***/ },
+	/* 57 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+		
+		var _RenderSceneComponent = __webpack_require__(58);
+		
+		var _RenderSceneComponent2 = _interopRequireDefault(_RenderSceneComponent);
+		
+		var _TransformComponent = __webpack_require__(17);
+		
+		var _TransformComponent2 = _interopRequireDefault(_TransformComponent);
+		
+		var _Component2 = __webpack_require__(9);
+		
+		var _Component3 = _interopRequireDefault(_Component2);
+		
+		var _Vector = __webpack_require__(13);
+		
+		var _Vector2 = _interopRequireDefault(_Vector);
+		
+		var _Matrix = __webpack_require__(15);
+		
+		var _Matrix2 = _interopRequireDefault(_Matrix);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+		
+		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+		
+		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+		
+		/**
+		 * (Deprecated)DOM要素とTransformを同期させるためのコンポーネント
+		 *
+		 * このコンポーネントはfundamentalからは削除されます。(別のパッケージとして分離予定)
+		 */
+		var HTMLBinderComponent = function (_Component) {
+		    _inherits(HTMLBinderComponent, _Component);
+		
+		    function HTMLBinderComponent() {
+		        _classCallCheck(this, HTMLBinderComponent);
+		
+		        var _this = _possibleConstructorReturn(this, (HTMLBinderComponent.__proto__ || Object.getPrototypeOf(HTMLBinderComponent)).apply(this, arguments));
+		
+		        _this._isFirstCall = true;
+		        return _this;
+		    }
+		
+		    _createClass(HTMLBinderComponent, [{
+		        key: "$awake",
+		        value: function $awake() {
+		            this._canvasContainer = this.companion.get("canvasContainer");
+		            this._currentTransform = this.node.getComponent(_TransformComponent2.default);
+		        }
+		    }, {
+		        key: "$mount",
+		        value: function $mount() {
+		            this._canvasContainer = this.companion.get("canvasContainer");
+		            this._currentTransform = this.node.getComponent(_TransformComponent2.default);
+		            this.node.on("render", this._onRender.bind(this));
+		        }
+		    }, {
+		        key: "$treeInitialized",
+		        value: function $treeInitialized() {
+		            var _this2 = this;
+		
+		            this.getAttributeRaw("targetRenderer").watch(function (v) {
+		                if (_this2._rendererQuery !== v) {
+		                    _this2._onRendererChanged();
+		                }
+		            }, true);
+		            this.getAttributeRaw("htmlQuery").watch(function (v) {
+		                _this2._onQueryChanged(v);
+		            }, true);
+		        }
+		    }, {
+		        key: "_onRender",
+		        value: function _onRender(args) {
+		            if (this._isFirstCall) {
+		                this._onRendererChanged();
+		                this._isFirstCall = false;
+		            }
+		            if (this._queriedElement && args.renderer === this._targetRenderer) {
+		                var vp = args.viewport;
+		                var rawPos = _Matrix2.default.transform(this._currentTransform.calcPVM(args.camera), new _Vector2.default(0, 0, 0, 1));
+		                var rawScPos = {
+		                    x: rawPos.X / rawPos.W,
+		                    y: rawPos.Y / rawPos.W,
+		                    z: rawPos.Z / rawPos.W
+		                };
+		                if (rawScPos.z >= -1 && rawScPos.z <= 1) {
+		                    var scPos = {
+		                        x: vp.Left + (rawScPos.x + 1) / 2 * vp.Width,
+		                        y: vp.Top + (rawScPos.y + 1) / 2 * vp.Height
+		                    };
+		                    this._queriedElement.style.visibility = "visible";
+		                    this._queriedElement.style.left = scPos.x + "px";
+		                    this._queriedElement.style.bottom = scPos.y + "px";
+		                } else {
+		                    this._queriedElement.style.visibility = "hidden";
+		                }
+		            }
+		        }
+		        /**
+		         * Restore default position of queried html
+		         */
+		
+		    }, {
+		        key: "_restoreDefault",
+		        value: function _restoreDefault() {
+		            this._canvasContainer.removeChild(this._queriedElement);
+		            this._parentCache.appendChild(this._queriedElement);
+		            var s = this._queriedElement.style;
+		            var c = this._styleCache;
+		            s.position = c["position"];
+		            s.left = c["left"];
+		            s.bottom = c["bottom"];
+		            s.visibility = c["visibility"];
+		        }
+		    }, {
+		        key: "_beginTrack",
+		        value: function _beginTrack() {
+		            this._parentCache.removeChild(this._queriedElement);
+		            this._canvasContainer.appendChild(this._queriedElement);
+		            this._queriedElement.style.position = "absolute";
+		        }
+		    }, {
+		        key: "_onRendererChanged",
+		        value: function _onRendererChanged() {
+		            var _this3 = this;
+		
+		            var returned = false;
+		            this.tree(this.getAttribute("targetRenderer")).forEach(function (n) {
+		                if (returned) {
+		                    return true;
+		                } else {
+		                    _this3._targetRenderer = n.getComponent(_RenderSceneComponent2.default);
+		                    if (_this3._targetRenderer) {
+		                        returned = true;
+		                    }
+		                }
+		            });
+		        }
+		    }, {
+		        key: "_onQueryChanged",
+		        value: function _onQueryChanged(query) {
+		            var queried = void 0;
+		            if (query && query !== "") {
+		                queried = document.querySelectorAll(query);
+		            }
+		            if (this._queriedElement) {
+		                this._restoreDefault();
+		            }
+		            if (!queried || queried.length === 0) {
+		                this._queriedElement = undefined;
+		                this._parentCache = undefined;
+		            } else {
+		                this._queriedElement = queried.item(0);
+		                var s = this._queriedElement.style;
+		                this._styleCache = {
+		                    position: s.position,
+		                    visibility: s.visibility,
+		                    left: s.left,
+		                    bottom: s.bottom
+		                };
+		                this._parentCache = this._queriedElement.parentElement;
+		                this._beginTrack();
+		            }
+		        }
+		    }]);
+		
+		    return HTMLBinderComponent;
+		}(_Component3.default);
+		
+		exports.default = HTMLBinderComponent;
+		
+		HTMLBinderComponent.attributes = {
+		    htmlQuery: {
+		        default: null,
+		        converter: "String"
+		    },
+		    targetRenderer: {
+		        default: "render-scene",
+		        converter: "String"
+		    }
+		};
+	
+	/***/ },
 	/* 58 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+		
+		var _Component2 = __webpack_require__(9);
+		
+		var _Component3 = _interopRequireDefault(_Component2);
+		
+		var _FrameBuffer = __webpack_require__(59);
+		
+		var _FrameBuffer2 = _interopRequireDefault(_FrameBuffer);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+		
+		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+		
+		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+		
+		var RenderSceneComponent = function (_Component) {
+		    _inherits(RenderSceneComponent, _Component);
+		
+		    function RenderSceneComponent() {
+		        _classCallCheck(this, RenderSceneComponent);
+		
+		        return _possibleConstructorReturn(this, (RenderSceneComponent.__proto__ || Object.getPrototypeOf(RenderSceneComponent)).apply(this, arguments));
+		    }
+		
+		    _createClass(RenderSceneComponent, [{
+		        key: "$awake",
+		
+		        // messages
+		        value: function $awake() {
+		            this.getAttributeRaw("layer").boundTo("layer");
+		            this.getAttributeRaw("clearColor").boundTo("clearColor");
+		            this.getAttributeRaw("clearColorEnabled").boundTo("clearColorEnabled");
+		            this.getAttributeRaw("clearDepthEnabled").boundTo("clearDepthEnabled");
+		            this.getAttributeRaw("clearDepth").boundTo("clearDepth");
+		            this.getAttributeRaw("camera").boundTo("camera");
+		            this.getAttributeRaw("technique").boundTo("technique");
+		        }
+		    }, {
+		        key: "$mount",
+		        value: function $mount() {
+		            this._gl = this.companion.get("gl");
+		            this._canvas = this.companion.get("canvasElement");
+		        }
+		    }, {
+		        key: "$bufferUpdated",
+		        value: function $bufferUpdated(args) {
+		            var out = this.getAttribute("out");
+		            if (out !== "default") {
+		                this._fbo = new _FrameBuffer2.default(this.companion.get("gl"));
+		                this._fbo.update(args.buffers[out]);
+		                this._fboSize = args.bufferSizes[out];
+		            }
+		            var depthBuffer = this.getAttribute("depthBuffer");
+		            if (depthBuffer && this._fbo) {
+		                this._fbo.update(args.buffers[depthBuffer]);
+		            }
+		        }
+		    }, {
+		        key: "$render",
+		        value: function $render(args) {
+		            var camera = this.camera ? this.camera : args.camera;
+		            if (!camera) {
+		                return;
+		            }
+		            if (this._fbo) {
+		                this._fbo.bind();
+		                this._gl.viewport(0, 0, this._fboSize.width, this._fboSize.height);
+		            } else {
+		                this._gl.bindFramebuffer(WebGLRenderingContext.FRAMEBUFFER, null);
+		                this._gl.viewport(args.viewport.Left, this._canvas.height - args.viewport.Bottom, args.viewport.Width, args.viewport.Height);
+		            }
+		            // clear buffer if needed
+		            if (this._fbo && this.clearColorEnabled) {
+		                this._gl.clearColor(this.clearColor.R, this.clearColor.G, this.clearColor.B, this.clearColor.A);
+		                this._gl.clear(WebGLRenderingContext.COLOR_BUFFER_BIT);
+		            }
+		            if (this.clearDepthEnabled) {
+		                this._gl.clearDepth(this.clearDepth);
+		                this._gl.clear(WebGLRenderingContext.DEPTH_BUFFER_BIT);
+		            }
+		            args.camera.updateContainedScene(args.loopIndex);
+		            args.camera.renderScene({
+		                renderer: this,
+		                camera: camera,
+		                buffers: args.buffers,
+		                layer: this.layer,
+		                viewport: args.viewport,
+		                loopIndex: args.loopIndex,
+		                technique: this.technique
+		            });
+		        }
+		    }]);
+		
+		    return RenderSceneComponent;
+		}(_Component3.default);
+		
+		exports.default = RenderSceneComponent;
+		
+		RenderSceneComponent.attributes = {
+		    layer: {
+		        converter: "String",
+		        default: "default"
+		    },
+		    depthBuffer: {
+		        default: null,
+		        converter: "String"
+		    },
+		    out: {
+		        converter: "String",
+		        default: "default"
+		    },
+		    clearColor: {
+		        default: "#0000",
+		        converter: "Color4"
+		    },
+		    clearColorEnabled: {
+		        default: true,
+		        converter: "Boolean"
+		    },
+		    clearDepthEnabled: {
+		        default: true,
+		        converter: "Boolean"
+		    },
+		    clearDepth: {
+		        default: 1.0,
+		        converter: "Number"
+		    },
+		    camera: {
+		        default: null,
+		        converter: "Component",
+		        target: "Camera"
+		    },
+		    technique: {
+		        default: "default",
+		        converter: "String"
+		    }
+		};
+	
+	/***/ },
+	/* 59 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+		
+		var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+		
+		var _RenderBuffer = __webpack_require__(60);
+		
+		var _RenderBuffer2 = _interopRequireDefault(_RenderBuffer);
+		
+		var _Texture2D = __webpack_require__(47);
+		
+		var _Texture2D2 = _interopRequireDefault(_Texture2D);
+		
+		var _ResourceBase2 = __webpack_require__(38);
+		
+		var _ResourceBase3 = _interopRequireDefault(_ResourceBase2);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+		
+		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+		
+		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+		
+		var FrameBuffer = function (_ResourceBase) {
+		    _inherits(FrameBuffer, _ResourceBase);
+		
+		    function FrameBuffer(gl) {
+		        _classCallCheck(this, FrameBuffer);
+		
+		        var _this = _possibleConstructorReturn(this, (FrameBuffer.__proto__ || Object.getPrototypeOf(FrameBuffer)).call(this, gl));
+		
+		        _this.fbo = gl.createFramebuffer();
+		        return _this;
+		    }
+		
+		    _createClass(FrameBuffer, [{
+		        key: "update",
+		        value: function update(boundTo, level, bindIndex) {
+		            this.gl.bindFramebuffer(WebGLRenderingContext.FRAMEBUFFER, this.fbo);
+		            if (boundTo instanceof _Texture2D2.default) {
+		                if (typeof bindIndex === "undefined") {
+		                    bindIndex = 0;
+		                }
+		                if (typeof level === "undefined") {
+		                    level = 0;
+		                }
+		                this.gl.framebufferTexture2D(WebGLRenderingContext.FRAMEBUFFER, WebGLRenderingContext.COLOR_ATTACHMENT0 + bindIndex, WebGLRenderingContext.TEXTURE_2D, boundTo.texture, level);
+		                if (this.gl.checkFramebufferStatus(WebGLRenderingContext.FRAMEBUFFER) !== WebGLRenderingContext.FRAMEBUFFER_COMPLETE) {
+		                    throw new Error("INCOMPLETE framebuffer");
+		                }
+		            } else if (boundTo instanceof _RenderBuffer2.default) {
+		                var registerTarget = level;
+		                if (typeof level === "undefined") {
+		                    registerTarget = WebGLRenderingContext.DEPTH_ATTACHMENT;
+		                }
+		                this.gl.framebufferRenderbuffer(WebGLRenderingContext.FRAMEBUFFER, registerTarget, WebGLRenderingContext.RENDERBUFFER, boundTo.renderBuffer);
+		            }
+		            this.gl.bindFramebuffer(WebGLRenderingContext.FRAMEBUFFER, null);
+		        }
+		    }, {
+		        key: "bind",
+		        value: function bind() {
+		            this.gl.bindFramebuffer(WebGLRenderingContext.FRAMEBUFFER, this.fbo);
+		        }
+		    }, {
+		        key: "destroy",
+		        value: function destroy() {
+		            _get(FrameBuffer.prototype.__proto__ || Object.getPrototypeOf(FrameBuffer.prototype), "destroy", this).call(this);
+		            this.gl.deleteFramebuffer(this.fbo);
+		        }
+		    }]);
+		
+		    return FrameBuffer;
+		}(_ResourceBase3.default);
+		
+		exports.default = FrameBuffer;
+	
+	/***/ },
+	/* 60 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+		
+		var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+		
+		var _ResourceBase2 = __webpack_require__(38);
+		
+		var _ResourceBase3 = _interopRequireDefault(_ResourceBase2);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+		
+		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+		
+		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+		
+		var RenderBuffer = function (_ResourceBase) {
+		    _inherits(RenderBuffer, _ResourceBase);
+		
+		    function RenderBuffer(gl) {
+		        _classCallCheck(this, RenderBuffer);
+		
+		        var _this = _possibleConstructorReturn(this, (RenderBuffer.__proto__ || Object.getPrototypeOf(RenderBuffer)).call(this, gl));
+		
+		        _this.renderBuffer = gl.createRenderbuffer();
+		        return _this;
+		    }
+		
+		    _createClass(RenderBuffer, [{
+		        key: "update",
+		        value: function update(format, width, height) {
+		            this.gl.bindRenderbuffer(WebGLRenderingContext.RENDERBUFFER, this.renderBuffer);
+		            this.gl.renderbufferStorage(WebGLRenderingContext.RENDERBUFFER, format, width, height);
+		            this.valid = true;
+		        }
+		    }, {
+		        key: "bind",
+		        value: function bind() {
+		            this.gl.bindRenderbuffer(WebGLRenderingContext.RENDERBUFFER, this.renderBuffer);
+		        }
+		    }, {
+		        key: "destroy",
+		        value: function destroy() {
+		            this.gl.deleteRenderbuffer(this.renderBuffer);
+		            _get(RenderBuffer.prototype.__proto__ || Object.getPrototypeOf(RenderBuffer.prototype), "destroy", this).call(this);
+		        }
+		    }]);
+		
+		    return RenderBuffer;
+		}(_ResourceBase3.default);
+		
+		exports.default = RenderBuffer;
+	
+	/***/ },
+	/* 61 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+		
+		var _Component2 = __webpack_require__(9);
+		
+		var _Component3 = _interopRequireDefault(_Component2);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+		
+		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+		
+		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+		
+		/**
+		 * 全体のループを管理しているコンポーネント。あまり直接ユーザーがいじることはありません。
+		 */
+		var LoopManagerComponent = function (_Component) {
+		    _inherits(LoopManagerComponent, _Component);
+		
+		    function LoopManagerComponent() {
+		        _classCallCheck(this, LoopManagerComponent);
+		
+		        var _this = _possibleConstructorReturn(this, (LoopManagerComponent.__proto__ || Object.getPrototypeOf(LoopManagerComponent)).apply(this, arguments));
+		
+		        _this._loopActions = [];
+		        _this._loopIndex = 0;
+		        return _this;
+		    }
+		
+		    _createClass(LoopManagerComponent, [{
+		        key: "$awake",
+		        value: function $awake() {
+		            var _this2 = this;
+		
+		            this.getAttributeRaw("loopEnabled").watch(function (attr) {
+		                if (attr) {
+		                    _this2._begin();
+		                }
+		            });
+		            this._registerNextLoop = window.requestAnimationFrame // if window.requestAnimationFrame is defined or undefined
+		            ? function () {
+		                window.requestAnimationFrame(_this2._loop.bind(_this2));
+		            } : function () {
+		                window.setTimeout(_this2._loop.bind(_this2), 1000 / 60);
+		            };
+		        }
+		    }, {
+		        key: "register",
+		        value: function register(action, priorty) {
+		            this._loopActions.push({
+		                action: action,
+		                priorty: priorty
+		            });
+		            this._loopActions.sort(function (a, b) {
+		                return a.priorty - b.priorty;
+		            });
+		        }
+		    }, {
+		        key: "_begin",
+		        value: function _begin() {
+		            this._registerNextLoop();
+		        }
+		    }, {
+		        key: "_loop",
+		        value: function _loop() {
+		            var _this3 = this;
+		
+		            this.node.emit("loop", {
+		                loopIndex: this._loopIndex
+		            });
+		            this._loopActions.forEach(function (a) {
+		                return a.action(_this3._loopIndex);
+		            });
+		            this._loopIndex++;
+		            this._registerNextLoop();
+		        }
+		    }]);
+		
+		    return LoopManagerComponent;
+		}(_Component3.default);
+		
+		LoopManagerComponent.attributes = {
+		    loopEnabled: {
+		        default: false,
+		        converter: "Boolean"
+		    }
+		};
+		exports.default = LoopManagerComponent;
+	
+	/***/ },
+	/* 62 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+		
+		var _Component2 = __webpack_require__(9);
+		
+		var _Component3 = _interopRequireDefault(_Component2);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+		
+		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+		
+		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+		
+		var __awaiter = undefined && undefined.__awaiter || function (thisArg, _arguments, P, generator) {
+		    return new (P || (P = Promise))(function (resolve, reject) {
+		        function fulfilled(value) {
+		            try {
+		                step(generator.next(value));
+		            } catch (e) {
+		                reject(e);
+		            }
+		        }
+		        function rejected(value) {
+		            try {
+		                step(generator["throw"](value));
+		            } catch (e) {
+		                reject(e);
+		            }
+		        }
+		        function step(result) {
+		            result.done ? resolve(result.value) : new P(function (resolve) {
+		                resolve(result.value);
+		            }).then(fulfilled, rejected);
+		        }
+		        step((generator = generator.apply(thisArg, _arguments || [])).next());
+		    });
+		};
+		
+		var MaterialComponent = function (_Component) {
+		    _inherits(MaterialComponent, _Component);
+		
+		    function MaterialComponent() {
+		        _classCallCheck(this, MaterialComponent);
+		
+		        var _this = _possibleConstructorReturn(this, (MaterialComponent.__proto__ || Object.getPrototypeOf(MaterialComponent)).apply(this, arguments));
+		
+		        _this.materialArgs = {};
+		        return _this;
+		    }
+		
+		    _createClass(MaterialComponent, [{
+		        key: "$mount",
+		        value: function $mount() {
+		            var typeName = this.getAttribute("type");
+		            if (typeName) {
+		                this.materialPromise = this.companion.get("MaterialFactory").instanciate(typeName);
+		                this._registerAttributes();
+		            }
+		        }
+		    }, {
+		        key: "_registerAttributes",
+		        value: function _registerAttributes() {
+		            return __awaiter(this, void 0, void 0, regeneratorRuntime.mark(function _callee() {
+		                var _this2 = this;
+		
+		                var key, _loop, _key;
+		
+		                return regeneratorRuntime.wrap(function _callee$(_context) {
+		                    while (1) {
+		                        switch (_context.prev = _context.next) {
+		                            case 0:
+		                                _context.next = 2;
+		                                return this.materialPromise;
+		
+		                            case 2:
+		                                this.material = _context.sent;
+		
+		                                for (key in this.material.argumentDeclarations) {
+		                                    this.__addAtribute(key, this.material.argumentDeclarations[key]);
+		                                    this.getAttributeRaw(key).boundTo(key, this.material.arguments);
+		                                }
+		
+		                                _loop = function _loop(_key) {
+		                                    _this2.__addAtribute(_key, _this2.material.macroDeclarations[_key]);
+		                                    _this2.getAttributeRaw(_key).watch(function (v) {
+		                                        _this2.material.setMacroValue(_key, v);
+		                                    }, true);
+		                                };
+		
+		                                for (_key in this.material.macroDeclarations) {
+		                                    _loop(_key);
+		                                }
+		                                this.ready = true;
+		
+		                            case 7:
+		                            case "end":
+		                                return _context.stop();
+		                        }
+		                    }
+		                }, _callee, this);
+		            }));
+		        }
+		    }]);
+		
+		    return MaterialComponent;
+		}(_Component3.default);
+		
+		exports.default = MaterialComponent;
+		
+		MaterialComponent.attributes = {
+		    type: {
+		        converter: "String",
+		        default: null
+		    }
+		};
+	
+	/***/ },
+	/* 63 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -29620,190 +30220,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		};
 	
 	/***/ },
-	/* 59 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-		
-		var _SceneComponent = __webpack_require__(18);
-		
-		var _SceneComponent2 = _interopRequireDefault(_SceneComponent);
-		
-		var _MaterialContainerComponent = __webpack_require__(56);
-		
-		var _MaterialContainerComponent2 = _interopRequireDefault(_MaterialContainerComponent);
-		
-		var _TransformComponent = __webpack_require__(17);
-		
-		var _TransformComponent2 = _interopRequireDefault(_TransformComponent);
-		
-		var _Component2 = __webpack_require__(9);
-		
-		var _Component3 = _interopRequireDefault(_Component2);
-		
-		var _GLM = __webpack_require__(12);
-		
-		var _GLM2 = _interopRequireDefault(_GLM);
-		
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-		
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-		
-		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-		
-		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-		
-		var vec3 = _GLM2.default.vec3;
-		/**
-		 * シーン中に存在するメッシュ一つあたりのレンダリングを司るコンポーネント
-		 *
-		 * このメッシュが、対象となるノードの`Transform`や描画に用いる`Camera`、マテリアルなどを考慮して実際のレンダリングを行います。
-		 */
-		
-		var MeshRenderer = function (_Component) {
-		    _inherits(MeshRenderer, _Component);
-		
-		    function MeshRenderer() {
-		        _classCallCheck(this, MeshRenderer);
-		
-		        var _this = _possibleConstructorReturn(this, (MeshRenderer.__proto__ || Object.getPrototypeOf(MeshRenderer)).apply(this, arguments));
-		
-		        _this._priortyCalcCache = new Float32Array(3);
-		        return _this;
-		    }
-		    /**
-		    * Find scene tag recursively.
-		    * @param  {GomlNode}       node [the node to searching currently]
-		    * @return {SceneComponent}      [the scene component found]
-		    */
-		
-		
-		    _createClass(MeshRenderer, [{
-		        key: "getRenderingPriorty",
-		        value: function getRenderingPriorty(camera, cameraMoved, lastPriorty) {
-		            vec3.add(this._priortyCalcCache, camera.transform.globalPosition.rawElements, this._geometry.aabb.Center.rawElements);
-		            vec3.sub(this._priortyCalcCache, this._priortyCalcCache, this._transformComponent.globalPosition.rawElements);
-		            return this._materialContainer.getDrawPriorty(vec3.sqrLen(this._priortyCalcCache)); // Obtains distance between camera and center of aabb
-		        }
-		    }, {
-		        key: "$awake",
-		        value: function $awake() {
-		            this.getAttributeRaw("targetBuffer").boundTo("_targetBuffer");
-		            this.getAttributeRaw("layer").boundTo("_layer");
-		            this.getAttributeRaw("drawOffset").boundTo("_drawOffset");
-		            this.getAttributeRaw("drawCount").boundTo("_drawCount");
-		            this.getAttributeRaw("geometry").boundTo("_geometry");
-		        }
-		    }, {
-		        key: "$mount",
-		        value: function $mount() {
-		            this._transformComponent = this.node.getComponent(_TransformComponent2.default);
-		            this._materialContainer = this.node.getComponent(_MaterialContainerComponent2.default);
-		            this._containedScene = MeshRenderer._findContainedScene(this.node);
-		            this._containedScene.queueRegistory.addRenderable(this);
-		        }
-		    }, {
-		        key: "$unmount",
-		        value: function $unmount() {
-		            this._containedScene.queueRegistory.removeRenderable(this);
-		        }
-		    }, {
-		        key: "render",
-		        value: function render(args) {
-		            if (!this.node.isActive || !this.enabled || this._layer !== args.layer) {
-		                return;
-		            }
-		            if (!this._geometry || !args.material && !this._materialContainer.material) {
-		                return; // material is not instanciated yet.
-		            }
-		            var renderArgs = {
-		                targetBuffer: this._targetBuffer,
-		                geometry: this._geometry,
-		                attributeValues: null,
-		                camera: args.camera,
-		                transform: this._transformComponent,
-		                buffers: args.buffers,
-		                viewport: args.viewport,
-		                drawCount: this._drawCount,
-		                drawOffset: this._drawOffset,
-		                sceneDescription: args.sceneDescription,
-		                technique: args.technique
-		            };
-		            renderArgs.attributeValues = this._materialContainer.materialArgs;
-		            this._materialContainer.material.draw(renderArgs);
-		            this.node.emit("render", args);
-		        }
-		    }], [{
-		        key: "_findContainedScene",
-		        value: function _findContainedScene(node) {
-		            if (node.parent) {
-		                var scene = node.parent.getComponent(_SceneComponent2.default);
-		                if (scene) {
-		                    return scene;
-		                } else {
-		                    return MeshRenderer._findContainedScene(node.parent);
-		                }
-		            } else {
-		                return null;
-		            }
-		        }
-		    }]);
-		
-		    return MeshRenderer;
-		}(_Component3.default);
-		
-		exports.default = MeshRenderer;
-		
-		MeshRenderer.attributes = {
-		    /**
-		     * 描画に用いる形状データ
-		     */
-		    geometry: {
-		        converter: "Geometry",
-		        default: "quad"
-		    },
-		    /**
-		     * 描画に用いるインデックスバッファ名
-		     */
-		    targetBuffer: {
-		        converter: "String",
-		        default: "default"
-		    },
-		    /**
-		     * このメッシュが属するレイヤー
-		     *
-		     * 詳しくは`render-scene`ノードを参考にしてください。
-		     */
-		    layer: {
-		        converter: "String",
-		        default: "default"
-		    },
-		    /**
-		     * 描画するインデックスの個数
-		     *
-		     * デフォルトの状態でジオメトリの全インデックスを描画する
-		     */
-		    drawCount: {
-		        converter: "Number",
-		        default: Number.MAX_VALUE
-		    },
-		    /**
-		     * 描画するジオメトリのインデックスのオフセット
-		     */
-		    drawOffset: {
-		        converter: "Number",
-		        default: 0
-		    }
-		};
-	
-	/***/ },
-	/* 60 */
+	/* 64 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -29818,7 +30235,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _Vector2 = _interopRequireDefault(_Vector);
 		
-		var _Quaternion = __webpack_require__(61);
+		var _Quaternion = __webpack_require__(65);
 		
 		var _Quaternion2 = _interopRequireDefault(_Quaternion);
 		
@@ -29892,30 +30309,30 @@ return /******/ (function(modules) { // webpackBootstrap
 		    }, {
 		        key: "$initialized",
 		        value: function $initialized() {
-		            var look = _Vector2.default.normalize(this._center.subtractWith(this._transform.localPosition));
+		            var look = _Vector2.default.normalize(this.center.subtractWith(this._transform.localPosition));
 		            var g = _Quaternion2.default.fromToRotation(this._transform.forward, look).normalize();
 		            this._transform.localRotation = g;
 		            this._initialRotation = g;
 		            this._initialDirection = _Vector2.default.copy(this._transform.forward.negateThis()).normalized;
-		            if (this._distance !== null) {
-		                this._transform.localPosition = this._center.addWith(this._initialDirection.multiplyWith(this._distance));
+		            if (this.distance !== null) {
+		                this._transform.localPosition = this.center.addWith(this._initialDirection.multiplyWith(this.distance));
 		            } else {
-		                this._distance = this._transform.localPosition.subtractWith(this._center).magnitude;
+		                this.distance = this._transform.localPosition.subtractWith(this.center).magnitude;
 		            }
 		        }
 		    }, {
 		        key: "$update",
 		        value: function $update() {
-		            if (this._updated || !this._lastCenter || !this._center.equalWith(this._lastCenter)) {
+		            if (this._updated || !this._lastCenter || !this.center.equalWith(this._lastCenter)) {
 		                this._updated = false;
-		                this._lastCenter = this._center;
+		                this._lastCenter = this.center;
 		                // rotate excution
-		                var rotationVartical = _Quaternion2.default.angleAxis(-this._xsum * this._rotateSpeed * 0.01, _Vector2.default.YUnit);
-		                var rotationHorizontal = _Quaternion2.default.angleAxis(-this._ysum * this._rotateSpeed * 0.01, _Vector2.default.XUnit);
+		                var rotationVartical = _Quaternion2.default.angleAxis(-this._xsum * this.rotateSpeed * 0.01, _Vector2.default.YUnit);
+		                var rotationHorizontal = _Quaternion2.default.angleAxis(-this._ysum * this.rotateSpeed * 0.01, _Vector2.default.XUnit);
 		                var rotation = _Quaternion2.default.multiply(rotationVartical, rotationHorizontal);
 		                var rotationMat = _Matrix2.default.rotationQuaternion(rotation);
 		                var direction = _Matrix2.default.transformNormal(rotationMat, this._initialDirection);
-		                this._transform.localPosition = this._center.addWith(this._d).addWith(_Vector2.default.normalize(direction).multiplyWith(this._distance));
+		                this._transform.localPosition = this.center.addWith(this._d).addWith(_Vector2.default.normalize(direction).multiplyWith(this.distance));
 		                this._transform.localRotation = rotation;
 		                this._transform.localRotation = _Quaternion2.default.multiply(rotation, this._initialRotation);
 		            }
@@ -29951,8 +30368,8 @@ return /******/ (function(modules) { // webpackBootstrap
 		                this._updated = true;
 		            }
 		            if (this._checkButtonPress(m, false)) {
-		                var moveX = -diffX * this._moveSpeed * 0.01;
-		                var moveY = diffY * this._moveSpeed * 0.01;
+		                var moveX = -diffX * this.moveSpeed * 0.01;
+		                var moveY = diffY * this.moveSpeed * 0.01;
 		                this._d = this._d.addWith(this._transform.right.multiplyWith(moveX)).addWith(this._transform.up.multiplyWith(moveY));
 		                this._updated = true;
 		            }
@@ -29984,10 +30401,10 @@ return /******/ (function(modules) { // webpackBootstrap
 		            if (!this.isActive) {
 		                return;
 		            }
-		            var dir = _Vector2.default.subtract(this._transform.localPosition, this._center).normalized;
-		            var moveDist = m.deltaY * this._zoomSpeed * 0.05;
-		            this._distance = Math.max(1, this._distance + moveDist);
-		            this._transform.localPosition = this._center.addWith(dir.multiplyWith(this._distance));
+		            var dir = _Vector2.default.subtract(this._transform.localPosition, this.center).normalized;
+		            var moveDist = m.deltaY * this.zoomSpeed * 0.05;
+		            this.distance = Math.max(1, this.distance + moveDist);
+		            this._transform.localPosition = this.center.addWith(dir.multiplyWith(this.distance));
 		            m.preventDefault();
 		        }
 		    }]);
@@ -30022,7 +30439,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		};
 	
 	/***/ },
-	/* 61 */
+	/* 65 */
 	/***/ function(module, exports) {
 	
 			Object.defineProperty(exports, "__esModule", {
@@ -30030,7 +30447,7 @@ return /******/ (function(modules) { // webpackBootstrap
 			});exports.default=window.GrimoireJS.lib.math.Quaternion;
 	
 	/***/ },
-	/* 62 */
+	/* 66 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -30041,7 +30458,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 		
-		var _RenderBuffer = __webpack_require__(63);
+		var _RenderBuffer = __webpack_require__(60);
 		
 		var _RenderBuffer2 = _interopRequireDefault(_RenderBuffer);
 		
@@ -30049,7 +30466,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _Component3 = _interopRequireDefault(_Component2);
 		
-		var _TextureSizeCalculator = __webpack_require__(64);
+		var _TextureSizeCalculator = __webpack_require__(67);
 		
 		var _TextureSizeCalculator2 = _interopRequireDefault(_TextureSizeCalculator);
 		
@@ -30108,70 +30525,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		};
 	
 	/***/ },
-	/* 63 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-		
-		var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-		
-		var _ResourceBase2 = __webpack_require__(38);
-		
-		var _ResourceBase3 = _interopRequireDefault(_ResourceBase2);
-		
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-		
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-		
-		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-		
-		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-		
-		var RenderBuffer = function (_ResourceBase) {
-		    _inherits(RenderBuffer, _ResourceBase);
-		
-		    function RenderBuffer(gl) {
-		        _classCallCheck(this, RenderBuffer);
-		
-		        var _this = _possibleConstructorReturn(this, (RenderBuffer.__proto__ || Object.getPrototypeOf(RenderBuffer)).call(this, gl));
-		
-		        _this.renderBuffer = gl.createRenderbuffer();
-		        return _this;
-		    }
-		
-		    _createClass(RenderBuffer, [{
-		        key: "update",
-		        value: function update(format, width, height) {
-		            this.gl.bindRenderbuffer(WebGLRenderingContext.RENDERBUFFER, this.renderBuffer);
-		            this.gl.renderbufferStorage(WebGLRenderingContext.RENDERBUFFER, format, width, height);
-		            this.valid = true;
-		        }
-		    }, {
-		        key: "bind",
-		        value: function bind() {
-		            this.gl.bindRenderbuffer(WebGLRenderingContext.RENDERBUFFER, this.renderBuffer);
-		        }
-		    }, {
-		        key: "destroy",
-		        value: function destroy() {
-		            this.gl.deleteRenderbuffer(this.renderBuffer);
-		            _get(RenderBuffer.prototype.__proto__ || Object.getPrototypeOf(RenderBuffer.prototype), "destroy", this).call(this);
-		        }
-		    }]);
-		
-		    return RenderBuffer;
-		}(_ResourceBase3.default);
-		
-		exports.default = RenderBuffer;
-	
-	/***/ },
-	/* 64 */
+	/* 67 */
 	/***/ function(module, exports) {
 	
 		"use strict";
@@ -30192,8 +30546,8 @@ return /******/ (function(modules) { // webpackBootstrap
 		    _createClass(TextureSizeCalculator, null, [{
 		        key: "getPow2Size",
 		        value: function getPow2Size(width, height) {
-		            var nw = Math.pow(2, Math.log(width) / Math.LN2 | 0); // largest 2^n integer that does not exceed s
-		            var nh = Math.pow(2, Math.log(height) / Math.LN2 | 0); // largest 2^n integer that does not exceed s
+		            var nw = Math.pow(2, Math.ceil(Math.log2(width))); // largest 2^n integer that does not exceed s
+		            var nh = Math.pow(2, Math.ceil(Math.log2(height))); // largest 2^n integer that does not exceed s
 		            return {
 		                width: nw,
 		                height: nh
@@ -30207,7 +30561,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = TextureSizeCalculator;
 	
 	/***/ },
-	/* 65 */
+	/* 68 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -30240,25 +30594,69 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		        _this._buffers = {};
 		        _this._bufferSizes = {};
+		        _this._wasInside = false;
 		        return _this;
 		    }
 		
 		    _createClass(RendererComponent, [{
-		        key: "$mount",
-		        value: function $mount() {
+		        key: "$awake",
+		        value: function $awake() {
 		            var _this2 = this;
 		
-		            this._gl = this.companion.get("gl");
-		            this._canvas = this.companion.get("canvasElement");
-		            this._camera = this.getAttribute("camera");
-		            this.getAttributeRaw("camera").watch(function (v) {
-		                return _this2._camera = v;
-		            });
+		            // initializing attributes
+		            this.getAttributeRaw("camera").boundTo("camera");
 		            this.getAttributeRaw("viewport").watch(function (v) {
 		                _this2._viewportSizeGenerator = v;
 		                _this2.$resizeCanvas();
 		            });
 		            this._viewportSizeGenerator = this.getAttribute("viewport");
+		            // initializing mouse handlers
+		            this._mouseMoveHandler = function (e) {
+		                if (_this2._isViewportInside(e)) {
+		                    if (!_this2._wasInside) {
+		                        _this2.node.emit("mouseenter");
+		                        _this2.node.broadcastMessage("mouseenter", _this2._toViewportMouseArgs(e));
+		                    }
+		                    _this2.node.emit("mousemove");
+		                    _this2.node.broadcastMessage("mousemove", _this2._toViewportMouseArgs(e));
+		                    _this2._wasInside = true; // Mark as last pointer was inside of viewport
+		                } else {
+		                    if (_this2._wasInside) {
+		                        _this2.node.emit("mouseleave");
+		                        _this2.node.broadcastMessage("mouseleave", _this2._toViewportMouseArgs(e));
+		                    }
+		                    _this2._wasInside = false; // Mark as last pointer was not inside of viewport
+		                }
+		            };
+		            this._mouseEnterHandler = function (e) {
+		                if (_this2._isViewportInside(e)) {
+		                    _this2.node.emit("mouseenter");
+		                    _this2.node.broadcastMessage("mouseenter", _this2._toViewportMouseArgs(e));
+		                    _this2._wasInside = true;
+		                }
+		            };
+		            this._mouseLeaveHandler = function (e) {
+		                if (_this2._wasInside) {
+		                    _this2.node.emit("mouseleave");
+		                    _this2.node.broadcastMessage("mouseleave", _this2._toViewportMouseArgs(e));
+		                }
+		                _this2._wasInside = false;
+		            };
+		        }
+		    }, {
+		        key: "$mount",
+		        value: function $mount() {
+		            var _this3 = this;
+		
+		            this._gl = this.companion.get("gl");
+		            this._canvas = this.companion.get("canvasElement");
+		            this.getAttributeRaw("handleMouse").watch(function (a) {
+		                if (a) {
+		                    _this3._enableMouseHandling();
+		                } else {
+		                    _this3._disableMouseHandling();
+		                }
+		            }, true);
 		        }
 		    }, {
 		        key: "$treeInitialized",
@@ -30288,11 +30686,71 @@ return /******/ (function(modules) { // webpackBootstrap
 		        key: "$renderViewport",
 		        value: function $renderViewport(args) {
 		            this.node.broadcastMessage("render", {
-		                camera: this._camera,
+		                camera: this.camera,
 		                viewport: this._viewportCache,
 		                bufferSizes: this._bufferSizes,
 		                buffers: this._buffers,
 		                loopIndex: args.loopIndex
+		            });
+		        }
+		    }, {
+		        key: "_enableMouseHandling",
+		        value: function _enableMouseHandling() {
+		            this._canvas.addEventListener("mousemove", this._mouseMoveHandler);
+		            this._canvas.addEventListener("mouseleave", this._mouseLeaveHandler);
+		            this._canvas.addEventListener("mouseenter", this._mouseEnterHandler);
+		        }
+		    }, {
+		        key: "_disableMouseHandling",
+		        value: function _disableMouseHandling() {
+		            this._canvas.removeEventListener("mousemove", this._mouseMoveHandler);
+		            this._canvas.removeEventListener("mouseleave", this._mouseLeaveHandler);
+		            this._canvas.removeEventListener("mouseenter", this._mouseEnterHandler);
+		        }
+		        /**
+		         * Check mouse is inside of viewport
+		         * @param  {MouseEvent} e [description]
+		         * @return {boolean}      [description]
+		         */
+		
+		    }, {
+		        key: "_isViewportInside",
+		        value: function _isViewportInside(e) {
+		            var rc = this._getRelativePosition(e);
+		            var n = this._viewportCache.toLocalNormalized(rc[0], rc[1]);
+		            return n[0] >= 0 && n[0] <= 1 && n[1] >= 0 && n[1] <= 1;
+		        }
+		        /**
+		         * Obtain mouse point of relative coordinate from element.
+		         * @param  {MouseEvent} e [description]
+		         * @return {number[]}     [description]
+		         */
+		
+		    }, {
+		        key: "_getRelativePosition",
+		        value: function _getRelativePosition(e) {
+		            var rect = this._canvas.getBoundingClientRect();
+		            var positionX = rect.left + window.pageXOffset;
+		            var positionY = rect.top + window.pageYOffset;
+		            return [e.pageX - positionX, e.pageY - positionY];
+		        }
+		        /**
+		         * Convert mouse args into viewport mouse event
+		         * @param  {MouseEvent}         e [description]
+		         * @return {ViewportMouseEvent}   [description]
+		         */
+		
+		    }, {
+		        key: "_toViewportMouseArgs",
+		        value: function _toViewportMouseArgs(e) {
+		            var ro = this._getRelativePosition(e);
+		            var r = this._viewportCache.toLocal(ro[0], ro[1]);
+		            var n = this._viewportCache.toLocalNormalized(ro[0], ro[1]);
+		            return Object.assign(e, {
+		                viewportX: r[0],
+		                viewportY: r[1],
+		                viewportNormalizedX: n[0],
+		                viewportNormalizedY: n[1]
 		            });
 		        }
 		    }]);
@@ -30311,11 +30769,15 @@ return /******/ (function(modules) { // webpackBootstrap
 		    viewport: {
 		        converter: "Viewport",
 		        default: "auto"
+		    },
+		    handleMouse: {
+		        converter: "Boolean",
+		        default: true
 		    }
 		};
 	
 	/***/ },
-	/* 66 */
+	/* 69 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -30326,11 +30788,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 		
-		var _Color = __webpack_require__(67);
+		var _Color = __webpack_require__(70);
 		
 		var _Color2 = _interopRequireDefault(_Color);
 		
-		var _LoopManagerComponent = __webpack_require__(54);
+		var _LoopManagerComponent = __webpack_require__(61);
 		
 		var _LoopManagerComponent2 = _interopRequireDefault(_LoopManagerComponent);
 		
@@ -30422,7 +30884,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		};
 	
 	/***/ },
-	/* 67 */
+	/* 70 */
 	/***/ function(module, exports) {
 	
 			Object.defineProperty(exports, "__esModule", {
@@ -30430,7 +30892,7 @@ return /******/ (function(modules) { // webpackBootstrap
 			});exports.default=window.GrimoireJS.lib.math.Color4;
 	
 	/***/ },
-	/* 68 */
+	/* 71 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -30441,11 +30903,232 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 		
-		var _MaterialContainerComponent = __webpack_require__(56);
+		var _MeshIndexCalculator = __webpack_require__(72);
+		
+		var _MeshIndexCalculator2 = _interopRequireDefault(_MeshIndexCalculator);
+		
+		var _FrameBuffer = __webpack_require__(59);
+		
+		var _FrameBuffer2 = _interopRequireDefault(_FrameBuffer);
+		
+		var _Texture2D = __webpack_require__(47);
+		
+		var _Texture2D2 = _interopRequireDefault(_Texture2D);
+		
+		var _RenderBuffer = __webpack_require__(60);
+		
+		var _RenderBuffer2 = _interopRequireDefault(_RenderBuffer);
+		
+		var _TextureSizeCalculator = __webpack_require__(67);
+		
+		var _TextureSizeCalculator2 = _interopRequireDefault(_TextureSizeCalculator);
+		
+		var _RenderSceneComponent = __webpack_require__(58);
+		
+		var _RenderSceneComponent2 = _interopRequireDefault(_RenderSceneComponent);
+		
+		var _Component2 = __webpack_require__(9);
+		
+		var _Component3 = _interopRequireDefault(_Component2);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+		
+		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+		
+		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+		
+		var RenderHitareaComponent = function (_Component) {
+		    _inherits(RenderHitareaComponent, _Component);
+		
+		    function RenderHitareaComponent() {
+		        _classCallCheck(this, RenderHitareaComponent);
+		
+		        var _this = _possibleConstructorReturn(this, (RenderHitareaComponent.__proto__ || Object.getPrototypeOf(RenderHitareaComponent)).apply(this, arguments));
+		
+		        _this._readCache = new Uint8Array(4);
+		        return _this;
+		    }
+		
+		    _createClass(RenderHitareaComponent, [{
+		        key: "$mount",
+		        value: function $mount() {
+		            this._sceneRenderer = this.node.getComponent(_RenderSceneComponent2.default);
+		            if (!this._sceneRenderer) {
+		                throw new Error("The node attaching RenderHitArea should contain RenderScene.");
+		            }
+		            this._gl = this.companion.get("gl");
+		            this._canvas = this.companion.get("canvasElement");
+		            this.hitareaTexture = new _Texture2D2.default(this._gl);
+		            this.hitareaRenderbuffer = new _RenderBuffer2.default(this._gl);
+		            if (this.hitareaFBO) {
+		                this.hitareaFBO.destroy();
+		                this.hitareaFBO = null;
+		            }
+		        }
+		    }, {
+		        key: "$resizeBuffer",
+		        value: function $resizeBuffer(args) {
+		            var size = _TextureSizeCalculator2.default.getPow2Size(args.width, args.height);
+		            this._bufferSize = [size.width, size.height];
+		            this.hitareaTexture.update(0, size.width, size.height, 0, WebGLRenderingContext.RGBA, WebGLRenderingContext.UNSIGNED_BYTE);
+		            this.hitareaRenderbuffer.update(WebGLRenderingContext.DEPTH_COMPONENT16, size.width, size.height);
+		            if (!this.hitareaFBO) {
+		                this.hitareaFBO = new _FrameBuffer2.default(this._gl);
+		                this.hitareaFBO.update(this.hitareaTexture);
+		                this.hitareaFBO.update(this.hitareaRenderbuffer);
+		            }
+		        }
+		    }, {
+		        key: "$render",
+		        value: function $render(args) {
+		            if (!this._mouseInside) {
+		                return;
+		            }
+		            this.hitareaFBO.bind();
+		            this._gl.viewport(0, 0, this._bufferSize[0], this._bufferSize[1]);
+		            // clear buffer if needed
+		            this._gl.clearColor(0, 0, 0, 0);
+		            this._gl.clear(WebGLRenderingContext.COLOR_BUFFER_BIT);
+		            this._gl.clearDepth(1);
+		            this._gl.clear(WebGLRenderingContext.DEPTH_BUFFER_BIT);
+		            args.camera.renderScene({
+		                renderer: this._sceneRenderer,
+		                camera: args.camera,
+		                buffers: args.buffers,
+		                layer: this._sceneRenderer.layer,
+		                viewport: args.viewport,
+		                loopIndex: args.loopIndex,
+		                technique: "hitarea"
+		            });
+		            this._gl.flush();
+		            this._gl.readPixels(this._lastPosition[0] * this._bufferSize[0], this._lastPosition[1] * this._bufferSize[1], 1, 1, WebGLRenderingContext.RGBA, WebGLRenderingContext.UNSIGNED_BYTE, this._readCache);
+		            var index = _MeshIndexCalculator2.default.fromColor(this._readCache);
+		            if (index === 0) {
+		                if (this._lastRenderable instanceof _Component3.default) {
+		                    this._lastRenderable.node.emit("mouseleave", this._lastRenderable);
+		                }
+		                this._lastRenderable = null;
+		            } else {
+		                var r = args.camera.containedScene.queueRegistory.getByIndex(index - 1);
+		                if (this._lastRenderable !== r) {
+		                    if (this._lastRenderable instanceof _Component3.default) {
+		                        this._lastRenderable.node.emit("mouseleave", this._lastRenderable);
+		                    }
+		                    if (r instanceof _Component3.default) {
+		                        r.node.emit("mouseenter", r);
+		                    }
+		                } else {
+		                    if (r instanceof _Component3.default) {
+		                        if (this._mouseMoved) {
+		                            r.node.emit("mousemove", r);
+		                        } else {
+		                            r.node.emit("mouseon", r);
+		                        }
+		                    }
+		                }
+		                this._lastRenderable = r;
+		            }
+		            this._gl.bindFramebuffer(this._gl.FRAMEBUFFER, null);
+		        }
+		    }, {
+		        key: "$mousemove",
+		        value: function $mousemove(v) {
+		            this._lastPosition = [v.viewportNormalizedX, 1.0 - v.viewportNormalizedY];
+		            this._mouseMoved = true;
+		        }
+		    }, {
+		        key: "$mouseenter",
+		        value: function $mouseenter(v) {
+		            this._mouseInside = true;
+		            this._lastPosition = [v.viewportNormalizedX, 1.0 - v.viewportNormalizedY];
+		            this._mouseMoved = true;
+		        }
+		    }, {
+		        key: "$mouseleave",
+		        value: function $mouseleave(v) {
+		            this._mouseInside = false;
+		            this._lastPosition = [v.viewportNormalizedX, 1.0 - v.viewportNormalizedY];
+		            this._mouseMoved = true;
+		            if (this._lastRenderable instanceof _Component3.default) {
+		                this._lastRenderable.node.emit("mouseleave", this._lastRenderable);
+		            }
+		            this._lastRenderable = null;
+		        }
+		    }]);
+		
+		    return RenderHitareaComponent;
+		}(_Component3.default);
+		
+		exports.default = RenderHitareaComponent;
+		
+		RenderHitareaComponent.attributes = {};
+	
+	/***/ },
+	/* 72 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+		
+		var _Vector = __webpack_require__(13);
+		
+		var _Vector2 = _interopRequireDefault(_Vector);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+		
+		var rc = 511;
+		var gc = rc << 8;
+		var bc = gc << 8;
+		var ac = bc << 8;
+		
+		var MeshIndexCalculator = function () {
+		    function MeshIndexCalculator() {
+		        _classCallCheck(this, MeshIndexCalculator);
+		    }
+		
+		    _createClass(MeshIndexCalculator, null, [{
+		        key: "fromIndex",
+		        value: function fromIndex(index) {
+		            return new _Vector2.default((index & rc) / 255, ((index & gc) >> 8) / 255, ((index & bc) >> 16) / 255, ((index & ac) >> 24) / 255);
+		        }
+		    }, {
+		        key: "fromColor",
+		        value: function fromColor(color) {
+		            return color[0] + (color[1] << 8) + (color[2] << 16) + (color[3] << 24);
+		        }
+		    }]);
+		
+		    return MeshIndexCalculator;
+		}();
+		
+		exports.default = MeshIndexCalculator;
+	
+	/***/ },
+	/* 73 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+		
+		var _MaterialContainerComponent = __webpack_require__(51);
 		
 		var _MaterialContainerComponent2 = _interopRequireDefault(_MaterialContainerComponent);
 		
-		var _FrameBuffer = __webpack_require__(69);
+		var _FrameBuffer = __webpack_require__(59);
 		
 		var _FrameBuffer2 = _interopRequireDefault(_FrameBuffer);
 		
@@ -30585,245 +31268,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		};
 	
 	/***/ },
-	/* 69 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-		
-		var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-		
-		var _RenderBuffer = __webpack_require__(63);
-		
-		var _RenderBuffer2 = _interopRequireDefault(_RenderBuffer);
-		
-		var _Texture2D = __webpack_require__(47);
-		
-		var _Texture2D2 = _interopRequireDefault(_Texture2D);
-		
-		var _ResourceBase2 = __webpack_require__(38);
-		
-		var _ResourceBase3 = _interopRequireDefault(_ResourceBase2);
-		
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-		
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-		
-		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-		
-		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-		
-		var FrameBuffer = function (_ResourceBase) {
-		    _inherits(FrameBuffer, _ResourceBase);
-		
-		    function FrameBuffer(gl) {
-		        _classCallCheck(this, FrameBuffer);
-		
-		        var _this = _possibleConstructorReturn(this, (FrameBuffer.__proto__ || Object.getPrototypeOf(FrameBuffer)).call(this, gl));
-		
-		        _this.fbo = gl.createFramebuffer();
-		        return _this;
-		    }
-		
-		    _createClass(FrameBuffer, [{
-		        key: "update",
-		        value: function update(boundTo, level, bindIndex) {
-		            this.gl.bindFramebuffer(WebGLRenderingContext.FRAMEBUFFER, this.fbo);
-		            if (boundTo instanceof _Texture2D2.default) {
-		                if (typeof bindIndex === "undefined") {
-		                    bindIndex = 0;
-		                }
-		                if (typeof level === "undefined") {
-		                    level = 0;
-		                }
-		                this.gl.framebufferTexture2D(WebGLRenderingContext.FRAMEBUFFER, WebGLRenderingContext.COLOR_ATTACHMENT0 + bindIndex, WebGLRenderingContext.TEXTURE_2D, boundTo.texture, level);
-		                if (this.gl.checkFramebufferStatus(WebGLRenderingContext.FRAMEBUFFER) !== WebGLRenderingContext.FRAMEBUFFER_COMPLETE) {
-		                    throw new Error("INCOMPLETE framebuffer");
-		                }
-		            } else if (boundTo instanceof _RenderBuffer2.default) {
-		                var registerTarget = level;
-		                if (typeof level === "undefined") {
-		                    registerTarget = WebGLRenderingContext.DEPTH_ATTACHMENT;
-		                }
-		                this.gl.framebufferRenderbuffer(WebGLRenderingContext.FRAMEBUFFER, registerTarget, WebGLRenderingContext.RENDERBUFFER, boundTo.renderBuffer);
-		            }
-		            this.gl.bindFramebuffer(WebGLRenderingContext.FRAMEBUFFER, null);
-		        }
-		    }, {
-		        key: "bind",
-		        value: function bind() {
-		            this.gl.bindFramebuffer(WebGLRenderingContext.FRAMEBUFFER, this.fbo);
-		        }
-		    }, {
-		        key: "destroy",
-		        value: function destroy() {
-		            _get(FrameBuffer.prototype.__proto__ || Object.getPrototypeOf(FrameBuffer.prototype), "destroy", this).call(this);
-		            this.gl.deleteFramebuffer(this.fbo);
-		        }
-		    }]);
-		
-		    return FrameBuffer;
-		}(_ResourceBase3.default);
-		
-		exports.default = FrameBuffer;
-	
-	/***/ },
-	/* 70 */
-	/***/ function(module, exports, __webpack_require__) {
-	
-		"use strict";
-		
-		Object.defineProperty(exports, "__esModule", {
-		    value: true
-		});
-		
-		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-		
-		var _Component2 = __webpack_require__(9);
-		
-		var _Component3 = _interopRequireDefault(_Component2);
-		
-		var _FrameBuffer = __webpack_require__(69);
-		
-		var _FrameBuffer2 = _interopRequireDefault(_FrameBuffer);
-		
-		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-		
-		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-		
-		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-		
-		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-		
-		var RenderSceneComponent = function (_Component) {
-		    _inherits(RenderSceneComponent, _Component);
-		
-		    function RenderSceneComponent() {
-		        _classCallCheck(this, RenderSceneComponent);
-		
-		        return _possibleConstructorReturn(this, (RenderSceneComponent.__proto__ || Object.getPrototypeOf(RenderSceneComponent)).apply(this, arguments));
-		    }
-		
-		    _createClass(RenderSceneComponent, [{
-		        key: "$awake",
-		
-		        // messages
-		        value: function $awake() {
-		            this.getAttributeRaw("layer").boundTo("_layer");
-		            this.getAttributeRaw("clearColor").boundTo("_clearColor");
-		            this.getAttributeRaw("clearColorEnabled").boundTo("_clearColorEnabled");
-		            this.getAttributeRaw("clearDepthEnabled").boundTo("_clearDepthEnabled");
-		            this.getAttributeRaw("clearDepth").boundTo("_clearDepth");
-		            this.getAttributeRaw("camera").boundTo("camera");
-		            this.getAttributeRaw("technique").boundTo("_technique");
-		        }
-		    }, {
-		        key: "$mount",
-		        value: function $mount() {
-		            this._gl = this.companion.get("gl");
-		            this._canvas = this.companion.get("canvasElement");
-		        }
-		    }, {
-		        key: "$bufferUpdated",
-		        value: function $bufferUpdated(args) {
-		            var out = this.getAttribute("out");
-		            if (out !== "default") {
-		                this._fbo = new _FrameBuffer2.default(this.companion.get("gl"));
-		                this._fbo.update(args.buffers[out]);
-		                this._fboSize = args.bufferSizes[out];
-		            }
-		            var depthBuffer = this.getAttribute("depthBuffer");
-		            if (depthBuffer && this._fbo) {
-		                this._fbo.update(args.buffers[depthBuffer]);
-		            }
-		        }
-		    }, {
-		        key: "$render",
-		        value: function $render(args) {
-		            var camera = this.camera ? this.camera : args.camera;
-		            if (!camera) {
-		                return;
-		            }
-		            if (this._fbo) {
-		                this._fbo.bind();
-		                this._gl.viewport(0, 0, this._fboSize.width, this._fboSize.height);
-		            } else {
-		                this._gl.bindFramebuffer(WebGLRenderingContext.FRAMEBUFFER, null);
-		                this._gl.viewport(args.viewport.Left, this._canvas.height - args.viewport.Bottom, args.viewport.Width, args.viewport.Height);
-		            }
-		            // clear buffer if needed
-		            if (this._fbo && this._clearColorEnabled) {
-		                this._gl.clearColor(this._clearColor.R, this._clearColor.G, this._clearColor.B, this._clearColor.A);
-		                this._gl.clear(WebGLRenderingContext.COLOR_BUFFER_BIT);
-		            }
-		            if (this._clearDepthEnabled) {
-		                this._gl.clearDepth(this._clearDepth);
-		                this._gl.clear(WebGLRenderingContext.DEPTH_BUFFER_BIT);
-		            }
-		            args.camera.updateContainedScene(args.loopIndex);
-		            args.camera.renderScene({
-		                camera: camera,
-		                buffers: args.buffers,
-		                layer: this._layer,
-		                viewport: args.viewport,
-		                loopIndex: args.loopIndex,
-		                technique: this._technique
-		            });
-		        }
-		    }]);
-		
-		    return RenderSceneComponent;
-		}(_Component3.default);
-		
-		exports.default = RenderSceneComponent;
-		
-		RenderSceneComponent.attributes = {
-		    layer: {
-		        converter: "String",
-		        default: "default"
-		    },
-		    depthBuffer: {
-		        default: null,
-		        converter: "String"
-		    },
-		    out: {
-		        converter: "String",
-		        default: "default"
-		    },
-		    clearColor: {
-		        default: "#0000",
-		        converter: "Color4"
-		    },
-		    clearColorEnabled: {
-		        default: true,
-		        converter: "Boolean"
-		    },
-		    clearDepthEnabled: {
-		        default: true,
-		        converter: "Boolean"
-		    },
-		    clearDepth: {
-		        default: 1.0,
-		        converter: "Number"
-		    },
-		    camera: {
-		        default: null,
-		        converter: "Component",
-		        target: "Camera"
-		    },
-		    technique: {
-		        default: "default",
-		        converter: "String"
-		    }
-		};
-	
-	/***/ },
-	/* 71 */
+	/* 74 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -30842,7 +31287,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _Component3 = _interopRequireDefault(_Component2);
 		
-		var _TextureSizeCalculator = __webpack_require__(64);
+		var _TextureSizeCalculator = __webpack_require__(67);
 		
 		var _TextureSizeCalculator2 = _interopRequireDefault(_TextureSizeCalculator);
 		
@@ -30931,7 +31376,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		};
 	
 	/***/ },
-	/* 72 */
+	/* 75 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -30983,7 +31428,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		                resolve(result.value);
 		            }).then(fulfilled, rejected);
 		        }
-		        step((generator = generator.apply(thisArg, _arguments)).next());
+		        step((generator = generator.apply(thisArg, _arguments || [])).next());
 		    });
 		};
 		
@@ -31101,7 +31546,79 @@ return /******/ (function(modules) { // webpackBootstrap
 		};
 	
 	/***/ },
-	/* 73 */
+	/* 76 */
+	/***/ function(module, exports, __webpack_require__) {
+	
+		"use strict";
+		
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});
+		
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+		
+		var _Component2 = __webpack_require__(9);
+		
+		var _Component3 = _interopRequireDefault(_Component2);
+		
+		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+		
+		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+		
+		function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+		
+		function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+		
+		var TimeComponent = function (_Component) {
+		    _inherits(TimeComponent, _Component);
+		
+		    function TimeComponent() {
+		        _classCallCheck(this, TimeComponent);
+		
+		        var _this = _possibleConstructorReturn(this, (TimeComponent.__proto__ || Object.getPrototypeOf(TimeComponent)).apply(this, arguments));
+		
+		        _this._time = 0;
+		        _this._startTime = 0;
+		        _this._lastFrame = 0;
+		        return _this;
+		    }
+		
+		    _createClass(TimeComponent, [{
+		        key: "$awake",
+		        value: function $awake() {
+		            this._time = 0;
+		            this._lastFrame = 0;
+		            this._startTime = Date.now();
+		        }
+		    }, {
+		        key: "$update",
+		        value: function $update() {
+		            var now = Date.now();
+		            var total = now - this._startTime;
+		            this.setAttribute("time", now);
+		            this.setAttribute("timeDelta", now - this._lastFrame);
+		            this._lastFrame = now;
+		        }
+		    }]);
+		
+		    return TimeComponent;
+		}(_Component3.default);
+		
+		exports.default = TimeComponent;
+		
+		TimeComponent.attributes = {
+		    time: {
+		        default: 0,
+		        converter: "Number"
+		    },
+		    timeDelta: {
+		        default: 0,
+		        converter: "Number"
+		    }
+		};
+	
+	/***/ },
+	/* 77 */
 	/***/ function(module, exports) {
 	
 		"use strict";
@@ -31132,7 +31649,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		}
 	
 	/***/ },
-	/* 74 */
+	/* 78 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -31148,9 +31665,9 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 		
-		function GeometryConverter(val) {
+		function GeometryConverter(val, attr) {
 		    if (typeof val === "string") {
-		        return this.companion.get("GeometryRegistory").getGeometry(val);
+		        return attr.companion.get("GeometryRegistory").getGeometry(val);
 		    } else if (val instanceof _Geometry2.default) {
 		        return val;
 		    }
@@ -31158,7 +31675,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		}
 	
 	/***/ },
-	/* 75 */
+	/* 79 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -31168,24 +31685,24 @@ return /******/ (function(modules) { // webpackBootstrap
 		});
 		exports.default = MaterialConverter;
 		
-		var _MaterialComponent = __webpack_require__(55);
+		var _MaterialComponent = __webpack_require__(62);
 		
 		var _MaterialComponent2 = _interopRequireDefault(_MaterialComponent);
 		
 		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 		
-		function MaterialConverter(val) {
+		function MaterialConverter(val, attr) {
 		    if (typeof val === "string") {
 		        var regex = /\s*new\s*\(\s*([a-zA-Z\d\-]+)\s*\)/;
 		        var regexResult = void 0;
 		        if (regexResult = regex.exec(val)) {
-		            this.component[this.declaration["componentBoundTo"]] = null;
-		            return this.companion.get("MaterialFactory").instanciate(regexResult[1]);
+		            attr.component[attr.declaration["componentBoundTo"]] = null;
+		            return attr.companion.get("MaterialFactory").instanciate(regexResult[1]);
 		        } else {
-		            var node = this.tree(val).first();
+		            var node = attr.tree(val).first();
 		            if (node) {
 		                var mc = node.getComponent(_MaterialComponent2.default);
-		                this.component[this.declaration["componentBoundTo"]] = mc;
+		                attr.component[attr.declaration["componentBoundTo"]] = mc;
 		                return mc.materialPromise;
 		            } else {
 		                console.warn("There was no matching material component filtered by '" + val + "'");
@@ -31197,7 +31714,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		}
 	
 	/***/ },
-	/* 76 */
+	/* 80 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -31207,25 +31724,25 @@ return /******/ (function(modules) { // webpackBootstrap
 		});
 		exports.default = NodeConverter;
 		
-		var _GomlNode = __webpack_require__(77);
+		var _GomlNode = __webpack_require__(81);
 		
 		var _GomlNode2 = _interopRequireDefault(_GomlNode);
 		
 		function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 		
-		function NodeConverter(val) {
+		function NodeConverter(val, attr) {
 		    if (val === null) {
 		        return null;
 		    }
 		    if (val instanceof _GomlNode2.default) {
 		        return val;
 		    } else if (typeof val === "string") {
-		        return this.component.node.tree(val).first();
+		        return attr.component.node.tree(val).first();
 		    }
 		}
 	
 	/***/ },
-	/* 77 */
+	/* 81 */
 	/***/ function(module, exports) {
 	
 			Object.defineProperty(exports, "__esModule", {
@@ -31233,7 +31750,7 @@ return /******/ (function(modules) { // webpackBootstrap
 			});exports.default=window.GrimoireJS.Node.GomlNode;
 	
 	/***/ },
-	/* 78 */
+	/* 82 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -31241,9 +31758,8 @@ return /******/ (function(modules) { // webpackBootstrap
 		Object.defineProperty(exports, "__esModule", {
 		    value: true
 		});
-		exports.default = PositionConverter;
 		
-		var _Attribute = __webpack_require__(79);
+		var _Attribute = __webpack_require__(83);
 		
 		var _Attribute2 = _interopRequireDefault(_Attribute);
 		
@@ -31251,32 +31767,39 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _lastVal = void 0;
 		var _node = void 0;
-		function PositionConverter(val) {
-		    if (val === null) {
-		        return null;
-		    }
-		    if (_lastVal === val) {
-		        return _node.getAttribute("position");
-		    } else {
-		        _lastVal = null;
-		        try {
-		            var vec = _Attribute2.default.convert("Vector3", this, val);
-		            if (vec) {
-		                return vec;
+		exports.default = {
+		    name: "Position",
+		    lazy: true,
+		    verify: function verify(attr) {
+		        return true;
+		    },
+		    convert: function convert(val, attr) {
+		        if (val === null) {
+		            return null;
+		        }
+		        if (attr.convertContext._lastVal === val) {
+		            return attr.convertContext._node.getAttribute("position");
+		        } else {
+		            attr.convertContext._lastVal = null;
+		            try {
+		                var vec = _Attribute2.default.convert("Vector3", attr, val);
+		                if (vec) {
+		                    return vec;
+		                }
+		            } catch (e) {
+		                ;
 		            }
-		        } catch (e) {
-		            ;
-		        }
-		        _node = _Attribute2.default.convert("Node", this, val);
-		        if (_node) {
-		            _lastVal = val;
-		            return _node.getAttribute("position");
+		            attr.convertContext._node = _Attribute2.default.convert("Node", attr, val);
+		            if (attr.convertContext._node) {
+		                attr.convertContext._lastVal = val;
+		                return attr.convertContext._node.getAttribute("position");
+		            }
 		        }
 		    }
-		}
+		};
 	
 	/***/ },
-	/* 79 */
+	/* 83 */
 	/***/ function(module, exports) {
 	
 			Object.defineProperty(exports, "__esModule", {
@@ -31284,7 +31807,7 @@ return /******/ (function(modules) { // webpackBootstrap
 			});exports.default=window.GrimoireJS.Node.Attribute;
 	
 	/***/ },
-	/* 80 */
+	/* 84 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -31297,11 +31820,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		exports.default = TextureConverter;
 		
-		var _TextureComponent = __webpack_require__(72);
+		var _TextureComponent = __webpack_require__(75);
 		
 		var _TextureComponent2 = _interopRequireDefault(_TextureComponent);
 		
-		var _TextureReference = __webpack_require__(81);
+		var _TextureReference = __webpack_require__(85);
 		
 		var _TextureReference2 = _interopRequireDefault(_TextureReference);
 		
@@ -31344,9 +31867,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		    updateVideo(tex, val);
 		    return tex;
 		}
-		function TextureConverter(val) {
-		    var _this = this;
-		
+		function TextureConverter(val, attr) {
 		    if (val instanceof _Texture2D2.default) {
 		        return new _TextureReference2.default(val);
 		    }
@@ -31369,11 +31890,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		                        case "video":
 		                            return {
 		                                v: {
-		                                    v: new _TextureReference2.default(fromVideoTexture(_this.companion.get("gl"), generateVideoTag(param)))
+		                                    v: new _TextureReference2.default(fromVideoTexture(attr.companion.get("gl"), generateVideoTag(param)))
 		                                }
 		                            };
 		                        case "query":
-		                            var obtainedTag = _this.tree(param);
+		                            var obtainedTag = attr.tree(param);
 		                            var texture = obtainedTag.first().getComponent(_TextureComponent2.default);
 		                            return {
 		                                v: {
@@ -31391,11 +31912,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		            if ((typeof _ret === "undefined" ? "undefined" : _typeof(_ret)) === "object") return _ret.v;
 		        } else {
 		            var _ret3 = function () {
-		                var tex = new _Texture2D2.default(_this.companion.get("gl"));
+		                var tex = new _Texture2D2.default(attr.companion.get("gl"));
 		                _ImageResolver2.default.resolve(val).then(function (t) {
 		                    tex.update(t);
 		                });
-		                _this.companion.get("loader").register(tex.validPromise);
+		                attr.companion.get("loader").register(tex.validPromise);
 		                return {
 		                    v: new _TextureReference2.default(tex)
 		                };
@@ -31407,7 +31928,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		    if ((typeof val === "undefined" ? "undefined" : _typeof(val)) === "object") {
 		        if (val instanceof HTMLImageElement) {
 		            var _ret4 = function () {
-		                var tex = new _Texture2D2.default(_this.companion.get("gl"));
+		                var tex = new _Texture2D2.default(attr.companion.get("gl"));
 		                if (val.complete && val.naturalWidth) {
 		                    tex.update(val);
 		                } else {
@@ -31422,18 +31943,18 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		            if ((typeof _ret4 === "undefined" ? "undefined" : _typeof(_ret4)) === "object") return _ret4.v;
 		        } else if (val instanceof HTMLCanvasElement) {
-		            var tex = new _Texture2D2.default(this.companion.get("gl"));
+		            var tex = new _Texture2D2.default(attr.companion.get("gl"));
 		            tex.update(val);
 		            return new _TextureReference2.default(tex);
 		        } else if (val instanceof HTMLVideoElement) {
-		            return new _TextureReference2.default(fromVideoTexture(this.companion.get("gl"), val));
+		            return new _TextureReference2.default(fromVideoTexture(attr.companion.get("gl"), val));
 		        }
 		    }
 		    return null;
 		}
 	
 	/***/ },
-	/* 81 */
+	/* 85 */
 	/***/ function(module, exports) {
 	
 		"use strict";
@@ -31474,7 +31995,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = TextureReference;
 	
 	/***/ },
-	/* 82 */
+	/* 86 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -31487,7 +32008,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		exports.default = ViewportConverter;
 		
-		var _Rectangle = __webpack_require__(83);
+		var _Rectangle = __webpack_require__(87);
 		
 		var _Rectangle2 = _interopRequireDefault(_Rectangle);
 		
@@ -31535,7 +32056,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		}
 	
 	/***/ },
-	/* 83 */
+	/* 87 */
 	/***/ function(module, exports) {
 	
 			Object.defineProperty(exports, "__esModule", {
@@ -31543,7 +32064,7 @@ return /******/ (function(modules) { // webpackBootstrap
 			});exports.default=window.GrimoireJS.lib.math.Rectangle;
 	
 	/***/ },
-	/* 84 */
+	/* 88 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -31566,11 +32087,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _Vector2 = _interopRequireDefault(_Vector);
 		
-		var _GeometryUtility = __webpack_require__(85);
+		var _GeometryUtility = __webpack_require__(89);
 		
 		var _GeometryUtility2 = _interopRequireDefault(_GeometryUtility);
 		
-		var _GeometryFactory = __webpack_require__(51);
+		var _GeometryFactory = __webpack_require__(55);
 		
 		var _GeometryFactory2 = _interopRequireDefault(_GeometryFactory);
 		
@@ -31614,6 +32135,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		            DefaultPrimitives._registerCone();
 		            DefaultPrimitives._registerPlane();
 		            DefaultPrimitives._registerTriangle();
+		            DefaultPrimitives._registerCapsule();
 		        }
 		    }, {
 		        key: "_registerQuad",
@@ -31643,7 +32165,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		            _GeometryFactory2.default.addType("cone", {
 		                divide: {
 		                    converter: "Number",
-		                    default: 6
+		                    default: 50
 		                }
 		            }, function (gl, attrs) {
 		                var div = attrs["divide"];
@@ -31675,7 +32197,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		            _GeometryFactory2.default.addType("cylinder", {
 		                divide: {
 		                    converter: "Number",
-		                    default: 5
+		                    default: 50
 		                }
 		            }, function (gl, attrs) {
 		                var div = attrs["divide"];
@@ -31748,12 +32270,30 @@ return /******/ (function(modules) { // webpackBootstrap
 		            });
 		        }
 		    }, {
+		        key: "_registerCapsule",
+		        value: function _registerCapsule() {
+		            _GeometryFactory2.default.addType("capsule", {
+		                divide: {
+		                    converter: "Number",
+		                    default: 50
+		                }
+		            }, function (gl, attrs) {
+		                var dH = attrs["divide"];
+		                var dV = attrs["divide"] % 2 == 1 ? attrs["divide"] + 1 : attrs["divide"];
+		                var geometry = new _Geometry2.default(gl);
+		                geometry.addAttributes(_GeometryUtility2.default.capsule([0, 0, 0], [0, 1, 0], [1, 0, 0], [0, 0, -1], dV, dH), primitiveLayout);
+		                geometry.addIndex("default", _GeometryUtility2.default.sphereIndex(0, dV, dH));
+		                geometry.addIndex("wireframe", _GeometryUtility2.default.linesFromTriangles(_GeometryUtility2.default.sphereIndex(0, dV, dH)), WebGLRenderingContext.LINES);
+		                return geometry;
+		            });
+		        }
+		    }, {
 		        key: "_registerCircle",
 		        value: function _registerCircle() {
 		            _GeometryFactory2.default.addType("circle", {
 		                divide: {
 		                    converter: "Number",
-		                    default: 10
+		                    default: 30
 		                }
 		            }, function (gl, attrs) {
 		                var div = attrs["divide"];
@@ -31792,7 +32332,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = DefaultPrimitives;
 	
 	/***/ },
-	/* 85 */
+	/* 89 */
 	/***/ function(module, exports) {
 	
 		"use strict";
@@ -32036,6 +32576,57 @@ return /******/ (function(modules) { // webpackBootstrap
 		            return ret;
 		        }
 		    }, {
+		        key: "capsule",
+		        value: function capsule(center, up, right, forward) {
+		            var vdiv = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 3;
+		            var hdiv = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : 3;
+		
+		            var ret = new Array((vdiv * hdiv + 2) * 8);
+		            //top(0)
+		            ret[0] = center[0] + 2 * up[0];
+		            ret[1] = center[1] + 2 * up[1];
+		            ret[2] = center[2] + 2 * up[2];
+		            ret[3] = up[0];
+		            ret[4] = up[1];
+		            ret[5] = up[2];
+		            ret[6] = 0;
+		            ret[7] = 0;
+		            // bottom(1)
+		            ret[8] = center[0] - 2 * up[0];
+		            ret[9] = center[1] - 2 * up[1];
+		            ret[10] = center[2] - 2 * up[2];
+		            ret[11] = -up[0];
+		            ret[12] = -up[1];
+		            ret[13] = -up[2];
+		            ret[14] = 0;
+		            ret[15] = 1;
+		            var vDelta = Math.PI / (vdiv + 1);
+		            var hDelta = Math.PI * 2 / hdiv;
+		            for (var v = 0; v < vdiv; v++) {
+		                var vc = Math.cos((v + 1) * vDelta);
+		                var vs = Math.sin((v + 1) * vDelta);
+		                var phi = vDelta * v;
+		                for (var h = 0; h < hdiv + 1; h++) {
+		                    var hc = Math.cos(h * hDelta);
+		                    var hs = Math.sin(h * hDelta);
+		                    var fi = 16 + (v * (hdiv + 1) + h) * 8;
+		                    ret[fi + 0] = center[0] + vc * up[0] + vs * (forward[0] * hc + right[0] * hs);
+		                    ret[fi + 1] = center[1] + vc * up[1] + vs * (forward[1] * hc + right[1] * hs);
+		                    ret[fi + 2] = center[2] + vc * up[2] + vs * (forward[2] * hc + right[2] * hs);
+		                    ret[fi + 3] = center[0] + vc * up[0] + vs * (forward[0] * hc + right[0] * hs);
+		                    ret[fi + 4] = center[1] + vc * up[1] + vs * (forward[1] * hc + right[1] * hs);
+		                    ret[fi + 5] = center[2] + vc * up[2] + vs * (forward[2] * hc + right[2] * hs);
+		                    var theta = hDelta * h;
+		                    ret[fi + 6] = theta / Math.PI / 2;
+		                    ret[fi + 7] = phi / Math.PI;
+		                    ret[fi + 0] = ret[fi + 0] > 0 ? ret[fi + 0] + up[0] : ret[fi + 0] - up[0];
+		                    ret[fi + 1] = ret[fi + 1] > 0 ? ret[fi + 1] + up[1] : ret[fi + 1] - up[1];
+		                    ret[fi + 2] = ret[fi + 2] > 0 ? ret[fi + 2] + up[2] : ret[fi + 2] - up[2];
+		                }
+		            }
+		            return ret;
+		        }
+		    }, {
 		        key: "sphere",
 		        value: function sphere(center, up, right, forward) {
 		            var vdiv = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 3;
@@ -32130,7 +32721,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = GeometryUtility;
 	
 	/***/ },
-	/* 86 */
+	/* 90 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -32145,7 +32736,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _MaterialFactory2 = _interopRequireDefault(_MaterialFactory);
 		
-		var _Unlit = __webpack_require__(87);
+		var _Unlit = __webpack_require__(91);
 		
 		var _Unlit2 = _interopRequireDefault(_Unlit);
 		
@@ -32171,13 +32762,13 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = DefaultMaterial;
 	
 	/***/ },
-	/* 87 */
+	/* 91 */
 	/***/ function(module, exports) {
 	
 		module.exports = "@Technique default{\n@Pass{\n  @BlendFunc(SRC_ALPHA,ONE_MINUS_SRC_ALPHA)\n  FS_PREC(mediump,float)\n  varying vec2 vTexCoord;\n  #ifdef VS\n\n  attribute vec3 position;\n  attribute vec2 texCoord;\n  @MODELVIEWPROJECTION\n  uniform mat4 _matPVM;\n  void main()\n  {\n    gl_Position = _matPVM * vec4(position,1.0);\n    vTexCoord = texCoord;\n  }\n  #endif\n  #ifdef FS\n  @{type:\"color\",default:\"white\"}\n  uniform vec4 color;\n\n  uniform sampler2D texture;\n  @HAS_TEXTURE{sampler:\"texture\"}\n  uniform bool _textureUsed;\n\n  uniform float _time;\n  void main(void)\n  {\n    if(_textureUsed){\n      gl_FragColor = color * texture2D(texture,vTexCoord);\n    }else{\n      gl_FragColor = color;\n   }\n  }\n  #endif\n}\n}\n"
 	
 	/***/ },
-	/* 88 */
+	/* 92 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -32264,7 +32855,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = null;
 	
 	/***/ },
-	/* 89 */
+	/* 93 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -32273,7 +32864,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		    value: true
 		});
 		
-		var _Vector = __webpack_require__(90);
+		var _MeshIndexCalculator = __webpack_require__(72);
+		
+		var _MeshIndexCalculator2 = _interopRequireDefault(_MeshIndexCalculator);
+		
+		var _Vector = __webpack_require__(94);
 		
 		var _Vector2 = _interopRequireDefault(_Vector);
 		
@@ -32324,10 +32919,16 @@ return /******/ (function(modules) { // webpackBootstrap
 		        proxy.uniformVector3(valInfo.name, args.camera.transform.forward);
 		    };
 		});
+		_UniformResolverRegistry2.default.add("MESH_INDEX", function (valInfo) {
+		    return function (proxy, args) {
+		        var index = args.renderable.index;
+		        proxy.uniformVector4(valInfo.name, _MeshIndexCalculator2.default.fromIndex(index));
+		    };
+		});
 		exports.default = null;
 	
 	/***/ },
-	/* 90 */
+	/* 94 */
 	/***/ function(module, exports) {
 	
 			Object.defineProperty(exports, "__esModule", {
@@ -32335,7 +32936,7 @@ return /******/ (function(modules) { // webpackBootstrap
 			});exports.default=window.GrimoireJS.lib.math.Vector2;
 	
 	/***/ },
-	/* 91 */
+	/* 95 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -32469,7 +33070,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.default = null;
 	
 	/***/ },
-	/* 92 */
+	/* 96 */
 	/***/ function(module, exports) {
 	
 		"use strict";
@@ -32629,7 +33230,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		};
 	
 	/***/ },
-	/* 93 */
+	/* 97 */
 	/***/ function(module, exports, __webpack_require__) {
 	
 		"use strict";
@@ -32638,19 +33239,27 @@ return /******/ (function(modules) { // webpackBootstrap
 		    value: true
 		});
 		
-		var _PositionConverter = __webpack_require__(78);
+		var _TimeComponent = __webpack_require__(76);
+		
+		var _TimeComponent2 = _interopRequireDefault(_TimeComponent);
+		
+		var _RenderHitareaComponent = __webpack_require__(71);
+		
+		var _RenderHitareaComponent2 = _interopRequireDefault(_RenderHitareaComponent);
+		
+		var _PositionConverter = __webpack_require__(82);
 		
 		var _PositionConverter2 = _interopRequireDefault(_PositionConverter);
 		
-		var _NodeConverter = __webpack_require__(76);
+		var _NodeConverter = __webpack_require__(80);
 		
 		var _NodeConverter2 = _interopRequireDefault(_NodeConverter);
 		
-		var _DefaultMaterial = __webpack_require__(86);
+		var _DefaultMaterial = __webpack_require__(90);
 		
 		var _DefaultMaterial2 = _interopRequireDefault(_DefaultMaterial);
 		
-		var _DefaultPrimitives = __webpack_require__(84);
+		var _DefaultPrimitives = __webpack_require__(88);
 		
 		var _DefaultPrimitives2 = _interopRequireDefault(_DefaultPrimitives);
 		
@@ -32670,63 +33279,63 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _CanvasInitializerComponent2 = _interopRequireDefault(_CanvasInitializerComponent);
 		
-		var _FullscreenComponent = __webpack_require__(49);
+		var _FullscreenComponent = __webpack_require__(53);
 		
 		var _FullscreenComponent2 = _interopRequireDefault(_FullscreenComponent);
 		
-		var _GeometryComponent = __webpack_require__(50);
+		var _GeometryComponent = __webpack_require__(54);
 		
 		var _GeometryComponent2 = _interopRequireDefault(_GeometryComponent);
 		
-		var _GeometryRegistoryComponent = __webpack_require__(52);
+		var _GeometryRegistoryComponent = __webpack_require__(56);
 		
 		var _GeometryRegistoryComponent2 = _interopRequireDefault(_GeometryRegistoryComponent);
 		
-		var _HTMLBinderComponent = __webpack_require__(53);
+		var _HTMLBinderComponent = __webpack_require__(57);
 		
 		var _HTMLBinderComponent2 = _interopRequireDefault(_HTMLBinderComponent);
 		
-		var _LoopManagerComponent = __webpack_require__(54);
+		var _LoopManagerComponent = __webpack_require__(61);
 		
 		var _LoopManagerComponent2 = _interopRequireDefault(_LoopManagerComponent);
 		
-		var _MaterialComponent = __webpack_require__(55);
+		var _MaterialComponent = __webpack_require__(62);
 		
 		var _MaterialComponent2 = _interopRequireDefault(_MaterialComponent);
 		
-		var _MaterialContainerComponent = __webpack_require__(56);
+		var _MaterialContainerComponent = __webpack_require__(51);
 		
 		var _MaterialContainerComponent2 = _interopRequireDefault(_MaterialContainerComponent);
 		
-		var _MaterialImporterComponent = __webpack_require__(58);
+		var _MaterialImporterComponent = __webpack_require__(63);
 		
 		var _MaterialImporterComponent2 = _interopRequireDefault(_MaterialImporterComponent);
 		
-		var _MeshRendererComponent = __webpack_require__(59);
+		var _MeshRendererComponent = __webpack_require__(50);
 		
 		var _MeshRendererComponent2 = _interopRequireDefault(_MeshRendererComponent);
 		
-		var _MouseCameraControlComponent = __webpack_require__(60);
+		var _MouseCameraControlComponent = __webpack_require__(64);
 		
 		var _MouseCameraControlComponent2 = _interopRequireDefault(_MouseCameraControlComponent);
 		
-		var _RenderBufferComponent = __webpack_require__(62);
+		var _RenderBufferComponent = __webpack_require__(66);
 		
 		var _RenderBufferComponent2 = _interopRequireDefault(_RenderBufferComponent);
 		
-		var _RendererComponent = __webpack_require__(65);
+		var _RendererComponent = __webpack_require__(68);
 		
 		var _RendererComponent2 = _interopRequireDefault(_RendererComponent);
 		
-		var _RendererManagerComponent = __webpack_require__(66);
+		var _RendererManagerComponent = __webpack_require__(69);
 		
 		var _RendererManagerComponent2 = _interopRequireDefault(_RendererManagerComponent);
 		
-		var _RenderQuadComponent = __webpack_require__(68);
+		var _RenderQuadComponent = __webpack_require__(73);
 		
 		var _RenderQuadComponent2 = _interopRequireDefault(_RenderQuadComponent);
 		
-		var _RenderSceneComponent = __webpack_require__(70);
+		var _RenderSceneComponent = __webpack_require__(58);
 		
 		var _RenderSceneComponent2 = _interopRequireDefault(_RenderSceneComponent);
 		
@@ -32734,11 +33343,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _SceneComponent2 = _interopRequireDefault(_SceneComponent);
 		
-		var _TextureBufferComponent = __webpack_require__(71);
+		var _TextureBufferComponent = __webpack_require__(74);
 		
 		var _TextureBufferComponent2 = _interopRequireDefault(_TextureBufferComponent);
 		
-		var _TextureComponent = __webpack_require__(72);
+		var _TextureComponent = __webpack_require__(75);
 		
 		var _TextureComponent2 = _interopRequireDefault(_TextureComponent);
 		
@@ -32746,23 +33355,23 @@ return /******/ (function(modules) { // webpackBootstrap
 		
 		var _TransformComponent2 = _interopRequireDefault(_TransformComponent);
 		
-		var _CanvasSizeConverter = __webpack_require__(73);
+		var _CanvasSizeConverter = __webpack_require__(77);
 		
 		var _CanvasSizeConverter2 = _interopRequireDefault(_CanvasSizeConverter);
 		
-		var _GeometryConverter = __webpack_require__(74);
+		var _GeometryConverter = __webpack_require__(78);
 		
 		var _GeometryConverter2 = _interopRequireDefault(_GeometryConverter);
 		
-		var _MaterialConverter = __webpack_require__(75);
+		var _MaterialConverter = __webpack_require__(79);
 		
 		var _MaterialConverter2 = _interopRequireDefault(_MaterialConverter);
 		
-		var _TextureConverter = __webpack_require__(80);
+		var _TextureConverter = __webpack_require__(84);
 		
 		var _TextureConverter2 = _interopRequireDefault(_TextureConverter);
 		
-		var _ViewportConverter = __webpack_require__(82);
+		var _ViewportConverter = __webpack_require__(86);
 		
 		var _ViewportConverter2 = _interopRequireDefault(_ViewportConverter);
 		
@@ -32789,7 +33398,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		                resolve(result.value);
 		            }).then(fulfilled, rejected);
 		        }
-		        step((generator = generator.apply(thisArg, _arguments)).next());
+		        step((generator = generator.apply(thisArg, _arguments || [])).next());
 		    });
 		};
 		//
@@ -32829,6 +33438,8 @@ return /******/ (function(modules) { // webpackBootstrap
 		                            _grimoirejs2.default.registerComponent(_$ns("TextureBuffer"), _TextureBufferComponent2.default);
 		                            _grimoirejs2.default.registerComponent(_$ns("Texture"), _TextureComponent2.default);
 		                            _grimoirejs2.default.registerComponent(_$ns("Transform"), _TransformComponent2.default);
+		                            _grimoirejs2.default.registerComponent(_$ns("RenderHitArea"), _RenderHitareaComponent2.default);
+		                            _grimoirejs2.default.registerComponent(_$ns("Time"), _TimeComponent2.default);
 		                            _grimoirejs2.default.registerConverter(_$ns("CanvasSize"), _CanvasSizeConverter2.default);
 		                            _grimoirejs2.default.registerConverter(_$ns("Geometry"), _GeometryConverter2.default);
 		                            _grimoirejs2.default.registerConverter(_$ns("Material"), _MaterialConverter2.default);
@@ -32836,7 +33447,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		                            _grimoirejs2.default.registerConverter(_$ns("Texture2D"), _TextureConverter2.default);
 		                            _grimoirejs2.default.registerConverter(_$ns("Viewport"), _ViewportConverter2.default);
 		                            _grimoirejs2.default.registerConverter(_$ns("Node"), _NodeConverter2.default);
-		                            _grimoirejs2.default.registerConverter(_$ns("Position"), _PositionConverter2.default);
+		                            _grimoirejs2.default.registerConverter(_PositionConverter2.default);
 		                            _grimoirejs2.default.registerNode("goml", ["CanvasInitializer", "LoopManager", "AssetLoadingManager", "GeometryRegistory", "RendererManager", "Fullscreen"]);
 		                            _grimoirejs2.default.registerNode("scene", ["Scene"]);
 		                            _grimoirejs2.default.registerNode("object", ["Transform"]);
@@ -32849,7 +33460,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		                            _grimoirejs2.default.registerNode("import-material", ["MaterialImporter"]);
 		                            _grimoirejs2.default.registerNode("texture-buffer", ["TextureBuffer"]);
 		                            _grimoirejs2.default.registerNode("render-buffer", ["RenderBuffer"]);
-		                            _grimoirejs2.default.registerNode("render-scene", ["RenderScene"], {
+		                            _grimoirejs2.default.registerNode("render-scene", ["RenderScene", "RenderHitArea"], {
 		                                material: null
 		                            });
 		                            _grimoirejs2.default.registerNode("render-quad", ["MaterialContainer", "RenderQuad"], {
@@ -32858,7 +33469,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		                            _DefaultPrimitives2.default.register();
 		                            _DefaultMaterial2.default.register();
 		
-		                        case 47:
+		                        case 49:
 		                        case "end":
 		                            return _context.stop();
 		                    }

@@ -88,11 +88,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _ConstantConverter2 = _interopRequireDefault(_ConstantConverter);
 	
-	var _GLTFMaterialFactory = __webpack_require__(26);
+	var _GLTFMaterialFactory = __webpack_require__(27);
 	
 	var _GLTFMaterialFactory2 = _interopRequireDefault(_GLTFMaterialFactory);
 	
-	var _MaterialParser = __webpack_require__(18);
+	var _MaterialParser = __webpack_require__(19);
 	
 	var _MaterialParser2 = _interopRequireDefault(_MaterialParser);
 	
@@ -104,13 +104,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _ResourceResolver2 = _interopRequireDefault(_ResourceResolver);
 	
-	var _main = __webpack_require__(27);
+	var _main = __webpack_require__(28);
 	
 	var _main2 = _interopRequireDefault(_main);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var __VERSION__ = "1.8.0-beta1";
+	var __VERSION__ = "1.8.0-beta3";
 	var __NAME__ = "grimoirejs-gltf";
 	
 	var __EXPOSE__ = {
@@ -468,7 +468,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            if (!v2) {
 	                return v1;
 	            }
-	            var delta = (t2[0] - t) / (t2[0] - t1[0]); // TODO interpolator?
+	            var delta = (t - t1[0]) / (t2[0] - t1[0]); // TODO interpolator?
 	            return _Interpolators2.default[interpolation](delta, v1, v2);
 	        }
 	    }]);
@@ -612,6 +612,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        break;
 	                    case "scale":
 	                        transform.localScale.rawElements = v;
+	                        break;
 	                }
 	            });
 	            for (var tr in this._targetTransforms) {
@@ -636,6 +637,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    animation: {
 	        converter: "Object",
 	        default: null
+	    },
+	    frame: {
+	        converter: "Number",
+	        default: 0
 	    }
 	};
 
@@ -855,7 +860,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: "_populateMaterial",
 	        value: function _populateMaterial(data, materialName, skinName) {
-	            var query = skinName ? "gltf-" + materialName + "-" + skinName : "gltf-" + materialName;
+	            var query = skinName ? "gltf-" + data.tf.id + "-" + materialName + "-" + skinName : "gltf-" + data.tf.id + "-" + materialName;
 	            var matNodes = this.node.getChildrenByClass(query);
 	            if (matNodes.length === 0) {
 	                var mat = this._assetRoot.addChildByName("material", Object.assign({
@@ -884,10 +889,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	                for (var i = 0; i < node.meshes.length; i++) {
 	                    var mesh = data.meshes[node.meshes[i]];
 	                    for (var j = 0; j < mesh.length; j++) {
-	                        var matquery = this._populateMaterial(data, data.tf.meshes[node.meshes[i]].primitives[j].material, node.skin);
+	                        var materialName = data.tf.meshes[node.meshes[i]].primitives[j].material;
+	                        var exts = data.tf.materials[materialName].extensions;
+	                        var noUseAlpha = exts && exts.KHR_materials_common && !exts.KHR_materials_common.transparent;
+	                        var matquery = this._populateMaterial(data, materialName, node.skin);
 	                        gomlNode.addChildByName("gltf-mesh", {
 	                            geometry: mesh[j],
-	                            material: matquery
+	                            material: matquery,
+	                            drawOrder: noUseAlpha ? "NoAlpha" : "UseAlpha"
 	                        });
 	                    }
 	                }
@@ -1007,7 +1016,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _Animation2 = _interopRequireDefault(_Animation);
 	
-	var _MaterialParser = __webpack_require__(18);
+	var _MaterialParser = __webpack_require__(19);
 	
 	var _MaterialParser2 = _interopRequireDefault(_MaterialParser);
 	
@@ -1015,27 +1024,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _ConstantConverter2 = _interopRequireDefault(_ConstantConverter);
 	
-	var _Vector = __webpack_require__(21);
+	var _Vector = __webpack_require__(22);
 	
 	var _Vector2 = _interopRequireDefault(_Vector);
 	
-	var _AABB = __webpack_require__(22);
+	var _AABB = __webpack_require__(23);
 	
 	var _AABB2 = _interopRequireDefault(_AABB);
 	
-	var _TextFileResolver = __webpack_require__(16);
-	
-	var _TextFileResolver2 = _interopRequireDefault(_TextFileResolver);
-	
-	var _Buffer = __webpack_require__(23);
+	var _Buffer = __webpack_require__(24);
 	
 	var _Buffer2 = _interopRequireDefault(_Buffer);
 	
-	var _Geometry = __webpack_require__(24);
+	var _Geometry = __webpack_require__(25);
 	
 	var _Geometry2 = _interopRequireDefault(_Geometry);
 	
-	var _Texture2D = __webpack_require__(25);
+	var _Texture2D = __webpack_require__(26);
 	
 	var _Texture2D2 = _interopRequireDefault(_Texture2D);
 	
@@ -1077,7 +1082,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        key: "parseFromURL",
 	        value: function parseFromURL(gl, url) {
 	            return __awaiter(this, void 0, void 0, regeneratorRuntime.mark(function _callee() {
-	                var resourceResolver, resolved, tf, rawBuffer, rawbufferView, meshes, buffers, images, textures, animations, skins, materials, accessors, key, _key, bufferView, currentBuffer, buffer, _key2, imgLoadTask, _loop, _key3, _key4, texInfo, sampler, tex, _key5, material, _key6, _key7, skin, accessor;
+	                var resourceResolver, tf, rawBuffer, rawbufferView, meshes, buffers, images, textures, animations, skins, materials, accessors, key, _key, bufferView, currentBuffer, buffer, _key2, imgLoadTask, _loop, _key3, _key4, texInfo, sampler, tex, _key5, material, _key6, _key7, skin, accessor;
 	
 	                return regeneratorRuntime.wrap(function _callee$(_context) {
 	                    while (1) {
@@ -1085,11 +1090,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	                            case 0:
 	                                resourceResolver = new _ResourceResolver2.default(url);
 	                                _context.next = 3;
-	                                return _TextFileResolver2.default.resolve(url);
+	                                return resourceResolver.loadGLTFFile();
 	
 	                            case 3:
-	                                resolved = _context.sent;
-	                                tf = JSON.parse(resolved);
+	                                tf = _context.sent;
 	                                rawBuffer = {};
 	                                rawbufferView = {};
 	                                meshes = {};
@@ -1104,22 +1108,35 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	                                _context.t0 = regeneratorRuntime.keys(tf.buffers);
 	
-	                            case 16:
+	                            case 15:
 	                                if ((_context.t1 = _context.t0()).done) {
-	                                    _context.next = 23;
+	                                    _context.next = 26;
 	                                    break;
 	                                }
 	
 	                                key = _context.t1.value;
-	                                _context.next = 20;
-	                                return resourceResolver.loadBuffer(tf.buffers[key].uri);
 	
-	                            case 20:
-	                                rawBuffer[key] = _context.sent;
-	                                _context.next = 16;
+	                                if (!(key === "binary_glTF")) {
+	                                    _context.next = 21;
+	                                    break;
+	                                }
+	
+	                                rawBuffer[key] = resourceResolver.binaryGLTFBuffer;
+	                                _context.next = 24;
 	                                break;
 	
+	                            case 21:
+	                                _context.next = 23;
+	                                return resourceResolver.loadBuffer(tf.buffers[key].uri);
+	
 	                            case 23:
+	                                rawBuffer[key] = _context.sent;
+	
+	                            case 24:
+	                                _context.next = 15;
+	                                break;
+	
+	                            case 26:
 	                                for (_key in tf.bufferViews) {
 	                                    bufferView = tf.bufferViews[_key];
 	                                    currentBuffer = rawBuffer[bufferView.buffer];
@@ -1139,7 +1156,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                                imgLoadTask = [];
 	
 	                                _loop = function _loop(_key3) {
-	                                    imgLoadTask.push(resourceResolver.loadImage(tf.images[_key3].uri).then(function (t) {
+	                                    imgLoadTask.push(resourceResolver.loadImage(tf.images[_key3]).then(function (t) {
 	                                        images[_key3] = t;
 	                                    }));
 	                                };
@@ -1147,10 +1164,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	                                for (_key3 in tf.images) {
 	                                    _loop(_key3);
 	                                }
-	                                _context.next = 30;
+	                                _context.next = 33;
 	                                return Promise.all(imgLoadTask);
 	
-	                            case 30:
+	                            case 33:
 	                                // parse textures
 	                                for (_key4 in tf.textures) {
 	                                    texInfo = tf.textures[_key4];
@@ -1165,9 +1182,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	                                }
 	                                _context.t2 = regeneratorRuntime.keys(tf.materials);
 	
-	                            case 32:
+	                            case 35:
 	                                if ((_context.t3 = _context.t2()).done) {
-	                                    _context.next = 46;
+	                                    _context.next = 49;
 	                                    break;
 	                                }
 	
@@ -1175,30 +1192,30 @@ return /******/ (function(modules) { // webpackBootstrap
 	                                material = tf.materials[_key5];
 	
 	                                if (!(material.extensions !== void 0 && material.extensions.KHR_materials_common)) {
-	                                    _context.next = 41;
+	                                    _context.next = 44;
 	                                    break;
 	                                }
 	
-	                                _context.next = 38;
+	                                _context.next = 41;
 	                                return _MaterialParser2.default.parse(tf, _key5, resourceResolver, textures);
-	
-	                            case 38:
-	                                materials[_key5] = _context.sent;
-	                                _context.next = 44;
-	                                break;
 	
 	                            case 41:
-	                                _context.next = 43;
-	                                return _MaterialParser2.default.parse(tf, _key5, resourceResolver, textures);
-	
-	                            case 43:
 	                                materials[_key5] = _context.sent;
-	
-	                            case 44:
-	                                _context.next = 32;
+	                                _context.next = 47;
 	                                break;
 	
+	                            case 44:
+	                                _context.next = 46;
+	                                return _MaterialParser2.default.parse(tf, _key5, resourceResolver, textures);
+	
 	                            case 46:
+	                                materials[_key5] = _context.sent;
+	
+	                            case 47:
+	                                _context.next = 35;
+	                                break;
+	
+	                            case 49:
 	                                // parse animations
 	                                if (tf.animations) {
 	                                    for (_key6 in tf.animations) {
@@ -1227,7 +1244,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                                    skins: skins
 	                                });
 	
-	                            case 49:
+	                            case 52:
 	                            case "end":
 	                                return _context.stop();
 	                        }
@@ -1335,6 +1352,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _ImageResolver2 = _interopRequireDefault(_ImageResolver);
 	
+	var _HashCalculator = __webpack_require__(18);
+	
+	var _HashCalculator2 = _interopRequireDefault(_HashCalculator);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1349,20 +1370,72 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this._rootPath = _rootPath;
 	        this.baseDirectory = this._getBaseDir(_rootPath);
 	    }
-	    /**
-	     * Load image from specified url or dataURL.
-	     * @param  {string}  url [description]
-	     * @return {Promise}     [description]
-	     */
-	
 	
 	    _createClass(ResourceResolver, [{
+	        key: "loadGLTFFile",
+	        value: function loadGLTFFile() {
+	            var _this = this;
+	
+	            return new Promise(function (resolve, reject) {
+	                var xhr = new XMLHttpRequest();
+	                xhr.open("GET", _this._rootPath);
+	                xhr.responseType = "arraybuffer";
+	                xhr.onload = function (v) {
+	                    var uiarr = new Uint8Array(xhr.response);
+	                    var glTFMagic = [103, 108, 84, 70];
+	                    var isBinary = true;
+	                    for (var i = 0; i < glTFMagic.length; i++) {
+	                        if (uiarr[i] !== glTFMagic[i]) {
+	                            isBinary = false;
+	                        }
+	                    }
+	                    var resultJson = void 0;
+	                    if (isBinary) {
+	                        var darr = new DataView(xhr.response);
+	                        var fl = darr.getUint32(8, true); // fullLength
+	                        var l = darr.getUint32(12, true); // contentLength
+	                        resultJson = _this._bufferToString(xhr.response.slice(20, 20 + l));
+	                        _this.binaryGLTFBuffer = xhr.response.slice(20 + l, fl);
+	                    } else {
+	                        resultJson = _this._bufferToString(xhr.response);
+	                    }
+	                    _this.tf = JSON.parse(resultJson);
+	                    _this.tf.id = _HashCalculator2.default.calcHash(resultJson);
+	                    resolve(_this.tf);
+	                };
+	                xhr.onerror = function (e) {
+	                    // reject({
+	                    //   message: `Loading resource at '${this.baseDirectory + url} failed. Is there resource file in dependency at correct location?'`,
+	                    //   error:e
+	                    // });
+	                };
+	                xhr.send();
+	            });
+	        }
+	        /**
+	         * Load image from specified url or dataURL.
+	         * @param  {string}  url [description]
+	         * @return {Promise}     [description]
+	         */
+	
+	    }, {
 	        key: "loadImage",
-	        value: function loadImage(url) {
+	        value: function loadImage(image) {
+	            var url = image.uri;
+	            var isBlob = false;
+	            if (image["extensions"] && image["extensions"]["KHR_binary_glTF"]) {
+	                var binaryInfo = image["extensions"]["KHR_binary_glTF"];
+	                var bufferViewInfo = this.tf.bufferViews[binaryInfo.bufferView];
+	                var blob = new Blob([new Uint8Array(this.binaryGLTFBuffer, bufferViewInfo.byteOffset, bufferViewInfo.byteLength)], {
+	                    type: binaryInfo.mimeType
+	                });
+	                url = window.URL.createObjectURL(blob);
+	                isBlob = true;
+	            }
 	            if (this._isDataUrl(url)) {
 	                return this._dataUriToImage(url);
 	            } else {
-	                return _ImageResolver2.default.resolve(this.baseDirectory + url);
+	                return _ImageResolver2.default.resolve(isBlob ? url : this.baseDirectory + url);
 	            }
 	        }
 	        /**
@@ -1373,23 +1446,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: "loadBuffer",
 	        value: function loadBuffer(url) {
-	            var _this = this;
+	            var _this2 = this;
 	
 	            if (this._isDataUrl(url)) {
 	                return new Promise(function (resolve, reject) {
-	                    resolve(_this._dataUriToArrayBuffer(url));
+	                    resolve(_this2._dataUriToArrayBuffer(url));
 	                });
 	            }
 	            return new Promise(function (resolve, reject) {
 	                var xhr = new XMLHttpRequest();
-	                xhr.open("GET", _this.baseDirectory + url);
+	                xhr.open("GET", _this2.baseDirectory + url);
 	                xhr.responseType = "arraybuffer";
 	                xhr.onload = function (v) {
 	                    resolve(xhr.response);
 	                };
 	                xhr.onerror = function (e) {
 	                    reject({
-	                        message: "Loading resource at '" + (_this.baseDirectory + url) + " failed. Is there resource file in dependency at correct location?'",
+	                        message: "Loading resource at '" + (_this2.baseDirectory + url) + " failed. Is there resource file in dependency at correct location?'",
 	                        error: e
 	                    });
 	                };
@@ -1403,12 +1476,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	         */
 	
 	    }, {
-	        key: "loadString",
-	        value: function loadString(url) {
+	        key: "loadShader",
+	        value: function loadShader(shader) {
+	            var url = shader.uri;
+	            var isBlob = false;
+	            if (shader["extensions"] && shader["extensions"]["KHR_binary_glTF"]) {
+	                var binaryInfo = shader["extensions"]["KHR_binary_glTF"];
+	                var bufferViewInfo = this.tf.bufferViews[binaryInfo.bufferView];
+	                var blob = new Blob([new Uint8Array(this.binaryGLTFBuffer, bufferViewInfo.byteOffset, bufferViewInfo.byteLength)], {
+	                    type: "text/plain"
+	                });
+	                url = window.URL.createObjectURL(blob);
+	                isBlob = true;
+	            }
 	            if (this._isDataUrl(url)) {
-	                throw new Error("Not implemented yet");
+	                return Promise.resolve(this._dataUriToText(url));
 	            } else {
-	                return _TextFileResolver2.default.resolve(this.baseDirectory + url);
+	                return _TextFileResolver2.default.resolve(isBlob ? url : this.baseDirectory + url);
 	            }
 	        }
 	        /**
@@ -1439,23 +1523,54 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, {
 	        key: "_dataUriToImage",
 	        value: function _dataUriToImage(dataUrl) {
+	            var _this3 = this;
+	
 	            return new Promise(function (resolve, reject) {
 	                var canvas = document.createElement('canvas');
 	                var context = canvas.getContext('2d');
 	                var image = new Image();
 	                image.src = dataUrl;
 	                image.onload = function () {
-	                    var cWidth = Math.pow(2, Math.ceil(Math.log(image.width) / Math.LN2));
-	                    var cHeight = Math.pow(2, Math.ceil(Math.log(image.height) / Math.LN2));
-	                    if (cWidth === image.width && cHeight == image.height) {
-	                        resolve(image);
-	                    }
-	                    canvas.width = cWidth;
-	                    canvas.height = cHeight;
-	                    context.drawImage(image, 0, 0, image.width, image.height, 0, 0, cWidth, cHeight);
-	                    resolve(canvas);
+	                    resolve(_this3._ensureCorrectSize(image));
 	                };
 	            });
+	        }
+	    }, {
+	        key: "_dataUriToText",
+	        value: function _dataUriToText(dataUrl) {
+	            var splittedUri = dataUrl.split(",");
+	            var byteString = atob(splittedUri[1]);
+	            return byteString;
+	        }
+	    }, {
+	        key: "_ensureCorrectSize",
+	        value: function _ensureCorrectSize(image) {
+	            var canvas = document.createElement('canvas');
+	            var context = canvas.getContext('2d');
+	            var cWidth = Math.pow(2, Math.ceil(Math.log(image.width) / Math.LN2));
+	            var cHeight = Math.pow(2, Math.ceil(Math.log(image.height) / Math.LN2));
+	            if (cWidth === image.width && cHeight == image.height) {
+	                return image;
+	            }
+	            canvas.width = cWidth;
+	            canvas.height = cHeight;
+	            context.drawImage(image, 0, 0, image.width, image.height, 0, 0, cWidth, cHeight);
+	            return canvas;
+	        }
+	    }, {
+	        key: "_bufferToString",
+	        value: function _bufferToString(arr) {
+	            var tmp = "";
+	            var len = 1024;
+	            for (var p = 0; p < arr.byteLength; p += len) {
+	                tmp += this._smallBufferToString(new Uint8Array(arr.slice(p, p + len)));
+	            }
+	            return tmp;
+	        }
+	    }, {
+	        key: "_smallBufferToString",
+	        value: function _smallBufferToString(arr) {
+	            return String.fromCharCode.apply("", arr);
 	        }
 	        /**
 	         * Check specified url is dataUrl or not
@@ -1504,6 +1619,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 18 */
+/***/ function(module, exports) {
+
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});exports.default=window.GrimoireJS.lib.fundamental.Util.HashCalculator;
+
+/***/ },
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -1514,11 +1637,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _Material = __webpack_require__(19);
+	var _Material = __webpack_require__(20);
 	
 	var _Material2 = _interopRequireDefault(_Material);
 	
-	var _MaterialFactory = __webpack_require__(20);
+	var _MaterialFactory = __webpack_require__(21);
 	
 	var _MaterialFactory2 = _interopRequireDefault(_MaterialFactory);
 	
@@ -1578,10 +1701,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	                                    break;
 	                                }
 	
-	                                return _context2.abrupt("return", this._parseMaterialCommon(material, matKey, textures));
+	                                return _context2.abrupt("return", this._parseMaterialCommon(tf, matKey, textures));
 	
 	                            case 5:
-	                                if (!(_MaterialFactory2.default.materialGenerators[material.technique] === void 0)) {
+	                                if (!(_MaterialFactory2.default.registerdHandlers[material.technique] === void 0)) {
 	                                    _context2.next = 7;
 	                                    break;
 	                                }
@@ -1613,7 +1736,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                            case 7:
 	                                result = {
 	                                    type: material.technique,
-	                                    class: "gltf-" + matKey
+	                                    class: "gltf-" + tf.id + "-" + matKey
 	                                };
 	
 	                                for (key in material.values) {
@@ -1656,12 +1779,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	                                technique = tf.techniques[mat.technique];
 	                                program = tf.programs[technique.program];
 	                                _context3.next = 5;
-	                                return resourceResolver.loadString(tf.shaders[program.vertexShader].uri);
+	                                return resourceResolver.loadShader(tf.shaders[program.vertexShader]);
 	
 	                            case 5:
 	                                _context3.t0 = _context3.sent;
 	                                _context3.next = 8;
-	                                return resourceResolver.loadString(tf.shaders[program.fragmentShader].uri);
+	                                return resourceResolver.loadShader(tf.shaders[program.fragmentShader]);
 	
 	                            case 8:
 	                                _context3.t1 = _context3.sent;
@@ -1776,7 +1899,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    }, {
 	        key: "_parseMaterialCommon",
-	        value: function _parseMaterialCommon(material, matKey, textures) {
+	        value: function _parseMaterialCommon(tf, matKey, textures) {
+	            var material = tf.materials[matKey];
 	            var cmatData = material.extensions.KHR_materials_common;
 	            var matValues = cmatData.values;
 	            switch (cmatData.technique) {
@@ -1784,16 +1908,31 @@ return /******/ (function(modules) { // webpackBootstrap
 	                case "BLINN":
 	                    var result = {
 	                        type: "gltf-unlit",
-	                        class: "gltf-" + matKey
+	                        class: "gltf-" + tf.id + "-" + matKey
 	                    };
-	                    if (typeof matValues.diffuse === "string") {
-	                        result["texture"] = textures[matValues.diffuse];
-	                    } else if (Array.isArray(matValues.diffuse)) {
-	                        result["diffuse"] = _ConstantConverter2.default.asColorValue(matValues.diffuse);
-	                    }
+	                    this._setAsColorOrTexture(result, textures, matValues.ambient, "ambient", "ambientTexture");
+	                    this._setAsColorOrTexture(result, textures, matValues.diffuse, "diffuse", "diffuseTexture");
+	                    this._setAsColorOrTexture(result, textures, matValues.specular, "specular", "specularTexture");
+	                    this._setAsColorOrTexture(result, textures, matValues.specular, "specular", "specularTexture");
+	                    this._setAsColorOrTexture(result, textures, matValues.emission, "emission", "emissionTexture");
+	                    result["transparency"] = matValues["transparency"];
+	                    result["shininess"] = matValues["shininess"];
 	                    return result;
 	                default:
 	                    throw new Error("Unsupported common material technique " + cmatData.technique);
+	            }
+	        }
+	    }, {
+	        key: "_setAsColorOrTexture",
+	        value: function _setAsColorOrTexture(result, textures, value, nameOnColor, nameOnTexture) {
+	            if (Array.isArray(value)) {
+	                result[nameOnColor] = _ConstantConverter2.default.asColorValue(value);
+	            } else if (typeof value === "string") {
+	                result[nameOnTexture] = textures[value];
+	            } else if (value === void 0) {
+	                return;
+	            } else {
+	                throw new Error("Unknown type for color registration");
 	            }
 	        }
 	    }]);
@@ -1804,7 +1943,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = MaterialParser;
 
 /***/ },
-/* 19 */
+/* 20 */
 /***/ function(module, exports) {
 
 		Object.defineProperty(exports, "__esModule", {
@@ -1812,7 +1951,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		});exports.default=window.GrimoireJS.lib.fundamental.Material.Material;
 
 /***/ },
-/* 20 */
+/* 21 */
 /***/ function(module, exports) {
 
 		Object.defineProperty(exports, "__esModule", {
@@ -1820,7 +1959,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		});exports.default=window.GrimoireJS.lib.fundamental.Material.MaterialFactory;
 
 /***/ },
-/* 21 */
+/* 22 */
 /***/ function(module, exports) {
 
 		Object.defineProperty(exports, "__esModule", {
@@ -1828,7 +1967,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		});exports.default=window.GrimoireJS.lib.math.Vector3;
 
 /***/ },
-/* 22 */
+/* 23 */
 /***/ function(module, exports) {
 
 		Object.defineProperty(exports, "__esModule", {
@@ -1836,7 +1975,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		});exports.default=window.GrimoireJS.lib.math.AABB;
 
 /***/ },
-/* 23 */
+/* 24 */
 /***/ function(module, exports) {
 
 		Object.defineProperty(exports, "__esModule", {
@@ -1844,7 +1983,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		});exports.default=window.GrimoireJS.lib.fundamental.Resource.Buffer;
 
 /***/ },
-/* 24 */
+/* 25 */
 /***/ function(module, exports) {
 
 		Object.defineProperty(exports, "__esModule", {
@@ -1852,7 +1991,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		});exports.default=window.GrimoireJS.lib.fundamental.Geometry.Geometry;
 
 /***/ },
-/* 25 */
+/* 26 */
 /***/ function(module, exports) {
 
 		Object.defineProperty(exports, "__esModule", {
@@ -1860,7 +1999,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		});exports.default=window.GrimoireJS.lib.fundamental.Resource.Texture2D;
 
 /***/ },
-/* 26 */
+/* 27 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -1878,7 +2017,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = new GLTFMaterilFactory();
 
 /***/ },
-/* 27 */
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -1899,15 +2038,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _GLTFModelComponent2 = _interopRequireDefault(_GLTFModelComponent);
 	
-	var _grimoirejs = __webpack_require__(28);
+	var _grimoirejs = __webpack_require__(29);
 	
 	var _grimoirejs2 = _interopRequireDefault(_grimoirejs);
 	
-	var _MaterialFactory = __webpack_require__(20);
+	var _MaterialFactory = __webpack_require__(21);
 	
 	var _MaterialFactory2 = _interopRequireDefault(_MaterialFactory);
 	
-	var _gltfUnlit = __webpack_require__(29);
+	var _UniformResolverRegistry = __webpack_require__(30);
+	
+	var _UniformResolverRegistry2 = _interopRequireDefault(_UniformResolverRegistry);
+	
+	var _gltfUnlit = __webpack_require__(31);
 	
 	var _gltfUnlit2 = _interopRequireDefault(_gltfUnlit);
 	
@@ -1956,8 +2099,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	                            _grimoirejs2.default.registerNode("gltf-assets", [], {});
 	                            _grimoirejs2.default.registerNode("gltf-animation", ["GLTFAnimation"], {});
 	                            _MaterialFactory2.default.addSORTMaterial("gltf-unlit", _gltfUnlit2.default);
+	                            _UniformResolverRegistry2.default.add("JOINTMATRIX", function (valInfo, material) {
+	                                material.addArgument("boneMatrices", {
+	                                    converter: "Object",
+	                                    default: null
+	                                });
+	                                return function (proxy, info) {
+	                                    if (!material.arguments["boneMatrices"]) {
+	                                        return;
+	                                    }
+	                                    proxy.uniformMatrixArray(valInfo.name, material.arguments["boneMatrices"]);
+	                                };
+	                            });
 	
-	                        case 9:
+	                        case 10:
 	                        case "end":
 	                            return _context.stop();
 	                    }
@@ -1968,7 +2123,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 28 */
+/* 29 */
 /***/ function(module, exports) {
 
 		Object.defineProperty(exports, "__esModule", {
@@ -1976,10 +2131,18 @@ return /******/ (function(modules) { // webpackBootstrap
 		});exports.default=window.GrimoireJS;
 
 /***/ },
-/* 29 */
+/* 30 */
 /***/ function(module, exports) {
 
-	module.exports = "@Pass{\n@ExposeMacro(int,boneCount,BONE_COUNT,0)\nFS_PREC(mediump,float)\n\nvarying vec3 vNormal;\nvarying vec2 vUV;\n\n#ifdef VS\n#if BONE_COUNT > 0\n  uniform mat4 boneMatrices[BONE_COUNT];\n#endif\n  @NORMAL\n  attribute vec3 normal;\n  @POSITION\n  attribute vec3 position;\n  @TEXCOORD_0\n  attribute vec2 texCoord;\n#if BONE_COUNT > 0\n  @JOINT\n  attribute vec4 joint;\n  @WEIGHT\n  attribute vec4 weight;\n#endif\n  uniform mat4 _matPVM;\n  uniform mat4 _matM;\n  void main(){\n    #if BONE_COUNT > 0\n      mat4 skinMat = weight.x * boneMatrices[int(joint.x)] + weight.y * boneMatrices[int(joint.y)] + weight.z * boneMatrices[int(joint.z)] + weight.w * boneMatrices[int(joint.w)];\n      gl_Position = _matPVM * skinMat * vec4(position,1);\n      vNormal = normalize((_matM * skinMat  * vec4(normal,0)).xyz);\n    #else\n      gl_Position = _matPVM  * vec4(position,1);\n      vNormal = normalize((_matM  * vec4(normal,0)).xyz);\n    #endif\n    vUV = texCoord;\n  }\n\n\n#endif\n\n\n#ifdef FS\n  uniform sampler2D texture;\n\n  @HAS_TEXTURE{sampler:\"texture\"}\n  uniform bool _textureUsed;\n\n  @{type:\"color\"}\n  uniform vec4 diffuse;\n\n  @{default:\"n(1,1,-1)\"}\n  uniform vec3 sunDir;\n\n  void main(){\n    vec4 dColor;\n    if(_textureUsed){\n      dColor = texture2D(texture,vUV);\n    }else{\n      dColor = diffuse;\n    }\n    gl_FragColor.xyz = dot(sunDir,vNormal) * dColor.xyz;\n    gl_FragColor.w = dColor.w;\n  }\n#endif\n}\n"
+		Object.defineProperty(exports, "__esModule", {
+		    value: true
+		});exports.default=window.GrimoireJS.lib.fundamental.Material.UniformResolverRegistry;
+
+/***/ },
+/* 31 */
+/***/ function(module, exports) {
+
+	module.exports = "@Pass{\n@BlendFunc(SRC_ALPHA,ONE_MINUS_SRC_ALPHA)\n@ExposeMacro(int,boneCount,BONE_COUNT,0)\nFS_PREC(mediump,float)\n\nvarying vec3 vPosition;\nvarying vec3 vNormal;\nvarying vec2 vUV;\n\n#ifdef VS\n#if BONE_COUNT > 0\n  @JOINTMATRIX\n  uniform mat4 boneMatrices[BONE_COUNT];\n#endif\n  @NORMAL\n  attribute vec3 normal;\n  @POSITION\n  attribute vec3 position;\n  @TEXCOORD_0\n  attribute vec2 texCoord;\n#if BONE_COUNT > 0\n  @JOINT\n  attribute vec4 joint;\n  @WEIGHT\n  attribute vec4 weight;\n#endif\n  uniform mat4 _matPVM;\n  uniform mat4 _matM;\n  void main(){\n    mat4 transform = _matM;\n    mat4 projectionTransform = _matPVM;\n    #if BONE_COUNT > 0\n      mat4 skinMat = weight.x * boneMatrices[int(joint.x)] + weight.y * boneMatrices[int(joint.y)] + weight.z * boneMatrices[int(joint.z)] + weight.w * boneMatrices[int(joint.w)];\n      transform *= skinMat;\n      projectionTransform *= skinMat;\n    #endif\n    vUV = texCoord;\n    vNormal = normalize((transform * vec4(normal,0.0)).xyz);\n    vPosition = (transform * vec4(position,1.0)).xyz;\n    gl_Position = projectionTransform * vec4(position,1.0);\n  }\n\n\n#endif\n\n\n#ifdef FS\n\n  @{type:\"color\"}\n  uniform vec3 ambient;\n\n  uniform sampler2D ambientTexture;\n\n  @HAS_TEXTURE{sampler:\"ambientTexture\"}\n  uniform bool ambientTextureUsed;\n\n  @{type:\"color\"}\n  uniform vec4 diffuse;\n\n  uniform sampler2D diffuseTexture;\n\n  @HAS_TEXTURE{sampler:\"diffuseTexture\"}\n  uniform bool diffuseTextureUsed;\n\n  @{type:\"color\"}\n  uniform vec3 specular;\n\n  uniform sampler2D specularTexture;\n\n  @HAS_TEXTURE{sampler:\"specularTexture\"}\n  uniform bool specularTextureUsed;\n\n  @{type:\"color\"}\n  uniform vec3 emission;\n\n  uniform sampler2D emissionTexture;\n\n  @HAS_TEXTURE{sampler:\"emissionTexture\"}\n  uniform bool emissionTextureUsed;\n\n  @{default:\"1.0\"}\n  uniform float shininess;\n\n  @{default:\"1.0\"}\n  uniform float transparency;\n\n  uniform vec3 _cameraPosition;\n\n  @{default:\"n(1,1,-1)\"}\n  uniform vec3 sunDir;\n\n  void main(){\n    vec4 dColor = vec4(0);\n    vec3 sColor = vec3(0);\n    vec3 eColor = vec3(0);\n    vec3 aColor = vec3(0);\n    vec3 hVec = normalize(normalize(_cameraPosition - vPosition) + sunDir);\n    if(ambientTextureUsed){\n      aColor = texture2D(ambientTexture,vUV).rgb;\n    }else{\n      aColor = ambient;\n    }\n    if(diffuseTextureUsed){\n      dColor = texture2D(diffuseTexture,vUV);\n    }else{\n      dColor = diffuse;\n    }\n    dColor.rgb = dot(sunDir,vNormal) * dColor.rgb;\n    if(specularTextureUsed){\n      sColor = texture2D(specularTexture,vUV).rgb;\n    }else{\n      sColor = specular;\n    }\n    if(emissionTextureUsed){\n      eColor = texture2D(emissionTexture,vUV).rgb;\n    }else{\n      eColor = emission;\n    }\n    sColor = sColor * pow(max(0.,dot(hVec,vNormal)),shininess);\n    gl_FragColor.rgb = dColor.rgb + sColor + eColor + aColor;\n    gl_FragColor.a = dColor.a * transparency;\n  }\n#endif\n}\n"
 
 /***/ }
 /******/ ])
