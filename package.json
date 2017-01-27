@@ -8,11 +8,11 @@
   },
   "dependencies": {
     "grimoirejs": "^0.14.0",
-    "grimoirejs-forward-shading": "^1.3.1",
-    "grimoirejs-fundamental": "^0.12.0",
-    "grimoirejs-gltf": "^1.8.0",
-    "grimoirejs-math": "^1.8.0",
-    "grimoirejs-preset-basic": "^1.8.0"
+    "grimoirejs-forward-shading": "^1.3.2",
+    "grimoirejs-fundamental": "^0.12.2",
+    "grimoirejs-gltf": "^1.8.1",
+    "grimoirejs-math": "^1.10.1",
+    "grimoirejs-preset-basic": "^1.8.2"
   },
   "devDependencies": {},
   "repository": {

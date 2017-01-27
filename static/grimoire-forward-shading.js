@@ -114,7 +114,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var __VERSION__ = "1.3.0-beta2";
+	var __VERSION__ = "1.3.1";
 	var __NAME__ = "grimoirejs-forward-shading";
 	
 	var __EXPOSE__ = {

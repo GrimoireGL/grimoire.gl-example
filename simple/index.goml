@@ -1,6 +1,6 @@
 <goml width="fit" height="fit">
   <scene>
-    <camera position="0,0,12" far="100" />
+    <camera position="0,0,5" far="100" />
     <mesh geometry="cube" texture="simple/logo.png">
       <mesh.components>
         <Rotate />

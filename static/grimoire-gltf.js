@@ -110,7 +110,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var __VERSION__ = "1.8.0-beta3";
+	var __VERSION__ = "1.8.1";
 	var __NAME__ = "grimoirejs-gltf";
 	
 	var __EXPOSE__ = {

@@ -378,7 +378,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var __VERSION__ = "0.12.0";
+	var __VERSION__ = "0.12.1";
 	var __NAME__ = "grimoirejs-fundamental";
 	
 	var __EXPOSE__ = {
