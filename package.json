@@ -9,10 +9,10 @@
   "dependencies": {
     "grimoirejs": "latest",
     "grimoirejs-forward-shading": "latest",
-    "grimoirejs-fundamental": "latest",
+    "grimoirejs-fundamental": "^0.13.3",
     "grimoirejs-gltf": "latest",
     "grimoirejs-math": "latest",
-    "grimoirejs-preset-basic": "latest"
+    "grimoirejs-preset-basic": "^1.9.6"
   },
   "devDependencies": {},
   "repository": {

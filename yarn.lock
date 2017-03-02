@@ -466,9 +466,16 @@ grimoirejs-forward-shading@latest:
     grimoirejs-fundamental latest
     grimoirejs-math latest
 
-grimoirejs-fundamental@^0.12.10, grimoirejs-fundamental@^0.12.8, grimoirejs-fundamental@latest:
+grimoirejs-fundamental@^0.12.8, grimoirejs-fundamental@latest:
   version "0.12.10"
   resolved "https://registry.yarnpkg.com/grimoirejs-fundamental/-/grimoirejs-fundamental-0.12.10.tgz#a758ce67004a092383781ee879eb1d3329405a87"
+  dependencies:
+    "@types/json5" "0.0.29"
+    json5 "^0.5.1"
+
+grimoirejs-fundamental@^0.13.3:
+  version "0.13.3"
+  resolved "https://registry.yarnpkg.com/grimoirejs-fundamental/-/grimoirejs-fundamental-0.13.3.tgz#6093f53f58d145c9865c129f2b99866251d3866a"
   dependencies:
     "@types/json5" "0.0.29"
     json5 "^0.5.1"
@@ -487,12 +494,12 @@ grimoirejs-math@^1.12.1, grimoirejs-math@latest:
   dependencies:
     gl-matrix "^2.3.2"
 
-grimoirejs-preset-basic@latest:
-  version "1.9.4"
-  resolved "https://registry.yarnpkg.com/grimoirejs-preset-basic/-/grimoirejs-preset-basic-1.9.4.tgz#69ac5ec7774280d5be301b0d12c948b3344d88f6"
+grimoirejs-preset-basic@^1.9.6:
+  version "1.9.6"
+  resolved "https://registry.yarnpkg.com/grimoirejs-preset-basic/-/grimoirejs-preset-basic-1.9.6.tgz#5159f0f4955e3b1363275b30482179800416b2d3"
   dependencies:
     grimoirejs "^0.14.7"
-    grimoirejs-fundamental "^0.12.10"
+    grimoirejs-fundamental "^0.13.3"
     grimoirejs-math "^1.12.1"
 
 grimoirejs@^0.14.7, grimoirejs@latest:
